@@ -1,7 +1,7 @@
 # Withheld Financial Review Dashboard Design
 
 **Date:** 2026-08-10  
-**Status:** Approved in conversation; pending user review of this written specification
+**Status:** Approved by user
 
 ## Objective
 
@@ -22,7 +22,9 @@ Generated review artifacts should live below a private/output directory and shou
 
 The generator begins with `backend/app/data/us_valuations/*.json` to identify the complete served universe and selects records whose publication state is withheld. This makes the expected company count independent of the presence of a private artifact.
 
-For each withheld ticker, the generator looks for its corresponding private valuation and filing-evidence packet in the project output directories. The canonical bridge-recovery output is preferred. If a withheld ticker has no private packet, the dashboard still includes it and displays a clear `private packet unavailable` state using the public-safe metadata that exists.
+For each withheld ticker, the generator looks for its corresponding private valuation and filing-evidence packet in the project output directories. The canonical bridge-recovery output is preferred, followed by the model-route rebuild output. If a withheld ticker has no private packet, the dashboard still includes it and displays a clear `private packet unavailable` state using the public-safe metadata that exists.
+
+At design time, 123 private files cover 120 unique withheld companies because IDXX, ROK, and SHW each appear in two output runs. Five withheld companies currently have no private packet: AJG, HSY, MSFT, NOW, and PANW. These counts are diagnostic observations, not hard-coded behavior; the generator reconciles the files afresh on every run.
 
 The generator does not query the internet. SEC links are taken from existing source metadata and filing-evidence captures. Missing links remain visibly missing rather than being guessed.
 
@@ -166,4 +168,3 @@ The implementation is acceptable when:
 - Automatically rerunning or publishing valuations after review.
 - Fetching new SEC data from the internet.
 - Embedding the dashboard into the customer-facing application.
-
