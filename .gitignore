@@ -28,6 +28,9 @@ build/
 .DS_Store
 *.sw?
 
+# Local isolated development worktrees
+.worktrees/
+
 # Infrastructure / data volumes
 infrastructure/**/data/
 minio-data/
