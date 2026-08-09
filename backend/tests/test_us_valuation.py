@@ -295,6 +295,8 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
         "note": "Latest financial statement used; this does not claim to be the issuer's latest disclosure of every type.",
     }
     assert public["data_boundary"]["stock_prices_used"] is False
+    assert public["automated_review"]["review_version"] == "US-AUTO-REVIEW-1.0"
+    assert public["automated_review"]["decision"] == "blocked"
     assert set(public) == {
         "schema_version",
         "valuation_date",
@@ -310,6 +312,7 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
         "scenario_range",
         "forecast_quality",
         "review",
+        "automated_review",
         "methodology",
         "data_boundary",
     }
@@ -651,6 +654,80 @@ def test_same_period_noncontrolling_accession_cannot_clear_bridge() -> None:
     assert all(
         financials["balance_sheet"]["field_states"][field] == "verification_stale"
         for field in stale
+    )
+
+
+def _fixture_filing_records(submission: dict[str, Any]) -> list[dict[str, Any]]:
+    recent = submission["filings"]["recent"]
+    return [
+        {
+            key: values[index]
+            for key, values in recent.items()
+            if isinstance(values, list) and index < len(values)
+        }
+        for index in range(len(recent["accessionNumber"]))
+    ]
+
+
+def test_wdc_stale_instant_bridge_facts_do_not_clear_current_bridge() -> None:
+    submission = load_fixture("wdc-submissions.json")
+    classification = classify_issuer(submission)
+    financials = CompanyFactsNormalizer(
+        load_fixture("wdc-companyfacts.json"),
+        fiscal_year_end=submission["fiscalYearEnd"],
+        filing_records=_fixture_filing_records(submission),
+    ).normalize(
+        annual_count=5,
+        verified_zero_bridge_fields=classification["verified_zero_bridge_fields"],
+        governed_bridge_fields=classification["governed_bridge_fields"],
+    )
+
+    balance_sheet = financials["balance_sheet"]
+    assert balance_sheet["bridge_complete"] is False
+    assert set(balance_sheet["bridge_missing_fields"]) >= {
+        "marketable_securities_current",
+        "marketable_securities_noncurrent",
+        "preferred_equity",
+    }
+    for field in (
+        "marketable_securities_current",
+        "marketable_securities_noncurrent",
+        "preferred_equity",
+    ):
+        assert balance_sheet["field_states"][field] != "reported"
+
+
+def test_crm_stale_lease_and_nonoperating_facts_do_not_clear_current_bridge() -> None:
+    submission = load_fixture("crm-submissions.json")
+    classification = classify_issuer(submission)
+    financials = CompanyFactsNormalizer(
+        load_fixture("crm-companyfacts.json"),
+        fiscal_year_end=submission["fiscalYearEnd"],
+        filing_records=_fixture_filing_records(submission),
+    ).normalize(
+        annual_count=5,
+        verified_zero_bridge_fields=classification["verified_zero_bridge_fields"],
+        governed_bridge_fields=classification["governed_bridge_fields"],
+    )
+
+    balance_sheet = financials["balance_sheet"]
+    assert balance_sheet["bridge_complete"] is False
+    assert set(balance_sheet["bridge_missing_fields"]) >= {
+        "marketable_securities_noncurrent",
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+        "noncontrolling_interests",
+    }
+    for field in (
+        "marketable_securities_noncurrent",
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+        "noncontrolling_interests",
+    ):
+        assert balance_sheet["field_states"][field] != "reported"
+    assert balance_sheet["values"]["commercial_paper"] == 0.0
+    assert balance_sheet["total_interest_bearing_debt"] == pytest.approx(
+        balance_sheet["values"]["noncurrent_debt"]
     )
 
 
