@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 import app.us_valuation.pipeline as valuation_pipeline
+from app.us_valuation.classification import load_archetype_config
 from app.us_valuation.eligibility import model_eligibility
 
 
@@ -45,6 +46,37 @@ def test_model_eligibility_matches_archetype_model_pair(
     assert result["eligible"] is expected
     assert result["model"] == model
     assert result["reason"]
+
+
+def test_every_configured_archetype_has_one_governed_primary_model() -> None:
+    policies = load_archetype_config()["valuation_policies"]
+
+    assert policies
+    for archetype, policy in policies.items():
+        model = policy["primary_model"]
+        result = model_eligibility(classification_for(archetype, model))
+        assert result["eligible"] is True
+
+
+@pytest.mark.parametrize(
+    ("archetype", "model"),
+    [
+        ("enterprise_software_cloud", "fcff_dcf"),
+        ("semiconductors_and_components", "fcff_dcf"),
+        ("us_bank", "residual_income"),
+        ("us_insurance", "residual_income"),
+        ("us_reit", "ffo"),
+        ("us_utility", "ddm"),
+        ("diversified_industrials", "fcff_dcf"),
+        ("capital_goods_machinery", "fcff_dcf"),
+    ],
+)
+def test_requested_company_types_use_governed_models(
+    archetype: str, model: str
+) -> None:
+    result = model_eligibility(classification_for(archetype, model))
+
+    assert result["eligible"] is True
 
 
 @pytest.mark.parametrize(

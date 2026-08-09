@@ -174,6 +174,30 @@
       "confidence": 0.98,
       "reason": "Apple combines mature hardware with a material services ecosystem; consolidated FCFF remains appropriate for the initial filing-only route.",
       "verified_zero_bridge_fields": {
+        "finance_lease_current": {
+          "rationale": "Apple's March 28, 2026 controlling Form 10-Q separately presents commercial paper, term debt, and other current liabilities but no separately reported current finance-lease liability; do not infer a lease amount from the aggregate other-liabilities caption.",
+          "source_accession": "0000320193-26-000013",
+          "controlled_period_end": "2026-03-28",
+          "form": "10-Q",
+          "filing_date": "2026-05-01",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-07-31",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        },
+        "finance_lease_noncurrent": {
+          "rationale": "Apple's March 28, 2026 controlling Form 10-Q separately presents term debt and other non-current liabilities but no separately reported noncurrent finance-lease liability; do not infer a lease amount from the aggregate other-liabilities caption.",
+          "source_accession": "0000320193-26-000013",
+          "controlled_period_end": "2026-03-28",
+          "form": "10-Q",
+          "filing_date": "2026-05-01",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-07-31",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        },
         "preferred_equity": {
           "rationale": "No preferred-equity balance or preferred-stock ownership claim is presented in the latest controlling Apple financial statements used by this pilot.",
           "source_accession": "0000320193-26-000013",
@@ -253,6 +277,18 @@
         }
       },
       "verified_zero_bridge_fields": {
+        "commercial_paper": {
+          "rationale": "Microsoft's June 30, 2026 controlling Form 10-K presents current and noncurrent long-term debt but no commercial-paper borrowing balance; the latest current-period Companyfacts also has no CommercialPaper fact, so the stale zero from June 30, 2025 is replaced with a current filing-validated zero.",
+          "source_accession": "0001193125-26-323660",
+          "controlled_period_end": "2026-06-30",
+          "form": "10-K",
+          "filing_date": "2026-07-29",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-07-31",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        },
         "preferred_equity": {
           "rationale": "The controlling Microsoft Form 10-Q does not present preferred equity or a preferred-stock ownership claim.",
           "source_accession": "0000950170-25-061046",
@@ -494,6 +530,47 @@
     "0000106040": {
       "ticker": "WDC",
       "reason": "WDC routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
+      "governed_bridge_fields": {
+        "marketable_securities_current": {
+          "value": 0,
+          "rationale": "WDC's April 3, 2026 balance sheet presents cash and cash equivalents separately and no marketable-securities or short-term-investments line; the filing's cash-equivalents note describes money-market funds as part of cash and cash equivalents.",
+          "source_accession": "0001628280-26-029054",
+          "controlled_period_end": "2026-04-03",
+          "form": "10-Q",
+          "filing_date": "2026-05-01",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-08-01",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        },
+        "marketable_securities_noncurrent": {
+          "value": 0,
+          "rationale": "WDC's April 3, 2026 balance sheet presents no noncurrent marketable-securities or long-term-investments line; cash equivalents are included in cash and cash equivalents.",
+          "source_accession": "0001628280-26-029054",
+          "controlled_period_end": "2026-04-03",
+          "form": "10-Q",
+          "filing_date": "2026-05-01",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-08-09",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        },
+        "preferred_equity": {
+          "value": 0,
+          "rationale": "WDC's Series A convertible preferred shares were fully converted into common shares on February 17, 2026, and the preferred shares were eliminated on February 24, 2026; the April 3, 2026 balance sheet reports convertible preferred stock as zero.",
+          "source_accession": "0001628280-26-029054",
+          "controlled_period_end": "2026-04-03",
+          "form": "10-Q",
+          "filing_date": "2026-05-01",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-08-09",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        }
+      },
       "verified_zero_bridge_fields": {
         "commercial_paper": {
           "rationale": "WDC's controlling filing tags no commercial paper concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
@@ -532,14 +609,57 @@
     "0001108524": {
       "ticker": "CRM",
       "reason": "CRM routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
-      "verified_zero_bridge_fields": {
-        "commercial_paper": {
-          "rationale": "CRM's controlling filing tags no commercial paper concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
+      "governed_bridge_fields": {
+        "marketable_securities_noncurrent": {
+          "value": 0,
+          "rationale": "CRM's April 30, 2026 balance sheet presents the full $2.902 billion marketable-securities balance under current assets. The investment note separately gives contractual maturities, which do not change the balance-sheet current classification.",
           "source_accession": "0001108524-26-000127",
           "controlled_period_end": "2026-04-30",
+          "form": "10-Q",
+          "filing_date": "2026-05-28",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000127/crm-20260430.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-08-09",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        }
+      },
+      "verified_zero_bridge_fields": {
+        "commercial_paper": {
+          "rationale": "CRM's April 30, 2026 filing reports $94 million of commercial paper as a marketable-securities investment. It does not present commercial-paper borrowing; the investment is already included in current marketable securities and must not be added to debt.",
+          "source_accession": "0001108524-26-000127",
+          "controlled_period_end": "2026-04-30",
+          "form": "10-Q",
+          "filing_date": "2026-05-28",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000127/crm-20260430.htm",
           "reviewer": "FinSight automated bridge-absence check",
-          "reviewed_on": "2026-08-01",
-          "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
+          "reviewed_on": "2026-08-09",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        },
+        "noncontrolling_interests": {
+          "rationale": "CRM's April 30, 2026 condensed consolidated balance sheet presents only stockholders' equity and no noncontrolling-interest balance or allocation.",
+          "source_accession": "0001108524-26-000127",
+          "controlled_period_end": "2026-04-30",
+          "form": "10-Q",
+          "filing_date": "2026-05-28",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000127/crm-20260430.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-08-09",
+          "verification_version": "US-BRIDGE-FILING-1.0"
+        },
+        "preferred_equity": {
+          "rationale": "CRM's April 30, 2026 condensed consolidated balance sheet presents common stockholders' equity and no preferred-equity balance or preferred-stock ownership claim.",
+          "source_accession": "0001108524-26-000127",
+          "controlled_period_end": "2026-04-30",
+          "form": "10-Q",
+          "filing_date": "2026-05-28",
+          "unit": "USD",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000127/crm-20260430.htm",
+          "reviewer": "FinSight U.S. valuation policy review",
+          "reviewed_on": "2026-08-09",
+          "verification_version": "US-BRIDGE-FILING-1.0"
         }
       }
     },

@@ -155,6 +155,28 @@ def _public_model(model: dict[str, Any]) -> dict[str, Any]:
 PUBLICATION_STATES = {"pass", "review_required", "withheld"}
 
 
+def _legacy_fcff_fallback_reason(artifact: dict[str, Any]) -> str | None:
+    """Return a repair reason for an old FCFF-to-equity fallback artifact."""
+    policy = artifact.get("model_policy")
+    if not isinstance(policy, dict):
+        return None
+    primary = policy.get("primary")
+    if primary not in {"residual_income", "ddm", "ffo"}:
+        return None
+    fallback_from = policy.get("fallback_from")
+    policy_reason = str(policy.get("reason", "")).lower()
+    if fallback_from == "fcff_dcf" or (
+        "fcff" in policy_reason
+        and "bridge" in policy_reason
+        and "fallback" in policy_reason
+    ):
+        return (
+            "Legacy FCFF fallback artifact is not publishable; repair the current "
+            "enterprise-to-equity bridge or regenerate through the governed model route."
+        )
+    return None
+
+
 def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     """Validate public state vocabulary and fail closed at every serving boundary."""
     public = deepcopy(artifact)

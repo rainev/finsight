@@ -4,28 +4,23 @@ from __future__ import annotations
 
 from typing import Any
 
+from .classification import load_archetype_config
 
-_GOVERNED_MODELS = {
-    "hardware_electronic_equipment": "fcff_dcf",
-    "enterprise_software_cloud": "fcff_dcf",
-    "semiconductors_and_components": "fcff_dcf",
-    "medical_devices_instruments": "fcff_dcf",
-    "diversified_industrials": "fcff_dcf",
-    "pharmaceuticals": "fcff_dcf",
-    "specialty_chemicals": "fcff_dcf",
-    "consumer_staples": "fcff_dcf",
-    "internet_digital_services": "fcff_dcf",
-    "us_bank": "residual_income",
-    "us_utility": "ddm",
-    "capital_goods_machinery": "fcff_dcf",
-    "retail": "fcff_dcf",
-    "transportation": "fcff_dcf",
-    "telecom": "fcff_dcf",
-    "us_insurance": "residual_income",
-    "us_securities": "residual_income",
-    "us_credit": "residual_income",
-    "us_reit": "ffo",
-}
+
+def _governed_models() -> dict[str, str]:
+    """Read the primary model registry from the classification configuration."""
+    config = load_archetype_config()
+    policies = config.get("valuation_policies", {})
+    if not isinstance(policies, dict):
+        return {}
+    return {
+        archetype: policy["primary_model"]
+        for archetype, policy in policies.items()
+        if isinstance(archetype, str)
+        and isinstance(policy, dict)
+        and isinstance(policy.get("primary_model"), str)
+        and policy["primary_model"]
+    }
 
 
 def model_eligibility(classification: dict[str, Any]) -> dict[str, Any]:
@@ -41,7 +36,7 @@ def model_eligibility(classification: dict[str, Any]) -> dict[str, Any]:
     raw_model = policy.get("primary_model") if isinstance(policy, dict) else None
     archetype = raw_archetype if isinstance(raw_archetype, str) else ""
     model = raw_model if isinstance(raw_model, str) and raw_model else "unknown"
-    expected_model = _GOVERNED_MODELS.get(archetype)
+    expected_model = _governed_models().get(archetype)
     if expected_model is None:
         return {
             "eligible": False,

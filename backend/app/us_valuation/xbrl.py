@@ -581,6 +581,99 @@ class CompanyFactsNormalizer:
             "Latest filed point-in-time fact for the requested balance-sheet date.",
         )
 
+    def _controlling_filing(self, period_end: str) -> dict[str, Any] | None:
+        """Return the latest eligible filing that controls a balance-sheet date."""
+        candidates = [
+            record
+            for record in self.filing_records
+            if record.get("reportDate") == period_end
+            and record.get("form") in {"10-K", "10-K/A", "10-Q", "10-Q/A"}
+            and (
+                not self.as_of_date
+                or record.get("filingDate", "") <= self.as_of_date
+            )
+        ]
+        return (
+            max(
+                candidates,
+                key=lambda record: (
+                    record.get("filingDate", ""),
+                    record.get("form", "").endswith("/A"),
+                    record.get("accessionNumber", ""),
+                ),
+            )
+            if candidates
+            else None
+        )
+
+    def _accession_has_period_fact(self, accession: str, period_end: str) -> bool:
+        """Confirm an evidence accession is represented in the SEC fact payload."""
+        for namespace in self.namespaces.values():
+            for concept in namespace.values():
+                for facts in concept.get("units", {}).values():
+                    if any(
+                        fact.get("accn") == accession
+                        and fact.get("end") == period_end
+                        and (
+                            not self.as_of_date
+                            or fact.get("filed", "") <= self.as_of_date
+                        )
+                        for fact in facts
+                    ):
+                        return True
+        return False
+
+    def _bridge_instant(
+        self,
+        field: str,
+        *,
+        period_end: str,
+        controlling_accession: str | None,
+        allow_cover_page_date: bool = False,
+    ) -> SelectedFact | None:
+        """Select a bridge fact from the current controlling filing only."""
+        controlling_filing = self._controlling_filing(period_end)
+        filing_date = (
+            controlling_filing.get("filingDate") if controlling_filing else None
+        )
+        candidates = []
+        for item in self._candidates(field):
+            fact = item[3]
+            if fact.get("start") or fact.get("form") not in {
+                "10-K",
+                "10-K/A",
+                "10-Q",
+                "10-Q/A",
+            }:
+                continue
+            if controlling_accession and fact.get("accn") != controlling_accession:
+                continue
+            if allow_cover_page_date:
+                if not filing_date or fact.get("end", "") < period_end:
+                    continue
+                if fact.get("end", "") > filing_date:
+                    continue
+            elif fact.get("end") != period_end:
+                continue
+            candidates.append(item)
+        if not candidates:
+            return None
+        item = max(
+            candidates,
+            key=lambda candidate: (
+                candidate[3].get("end", ""),
+                candidate[3].get("filed", ""),
+                candidate[3].get("form", "").endswith("/A"),
+                candidate[3].get("accn", ""),
+            ),
+        )
+        reason = (
+            "Current controlling filing fact used for the enterprise-to-equity bridge."
+            if not allow_cover_page_date
+            else "Current controlling filing cover-page share fact used for the bridge denominator."
+        )
+        return self._selected(field, item, reason)
+
     def operating_nwc(self, end: str) -> dict[str, Any]:
         # Accounts receivable anchors the operating-capital proxy. Some issuers
         # report the balance sheet only at fiscal-year ends, not at an interim
@@ -746,6 +839,8 @@ class CompanyFactsNormalizer:
             for field, evidence in governed_bridge_evidence.items()
             if evidence.get("controlled_period_end") == ttm_end
             and evidence.get("source_accession") == controlling_accession
+            and controlling_accession is not None
+            and self._accession_has_period_fact(controlling_accession, ttm_end)
             and isinstance(evidence.get("value"), (int, float))
             and not isinstance(evidence.get("value"), bool)
             and evidence["value"] >= 0
@@ -762,6 +857,8 @@ class CompanyFactsNormalizer:
             for field, evidence in verified_zero_evidence.items()
             if evidence.get("controlled_period_end") == ttm_end
             and evidence.get("source_accession") == controlling_accession
+            and controlling_accession is not None
+            and self._accession_has_period_fact(controlling_accession, ttm_end)
             and (
                 not self.as_of_date
                 or (
@@ -791,6 +888,12 @@ class CompanyFactsNormalizer:
             - change_nwc
         )
 
+        controlling_bridge_filing = self._controlling_filing(ttm_end)
+        controlling_bridge_accession = (
+            controlling_bridge_filing.get("accessionNumber")
+            if controlling_bridge_filing
+            else None
+        )
         balance_fields = {}
         for field in (
             "cash",
@@ -820,13 +923,33 @@ class CompanyFactsNormalizer:
                     field,
                     annual_periods[-1]["period_end"],
                 )
-            else:
-                fact = self.instant(
+            elif field == "common_shares_outstanding":
+                fact = self._bridge_instant(
                     field,
-                    at_or_before=None
-                    if field == "common_shares_outstanding"
-                    else ttm_end,
+                    period_end=ttm_end,
+                    controlling_accession=controlling_bridge_accession,
+                    allow_cover_page_date=True,
                 )
+                if fact is None and controlling_bridge_filing is None:
+                    # Direct normalizer callers may omit submissions metadata. Keep
+                    # their share-count proxy usable, while production pipeline runs
+                    # remain governed by the controlling filing above.
+                    fact = self.instant(field)
+            else:
+                fact = self._bridge_instant(
+                    field,
+                    period_end=ttm_end,
+                    controlling_accession=controlling_bridge_accession,
+                )
+            stale_fact = (
+                self.instant(field, at_or_before=ttm_end)
+                if fact is None and field not in {
+                    "diluted_weighted_average_shares",
+                    "incremental_dilutive_shares",
+                    "common_shares_outstanding",
+                }
+                else None
+            )
             balance_fields[field] = {
                 "value": (
                     fact.value
@@ -850,6 +973,11 @@ class CompanyFactsNormalizer:
                         **verified_zero_evidence[field],
                     }
                     if field in verified_zero_fields
+                    else {
+                        **stale_fact.as_dict(),
+                        "value_status": "stale_reported_fact",
+                    }
+                    if stale_fact
                     else None
                 ),
                 "state": (
@@ -859,6 +987,8 @@ class CompanyFactsNormalizer:
                     if field in current_governed_bridge_fields
                     else "policy_verified_zero"
                     if field in verified_zero_fields
+                    else "verification_stale"
+                    if stale_fact
                     else "verification_stale"
                     if field in governed_bridge_evidence
                     or field in verified_zero_evidence

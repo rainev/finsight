@@ -22,6 +22,7 @@ from app.us_valuation.classification import classify_issuer
 from app.us_valuation.artifacts import (
     frontend_company,
     public_result,
+    sanitize_public_artifact,
     sec_cache_manifest,
 )
 import app.us_valuation.pipeline as valuation_pipeline
@@ -413,6 +414,39 @@ def test_api_loader_fails_closed_for_legacy_publication_state(
     assert load_generated_result("AAPL")["review"]["publication_state"] == "withheld"
 
 
+def test_legacy_fcff_fallback_artifact_is_withheld_and_scrubbed() -> None:
+    artifact = json.loads(
+        Path("backend/app/data/us_valuations/LOW.json").read_text(encoding="utf-8")
+    )
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert sanitized["models"]["ddm"]["intrinsic_value_per_share"] is None
+    assert sanitized["scenario_range"]["base"] is None
+    assert any(
+        "legacy fcff fallback" in error.lower()
+        for error in sanitized["review"]["errors"]
+    )
+
+
+@pytest.mark.parametrize("ticker", ["WFC", "SO"])
+def test_intentional_equity_level_artifacts_remain_eligible(ticker: str) -> None:
+    artifact = json.loads(
+        Path(f"backend/app/data/us_valuations/{ticker}.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert "fallback_from" not in sanitized["model_policy"]
+    assert sanitized["review"]["publication_state"] == "review_required"
+    assert next(iter(sanitized["models"].values()))[
+        "intrinsic_value_per_share"
+    ] is not None
+
+
 def test_segment_required_issuer_without_registry_evidence_fails_before_models(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -653,7 +687,12 @@ def test_same_period_noncontrolling_accession_cannot_clear_bridge() -> None:
     assert financials["balance_sheet"]["bridge_complete"] is False
     assert all(
         financials["balance_sheet"]["field_states"][field] == "verification_stale"
-        for field in stale
+        for field in (
+            "preferred_equity",
+            "noncontrolling_interests",
+            "finance_lease_current",
+            "finance_lease_noncurrent",
+        )
     )
 
 
@@ -683,18 +722,17 @@ def test_wdc_stale_instant_bridge_facts_do_not_clear_current_bridge() -> None:
     )
 
     balance_sheet = financials["balance_sheet"]
-    assert balance_sheet["bridge_complete"] is False
-    assert set(balance_sheet["bridge_missing_fields"]) >= {
-        "marketable_securities_current",
-        "marketable_securities_noncurrent",
-        "preferred_equity",
-    }
+    assert balance_sheet["bridge_complete"] is True
+    assert balance_sheet["bridge_missing_fields"] == []
+    assert balance_sheet["values"]["marketable_securities_current"] == 0
+    assert balance_sheet["values"]["marketable_securities_noncurrent"] == 0
+    assert balance_sheet["values"]["preferred_equity"] == 0
     for field in (
         "marketable_securities_current",
         "marketable_securities_noncurrent",
         "preferred_equity",
     ):
-        assert balance_sheet["field_states"][field] != "reported"
+        assert balance_sheet["field_states"][field] == "governed_filing_fact"
 
 
 def test_crm_stale_lease_and_nonoperating_facts_do_not_clear_current_bridge() -> None:
@@ -712,19 +750,21 @@ def test_crm_stale_lease_and_nonoperating_facts_do_not_clear_current_bridge() ->
 
     balance_sheet = financials["balance_sheet"]
     assert balance_sheet["bridge_complete"] is False
-    assert set(balance_sheet["bridge_missing_fields"]) >= {
-        "marketable_securities_noncurrent",
+    assert set(balance_sheet["bridge_missing_fields"]) == {
         "finance_lease_current",
         "finance_lease_noncurrent",
-        "noncontrolling_interests",
     }
-    for field in (
-        "marketable_securities_noncurrent",
-        "finance_lease_current",
-        "finance_lease_noncurrent",
-        "noncontrolling_interests",
-    ):
-        assert balance_sheet["field_states"][field] != "reported"
+    assert balance_sheet["values"]["marketable_securities_noncurrent"] == 0
+    assert balance_sheet["values"]["commercial_paper"] == 0
+    assert balance_sheet["values"]["noncontrolling_interests"] == 0
+    assert balance_sheet["values"]["preferred_equity"] == 0
+    assert balance_sheet["field_states"]["marketable_securities_noncurrent"] == "governed_filing_fact"
+    assert balance_sheet["field_states"]["commercial_paper"] == "policy_verified_zero"
+    assert balance_sheet["field_states"]["noncontrolling_interests"] == "policy_verified_zero"
+    assert balance_sheet["field_states"]["preferred_equity"] == "policy_verified_zero"
+    for field in ("finance_lease_current", "finance_lease_noncurrent"):
+        assert balance_sheet["field_states"][field] == "verification_stale"
+        assert balance_sheet["values"][field] is None
     assert balance_sheet["values"]["commercial_paper"] == 0.0
     assert balance_sheet["total_interest_bearing_debt"] == pytest.approx(
         balance_sheet["values"]["noncurrent_debt"]
@@ -1306,11 +1346,11 @@ def test_terminal_state_is_continuous(result: dict):
 
 def test_apple_golden_values_and_scenario_order(result: dict):
     assert result["models"]["fcff_dcf"]["intrinsic_value_per_share"] == pytest.approx(
-        130.5140765,
+        130.5974960,
         abs=0.001,
     )
     assert result["models"]["epv"]["intrinsic_value_per_share"] == pytest.approx(
-        91.3648524,
+        91.4482720,
         abs=0.001,
     )
     scenario_range = result["scenario_range"]
