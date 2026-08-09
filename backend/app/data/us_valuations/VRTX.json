@@ -65,8 +65,8 @@
       "model": "residual_income",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 111.59034357475278,
-      "publication_state": "review_required",
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
       "errors": [],
       "warnings": [
         "FCFF enterprise-to-equity bridge incomplete (missing current_debt); valued via residual_income equity-level fallback.",
@@ -77,33 +77,35 @@
   "scenarios": {
     "bear": {
       "residual_income": {
-        "intrinsic_value_per_share": 98.02243667681019,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "base": {
       "residual_income": {
-        "intrinsic_value_per_share": 111.59034357475278,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "bull": {
       "residual_income": {
-        "intrinsic_value_per_share": 138.99839989774551,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     }
   },
   "scenario_range": {
-    "low": 98.02243667681019,
-    "base": 111.59034357475278,
-    "high": 138.99839989774551,
+    "low": null,
+    "base": null,
+    "high": null,
     "label": "assumption range, not a statistical confidence interval"
   },
   "review": {
-    "publication_state": "review_required",
+    "publication_state": "withheld",
     "confidence_grade": "medium",
-    "errors": [],
+    "errors": [
+      "Legacy FCFF fallback artifact is not publishable; repair the current enterprise-to-equity bridge or regenerate through the governed model route."
+    ],
     "warnings": [
       "FCFF enterprise-to-equity bridge incomplete (missing current_debt); valued via residual_income equity-level fallback.",
       "Single-period book/ROE snapshot; average-equity and preferred-stock refinements pending."

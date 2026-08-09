@@ -623,6 +623,16 @@ class CompanyFactsNormalizer:
                         return True
         return False
 
+    @staticmethod
+    def _evidence_available_as_of(
+        evidence: Mapping[str, Any], as_of_date: str | None
+    ) -> bool:
+        """Use filing availability for point-in-time evidence, not audit timing."""
+        if not as_of_date:
+            return True
+        available_on = evidence.get("filing_date") or evidence.get("reviewed_on")
+        return bool(available_on) and str(available_on) <= as_of_date
+
     def _bridge_instant(
         self,
         field: str,
@@ -845,11 +855,7 @@ class CompanyFactsNormalizer:
             and not isinstance(evidence.get("value"), bool)
             and evidence["value"] >= 0
             and (
-                not self.as_of_date
-                or (
-                    bool(evidence.get("reviewed_on"))
-                    and evidence["reviewed_on"] <= self.as_of_date
-                )
+                self._evidence_available_as_of(evidence, self.as_of_date)
             )
         }
         verified_zero_fields = {
@@ -860,11 +866,7 @@ class CompanyFactsNormalizer:
             and controlling_accession is not None
             and self._accession_has_period_fact(controlling_accession, ttm_end)
             and (
-                not self.as_of_date
-                or (
-                    bool(evidence.get("reviewed_on"))
-                    and evidence["reviewed_on"] <= self.as_of_date
-                )
+                self._evidence_available_as_of(evidence, self.as_of_date)
             )
         }
         prior_end = ttm_fields["revenue"].get("prior_ytd", {}).get("end")

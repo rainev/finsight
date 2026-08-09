@@ -65,8 +65,8 @@
       "model": "residual_income",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 30.651312533788868,
-      "publication_state": "review_required",
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
       "errors": [],
       "warnings": [
         "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent, commercial_paper, preferred_equity, finance_lease_current, finance_lease_noncurrent); valued via residual_income equity-level fallback.",
@@ -77,33 +77,35 @@
   "scenarios": {
     "bear": {
       "residual_income": {
-        "intrinsic_value_per_share": 26.566451032608196,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "base": {
       "residual_income": {
-        "intrinsic_value_per_share": 30.651312533788868,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "bull": {
       "residual_income": {
-        "intrinsic_value_per_share": 39.08143770748569,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     }
   },
   "scenario_range": {
-    "low": 26.566451032608196,
-    "base": 30.651312533788868,
-    "high": 39.08143770748569,
+    "low": null,
+    "base": null,
+    "high": null,
     "label": "assumption range, not a statistical confidence interval"
   },
   "review": {
-    "publication_state": "review_required",
+    "publication_state": "withheld",
     "confidence_grade": "medium",
-    "errors": [],
+    "errors": [
+      "Legacy FCFF fallback artifact is not publishable; repair the current enterprise-to-equity bridge or regenerate through the governed model route."
+    ],
     "warnings": [
       "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent, commercial_paper, preferred_equity, finance_lease_current, finance_lease_noncurrent); valued via residual_income equity-level fallback.",
       "Single-period book/ROE snapshot; average-equity and preferred-stock refinements pending."

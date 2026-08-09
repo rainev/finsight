@@ -64,8 +64,8 @@
       "model": "ddm",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 10.424561307614544,
-      "publication_state": "review_required",
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
       "errors": [],
       "warnings": [
         "FCFF enterprise-to-equity bridge incomplete (missing commercial_paper, preferred_equity, finance_lease_current, finance_lease_noncurrent); valued via ddm equity-level fallback.",
@@ -76,33 +76,35 @@
   "scenarios": {
     "bear": {
       "ddm": {
-        "intrinsic_value_per_share": 9.553099852660008,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "base": {
       "ddm": {
-        "intrinsic_value_per_share": 10.424561307614544,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "bull": {
       "ddm": {
-        "intrinsic_value_per_share": 11.36215094275089,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     }
   },
   "scenario_range": {
-    "low": 9.553099852660008,
-    "base": 10.424561307614544,
-    "high": 11.36215094275089,
+    "low": null,
+    "base": null,
+    "high": null,
     "label": "assumption range, not a statistical confidence interval"
   },
   "review": {
-    "publication_state": "review_required",
+    "publication_state": "withheld",
     "confidence_grade": "medium",
-    "errors": [],
+    "errors": [
+      "Legacy FCFF fallback artifact is not publishable; repair the current enterprise-to-equity bridge or regenerate through the governed model route."
+    ],
     "warnings": [
       "FCFF enterprise-to-equity bridge incomplete (missing commercial_paper, preferred_equity, finance_lease_current, finance_lease_noncurrent); valued via ddm equity-level fallback.",
       "Dividend growth is a governed policy assumption, not a per-issuer forecast."

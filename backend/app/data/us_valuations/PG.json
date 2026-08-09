@@ -64,8 +64,8 @@
       "model": "ddm",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 68.53812783585349,
-      "publication_state": "review_required",
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
       "errors": [],
       "warnings": [
         "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent); valued via ddm equity-level fallback.",
@@ -76,33 +76,35 @@
   "scenarios": {
     "bear": {
       "ddm": {
-        "intrinsic_value_per_share": 62.8085498861258,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "base": {
       "ddm": {
-        "intrinsic_value_per_share": 68.53812783585349,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "bull": {
       "ddm": {
-        "intrinsic_value_per_share": 74.70247723860557,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     }
   },
   "scenario_range": {
-    "low": 62.8085498861258,
-    "base": 68.53812783585349,
-    "high": 74.70247723860557,
+    "low": null,
+    "base": null,
+    "high": null,
     "label": "assumption range, not a statistical confidence interval"
   },
   "review": {
-    "publication_state": "review_required",
+    "publication_state": "withheld",
     "confidence_grade": "medium",
-    "errors": [],
+    "errors": [
+      "Legacy FCFF fallback artifact is not publishable; repair the current enterprise-to-equity bridge or regenerate through the governed model route."
+    ],
     "warnings": [
       "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent); valued via ddm equity-level fallback.",
       "Dividend growth is a governed policy assumption, not a per-issuer forecast."

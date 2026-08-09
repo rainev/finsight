@@ -65,8 +65,8 @@
       "model": "residual_income",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 182.47990848482922,
-      "publication_state": "review_required",
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
       "errors": [],
       "warnings": [
         "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent); valued via residual_income equity-level fallback.",
@@ -77,33 +77,35 @@
   "scenarios": {
     "bear": {
       "residual_income": {
-        "intrinsic_value_per_share": 164.08909434167552,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "base": {
       "residual_income": {
-        "intrinsic_value_per_share": 182.47990848482922,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     },
     "bull": {
       "residual_income": {
-        "intrinsic_value_per_share": 225.38191928256026,
-        "publication_state": "review_required"
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld"
       }
     }
   },
   "scenario_range": {
-    "low": 164.08909434167552,
-    "base": 182.47990848482922,
-    "high": 225.38191928256026,
+    "low": null,
+    "base": null,
+    "high": null,
     "label": "assumption range, not a statistical confidence interval"
   },
   "review": {
-    "publication_state": "review_required",
+    "publication_state": "withheld",
     "confidence_grade": "medium",
-    "errors": [],
+    "errors": [
+      "Legacy FCFF fallback artifact is not publishable; repair the current enterprise-to-equity bridge or regenerate through the governed model route."
+    ],
     "warnings": [
       "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent); valued via residual_income equity-level fallback.",
       "Single-period book/ROE snapshot; average-equity and preferred-stock refinements pending."

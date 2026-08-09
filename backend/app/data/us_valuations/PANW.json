@@ -53,8 +53,8 @@
       "model": "fcff_dcf",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 22.652620110101612,
-      "publication_state": "review_required",
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
       "errors": [],
       "warnings": [
         "Present value of terminal value exceeds 75% of enterprise value."
@@ -64,8 +64,8 @@
       "model": "epv",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 14.075026500626366,
-      "publication_state": "review_required",
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
       "errors": [],
       "warnings": [
         "EPV is a no-growth support value, not an independent growth forecast.",
@@ -79,10 +79,12 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 18.139464215858624,
-        "publication_state": "pass",
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld",
         "errors": [],
-        "warnings": []
+        "warnings": [
+          "Present value of terminal value exceeds 75% of enterprise value."
+        ]
       }
     },
     "base": {
@@ -90,8 +92,8 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 22.652620110101612,
-        "publication_state": "review_required",
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld",
         "errors": [],
         "warnings": [
           "Present value of terminal value exceeds 75% of enterprise value."
@@ -103,20 +105,19 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 29.37580692694777,
-        "publication_state": "review_required",
+        "intrinsic_value_per_share": null,
+        "publication_state": "withheld",
         "errors": [],
         "warnings": [
-          "Present value of terminal value exceeds 75% of enterprise value.",
-          "Present value of terminal value exceeds 85%; manual review is required."
+          "Present value of terminal value exceeds 75% of enterprise value."
         ]
       }
     }
   },
   "scenario_range": {
-    "low": 18.139464215858624,
-    "base": 22.652620110101612,
-    "high": 29.37580692694777,
+    "low": null,
+    "base": null,
+    "high": null,
     "label": "assumption range, not a statistical confidence interval"
   },
   "forecast_quality": {
@@ -143,11 +144,11 @@
       "revenue_fcff_consistency": {
         "status": "pass",
         "revenue_cagr": 0.07059165704471759,
-        "fcff_cagr": 0.4736413977230989
+        "fcff_cagr": 0.4783682026640943
       },
       "dcf_epv_dispersion": {
         "status": "pass",
-        "value": 0.37865790216691936,
+        "value": 0.3476153536206029,
         "review_threshold": 0.4
       },
       "segment_evidence_automation": {
@@ -157,7 +158,7 @@
     }
   },
   "review": {
-    "publication_state": "review_required",
+    "publication_state": "withheld",
     "confidence_grade": "medium",
     "errors": [],
     "warnings": [
@@ -184,5 +185,32 @@
     "raw_financial_statement_values_included": false,
     "stock_prices_used": false,
     "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution"
+  },
+  "automated_review": {
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "decision": "blocked",
+    "publication_state": "withheld",
+    "evidence_status": "complete",
+    "blocking_reasons": [
+      "hard_warning:Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
+    ],
+    "repair_actions": [
+      "resolve_model_warnings"
+    ],
+    "warnings": [
+      "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
+      "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Present value of terminal value exceeds 75% of enterprise value."
+    ],
+    "repair_attempts": [
+      {
+        "attempt": 1,
+        "status": "no_progress",
+        "blocking_reasons": [
+          "hard_warning:Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
+        ]
+      }
+    ]
   }
 }

@@ -735,6 +735,23 @@ def test_wdc_stale_instant_bridge_facts_do_not_clear_current_bridge() -> None:
         assert balance_sheet["field_states"][field] == "governed_filing_fact"
 
 
+def test_wdc_bridge_evidence_is_available_from_filing_date_not_review_date() -> None:
+    submission = load_fixture("wdc-submissions.json")
+    classification = classify_issuer(submission)
+    financials = CompanyFactsNormalizer(
+        load_fixture("wdc-companyfacts.json"),
+        fiscal_year_end=submission["fiscalYearEnd"],
+        as_of_date="2026-07-31",
+        filing_records=_fixture_filing_records(submission),
+    ).normalize(
+        annual_count=5,
+        verified_zero_bridge_fields=classification["verified_zero_bridge_fields"],
+        governed_bridge_fields=classification["governed_bridge_fields"],
+    )
+
+    assert financials["balance_sheet"]["bridge_complete"] is True
+
+
 def test_crm_stale_lease_and_nonoperating_facts_do_not_clear_current_bridge() -> None:
     submission = load_fixture("crm-submissions.json")
     classification = classify_issuer(submission)

@@ -32,14 +32,14 @@
     "reason": "FCFF is the primary governed model for the hardware and services archetype; EPV is a separate no-growth support value."
   },
   "public_assumptions": {
-    "forecast_policy_version": "US-FORECAST-1.0",
-    "forecast_years": 5,
-    "forecast_mode": "consolidated",
-    "initial_revenue_growth": 0.05082746662756747,
-    "target_operating_margin": 0.21399235933924782,
+    "forecast_policy_version": null,
+    "forecast_years": null,
+    "forecast_mode": "unavailable",
+    "initial_revenue_growth": null,
+    "target_operating_margin": null,
     "segment_assumptions": {},
-    "sales_to_capital": 2.5,
-    "terminal_growth": 0.02,
+    "sales_to_capital": null,
+    "terminal_growth": null,
     "discount_policy_version": "US-RATES-1.0",
     "discount_calibration_type": "policy_calibrated",
     "policy_wacc": 0.09056733174980205,
@@ -53,114 +53,54 @@
       "model": "fcff_dcf",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 82.2189071951475,
-      "publication_state": "pass",
-      "errors": [],
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
+      "errors": [
+        "Enterprise-to-equity bridge requires current filing evidence for marketable_securities_noncurrent. No governed segment forecast evidence is available for normalized period 2026-04-24; configured periods: none"
+      ],
       "warnings": []
     },
     "epv": {
       "model": "epv",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 65.42862182363037,
-      "publication_state": "review_required",
-      "errors": [],
-      "warnings": [
-        "EPV is a no-growth support value, not an independent growth forecast.",
-        "It assumes normalized D&A approximates maintenance CapEx and normalized working capital is stable."
-      ]
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
+      "errors": [
+        "Enterprise-to-equity bridge requires current filing evidence for marketable_securities_noncurrent. No governed segment forecast evidence is available for normalized period 2026-04-24; configured periods: none"
+      ],
+      "warnings": []
     }
   },
-  "scenarios": {
-    "bear": {
-      "fcff_dcf": {
-        "model": "fcff_dcf",
-        "output_type": "intrinsic_value_per_share",
-        "currency": "USD",
-        "intrinsic_value_per_share": 65.60214319461988,
-        "publication_state": "pass",
-        "errors": [],
-        "warnings": []
-      }
-    },
-    "base": {
-      "fcff_dcf": {
-        "model": "fcff_dcf",
-        "output_type": "intrinsic_value_per_share",
-        "currency": "USD",
-        "intrinsic_value_per_share": 82.2189071951475,
-        "publication_state": "pass",
-        "errors": [],
-        "warnings": []
-      }
-    },
-    "bull": {
-      "fcff_dcf": {
-        "model": "fcff_dcf",
-        "output_type": "intrinsic_value_per_share",
-        "currency": "USD",
-        "intrinsic_value_per_share": 106.50265591648768,
-        "publication_state": "review_required",
-        "errors": [],
-        "warnings": [
-          "Present value of terminal value exceeds 75% of enterprise value."
-        ]
-      }
-    }
-  },
+  "scenarios": {},
   "scenario_range": {
-    "low": 65.60214319461988,
-    "base": 82.2189071951475,
-    "high": 106.50265591648768,
+    "low": null,
+    "base": null,
+    "high": null,
     "label": "assumption range, not a statistical confidence interval"
   },
   "forecast_quality": {
     "policy_version": "US-FORECAST-QUALITY-1.0",
-    "status": "review_required",
-    "errors": [],
-    "warnings": [
-      "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
+    "status": "withheld",
+    "errors": [
+      "Enterprise-to-equity bridge requires current filing evidence for marketable_securities_noncurrent. No governed segment forecast evidence is available for normalized period 2026-04-24; configured periods: none"
     ],
+    "warnings": [],
     "checks": {
-      "segment_forecast_required": {
-        "status": "pass",
-        "value": false
-      },
-      "forecast_horizon": {
-        "status": "pass",
-        "value": 5
-      },
-      "terminal_growth_continuity": {
-        "status": "pass",
-        "value": 0.02,
-        "target": 0.02
-      },
-      "revenue_fcff_consistency": {
-        "status": "pass",
-        "revenue_cagr": 0.03270104529260376,
-        "fcff_cagr": -0.00968954761584162
-      },
-      "dcf_epv_dispersion": {
-        "status": "pass",
-        "value": 0.20421440693276546,
-        "review_threshold": 0.4
-      },
-      "segment_evidence_automation": {
-        "status": "review_required",
-        "value": "standardized_consolidated_facts"
+      "segment_evidence_as_of": {
+        "status": "fail",
+        "normalized_period_end": "2026-04-24",
+        "available_periods": []
       }
     }
   },
   "review": {
-    "publication_state": "review_required",
-    "confidence_grade": "medium",
-    "errors": [],
-    "warnings": [
-      "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
-      "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
-      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
-      "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
+    "publication_state": "withheld",
+    "confidence_grade": "insufficient",
+    "errors": [
+      "Enterprise-to-equity bridge requires current filing evidence for marketable_securities_noncurrent. No governed segment forecast evidence is available for normalized period 2026-04-24; configured periods: none"
     ],
+    "warnings": [],
     "price_dependent_inputs_used": false,
     "prohibited_output_check": {
       "current_price": false,
@@ -172,11 +112,45 @@
   "methodology": {
     "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
     "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
-    "source_policy": "SEC Companyfacts, submissions and governed filing-specific Products/Services tables; no exchange prices"
+    "source_policy": "SEC Companyfacts, submissions and governed filing-specific reportable-segment tables; no exchange prices"
   },
   "data_boundary": {
     "raw_financial_statement_values_included": false,
     "stock_prices_used": false,
     "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution"
+  },
+  "automated_review": {
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "decision": "blocked",
+    "publication_state": "withheld",
+    "evidence_status": "complete",
+    "blocking_reasons": [
+      "review_error:Enterprise-to-equity bridge requires current filing evidence for marketable_securities_noncurrent. No governed segment forecast evidence is available for normalized period 2026-04-24; configured periods: none",
+      "invalid_model_state:fcff_dcf",
+      "model_not_pass:fcff_dcf",
+      "missing_model_value:fcff_dcf",
+      "invalid_model_state:epv",
+      "model_not_pass:epv",
+      "missing_model_value:epv"
+    ],
+    "repair_actions": [
+      "rebuild_valuation_models"
+    ],
+    "warnings": [],
+    "repair_attempts": [
+      {
+        "attempt": 1,
+        "status": "no_progress",
+        "blocking_reasons": [
+          "review_error:Enterprise-to-equity bridge requires current filing evidence for marketable_securities_noncurrent. No governed segment forecast evidence is available for normalized period 2026-04-24; configured periods: none",
+          "invalid_model_state:fcff_dcf",
+          "model_not_pass:fcff_dcf",
+          "missing_model_value:fcff_dcf",
+          "invalid_model_state:epv",
+          "model_not_pass:epv",
+          "missing_model_value:epv"
+        ]
+      }
+    ]
   }
 }

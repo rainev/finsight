@@ -576,6 +576,8 @@
           "rationale": "WDC's controlling filing tags no commercial paper concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
           "source_accession": "0001628280-26-029054",
           "controlled_period_end": "2026-04-03",
+          "filing_date": "2026-05-01",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
           "reviewer": "FinSight automated bridge-absence check",
           "reviewed_on": "2026-08-01",
           "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
@@ -584,6 +586,8 @@
           "rationale": "WDC's controlling filing tags no finance lease current concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
           "source_accession": "0001628280-26-029054",
           "controlled_period_end": "2026-04-03",
+          "filing_date": "2026-05-01",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
           "reviewer": "FinSight automated bridge-absence check",
           "reviewed_on": "2026-08-01",
           "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
@@ -592,6 +596,8 @@
           "rationale": "WDC's controlling filing tags no finance lease noncurrent concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
           "source_accession": "0001628280-26-029054",
           "controlled_period_end": "2026-04-03",
+          "filing_date": "2026-05-01",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
           "reviewer": "FinSight automated bridge-absence check",
           "reviewed_on": "2026-08-01",
           "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
@@ -600,6 +606,8 @@
           "rationale": "WDC's controlling filing tags no noncontrolling interests concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
           "source_accession": "0001628280-26-029054",
           "controlled_period_end": "2026-04-03",
+          "filing_date": "2026-05-01",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
           "reviewer": "FinSight automated bridge-absence check",
           "reviewed_on": "2026-08-01",
           "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
