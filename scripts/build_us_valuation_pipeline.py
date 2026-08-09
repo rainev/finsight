@@ -73,6 +73,7 @@ def build_issuer_artifacts(
     *,
     issuer_metadata: dict | None = None,
     capture_private_fixture: bool = False,
+    filing_evidence: list[dict] | None = None,
 ) -> dict[str, Path]:
     """Fetch SEC data and write private, public, frontend, and fixture artifacts."""
     normalized_cik = normalize_cik(cik)
@@ -116,6 +117,7 @@ def build_issuer_artifacts(
         companyfacts=companyfacts,
         valuation_date=valuation_date,
         source_manifest=source_manifest,
+        filing_evidence=filing_evidence,
     )
     public = public_result(result, submissions)
     frontend = frontend_company(
@@ -172,6 +174,11 @@ def main() -> int:
     parser.add_argument("--valuation-date", default="2026-07-31")
     parser.add_argument("--refresh", action="store_true")
     parser.add_argument("--capture-private-fixture", action="store_true")
+    parser.add_argument(
+        "--filing-evidence",
+        type=Path,
+        help="JSON evidence records produced by extract_us_filing_evidence.py",
+    )
     args = parser.parse_args()
     output_root = (
         Path(args.output_root)
@@ -187,6 +194,11 @@ def main() -> int:
         args.valuation_date,
         args.refresh,
         capture_private_fixture=args.capture_private_fixture,
+        filing_evidence=(
+            json.loads(args.filing_evidence.read_text(encoding="utf-8"))
+            if args.filing_evidence
+            else None
+        ),
     )
     print("\n".join(str(path) for path in paths.values()))
     return 0

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from datetime import date
-from typing import Any
+from typing import Any, Iterable, Mapping
 
 from .assumptions import (
     ForecastEvidenceUnavailable,
@@ -421,6 +421,7 @@ def build_us_valuation(
     market_assumptions: USMarketAssumptions = US_BASE,
     valuation_date: str | None = None,
     source_manifest: dict[str, Any] | None = None,
+    filing_evidence: Iterable[Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
     if valuation_date:
         cutoff_submissions = deepcopy(submissions)
@@ -473,6 +474,7 @@ def build_us_valuation(
             "verified_zero_bridge_fields"
         ],
         governed_bridge_fields=classification["governed_bridge_fields"],
+        filing_evidence=filing_evidence,
     )
     policy = classification["valuation_policy"]
     discount_rate = build_discount_rate(

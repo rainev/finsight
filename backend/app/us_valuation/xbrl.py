@@ -9,6 +9,8 @@ from importlib.resources import files
 from statistics import median
 from typing import Any, Iterable, Mapping
 
+from .filing_evidence import governed_bridge_fields_from_evidence
+
 
 # Fallback effective tax rate for issuers with no year in the normal 0-40% band
 # (persistent pretax losses). The US federal statutory corporate rate.
@@ -740,6 +742,7 @@ class CompanyFactsNormalizer:
         verified_zero_bridge_fields: Mapping[str, dict[str, Any]]
         | Iterable[str] = (),
         governed_bridge_fields: Mapping[str, dict[str, Any]] | None = None,
+        filing_evidence: Iterable[Mapping[str, Any]] | None = None,
     ) -> dict[str, Any]:
         if isinstance(verified_zero_bridge_fields, Mapping):
             verified_zero_evidence = dict(verified_zero_bridge_fields)
@@ -752,6 +755,15 @@ class CompanyFactsNormalizer:
                 for field in verified_zero_bridge_fields
             }
         governed_bridge_evidence = dict(governed_bridge_fields or {})
+        recovered_bridge_evidence = governed_bridge_fields_from_evidence(
+            filing_evidence or (),
+            as_of_date=self.as_of_date,
+        )
+        for field, evidence in recovered_bridge_evidence.items():
+            existing = governed_bridge_evidence.get(field)
+            if existing and existing.get("value") not in (None, evidence["value"]):
+                raise ValueError(f"Conflicting bridge evidence for {field}")
+            governed_bridge_evidence.setdefault(field, evidence)
         annual_revenue = self.annual_series("revenue", annual_count)
         if len(annual_revenue) < 3:
             raise ValueError("At least three annual revenue facts are required")
