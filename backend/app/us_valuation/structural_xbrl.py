@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
+from math import isfinite
 from numbers import Real
 from typing import Any, Literal, Mapping
 
@@ -16,18 +17,23 @@ def _require_text(value: str, field: str) -> None:
         raise ValueError(f"{field} must be nonempty")
 
 
-def _validate_date(value: str | None, field: str) -> None:
-    if value is None:
-        return
+def _validate_date(value: str, field: str) -> None:
     try:
         date.fromisoformat(value)
     except (TypeError, ValueError) as error:
         raise ValueError(f"{field} must be an ISO date") from error
 
 
+def _validate_optional_date(value: str | None, field: str) -> None:
+    if value is not None:
+        _validate_date(value, field)
+
+
 def _validate_number(value: float | None, field: str) -> None:
     if value is not None and (isinstance(value, bool) or not isinstance(value, Real)):
         raise ValueError(f"{field} must be numeric")
+    if value is not None and not isfinite(value):
+        raise ValueError(f"{field} must be finite")
 
 
 def _json_value(value: Any) -> Any:
@@ -40,12 +46,15 @@ def _json_value(value: Any) -> Any:
     return value
 
 
-def _tuple_pairs(value: Any, field: str) -> tuple[tuple[str, str], ...]:
-    if not isinstance(value, (list, tuple)):
+def _tuple_pairs(
+    value: Any, field: str, *, allow_lists: bool = False
+) -> tuple[tuple[str, str], ...]:
+    sequence_type = (list, tuple) if allow_lists else tuple
+    if not isinstance(value, sequence_type):
         raise ValueError(f"{field} must be a sequence of pairs")
     pairs: list[tuple[str, str]] = []
     for item in value:
-        if not isinstance(item, (list, tuple)) or len(item) != 2:
+        if not isinstance(item, sequence_type) or len(item) != 2:
             raise ValueError(f"{field} must be a sequence of pairs")
         key, mapped_value = item
         _require_text(key, field)
@@ -85,9 +94,11 @@ class StructuralFact:
             (self.source_accession, "source_accession"),
         ):
             _require_text(value, field)
-        _validate_date(self.period_start, "period_start")
+        _validate_optional_date(self.period_start, "period_start")
         _validate_date(self.period_end, "period_end")
         _validate_number(self.value, "value")
+        if self.documentation is not None and not isinstance(self.documentation, str):
+            raise ValueError("documentation must be a string or None")
         for value, field in (
             (self.labels, "labels"),
             (self.dimensions, "dimensions"),
@@ -139,14 +150,16 @@ class StructuralFact:
             qname=value["qname"],
             namespace=value["namespace"],
             local_name=value["local_name"],
-            labels=_tuple_pairs(value["labels"], "labels"),
+            labels=_tuple_pairs(value["labels"], "labels", allow_lists=True),
             documentation=value.get("documentation"),
             value=value.get("value"),
             unit=value["unit"],
             period_start=value.get("period_start"),
             period_end=value["period_end"],
             context_id=value["context_id"],
-            dimensions=_tuple_pairs(value.get("dimensions", ()), "dimensions"),
+            dimensions=_tuple_pairs(
+                value.get("dimensions", ()), "dimensions", allow_lists=True
+            ),
             statement_roles=tuple(value.get("statement_roles", ())),
             presentation_parents=tuple(value.get("presentation_parents", ())),
             calculation_parents=tuple(value.get("calculation_parents", ())),
