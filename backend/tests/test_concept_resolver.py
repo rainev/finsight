@@ -137,6 +137,18 @@ def test_known_standard_alias_is_accepted() -> None:
             "us-gaap:ShortTermInvestments",
             "http://fasb.org.evil/us-gaap/2025",
         ),
+        (
+            "us-gaap:ShortTermInvestments",
+            "http://fasb.org/US-GAAP/2025",
+        ),
+        (
+            "us-gaap:ShortTermInvestments",
+            "http://xbrl.us.evil/us-gaap/2024-01-31",
+        ),
+        (
+            "us-gaap:ShortTermInvestments",
+            "https://xbrl.us/us-gaap/2024-01-31",
+        ),
     ],
 )
 def test_issuer_namespace_cannot_spoof_standard_alias(
@@ -177,6 +189,21 @@ def test_exact_official_namespace_and_prefixed_qname_are_standard_identity() -> 
         qname="us-gaap:ShortTermInvestments",
         local_name="ShortTermInvestments",
         namespace="http://fasb.org/us-gaap/2025",
+        value=100.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.98
+    assert decision.mapping_method == "known_taxonomy_alias"
+
+
+def test_legacy_xbrl_us_dated_namespace_is_standard_identity() -> None:
+    fact = make_fact(
+        qname="ShortTermInvestments",
+        local_name="ShortTermInvestments",
+        namespace="http://xbrl.us/us-gaap/2024-01-31",
         value=100.0,
     )
 
@@ -484,6 +511,20 @@ def test_camel_case_exclusion_is_visible_to_economic_gate() -> None:
     assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
 
 
+def test_underscore_is_a_token_separator_for_exclusions() -> None:
+    fact = make_fact(
+        qname="fsi:Restricted_MarketableSecuritiesCurrent",
+        local_name="Restricted_MarketableSecuritiesCurrent",
+        documentation="Available-for-sale debt securities classified as current.",
+        value=135.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
 def test_unrestricted_does_not_match_restricted_exclusion() -> None:
     fact = make_fact(
         qname="fsi:UnrestrictedInvestmentSecuritiesCurrent",
@@ -498,6 +539,54 @@ def test_unrestricted_does_not_match_restricted_exclusion() -> None:
     assert decision.status == "accepted"
     assert decision.confidence == 0.96
     assert decision.reason_codes[-1] == "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES"
+
+
+@pytest.mark.parametrize(
+    "qname,documentation",
+    [
+        (
+            "fsi:InvestmentSecuritiesNonCurrent",
+            "Available-for-sale debt securities.",
+        ),
+        (
+            "fsi:InvestmentSecurities",
+            "Non-current available-for-sale debt securities.",
+        ),
+    ],
+)
+def test_noncurrent_evidence_does_not_create_current_contradiction(
+    qname: str, documentation: str
+) -> None:
+    fact = make_fact(
+        qname=qname,
+        local_name=qname.split(":", 1)[-1],
+        documentation=documentation,
+        presentation_parents=("us-gaap:AssetsNoncurrent",),
+        calculation_parents=("us-gaap:AssetsNoncurrent",),
+        value=135.0,
+    )
+
+    decision = resolve_concept(noncurrent_request(), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.96
+    assert decision.mapping_method == "extension_structural_match"
+
+
+def test_independent_current_and_noncurrent_text_is_contradictory() -> None:
+    fact = make_fact(
+        qname="fsi:InvestmentSecuritiesNonCurrent",
+        local_name="InvestmentSecuritiesNonCurrent",
+        documentation="Current and non-current available-for-sale debt securities.",
+        presentation_parents=("us-gaap:AssetsCurrent",),
+        calculation_parents=("us-gaap:AssetsCurrent",),
+        value=135.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("CURRENT_NONCURRENT_CONFLICT",)
 
 
 def test_plural_single_word_exclusion_remains_true() -> None:

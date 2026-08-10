@@ -16,7 +16,10 @@ _RULES_PATH = _CONFIG_DIR / "structural_concept_rules.json"
 _ALIASES_PATH = _CONFIG_DIR / "concept_aliases.json"
 _RESOLVER_VERSION = "US-XBRL-RESOLVER-1.0"
 _OFFICIAL_US_GAAP_NAMESPACE = re.compile(
-    r"^http://fasb\.org/us-gaap/\d{4}(?:-\d{2}-\d{2})?$"
+    r"^(?:"
+    r"http://fasb\.org/us-gaap/\d{4}(?:-\d{2}-\d{2})?"
+    r"|http://xbrl\.us/us-gaap/\d{4}-\d{2}-\d{2}"
+    r")$"
 )
 _CAMEL_BOUNDARY = re.compile(
     r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])"
@@ -75,7 +78,7 @@ def _concepts_for_metric(aliases: Mapping[str, Any], concept: str) -> tuple[str,
 
 
 def _standard_alias_rank(fact: StructuralFact, concepts: tuple[str, ...]) -> int | None:
-    if not _OFFICIAL_US_GAAP_NAMESPACE.fullmatch(fact.namespace.casefold()):
+    if not _OFFICIAL_US_GAAP_NAMESPACE.fullmatch(fact.namespace):
         return None
     for index, concept in enumerate(concepts):
         if fact.qname == f"us-gaap:{concept}" or fact.local_name == concept:
@@ -93,7 +96,7 @@ def _standard_metric_for_fact(
 
 
 def _normalized_text(value: str) -> str:
-    value = _CAMEL_BOUNDARY.sub(" ", value)
+    value = _CAMEL_BOUNDARY.sub(" ", value).replace("_", " ")
     return " ".join(
         re.sub(r"[^\w]+", " ", value.casefold().replace("-", " ")).split()
     )
@@ -105,15 +108,20 @@ def _fact_text(fact: StructuralFact) -> str:
     return _normalized_text(" ".join(parts))
 
 
-def _contains_phrase(text: str, phrase: str) -> bool:
+def _phrase_pattern(phrase: str) -> str:
     normalized_phrase = _normalized_text(phrase)
     suffix = "s?" if len(normalized_phrase.split()) == 1 else ""
-    return bool(
-        re.search(
-            rf"(?<!\w){re.escape(normalized_phrase)}{suffix}(?!\w)",
-            text,
-        )
-    )
+    return rf"(?<!\w){re.escape(normalized_phrase)}{suffix}(?!\w)"
+
+
+def _contains_phrase(text: str, phrase: str) -> bool:
+    return bool(re.search(_phrase_pattern(phrase), text))
+
+
+def _remove_phrases(text: str, phrases: tuple[str, ...]) -> str:
+    for phrase in phrases:
+        text = re.sub(_phrase_pattern(phrase), " ", text)
+    return text
 
 
 def _excluded_reason(
@@ -157,12 +165,14 @@ def _orientation(
         orientations.add("current" if standard_metric.endswith("_current") else "noncurrent")
 
     text = _fact_text(fact)
-    if any(
-        _contains_phrase(text, token)
-        for token in ("noncurrent", "non current", "long term")
-    ):
+    noncurrent_phrases = ("noncurrent", "non current", "long term")
+    if any(_contains_phrase(text, token) for token in noncurrent_phrases):
         orientations.add("noncurrent")
-    if any(_contains_phrase(text, token) for token in ("current", "short term")):
+    standalone_current_text = _remove_phrases(text, noncurrent_phrases)
+    if any(
+        _contains_phrase(standalone_current_text, token)
+        for token in ("current", "short term")
+    ):
         orientations.add("current")
     if len(orientations) > 1:
         return "conflict"
