@@ -8,6 +8,26 @@ from app.us_valuation.structural_xbrl import ResolutionRequest, StructuralFact
 
 ACCESSION = "0000000000-26-000001"
 PERIOD = "2025-12-31"
+OFFICIAL_NAMESPACES = (
+    "http://xbrl.us/us-gaap/2008-01-31",
+    "http://xbrl.us/us-gaap/2009-01-31",
+    "http://fasb.org/us-gaap/2011-01-31",
+    "http://fasb.org/us-gaap/2012-01-31",
+    "http://fasb.org/us-gaap/2013-01-31",
+    "http://fasb.org/us-gaap/2014-01-31",
+    "http://fasb.org/us-gaap/2015-01-31",
+    "http://fasb.org/us-gaap/2016-01-31",
+    "http://fasb.org/us-gaap/2017-01-31",
+    "http://fasb.org/us-gaap/2018-01-31",
+    "http://fasb.org/us-gaap/2019-01-31",
+    "http://fasb.org/us-gaap/2020-01-31",
+    "http://fasb.org/us-gaap/2021-01-31",
+    "http://fasb.org/us-gaap/2022",
+    "http://fasb.org/us-gaap/2023",
+    "http://fasb.org/us-gaap/2024",
+    "http://fasb.org/us-gaap/2025",
+    "http://fasb.org/us-gaap/2026",
+)
 
 
 def make_fact(**overrides: object) -> StructuralFact:
@@ -99,6 +119,52 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "receivable",
         "financial-institution trading assets",
     }
+    assert tuple(rules["official_us_gaap_namespaces"]) == OFFICIAL_NAMESPACES
+
+
+@pytest.mark.parametrize("namespace", OFFICIAL_NAMESPACES)
+def test_every_governed_official_namespace_accepts_exact_standard_identity(
+    namespace: str,
+) -> None:
+    fact = make_fact(
+        qname="us-gaap:ShortTermInvestments",
+        local_name="ShortTermInvestments",
+        namespace=namespace,
+        value=100.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.98
+    assert decision.mapping_method == "known_taxonomy_alias"
+
+
+@pytest.mark.parametrize(
+    "namespace",
+    [
+        "http://xbrl.us/us-gaap/2008-02-01",
+        "http://xbrl.us/us-gaap/2009-13-01",
+        "http://xbrl.us/us-gaap/2024-01-31",
+        "http://fasb.org/us-gaap/2021-02-01",
+        "http://fasb.org/us-gaap/2024-01-31",
+        "http://fasb.org/us-gaap/2027",
+        "http://fasb.org/us-gaap/2026-01-31",
+    ],
+)
+def test_unknown_or_malformed_namespace_is_not_standard_identity(namespace: str) -> None:
+    fact = make_fact(
+        qname="us-gaap:ShortTermInvestments",
+        local_name="ShortTermInvestments",
+        namespace=namespace,
+        value=100.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.96
+    assert decision.mapping_method == "extension_structural_match"
 
 
 def test_known_standard_alias_is_accepted() -> None:
@@ -169,7 +235,7 @@ def test_issuer_namespace_cannot_spoof_standard_alias(
     assert decision.source_concept == qname
 
 
-def test_official_us_gaap_namespace_can_identify_unqualified_standard_alias() -> None:
+def test_unqualified_qname_cannot_be_standard_identity() -> None:
     fact = make_fact(
         qname="ShortTermInvestments",
         local_name="ShortTermInvestments",
@@ -180,8 +246,8 @@ def test_official_us_gaap_namespace_can_identify_unqualified_standard_alias() ->
     decision = resolve_concept(current_request(), [fact])
 
     assert decision.status == "accepted"
-    assert decision.confidence == 0.98
-    assert decision.mapping_method == "known_taxonomy_alias"
+    assert decision.confidence == 0.96
+    assert decision.mapping_method == "extension_structural_match"
 
 
 def test_exact_official_namespace_and_prefixed_qname_are_standard_identity() -> None:
@@ -199,11 +265,12 @@ def test_exact_official_namespace_and_prefixed_qname_are_standard_identity() -> 
     assert decision.mapping_method == "known_taxonomy_alias"
 
 
-def test_legacy_xbrl_us_dated_namespace_is_standard_identity() -> None:
+@pytest.mark.parametrize("namespace", ["http://xbrl.us/us-gaap/2008-01-31", "http://xbrl.us/us-gaap/2009-01-31"])
+def test_legacy_xbrl_us_dated_namespace_is_standard_identity(namespace: str) -> None:
     fact = make_fact(
-        qname="ShortTermInvestments",
+        qname="us-gaap:ShortTermInvestments",
         local_name="ShortTermInvestments",
-        namespace="http://xbrl.us/us-gaap/2024-01-31",
+        namespace=namespace,
         value=100.0,
     )
 
@@ -212,6 +279,28 @@ def test_legacy_xbrl_us_dated_namespace_is_standard_identity() -> None:
     assert decision.status == "accepted"
     assert decision.confidence == 0.98
     assert decision.mapping_method == "known_taxonomy_alias"
+
+
+def test_qname_and_local_name_must_both_match_standard_concept() -> None:
+    qname_only = make_fact(
+        qname="us-gaap:ShortTermInvestments",
+        local_name="OtherInvestmentConcept",
+        namespace="http://fasb.org/us-gaap/2025",
+        value=100.0,
+    )
+    local_name_only = make_fact(
+        qname="fsi:OtherInvestmentConcept",
+        local_name="ShortTermInvestments",
+        namespace="http://fasb.org/us-gaap/2025",
+        value=100.0,
+    )
+
+    qname_decision = resolve_concept(current_request(), [qname_only])
+    local_name_decision = resolve_concept(current_request(), [local_name_only])
+
+    assert qname_decision.mapping_method == "extension_structural_match"
+    assert local_name_decision.mapping_method == "extension_structural_match"
+    assert qname_decision.confidence == local_name_decision.confidence == 0.96
 
 
 def test_first_configured_standard_concept_is_exactly_accepted() -> None:

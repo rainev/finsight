@@ -15,12 +15,6 @@ _CONFIG_DIR = Path(__file__).with_name("config")
 _RULES_PATH = _CONFIG_DIR / "structural_concept_rules.json"
 _ALIASES_PATH = _CONFIG_DIR / "concept_aliases.json"
 _RESOLVER_VERSION = "US-XBRL-RESOLVER-1.0"
-_OFFICIAL_US_GAAP_NAMESPACE = re.compile(
-    r"^(?:"
-    r"http://fasb\.org/us-gaap/\d{4}(?:-\d{2}-\d{2})?"
-    r"|http://xbrl\.us/us-gaap/\d{4}-\d{2}-\d{2}"
-    r")$"
-)
 _CAMEL_BOUNDARY = re.compile(
     r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])"
 )
@@ -52,6 +46,14 @@ def load_structural_rules() -> dict[str, Any]:
         rules = json.load(handle)
     if not isinstance(rules, dict) or rules.get("version") != _RESOLVER_VERSION:
         raise ValueError("structural concept rules have an unsupported version")
+    namespaces = rules.get("official_us_gaap_namespaces")
+    if (
+        not isinstance(namespaces, list)
+        or not namespaces
+        or any(not isinstance(namespace, str) or not namespace for namespace in namespaces)
+        or len(namespaces) != len(set(namespaces))
+    ):
+        raise ValueError("structural concept rules must contain a unique namespace allowlist")
     return rules
 
 
@@ -77,20 +79,33 @@ def _concepts_for_metric(aliases: Mapping[str, Any], concept: str) -> tuple[str,
     return tuple(concepts)
 
 
-def _standard_alias_rank(fact: StructuralFact, concepts: tuple[str, ...]) -> int | None:
-    if not _OFFICIAL_US_GAAP_NAMESPACE.fullmatch(fact.namespace):
+def _standard_alias_rank(
+    fact: StructuralFact,
+    concepts: tuple[str, ...],
+    official_namespaces: frozenset[str],
+) -> int | None:
+    if fact.namespace not in official_namespaces:
         return None
     for index, concept in enumerate(concepts):
-        if fact.qname == f"us-gaap:{concept}" or fact.local_name == concept:
+        if fact.qname == f"us-gaap:{concept}" and fact.local_name == concept:
             return index
     return None
 
 
 def _standard_metric_for_fact(
-    fact: StructuralFact, aliases: Mapping[str, Any]
+    fact: StructuralFact,
+    aliases: Mapping[str, Any],
+    official_namespaces: frozenset[str],
 ) -> str | None:
     for concept in ("marketable_securities_current", "marketable_securities_noncurrent"):
-        if _standard_alias_rank(fact, _concepts_for_metric(aliases, concept)) is not None:
+        if (
+            _standard_alias_rank(
+                fact,
+                _concepts_for_metric(aliases, concept),
+                official_namespaces,
+            )
+            is not None
+        ):
             return concept
     return None
 
@@ -160,7 +175,8 @@ def _orientation(
     if parents & noncurrent_parents:
         orientations.add("noncurrent")
 
-    standard_metric = _standard_metric_for_fact(fact, aliases)
+    official_namespaces = frozenset(rules["official_us_gaap_namespaces"])
+    standard_metric = _standard_metric_for_fact(fact, aliases, official_namespaces)
     if standard_metric is not None:
         orientations.add("current" if standard_metric.endswith("_current") else "noncurrent")
 
@@ -256,9 +272,10 @@ def _classify_candidate(
     request: ResolutionRequest,
     metric_rules: Mapping[str, Any],
     aliases: Mapping[str, Any],
+    official_namespaces: frozenset[str],
 ) -> _Candidate | None:
     concepts = _concepts_for_metric(aliases, request.normalized_concept)
-    alias_rank = _standard_alias_rank(fact, concepts)
+    alias_rank = _standard_alias_rank(fact, concepts, official_namespaces)
     if alias_rank is not None:
         if alias_rank == 0:
             return _Candidate(
@@ -369,9 +386,16 @@ def resolve_concept(
 
     candidates: list[_Candidate] = []
     gate_failures: list[tuple[StructuralFact, str]] = []
+    official_namespaces = frozenset(rules["official_us_gaap_namespaces"])
     material_facts = tuple(facts)
     for fact in material_facts:
-        candidate = _classify_candidate(fact, request, metric_rules, aliases)
+        candidate = _classify_candidate(
+            fact,
+            request,
+            metric_rules,
+            aliases,
+            official_namespaces,
+        )
         if candidate is None:
             continue
         gate_reason = _hard_gate_reason(request, fact, metric_rules, rules, aliases)

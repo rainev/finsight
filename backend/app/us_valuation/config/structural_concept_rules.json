@@ -1,5 +1,25 @@
 {
   "version": "US-XBRL-RESOLVER-1.0",
+  "official_us_gaap_namespaces": [
+    "http://xbrl.us/us-gaap/2008-01-31",
+    "http://xbrl.us/us-gaap/2009-01-31",
+    "http://fasb.org/us-gaap/2011-01-31",
+    "http://fasb.org/us-gaap/2012-01-31",
+    "http://fasb.org/us-gaap/2013-01-31",
+    "http://fasb.org/us-gaap/2014-01-31",
+    "http://fasb.org/us-gaap/2015-01-31",
+    "http://fasb.org/us-gaap/2016-01-31",
+    "http://fasb.org/us-gaap/2017-01-31",
+    "http://fasb.org/us-gaap/2018-01-31",
+    "http://fasb.org/us-gaap/2019-01-31",
+    "http://fasb.org/us-gaap/2020-01-31",
+    "http://fasb.org/us-gaap/2021-01-31",
+    "http://fasb.org/us-gaap/2022",
+    "http://fasb.org/us-gaap/2023",
+    "http://fasb.org/us-gaap/2024",
+    "http://fasb.org/us-gaap/2025",
+    "http://fasb.org/us-gaap/2026"
+  ],
   "marketable_securities_current": {
     "statement_role": "balance_sheet",
     "unit": "USD",
