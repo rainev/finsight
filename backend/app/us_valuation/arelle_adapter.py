@@ -85,9 +85,16 @@ def _looks_like_missing_arelle(output: str) -> bool:
 
 
 def _worker_environment() -> dict[str, str]:
-    environment = os.environ.copy()
-    environment["PYTHONPATH"] = os.fspath(_BACKEND_DIR)
-    environment.pop("PYTHONSAFEPATH", None)
+    environment = {
+        key: value for key, value in os.environ.items() if not key.startswith("PYTHON")
+    }
+    environment.update(
+        {
+            "PYTHONPATH": os.fspath(_BACKEND_DIR),
+            "PYTHONNOUSERSITE": "1",
+            "PYTHONHASHSEED": "0",
+        }
+    )
     return environment
 
 

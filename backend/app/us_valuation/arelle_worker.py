@@ -6,6 +6,7 @@ import argparse
 from functools import lru_cache
 import hashlib
 import json
+import math
 import os
 import sys
 import tempfile
@@ -162,9 +163,13 @@ def _numeric_fact_value(fact: Any) -> tuple[int | float | None, ParseDiagnostic 
     if decimal_value == decimal_value.to_integral_value():
         return int(decimal_value), None
     numeric_value = float(decimal_value)
-    if not float("-inf") < numeric_value < float("inf"):
+    if not math.isfinite(numeric_value):
         return None, _skip_diagnostic(
             "nonfinite_numeric_value", "Numeric fact xValue is not finite as a float."
+        )
+    if Decimal.from_float(numeric_value) != decimal_value:
+        return None, _skip_diagnostic(
+            "inexact_numeric_value", "Numeric fact xValue cannot be represented exactly as a float."
         )
     return numeric_value, None
 

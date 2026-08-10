@@ -156,6 +156,41 @@ def test_numeric_conversion_preserves_large_integral_values_and_rejects_nonfinit
     assert diagnostic.code == "nonfinite_numeric_value"
 
 
+@pytest.mark.parametrize("value", [Decimal("0.5"), Decimal("42.25")])
+def test_numeric_conversion_accepts_exactly_representable_fractional_decimals(
+    value: Decimal,
+) -> None:
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": value})()
+    )
+
+    assert converted == float(value)
+    assert isinstance(converted, float)
+    assert diagnostic is None
+
+
+@pytest.mark.parametrize("value", [Decimal("9007199254740993.5"), Decimal("1E-400")])
+def test_numeric_conversion_rejects_inexact_fractional_decimals(value: Decimal) -> None:
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": value})()
+    )
+
+    assert converted is None
+    assert diagnostic is not None
+    assert diagnostic.code == "inexact_numeric_value"
+
+
+def test_numeric_conversion_rejects_fractional_overflow() -> None:
+    overflowing_fraction = Decimal("1" + "0" * 309 + ".5")
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": overflowing_fraction})()
+    )
+
+    assert converted is None
+    assert diagnostic is not None
+    assert diagnostic.code == "nonfinite_numeric_value"
+
+
 @pytest.mark.parametrize(
     ("fact", "code"),
     [
@@ -330,6 +365,21 @@ def test_arelle_adapter_sanitizes_worker_import_environment(
     assert isinstance(env, dict)
     assert env["PYTHONPATH"] == str(_BACKEND_DIR)
     assert "PYTHONSAFEPATH" not in env
+    assert "PYTHONHOME" not in env
+    assert env["PYTHONNOUSERSITE"] == "1"
+    assert env["PYTHONHASHSEED"] == "0"
+
+
+def test_arelle_adapter_extracts_with_hostile_python_environment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("PYTHONHOME", "/tmp/hostile-python-home")
+    monkeypatch.setenv("PYTHONPATH", "/tmp/hostile-app")
+    monkeypatch.setenv("PYTHONSAFEPATH", "/tmp/hostile-safe-path")
+
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    assert any(fact.local_name == "LiquidInvestmentSecuritiesCurrent" for fact in filing.facts)
 
 
 def test_arelle_adapter_maps_worker_launch_oserror_to_parse_error(
