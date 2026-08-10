@@ -70,7 +70,7 @@ def _filing_from_payload(payload: Any, accession: str) -> StructuralFiling:
             diagnostics=diagnostics,
             form=payload.get("form"),
         )
-    except (KeyError, TypeError, ValueError) as error:
+    except (AttributeError, KeyError, TypeError, ValueError) as error:
         raise ArelleParseError(f"worker output has invalid filing data: {error}") from error
 
 
@@ -82,6 +82,13 @@ def _looks_like_missing_arelle(output: str) -> bool:
         or "modulenotfounderror" in lowered and "arelle" in lowered
         or "arelle is not installed" in lowered
     )
+
+
+def _worker_environment() -> dict[str, str]:
+    environment = os.environ.copy()
+    environment["PYTHONPATH"] = os.fspath(_BACKEND_DIR)
+    environment.pop("PYTHONSAFEPATH", None)
+    return environment
 
 
 def parse_structural_filing(
@@ -122,11 +129,14 @@ def parse_structural_filing(
                     text=True,
                     timeout=timeout_seconds,
                     cwd=os.fspath(_BACKEND_DIR),
+                    env=_worker_environment(),
                 )
             except subprocess.TimeoutExpired as error:
                 raise ArelleParseTimeout(
                     f"Arelle worker exceeded {timeout_seconds} seconds"
                 ) from error
+            except OSError as error:
+                raise ArelleParseError(f"failed to launch Arelle worker: {error}") from error
             if completed.returncode != 0:
                 details = "\n".join(part for part in (completed.stderr, completed.stdout) if part)
                 if _looks_like_missing_arelle(details):

@@ -23,6 +23,16 @@
              type="xbrli:monetaryItemType"
              substitutionGroup="xbrli:item"
              xbrli:periodType="instant"/>
+  <xs:element name="LargeIntegralAmount"
+             id="fsi_LargeIntegralAmount"
+             type="xbrli:monetaryItemType"
+             substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
+  <xs:element name="TestDurationAmount"
+             id="fsi_TestDurationAmount"
+             type="xbrli:monetaryItemType"
+             substitutionGroup="xbrli:item"
+             xbrli:periodType="duration"/>
   <xs:annotation>
     <xs:appinfo>
       <link:linkbaseRef xlink:type="simple" xlink:href="fsi-2025_pre.xml"

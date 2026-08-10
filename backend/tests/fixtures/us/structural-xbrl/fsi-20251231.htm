@@ -19,6 +19,15 @@
           </xbrli:entity>
           <xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period>
         </xbrli:context>
+        <xbrli:context id="CurrentYearDuration">
+          <xbrli:entity>
+            <xbrli:identifier scheme="http://www.sec.gov/CIK">0000000000</xbrli:identifier>
+          </xbrli:entity>
+          <xbrli:period>
+            <xbrli:startDate>2025-01-01</xbrli:startDate>
+            <xbrli:endDate>2025-12-31</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
         <xbrli:unit id="USD"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit>
       </ix:resources>
     </ix:header>
@@ -35,6 +44,14 @@
       <tr><td>Strategic equity investments</td><td>
         <ix:nonFraction name="fsi:StrategicEquityInvestments"
                         contextRef="CurrentYearInstant" unitRef="USD" decimals="0">70000000</ix:nonFraction>
+      </td></tr>
+      <tr><td>Large integral amount</td><td>
+        <ix:nonFraction name="fsi:LargeIntegralAmount"
+                        contextRef="CurrentYearInstant" unitRef="USD" decimals="0">9007199254740993</ix:nonFraction>
+      </td></tr>
+      <tr><td>Test duration amount</td><td>
+        <ix:nonFraction name="fsi:TestDurationAmount"
+                        contextRef="CurrentYearDuration" unitRef="USD" decimals="2">123.45</ix:nonFraction>
       </td></tr>
     </table>
   </body>

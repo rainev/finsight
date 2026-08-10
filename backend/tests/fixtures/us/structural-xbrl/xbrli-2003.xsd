@@ -35,7 +35,13 @@
     <xs:simpleContent><xs:extension base="xs:string"><xs:attribute name="scheme" type="xs:anyURI" use="required"/></xs:extension></xs:simpleContent>
   </xs:complexType>
   <xs:complexType name="periodType">
-    <xs:choice><xs:element name="instant" type="xs:date"/></xs:choice>
+    <xs:choice>
+      <xs:element name="instant" type="xs:date"/>
+      <xs:sequence>
+        <xs:element name="startDate" type="xs:date"/>
+        <xs:element name="endDate" type="xs:date"/>
+      </xs:sequence>
+    </xs:choice>
   </xs:complexType>
   <xs:element name="unit" type="xbrli:unitType"/>
   <xs:complexType name="unitType">

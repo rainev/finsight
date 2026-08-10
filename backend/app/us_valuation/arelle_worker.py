@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from functools import lru_cache
 import hashlib
 import json
 import os
@@ -10,9 +11,11 @@ import sys
 import tempfile
 from collections.abc import Iterable, Iterator
 from datetime import date, datetime, timedelta
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
+from .concept_resolver import load_structural_rules
 from .structural_xbrl import ParseDiagnostic, StructuralFact
 
 try:
@@ -29,13 +32,7 @@ class _QNameCanonicalizer:
     _KNOWN = {
         "http://www.xbrl.org/2003/iso4217": "iso4217",
         "http://www.xbrl.org/2003/instance": "xbrli",
-        "http://fasb.org/us-gaap/2025": "us-gaap",
-        "http://fasb.org/us-gaap/2024": "us-gaap",
-        "https://fasb.org/us-gaap/2025": "us-gaap",
     }
-
-    def __init__(self) -> None:
-        self._fsi_namespace: str | None = None
 
     def qname(self, value: Any) -> str:
         value = getattr(value, "qname", value)
@@ -52,16 +49,15 @@ class _QNameCanonicalizer:
         known = self._KNOWN.get(namespace)
         if known:
             return known
-        if "us-gaap" in namespace:
+        if namespace in _official_us_gaap_namespaces():
             return "us-gaap"
-        if "iso4217" in namespace:
-            return "iso4217"
-        if self._fsi_namespace is None and "fsi" in namespace:
-            self._fsi_namespace = namespace
-        if namespace == self._fsi_namespace:
-            return "fsi"
         digest = hashlib.sha1(namespace.encode("utf-8")).hexdigest()[:10]
         return f"ns_{digest}"
+
+
+@lru_cache(maxsize=1)
+def _official_us_gaap_namespaces() -> frozenset[str]:
+    return frozenset(load_structural_rules()["official_us_gaap_namespaces"])
 
 
 def _set_resource_limits() -> None:
@@ -140,6 +136,39 @@ def _role_token(model: Any, linkrole: str | None) -> str | None:
     return None
 
 
+def _skip_diagnostic(code: str, message: str) -> ParseDiagnostic:
+    return ParseDiagnostic(code=code, message=message, severity="warning")
+
+
+def _numeric_fact_value(fact: Any) -> tuple[int | float | None, ParseDiagnostic | None]:
+    concept = getattr(fact, "concept", None)
+    if concept is None or not getattr(concept, "isNumeric", False):
+        return None, None
+    if not hasattr(fact, "xValue"):
+        return None, _skip_diagnostic("missing_fact_value", "Numeric fact has no xValue.")
+    raw_value = getattr(fact, "xValue", None)
+    if raw_value is None:
+        return None, _skip_diagnostic("nil_fact", "Numeric fact has a nil xValue.")
+    try:
+        decimal_value = raw_value if isinstance(raw_value, Decimal) else Decimal(str(raw_value))
+    except (InvalidOperation, TypeError, ValueError):
+        return None, _skip_diagnostic(
+            "invalid_numeric_value", "Numeric fact xValue is not a valid number."
+        )
+    if not decimal_value.is_finite():
+        return None, _skip_diagnostic(
+            "nonfinite_numeric_value", "Numeric fact xValue is not finite."
+        )
+    if decimal_value == decimal_value.to_integral_value():
+        return int(decimal_value), None
+    numeric_value = float(decimal_value)
+    if not float("-inf") < numeric_value < float("inf"):
+        return None, _skip_diagnostic(
+            "nonfinite_numeric_value", "Numeric fact xValue is not finite as a float."
+        )
+    return numeric_value, None
+
+
 def _labels_for_concept(concept: Any) -> tuple[tuple[str, str], ...]:
     roles = (
         ("standard", "http://www.xbrl.org/2003/role/label"),
@@ -150,14 +179,16 @@ def _labels_for_concept(concept: Any) -> tuple[tuple[str, str], ...]:
     labels: list[tuple[str, str]] = []
     for name, role in roles:
         try:
-            label = concept.label(lang="en", preferredLabel=role)
+            label = concept.label(
+                lang="en", preferredLabel=role, fallbackToQname=False
+            )
         except (AttributeError, TypeError):
             label = None
         if label:
             labels.append((name, str(label).strip()))
     if not labels:
         try:
-            label = concept.label(lang="en")
+            label = concept.label(lang="en", fallbackToQname=False)
         except (AttributeError, TypeError):
             label = None
         if label:
@@ -181,7 +212,7 @@ def _unit_name(model: Any, unit_id: str | None, qnames: _QNameCanonicalizer) -> 
         return "unknown"
     namespace = str(getattr(measure, "namespaceURI", ""))
     local_name = str(getattr(measure, "localName", ""))
-    if "iso4217" in namespace:
+    if namespace == "http://www.xbrl.org/2003/iso4217":
         return local_name
     return qnames.qname(measure)
 
@@ -291,8 +322,13 @@ def _extract_payload(entrypoint: Path, accession: str) -> dict[str, Any]:
 
         raw_facts: list[StructuralFact] = []
         for fact in getattr(model, "facts", ()) or ():
+            numeric_value, skip_diagnostic = _numeric_fact_value(fact)
+            if skip_diagnostic is not None:
+                diagnostics += (skip_diagnostic,)
+            if numeric_value is None:
+                continue
             concept = getattr(fact, "concept", None)
-            if concept is None or not getattr(concept, "isNumeric", False):
+            if concept is None:
                 continue
             context_id = str(getattr(fact, "contextID", ""))
             context = getattr(model, "contexts", {}).get(context_id)
@@ -306,13 +342,6 @@ def _extract_payload(entrypoint: Path, accession: str) -> dict[str, Any]:
                     ),
                 )
                 continue
-            value = getattr(fact, "xValue", None)
-            if value is None:
-                continue
-            try:
-                numeric_value = float(value)
-            except (TypeError, ValueError, OverflowError):
-                continue
             labels = _labels_for_concept(concept)
             links = _structural_links(model, concept, qnames)
             if getattr(context, "isInstantPeriod", False):
@@ -323,7 +352,10 @@ def _extract_payload(entrypoint: Path, accession: str) -> dict[str, Any]:
                 period_end = _iso_date(instant)
             else:
                 period_start = _iso_date(getattr(context, "startDatetime", None))
-                period_end = _iso_date(getattr(context, "endDatetime", None))
+                end = getattr(context, "endDatetime", None)
+                if isinstance(end, (date, datetime)):
+                    end -= timedelta(days=1)
+                period_end = _iso_date(end)
             if not period_end:
                 continue
             concept_qname = getattr(concept, "qname", concept)
