@@ -1,0 +1,44 @@
+{
+  "version": "US-XBRL-RESOLVER-1.0",
+  "marketable_securities_current": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "known_current_parents": [
+      "us-gaap:AssetsCurrent",
+      "us-gaap:ShortTermInvestments",
+      "us-gaap:MarketableSecuritiesCurrent"
+    ],
+    "required_definition_phrases": [
+      "available-for-sale",
+      "debt securities",
+      "marketable securities",
+      "short-term investments"
+    ]
+  },
+  "marketable_securities_noncurrent": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "known_noncurrent_parents": [
+      "us-gaap:AssetsNoncurrent",
+      "us-gaap:LongTermInvestments",
+      "us-gaap:MarketableSecuritiesNoncurrent"
+    ],
+    "required_definition_phrases": [
+      "available-for-sale",
+      "debt securities",
+      "marketable securities",
+      "long-term investments"
+    ]
+  },
+  "excluded_economic_phrases": [
+    "strategic",
+    "equity method",
+    "restricted",
+    "trust",
+    "collateral",
+    "receivable",
+    "financial-institution trading assets",
+    "financial institution trading assets",
+    "trading assets"
+  ]
+}
