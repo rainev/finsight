@@ -114,6 +114,52 @@ def test_known_standard_alias_is_accepted() -> None:
     assert decision.value == 100.0
 
 
+@pytest.mark.parametrize(
+    "qname,namespace",
+    [
+        (
+            "ShortTermInvestments",
+            "https://issuer.example/us-gaap/2025",
+        ),
+        (
+            "fsi:ShortTermInvestments",
+            "https://issuer.example/us-gaap/2025",
+        ),
+    ],
+)
+def test_issuer_namespace_cannot_spoof_standard_alias(
+    qname: str, namespace: str
+) -> None:
+    fact = make_fact(
+        qname=qname,
+        local_name="ShortTermInvestments",
+        namespace=namespace,
+        value=100.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.96
+    assert decision.mapping_method == "extension_structural_match"
+    assert decision.source_concept == qname
+
+
+def test_official_us_gaap_namespace_can_identify_unqualified_standard_alias() -> None:
+    fact = make_fact(
+        qname="ShortTermInvestments",
+        local_name="ShortTermInvestments",
+        namespace="http://fasb.org/us-gaap/2025",
+        value=100.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.98
+    assert decision.mapping_method == "known_taxonomy_alias"
+
+
 def test_first_configured_standard_concept_is_exactly_accepted() -> None:
     fact = make_fact(
         qname="us-gaap:MarketableSecuritiesCurrent",
@@ -259,6 +305,28 @@ def test_failed_accounting_gate_is_not_overridden_by_extension_wording_or_confid
     assert decision.reason_codes == ("UNIT_MISMATCH",)
 
 
+@pytest.mark.parametrize(
+    "qname,local_name",
+    [
+        ("us-gaap:ShortTermInvestments", "ShortTermInvestments"),
+        ("fsi:LiquidInvestmentSecuritiesCurrent", "LiquidInvestmentSecuritiesCurrent"),
+    ],
+)
+def test_missing_numeric_value_is_a_schema_valid_hard_gate(
+    qname: str, local_name: str
+) -> None:
+    fact = make_fact(qname=qname, local_name=local_name, value=None)
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.confidence == 0.0
+    assert decision.mapping_method == "hard_gate_rejection"
+    assert decision.reason_codes == ("MISSING_NUMERIC_VALUE",)
+    assert decision.source_concept == qname
+    assert decision.value is None
+
+
 def test_current_request_rejects_noncurrent_fact() -> None:
     fact = make_fact(
         qname="us-gaap:LongTermInvestments",
@@ -309,6 +377,73 @@ def test_noncurrent_extension_uses_noncurrent_structural_signals() -> None:
         "NONCURRENT_ASSET_CALCULATION_PARENT",
         "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES",
     }
+
+
+@pytest.mark.parametrize(
+    "metric_request,parents",
+    [
+        (current_request(), ("us-gaap:AssetsNoncurrent",)),
+        (noncurrent_request(), ("us-gaap:AssetsCurrent",)),
+        (
+            current_request(),
+            ("us-gaap:AssetsCurrent", "us-gaap:AssetsNoncurrent"),
+        ),
+        (
+            noncurrent_request(),
+            ("us-gaap:AssetsCurrent", "us-gaap:AssetsNoncurrent"),
+        ),
+    ],
+)
+def test_structural_parent_orientation_rejects_generic_or_contradictory_facts(
+    metric_request: ResolutionRequest, parents: tuple[str, ...]
+) -> None:
+    fact = make_fact(
+        qname="fsi:InvestmentSecurities",
+        local_name="InvestmentSecurities",
+        documentation="Available-for-sale debt securities.",
+        presentation_parents=parents,
+        calculation_parents=parents,
+    )
+
+    decision = resolve_concept(metric_request, [fact])
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("CURRENT_NONCURRENT_CONFLICT",)
+
+
+def test_unrestricted_does_not_match_restricted_exclusion() -> None:
+    fact = make_fact(
+        qname="fsi:UnrestrictedInvestmentSecuritiesCurrent",
+        local_name="UnrestrictedInvestmentSecuritiesCurrent",
+        documentation="Unrestricted available-for-sale debt securities classified as current.",
+        labels=(("standard", "Unrestricted investment securities"),),
+        value=135.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.96
+    assert decision.reason_codes[-1] == "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES"
+
+
+def test_gate_failure_order_is_stable_for_same_qname_and_accession() -> None:
+    period_failure = make_fact(
+        period_end="2024-12-31",
+        source_accession=ACCESSION,
+    )
+    unit_failure = make_fact(
+        unit="shares",
+        source_accession=ACCESSION,
+    )
+
+    forward = resolve_concept(current_request(), [period_failure, unit_failure])
+    reverse = resolve_concept(current_request(), [unit_failure, period_failure])
+
+    assert forward.status == reverse.status == "rejected"
+    assert forward.reason_codes == reverse.reason_codes == ("PERIOD_MISMATCH",)
+    assert forward.source_concept == reverse.source_concept
+    assert forward.source_accession == reverse.source_accession == ACCESSION
 
 
 def test_equal_strength_conflicting_facts_are_ambiguous() -> None:
@@ -369,7 +504,7 @@ def test_calculation_linked_component_and_total_candidates_are_rejected() -> Non
     assert decision.status == "rejected"
     assert decision.confidence == 0.0
     assert decision.mapping_method == "hard_gate_rejection"
-    assert decision.reason_codes == ("AMBIGUOUS_FACTS",)
+    assert decision.reason_codes == ("COMPONENT_TOTAL_CONFLICT",)
 
 
 def test_no_candidate_is_unresolved() -> None:

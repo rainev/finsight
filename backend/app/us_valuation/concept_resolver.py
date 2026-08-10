@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -14,6 +15,19 @@ _CONFIG_DIR = Path(__file__).with_name("config")
 _RULES_PATH = _CONFIG_DIR / "structural_concept_rules.json"
 _ALIASES_PATH = _CONFIG_DIR / "concept_aliases.json"
 _RESOLVER_VERSION = "US-XBRL-RESOLVER-1.0"
+_OFFICIAL_US_GAAP_NAMESPACE = re.compile(
+    r"^https?://(?:www\.)?(?:fasb\.org|xbrl\.us)/us-gaap/\d{4}(?:-\d{2}-\d{2})?$"
+)
+_GATE_PRIORITY = {
+    "ACCESSION_MISMATCH": 10,
+    "PERIOD_MISMATCH": 20,
+    "UNIT_MISMATCH": 30,
+    "STATEMENT_ROLE_MISMATCH": 40,
+    "DIMENSIONED_NONCONSOLIDATED_FACT": 50,
+    "MISSING_NUMERIC_VALUE": 60,
+    "CURRENT_NONCURRENT_CONFLICT": 70,
+    "EXCLUDED_ECONOMIC_CLASS": 80,
+}
 
 
 @dataclass(frozen=True)
@@ -59,9 +73,12 @@ def _concepts_for_metric(aliases: Mapping[str, Any], concept: str) -> tuple[str,
 
 def _standard_alias_rank(fact: StructuralFact, concepts: tuple[str, ...]) -> int | None:
     for index, concept in enumerate(concepts):
-        if fact.qname == concept or fact.qname == f"us-gaap:{concept}":
+        if fact.qname == f"us-gaap:{concept}":
             return index
-        if fact.namespace.casefold().find("us-gaap") >= 0 and fact.local_name == concept:
+        if (
+            _OFFICIAL_US_GAAP_NAMESPACE.fullmatch(fact.namespace.casefold())
+            and fact.local_name == concept
+        ):
             return index
     return None
 
@@ -76,7 +93,9 @@ def _standard_metric_for_fact(
 
 
 def _normalized_text(value: str) -> str:
-    return " ".join(value.casefold().replace("-", " ").split())
+    return " ".join(
+        re.sub(r"[^\w]+", " ", value.casefold().replace("-", " ")).split()
+    )
 
 
 def _fact_text(fact: StructuralFact) -> str:
@@ -86,7 +105,13 @@ def _fact_text(fact: StructuralFact) -> str:
 
 
 def _contains_phrase(text: str, phrase: str) -> bool:
-    return _normalized_text(phrase) in text
+    normalized_phrase = _normalized_text(phrase)
+    return bool(
+        re.search(
+            rf"(?<!\w){re.escape(normalized_phrase)}s?(?!\w)",
+            text,
+        )
+    )
 
 
 def _excluded_reason(
@@ -103,25 +128,43 @@ def _excluded_reason(
 
 def _orientation(
     fact: StructuralFact,
-    metric_rules: Mapping[str, Any],
+    rules: Mapping[str, Any],
     aliases: Mapping[str, Any],
 ) -> str | None:
+    current_rules = rules.get("marketable_securities_current", {})
+    noncurrent_rules = rules.get("marketable_securities_noncurrent", {})
+    current_parents = set(
+        current_rules.get("known_current_parents", ())
+        if isinstance(current_rules, Mapping)
+        else ()
+    )
+    noncurrent_parents = set(
+        noncurrent_rules.get("known_noncurrent_parents", ())
+        if isinstance(noncurrent_rules, Mapping)
+        else ()
+    )
+    parents = set(fact.presentation_parents) | set(fact.calculation_parents)
+    orientations: set[str] = set()
+    if parents & current_parents:
+        orientations.add("current")
+    if parents & noncurrent_parents:
+        orientations.add("noncurrent")
+
     standard_metric = _standard_metric_for_fact(fact, aliases)
     if standard_metric is not None:
-        return "current" if standard_metric.endswith("_current") else "noncurrent"
-
-    current_parents = set(metric_rules.get("known_current_parents", ()))
-    noncurrent_parents = set(metric_rules.get("known_noncurrent_parents", ()))
-    parents = set(fact.presentation_parents) | set(fact.calculation_parents)
-    if parents & noncurrent_parents:
-        return "noncurrent"
-    if parents & current_parents:
-        return "current"
+        orientations.add("current" if standard_metric.endswith("_current") else "noncurrent")
+    if len(orientations) > 1:
+        return "conflict"
+    if orientations:
+        return next(iter(orientations))
 
     text = _fact_text(fact)
-    if any(token in text for token in ("noncurrent", "non current", "long term")):
+    if any(
+        _contains_phrase(text, token)
+        for token in ("noncurrent", "non current", "long term")
+    ):
         return "noncurrent"
-    if any(token in text for token in ("current", "short term")):
+    if any(_contains_phrase(text, token) for token in ("current", "short term")):
         return "current"
     return None
 
@@ -145,10 +188,14 @@ def _hard_gate_reason(
         return "STATEMENT_ROLE_MISMATCH"
     if fact.dimensions:
         return "DIMENSIONED_NONCONSOLIDATED_FACT"
+    if fact.value is None:
+        return "MISSING_NUMERIC_VALUE"
 
-    orientation = _orientation(fact, metric_rules, aliases)
+    orientation = _orientation(fact, rules, aliases)
     expected = "current" if request.normalized_concept.endswith("_current") else "noncurrent"
-    if orientation is not None and orientation != expected:
+    if orientation == "conflict" or (
+        orientation is not None and orientation != expected
+    ):
         return "CURRENT_NONCURRENT_CONFLICT"
 
     return _excluded_reason(fact, rules)
@@ -267,6 +314,29 @@ def _decision(
     )
 
 
+def _gate_failure_sort_key(
+    failure: tuple[StructuralFact, str],
+) -> tuple[int, str, str, str, str, str]:
+    fact, reason = failure
+    return (
+        _GATE_PRIORITY.get(reason, 999),
+        fact.qname,
+        fact.source_accession,
+        fact.period_end,
+        fact.unit,
+        fact.context_id,
+    )
+
+
+def _component_total_conflict(left: StructuralFact, right: StructuralFact) -> bool:
+    return bool(
+        right.qname in left.calculation_children
+        or left.qname in right.calculation_children
+        or right.qname in left.calculation_parents
+        or left.qname in right.calculation_parents
+    )
+
+
 def resolve_concept(
     request: ResolutionRequest, facts: Iterable[StructuralFact]
 ) -> ResolutionDecision:
@@ -300,10 +370,7 @@ def resolve_concept(
 
     if not candidates:
         if gate_failures:
-            fact, reason = sorted(
-                gate_failures,
-                key=lambda item: (item[0].qname, item[0].source_accession),
-            )[0]
+            fact, reason = sorted(gate_failures, key=_gate_failure_sort_key)[0]
             return _decision(
                 request,
                 fact=fact,
@@ -323,6 +390,20 @@ def resolve_concept(
 
     ordered = sorted(candidates, key=lambda item: (item.fact.qname, item.fact.source_accession))
     if len(ordered) > 1:
+        if any(
+            _component_total_conflict(left.fact, right.fact)
+            for index, left in enumerate(ordered)
+            for right in ordered[index + 1 :]
+        ):
+            first = ordered[0].fact
+            return _decision(
+                request,
+                fact=first,
+                status="rejected",
+                confidence=0.0,
+                mapping_method="hard_gate_rejection",
+                reason_codes=("COMPONENT_TOTAL_CONFLICT",),
+            )
         first = ordered[0].fact
         return _decision(
             request,
