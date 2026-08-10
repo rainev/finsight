@@ -145,6 +145,11 @@ def test_structural_fact_rejects_non_finite_values(value: float) -> None:
         _fact(value=value)
 
 
+def test_structural_fact_rejects_integer_beyond_numeric_boundary() -> None:
+    with pytest.raises(ValueError, match="value"):
+        _fact(value=10**309)
+
+
 @pytest.mark.parametrize("confidence", [float("nan"), float("inf"), float("-inf")])
 def test_resolution_decision_rejects_non_finite_confidence(confidence: float) -> None:
     with pytest.raises(ValueError, match="confidence"):

@@ -32,8 +32,13 @@ def _validate_optional_date(value: str | None, field: str) -> None:
 def _validate_number(value: float | None, field: str) -> None:
     if value is not None and (isinstance(value, bool) or not isinstance(value, Real)):
         raise ValueError(f"{field} must be numeric")
-    if value is not None and not isfinite(value):
-        raise ValueError(f"{field} must be finite")
+    if value is not None:
+        try:
+            finite = isfinite(value)
+        except OverflowError as error:
+            raise ValueError(f"{field} must be finite") from error
+        if not finite:
+            raise ValueError(f"{field} must be finite")
 
 
 def _json_value(value: Any) -> Any:

@@ -188,7 +188,17 @@ def test_numeric_conversion_rejects_fractional_overflow() -> None:
 
     assert converted is None
     assert diagnostic is not None
-    assert diagnostic.code == "nonfinite_numeric_value"
+    assert diagnostic.code in {"nonfinite_numeric_value", "numeric_out_of_range"}
+
+
+def test_numeric_conversion_rejects_oversized_integral_decimal() -> None:
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal("1E309")})()
+    )
+
+    assert converted is None
+    assert diagnostic is not None
+    assert diagnostic.code == "numeric_out_of_range"
 
 
 @pytest.mark.parametrize(

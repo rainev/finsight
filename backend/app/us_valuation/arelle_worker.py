@@ -27,6 +27,7 @@ except ImportError:  # pragma: no cover - POSIX is the supported bounded-runtime
 
 CPU_LIMIT_SECONDS = 120
 ADDRESS_SPACE_LIMIT_BYTES = 2 * 1024 * 1024 * 1024
+MAX_FINITE_FLOAT_DECIMAL = Decimal.from_float(sys.float_info.max)
 
 
 class _QNameCanonicalizer:
@@ -159,6 +160,10 @@ def _numeric_fact_value(fact: Any) -> tuple[int | float | None, ParseDiagnostic 
     if not decimal_value.is_finite():
         return None, _skip_diagnostic(
             "nonfinite_numeric_value", "Numeric fact xValue is not finite."
+        )
+    if abs(decimal_value) > MAX_FINITE_FLOAT_DECIMAL:
+        return None, _skip_diagnostic(
+            "numeric_out_of_range", "Numeric fact xValue exceeds the supported numeric range."
         )
     if decimal_value == decimal_value.to_integral_value():
         return int(decimal_value), None
