@@ -14,7 +14,11 @@ def make_fact(**overrides: object) -> StructuralFact:
     qname = str(overrides.get("qname", "fsi:LiquidInvestmentSecuritiesCurrent"))
     values: dict[str, object] = {
         "qname": qname,
-        "namespace": "https://example.test/fsi/2025",
+        "namespace": (
+            "http://fasb.org/us-gaap/2025"
+            if qname.startswith("us-gaap:")
+            else "https://example.test/fsi/2025"
+        ),
         "local_name": qname.split(":", 1)[-1],
         "labels": (("standard", "Liquid investment securities"),),
         "documentation": "Available-for-sale debt securities classified as current.",
@@ -125,6 +129,14 @@ def test_known_standard_alias_is_accepted() -> None:
             "fsi:ShortTermInvestments",
             "https://issuer.example/us-gaap/2025",
         ),
+        (
+            "us-gaap:ShortTermInvestments",
+            "https://fasb.org/us-gaap/2025",
+        ),
+        (
+            "us-gaap:ShortTermInvestments",
+            "http://fasb.org.evil/us-gaap/2025",
+        ),
     ],
 )
 def test_issuer_namespace_cannot_spoof_standard_alias(
@@ -148,6 +160,21 @@ def test_issuer_namespace_cannot_spoof_standard_alias(
 def test_official_us_gaap_namespace_can_identify_unqualified_standard_alias() -> None:
     fact = make_fact(
         qname="ShortTermInvestments",
+        local_name="ShortTermInvestments",
+        namespace="http://fasb.org/us-gaap/2025",
+        value=100.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.98
+    assert decision.mapping_method == "known_taxonomy_alias"
+
+
+def test_exact_official_namespace_and_prefixed_qname_are_standard_identity() -> None:
+    fact = make_fact(
+        qname="us-gaap:ShortTermInvestments",
         local_name="ShortTermInvestments",
         namespace="http://fasb.org/us-gaap/2025",
         value=100.0,
@@ -411,6 +438,52 @@ def test_structural_parent_orientation_rejects_generic_or_contradictory_facts(
     assert decision.reason_codes == ("CURRENT_NONCURRENT_CONFLICT",)
 
 
+@pytest.mark.parametrize(
+    "metric_request,qname,parents",
+    [
+        (
+            current_request(),
+            "fsi:InvestmentSecuritiesNoncurrent",
+            ("us-gaap:AssetsCurrent",),
+        ),
+        (
+            noncurrent_request(),
+            "fsi:InvestmentSecuritiesCurrent",
+            ("us-gaap:AssetsNoncurrent",),
+        ),
+    ],
+)
+def test_explicit_noncurrent_or_current_name_conflicts_with_parent_orientation(
+    metric_request: ResolutionRequest, qname: str, parents: tuple[str, ...]
+) -> None:
+    fact = make_fact(
+        qname=qname,
+        local_name=qname.split(":", 1)[-1],
+        documentation="Available-for-sale debt securities.",
+        presentation_parents=parents,
+        calculation_parents=parents,
+    )
+
+    decision = resolve_concept(metric_request, [fact])
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("CURRENT_NONCURRENT_CONFLICT",)
+
+
+def test_camel_case_exclusion_is_visible_to_economic_gate() -> None:
+    fact = make_fact(
+        qname="fsi:RestrictedMarketableSecuritiesCurrent",
+        local_name="RestrictedMarketableSecuritiesCurrent",
+        documentation="Available-for-sale debt securities classified as current.",
+        value=135.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
 def test_unrestricted_does_not_match_restricted_exclusion() -> None:
     fact = make_fact(
         qname="fsi:UnrestrictedInvestmentSecuritiesCurrent",
@@ -425,6 +498,33 @@ def test_unrestricted_does_not_match_restricted_exclusion() -> None:
     assert decision.status == "accepted"
     assert decision.confidence == 0.96
     assert decision.reason_codes[-1] == "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES"
+
+
+def test_plural_single_word_exclusion_remains_true() -> None:
+    fact = make_fact(
+        qname="fsi:CustomerFinancingReceivables",
+        local_name="CustomerFinancingReceivables",
+        documentation="Customer financing receivables.",
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
+def test_malformed_multiword_phrase_does_not_satisfy_definition() -> None:
+    fact = make_fact(
+        qname="fsi:MarketableInvestmentSecuritiesCurrent",
+        local_name="MarketableInvestmentSecuritiesCurrent",
+        documentation="Available-for-sales instruments classified as current.",
+        value=135.0,
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "review"
+    assert decision.mapping_method == "insufficient_structural_support"
 
 
 def test_gate_failure_order_is_stable_for_same_qname_and_accession() -> None:

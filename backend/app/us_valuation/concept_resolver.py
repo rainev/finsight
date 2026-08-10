@@ -16,7 +16,10 @@ _RULES_PATH = _CONFIG_DIR / "structural_concept_rules.json"
 _ALIASES_PATH = _CONFIG_DIR / "concept_aliases.json"
 _RESOLVER_VERSION = "US-XBRL-RESOLVER-1.0"
 _OFFICIAL_US_GAAP_NAMESPACE = re.compile(
-    r"^https?://(?:www\.)?(?:fasb\.org|xbrl\.us)/us-gaap/\d{4}(?:-\d{2}-\d{2})?$"
+    r"^http://fasb\.org/us-gaap/\d{4}(?:-\d{2}-\d{2})?$"
+)
+_CAMEL_BOUNDARY = re.compile(
+    r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])"
 )
 _GATE_PRIORITY = {
     "ACCESSION_MISMATCH": 10,
@@ -72,13 +75,10 @@ def _concepts_for_metric(aliases: Mapping[str, Any], concept: str) -> tuple[str,
 
 
 def _standard_alias_rank(fact: StructuralFact, concepts: tuple[str, ...]) -> int | None:
+    if not _OFFICIAL_US_GAAP_NAMESPACE.fullmatch(fact.namespace.casefold()):
+        return None
     for index, concept in enumerate(concepts):
-        if fact.qname == f"us-gaap:{concept}":
-            return index
-        if (
-            _OFFICIAL_US_GAAP_NAMESPACE.fullmatch(fact.namespace.casefold())
-            and fact.local_name == concept
-        ):
+        if fact.qname == f"us-gaap:{concept}" or fact.local_name == concept:
             return index
     return None
 
@@ -93,6 +93,7 @@ def _standard_metric_for_fact(
 
 
 def _normalized_text(value: str) -> str:
+    value = _CAMEL_BOUNDARY.sub(" ", value)
     return " ".join(
         re.sub(r"[^\w]+", " ", value.casefold().replace("-", " ")).split()
     )
@@ -106,9 +107,10 @@ def _fact_text(fact: StructuralFact) -> str:
 
 def _contains_phrase(text: str, phrase: str) -> bool:
     normalized_phrase = _normalized_text(phrase)
+    suffix = "s?" if len(normalized_phrase.split()) == 1 else ""
     return bool(
         re.search(
-            rf"(?<!\w){re.escape(normalized_phrase)}s?(?!\w)",
+            rf"(?<!\w){re.escape(normalized_phrase)}{suffix}(?!\w)",
             text,
         )
     )
@@ -153,19 +155,19 @@ def _orientation(
     standard_metric = _standard_metric_for_fact(fact, aliases)
     if standard_metric is not None:
         orientations.add("current" if standard_metric.endswith("_current") else "noncurrent")
-    if len(orientations) > 1:
-        return "conflict"
-    if orientations:
-        return next(iter(orientations))
 
     text = _fact_text(fact)
     if any(
         _contains_phrase(text, token)
         for token in ("noncurrent", "non current", "long term")
     ):
-        return "noncurrent"
+        orientations.add("noncurrent")
     if any(_contains_phrase(text, token) for token in ("current", "short term")):
-        return "current"
+        orientations.add("current")
+    if len(orientations) > 1:
+        return "conflict"
+    if orientations:
+        return next(iter(orientations))
     return None
 
 
