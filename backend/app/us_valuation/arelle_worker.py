@@ -17,7 +17,11 @@ from pathlib import Path
 from typing import Any
 
 from .concept_resolver import load_structural_rules
-from .structural_xbrl import ParseDiagnostic, StructuralFact
+from .structural_xbrl import (
+    MAX_SUPPORTED_INTEGER,
+    ParseDiagnostic,
+    StructuralFact,
+)
 
 try:
     import resource
@@ -27,7 +31,6 @@ except ImportError:  # pragma: no cover - POSIX is the supported bounded-runtime
 
 CPU_LIMIT_SECONDS = 120
 ADDRESS_SPACE_LIMIT_BYTES = 2 * 1024 * 1024 * 1024
-MAX_FINITE_FLOAT_DECIMAL = Decimal.from_float(sys.float_info.max)
 
 
 class _QNameCanonicalizer:
@@ -161,12 +164,13 @@ def _numeric_fact_value(fact: Any) -> tuple[int | float | None, ParseDiagnostic 
         return None, _skip_diagnostic(
             "nonfinite_numeric_value", "Numeric fact xValue is not finite."
         )
-    if abs(decimal_value) > MAX_FINITE_FLOAT_DECIMAL:
-        return None, _skip_diagnostic(
-            "numeric_out_of_range", "Numeric fact xValue exceeds the supported numeric range."
-        )
-    if decimal_value == decimal_value.to_integral_value():
-        return int(decimal_value), None
+    int_value = int(decimal_value)
+    if Decimal(int_value) == decimal_value:
+        if abs(int_value) > MAX_SUPPORTED_INTEGER:
+            return None, _skip_diagnostic(
+                "numeric_out_of_range", "Numeric fact xValue exceeds the supported numeric range."
+            )
+        return int_value, None
     numeric_value = float(decimal_value)
     if not math.isfinite(numeric_value):
         return None, _skip_diagnostic(

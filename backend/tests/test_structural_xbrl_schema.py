@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import sys
+
 import pytest
 
 from app.us_valuation.structural_xbrl import (
@@ -148,6 +150,13 @@ def test_structural_fact_rejects_non_finite_values(value: float) -> None:
 def test_structural_fact_rejects_integer_beyond_numeric_boundary() -> None:
     with pytest.raises(ValueError, match="value"):
         _fact(value=10**309)
+
+
+def test_structural_fact_accepts_numeric_boundary_and_rejects_boundary_plus_one() -> None:
+    maximum = int(sys.float_info.max)
+    assert _fact(value=maximum).value == maximum
+    with pytest.raises(ValueError, match="value"):
+        _fact(value=maximum + 1)
 
 
 @pytest.mark.parametrize("confidence", [float("nan"), float("inf"), float("-inf")])

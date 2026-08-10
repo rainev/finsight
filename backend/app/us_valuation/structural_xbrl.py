@@ -6,10 +6,12 @@ from dataclasses import dataclass
 from datetime import date
 from math import isfinite
 from numbers import Real
+import sys
 from typing import Any, Literal, Mapping
 
 
 ResolutionStatus = Literal["accepted", "review", "rejected", "unresolved"]
+MAX_SUPPORTED_INTEGER = int(sys.float_info.max)
 
 
 def _require_text(value: str, field: str) -> None:
@@ -33,6 +35,10 @@ def _validate_number(value: float | None, field: str) -> None:
     if value is not None and (isinstance(value, bool) or not isinstance(value, Real)):
         raise ValueError(f"{field} must be numeric")
     if value is not None:
+        if isinstance(value, int):
+            if abs(value) > MAX_SUPPORTED_INTEGER:
+                raise ValueError(f"{field} must be finite")
+            return
         try:
             finite = isfinite(value)
         except OverflowError as error:

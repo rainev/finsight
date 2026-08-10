@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from decimal import Decimal
 from pathlib import Path
 
@@ -194,6 +195,28 @@ def test_numeric_conversion_rejects_fractional_overflow() -> None:
 def test_numeric_conversion_rejects_oversized_integral_decimal() -> None:
     converted, diagnostic = _numeric_fact_value(
         type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal("1E309")})()
+    )
+
+    assert converted is None
+    assert diagnostic is not None
+    assert diagnostic.code == "numeric_out_of_range"
+
+
+def test_numeric_conversion_accepts_exact_float_integer_boundary() -> None:
+    maximum = int(sys.float_info.max)
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal(maximum)})()
+    )
+
+    assert converted == maximum
+    assert isinstance(converted, int)
+    assert diagnostic is None
+
+
+def test_numeric_conversion_rejects_exact_float_integer_boundary_plus_one() -> None:
+    maximum = int(sys.float_info.max)
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal(maximum + 1)})()
     )
 
     assert converted is None
