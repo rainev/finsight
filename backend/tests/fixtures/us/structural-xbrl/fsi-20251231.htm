@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ix="http://www.xbrl.org/2013/inlineXBRL"
+      xmlns:xbrli="http://www.xbrl.org/2003/instance"
+      xmlns:link="http://www.xbrl.org/2003/linkbase"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+      xmlns:fsi="https://example.test/fsi/2025">
+  <head><title>FSI 2025 Structural Fixture</title></head>
+  <body>
+    <ix:header>
+      <ix:references>
+        <link:schemaRef xlink:type="simple" xlink:href="fsi-2025.xsd"/>
+      </ix:references>
+      <ix:resources>
+        <xbrli:context id="CurrentYearInstant">
+          <xbrli:entity>
+            <xbrli:identifier scheme="http://www.sec.gov/CIK">0000000000</xbrli:identifier>
+          </xbrli:entity>
+          <xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period>
+        </xbrli:context>
+        <xbrli:unit id="USD"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit>
+      </ix:resources>
+    </ix:header>
+    <h1>Consolidated balance sheet</h1>
+    <table>
+      <tr><td>Liquid investment securities, current</td><td>
+        <ix:nonFraction name="fsi:LiquidInvestmentSecuritiesCurrent"
+                        contextRef="CurrentYearInstant" unitRef="USD" decimals="0">42500000</ix:nonFraction>
+      </td></tr>
+      <tr><td>Liquid investment securities, noncurrent</td><td>
+        <ix:nonFraction name="fsi:LiquidInvestmentSecuritiesNoncurrent"
+                        contextRef="CurrentYearInstant" unitRef="USD" decimals="0">8000000</ix:nonFraction>
+      </td></tr>
+      <tr><td>Strategic equity investments</td><td>
+        <ix:nonFraction name="fsi:StrategicEquityInvestments"
+                        contextRef="CurrentYearInstant" unitRef="USD" decimals="0">70000000</ix:nonFraction>
+      </td></tr>
+    </table>
+  </body>
+</html>

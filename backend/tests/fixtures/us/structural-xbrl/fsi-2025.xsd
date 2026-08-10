@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xbrli="http://www.xbrl.org/2003/instance"
+           xmlns:link="http://www.xbrl.org/2003/linkbase"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           targetNamespace="https://example.test/fsi/2025"
+           xmlns:fsi="https://example.test/fsi/2025"
+           elementFormDefault="qualified">
+  <xs:import namespace="http://www.xbrl.org/2003/instance" schemaLocation="xbrli-2003.xsd"/>
+  <xs:import namespace="http://fasb.org/us-gaap/2025" schemaLocation="us-gaap-2025.xsd"/>
+  <xs:element name="LiquidInvestmentSecuritiesCurrent"
+             id="fsi_LiquidInvestmentSecuritiesCurrent"
+             type="xbrli:monetaryItemType"
+             substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
+  <xs:element name="LiquidInvestmentSecuritiesNoncurrent"
+             id="fsi_LiquidInvestmentSecuritiesNoncurrent"
+             type="xbrli:monetaryItemType"
+             substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
+  <xs:element name="StrategicEquityInvestments"
+             id="fsi_StrategicEquityInvestments"
+             type="xbrli:monetaryItemType"
+             substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
+  <xs:annotation>
+    <xs:appinfo>
+      <link:linkbaseRef xlink:type="simple" xlink:href="fsi-2025_pre.xml"
+                        xlink:role="http://www.xbrl.org/2003/role/presentationLinkbaseRef"
+                        xlink:arcrole="http://www.w3.org/1999/xlink/properties/linkbase"/>
+      <link:linkbaseRef xlink:type="simple" xlink:href="fsi-2025_cal.xml"
+                        xlink:role="http://www.xbrl.org/2003/role/calculationLinkbaseRef"
+                        xlink:arcrole="http://www.w3.org/1999/xlink/properties/linkbase"/>
+      <link:linkbaseRef xlink:type="simple" xlink:href="fsi-2025_lab.xml"
+                        xlink:role="http://www.xbrl.org/2003/role/labelLinkbaseRef"
+                        xlink:arcrole="http://www.w3.org/1999/xlink/properties/linkbase"/>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

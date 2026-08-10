@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xbrli="http://www.xbrl.org/2003/instance"
+           targetNamespace="http://fasb.org/us-gaap/2025"
+           xmlns:us-gaap="http://fasb.org/us-gaap/2025"
+           elementFormDefault="qualified">
+  <xs:import namespace="http://www.xbrl.org/2003/instance" schemaLocation="xbrli-2003.xsd"/>
+  <xs:element name="AssetsCurrent" id="us-gaap_AssetsCurrent"
+             type="xbrli:monetaryItemType" substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
+  <xs:element name="AssetsNoncurrent" id="us-gaap_AssetsNoncurrent"
+             type="xbrli:monetaryItemType" substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
+  <xs:element name="ShortTermInvestments" id="us-gaap_ShortTermInvestments"
+             type="xbrli:monetaryItemType" substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
+  <xs:element name="LongTermInvestments" id="us-gaap_LongTermInvestments"
+             type="xbrli:monetaryItemType" substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
+</xs:schema>
