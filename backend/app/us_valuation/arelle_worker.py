@@ -36,6 +36,24 @@ CPU_LIMIT_SECONDS = 120
 ADDRESS_SPACE_LIMIT_BYTES = 2 * 1024 * 1024 * 1024
 MAX_PRESENTATION_ANCESTORS = 128
 MAX_PRESENTATION_DEPTH = 32
+SEC_INLINE_TRANSFORM_PLUGIN = (
+    Path(__file__).resolve().parent / "vendor" / "arelle_edgar_transform"
+)
+
+
+def _load_sec_inline_transforms(controller: Any) -> None:
+    """Load the pinned official SEC transform hook before parsing Inline XBRL."""
+
+    from arelle import PluginManager  # noqa: PLC0415 - child-process-only import
+
+    module_info = PluginManager.addPluginModule(os.fspath(SEC_INLINE_TRANSFORM_PLUGIN))
+    if module_info is None:
+        raise RuntimeError("Arelle SEC Inline Transforms plugin could not be registered")
+    hooks = tuple(PluginManager.pluginClassMethods("ModelManager.LoadCustomTransforms"))
+    if not hooks:
+        raise RuntimeError("Arelle SEC Inline Transforms plugin did not expose its transform hook")
+    controller.modelManager.customTransforms = None
+    controller.modelManager.loadCustomTransforms()
 
 
 class _QNameCanonicalizer:
@@ -486,6 +504,7 @@ def _extract_payload(entrypoint: Path, accession: str, form: str = "10-K") -> di
     worker_temp_dir = tempfile.TemporaryDirectory(prefix="arelle-worker-")
     try:
         controller = Cntlr.Cntlr(logFileName="logToPrint", disable_persistent_config=True)
+        _load_sec_inline_transforms(controller)
         controller.userAppDir = worker_temp_dir.name
         controller.webCache.cacheDir = os.path.join(worker_temp_dir.name, "cache")
         controller.webCache.workOffline = True

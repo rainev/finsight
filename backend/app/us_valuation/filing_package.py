@@ -17,6 +17,7 @@ from urllib.parse import urljoin, urlparse, urlunparse
 
 from .sec_client import (
     SecClient,
+    canonicalize_legacy_taxonomy_url,
     normalize_accession,
     normalize_cik,
     sec_archive_url,
@@ -307,7 +308,9 @@ def _dependency_urls(raw: bytes, source_url: str) -> tuple[str, ...]:
         value = html.unescape(match.group(1) or match.group(2) or "").strip()
         tokens = value.split() if match.group(2) else [value]
         for token in tokens:
-            candidate = _without_fragment(urljoin(source_url, token))
+            candidate = canonicalize_legacy_taxonomy_url(
+                _without_fragment(urljoin(source_url, token))
+            )
             path = urlparse(candidate).path.lower()
             if path.endswith((".xsd", ".xml")):
                 dependencies.add(candidate)

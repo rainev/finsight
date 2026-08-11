@@ -119,7 +119,7 @@ def parse_structural_filing(
 ) -> StructuralFiling:
     """Parse a local filing through a JSON-only child-process boundary."""
 
-    entrypoint = Path(entrypoint)
+    entrypoint = Path(entrypoint).resolve()
     if not entrypoint.is_file():
         raise ArelleParseError(f"entrypoint does not exist: {entrypoint}")
     if not accession.strip():

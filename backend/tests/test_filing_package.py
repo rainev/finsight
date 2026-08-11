@@ -13,7 +13,11 @@ from app.us_valuation.filing_package import (
     FilingPackageIncomplete,
     cache_structural_filing_package,
 )
-from app.us_valuation.sec_client import SecClient
+from app.us_valuation.sec_client import (
+    SecClient,
+    canonicalize_legacy_taxonomy_url,
+    validate_taxonomy_url,
+)
 
 
 class FakeSecClient:
@@ -374,6 +378,54 @@ def test_package_cache_rejects_unapproved_or_insecure_taxonomy_urls(
             form="10-K",
             output_dir=tmp_path,
         )
+
+
+def test_package_cache_upgrades_legacy_http_url_on_governed_taxonomy_host(
+    tmp_path: Path,
+) -> None:
+    declared_url = "http://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd"
+    governed_url = "https://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd"
+    client = FakeSecClient(
+        index_names=["fsi.htm", "fsi.xsd"],
+        attachments={
+            "fsi.htm": b'<link href="fsi.xsd"/>',
+            "fsi.xsd": (
+                f'<xs:import schemaLocation="{declared_url}"/>'
+            ).encode(),
+        },
+        taxonomy_resources={governed_url: b"<xs:schema/>",},
+    )
+
+    entrypoint = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="fsi.htm",
+        output_dir=tmp_path,
+    )
+
+    manifest = json.loads((entrypoint.parent / "package-manifest.json").read_text())
+    assert client.requested_urls == [governed_url]
+    assert governed_url in {item["source_url"] for item in manifest["files"]}
+    assert declared_url not in {item["source_url"] for item in manifest["files"]}
+
+
+@pytest.mark.parametrize(
+    "url",
+    (
+        "https://www.xbrl.org:444/taxonomy.xsd",
+        "https://www.xbrl.org:not-a-port/taxonomy.xsd",
+    ),
+)
+def test_taxonomy_url_rejects_nondefault_or_malformed_https_ports(url: str) -> None:
+    with pytest.raises(ValueError, match="governed host and default port"):
+        validate_taxonomy_url(url)
+
+
+def test_legacy_taxonomy_url_leaves_malformed_http_port_for_governed_rejection() -> None:
+    url = "http://www.xbrl.org:not-a-port/taxonomy.xsd"
+
+    assert canonicalize_legacy_taxonomy_url(url) == url
 
 
 @pytest.mark.parametrize(

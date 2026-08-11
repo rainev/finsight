@@ -94,14 +94,46 @@ def sec_archive_url(
 
 def validate_taxonomy_url(url: str) -> str:
     parsed = urlparse(url)
+    try:
+        port = parsed.port
+    except ValueError as exc:
+        raise ValueError(
+            "XBRL taxonomy URL must use HTTPS on a governed host and default port"
+        ) from exc
     if (
         parsed.scheme != "https"
         or not parsed.hostname
         or parsed.hostname.casefold() not in GOVERNED_TAXONOMY_HOSTS
         or parsed.username is not None
         or parsed.password is not None
+        or port not in {None, 443}
     ):
-        raise ValueError("XBRL taxonomy URL must use HTTPS on a governed host")
+        raise ValueError(
+            "XBRL taxonomy URL must use HTTPS on a governed host and default port"
+        )
+    return url
+
+
+def canonicalize_legacy_taxonomy_url(url: str) -> str:
+    """Upgrade an HTTP taxonomy identifier only when its host is governed."""
+
+    parsed = urlparse(url)
+    try:
+        port = parsed.port
+    except ValueError:
+        return url
+    if (
+        parsed.scheme == "http"
+        and parsed.hostname
+        and parsed.hostname.casefold() in GOVERNED_TAXONOMY_HOSTS
+        and parsed.username is None
+        and parsed.password is None
+        and port in {None, 80}
+    ):
+        return parsed._replace(
+            scheme="https",
+            netloc=parsed.hostname.casefold(),
+        ).geturl()
     return url
 
 

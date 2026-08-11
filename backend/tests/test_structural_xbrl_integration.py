@@ -15,6 +15,7 @@ ARCHIVE_ACCESSION = "000000000126000001"
 FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "us" / "structural-xbrl"
 REMOTE_US_GAAP = "https://xbrl.fasb.org/us-gaap/2025/us-gaap-2025.xsd"
 REMOTE_XBRLI = "https://www.xbrl.org/2003/xbrli-2003.xsd"
+LEGACY_DECLARED_XBRLI = "http://www.xbrl.org/2003/xbrli-2003.xsd"
 
 
 def _taxonomy_cache_path(cache_root: Path, url: str) -> Path:
@@ -53,11 +54,11 @@ def test_cached_package_to_offline_arelle_to_shadow_report_is_hermetic(
         f'schemaLocation="{REMOTE_US_GAAP}"',
     ).replace(
         'schemaLocation="xbrli-2003.xsd"',
-        f'schemaLocation="{REMOTE_XBRLI}"',
+        f'schemaLocation="{LEGACY_DECLARED_XBRLI}"',
     )
     remote_us_gaap = (FIXTURE_ROOT / "us-gaap-2025.xsd").read_text().replace(
         'schemaLocation="xbrli-2003.xsd"',
-        f'schemaLocation="{REMOTE_XBRLI}"',
+        f'schemaLocation="{LEGACY_DECLARED_XBRLI}"',
     )
     filing_files = {
         "fsi-20251231.htm": primary,
@@ -145,4 +146,7 @@ def test_cached_package_to_offline_arelle_to_shadow_report_is_hermetic(
     assert {item["source_url"] for item in manifest["files"]} >= {
         REMOTE_US_GAAP,
         REMOTE_XBRLI,
+    }
+    assert LEGACY_DECLARED_XBRLI not in {
+        item["source_url"] for item in manifest["files"]
     }

@@ -81,6 +81,64 @@ def test_arelle_adapter_extracts_extension_structure() -> None:
     }
 
 
+def test_arelle_adapter_loads_sec_inline_transforms() -> None:
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    current = next(
+        fact for fact in filing.facts if fact.local_name == "LiquidInvestmentSecuritiesCurrent"
+    )
+    assert current.value == 42_500_000
+    assert all("invalidTransformation" not in item.code for item in filing.diagnostics)
+
+
+def test_observed_sec_inline_transform_functions_are_compatible_with_pinned_arelle() -> None:
+    script = """
+import json
+from app.us_valuation.vendor.arelle_edgar_transform import (
+    boolballotbox,
+    durday,
+    durmonth,
+    durwordsen,
+    duryear,
+    entityfilercategoryen,
+    exchnameen,
+    numwordsen,
+    stateprovnameen,
+)
+print(json.dumps({
+    "boolballotbox": boolballotbox("☒"),
+    "durday": durday("2"),
+    "durmonth": durmonth("3"),
+    "durwordsen": durwordsen("Two years three months four days"),
+    "duryear": duryear("5"),
+    "entityfilercategoryen": entityfilercategoryen("Large Accelerated Filer"),
+    "exchnameen": exchnameen("NASDAQ"),
+    "numwordsen": numwordsen("Forty Two"),
+    "stateprovnameen": stateprovnameen("California"),
+}))
+"""
+
+    completed = subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=_BACKEND_DIR,
+        capture_output=True,
+        check=True,
+        text=True,
+    )
+
+    assert json.loads(completed.stdout) == {
+        "boolballotbox": "true",
+        "durday": "P2D",
+        "durmonth": "P3M",
+        "durwordsen": "P2Y3M4D",
+        "duryear": "P5Y",
+        "entityfilercategoryen": "Large Accelerated Filer",
+        "exchnameen": "NASDAQ",
+        "numwordsen": "42",
+        "stateprovnameen": "CA",
+    }
+
+
 def test_arelle_adapter_carries_normalized_filing_form() -> None:
     filing = parse_structural_filing(
         ENTRYPOINT,
@@ -98,6 +156,18 @@ def test_arelle_adapter_bootstraps_worker_when_parent_cwd_is_repository_root(
     monkeypatch.chdir(Path(__file__).resolve().parents[2].parent)
 
     filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    assert len(filing.facts) == 5
+
+
+def test_arelle_adapter_resolves_relative_entrypoint_before_worker_chdir(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repository_root = Path(__file__).resolve().parents[2]
+    monkeypatch.chdir(repository_root)
+    relative_entrypoint = ENTRYPOINT.relative_to(repository_root)
+
+    filing = parse_structural_filing(relative_entrypoint, accession=ACCESSION)
 
     assert len(filing.facts) == 5
 

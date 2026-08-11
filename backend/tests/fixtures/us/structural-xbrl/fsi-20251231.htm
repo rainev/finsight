@@ -5,6 +5,7 @@
       xmlns:link="http://www.xbrl.org/2003/linkbase"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+      xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31"
       xmlns:fsi="https://example.test/fsi/2025">
   <head><title>FSI 2025 Structural Fixture</title></head>
   <body>
@@ -35,7 +36,8 @@
     <table>
       <tr><td>Liquid investment securities, current</td><td>
         <ix:nonFraction name="fsi:LiquidInvestmentSecuritiesCurrent"
-                        contextRef="CurrentYearInstant" unitRef="USD" decimals="0">42500000</ix:nonFraction>
+                        contextRef="CurrentYearInstant" unitRef="USD" decimals="0"
+                        format="ixt-sec:numwordsen">Forty Two Million Five Hundred Thousand</ix:nonFraction>
       </td></tr>
       <tr><td>Liquid investment securities, noncurrent</td><td>
         <ix:nonFraction name="fsi:LiquidInvestmentSecuritiesNoncurrent"

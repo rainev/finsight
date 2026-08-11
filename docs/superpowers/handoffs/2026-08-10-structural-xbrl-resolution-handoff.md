@@ -54,15 +54,63 @@ fuzzy, or semantic-value acceptance path was added.
   `frontend/public/data/` changed.
 - Generated `output/` remains untracked and was excluded from commits.
 
-## Real-data limitation
+## Real filing pilot (2026-08-11)
 
-The last bounded offline corpus run discovered 118 withheld artifacts but had
-0 eligible structural cases because sanitized serving artifacts omit private
-bridge fields and controlling-filing metadata. Runtime was 0.09 seconds and the
-cache remained empty (0 files / 0 KiB). This is not evidence that Arelle can
-recover the formerly missing accounts from real filings.
+The selected ANET, CRM, DELL, FTNT, and WDC filings were downloaded into the
+non-serving structural cache and parsed offline. Final pilot run 5 produced:
 
-Keep the feature shadow-only until a real filing pilot is reconciled manually.
+- 5/5 filings parsed and 0 parser failures;
+- 4,421 bounded numeric structural facts: ANET 576, CRM 772, DELL 1,040,
+  FTNT 1,043, and WDC 990;
+- accepted current marketable securities for ANET (`$9,563.7m`) and CRM
+  (`$2,902m`) through the governed `AvailableForSaleSecuritiesDebtSecuritiesCurrent`
+  taxonomy alias;
+- review-grade, value-matched current short-term investments for FTNT
+  (`$1,134.7m`) through `OtherShortTermInvestments`; the resolver did not
+  auto-accept it because the current rules require stronger governed support;
+- rejected false candidates for ANET noncurrent marketable securities and DELL
+  current marketable securities rather than inferring zeros from unrelated
+  zero-valued facts.
+
+The earlier run-4 candidate scan ranked facts partly by whether they matched the
+known truth-set value. Independent review correctly identified that method as
+circular and prone to elevating unrelated zero-valued facts. Run 5 supersedes
+it: candidate discovery now uses only field terms, period, unit, dimensions,
+and statement placement. Expected values do not affect discovery or ranking.
+All non-marketable candidate lists are therefore observations only, with no
+claim that debt, leases, commercial paper, preferred/temporary equity, or NCI
+has been recovered. Those fields remain unresolved until account-specific
+governed resolvers exist. Zero/absence conclusions cannot be accepted merely
+because an unrelated fact has value zero.
+
+The first real run exposed two integration gaps that now have regression tests:
+
+- legacy allowlisted XBRL taxonomy identifiers using `http://` are upgraded to
+  governed `https://` retrieval URLs;
+- relative filing-package paths are resolved before the worker changes its
+  working directory.
+
+Plain `arelle-release==2.44.0` excludes the SEC EDGAR transform plugin. The
+runtime-only official `Arelle/EDGAR/transform` plugin is therefore vendored at
+commit `72033f579e89ab47e882437b5d4ceed9c7656ed5`, loaded inside the isolated
+worker, and covered by a representative SEC transform fixture. No parser
+errors are ignored or downgraded.
+
+Raw pilot evidence is intentionally untracked under
+`output/structural-xbrl-pilot/results-run5/`. Publication effect remains
+`none_shadow_only`; no serving valuation artifact changed.
+
+## Pilot verification
+
+- Focused structural suite: `200 passed in 5.97s`.
+- Full backend suite from repository root: `343 passed, 3 skipped, 1
+  pre-existing failure`.
+- The sole failure is still the unrelated missing `automated_review` field in
+  `test_microsoft_public_artifact_contains_no_raw_financial_amounts`.
+- Real run-5 assertions confirmed 5/5 parsed, governed marketable values matched
+  the truth set, candidate ranking contains no expected-value signal, and the
+  publication effect is shadow-only.
+- `git diff --check` passed and no serving valuation path changed.
 
 ## Five-company pilot selected
 
@@ -83,12 +131,14 @@ merely because Arelle emits a semantically similar fact.
 
 ## Exact next step
 
-1. Supply a compliant SEC User-Agent with a monitored contact.
-2. Download complete bounded packages for the five selected filings into a
-   non-serving cache.
-3. Run Arelle offline on all five packages.
-4. Run the deterministic marketable-securities resolver where eligible.
-5. Reconcile selected facts, units, periods, contexts, and values against the
-   filing-specific evidence artifacts.
-6. Record accepted, review, rejected, unresolved, and parser-failure counts.
-7. Keep the path shadow-only and request user confirmation before any promotion.
+1. Add account-specific governed resolvers for debt, leases, preferred/temporary
+   equity, and NCI, beginning with the exact pilot facts above.
+2. Keep zero/absence and CRM commercial-paper decisions fail-closed until their
+   statement and dimensional rules are explicit.
+3. Test `OtherShortTermInvestments` across a broader company corpus before
+   deciding whether it becomes an accepted marketable-securities alias or stays
+   review-grade.
+4. Rerun the same five filings through those resolvers and compare every
+   accepted value against the filing-specific truth set.
+5. Keep all results shadow-only and request user confirmation before any
+   production promotion.
