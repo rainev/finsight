@@ -499,7 +499,7 @@ def resolve_concept(
     highest_rank = tuple(
         candidate for candidate in ordered if candidate.confidence == highest_confidence
     )
-    if len(highest_rank) > 1:
+    if len({candidate.fact.value for candidate in highest_rank}) > 1:
         return _decision(
             request,
             fact=highest_rank[0].fact,

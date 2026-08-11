@@ -9,7 +9,7 @@ import time
 from pathlib import Path
 from typing import Any, Callable
 from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 from urllib.parse import urlparse
 
 
@@ -27,6 +27,28 @@ GOVERNED_TAXONOMY_HOSTS = frozenset(
         "xbrl.org",
     }
 )
+MAX_FILING_INDEX_BYTES = 2 * 1024 * 1024
+
+
+class _GovernedRedirectHandler(HTTPRedirectHandler):
+    """Reject an unsafe redirect target before urllib sends the next request."""
+
+    def redirect_request(
+        self,
+        request: Request,
+        fp: Any,
+        code: int,
+        msg: str,
+        headers: Any,
+        newurl: str,
+    ) -> Request | None:
+        try:
+            validate_taxonomy_url(newurl)
+        except ValueError as exc:
+            raise RuntimeError(
+                "SEC taxonomy redirect left governed HTTPS hosts"
+            ) from exc
+        return super().redirect_request(request, fp, code, msg, headers, newurl)
 
 
 def normalize_cik(cik: str | int) -> str:
@@ -147,6 +169,7 @@ class SecClient:
                 f"archives/CIK{normalized_cik}/{normalized_accession}/index.json"
             ),
             refresh=refresh,
+            max_bytes=MAX_FILING_INDEX_BYTES,
         )
 
     def filing_attachment(
@@ -195,13 +218,21 @@ class SecClient:
             validate_final_url=validate_taxonomy_url,
         )
 
-    def _get_json(self, url: str, *, cache_name: str, refresh: bool) -> dict[str, Any]:
+    def _get_json(
+        self,
+        url: str,
+        *,
+        cache_name: str,
+        refresh: bool,
+        max_bytes: int | None = None,
+    ) -> dict[str, Any]:
         raw = self._get_bytes(
             url,
             cache_name=cache_name,
             refresh=refresh,
             accept="application/json",
             validate=_validate_json_bytes,
+            max_bytes=max_bytes,
         )
         try:
             return json.loads(raw.decode("utf-8"))
@@ -261,7 +292,12 @@ class SecClient:
                         },
                     )
                     type(self)._process_last_request_at = time.monotonic()
-                    with urlopen(request, timeout=self.timeout_seconds) as response:
+                    open_request = (
+                        urlopen
+                        if validate_final_url is None
+                        else build_opener(_GovernedRedirectHandler()).open
+                    )
+                    with open_request(request, timeout=self.timeout_seconds) as response:
                         final_url = getattr(response, "geturl", lambda: url)()
                         if validate_final_url is not None:
                             try:
@@ -307,6 +343,12 @@ class SecClient:
                 chunk = response.read(min(64 * 1024, max_bytes - total + 1))
             except TypeError:
                 chunk = response.read()
+                if chunk:
+                    total += len(chunk)
+                    if total > max_bytes:
+                        raise RuntimeError("SEC response exceeds governed byte limit")
+                    chunks.append(chunk)
+                break
             if not chunk:
                 break
             total += len(chunk)

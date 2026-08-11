@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from urllib.request import HTTPRedirectHandler, Request
 
 import pytest
 
@@ -177,6 +178,7 @@ def test_filing_index_uses_unpadded_cik_in_sec_archive_url(tmp_path: Path) -> No
             *,
             cache_name: str,
             refresh: bool,
+            max_bytes: int | None = None,
         ) -> dict[str, object]:
             self.url = url
             return {}
@@ -486,7 +488,14 @@ def test_sec_taxonomy_fetch_rejects_redirect_outside_governed_hosts(
         def geturl(self) -> str:
             return "https://evil.example/redirected.xsd"
 
-    monkeypatch.setattr("app.us_valuation.sec_client.urlopen", lambda *args, **kwargs: Response())
+    class FakeOpener:
+        def open(self, *args: object, **kwargs: object) -> Response:
+            return Response()
+
+    monkeypatch.setattr(
+        "app.us_valuation.sec_client.build_opener",
+        lambda *args, **kwargs: FakeOpener(),
+    )
     client = SecClient(
         user_agent="FinSight contact@example.com",
         cache_dir=tmp_path,
@@ -498,6 +507,118 @@ def test_sec_taxonomy_fetch_rejects_redirect_outside_governed_hosts(
             "https://xbrl.fasb.org/us-gaap/2025/us-gaap-2025.xsd",
             max_bytes=1024,
         )
+
+
+def test_sec_taxonomy_redirect_is_rejected_before_following_unsafe_location(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    unsafe_request_made = False
+
+    class Response:
+        def __enter__(self) -> "Response":
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def read(self, size: int = -1) -> bytes:
+            return b"schema" if size != 0 else b""
+
+        def geturl(self) -> str:
+            return "https://evil.example/redirected.xsd"
+
+    def fake_urlopen(*args: object, **kwargs: object) -> Response:
+        nonlocal unsafe_request_made
+        unsafe_request_made = True
+        return Response()
+
+    def fake_base_redirect(
+        self: HTTPRedirectHandler,
+        request: Request,
+        fp: object,
+        code: int,
+        msg: str,
+        headers: object,
+        newurl: str,
+    ) -> Request:
+        nonlocal unsafe_request_made
+        unsafe_request_made = True
+        return Request(newurl)
+
+    class FakeOpener:
+        def __init__(self, handler: HTTPRedirectHandler) -> None:
+            self.handler = handler
+
+        def open(self, request: Request, *, timeout: int) -> Response:
+            self.handler.redirect_request(
+                request,
+                None,
+                302,
+                "Found",
+                {},
+                "https://evil.example/redirected.xsd",
+            )
+            return Response()
+
+    monkeypatch.setattr("app.us_valuation.sec_client.urlopen", fake_urlopen)
+    monkeypatch.setattr(
+        "app.us_valuation.sec_client.build_opener",
+        lambda handler: FakeOpener(handler),
+        raising=False,
+    )
+    monkeypatch.setattr(HTTPRedirectHandler, "redirect_request", fake_base_redirect)
+    client = SecClient(
+        user_agent="FinSight contact@example.com",
+        cache_dir=tmp_path,
+        max_retries=0,
+    )
+
+    with pytest.raises(RuntimeError, match="redirect"):
+        client.taxonomy_resource(
+            "https://xbrl.fasb.org/us-gaap/2025/us-gaap-2025.xsd",
+            max_bytes=1024,
+        )
+
+    assert unsafe_request_made is False
+
+
+def test_sec_filing_index_response_is_bounded_before_cache_write(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    body = json.dumps({"padding": "x" * (2 * 1024 * 1024)}).encode()
+
+    class Response:
+        def __init__(self) -> None:
+            self.offset = 0
+
+        def __enter__(self) -> "Response":
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def read(self, size: int = -1) -> bytes:
+            if self.offset >= len(body):
+                return b""
+            if size < 0:
+                size = len(body) - self.offset
+            chunk = body[self.offset : self.offset + size]
+            self.offset += len(chunk)
+            return chunk
+
+    monkeypatch.setattr(
+        "app.us_valuation.sec_client.urlopen", lambda *args, **kwargs: Response()
+    )
+    client = SecClient(
+        user_agent="FinSight contact@example.com",
+        cache_dir=tmp_path,
+        max_retries=0,
+    )
+
+    with pytest.raises(RuntimeError, match="byte limit"):
+        client.filing_index("1", "0000000001-26-000001")
+
+    assert not list(tmp_path.rglob("index.json"))
 
 
 def test_sec_filing_attachment_stream_is_bounded_before_cache_write(

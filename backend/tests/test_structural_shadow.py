@@ -173,6 +173,7 @@ def test_shadow_case_reports_rejected_ambiguous_candidates() -> None:
     alternative = extension_fact(
         qname="fsi:OtherLiquidInvestmentSecuritiesCurrent",
         local_name="OtherLiquidInvestmentSecuritiesCurrent",
+        value=43_500_000,
     )
 
     report = evaluate_shadow_case(

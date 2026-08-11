@@ -767,6 +767,25 @@ def test_equal_strength_conflicting_facts_are_ambiguous() -> None:
     assert decision.reason_codes == ("AMBIGUOUS_FACTS",)
 
 
+def test_equal_strength_same_value_facts_are_not_treated_as_conflicting() -> None:
+    first = make_fact(
+        qname="us-gaap:AvailableForSaleSecuritiesCurrent",
+        local_name="AvailableForSaleSecuritiesCurrent",
+        value=100.0,
+    )
+    second = make_fact(
+        qname="us-gaap:ShortTermInvestments",
+        local_name="ShortTermInvestments",
+        value=100.0,
+    )
+
+    decision = resolve_concept(current_request(), [first, second])
+
+    assert decision.status == "accepted"
+    assert decision.value == 100.0
+    assert decision.source_concept == "us-gaap:AvailableForSaleSecuritiesCurrent"
+
+
 def test_canonical_candidate_outranks_conflicting_alias_before_ambiguity() -> None:
     canonical = make_fact(
         qname="us-gaap:MarketableSecuritiesCurrent",
