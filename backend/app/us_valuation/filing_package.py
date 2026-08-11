@@ -47,28 +47,33 @@ def cache_structural_filing_package(
     _require_safe_filename(primary_document)
     index = client.filing_index(cik, accession, refresh=refresh)
     filenames = _filing_directory_names(index)
-    selected = _select_structural_filenames(filenames, primary_document)
-
     resources: dict[str, bytes] = {}
-    for filename in selected:
-        try:
-            resources[filename] = client.filing_attachment(
-                cik,
-                accession,
-                filename,
-                refresh=refresh,
-            )
-        except (KeyError, OSError, RuntimeError) as exc:
-            raise FilingPackageIncomplete(
-                f"Structural filing resource is unavailable: {filename}"
-            ) from exc
+    resources[primary_document] = _fetch_structural_resource(
+        client,
+        cik=cik,
+        accession=accession,
+        filename=primary_document,
+        refresh=refresh,
+    )
+    referenced_schemas = _local_schema_references(resources[primary_document])
+    selected = _select_structural_filenames(
+        filenames,
+        primary_document,
+        referenced_schemas=referenced_schemas,
+    )
 
-    primary_bytes = resources.get(primary_document)
-    if primary_bytes is None:
-        raise FilingPackageIncomplete(
-            f"Primary filing document is unavailable: {primary_document}"
+    for filename in selected:
+        if filename == primary_document:
+            continue
+        resources[filename] = _fetch_structural_resource(
+            client,
+            cik=cik,
+            accession=accession,
+            filename=filename,
+            refresh=refresh,
         )
-    _ensure_referenced_schemas_are_present(primary_bytes, resources)
+
+    _ensure_referenced_schemas_are_present(referenced_schemas, resources)
 
     package_dir = output_dir / f"CIK{normalized_cik}-{archive_accession}"
     package_dir.mkdir(parents=True, exist_ok=True)
@@ -102,6 +107,27 @@ def cache_structural_filing_package(
     return package_dir / primary_document
 
 
+def _fetch_structural_resource(
+    client: SecClient,
+    *,
+    cik: str,
+    accession: str,
+    filename: str,
+    refresh: bool,
+) -> bytes:
+    try:
+        return client.filing_attachment(
+            cik,
+            accession,
+            filename,
+            refresh=refresh,
+        )
+    except (KeyError, OSError, RuntimeError) as exc:
+        raise FilingPackageIncomplete(
+            f"Structural filing resource is unavailable: {filename}"
+        ) from exc
+
+
 def _filing_directory_names(index: dict[str, Any]) -> list[str]:
     directory = index.get("directory")
     if not isinstance(directory, dict):
@@ -118,13 +144,14 @@ def _filing_directory_names(index: dict[str, Any]) -> list[str]:
 
 
 def _select_structural_filenames(
-    filenames: list[str], primary_document: str
+    filenames: list[str],
+    primary_document: str,
+    *,
+    referenced_schemas: set[str],
 ) -> list[str]:
     selected = {primary_document}
     schema_stems = {
-        Path(filename).stem.lower()
-        for filename in filenames
-        if _is_safe_basename(filename) and filename.lower().endswith(".xsd")
+        Path(filename).stem.lower() for filename in referenced_schemas
     }
     for filename in filenames:
         if not _is_safe_basename(filename):
@@ -141,15 +168,26 @@ def _select_structural_filenames(
     return sorted(selected)
 
 
-def _ensure_referenced_schemas_are_present(
-    primary_bytes: bytes, resources: dict[str, bytes]
-) -> None:
+def _local_schema_references(primary_bytes: bytes) -> set[str]:
     primary_text = primary_bytes.decode("utf-8", errors="replace")
+    references: set[str] = set()
     for reference in _LOCAL_SCHEMA_REFERENCE.findall(primary_text):
         schema_name = html.unescape(reference).split("?")[0].split("#")[0]
         if "://" in schema_name:
             continue
-        if not _is_safe_basename(schema_name) or schema_name not in resources:
+        if not _is_safe_basename(schema_name):
+            raise FilingPackageIncomplete(
+                f"Locally referenced extension schema is unavailable: {schema_name}"
+            )
+        references.add(schema_name)
+    return references
+
+
+def _ensure_referenced_schemas_are_present(
+    referenced_schemas: set[str], resources: dict[str, bytes]
+) -> None:
+    for schema_name in referenced_schemas:
+        if schema_name not in resources:
             raise FilingPackageIncomplete(
                 f"Locally referenced extension schema is unavailable: {schema_name}"
             )

@@ -83,7 +83,14 @@ def test_package_cache_downloads_only_the_matching_instance_xml(tmp_path: Path) 
             "fsi-2025.xml",
             "unrelated-exhibit.xml",
             "FilingSummary.xml",
-        ]
+        ],
+        attachments={
+            "fsi-20251231.htm": b'<html><link href="fsi-2025.xsd" /></html>',
+            "fsi-2025.xsd": b"schema",
+            "fsi-2025.xml": b"instance",
+            "unrelated-exhibit.xml": b"unrelated",
+            "FilingSummary.xml": b"summary",
+        },
     )
 
     cache_structural_filing_package(
@@ -98,6 +105,48 @@ def test_package_cache_downloads_only_the_matching_instance_xml(tmp_path: Path) 
         "fsi-20251231.htm",
         "fsi-2025.xsd",
         "fsi-2025.xml",
+    }
+
+
+def test_package_cache_selects_instance_for_primary_referenced_schema_only(
+    tmp_path: Path,
+) -> None:
+    client = FakeSecClient(
+        index_names=[
+            "filing.htm",
+            "filing.xsd",
+            "filing.xml",
+            "filing_pre.xml",
+            "unrelated.xsd",
+            "unrelated.xml",
+            "unrelated_lab.xml",
+        ],
+        attachments={
+            "filing.htm": b'<html><link href="filing.xsd?v=1#extension" /></html>',
+            "filing.xsd": b"filing schema",
+            "filing.xml": b"filing instance",
+            "filing_pre.xml": b"filing presentation",
+            "unrelated.xsd": b"unrelated schema",
+            "unrelated.xml": b"unrelated instance",
+            "unrelated_lab.xml": b"required label linkbase",
+        },
+    )
+
+    cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path,
+    )
+
+    assert set(client.requested) == {
+        "filing.htm",
+        "filing.xsd",
+        "filing.xml",
+        "filing_pre.xml",
+        "unrelated.xsd",
+        "unrelated_lab.xml",
     }
 
 
