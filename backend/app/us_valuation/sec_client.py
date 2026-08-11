@@ -7,7 +7,7 @@ import json
 import threading
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -43,6 +43,22 @@ def safe_filing_filename(filename: str) -> str:
     ):
         raise ValueError("filing attachment must use a safe file name")
     return candidate
+
+
+def sec_archive_url(
+    cik: str | int,
+    accession: str | int,
+    filename: str,
+) -> str:
+    """Build one canonical SEC archive URL for a safe filing resource."""
+    archive_cik = str(int(normalize_cik(cik)))
+    archive_accession = normalize_accession(accession)
+    safe_name = safe_filing_filename(filename)
+    return f"{SEC_ARCHIVES_ROOT}/{archive_cik}/{archive_accession}/{safe_name}"
+
+
+def _validate_json_bytes(raw: bytes) -> None:
+    json.loads(raw.decode("utf-8"))
 
 
 class SecClient:
@@ -100,7 +116,7 @@ class SecClient:
         normalized_cik = normalize_cik(cik)
         normalized_accession = normalize_accession(accession)
         return self._get_json(
-            self._archive_url(normalized_cik, normalized_accession, "index.json"),
+            sec_archive_url(normalized_cik, normalized_accession, "index.json"),
             cache_name=(
                 f"archives/CIK{normalized_cik}/{normalized_accession}/index.json"
             ),
@@ -120,7 +136,7 @@ class SecClient:
         normalized_accession = normalize_accession(accession)
         safe_name = safe_filing_filename(filename)
         return self._get_bytes(
-            self._archive_url(normalized_cik, normalized_accession, safe_name),
+            sec_archive_url(normalized_cik, normalized_accession, safe_name),
             cache_name=(
                 f"archives/CIK{normalized_cik}/{normalized_accession}/{safe_name}"
             ),
@@ -128,16 +144,13 @@ class SecClient:
             accept="application/octet-stream, application/xml, text/html",
         )
 
-    @staticmethod
-    def _archive_url(cik: str, accession: str, filename: str) -> str:
-        return f"{SEC_ARCHIVES_ROOT}/{cik}/{accession}/{filename}"
-
     def _get_json(self, url: str, *, cache_name: str, refresh: bool) -> dict[str, Any]:
         raw = self._get_bytes(
             url,
             cache_name=cache_name,
             refresh=refresh,
             accept="application/json",
+            validate=_validate_json_bytes,
         )
         try:
             return json.loads(raw.decode("utf-8"))
@@ -151,12 +164,15 @@ class SecClient:
         cache_name: str,
         refresh: bool,
         accept: str,
+        validate: Callable[[bytes], None] | None = None,
     ) -> bytes:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         path = self.cache_dir / cache_name
         if path.exists() and not refresh:
             try:
                 raw = path.read_bytes()
+                if validate is not None:
+                    validate(raw)
                 self._write_cache_metadata(
                     path,
                     url=url,
@@ -164,7 +180,7 @@ class SecClient:
                     fetched_at_epoch=None,
                 )
                 return raw
-            except OSError as exc:
+            except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
                 raise RuntimeError(f"Invalid SEC cache file: {path.name}") from exc
         if not self.user_agent or "@" not in self.user_agent:
             raise ValueError(
@@ -190,6 +206,8 @@ class SecClient:
                     type(self)._process_last_request_at = time.monotonic()
                     with urlopen(request, timeout=self.timeout_seconds) as response:
                         raw = response.read()
+                if validate is not None:
+                    validate(raw)
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(raw)
                 self._write_cache_metadata(
@@ -199,7 +217,13 @@ class SecClient:
                     fetched_at_epoch=time.time(),
                 )
                 return raw
-            except (HTTPError, URLError, TimeoutError) as exc:
+            except (
+                HTTPError,
+                URLError,
+                TimeoutError,
+                UnicodeDecodeError,
+                json.JSONDecodeError,
+            ) as exc:
                 last_error = exc
                 if attempt == self.max_retries:
                     break

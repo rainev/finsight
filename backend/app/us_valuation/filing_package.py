@@ -11,10 +11,10 @@ from pathlib import Path
 from typing import Any
 
 from .sec_client import (
-    SEC_ARCHIVES_ROOT,
     SecClient,
     normalize_accession,
     normalize_cik,
+    sec_archive_url,
 )
 
 
@@ -24,7 +24,7 @@ class FilingPackageIncomplete(RuntimeError):
 
 _LINKBASE_SUFFIXES = ("_pre.xml", "_cal.xml", "_def.xml", "_lab.xml")
 _LOCAL_SCHEMA_REFERENCE = re.compile(
-    r"(?:href|schemaLocation)\s*=\s*['\"]([^'\"]+\.xsd)['\"]",
+    r"(?:href|schemaLocation)\s*=\s*['\"]([^'\"]+\.xsd(?:[?#][^'\"]*)?)['\"]",
     re.IGNORECASE,
 )
 
@@ -80,7 +80,7 @@ def cache_structural_filing_package(
         manifest_files.append(
             {
                 "filename": filename,
-                "source_url": _archive_url(
+                "source_url": sec_archive_url(
                     normalized_cik, archive_accession, filename
                 ),
                 "sha256": hashlib.sha256(raw).hexdigest(),
@@ -121,13 +121,22 @@ def _select_structural_filenames(
     filenames: list[str], primary_document: str
 ) -> list[str]:
     selected = {primary_document}
+    schema_stems = {
+        Path(filename).stem.lower()
+        for filename in filenames
+        if _is_safe_basename(filename) and filename.lower().endswith(".xsd")
+    }
     for filename in filenames:
         if not _is_safe_basename(filename):
             continue
         lower = filename.lower()
         if lower.endswith(".xsd") or lower.endswith(_LINKBASE_SUFFIXES):
             selected.add(filename)
-        elif lower.endswith(".xml") and lower != "filingsummary.xml":
+        elif (
+            lower.endswith(".xml")
+            and lower != "filingsummary.xml"
+            and Path(filename).stem.lower() in schema_stems
+        ):
             selected.add(filename)
     return sorted(selected)
 
@@ -159,7 +168,3 @@ def _is_safe_basename(filename: str) -> bool:
         and "\\" not in filename
         and Path(filename).name == filename
     )
-
-
-def _archive_url(cik: str, accession: str, filename: str) -> str:
-    return f"{SEC_ARCHIVES_ROOT}/{cik}/{accession}/{filename}"
