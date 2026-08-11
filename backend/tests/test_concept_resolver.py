@@ -414,6 +414,81 @@ def test_direct_finance_lease_liability_aliases_are_accepted(
     assert decision.source_concept == qname
 
 
+@pytest.mark.parametrize(
+    "metric",
+    ["finance_lease_current", "finance_lease_noncurrent"],
+)
+def test_finance_lease_split_extension_under_payment_schedule_parent_is_not_accepted(
+    metric: str,
+) -> None:
+    parent = "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    fact = account_fact(
+        "issuer:FinanceLeaseLiabilityCarryingValue",
+        documentation="Finance lease liability carrying value.",
+        statement_roles=(),
+        presentation_parents=(parent,),
+        calculation_parents=(parent,),
+    )
+
+    decision = resolve_concept(metric_request(metric), [fact])
+
+    assert decision.status != "accepted"
+
+
+@pytest.mark.parametrize(
+    "overrides,reason",
+    [
+        ({"unit": "shares"}, "UNIT_MISMATCH"),
+        ({"period_end": "2024-12-31"}, "PERIOD_MISMATCH"),
+        ({"source_accession": "other-accession"}, "ACCESSION_MISMATCH"),
+        ({"statement_roles": ("income_statement",)}, "STATEMENT_ROLE_MISMATCH"),
+        (
+            {
+                "dimensions": (
+                    ("us-gaap:ProductOrServiceAxis", "us-gaap:FinanceLeaseMember"),
+                )
+            },
+            "DIMENSIONED_NONCONSOLIDATED_FACT",
+        ),
+    ],
+)
+def test_finance_lease_direct_alias_enforces_accounting_gates(
+    overrides: dict[str, object], reason: str
+) -> None:
+    parent = "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract"
+    fact_values: dict[str, object] = {
+        "value": 220_000_000,
+        "statement_roles": (),
+        "presentation_parents": (parent,),
+        "calculation_parents": (parent,),
+    }
+    fact_values.update(overrides)
+
+    decision = resolve_concept(
+        metric_request("finance_lease_current"),
+        [account_fact("us-gaap:FinanceLeaseLiabilityCurrent", **fact_values)],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == (reason,)
+
+
+@pytest.mark.parametrize(
+    "metric",
+    [
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+        "finance_lease_total",
+    ],
+)
+def test_finance_lease_absence_is_unresolved_not_zero(metric: str) -> None:
+    decision = resolve_concept(metric_request(metric), [])
+
+    assert decision.status == "unresolved"
+    assert decision.value is None
+    assert decision.reason_codes == ("NO_CANDIDATE",)
+
+
 def test_finance_lease_total_accepts_net_carrying_value_not_gross_payments() -> None:
     carrying_value = account_fact(
         "us-gaap:FinanceLeaseLiability",
@@ -435,6 +510,20 @@ def test_finance_lease_total_accepts_net_carrying_value_not_gross_payments() -> 
     assert decision.status == "accepted"
     assert decision.value == 664_000_000
     assert decision.source_concept == "us-gaap:FinanceLeaseLiability"
+
+
+def test_finance_lease_total_gross_payments_alone_are_not_accepted() -> None:
+    gross_payments = account_fact(
+        "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+        value=718_000_000,
+        statement_roles=(),
+        presentation_parents=("us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract",),
+    )
+
+    decision = resolve_concept(metric_request("finance_lease_total"), [gross_payments])
+
+    assert decision.status == "review"
+    assert decision.status != "accepted"
 
 
 @pytest.mark.parametrize(

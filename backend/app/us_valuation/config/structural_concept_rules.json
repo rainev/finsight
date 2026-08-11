@@ -267,8 +267,7 @@
     "statement_support_parents": [
       "us-gaap:LiabilitiesCurrent",
       "us-gaap:LiabilitiesCurrentAbstract",
-      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
-      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract"
     ],
     "direct_statement_parents": [
       "us-gaap:LiabilitiesCurrent",
@@ -278,8 +277,7 @@
     "structural_parents": [
       "us-gaap:LiabilitiesCurrent",
       "us-gaap:LiabilitiesCurrentAbstract",
-      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
-      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract"
     ],
     "extension_terms": [
       "finance lease",
@@ -327,8 +325,7 @@
     "statement_support_parents": [
       "us-gaap:LiabilitiesNoncurrent",
       "us-gaap:LiabilitiesNoncurrentAbstract",
-      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
-      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract"
     ],
     "direct_statement_parents": [
       "us-gaap:LiabilitiesNoncurrent",
@@ -338,8 +335,7 @@
     "structural_parents": [
       "us-gaap:LiabilitiesNoncurrent",
       "us-gaap:LiabilitiesNoncurrentAbstract",
-      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
-      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract"
     ],
     "extension_terms": [
       "finance lease",
