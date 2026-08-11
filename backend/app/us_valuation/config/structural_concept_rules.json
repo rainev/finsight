@@ -111,5 +111,143 @@
     "concept_reason_codes": {},
     "allowed_dimensions": {},
     "contextual_concepts": []
+  },
+  "current_debt": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "current",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "extension_terms": [
+      "debt current",
+      "current maturities",
+      "short term borrowings"
+    ],
+    "required_definition_phrases": [
+      "current debt carrying amount",
+      "aggregate current debt carrying amount"
+    ],
+    "excluded_economic_phrases": [
+      "available for sale",
+      "investment",
+      "receivable",
+      "maturity repayments",
+      "fair value",
+      "face amount",
+      "proceeds",
+      "repayments"
+    ],
+    "component_only_concepts": [
+      "NotesPayableCurrent",
+      "ConvertibleDebtCurrent",
+      "ShortTermBorrowings"
+    ],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [
+      "LongTermDebtCurrent"
+    ],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "noncurrent_debt": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "noncurrent",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "extension_terms": [
+      "debt noncurrent",
+      "long term borrowings",
+      "long term debt"
+    ],
+    "required_definition_phrases": [
+      "noncurrent debt carrying amount",
+      "aggregate noncurrent debt carrying amount"
+    ],
+    "excluded_economic_phrases": [
+      "available for sale",
+      "investment",
+      "receivable",
+      "maturity repayments",
+      "fair value",
+      "face amount",
+      "proceeds",
+      "repayments",
+      "issuance costs"
+    ],
+    "component_only_concepts": [
+      "LongTermDebt",
+      "ConvertibleDebtNoncurrent"
+    ],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "commercial_paper": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "current",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "extension_terms": [
+      "commercial paper",
+      "commercial paper borrowing",
+      "short term borrowings"
+    ],
+    "required_definition_phrases": [
+      "commercial paper borrowing",
+      "commercial paper liability"
+    ],
+    "excluded_economic_phrases": [
+      "available for sale",
+      "investment",
+      "assets fair value",
+      "financial instrument axis"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {},
+    "contextual_concepts": []
   }
 }

@@ -97,13 +97,16 @@ def metric_request(metric: str, **overrides: object) -> ResolutionRequest:
 
 def account_fact(qname: str, **overrides: object) -> StructuralFact:
     local_name = qname.split(":", 1)[-1]
+    presentation_parents = tuple(overrides.get("presentation_parents", ()))
     values: dict[str, object] = {
         "qname": qname,
         "local_name": local_name,
         "labels": (("standard", local_name),),
         "documentation": local_name,
-        "presentation_ancestry": tuple(overrides.get("presentation_parents", ())),
+        "presentation_ancestry": presentation_parents,
     }
+    if "presentation_parents" in overrides and "calculation_parents" not in overrides:
+        values["calculation_parents"] = presentation_parents
     values.update(overrides)
     return make_fact(**values)
 
@@ -116,6 +119,220 @@ def noncurrent_request(**overrides: object) -> ResolutionRequest:
     return metric_request("marketable_securities_noncurrent", **overrides)
 
 
+@pytest.mark.parametrize(
+    "metric,qname,value,parents,roles",
+    [
+        (
+            "current_debt",
+            "us-gaap:DebtCurrent",
+            7_550_000_000,
+            ("us-gaap:DebtInstrumentLineItems",),
+            (),
+        ),
+        (
+            "current_debt",
+            "us-gaap:LongTermDebtCurrent",
+            0,
+            ("us-gaap:LiabilitiesCurrentAbstract",),
+            ("balance_sheet",),
+        ),
+        (
+            "noncurrent_debt",
+            "us-gaap:LongTermDebtNoncurrent",
+            23_611_000_000,
+            ("us-gaap:DebtInstrumentLineItems",),
+            (),
+        ),
+        (
+            "noncurrent_debt",
+            "us-gaap:LongTermDebtNoncurrent",
+            0,
+            ("us-gaap:LiabilitiesNoncurrentAbstract",),
+            ("balance_sheet",),
+        ),
+    ],
+)
+def test_direct_debt_carrying_amounts_are_accepted(
+    metric: str,
+    qname: str,
+    value: float,
+    parents: tuple[str, ...],
+    roles: tuple[str, ...],
+) -> None:
+    decision = resolve_concept(
+        metric_request(metric),
+        [account_fact(qname, value=value, presentation_parents=parents, statement_roles=roles)],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == value
+
+
+def test_convertible_current_debt_is_review_only_component() -> None:
+    decision = resolve_concept(
+        metric_request("current_debt"),
+        [account_fact("us-gaap:ConvertibleDebtCurrent", value=125.0)],
+    )
+
+    assert decision.status == "review"
+    assert decision.confidence == 0.75
+    assert "COMPONENT_ONLY_CONCEPT" in decision.reason_codes
+
+
+def test_unqualified_long_term_debt_is_review_only_for_noncurrent_debt() -> None:
+    decision = resolve_concept(
+        metric_request("noncurrent_debt"),
+        [
+            account_fact(
+                "us-gaap:LongTermDebt",
+                value=23_611_000_000,
+                presentation_parents=("us-gaap:LiabilitiesNoncurrentAbstract",),
+                calculation_parents=("us-gaap:LiabilitiesNoncurrentAbstract",),
+            )
+        ],
+    )
+
+    assert decision.status == "review"
+    assert decision.confidence == 0.75
+    assert "COMPONENT_ONLY_CONCEPT" in decision.reason_codes
+
+
+def test_current_debt_subtype_with_only_generic_debt_note_support_is_rejected() -> None:
+    decision = resolve_concept(
+        metric_request("current_debt"),
+        [
+            account_fact(
+                "us-gaap:LongTermDebtCurrent",
+                statement_roles=(),
+                presentation_parents=("us-gaap:DebtInstrumentLineItems",),
+                calculation_parents=("us-gaap:DebtInstrumentLineItems",),
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("STATEMENT_ROLE_MISMATCH",)
+
+
+@pytest.mark.parametrize(
+    "qname,documentation",
+    [
+        ("us-gaap:DebtMaturitySchedule", "Debt maturity repayments."),
+        ("us-gaap:DebtInstrumentFaceAmount", "Debt instrument face amount."),
+        ("us-gaap:DebtInstrumentFairValue", "Debt instrument fair value."),
+        (
+            "us-gaap:ProceedsFromIssuanceOfLongTermDebt",
+            "Proceeds from debt issuance cash flows.",
+        ),
+        (
+            "us-gaap:RepaymentsOfLongTermDebt",
+            "Repayments of long-term debt cash flows.",
+        ),
+    ],
+)
+def test_debt_schedule_valuation_and_cash_flow_facts_are_rejected(
+    qname: str, documentation: str
+) -> None:
+    decision = resolve_concept(
+        metric_request("noncurrent_debt"),
+        [
+            account_fact(
+                qname,
+                documentation=documentation,
+                presentation_parents=("us-gaap:DebtInstrumentLineItems",),
+                calculation_parents=("us-gaap:DebtInstrumentLineItems",),
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
+def test_crm_commercial_paper_investment_component_is_excluded() -> None:
+    decision = resolve_concept(
+        metric_request("commercial_paper"),
+        [
+            account_fact(
+                "us-gaap:AvailableForSaleSecuritiesDebtSecurities",
+                value=94_000_000,
+                documentation="Available-for-sale debt securities reported at assets fair value.",
+                dimensions=(
+                    (
+                        "us-gaap:FinancialInstrumentAxis",
+                        "us-gaap:CommercialPaperMember",
+                    ),
+                ),
+                presentation_parents=("us-gaap:AssetsCurrent",),
+                calculation_parents=("us-gaap:AssetsCurrent",),
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
+def test_missing_commercial_paper_borrowing_is_unresolved_not_zero() -> None:
+    decision = resolve_concept(metric_request("commercial_paper"), [])
+
+    assert decision.status == "unresolved"
+    assert decision.value is None
+    assert decision.reason_codes == ("NO_CANDIDATE",)
+
+
+def _issuer_current_borrowings_fact(
+    *, presentation_parents: tuple[str, ...], calculation_parents: tuple[str, ...]
+) -> StructuralFact:
+    return account_fact(
+        "issuer:CurrentBorrowingsAndMaturities",
+        labels=(("standard", "Current borrowings and maturities"),),
+        documentation="Aggregate current debt carrying amount.",
+        statement_roles=(),
+        presentation_parents=presentation_parents,
+        calculation_parents=calculation_parents,
+        relationships=(
+            StructuralRelationship(
+                arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                linkrole="https://example.test/role/BalanceSheet",
+                from_concept="us-gaap:LiabilitiesCurrentAbstract",
+                to_concept="issuer:CurrentBorrowingsAndMaturities",
+                order=1.0,
+                preferred_label=None,
+                calculation_weight=None,
+            ),
+        ),
+    )
+
+
+def test_issuer_current_borrowings_extension_is_accepted_with_two_structural_signals() -> None:
+    fact = _issuer_current_borrowings_fact(
+        presentation_parents=("us-gaap:LiabilitiesCurrentAbstract",),
+        calculation_parents=("us-gaap:LiabilitiesCurrentAbstract",),
+    )
+
+    decision = resolve_concept(metric_request("current_debt"), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.confidence == 0.96
+    assert decision.value == 100.0
+
+
+@pytest.mark.parametrize("missing", ["presentation_parents", "calculation_parents"])
+def test_issuer_current_borrowings_missing_one_structural_signal_is_review(
+    missing: str,
+) -> None:
+    parents = ("us-gaap:LiabilitiesCurrentAbstract",)
+    overrides = {
+        "presentation_parents": parents if missing != "presentation_parents" else (),
+        "calculation_parents": parents if missing != "calculation_parents" else (),
+    }
+    fact = _issuer_current_borrowings_fact(**overrides)
+
+    decision = resolve_concept(metric_request("current_debt"), [fact])
+
+    assert decision.status == "review"
+    assert decision.confidence == 0.75
 def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() -> None:
     rules = load_structural_rules()
 
@@ -133,6 +350,9 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
     assert set(metric_rules) == {
         "marketable_securities_current",
         "marketable_securities_noncurrent",
+        "current_debt",
+        "noncurrent_debt",
+        "commercial_paper",
     }
     required_policy_fields = {
         "orientation",

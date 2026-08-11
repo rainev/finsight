@@ -240,10 +240,29 @@ def _orientation(
     orientation_parts.extend(fact.presentation_parents)
     orientation_parts.extend(fact.calculation_parents)
     text = _normalized_text(" ".join(orientation_parts) + " " + parent_text)
-    noncurrent_phrases = ("noncurrent", "non current", "long term")
+
+    concept_text = _normalized_text(f"{fact.qname} {fact.local_name}")
+    explicit_noncurrent_concept = bool(
+        re.search(r"(?:^|\s)non ?current$", concept_text)
+    )
+    explicit_current_concept = not explicit_noncurrent_concept and bool(
+        re.search(r"(?:^|\s)current$", concept_text)
+        or _contains_phrase(concept_text, "current portion")
+        or _contains_phrase(concept_text, "current maturities")
+    )
+
+    noncurrent_phrases = ("noncurrent", "non current")
     if any(_contains_phrase(text, token) for token in noncurrent_phrases):
         orientations.add("noncurrent")
-    standalone_current_text = _remove_phrases(text, noncurrent_phrases)
+    elif not explicit_current_concept and _contains_phrase(text, "long term"):
+        orientations.add("noncurrent")
+
+    if explicit_noncurrent_concept:
+        orientations.add("noncurrent")
+    if explicit_current_concept:
+        orientations.add("current")
+
+    standalone_current_text = _remove_phrases(text, noncurrent_phrases + ("long term",))
     if any(
         _contains_phrase(standalone_current_text, token)
         for token in ("current", "short term")
