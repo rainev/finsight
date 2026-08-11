@@ -7,6 +7,7 @@
 - Final implementation commits:
   - `5f80961 fix: harden structural XBRL evidence pipeline`
   - `ad319a1 fix: close structural XBRL review gaps`
+  - `a1b69d7 feat: enable SEC transforms in structural XBRL pilot`
 - Design: `docs/superpowers/specs/2026-08-10-structural-xbrl-concept-resolution-design.md`
 - Plan: `docs/superpowers/plans/2026-08-10-structural-xbrl-concept-resolution.md`
 - SDD ledger: `.superpowers/sdd/2026-08-10-structural-xbrl-concept-resolution/progress.md`
