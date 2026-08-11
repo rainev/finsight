@@ -249,6 +249,23 @@ def test_debt_schedule_valuation_and_cash_flow_facts_are_rejected(
     assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
 
 
+def test_debt_maturity_schedule_is_excluded_with_carrying_amount_wording() -> None:
+    decision = resolve_concept(
+        metric_request("noncurrent_debt"),
+        [
+            account_fact(
+                "issuer:LongTermDebtMaturitySchedule",
+                documentation="Noncurrent debt carrying amount maturity schedule.",
+                presentation_parents=("us-gaap:DebtInstrumentLineItems",),
+                calculation_parents=("us-gaap:DebtInstrumentLineItems",),
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
 def test_crm_commercial_paper_investment_component_is_excluded() -> None:
     decision = resolve_concept(
         metric_request("commercial_paper"),
@@ -316,6 +333,10 @@ def test_issuer_current_borrowings_extension_is_accepted_with_two_structural_sig
     assert decision.status == "accepted"
     assert decision.confidence == 0.96
     assert decision.value == 100.0
+    assert set(decision.reason_codes) >= {
+        "CURRENT_LIABILITY_PRESENTATION_PARENT",
+        "CURRENT_LIABILITY_CALCULATION_PARENT",
+    }
 
 
 @pytest.mark.parametrize("missing", ["presentation_parents", "calculation_parents"])
@@ -333,6 +354,25 @@ def test_issuer_current_borrowings_missing_one_structural_signal_is_review(
 
     assert decision.status == "review"
     assert decision.confidence == 0.75
+
+
+def test_long_term_debt_current_rejects_noncurrent_parent_conflict() -> None:
+    parents = ("us-gaap:LiabilitiesNoncurrentAbstract",)
+    decision = resolve_concept(
+        metric_request("current_debt"),
+        [
+            account_fact(
+                "us-gaap:LongTermDebtCurrent",
+                value=0,
+                statement_roles=("balance_sheet",),
+                presentation_parents=parents,
+                calculation_parents=parents,
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("CURRENT_NONCURRENT_CONFLICT",)
 def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() -> None:
     rules = load_structural_rules()
 

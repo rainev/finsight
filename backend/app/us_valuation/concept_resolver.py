@@ -335,11 +335,14 @@ def _structural_signals(
     known_parents = set(_rule_strings(metric_rules, "structural_parents"))
     presentation = bool(set(fact.presentation_parents) & known_parents)
     calculation = bool(set(fact.calculation_parents) & known_parents)
+    reason_prefix = metric_rules.get("structural_reason_prefix", "ASSET")
+    if not isinstance(reason_prefix, str) or not reason_prefix:
+        reason_prefix = "STRUCTURAL"
     reasons: list[str] = []
     if presentation:
-        reasons.append(f"{expected.upper()}_ASSET_PRESENTATION_PARENT")
+        reasons.append(f"{expected.upper()}_{reason_prefix}_PRESENTATION_PARENT")
     if calculation:
-        reasons.append(f"{expected.upper()}_ASSET_CALCULATION_PARENT")
+        reasons.append(f"{expected.upper()}_{reason_prefix}_CALCULATION_PARENT")
     return presentation, calculation, tuple(reasons)
 
 

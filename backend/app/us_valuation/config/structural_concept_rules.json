@@ -139,10 +139,12 @@
       "current debt carrying amount",
       "aggregate current debt carrying amount"
     ],
+    "structural_reason_prefix": "LIABILITY",
     "excluded_economic_phrases": [
       "available for sale",
       "investment",
       "receivable",
+      "maturity schedule",
       "maturity repayments",
       "fair value",
       "face amount",
@@ -189,10 +191,12 @@
       "noncurrent debt carrying amount",
       "aggregate noncurrent debt carrying amount"
     ],
+    "structural_reason_prefix": "LIABILITY",
     "excluded_economic_phrases": [
       "available for sale",
       "investment",
       "receivable",
+      "maturity schedule",
       "maturity repayments",
       "fair value",
       "face amount",
@@ -237,6 +241,7 @@
       "commercial paper borrowing",
       "commercial paper liability"
     ],
+    "structural_reason_prefix": "LIABILITY",
     "excluded_economic_phrases": [
       "available for sale",
       "investment",
