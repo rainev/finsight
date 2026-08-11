@@ -404,10 +404,16 @@ class ResolutionEvidence:
 
     def validate_complete(self) -> None:
         fact = self.fact
+        has_statement_evidence = bool(
+            fact.statement_roles
+            or fact.presentation_parents
+            or fact.calculation_parents
+            or fact.presentation_ancestry
+        )
         if (
             not fact.namespace
             or not fact.context_id
-            or not fact.statement_roles
+            or not has_statement_evidence
             or not fact.relationships
             or not (fact.labels or fact.documentation)
             or fact.decimals is None
@@ -439,7 +445,7 @@ class ResolutionDecision:
     reason_codes: tuple[str, ...]
     form: str
     evidence: ResolutionEvidence | None
-    mapping_version: str = "US-XBRL-RESOLVER-1.0"
+    mapping_version: str = "US-XBRL-RESOLVER-1.1"
 
     def __post_init__(self) -> None:
         if self.status not in {"accepted", "review", "rejected", "unresolved"}:

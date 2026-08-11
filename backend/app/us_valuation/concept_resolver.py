@@ -1,4 +1,4 @@
-"""Deterministic structural resolver for marketable-securities XBRL facts."""
+"""Deterministic, policy-driven structural resolver for XBRL facts."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ from .structural_xbrl import (
 _CONFIG_DIR = Path(__file__).with_name("config")
 _RULES_PATH = _CONFIG_DIR / "structural_concept_rules.json"
 _ALIASES_PATH = _CONFIG_DIR / "concept_aliases.json"
-_RESOLVER_VERSION = "US-XBRL-RESOLVER-1.0"
+_RESOLVER_VERSION = "US-XBRL-RESOLVER-1.1"
 _CAMEL_BOUNDARY = re.compile(
     r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])"
 )
@@ -30,11 +30,11 @@ _GATE_PRIORITY = {
     "ACCESSION_MISMATCH": 10,
     "PERIOD_MISMATCH": 20,
     "UNIT_MISMATCH": 30,
+    "EXCLUDED_ECONOMIC_CLASS": 35,
     "STATEMENT_ROLE_MISMATCH": 40,
     "DIMENSIONED_NONCONSOLIDATED_FACT": 50,
     "MISSING_NUMERIC_VALUE": 60,
     "CURRENT_NONCURRENT_CONFLICT": 70,
-    "EXCLUDED_ECONOMIC_CLASS": 80,
 }
 
 
@@ -100,24 +100,6 @@ def _standard_alias_rank(
     return None
 
 
-def _standard_metric_for_fact(
-    fact: StructuralFact,
-    aliases: Mapping[str, Any],
-    official_namespaces: frozenset[str],
-) -> str | None:
-    for concept in ("marketable_securities_current", "marketable_securities_noncurrent"):
-        if (
-            _standard_alias_rank(
-                fact,
-                _concepts_for_metric(aliases, concept),
-                official_namespaces,
-            )
-            is not None
-        ):
-            return concept
-    return None
-
-
 def _normalized_text(value: str) -> str:
     value = _CAMEL_BOUNDARY.sub(" ", value).replace("_", " ")
     return " ".join(
@@ -128,7 +110,35 @@ def _normalized_text(value: str) -> str:
 def _fact_text(fact: StructuralFact) -> str:
     parts = [fact.qname, fact.local_name, fact.documentation or ""]
     parts.extend(label for _, label in fact.labels)
+    parts.extend(
+        value
+        for pair in fact.dimensions
+        for value in pair
+    )
+    parts.extend(fact.presentation_parents)
+    parts.extend(fact.calculation_parents)
+    parts.extend(fact.presentation_ancestry)
     return _normalized_text(" ".join(parts))
+
+
+def _rule_strings(metric_rules: Mapping[str, Any], key: str) -> tuple[str, ...]:
+    value = metric_rules.get(key, ())
+    if not isinstance(value, (list, tuple)):
+        return ()
+    return tuple(item for item in value if isinstance(item, str))
+
+
+def _concept_matches(fact: StructuralFact, concept: str) -> bool:
+    return fact.qname == concept or fact.local_name == concept
+
+
+def _configured_concept_value(
+    fact: StructuralFact, metric_rules: Mapping[str, Any], key: str
+) -> bool:
+    return any(
+        _concept_matches(fact, concept)
+        for concept in _rule_strings(metric_rules, key)
+    )
 
 
 def _phrase_pattern(phrase: str) -> str:
@@ -148,47 +158,87 @@ def _remove_phrases(text: str, phrases: tuple[str, ...]) -> str:
 
 
 def _excluded_reason(
-    fact: StructuralFact, rules: Mapping[str, Any]
+    fact: StructuralFact, metric_rules: Mapping[str, Any]
 ) -> str | None:
     text = _fact_text(fact)
-    phrases = rules.get("excluded_economic_phrases", ())
-    if isinstance(phrases, list) and any(
-        isinstance(phrase, str) and _contains_phrase(text, phrase) for phrase in phrases
-    ):
+    if any(_contains_phrase(text, phrase) for phrase in _rule_strings(metric_rules, "excluded_economic_phrases")):
         return "EXCLUDED_ECONOMIC_CLASS"
     return None
 
 
-def _orientation(
+def _statement_supported(
+    request: ResolutionRequest,
     fact: StructuralFact,
-    rules: Mapping[str, Any],
-    aliases: Mapping[str, Any],
+    metric_rules: Mapping[str, Any],
+) -> bool:
+    if request.statement_role != metric_rules.get("statement_role"):
+        return False
+    if request.statement_role in fact.statement_roles:
+        return True
+    if fact.statement_roles:
+        return False
+
+    parent_values = (
+        set(fact.presentation_parents)
+        | set(fact.calculation_parents)
+        | set(fact.presentation_ancestry)
+    )
+    if _configured_concept_value(fact, metric_rules, "direct_statement_concepts"):
+        return bool(
+            parent_values
+            & set(_rule_strings(metric_rules, "direct_statement_parents"))
+        )
+    return bool(
+        parent_values & set(_rule_strings(metric_rules, "statement_support_parents"))
+    )
+
+
+def _dimensions_allowed(
+    fact: StructuralFact, metric_rules: Mapping[str, Any]
+) -> bool:
+    if not fact.dimensions:
+        return True
+    allowed = metric_rules.get("allowed_dimensions", {})
+    if not isinstance(allowed, Mapping):
+        return False
+    combinations = allowed.get(fact.qname, allowed.get(fact.local_name, ()))
+    if not isinstance(combinations, (list, tuple)):
+        return False
+    actual = tuple(sorted(fact.dimensions))
+    for combination in combinations:
+        if not isinstance(combination, (list, tuple)):
+            continue
+        try:
+            expected = tuple(sorted(tuple(pair) for pair in combination))
+        except TypeError:
+            continue
+        if actual == expected:
+            return True
+    return False
+
+
+def _contextual_concept_match(
+    fact: StructuralFact, metric_rules: Mapping[str, Any]
+) -> bool:
+    return _configured_concept_value(fact, metric_rules, "contextual_concepts")
+
+
+def _orientation(
+    fact: StructuralFact, metric_rules: Mapping[str, Any]
 ) -> str | None:
-    current_rules = rules.get("marketable_securities_current", {})
-    noncurrent_rules = rules.get("marketable_securities_noncurrent", {})
-    current_parents = set(
-        current_rules.get("known_current_parents", ())
-        if isinstance(current_rules, Mapping)
-        else ()
-    )
-    noncurrent_parents = set(
-        noncurrent_rules.get("known_noncurrent_parents", ())
-        if isinstance(noncurrent_rules, Mapping)
-        else ()
-    )
+    configured = metric_rules.get("orientation")
+    if configured not in {"current", "noncurrent"}:
+        return None
+
     parents = set(fact.presentation_parents) | set(fact.calculation_parents)
+    parent_text = _normalized_text(" ".join(parents))
     orientations: set[str] = set()
-    if parents & current_parents:
-        orientations.add("current")
-    if parents & noncurrent_parents:
-        orientations.add("noncurrent")
-
-    official_namespaces = frozenset(rules["official_us_gaap_namespaces"])
-    standard_metric = _standard_metric_for_fact(fact, aliases, official_namespaces)
-    if standard_metric is not None:
-        orientations.add("current" if standard_metric.endswith("_current") else "noncurrent")
-
-    text = _fact_text(fact)
+    orientation_parts = [fact.qname, fact.local_name, fact.documentation or ""]
+    orientation_parts.extend(label for _, label in fact.labels)
+    orientation_parts.extend(value for pair in fact.dimensions for value in pair)
+    orientation_parts.extend(fact.presentation_parents)
+    orientation_parts.extend(fact.calculation_parents)
+    text = _normalized_text(" ".join(orientation_parts) + " " + parent_text)
     noncurrent_phrases = ("noncurrent", "non current", "long term")
     if any(_contains_phrase(text, token) for token in noncurrent_phrases):
         orientations.add("noncurrent")
@@ -209,8 +259,6 @@ def _hard_gate_reason(
     request: ResolutionRequest,
     fact: StructuralFact,
     metric_rules: Mapping[str, Any],
-    rules: Mapping[str, Any],
-    aliases: Mapping[str, Any],
 ) -> str | None:
     if fact.filing_form not in ELIGIBLE_FILING_FORMS:
         return "INELIGIBLE_FILING_FORM"
@@ -222,44 +270,49 @@ def _hard_gate_reason(
         return "PERIOD_MISMATCH"
     if fact.unit != request.unit or fact.unit != metric_rules.get("unit"):
         return "UNIT_MISMATCH"
-    if request.statement_role != metric_rules.get("statement_role"):
+    excluded_reason = _excluded_reason(fact, metric_rules)
+    if excluded_reason is not None:
+        return excluded_reason
+    if not _statement_supported(request, fact, metric_rules):
         return "STATEMENT_ROLE_MISMATCH"
-    if request.statement_role not in fact.statement_roles:
-        return "STATEMENT_ROLE_MISMATCH"
-    if fact.dimensions:
+    if not _dimensions_allowed(fact, metric_rules):
         return "DIMENSIONED_NONCONSOLIDATED_FACT"
     if fact.value is None:
         return "MISSING_NUMERIC_VALUE"
 
-    orientation = _orientation(fact, rules, aliases)
-    expected = "current" if request.normalized_concept.endswith("_current") else "noncurrent"
+    orientation = _orientation(fact, metric_rules)
+    expected = metric_rules.get("orientation")
     if orientation == "conflict" or (
-        orientation is not None and orientation != expected
+        expected in {"current", "noncurrent"}
+        and orientation is not None
+        and orientation != expected
     ):
         return "CURRENT_NONCURRENT_CONFLICT"
 
-    return _excluded_reason(fact, rules)
+    return None
 
 
-def _is_plausible_extension(fact: StructuralFact) -> bool:
+def _is_plausible_extension(
+    fact: StructuralFact, metric_rules: Mapping[str, Any]
+) -> bool:
     text = _fact_text(fact)
-    return any(
+    extension_terms = _rule_strings(metric_rules, "extension_terms")
+    term_tokens = tuple(
+        token
+        for phrase in extension_terms
+        for token in _normalized_text(phrase).split()
+        if token not in {"and", "for", "of", "the", "to"}
+    )
+    return _contextual_concept_match(fact, metric_rules) or any(
         _contains_phrase(text, phrase)
-        for phrase in (
-            "marketable",
-            "investment",
-            "securities",
-            "available for sale",
-            "debt securities",
-        )
+        for phrase in extension_terms + term_tokens
     )
 
 
 def _structural_signals(
     fact: StructuralFact, metric_rules: Mapping[str, Any], expected: str
 ) -> tuple[bool, bool, tuple[str, ...]]:
-    parent_key = f"known_{expected}_parents"
-    known_parents = set(metric_rules.get(parent_key, ()))
+    known_parents = set(_rule_strings(metric_rules, "structural_parents"))
     presentation = bool(set(fact.presentation_parents) & known_parents)
     calculation = bool(set(fact.calculation_parents) & known_parents)
     reasons: list[str] = []
@@ -271,12 +324,35 @@ def _structural_signals(
 
 
 def _definition_signal(fact: StructuralFact, metric_rules: Mapping[str, Any]) -> bool:
-    documentation = _normalized_text(fact.documentation or "")
-    phrases = metric_rules.get("required_definition_phrases", ())
-    return isinstance(phrases, list) and any(
-        isinstance(phrase, str) and _contains_phrase(documentation, phrase)
-        for phrase in phrases
+    text = _fact_text(fact)
+    return any(
+        _contains_phrase(text, phrase)
+        for phrase in _rule_strings(metric_rules, "required_definition_phrases")
     )
+
+
+def _concept_reason_code(
+    fact: StructuralFact, metric_rules: Mapping[str, Any]
+) -> str | None:
+    configured = metric_rules.get("concept_reason_codes", {})
+    if not isinstance(configured, Mapping):
+        return None
+    for concept, reason in configured.items():
+        if isinstance(concept, str) and isinstance(reason, str) and _concept_matches(fact, concept):
+            return reason
+    return None
+
+
+def _statement_reason_code(
+    request: ResolutionRequest,
+    fact: StructuralFact,
+    metric_rules: Mapping[str, Any],
+) -> str | None:
+    if request.statement_role in fact.statement_roles:
+        return None
+    if _statement_supported(request, fact, metric_rules):
+        return "STRUCTURAL_STATEMENT_SUPPORT"
+    return None
 
 
 def _classify_candidate(
@@ -288,45 +364,107 @@ def _classify_candidate(
 ) -> _Candidate | None:
     concepts = _concepts_for_metric(aliases, request.normalized_concept)
     alias_rank = _standard_alias_rank(fact, concepts, official_namespaces)
-    if alias_rank is not None:
-        if alias_rank == 0:
-            return _Candidate(
-                fact,
-                "accepted",
-                1.00,
-                "exact_configured_concept",
-                ("EXACT_CONFIGURED_CONCEPT",),
-            )
+    component_only = _configured_concept_value(
+        fact, metric_rules, "component_only_concepts"
+    )
+    review_only = any(
+        _contains_phrase(_fact_text(fact), phrase)
+        for phrase in _rule_strings(metric_rules, "review_only_phrases")
+    )
+
+    def candidate(
+        *,
+        status: str,
+        confidence: float,
+        mapping_method: str,
+        reason_codes: tuple[str, ...],
+    ) -> _Candidate:
+        reasons = list(reason_codes)
+        statement_reason = _statement_reason_code(request, fact, metric_rules)
+        if statement_reason is not None:
+            reasons.append(statement_reason)
+        concept_reason = _concept_reason_code(fact, metric_rules)
+        if concept_reason is not None:
+            reasons.append(concept_reason)
         return _Candidate(
             fact,
-            "accepted",
-            0.98,
-            "known_taxonomy_alias",
-            ("KNOWN_TAXONOMY_ALIAS",),
+            status,
+            confidence,
+            mapping_method,
+            tuple(dict.fromkeys(reasons)),
         )
 
-    if not _is_plausible_extension(fact):
+    if alias_rank is not None:
+        if component_only:
+            return candidate(
+                status="review",
+                confidence=0.75,
+                mapping_method="component_only_concept",
+                reason_codes=("COMPONENT_ONLY_CONCEPT",),
+            )
+        if review_only:
+            return candidate(
+                status="review",
+                confidence=0.75,
+                mapping_method="review_only_accounting_context",
+                reason_codes=("REVIEW_ONLY_ACCOUNTING_CONTEXT",),
+            )
+        if alias_rank == 0:
+            return candidate(
+                status="accepted",
+                confidence=1.00,
+                mapping_method="exact_configured_concept",
+                reason_codes=("EXACT_CONFIGURED_CONCEPT",),
+            )
+        return candidate(
+            status="accepted",
+            confidence=0.98,
+            mapping_method="known_taxonomy_alias",
+            reason_codes=("KNOWN_TAXONOMY_ALIAS",),
+        )
+
+    if not _is_plausible_extension(fact, metric_rules):
         return None
 
-    expected = "current" if request.normalized_concept.endswith("_current") else "noncurrent"
+    if _contextual_concept_match(fact, metric_rules):
+        if review_only:
+            return candidate(
+                status="review",
+                confidence=0.75,
+                mapping_method="review_only_accounting_context",
+                reason_codes=("REVIEW_ONLY_ACCOUNTING_CONTEXT",),
+            )
+        return candidate(
+            status="accepted",
+            confidence=0.96,
+            mapping_method="taxonomy_and_context",
+            reason_codes=("GOVERNED_DIMENSIONAL_CONTEXT",),
+        )
+
+    expected = metric_rules.get("orientation", "none")
     presentation, calculation, signal_reasons = _structural_signals(
         fact, metric_rules, expected
     )
     definition = _definition_signal(fact, metric_rules)
     if definition and presentation and calculation:
-        return _Candidate(
-            fact,
-            "accepted",
-            0.96,
-            "extension_structural_match",
-            signal_reasons + ("DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES",),
+        if review_only:
+            return candidate(
+                status="review",
+                confidence=0.75,
+                mapping_method="review_only_accounting_context",
+                reason_codes=("REVIEW_ONLY_ACCOUNTING_CONTEXT",),
+            )
+        return candidate(
+            status="accepted",
+            confidence=0.96,
+            mapping_method="extension_structural_match",
+            reason_codes=signal_reasons + ("DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES",),
         )
-    return _Candidate(
-        fact,
-        "review",
-        0.75,
-        "insufficient_structural_support",
-        ("INSUFFICIENT_STRUCTURAL_SUPPORT",),
+    return candidate(
+        status="review",
+        confidence=0.75,
+        mapping_method="insufficient_structural_support",
+        reason_codes=("INSUFFICIENT_STRUCTURAL_SUPPORT",),
     )
 
 
@@ -451,7 +589,7 @@ def resolve_concept(
         )
         if candidate is None:
             continue
-        gate_reason = _hard_gate_reason(request, fact, metric_rules, rules, aliases)
+        gate_reason = _hard_gate_reason(request, fact, metric_rules)
         if gate_reason is not None:
             gate_failures.append((fact, gate_reason))
         else:

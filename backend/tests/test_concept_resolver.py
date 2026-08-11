@@ -81,9 +81,9 @@ def make_fact(**overrides: object) -> StructuralFact:
     return StructuralFact(**values)  # type: ignore[arg-type]
 
 
-def current_request(**overrides: object) -> ResolutionRequest:
+def metric_request(metric: str, **overrides: object) -> ResolutionRequest:
     values: dict[str, object] = {
-        "normalized_concept": "marketable_securities_current",
+        "normalized_concept": metric,
         "period_end": PERIOD,
         "source_accession": ACCESSION,
         "unit": "USD",
@@ -92,56 +92,70 @@ def current_request(**overrides: object) -> ResolutionRequest:
     }
     values.update(overrides)
     return ResolutionRequest(**values)  # type: ignore[arg-type]
+
+
+def account_fact(qname: str, **overrides: object) -> StructuralFact:
+    local_name = qname.split(":", 1)[-1]
+    values: dict[str, object] = {
+        "qname": qname,
+        "local_name": local_name,
+        "labels": (("standard", local_name),),
+        "documentation": local_name,
+        "presentation_ancestry": tuple(overrides.get("presentation_parents", ())),
+    }
+    values.update(overrides)
+    return make_fact(**values)
+
+
+def current_request(**overrides: object) -> ResolutionRequest:
+    return metric_request("marketable_securities_current", **overrides)
 
 
 def noncurrent_request(**overrides: object) -> ResolutionRequest:
-    values: dict[str, object] = {
-        "normalized_concept": "marketable_securities_noncurrent",
-        "period_end": PERIOD,
-        "source_accession": ACCESSION,
-        "unit": "USD",
-        "statement_role": "balance_sheet",
-        "form": "10-K",
-    }
-    values.update(overrides)
-    return ResolutionRequest(**values)  # type: ignore[arg-type]
+    return metric_request("marketable_securities_noncurrent", **overrides)
 
 
 def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() -> None:
     rules = load_structural_rules()
 
-    assert rules["version"] == "US-XBRL-RESOLVER-1.0"
+    assert rules["version"] == "US-XBRL-RESOLVER-1.1"
     assert set(rules) >= {
         "version",
         "marketable_securities_current",
         "marketable_securities_noncurrent",
+    }
+    metric_rules = {
+        key: value
+        for key, value in rules.items()
+        if isinstance(value, dict) and "statement_role" in value
+    }
+    assert set(metric_rules) == {
+        "marketable_securities_current",
+        "marketable_securities_noncurrent",
+    }
+    required_policy_fields = {
+        "orientation",
+        "statement_support_parents",
+        "direct_statement_parents",
+        "structural_parents",
+        "extension_terms",
+        "required_definition_phrases",
         "excluded_economic_phrases",
+        "component_only_concepts",
+        "review_only_phrases",
+        "direct_statement_concepts",
+        "concept_reason_codes",
+        "allowed_dimensions",
+        "contextual_concepts",
     }
-    assert rules["marketable_securities_current"]["statement_role"] == (
-        "balance_sheet"
-    )
-    assert rules["marketable_securities_current"]["unit"] == "USD"
-    assert rules["marketable_securities_current"]["known_current_parents"] == [
-        "us-gaap:AssetsCurrent",
-        "us-gaap:ShortTermInvestments",
-        "us-gaap:MarketableSecuritiesCurrent",
-    ]
-    assert rules["marketable_securities_noncurrent"][
-        "known_noncurrent_parents"
-    ] == [
-        "us-gaap:AssetsNoncurrent",
-        "us-gaap:LongTermInvestments",
-        "us-gaap:MarketableSecuritiesNoncurrent",
-    ]
-    assert set(rules["excluded_economic_phrases"]) >= {
-        "strategic",
-        "equity method",
-        "restricted",
-        "trust",
-        "collateral",
-        "receivable",
-        "financial-institution trading assets",
+    assert all(required_policy_fields <= set(policy) for policy in metric_rules.values())
+    assert {policy["orientation"] for policy in metric_rules.values()} == {
+        "current",
+        "noncurrent",
     }
+    assert all(policy["excluded_economic_phrases"] for policy in metric_rules.values())
+    assert {rules["version"]} == {"US-XBRL-RESOLVER-1.1"}
+    assert "excluded_economic_phrases" not in rules
     assert tuple(rules["official_us_gaap_namespaces"]) == OFFICIAL_NAMESPACES
 
 
@@ -356,6 +370,8 @@ def test_extension_requires_two_independent_structural_signals() -> None:
     assert decision.status == "accepted"
     assert decision.confidence == 0.96
     assert decision.mapping_method == "extension_structural_match"
+    assert decision.value == 125.0
+    assert decision.reason_codes[-1] == "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES"
     assert set(decision.reason_codes) >= {
         "CURRENT_ASSET_PRESENTATION_PARENT",
         "CURRENT_ASSET_CALCULATION_PARENT",

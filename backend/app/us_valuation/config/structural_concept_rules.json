@@ -1,5 +1,5 @@
 {
-  "version": "US-XBRL-RESOLVER-1.0",
+  "version": "US-XBRL-RESOLVER-1.1",
   "official_us_gaap_namespaces": [
     "http://xbrl.us/us-gaap/2008-01-31",
     "http://xbrl.us/us-gaap/2009-01-31",
@@ -23,42 +23,93 @@
   "marketable_securities_current": {
     "statement_role": "balance_sheet",
     "unit": "USD",
-    "known_current_parents": [
+    "orientation": "current",
+    "statement_support_parents": [
       "us-gaap:AssetsCurrent",
+      "us-gaap:AssetsCurrentAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:AssetsCurrent",
+      "us-gaap:AssetsCurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:AssetsCurrent",
+      "us-gaap:AssetsCurrentAbstract",
       "us-gaap:ShortTermInvestments",
       "us-gaap:MarketableSecuritiesCurrent"
     ],
+    "extension_terms": [
+      "marketable securities",
+      "short term investments",
+      "available for sale",
+      "debt securities"
+    ],
     "required_definition_phrases": [
-      "available-for-sale",
+      "available for sale",
       "debt securities",
       "marketable securities",
-      "short-term investments"
-    ]
+      "short term investments"
+    ],
+    "excluded_economic_phrases": [
+      "strategic",
+      "equity method",
+      "restricted",
+      "trust",
+      "collateral",
+      "receivable",
+      "trading assets"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {},
+    "contextual_concepts": []
   },
   "marketable_securities_noncurrent": {
     "statement_role": "balance_sheet",
     "unit": "USD",
-    "known_noncurrent_parents": [
+    "orientation": "noncurrent",
+    "statement_support_parents": [
       "us-gaap:AssetsNoncurrent",
+      "us-gaap:AssetsNoncurrentAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:AssetsNoncurrent",
+      "us-gaap:AssetsNoncurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:AssetsNoncurrent",
+      "us-gaap:AssetsNoncurrentAbstract",
       "us-gaap:LongTermInvestments",
       "us-gaap:MarketableSecuritiesNoncurrent"
     ],
+    "extension_terms": [
+      "marketable securities",
+      "long term investments",
+      "available for sale",
+      "debt securities"
+    ],
     "required_definition_phrases": [
-      "available-for-sale",
+      "available for sale",
       "debt securities",
       "marketable securities",
-      "long-term investments"
-    ]
-  },
-  "excluded_economic_phrases": [
-    "strategic",
-    "equity method",
-    "restricted",
-    "trust",
-    "collateral",
-    "receivable",
-    "financial-institution trading assets",
-    "financial institution trading assets",
-    "trading assets"
-  ]
+      "long term investments"
+    ],
+    "excluded_economic_phrases": [
+      "strategic",
+      "equity method",
+      "restricted",
+      "trust",
+      "collateral",
+      "receivable",
+      "trading assets"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  }
 }

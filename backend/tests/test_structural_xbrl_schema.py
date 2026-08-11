@@ -61,7 +61,7 @@ def _decision(**overrides: object) -> ResolutionDecision:
     fact = _fact()
     evidence = ResolutionEvidence.from_fact(
         fact,
-        mapping_version="US-XBRL-RESOLVER-1.0",
+        mapping_version="US-XBRL-RESOLVER-1.1",
         confidence=0.95,
         reason_codes=("balance_sheet_role",),
     )
@@ -223,13 +223,49 @@ def test_usable_decisions_require_complete_immutable_evidence(status: str) -> No
         _decision(status=status, evidence=None)
 
 
+def test_evidence_accepts_structural_statement_support_without_classified_role() -> None:
+    fact = _fact(
+        statement_roles=(),
+        presentation_parents=("us-gaap:DebtInstrumentLineItems",),
+    )
+    evidence = ResolutionEvidence.from_fact(
+        fact,
+        mapping_version="US-XBRL-RESOLVER-1.1",
+        confidence=1.0,
+        reason_codes=("EXACT_CONFIGURED_CONCEPT", "STRUCTURAL_STATEMENT_SUPPORT"),
+    )
+
+    evidence.validate_complete()
+
+
+def test_evidence_without_roles_or_structural_statement_support_is_incomplete() -> None:
+    fact = _fact(
+        statement_roles=(),
+        presentation_parents=(),
+        calculation_parents=(),
+        presentation_ancestry=(),
+        relationships=(),
+    )
+    evidence = ResolutionEvidence.from_fact(
+        fact,
+        mapping_version="US-XBRL-RESOLVER-1.1",
+        confidence=1.0,
+        reason_codes=("EXACT_CONFIGURED_CONCEPT",),
+    )
+
+    with pytest.raises(
+        ValueError, match="accepted/review decisions require complete evidence"
+    ):
+        evidence.validate_complete()
+
+
 def test_decision_snapshot_contains_full_accounting_provenance() -> None:
     payload = _decision().as_dict()
 
     assert payload["form"] == "10-K"
     assert payload["evidence"] == {
         **_fact().as_dict(),
-        "mapping_version": "US-XBRL-RESOLVER-1.0",
+        "mapping_version": "US-XBRL-RESOLVER-1.1",
         "confidence": 0.95,
         "reason_codes": ["balance_sheet_role"],
     }
