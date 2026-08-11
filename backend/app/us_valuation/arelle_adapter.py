@@ -10,7 +10,12 @@ import tempfile
 from pathlib import Path
 from typing import Any, Mapping
 
-from .structural_xbrl import ParseDiagnostic, StructuralFact, StructuralFiling
+from .structural_xbrl import (
+    ParseDiagnostic,
+    StructuralFact,
+    StructuralFiling,
+    normalize_filing_form,
+)
 
 
 _BACKEND_DIR = Path(__file__).resolve().parents[2]
@@ -46,7 +51,7 @@ def _diagnostic_from_dict(value: Mapping[str, Any]) -> ParseDiagnostic:
     )  # type: ignore[arg-type]
 
 
-def _filing_from_payload(payload: Any, accession: str) -> StructuralFiling:
+def _filing_from_payload(payload: Any, accession: str, form: str) -> StructuralFiling:
     if not isinstance(payload, Mapping):
         raise ArelleParseError("worker output must be a JSON object")
     raw_facts = payload.get("facts")
@@ -56,6 +61,8 @@ def _filing_from_payload(payload: Any, accession: str) -> StructuralFiling:
         raise ArelleParseError("worker returned no facts")
     if payload.get("source_accession") != accession:
         raise ArelleParseError("worker output accession does not match the requested accession")
+    if payload.get("form") != form:
+        raise ArelleParseError("worker output form does not match the requested form")
 
     try:
         facts = tuple(StructuralFact.from_dict(fact) for fact in raw_facts)
@@ -69,6 +76,11 @@ def _filing_from_payload(payload: Any, accession: str) -> StructuralFiling:
             facts=facts,
             diagnostics=diagnostics,
             form=payload.get("form"),
+            filing_metadata=tuple(
+                (str(pair[0]), str(pair[1]))
+                for pair in payload.get("filing_metadata", ())
+                if isinstance(pair, (list, tuple)) and len(pair) == 2
+            ),
         )
     except (AttributeError, KeyError, TypeError, ValueError) as error:
         raise ArelleParseError(f"worker output has invalid filing data: {error}") from error
@@ -102,6 +114,7 @@ def parse_structural_filing(
     entrypoint: Path,
     *,
     accession: str,
+    form: str = "10-K",
     timeout_seconds: int = 120,
 ) -> StructuralFiling:
     """Parse a local filing through a JSON-only child-process boundary."""
@@ -113,6 +126,7 @@ def parse_structural_filing(
         raise ValueError("accession must be nonempty")
     if timeout_seconds <= 0:
         raise ValueError("timeout_seconds must be positive")
+    normalized_form = normalize_filing_form(form)
 
     with tempfile.TemporaryDirectory(prefix="arelle-output-") as temp_dir:
         output_path = Path(temp_dir) / "filing.json"
@@ -124,6 +138,8 @@ def parse_structural_filing(
             os.fspath(entrypoint),
             "--accession",
             accession,
+            "--form",
+            normalized_form,
             "--output",
             os.fspath(output_path),
         ]
@@ -161,7 +177,7 @@ def parse_structural_filing(
                 payload = json.loads(raw_output)
             except json.JSONDecodeError as error:
                 raise ArelleParseError(f"worker output is not valid JSON: {error}") from error
-            return _filing_from_payload(payload, accession)
+            return _filing_from_payload(payload, accession, normalized_form)
         finally:
             try:
                 output_path.unlink(missing_ok=True)

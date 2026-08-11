@@ -7,9 +7,11 @@ import pytest
 from app.us_valuation.structural_xbrl import (
     ParseDiagnostic,
     ResolutionDecision,
+    ResolutionEvidence,
     ResolutionRequest,
     StructuralFact,
     StructuralFiling,
+    StructuralRelationship,
 )
 
 
@@ -33,12 +35,36 @@ def _fact(**overrides: object) -> StructuralFact:
         "definition_parents": (),
         "definition_children": (),
         "source_accession": "0000000000-26-000001",
+        "decimals": "0",
+        "scale": None,
+        "sign": None,
+        "filing_form": "10-K",
+        "filing_metadata": (("primary_document", "fsi-20251231.htm"),),
+        "presentation_ancestry": ("us-gaap:AssetsCurrent",),
+        "relationships": (
+            StructuralRelationship(
+                arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                linkrole="https://example.test/role/BalanceSheet",
+                from_concept="us-gaap:AssetsCurrent",
+                to_concept="fsi:LiquidInvestmentSecuritiesCurrent",
+                order=1.0,
+                preferred_label=None,
+                calculation_weight=None,
+            ),
+        ),
     }
     values.update(overrides)
     return StructuralFact(**values)  # type: ignore[arg-type]
 
 
 def _decision(**overrides: object) -> ResolutionDecision:
+    fact = _fact()
+    evidence = ResolutionEvidence.from_fact(
+        fact,
+        mapping_version="US-XBRL-RESOLVER-1.0",
+        confidence=0.95,
+        reason_codes=("balance_sheet_role",),
+    )
     values: dict[str, object] = {
         "status": "accepted",
         "normalized_concept": "marketable_securities_current",
@@ -50,6 +76,8 @@ def _decision(**overrides: object) -> ResolutionDecision:
         "confidence": 0.95,
         "mapping_method": "presentation",
         "reason_codes": ("balance_sheet_role",),
+        "form": "10-K",
+        "evidence": evidence,
     }
     values.update(overrides)
     return ResolutionDecision(**values)  # type: ignore[arg-type]
@@ -87,6 +115,7 @@ def test_resolution_request_rejects_empty_accession() -> None:
             source_accession="",
             unit="USD",
             statement_role="balance_sheet",
+            form="10-K",
         )
 
 
@@ -136,6 +165,7 @@ def test_required_dates_reject_none() -> None:
             source_accession="0000000000-26-000001",
             unit="USD",
             statement_role="balance_sheet",
+            form="10-K",
         )
     with pytest.raises(ValueError, match="period"):
         _decision(period=None)
@@ -168,3 +198,52 @@ def test_resolution_decision_rejects_non_finite_confidence(confidence: float) ->
 def test_structural_fact_rejects_non_string_documentation() -> None:
     with pytest.raises(ValueError, match="documentation"):
         _fact(documentation=42)
+
+
+def test_relationship_round_trip_preserves_governed_arc_evidence() -> None:
+    fact = _fact()
+
+    restored = StructuralFact.from_dict(fact.as_dict())
+
+    assert restored.relationships == fact.relationships
+    assert restored.relationships[0].as_dict() == {
+        "arcrole": "http://www.xbrl.org/2003/arcrole/parent-child",
+        "linkrole": "https://example.test/role/BalanceSheet",
+        "from_concept": "us-gaap:AssetsCurrent",
+        "to_concept": "fsi:LiquidInvestmentSecuritiesCurrent",
+        "order": 1.0,
+        "preferred_label": None,
+        "calculation_weight": None,
+    }
+
+
+@pytest.mark.parametrize("status", ["accepted", "review"])
+def test_usable_decisions_require_complete_immutable_evidence(status: str) -> None:
+    with pytest.raises(ValueError, match="evidence"):
+        _decision(status=status, evidence=None)
+
+
+def test_decision_snapshot_contains_full_accounting_provenance() -> None:
+    payload = _decision().as_dict()
+
+    assert payload["form"] == "10-K"
+    assert payload["evidence"] == {
+        **_fact().as_dict(),
+        "mapping_version": "US-XBRL-RESOLVER-1.0",
+        "confidence": 0.95,
+        "reason_codes": ["balance_sheet_role"],
+    }
+
+
+@pytest.mark.parametrize("form", ["10-K", "10-K/A", "10-Q", "10-Q/A"])
+def test_resolution_request_accepts_only_governed_filing_forms(form: str) -> None:
+    request = ResolutionRequest(
+        normalized_concept="marketable_securities_current",
+        period_end="2025-12-31",
+        source_accession="0000000000-26-000001",
+        unit="USD",
+        statement_role="balance_sheet",
+        form=form,
+    )
+
+    assert request.form == form

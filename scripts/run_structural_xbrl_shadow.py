@@ -100,14 +100,16 @@ def _write_immutable_json(path: Path, payload: Mapping[str, Any]) -> None:
             raise RuntimeError(f"Refusing to overwrite immutable shadow report: {path}")
 
 
-def _ensure_separate_output(data_root: Path, output_root: Path) -> None:
-    resolved_output = output_root.resolve()
-    protected_roots = (data_root, *_PROTECTED_OUTPUT_ROOTS)
-    if any(
-        resolved_output.is_relative_to(protected_root.resolve())
-        for protected_root in protected_roots
-    ):
-        raise ValueError("output-root must not be inside protected project data")
+def _ensure_safe_writable_roots(
+    data_root: Path, cache_dir: Path, output_root: Path
+) -> None:
+    protected_roots = tuple(
+        protected.resolve() for protected in (data_root, *_PROTECTED_OUTPUT_ROOTS)
+    )
+    for label, writable in (("cache-dir", cache_dir), ("output-root", output_root)):
+        resolved = writable.resolve()
+        if any(resolved.is_relative_to(protected) for protected in protected_roots):
+            raise ValueError(f"{label} must not be inside protected project data")
 
 
 def _iter_withheld_artifacts(
@@ -152,7 +154,7 @@ def _failure_report(
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
-    _ensure_separate_output(args.data_root, args.output_root)
+    _ensure_safe_writable_roots(args.data_root, args.cache_dir, args.output_root)
 
     # Imports below this line deliberately keep --help independent of Arelle.
     sys.path.insert(0, str(_BACKEND_DIR))
@@ -163,6 +165,7 @@ def main(argv: list[str] | None = None) -> int:
         evaluate_shadow_case,
         shadow_requests_from_artifact,
     )
+    from app.us_valuation.structural_xbrl import ELIGIBLE_FILING_FORMS, StructuralFiling
 
     summary = {counter: 0 for counter in _COUNTER_NAMES}
     ticker_filter = {ticker.upper() for ticker in args.ticker}
@@ -180,21 +183,43 @@ def main(argv: list[str] | None = None) -> int:
             cik = _mapping(artifact.get("issuer")).get("cik")
             accession = controlling_filing.get("accession")
             primary_document = controlling_filing.get("primary_document")
+            form = controlling_filing.get("form")
             if not isinstance(cik, str) or not cik:
                 raise ValueError("artifact CIK is required")
             if not isinstance(accession, str) or not accession:
                 raise ValueError("controlling accession is required")
             if not isinstance(primary_document, str) or not primary_document:
                 raise ValueError("controlling primary document is required")
+            if not isinstance(form, str) or not form:
+                raise ValueError("controlling form is required")
+            normalized_form = form.strip().upper()
+            if normalized_form not in ELIGIBLE_FILING_FORMS:
+                report = evaluate_shadow_case(
+                    artifact,
+                    StructuralFiling(
+                        source_accession=accession,
+                        period_end=requests[0].period_end,
+                        facts=(),
+                        diagnostics=(),
+                        form=normalized_form,
+                    ),
+                )
+                for decision in report["decisions"]:
+                    summary[decision["status"]] += 1
+                _write_immutable_json(args.output_root / f"{ticker}.json", report)
+                continue
             entrypoint = cache_structural_filing_package(
                 client,
                 cik=cik,
                 accession=accession,
                 primary_document=primary_document,
+                form=normalized_form,
                 output_dir=args.cache_dir / "structural-filings",
                 refresh=args.refresh,
             )
-            filing = parse_structural_filing(entrypoint, accession=accession)
+            filing = parse_structural_filing(
+                entrypoint, accession=accession, form=normalized_form
+            )
             report = evaluate_shadow_case(artifact, filing)
             summary["parsed"] += 1
         except (OSError, RuntimeError, ValueError) as error:

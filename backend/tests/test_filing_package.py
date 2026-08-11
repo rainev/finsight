@@ -18,12 +18,20 @@ from app.us_valuation.sec_client import SecClient
 class FakeSecClient:
     """A no-network SEC client whose filing directory is fully controlled by a test."""
 
-    def __init__(self, *, index_names: list[str], attachments: dict[str, bytes] | None = None) -> None:
+    def __init__(
+        self,
+        *,
+        index_names: list[str],
+        attachments: dict[str, bytes] | None = None,
+        taxonomy_resources: dict[str, bytes] | None = None,
+    ) -> None:
         self.index_names = index_names
         self.attachments = attachments or {
             name: f"contents:{name}".encode("utf-8") for name in index_names
         }
         self.requested: list[str] = []
+        self.taxonomy_resources = taxonomy_resources or {}
+        self.requested_urls: list[str] = []
 
     def filing_index(self, cik: str, accession: str, *, refresh: bool = False) -> dict[str, object]:
         return {"directory": {"item": [{"name": name} for name in self.index_names]}}
@@ -35,9 +43,20 @@ class FakeSecClient:
         filename: str,
         *,
         refresh: bool = False,
+        max_bytes: int | None = None,
     ) -> bytes:
         self.requested.append(filename)
         return self.attachments[filename]
+
+    def taxonomy_resource(
+        self,
+        url: str,
+        *,
+        refresh: bool = False,
+        max_bytes: int,
+    ) -> bytes:
+        self.requested_urls.append(url)
+        return self.taxonomy_resources[url]
 
 
 def test_package_cache_downloads_only_structural_resources(tmp_path: Path) -> None:
@@ -285,3 +304,230 @@ def test_package_cache_rejects_missing_schema_with_url_suffix(
             primary_document="fsi-20251231.htm",
             output_dir=tmp_path,
         )
+
+
+def test_package_cache_recursively_closes_url_taxonomy_dependencies(
+    tmp_path: Path,
+) -> None:
+    remote_schema = "https://xbrl.fasb.org/us-gaap/2025/us-gaap-2025.xsd"
+    remote_linkbase = "https://www.xbrl.org/2025/us-gaap-2025_lab.xml"
+    client = FakeSecClient(
+        index_names=["fsi.htm", "fsi.xsd"],
+        attachments={
+            "fsi.htm": b'<link rel="schemaRef" href="fsi.xsd"/>',
+            "fsi.xsd": (
+                f'<xs:import schemaLocation="{remote_schema}"/>'
+            ).encode(),
+        },
+        taxonomy_resources={
+            remote_schema: (
+                f'<link:linkbaseRef xlink:href="{remote_linkbase}"/>'
+            ).encode(),
+            remote_linkbase: b"<link:linkbase/>",
+        },
+    )
+
+    entrypoint = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="fsi.htm",
+        form="10-K/A",
+        output_dir=tmp_path,
+    )
+
+    manifest = json.loads((entrypoint.parent / "package-manifest.json").read_text())
+    source_urls = {item["source_url"] for item in manifest["files"]}
+    assert source_urls >= {remote_schema, remote_linkbase}
+    assert manifest["form"] == "10-K/A"
+    assert manifest["manifest_version"] == "FINSIGHT-XBRL-PACKAGE-1"
+    assert manifest["resource_count"] == 4
+    assert manifest["total_bytes"] == sum(item["byte_count"] for item in manifest["files"])
+    assert all((entrypoint.parent / item["local_path"]).is_file() for item in manifest["files"])
+    remote_schema_record = next(
+        item for item in manifest["files"] if item["source_url"] == remote_schema
+    )
+    assert remote_schema_record["taxonomy_version"] == "2025"
+    assert remote_schema_record["taxonomy_namespace"] == ""
+    assert client.requested_urls == [remote_schema, remote_linkbase]
+
+
+def test_package_cache_rejects_unapproved_or_insecure_taxonomy_urls(
+    tmp_path: Path,
+) -> None:
+    client = FakeSecClient(
+        index_names=["fsi.htm", "fsi.xsd"],
+        attachments={
+            "fsi.htm": b'<link href="fsi.xsd"/>',
+            "fsi.xsd": b'<xs:import schemaLocation="http://evil.example/taxonomy.xsd"/>',
+        },
+    )
+
+    with pytest.raises(FilingPackageIncomplete, match="XBRL_URL_NOT_ALLOWED"):
+        cache_structural_filing_package(
+            client,
+            cik="1",
+            accession="0000000001-26-000001",
+            primary_document="fsi.htm",
+            form="10-K",
+            output_dir=tmp_path,
+        )
+
+
+@pytest.mark.parametrize(
+    "limits,code",
+    [
+        ({"max_resource_count": 1}, "XBRL_RESOURCE_COUNT_LIMIT"),
+        ({"max_file_bytes": 5}, "XBRL_FILE_SIZE_LIMIT"),
+        ({"max_total_bytes": 10}, "XBRL_PACKAGE_SIZE_LIMIT"),
+    ],
+)
+def test_package_acquisition_fails_closed_at_governed_limits(
+    tmp_path: Path,
+    limits: dict[str, int],
+    code: str,
+) -> None:
+    client = FakeSecClient(
+        index_names=["fsi.htm", "fsi.xsd"],
+        attachments={
+            "fsi.htm": b'<link href="fsi.xsd"/>',
+            "fsi.xsd": b"1234567890",
+        },
+    )
+
+    with pytest.raises(FilingPackageIncomplete, match=code):
+        cache_structural_filing_package(
+            client,
+            cik="1",
+            accession="0000000001-26-000001",
+            primary_document="fsi.htm",
+            form="10-K",
+            output_dir=tmp_path,
+            **limits,
+        )
+
+    assert not list(tmp_path.rglob("package-manifest.json"))
+
+
+def test_package_publication_uses_fresh_content_addressed_generations(
+    tmp_path: Path,
+) -> None:
+    client = FakeSecClient(
+        index_names=["fsi.htm", "fsi.xsd"],
+        attachments={
+            "fsi.htm": b'<link href="fsi.xsd"/>',
+            "fsi.xsd": b"first",
+        },
+    )
+    first = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="fsi.htm",
+        form="10-Q",
+        output_dir=tmp_path,
+    )
+    (first.parent / "stale.xml").write_text("stale")
+    client.attachments["fsi.xsd"] = b"second"
+
+    second = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="fsi.htm",
+        form="10-Q",
+        output_dir=tmp_path,
+        refresh=True,
+    )
+
+    assert first.parent != second.parent
+    assert not (second.parent / "stale.xml").exists()
+    assert second.parent.name == json.loads(
+        (second.parent / "package-manifest.json").read_text()
+    )["generation"]
+
+
+def test_package_refuses_tampered_existing_immutable_generation(tmp_path: Path) -> None:
+    client = FakeSecClient(index_names=["fsi.htm"])
+    entrypoint = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="fsi.htm",
+        form="10-K",
+        output_dir=tmp_path,
+    )
+    entrypoint.write_bytes(b"tampered")
+
+    with pytest.raises(FilingPackageIncomplete, match="XBRL_IMMUTABLE_CONFLICT"):
+        cache_structural_filing_package(
+            client,
+            cik="1",
+            accession="0000000001-26-000001",
+            primary_document="fsi.htm",
+            form="10-K",
+            output_dir=tmp_path,
+        )
+
+
+def test_sec_taxonomy_fetch_rejects_redirect_outside_governed_hosts(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    class Response:
+        def __enter__(self) -> "Response":
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def read(self, size: int = -1) -> bytes:
+            return b"schema" if size != 0 else b""
+
+        def geturl(self) -> str:
+            return "https://evil.example/redirected.xsd"
+
+    monkeypatch.setattr("app.us_valuation.sec_client.urlopen", lambda *args, **kwargs: Response())
+    client = SecClient(
+        user_agent="FinSight contact@example.com",
+        cache_dir=tmp_path,
+        max_retries=0,
+    )
+
+    with pytest.raises(RuntimeError, match="redirect"):
+        client.taxonomy_resource(
+            "https://xbrl.fasb.org/us-gaap/2025/us-gaap-2025.xsd",
+            max_bytes=1024,
+        )
+
+
+def test_sec_filing_attachment_stream_is_bounded_before_cache_write(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    class Response:
+        chunks = iter((b"1234", b"5678", b""))
+
+        def __enter__(self) -> "Response":
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def read(self, size: int = -1) -> bytes:
+            return next(self.chunks)
+
+    monkeypatch.setattr("app.us_valuation.sec_client.urlopen", lambda *args, **kwargs: Response())
+    client = SecClient(
+        user_agent="FinSight contact@example.com",
+        cache_dir=tmp_path,
+        max_retries=0,
+    )
+
+    with pytest.raises(RuntimeError, match="byte limit"):
+        client.filing_attachment(
+            "1",
+            "0000000001-26-000001",
+            "fsi.xsd",
+            max_bytes=5,
+        )
+
+    assert not list(tmp_path.rglob("fsi.xsd"))

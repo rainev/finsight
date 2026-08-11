@@ -8,7 +8,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
-from .structural_xbrl import ResolutionDecision, ResolutionRequest, StructuralFact
+from .structural_xbrl import (
+    ELIGIBLE_FILING_FORMS,
+    ResolutionDecision,
+    ResolutionEvidence,
+    ResolutionRequest,
+    StructuralFact,
+)
 
 
 _CONFIG_DIR = Path(__file__).with_name("config")
@@ -19,6 +25,8 @@ _CAMEL_BOUNDARY = re.compile(
     r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])"
 )
 _GATE_PRIORITY = {
+    "INELIGIBLE_FILING_FORM": 5,
+    "FILING_FORM_MISMATCH": 6,
     "ACCESSION_MISMATCH": 10,
     "PERIOD_MISMATCH": 20,
     "UNIT_MISMATCH": 30,
@@ -204,6 +212,10 @@ def _hard_gate_reason(
     rules: Mapping[str, Any],
     aliases: Mapping[str, Any],
 ) -> str | None:
+    if fact.filing_form not in ELIGIBLE_FILING_FORMS:
+        return "INELIGIBLE_FILING_FORM"
+    if fact.filing_form != request.form:
+        return "FILING_FORM_MISMATCH"
     if fact.source_accession != request.source_accession:
         return "ACCESSION_MISMATCH"
     if fact.period_end != request.period_end:
@@ -328,6 +340,14 @@ def _decision(
     reason_codes: tuple[str, ...],
     value: float | None = None,
 ) -> ResolutionDecision:
+    evidence = None
+    if fact is not None and status in {"accepted", "review"}:
+        evidence = ResolutionEvidence.from_fact(
+            fact,
+            mapping_version=_RESOLVER_VERSION,
+            confidence=confidence,
+            reason_codes=reason_codes,
+        )
     return ResolutionDecision(
         status=status,  # type: ignore[arg-type]
         normalized_concept=request.normalized_concept,
@@ -339,6 +359,8 @@ def _decision(
         confidence=confidence,
         mapping_method=mapping_method,
         reason_codes=reason_codes,
+        form=request.form,
+        evidence=evidence,
         mapping_version=_RESOLVER_VERSION,
     )
 
@@ -366,6 +388,28 @@ def _component_total_conflict(left: StructuralFact, right: StructuralFact) -> bo
     )
 
 
+def _fact_identity(fact: StructuralFact) -> tuple[object, ...]:
+    """Identity used to collapse exact duplicate XBRL facts before ambiguity."""
+
+    return (
+        fact.qname,
+        fact.context_id,
+        fact.unit,
+        fact.period_start,
+        fact.period_end,
+        fact.value,
+    )
+
+
+def _candidate_sort_key(candidate: _Candidate) -> tuple[float, str, str, str]:
+    return (
+        -candidate.confidence,
+        candidate.fact.qname,
+        candidate.fact.context_id,
+        candidate.fact.source_accession,
+    )
+
+
 def resolve_concept(
     request: ResolutionRequest, facts: Iterable[StructuralFact]
 ) -> ResolutionDecision:
@@ -373,6 +417,15 @@ def resolve_concept(
 
     rules = load_structural_rules()
     aliases = _load_aliases()
+    if request.form not in ELIGIBLE_FILING_FORMS:
+        return _decision(
+            request,
+            fact=None,
+            status="unresolved",
+            confidence=0.0,
+            mapping_method="ineligible_filing_form",
+            reason_codes=("INELIGIBLE_FILING_FORM",),
+        )
     metric_rules = _metric_rules(rules, request.normalized_concept)
     if metric_rules is None:
         return _decision(
@@ -424,22 +477,15 @@ def resolve_concept(
             reason_codes=("NO_CANDIDATE",),
         )
 
-    ordered = sorted(candidates, key=lambda item: (item.fact.qname, item.fact.source_accession))
-    if len(ordered) > 1:
-        if any(
-            _component_total_conflict(left.fact, right.fact)
-            for index, left in enumerate(ordered)
-            for right in ordered[index + 1 :]
-        ):
-            first = ordered[0].fact
-            return _decision(
-                request,
-                fact=first,
-                status="rejected",
-                confidence=0.0,
-                mapping_method="hard_gate_rejection",
-                reason_codes=("COMPONENT_TOTAL_CONFLICT",),
-            )
+    deduplicated: dict[tuple[object, ...], _Candidate] = {}
+    for candidate in sorted(candidates, key=_candidate_sort_key):
+        deduplicated.setdefault(_fact_identity(candidate.fact), candidate)
+    ordered = sorted(deduplicated.values(), key=_candidate_sort_key)
+    if any(
+        _component_total_conflict(left.fact, right.fact)
+        for index, left in enumerate(ordered)
+        for right in ordered[index + 1 :]
+    ):
         first = ordered[0].fact
         return _decision(
             request,
@@ -447,9 +493,22 @@ def resolve_concept(
             status="rejected",
             confidence=0.0,
             mapping_method="hard_gate_rejection",
+            reason_codes=("COMPONENT_TOTAL_CONFLICT",),
+        )
+    highest_confidence = ordered[0].confidence
+    highest_rank = tuple(
+        candidate for candidate in ordered if candidate.confidence == highest_confidence
+    )
+    if len(highest_rank) > 1:
+        return _decision(
+            request,
+            fact=highest_rank[0].fact,
+            status="rejected",
+            confidence=0.0,
+            mapping_method="hard_gate_rejection",
             reason_codes=("AMBIGUOUS_FACTS",),
         )
-    selected = ordered[0]
+    selected = highest_rank[0]
 
     return _decision(
         request,

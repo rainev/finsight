@@ -20,6 +20,7 @@ from app.us_valuation.structural_xbrl import (
     ParseDiagnostic,
     StructuralFact,
     StructuralFiling,
+    StructuralRelationship,
 )
 
 
@@ -70,6 +71,23 @@ def extension_fact(**overrides: object) -> StructuralFact:
         "definition_parents": ("us-gaap:ShortTermInvestments",),
         "definition_children": (),
         "source_accession": ACCESSION,
+        "decimals": "0",
+        "scale": None,
+        "sign": None,
+        "filing_form": "10-K",
+        "filing_metadata": (("primary_document", "fsi-20251231.htm"),),
+        "presentation_ancestry": ("us-gaap:AssetsCurrent",),
+        "relationships": (
+            StructuralRelationship(
+                arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                linkrole="https://issuer.example/role/BalanceSheet",
+                from_concept="us-gaap:AssetsCurrent",
+                to_concept="fsi:LiquidInvestmentSecuritiesCurrent",
+                order=1.0,
+                preferred_label=None,
+                calculation_weight=None,
+            ),
+        ),
     }
     values.update(overrides)
     return StructuralFact(**values)  # type: ignore[arg-type]
@@ -166,6 +184,26 @@ def test_shadow_case_reports_rejected_ambiguous_candidates() -> None:
     assert report["decisions"][0]["reason_codes"] == ["AMBIGUOUS_FACTS"]
 
 
+def test_shadow_case_stably_leaves_unsupported_form_unresolved() -> None:
+    artifact = withheld_artifact(missing=["marketable_securities_current"])
+    artifact["financials"]["ttm"]["controlling_filing"]["form"] = "8-K"  # type: ignore[index]
+
+    report = evaluate_shadow_case(
+        artifact,
+        StructuralFiling(
+            source_accession=ACCESSION,
+            period_end=PERIOD_END,
+            facts=(),
+            diagnostics=(),
+            form="8-K",
+        ),
+    )
+
+    assert report["decisions"][0]["status"] == "unresolved"
+    assert report["decisions"][0]["reason_codes"] == ["INELIGIBLE_FILING_FORM"]
+    assert report["decisions"][0]["form"] == "8-K"
+
+
 def test_shadow_cli_help_is_available_without_running_arelle() -> None:
     script = Path(__file__).resolve().parents[2] / "scripts" / "run_structural_xbrl_shadow.py"
 
@@ -217,7 +255,7 @@ def _install_cli_fakes(
         calls["cache"].append(kwargs)
         return Path("/controlled-cache") / f"{kwargs['accession']}.htm"
 
-    def parse_filing(entrypoint: Path, *, accession: str) -> object:
+    def parse_filing(entrypoint: Path, *, accession: str, form: str) -> object:
         calls["parse"].append((entrypoint, accession))
         if accession in failing_accessions:
             raise RuntimeError(f"controlled parser failure for {accession}")
@@ -437,6 +475,47 @@ def test_shadow_cli_rejects_project_data_roots_with_custom_input(
                 str(protected_output),
             ]
         )
+
+
+@pytest.mark.parametrize("writable_option", ["--cache-dir", "--output-root"])
+@pytest.mark.parametrize("alias_kind", ["direct", "descendant", "dotdot", "symlink"])
+def test_shadow_cli_protects_every_writable_root_alias_before_imports(
+    tmp_path: Path,
+    writable_option: str,
+    alias_kind: str,
+) -> None:
+    cli = _load_shadow_cli()
+    data_root = tmp_path / "input"
+    data_root.mkdir()
+    if alias_kind == "direct":
+        protected_alias = data_root
+    elif alias_kind == "descendant":
+        protected_alias = data_root / "child"
+    elif alias_kind == "dotdot":
+        protected_alias = data_root / "child" / ".."
+    else:
+        protected_alias = tmp_path / "data-alias"
+        protected_alias.symlink_to(data_root, target_is_directory=True)
+    cache_dir = tmp_path / "safe-cache"
+    output_root = tmp_path / "safe-output"
+    if writable_option == "--cache-dir":
+        cache_dir = protected_alias
+    else:
+        output_root = protected_alias
+
+    with pytest.raises(ValueError, match="protected"):
+        cli.main(
+            [
+                "--data-root",
+                str(data_root),
+                "--cache-dir",
+                str(cache_dir),
+                "--output-root",
+                str(output_root),
+            ]
+        )
+
+    assert not list(data_root.rglob("*.json"))
 
 
 @pytest.mark.parametrize("invalid_ticker", ["../escape", "nested/escape", "fsi"])

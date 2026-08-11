@@ -48,6 +48,48 @@ def test_arelle_adapter_extracts_extension_structure() -> None:
     assert all(isinstance(label, tuple) for label in current.labels)
     assert filing.source_accession == ACCESSION
     assert filing.period_end == "2025-12-31"
+    assert current.decimals == "0"
+    assert current.scale is None
+    assert current.sign is None
+    assert current.filing_form == "10-K"
+    assert current.presentation_ancestry == ("us-gaap:AssetsCurrent",)
+    assert current.filing_metadata
+    assert {
+        (
+            relationship.arcrole,
+            relationship.linkrole,
+            relationship.order,
+            relationship.preferred_label,
+            relationship.calculation_weight,
+        )
+        for relationship in current.relationships
+    } >= {
+        (
+            "http://www.xbrl.org/2003/arcrole/parent-child",
+            "https://example.test/role/balanceSheet",
+            1.0,
+            None,
+            None,
+        ),
+        (
+            "http://www.xbrl.org/2003/arcrole/summation-item",
+            "https://example.test/role/balanceSheet",
+            1.0,
+            None,
+            1.0,
+        ),
+    }
+
+
+def test_arelle_adapter_carries_normalized_filing_form() -> None:
+    filing = parse_structural_filing(
+        ENTRYPOINT,
+        accession=ACCESSION,
+        form="10-q/a",
+    )
+
+    assert filing.form == "10-Q/A"
+    assert {fact.filing_form for fact in filing.facts} == {"10-Q/A"}
 
 
 def test_arelle_adapter_bootstraps_worker_when_parent_cwd_is_repository_root(
@@ -274,9 +316,10 @@ def test_arelle_adapter_rejects_malformed_diagnostic_objects(
         output_path.write_text(
             json.dumps(
                 {
-                    "source_accession": ACCESSION,
-                    "period_end": "2025-12-31",
-                    "facts": [
+                        "source_accession": ACCESSION,
+                        "period_end": "2025-12-31",
+                        "form": "10-K",
+                        "facts": [
                         {
                             "qname": "fsi:TestFact",
                             "namespace": "https://example.test/fsi/2025",

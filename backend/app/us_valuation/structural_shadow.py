@@ -35,7 +35,7 @@ def _bridge_missing_fields(artifact: Mapping[str, Any]) -> tuple[str, ...]:
     return tuple(field for field in missing if isinstance(field, str) and field)
 
 
-def _artifact_context(artifact: Mapping[str, Any]) -> tuple[str, str]:
+def _artifact_context(artifact: Mapping[str, Any]) -> tuple[str, str, str]:
     financials = _mapping(artifact.get("financials"))
     ttm = _mapping(financials.get("ttm"))
     controlling_filing = _mapping(ttm.get("controlling_filing"))
@@ -43,7 +43,8 @@ def _artifact_context(artifact: Mapping[str, Any]) -> tuple[str, str]:
         controlling_filing.get("accession"), "controlling accession"
     )
     period_end = _nonempty_text(ttm.get("period_end"), "controlling period")
-    return accession, period_end
+    form = _nonempty_text(controlling_filing.get("form"), "controlling form")
+    return accession, period_end, form
 
 
 def shadow_requests_from_artifact(
@@ -57,7 +58,7 @@ def shadow_requests_from_artifact(
     )
     if not requested_fields:
         return ()
-    accession, period_end = _artifact_context(artifact)
+    accession, period_end, form = _artifact_context(artifact)
     return tuple(
         ResolutionRequest(
             normalized_concept=field,
@@ -65,6 +66,7 @@ def shadow_requests_from_artifact(
             source_accession=accession,
             unit="USD",
             statement_role="balance_sheet",
+            form=form,
         )
         for field in requested_fields
     )

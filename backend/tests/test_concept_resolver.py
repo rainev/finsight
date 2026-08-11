@@ -3,7 +3,11 @@ from __future__ import annotations
 import pytest
 
 from app.us_valuation.concept_resolver import load_structural_rules, resolve_concept
-from app.us_valuation.structural_xbrl import ResolutionRequest, StructuralFact
+from app.us_valuation.structural_xbrl import (
+    ResolutionRequest,
+    StructuralFact,
+    StructuralRelationship,
+)
 
 
 ACCESSION = "0000000000-26-000001"
@@ -55,6 +59,23 @@ def make_fact(**overrides: object) -> StructuralFact:
         "definition_parents": (),
         "definition_children": (),
         "source_accession": ACCESSION,
+        "decimals": "0",
+        "scale": None,
+        "sign": None,
+        "filing_form": "10-K",
+        "filing_metadata": (("primary_document", "fsi-20251231.htm"),),
+        "presentation_ancestry": ("us-gaap:AssetsCurrent",),
+        "relationships": (
+            StructuralRelationship(
+                arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                linkrole="https://example.test/role/BalanceSheet",
+                from_concept="us-gaap:AssetsCurrent",
+                to_concept=qname,
+                order=1.0,
+                preferred_label=None,
+                calculation_weight=None,
+            ),
+        ),
     }
     values.update(overrides)
     return StructuralFact(**values)  # type: ignore[arg-type]
@@ -67,6 +88,7 @@ def current_request(**overrides: object) -> ResolutionRequest:
         "source_accession": ACCESSION,
         "unit": "USD",
         "statement_role": "balance_sheet",
+        "form": "10-K",
     }
     values.update(overrides)
     return ResolutionRequest(**values)  # type: ignore[arg-type]
@@ -79,6 +101,7 @@ def noncurrent_request(**overrides: object) -> ResolutionRequest:
         "source_accession": ACCESSION,
         "unit": "USD",
         "statement_role": "balance_sheet",
+        "form": "10-K",
     }
     values.update(overrides)
     return ResolutionRequest(**values)  # type: ignore[arg-type]
@@ -744,7 +767,7 @@ def test_equal_strength_conflicting_facts_are_ambiguous() -> None:
     assert decision.reason_codes == ("AMBIGUOUS_FACTS",)
 
 
-def test_canonical_and_alias_duplicates_are_ambiguous_before_confidence_selection() -> None:
+def test_canonical_candidate_outranks_conflicting_alias_before_ambiguity() -> None:
     canonical = make_fact(
         qname="us-gaap:MarketableSecuritiesCurrent",
         local_name="MarketableSecuritiesCurrent",
@@ -758,9 +781,41 @@ def test_canonical_and_alias_duplicates_are_ambiguous_before_confidence_selectio
 
     decision = resolve_concept(current_request(), [canonical, alias])
 
-    assert decision.status == "rejected"
-    assert decision.confidence == 0.0
-    assert decision.reason_codes == ("AMBIGUOUS_FACTS",)
+    assert decision.status == "accepted"
+    assert decision.confidence == 1.0
+    assert decision.source_concept == "us-gaap:MarketableSecuritiesCurrent"
+
+
+def test_exact_duplicate_facts_are_deduplicated_before_ambiguity() -> None:
+    duplicate = make_fact(
+        qname="us-gaap:ShortTermInvestments",
+        local_name="ShortTermInvestments",
+        value=100.0,
+    )
+
+    decision = resolve_concept(current_request(), [duplicate, duplicate])
+
+    assert decision.status == "accepted"
+    assert decision.source_concept == "us-gaap:ShortTermInvestments"
+
+
+@pytest.mark.parametrize("form", ["10-K", "10-K/A", "10-Q", "10-Q/A"])
+def test_all_governed_forms_can_resolve(form: str) -> None:
+    fact = make_fact(
+        qname="us-gaap:ShortTermInvestments",
+        local_name="ShortTermInvestments",
+        filing_form=form,
+    )
+
+    assert resolve_concept(current_request(form=form), [fact]).status == "accepted"
+
+
+@pytest.mark.parametrize("form", ["8-K", "20-F", "S-1", ""])
+def test_unsupported_forms_are_stably_unresolved(form: str) -> None:
+    decision = resolve_concept(current_request(form=form), [make_fact()])
+
+    assert decision.status == "unresolved"
+    assert decision.reason_codes == ("INELIGIBLE_FILING_FORM",)
 
 
 def test_calculation_linked_component_and_total_candidates_are_rejected() -> None:

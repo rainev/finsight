@@ -10,10 +10,23 @@ from pathlib import Path
 from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
+from urllib.parse import urlparse
 
 
 SEC_DATA_ROOT = "https://data.sec.gov"
 SEC_ARCHIVES_ROOT = "https://www.sec.gov/Archives/edgar/data"
+GOVERNED_TAXONOMY_HOSTS = frozenset(
+    {
+        "xbrl.fasb.org",
+        "fasb.org",
+        "www.fasb.org",
+        "xbrl.sec.gov",
+        "www.sec.gov",
+        "sec.gov",
+        "www.xbrl.org",
+        "xbrl.org",
+    }
+)
 
 
 def normalize_cik(cik: str | int) -> str:
@@ -55,6 +68,19 @@ def sec_archive_url(
     archive_accession = normalize_accession(accession)
     safe_name = safe_filing_filename(filename)
     return f"{SEC_ARCHIVES_ROOT}/{archive_cik}/{archive_accession}/{safe_name}"
+
+
+def validate_taxonomy_url(url: str) -> str:
+    parsed = urlparse(url)
+    if (
+        parsed.scheme != "https"
+        or not parsed.hostname
+        or parsed.hostname.casefold() not in GOVERNED_TAXONOMY_HOSTS
+        or parsed.username is not None
+        or parsed.password is not None
+    ):
+        raise ValueError("XBRL taxonomy URL must use HTTPS on a governed host")
+    return url
 
 
 def _validate_json_bytes(raw: bytes) -> None:
@@ -130,6 +156,7 @@ class SecClient:
         filename: str,
         *,
         refresh: bool = False,
+        max_bytes: int | None = None,
     ) -> bytes:
         """Retrieve one safe, basename-only filing attachment from the SEC archive."""
         normalized_cik = normalize_cik(cik)
@@ -142,6 +169,30 @@ class SecClient:
             ),
             refresh=refresh,
             accept="application/octet-stream, application/xml, text/html",
+            max_bytes=max_bytes,
+        )
+
+    def taxonomy_resource(
+        self,
+        url: str,
+        *,
+        refresh: bool = False,
+        max_bytes: int,
+    ) -> bytes:
+        """Retrieve one governed taxonomy URL with redirect and byte bounds."""
+
+        validate_taxonomy_url(url)
+        parsed = urlparse(url)
+        basename = Path(parsed.path).name or "taxonomy-resource"
+        suffix = Path(basename).suffix[:16]
+        digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
+        return self._get_bytes(
+            url,
+            cache_name=f"taxonomy/{digest}{suffix}",
+            refresh=refresh,
+            accept="application/xml, text/xml, application/octet-stream",
+            max_bytes=max_bytes,
+            validate_final_url=validate_taxonomy_url,
         )
 
     def _get_json(self, url: str, *, cache_name: str, refresh: bool) -> dict[str, Any]:
@@ -165,12 +216,18 @@ class SecClient:
         refresh: bool,
         accept: str,
         validate: Callable[[bytes], None] | None = None,
+        max_bytes: int | None = None,
+        validate_final_url: Callable[[str], str] | None = None,
     ) -> bytes:
+        if max_bytes is not None and max_bytes <= 0:
+            raise ValueError("max_bytes must be positive")
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         path = self.cache_dir / cache_name
         if path.exists() and not refresh:
             try:
                 raw = path.read_bytes()
+                if max_bytes is not None and len(raw) > max_bytes:
+                    raise RuntimeError(f"SEC cache file exceeds byte limit: {path.name}")
                 if validate is not None:
                     validate(raw)
                 self._write_cache_metadata(
@@ -205,7 +262,15 @@ class SecClient:
                     )
                     type(self)._process_last_request_at = time.monotonic()
                     with urlopen(request, timeout=self.timeout_seconds) as response:
-                        raw = response.read()
+                        final_url = getattr(response, "geturl", lambda: url)()
+                        if validate_final_url is not None:
+                            try:
+                                validate_final_url(final_url)
+                            except ValueError as exc:
+                                raise RuntimeError(
+                                    "SEC taxonomy redirect left governed HTTPS hosts"
+                                ) from exc
+                        raw = self._read_response(response, max_bytes=max_bytes)
                 if validate is not None:
                     validate(raw)
                 path.parent.mkdir(parents=True, exist_ok=True)
@@ -230,6 +295,25 @@ class SecClient:
                 time.sleep(min(2**attempt, 8))
         digest = hashlib.sha256(url.encode("utf-8")).hexdigest()[:12]
         raise RuntimeError(f"SEC request failed after retries ({digest})") from last_error
+
+    @staticmethod
+    def _read_response(response: Any, *, max_bytes: int | None) -> bytes:
+        if max_bytes is None:
+            return response.read()
+        chunks: list[bytes] = []
+        total = 0
+        while True:
+            try:
+                chunk = response.read(min(64 * 1024, max_bytes - total + 1))
+            except TypeError:
+                chunk = response.read()
+            if not chunk:
+                break
+            total += len(chunk)
+            if total > max_bytes:
+                raise RuntimeError("SEC response exceeds governed byte limit")
+            chunks.append(chunk)
+        return b"".join(chunks)
 
     @staticmethod
     def _write_cache_metadata(
