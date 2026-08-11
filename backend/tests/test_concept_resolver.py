@@ -281,6 +281,10 @@ def test_preferred_non_carrying_facts_are_review_only(
             "Preferred stock redemption amount.",
         ),
         ("issuer:PreferredStockShares", "Preferred stock shares."),
+        (
+            "issuer:PreferredStockNumberOfShares",
+            "Preferred stock number of shares.",
+        ),
     ],
 )
 def test_synthetic_preferred_non_carrying_extensions_are_review_only(
