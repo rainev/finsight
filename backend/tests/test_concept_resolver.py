@@ -375,6 +375,141 @@ def test_long_term_debt_current_rejects_noncurrent_parent_conflict() -> None:
 
     assert decision.status == "rejected"
     assert decision.reason_codes == ("CURRENT_NONCURRENT_CONFLICT",)
+
+
+@pytest.mark.parametrize(
+    "metric,qname,value,parent",
+    [
+        (
+            "finance_lease_current",
+            "us-gaap:FinanceLeaseLiabilityCurrent",
+            220_000_000,
+            "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+        ),
+        (
+            "finance_lease_noncurrent",
+            "us-gaap:FinanceLeaseLiabilityNoncurrent",
+            444_000_000,
+            "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+        ),
+    ],
+)
+def test_direct_finance_lease_liability_aliases_are_accepted(
+    metric: str, qname: str, value: float, parent: str
+) -> None:
+    decision = resolve_concept(
+        metric_request(metric),
+        [
+            account_fact(
+                qname,
+                value=value,
+                statement_roles=(),
+                presentation_parents=(parent,),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == value
+    assert decision.source_concept == qname
+
+
+def test_finance_lease_total_accepts_net_carrying_value_not_gross_payments() -> None:
+    carrying_value = account_fact(
+        "us-gaap:FinanceLeaseLiability",
+        value=664_000_000,
+        statement_roles=(),
+        presentation_parents=("us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract",),
+    )
+    gross_payments = account_fact(
+        "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+        value=718_000_000,
+        statement_roles=(),
+        presentation_parents=("us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract",),
+    )
+
+    decision = resolve_concept(
+        metric_request("finance_lease_total"), [carrying_value, gross_payments]
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 664_000_000
+    assert decision.source_concept == "us-gaap:FinanceLeaseLiability"
+
+
+@pytest.mark.parametrize(
+    "metric,qname,documentation",
+    [
+        (
+            "finance_lease_current",
+            "us-gaap:FinanceLeaseLiabilityPaymentsDueNextTwelveMonths",
+            "Finance lease payments due in the next twelve months.",
+        ),
+        (
+            "finance_lease_noncurrent",
+            "us-gaap:FinanceLeaseLiabilityPaymentsDueYearTwoThroughThereafter",
+            "Finance lease payments due in year two through thereafter.",
+        ),
+    ],
+)
+def test_finance_lease_payment_schedule_facts_cannot_satisfy_carrying_value_requests(
+    metric: str, qname: str, documentation: str
+) -> None:
+    decision = resolve_concept(
+        metric_request(metric),
+        [
+            account_fact(
+                qname,
+                documentation=documentation,
+                presentation_parents=(
+                    "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract",
+                ),
+                calculation_parents=(
+                    "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract",
+                ),
+            )
+        ],
+    )
+
+    assert decision.status in {"review", "rejected"}
+    assert decision.status != "accepted"
+
+
+@pytest.mark.parametrize(
+    "qname,documentation",
+    [
+        (
+            "us-gaap:OperatingLeaseLiabilityCurrent",
+            "Operating lease liability current carrying value.",
+        ),
+        ("us-gaap:RightOfUseAsset", "Right of use asset."),
+        ("us-gaap:LeaseCost", "Lease cost."),
+        (
+            "us-gaap:PaymentsForOperatingLeases",
+            "Cash payments for operating leases.",
+        ),
+        ("issuer:LeaseCommitments", "Generic lease commitments."),
+    ],
+)
+def test_non_finance_lease_economics_are_rejected_from_carrying_value(
+    qname: str, documentation: str
+) -> None:
+    decision = resolve_concept(
+        metric_request("finance_lease_total"),
+        [
+            account_fact(
+                qname,
+                documentation=documentation,
+                presentation_parents=("us-gaap:LiabilitiesCurrentAbstract",),
+                calculation_parents=("us-gaap:LiabilitiesCurrentAbstract",),
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
 def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() -> None:
     rules = load_structural_rules()
 
@@ -395,6 +530,9 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "current_debt",
         "noncurrent_debt",
         "commercial_paper",
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+        "finance_lease_total",
     }
     required_policy_fields = {
         "orientation",
@@ -415,6 +553,7 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
     assert {policy["orientation"] for policy in metric_rules.values()} == {
         "current",
         "noncurrent",
+        "none",
     }
     assert all(policy["excluded_economic_phrases"] for policy in metric_rules.values())
     assert {rules["version"]} == {"US-XBRL-RESOLVER-1.1"}

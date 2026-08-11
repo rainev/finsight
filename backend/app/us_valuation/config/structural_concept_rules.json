@@ -259,5 +259,195 @@
     "concept_reason_codes": {},
     "allowed_dimensions": {},
     "contextual_concepts": []
+  },
+  "finance_lease_current": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "current",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "extension_terms": [
+      "finance lease",
+      "finance lease liability",
+      "lease liability",
+      "lease payments",
+      "right of use asset"
+    ],
+    "required_definition_phrases": [
+      "finance lease carrying value",
+      "finance lease liability carrying value",
+      "finance lease liability"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_FINANCE_LEASE_CARRYING_VALUE",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "operating lease",
+      "operating leases",
+      "right of use asset",
+      "lease cost",
+      "cash payments",
+      "lease commitment",
+      "lease commitments"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "finance lease liability payments due",
+      "minimum lease payments",
+      "lease payment",
+      "lease payments",
+      "next twelve months",
+      "year two through thereafter",
+      "maturity period",
+      "maturity periods"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "finance_lease_noncurrent": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "noncurrent",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "extension_terms": [
+      "finance lease",
+      "finance lease liability",
+      "lease liability",
+      "lease payments",
+      "right of use asset"
+    ],
+    "required_definition_phrases": [
+      "finance lease carrying value",
+      "finance lease liability carrying value",
+      "finance lease liability"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_FINANCE_LEASE_CARRYING_VALUE",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "operating lease",
+      "operating leases",
+      "right of use asset",
+      "lease cost",
+      "cash payments",
+      "lease commitment",
+      "lease commitments"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "finance lease liability payments due",
+      "minimum lease payments",
+      "lease payment",
+      "lease payments",
+      "next twelve months",
+      "year two through thereafter",
+      "maturity period",
+      "maturity periods"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "finance_lease_total": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "none",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "extension_terms": [
+      "finance lease",
+      "finance lease liability",
+      "lease liability",
+      "lease payments",
+      "right of use asset"
+    ],
+    "required_definition_phrases": [
+      "finance lease carrying value",
+      "finance lease liability carrying value",
+      "finance lease liability"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_FINANCE_LEASE_CARRYING_VALUE",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "operating lease",
+      "operating leases",
+      "right of use asset",
+      "lease cost",
+      "cash payments",
+      "lease commitment",
+      "lease commitments"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "finance lease liability payments due",
+      "minimum lease payments",
+      "lease payment",
+      "lease payments",
+      "next twelve months",
+      "year two through thereafter",
+      "maturity period",
+      "maturity periods"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {},
+    "contextual_concepts": []
   }
 }
