@@ -168,6 +168,55 @@ def test_preferred_equity_alias_still_requires_usd_unit() -> None:
 
 
 @pytest.mark.parametrize(
+    "fact_overrides,request_overrides,reason_code",
+    [
+        ({"source_accession": "0000000000-26-999999"}, {}, "ACCESSION_MISMATCH"),
+        ({"period_end": "2024-12-31"}, {}, "PERIOD_MISMATCH"),
+        (
+            {
+                "statement_roles": ("income_statement",),
+                "presentation_parents": ("us-gaap:NetIncomeLoss",),
+                "calculation_parents": ("us-gaap:NetIncomeLoss",),
+            },
+            {},
+            "STATEMENT_ROLE_MISMATCH",
+        ),
+        (
+            {
+                "dimensions": (
+                    ("us-gaap:StatementBusinessSegmentsAxis", "issuer:CloudMember"),
+                ),
+                "presentation_parents": ("us-gaap:TemporaryEquity",),
+                "calculation_parents": ("us-gaap:TemporaryEquity",),
+            },
+            {},
+            "DIMENSIONED_NONCONSOLIDATED_FACT",
+        ),
+        ({"filing_form": "10-Q"}, {}, "FILING_FORM_MISMATCH"),
+    ],
+)
+def test_preferred_direct_alias_obeys_every_non_unit_accounting_gate(
+    fact_overrides: dict[str, object],
+    request_overrides: dict[str, object],
+    reason_code: str,
+) -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity", **request_overrides),
+        [
+            account_fact(
+                "us-gaap:PreferredStockValue",
+                value=0,
+                **fact_overrides,
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == (reason_code,)
+
+
+@pytest.mark.parametrize(
     "qname,value,documentation",
     [
         (
@@ -222,6 +271,37 @@ def test_preferred_non_carrying_facts_are_review_only(
     assert decision.status == "review"
     assert decision.value == value
     assert decision.status != "accepted"
+
+
+@pytest.mark.parametrize(
+    "qname,documentation",
+    [
+        (
+            "issuer:PreferredStockRedemptionAmount",
+            "Preferred stock redemption amount.",
+        ),
+        ("issuer:PreferredStockShares", "Preferred stock shares."),
+    ],
+)
+def test_synthetic_preferred_non_carrying_extensions_are_review_only(
+    qname: str, documentation: str
+) -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                qname,
+                value=100,
+                documentation=documentation,
+                statement_roles=(),
+                presentation_parents=("us-gaap:TemporaryEquity",),
+                calculation_parents=("us-gaap:TemporaryEquity",),
+            )
+        ],
+    )
+
+    assert decision.status == "review"
+    assert "REVIEW_ONLY_ACCOUNTING_CONTEXT" in decision.reason_codes
 
 
 def test_preferred_carrying_amount_wins_over_liquidation_preference() -> None:
@@ -295,6 +375,31 @@ def test_governed_nci_equity_member_is_accepted() -> None:
 
 
 @pytest.mark.parametrize(
+    "qname",
+    [
+        "us-gaap:MinorityInterest",
+        "us-gaap:NoncontrollingInterestInConsolidatedEntity",
+    ],
+)
+def test_legacy_direct_nci_aliases_cannot_bypass_governed_dimension(
+    qname: str,
+) -> None:
+    fact = account_fact(
+        qname,
+        value=0,
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+        ),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "review"
+    assert decision.status != "accepted"
+
+
+@pytest.mark.parametrize(
     "dimensions",
     [
         ((
@@ -328,6 +433,52 @@ def test_nci_total_equity_other_members_and_unsegmented_facts_are_rejected(
     assert decision.reason_codes == ("DIMENSIONED_NONCONSOLIDATED_FACT",)
 
 
+def test_nci_exact_member_rejects_an_extra_dimension() -> None:
+    fact = account_fact(
+        "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        value=0,
+        dimensions=(
+            (
+                "us-gaap:StatementEquityComponentsAxis",
+                "us-gaap:NoncontrollingInterestMember",
+            ),
+            ("us-gaap:StatementBusinessSegmentsAxis", "issuer:CloudMember"),
+        ),
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+        ),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("DIMENSIONED_NONCONSOLIDATED_FACT",)
+
+
+def test_nci_exact_member_requires_rollforward_parent_even_with_statement_role() -> None:
+    fact = account_fact(
+        "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        value=0,
+        dimensions=(
+            (
+                "us-gaap:StatementEquityComponentsAxis",
+                "us-gaap:NoncontrollingInterestMember",
+            ),
+        ),
+        statement_roles=("balance_sheet",),
+        presentation_parents=("us-gaap:StockholdersEquity",),
+        calculation_parents=("us-gaap:StockholdersEquity",),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("STATEMENT_ROLE_MISMATCH",)
+
+
 def test_income_statement_nci_cannot_satisfy_equity_nci() -> None:
     fact = account_fact(
         "us-gaap:NetIncomeLossAttributableToNoncontrollingInterest",
@@ -355,7 +506,16 @@ def test_narrative_only_ftnt_ownership_is_not_structural_nci_zero() -> None:
 
     assert decision.status == "rejected"
     assert decision.value is None
-    assert decision.reason_codes == ("MISSING_NUMERIC_VALUE",)
+    assert decision.reason_codes == ("STATEMENT_ROLE_MISMATCH",)
+
+
+@pytest.mark.parametrize("metric", ["preferred_equity", "noncontrolling_interests"])
+def test_task_4_account_absence_is_unresolved_not_zero(metric: str) -> None:
+    decision = resolve_concept(metric_request(metric), [])
+
+    assert decision.status == "unresolved"
+    assert decision.value is None
+    assert decision.reason_codes == ("NO_CANDIDATE",)
 
 
 @pytest.mark.parametrize(

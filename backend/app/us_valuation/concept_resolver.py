@@ -173,16 +173,23 @@ def _statement_supported(
 ) -> bool:
     if request.statement_role != metric_rules.get("statement_role"):
         return False
-    if request.statement_role in fact.statement_roles:
-        return True
-    if fact.statement_roles:
-        return False
 
     parent_values = (
         set(fact.presentation_parents)
         | set(fact.calculation_parents)
         | set(fact.presentation_ancestry)
     )
+    required_parents = set(
+        _rule_strings(metric_rules, "required_statement_support_parents")
+    )
+    if required_parents and not parent_values & required_parents:
+        return False
+
+    if request.statement_role in fact.statement_roles:
+        return True
+    if fact.statement_roles:
+        return False
+
     if _configured_concept_value(fact, metric_rules, "direct_statement_concepts"):
         return bool(
             parent_values

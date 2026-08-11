@@ -517,6 +517,8 @@
       "earnings per share",
       "eps",
       "preferred share counts",
+      "preferred stock shares",
+      "redemption amount",
       "shares issued",
       "share count"
     ],
@@ -534,6 +536,9 @@
     "statement_role": "balance_sheet",
     "unit": "USD",
     "orientation": "none",
+    "required_statement_support_parents": [
+      "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward"
+    ],
     "statement_support_parents": [
       "us-gaap:StockholdersEquity",
       "us-gaap:StockholdersEquityAbstract",
@@ -572,7 +577,9 @@
     "component_only_concepts": [],
     "review_only_phrases": [
       "100% ownership",
-      "wholly owned"
+      "wholly owned",
+      "minority interest",
+      "noncontrolling interest in consolidated entity"
     ],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},

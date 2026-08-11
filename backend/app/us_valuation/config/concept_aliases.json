@@ -185,10 +185,7 @@
     "noncontrolling_interests": {
       "unit": "USD",
       "kind": "instant",
-      "concepts": [
-        "MinorityInterest",
-        "NoncontrollingInterestInConsolidatedEntity"
-      ]
+      "concepts": []
     },
     "common_shares_outstanding": {
       "unit": "shares",
