@@ -4,56 +4,86 @@
 
 - Branch: `feat/structural-xbrl-resolution`
 - Worktree: `/Users/carlosconda/Desktop/Investing Application/.worktrees/structural-xbrl-resolution`
-- Clean HEAD: `60466ce fix: enforce exact XBRL integer boundary`
+- Final implementation commit: `5f80961 fix: harden structural XBRL evidence pipeline`
 - Design: `docs/superpowers/specs/2026-08-10-structural-xbrl-concept-resolution-design.md`
 - Plan: `docs/superpowers/plans/2026-08-10-structural-xbrl-concept-resolution.md`
 - SDD ledger: `.superpowers/sdd/2026-08-10-structural-xbrl-concept-resolution/progress.md`
 
-## Completed and independently approved
+## Completed implementation
 
-1. Parser boundary and immutable provenance schema.
-   - Commits: `d373ebf`, `4f659ed`
-2. Deterministic marketable-securities resolver.
-   - Commits: `2fc7d1d`, `151b381`, `9ff67a0`, `512338d`, `74a9923`
-   - Exact governed US-GAAP namespace registry; no fuzzy or LLM acceptance.
-3. Process-isolated Arelle 2.44.0 adapter and local representative Inline XBRL package.
-   - Commits: `2c10552`, `ec92866`, `76745ed`, `ec1f0b4`, `60466ce`
-   - Parent application imports no Arelle code.
-   - Child process is offline, time-bounded, resource-bounded on POSIX, environment-sanitized, and JSON-only.
-   - Extracts contexts, units, labels, documentation, presentation, calculation, definition, and dimensional relationships.
-   - Corrects Arelle's exclusive period boundaries and conservatively diagnoses values that cannot cross the numeric JSON boundary exactly.
+Tasks 1–6 remain complete and independently approved. Final-review findings were
+addressed in `5f80961`:
 
-## Verification at pause
+- recursively bounded SEC/taxonomy dependency acquisition with governed HTTPS
+  domains, redirect validation, hashes, source/local URL mappings, taxonomy
+  version provenance, and fail-closed closure verification;
+- immutable, atomically published filing-package generations;
+- offline Arelle URL remapping against the verified local package;
+- protected cache/output path validation, including resolved symlink aliases;
+- filing-form gating for 10-K, 10-K/A, 10-Q, and 10-Q/A;
+- fuller immutable fact/relationship/mapping evidence;
+- exact fact deduplication and evidence-class ambiguity handling;
+- a hermetic package-builder → offline Arelle → resolver → shadow-report test.
 
-- Task 1–3 focused suite: `127 passed`.
-- Arelle adapter suite: `32 passed` in the final independent review.
-- Root backend suite: `270 passed, 3 skipped, 1 pre-existing unrelated failure`.
-- The pre-existing failure expects the user's uncommitted `automated_review` integration and predates this branch.
-- Independent Task 3 reviewer: approved with no substantive findings.
-- Worktree was clean when paused.
-- `arelle-release==2.44.0` was installed from `backend/requirements-xbrl.txt` and verified importable in the current Python 3.11 environment.
+Company Facts remains the production authority. Structural results remain
+shadow-only and cannot alter or clear publication gates. No LLM, embedding,
+fuzzy, or semantic-value acceptance path was added.
 
-## Current production impact
+## Verification at implementation commit
 
-- None. The structural resolver is not connected to valuation publication or approval gates.
-- Existing Company Facts normalization and serving artifacts are unchanged.
-- This is intentional until the shadow path is measured.
+- Focused structural suite: `189 passed in 2.57s`.
+- Hermetic real-boundary integration: `1 passed in 0.27s`.
+- Targeted filing/valuation regressions from repository root:
+  `84 passed, 3 skipped, 1 pre-existing failure`.
+- Full backend suite from repository root:
+  `333 passed, 3 skipped, 1 pre-existing failure`.
+- The sole failure remains
+  `test_microsoft_public_artifact_contains_no_raw_financial_amounts`, which
+  expects the unrelated, uncommitted `automated_review` integration from the
+  user's main worktree (`KeyError: 'automated_review'`).
+- The plan-prescribed `backend/tests/test_bridge_recovery.py` is still absent
+  from this isolated branch and was not copied from unrelated main-worktree
+  changes.
+- `git diff --check` passed.
+- No files under `backend/app/data/us_valuations/` or
+  `frontend/public/data/` changed.
+- Generated `output/` remains untracked and was excluded from commits.
+
+## Real-data limitation
+
+The last bounded offline corpus run discovered 118 withheld artifacts but had
+0 eligible structural cases because sanitized serving artifacts omit private
+bridge fields and controlling-filing metadata. Runtime was 0.09 seconds and the
+cache remained empty (0 files / 0 KiB). This is not evidence that Arelle can
+recover the formerly missing accounts from real filings.
+
+Keep the feature shadow-only until a real filing pilot is reconciled manually.
+
+## Five-company pilot selected
+
+Use the existing filing-specific evidence as the truth set for:
+
+- ANET — marketable securities, debt, and finance-lease zero/inference cases;
+- CRM — marketable securities, commercial-paper classification, and finance
+  lease total/split;
+- DELL — debt, zero current marketable securities, and NCI;
+- FTNT — `ShortTermInvestments` as current marketable securities, debt, and NCI;
+- WDC — debt and temporary/preferred-equity interpretation.
+
+Evidence lives in `/Users/carlosconda/Desktop/Investing Application/output/evidence-recovery/`.
+The first pilot can deterministically resolve only current/noncurrent marketable
+securities; the other accounts must be inspected as raw structural evidence
+until governed resolvers are added. Do not describe those accounts as recovered
+merely because Arelle emits a semantically similar fact.
 
 ## Exact next step
 
-Resume Task 4: cache complete SEC filing packages reproducibly.
-
-- Generated brief: `.superpowers/sdd/2026-08-10-structural-xbrl-concept-resolution/task-4-brief.md`
-- Task 4 agent was stopped before creating or modifying any files.
-- Implement `SecClient.filing_index`, `SecClient.filing_attachment`, and `filing_package.py` with safe names, deterministic manifests, hashes, bounded resource selection, and fail-closed incomplete-package behavior.
-- Then perform a fresh independent Task 4 review before Task 5.
-
-After Task 4:
-
-5. Add the shadow-only structural resolution path and CLI.
-6. Run regression verification, bounded shadow measurement, and documentation.
-7. Run final strongest-model whole-branch review and verification.
-
-## Suggested resume prompt
-
-`Resume the structural XBRL resolution work from docs/superpowers/handoffs/2026-08-10-structural-xbrl-resolution-handoff.md in the existing feat/structural-xbrl-resolution worktree. Use FinSight Efficiency Mode and subagent-driven development. Start at Task 4; do not redo approved Tasks 1–3.`
+1. Supply a compliant SEC User-Agent with a monitored contact.
+2. Download complete bounded packages for the five selected filings into a
+   non-serving cache.
+3. Run Arelle offline on all five packages.
+4. Run the deterministic marketable-securities resolver where eligible.
+5. Reconcile selected facts, units, periods, contexts, and values against the
+   filing-specific evidence artifacts.
+6. Record accepted, review, rejected, unresolved, and parser-failure counts.
+7. Keep the path shadow-only and request user confirmation before any promotion.
