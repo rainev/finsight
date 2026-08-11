@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import re
 import sys
 from typing import Any, Iterable, Mapping
 
@@ -14,6 +15,14 @@ _REPO_ROOT = Path(__file__).resolve().parents[1]
 _BACKEND_DIR = _REPO_ROOT / "backend"
 _DEFAULT_DATA_ROOT = _BACKEND_DIR / "app" / "data" / "us_valuations"
 _DEFAULT_OUTPUT_ROOT = _REPO_ROOT / "output" / "structural-xbrl-shadow"
+_PROTECTED_OUTPUT_ROOTS = (
+    _DEFAULT_DATA_ROOT,
+    _REPO_ROOT / "frontend" / "public" / "data",
+)
+_MARKETABLE_SECURITIES_FIELDS = frozenset(
+    {"marketable_securities_current", "marketable_securities_noncurrent"}
+)
+_CANONICAL_TICKER = re.compile(r"^[A-Z][A-Z0-9.-]{0,15}$")
 _COUNTER_NAMES = (
     "discovered",
     "eligible",
@@ -45,11 +54,17 @@ def _mapping(value: Any) -> Mapping[str, Any]:
 def _artifact_ticker(artifact: Mapping[str, Any], path: Path) -> str:
     ticker = artifact.get("ticker")
     if isinstance(ticker, str) and ticker:
-        return ticker
+        return _validate_ticker(ticker)
     issuer_ticker = _mapping(artifact.get("issuer")).get("ticker")
     if isinstance(issuer_ticker, str) and issuer_ticker:
-        return issuer_ticker
-    return path.stem.upper()
+        return _validate_ticker(issuer_ticker)
+    return _validate_ticker(path.stem)
+
+
+def _validate_ticker(value: str) -> str:
+    if not _CANONICAL_TICKER.fullmatch(value):
+        raise ValueError("ticker must be a canonical uppercase symbol")
+    return value
 
 
 def _is_withheld(artifact: Mapping[str, Any]) -> bool:
@@ -59,6 +74,19 @@ def _is_withheld(artifact: Mapping[str, Any]) -> bool:
 def _controlling_filing(artifact: Mapping[str, Any]) -> Mapping[str, Any]:
     financials = _mapping(artifact.get("financials"))
     return _mapping(_mapping(financials.get("ttm")).get("controlling_filing"))
+
+
+def _marketable_securities_gaps(artifact: Mapping[str, Any]) -> tuple[str, ...]:
+    financials = _mapping(artifact.get("financials"))
+    balance_sheet = _mapping(financials.get("balance_sheet"))
+    missing = balance_sheet.get("bridge_missing_fields")
+    if not isinstance(missing, (list, tuple)):
+        return ()
+    return tuple(
+        field
+        for field in missing
+        if isinstance(field, str) and field in _MARKETABLE_SECURITIES_FIELDS
+    )
 
 
 def _write_immutable_json(path: Path, payload: Mapping[str, Any]) -> None:
@@ -73,8 +101,13 @@ def _write_immutable_json(path: Path, payload: Mapping[str, Any]) -> None:
 
 
 def _ensure_separate_output(data_root: Path, output_root: Path) -> None:
-    if output_root.resolve().is_relative_to(data_root.resolve()):
-        raise ValueError("output-root must not be inside data-root")
+    resolved_output = output_root.resolve()
+    protected_roots = (data_root, *_PROTECTED_OUTPUT_ROOTS)
+    if any(
+        resolved_output.is_relative_to(protected_root.resolve())
+        for protected_root in protected_roots
+    ):
+        raise ValueError("output-root must not be inside protected project data")
 
 
 def _iter_withheld_artifacts(
@@ -101,6 +134,14 @@ def _failure_report(
         "cik": _mapping(artifact.get("issuer")).get("cik"),
         "valuation_date": artifact.get("valuation_date"),
         "controlling_filing": dict(_controlling_filing(artifact)),
+        "existing_field_state": {
+            field: _mapping(
+                _mapping(_mapping(artifact.get("financials")).get("balance_sheet")).get(
+                    "field_states"
+                )
+            ).get(field)
+            for field in _marketable_securities_gaps(artifact)
+        },
         "parser_diagnostics": [],
         "decisions": [],
         "skipped_fields": [],
@@ -129,17 +170,13 @@ def main(argv: list[str] | None = None) -> int:
     for path, artifact in _iter_withheld_artifacts(args.data_root, ticker_filter):
         summary["discovered"] += 1
         ticker = _artifact_ticker(artifact, path)
-        try:
-            requests = shadow_requests_from_artifact(artifact)
-        except ValueError:
-            summary["skipped"] += 1
-            continue
-        if not requests:
+        if not _marketable_securities_gaps(artifact):
             summary["skipped"] += 1
             continue
         summary["eligible"] += 1
         controlling_filing = _controlling_filing(artifact)
         try:
+            requests = shadow_requests_from_artifact(artifact)
             cik = _mapping(artifact.get("issuer")).get("cik")
             accession = controlling_filing.get("accession")
             primary_document = controlling_filing.get("primary_document")
