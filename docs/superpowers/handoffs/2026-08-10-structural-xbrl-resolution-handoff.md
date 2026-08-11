@@ -4,7 +4,9 @@
 
 - Branch: `feat/structural-xbrl-resolution`
 - Worktree: `/Users/carlosconda/Desktop/Investing Application/.worktrees/structural-xbrl-resolution`
-- Final implementation commit: `5f80961 fix: harden structural XBRL evidence pipeline`
+- Final implementation commits:
+  - `5f80961 fix: harden structural XBRL evidence pipeline`
+  - `ad319a1 fix: close structural XBRL review gaps`
 - Design: `docs/superpowers/specs/2026-08-10-structural-xbrl-concept-resolution-design.md`
 - Plan: `docs/superpowers/plans/2026-08-10-structural-xbrl-concept-resolution.md`
 - SDD ledger: `.superpowers/sdd/2026-08-10-structural-xbrl-concept-resolution/progress.md`
@@ -12,7 +14,7 @@
 ## Completed implementation
 
 Tasks 1–6 remain complete and independently approved. Final-review findings were
-addressed in `5f80961`:
+addressed in `5f80961` and the scoped re-review fixes in `ad319a1`:
 
 - recursively bounded SEC/taxonomy dependency acquisition with governed HTTPS
   domains, redirect validation, hashes, source/local URL mappings, taxonomy
@@ -24,6 +26,9 @@ addressed in `5f80961`:
 - fuller immutable fact/relationship/mapping evidence;
 - exact fact deduplication and evidence-class ambiguity handling;
 - a hermetic package-builder → offline Arelle → resolver → shadow-report test.
+- taxonomy redirects are rejected before urllib follows an ungoverned target;
+- filing-directory indexes are streamed under a 2 MiB bound;
+- equal-ranked candidates are ambiguous only when their values conflict.
 
 Company Facts remains the production authority. Structural results remain
 shadow-only and cannot alter or clear publication gates. No LLM, embedding,
@@ -31,12 +36,12 @@ fuzzy, or semantic-value acceptance path was added.
 
 ## Verification at implementation commit
 
-- Focused structural suite: `189 passed in 2.57s`.
+- Focused structural suite after scoped re-review fixes: `193 passed in 3.99s`.
 - Hermetic real-boundary integration: `1 passed in 0.27s`.
 - Targeted filing/valuation regressions from repository root:
   `84 passed, 3 skipped, 1 pre-existing failure`.
-- Full backend suite from repository root:
-  `333 passed, 3 skipped, 1 pre-existing failure`.
+- Full backend suite after scoped re-review fixes:
+  `336 passed, 3 skipped, 1 pre-existing failure`.
 - The sole failure remains
   `test_microsoft_public_artifact_contains_no_raw_financial_amounts`, which
   expects the unrelated, uncommitted `automated_review` integration from the
