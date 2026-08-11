@@ -336,7 +336,9 @@ def test_issuer_current_borrowings_extension_is_accepted_with_two_structural_sig
     assert set(decision.reason_codes) >= {
         "CURRENT_LIABILITY_PRESENTATION_PARENT",
         "CURRENT_LIABILITY_CALCULATION_PARENT",
+        "DEFINITION_IDENTIFIES_DEBT",
     }
+    assert "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES" not in decision.reason_codes
 
 
 @pytest.mark.parametrize("missing", ["presentation_parents", "calculation_parents"])

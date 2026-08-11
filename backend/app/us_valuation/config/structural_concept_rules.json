@@ -50,6 +50,7 @@
       "marketable securities",
       "short term investments"
     ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES",
     "excluded_economic_phrases": [
       "strategic",
       "equity method",
@@ -96,6 +97,7 @@
       "marketable securities",
       "long term investments"
     ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES",
     "excluded_economic_phrases": [
       "strategic",
       "equity method",
@@ -139,6 +141,7 @@
       "current debt carrying amount",
       "aggregate current debt carrying amount"
     ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_DEBT",
     "structural_reason_prefix": "LIABILITY",
     "excluded_economic_phrases": [
       "available for sale",
@@ -191,6 +194,7 @@
       "noncurrent debt carrying amount",
       "aggregate noncurrent debt carrying amount"
     ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_DEBT",
     "structural_reason_prefix": "LIABILITY",
     "excluded_economic_phrases": [
       "available for sale",
@@ -241,6 +245,7 @@
       "commercial paper borrowing",
       "commercial paper liability"
     ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_COMMERCIAL_PAPER",
     "structural_reason_prefix": "LIABILITY",
     "excluded_economic_phrases": [
       "available for sale",

@@ -469,6 +469,11 @@ def _classify_candidate(
         fact, metric_rules, expected
     )
     definition = _definition_signal(fact, metric_rules)
+    definition_reason = metric_rules.get(
+        "definition_reason_code", "DEFINITION_IDENTIFIES_STRUCTURAL_ACCOUNT"
+    )
+    if not isinstance(definition_reason, str) or not definition_reason:
+        definition_reason = "DEFINITION_IDENTIFIES_STRUCTURAL_ACCOUNT"
     if definition and presentation and calculation:
         if review_only:
             return candidate(
@@ -481,7 +486,7 @@ def _classify_candidate(
             status="accepted",
             confidence=0.96,
             mapping_method="extension_structural_match",
-            reason_codes=signal_reasons + ("DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES",),
+            reason_codes=signal_reasons + (definition_reason,),
         )
     return candidate(
         status="review",
