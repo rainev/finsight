@@ -445,5 +445,147 @@
     "concept_reason_codes": {},
     "allowed_dimensions": {},
     "contextual_concepts": []
+  },
+  "preferred_equity": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "none",
+    "statement_support_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:TemporaryEquity",
+      "us-gaap:TemporaryEquityAbstract",
+      "us-gaap:Liabilities",
+      "us-gaap:LiabilitiesAbstract",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:TemporaryEquity",
+      "us-gaap:TemporaryEquityAbstract",
+      "us-gaap:Liabilities",
+      "us-gaap:LiabilitiesAbstract",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:TemporaryEquity",
+      "us-gaap:TemporaryEquityAbstract",
+      "us-gaap:Liabilities",
+      "us-gaap:LiabilitiesAbstract",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "extension_terms": [
+      "preferred stock",
+      "preferred equity",
+      "temporary equity",
+      "mezzanine equity",
+      "redeemable equity",
+      "carrying amount",
+      "liquidation preference",
+      "preferred dividends",
+      "conversion value",
+      "preferred stock proceeds",
+      "eps",
+      "preferred share counts"
+    ],
+    "required_definition_phrases": [
+      "preferred stock",
+      "preferred equity carrying amount",
+      "temporary equity carrying amount",
+      "mezzanine equity carrying amount"
+    ],
+    "structural_reason_prefix": "EQUITY",
+    "excluded_economic_phrases": [
+      "asset",
+      "receivable",
+      "investment",
+      "fair value"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "liquidation preference",
+      "preferred dividends",
+      "conversion value",
+      "conversion price",
+      "preferred stock proceeds",
+      "earnings per share",
+      "eps",
+      "preferred share counts",
+      "shares issued",
+      "share count"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {
+      "PreferredStocksIncludingAdditionalPaidInCapitalParOrStatedValue": "PREFERRED_EQUITY_CARRYING_AMOUNT",
+      "PreferredStockValue": "PREFERRED_EQUITY_CARRYING_AMOUNT",
+      "TemporaryEquityCarryingAmountAttributableToParent": "TEMPORARY_EQUITY_CARRYING_AMOUNT",
+      "TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests": "TEMPORARY_EQUITY_CARRYING_AMOUNT"
+    },
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "noncontrolling_interests": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "none",
+    "statement_support_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "extension_terms": [
+      "noncontrolling interest",
+      "minority interest",
+      "100% ownership"
+    ],
+    "required_definition_phrases": [
+      "noncontrolling interest",
+      "minority interest"
+    ],
+    "structural_reason_prefix": "EQUITY",
+    "excluded_economic_phrases": [
+      "income statement",
+      "dividends"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "100% ownership",
+      "wholly owned"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_dimensions": {
+      "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest": [
+        [
+          "us-gaap:StatementEquityComponentsAxis",
+          "us-gaap:NoncontrollingInterestMember"
+        ]
+      ]
+    },
+    "contextual_concepts": [
+      "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"
+    ]
   }
 }

@@ -120,6 +120,245 @@ def noncurrent_request(**overrides: object) -> ResolutionRequest:
 
 
 @pytest.mark.parametrize(
+    "qname,reason_code",
+    [
+        ("us-gaap:PreferredStockValue", "PREFERRED_EQUITY_CARRYING_AMOUNT"),
+        (
+            "us-gaap:TemporaryEquityCarryingAmountAttributableToParent",
+            "TEMPORARY_EQUITY_CARRYING_AMOUNT",
+        ),
+    ],
+)
+def test_direct_preferred_or_temporary_carrying_amount_zero_is_accepted(
+    qname: str, reason_code: str
+) -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                qname,
+                value=0,
+                statement_roles=(),
+                presentation_parents=("us-gaap:TemporaryEquity",),
+                calculation_parents=("us-gaap:TemporaryEquity",),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 0
+    assert reason_code in decision.reason_codes
+
+
+def test_preferred_equity_alias_still_requires_usd_unit() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:PreferredStockValue",
+                value=0,
+                unit="shares",
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("UNIT_MISMATCH",)
+
+
+@pytest.mark.parametrize(
+    "qname,value,documentation",
+    [
+        (
+            "wdc:TemporaryEquityLiquidationPreference",
+            265_000_000,
+            "Temporary equity liquidation preference.",
+        ),
+        (
+            "wdc:PreferredStockDividends",
+            10_000_000,
+            "Preferred dividends.",
+        ),
+        (
+            "wdc:PreferredStockConversionValue",
+            265_000_000,
+            "Preferred stock conversion value.",
+        ),
+        (
+            "wdc:PreferredStockProceeds",
+            265_000_000,
+            "Preferred stock proceeds.",
+        ),
+        (
+            "wdc:PreferredEquityEPS",
+            1.25,
+            "Preferred-equity EPS.",
+        ),
+        (
+            "wdc:PreferredSharesIssued",
+            1_000_000,
+            "Preferred share counts.",
+        ),
+    ],
+)
+def test_preferred_non_carrying_facts_are_review_only(
+    qname: str, value: float, documentation: str
+) -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                qname,
+                value=value,
+                documentation=documentation,
+                statement_roles=(),
+                presentation_parents=("us-gaap:TemporaryEquity",),
+                calculation_parents=("us-gaap:TemporaryEquity",),
+            )
+        ],
+    )
+
+    assert decision.status == "review"
+    assert decision.value == value
+    assert decision.status != "accepted"
+
+
+def test_preferred_carrying_amount_wins_over_liquidation_preference() -> None:
+    carrying_amount = account_fact(
+        "us-gaap:TemporaryEquityCarryingAmountAttributableToParent",
+        value=0,
+        statement_roles=(),
+        presentation_parents=("us-gaap:TemporaryEquity",),
+        calculation_parents=("us-gaap:TemporaryEquity",),
+    )
+    liquidation_preference = account_fact(
+        "wdc:TemporaryEquityLiquidationPreference",
+        value=265_000_000,
+        documentation="Temporary equity liquidation preference.",
+        statement_roles=(),
+        presentation_parents=("us-gaap:TemporaryEquity",),
+        calculation_parents=("us-gaap:TemporaryEquity",),
+    )
+
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [liquidation_preference, carrying_amount],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.source_concept == carrying_amount.qname
+    assert decision.value == 0
+
+
+def test_preferred_shares_issued_zero_is_not_a_usd_preferred_equity_value() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:PreferredStockSharesIssued",
+                value=0,
+                unit="shares",
+                documentation="Preferred share counts.",
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("UNIT_MISMATCH",)
+
+
+def test_governed_nci_equity_member_is_accepted() -> None:
+    fact = account_fact(
+        "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        value=0,
+        dimensions=(
+            (
+                "us-gaap:StatementEquityComponentsAxis",
+                "us-gaap:NoncontrollingInterestMember",
+            ),
+        ),
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+        ),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.value == 0
+    assert decision.confidence == 0.96
+    assert decision.mapping_method == "taxonomy_and_context"
+    assert "GOVERNED_DIMENSIONAL_CONTEXT" in decision.reason_codes
+
+
+@pytest.mark.parametrize(
+    "dimensions",
+    [
+        ((
+            "us-gaap:StatementEquityComponentsAxis",
+            "us-gaap:ParentMember",
+        ),),
+        ((
+            "us-gaap:StatementEquityComponentsAxis",
+            "us-gaap:RetainedEarningsMember",
+        ),),
+        (),
+    ],
+)
+def test_nci_total_equity_other_members_and_unsegmented_facts_are_rejected(
+    dimensions: tuple[tuple[str, str], ...]
+) -> None:
+    fact = account_fact(
+        "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        value=0,
+        dimensions=dimensions,
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+        ),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("DIMENSIONED_NONCONSOLIDATED_FACT",)
+
+
+def test_income_statement_nci_cannot_satisfy_equity_nci() -> None:
+    fact = account_fact(
+        "us-gaap:NetIncomeLossAttributableToNoncontrollingInterest",
+        value=0,
+        statement_roles=("income_statement",),
+        presentation_parents=("us-gaap:NetIncomeLoss",),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("STATEMENT_ROLE_MISMATCH",)
+
+
+def test_narrative_only_ftnt_ownership_is_not_structural_nci_zero() -> None:
+    fact = account_fact(
+        "ftnt:OwnershipNarrative",
+        value=None,
+        documentation="100% ownership is maintained.",
+        presentation_parents=("us-gaap:StockholdersEquity",),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("MISSING_NUMERIC_VALUE",)
+
+
+@pytest.mark.parametrize(
     "metric,qname,value,parents,roles",
     [
         (
@@ -640,6 +879,8 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "finance_lease_current",
         "finance_lease_noncurrent",
         "finance_lease_total",
+        "preferred_equity",
+        "noncontrolling_interests",
     }
     required_policy_fields = {
         "orientation",
