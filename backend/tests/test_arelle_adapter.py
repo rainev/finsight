@@ -157,7 +157,7 @@ def test_arelle_adapter_bootstraps_worker_when_parent_cwd_is_repository_root(
 
     filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
 
-    assert len(filing.facts) == 5
+    assert len(filing.facts) == 6
 
 
 def test_arelle_adapter_resolves_relative_entrypoint_before_worker_chdir(
@@ -169,7 +169,7 @@ def test_arelle_adapter_resolves_relative_entrypoint_before_worker_chdir(
 
     filing = parse_structural_filing(relative_entrypoint, accession=ACCESSION)
 
-    assert len(filing.facts) == 5
+    assert len(filing.facts) == 6
 
 
 def test_arelle_adapter_extracts_all_representative_facts_and_relationships() -> None:

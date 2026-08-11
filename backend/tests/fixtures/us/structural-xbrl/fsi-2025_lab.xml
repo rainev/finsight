@@ -8,6 +8,8 @@
               xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesCurrent"/>
     <link:loc xlink:type="locator" xlink:label="noncurrent"
               xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesNoncurrent"/>
+    <link:loc xlink:type="locator" xlink:label="debt-current"
+              xlink:href="us-gaap-2025.xsd#us-gaap_DebtCurrent"/>
     <link:loc xlink:type="locator" xlink:label="strategic"
               xlink:href="fsi-2025.xsd#fsi_StrategicEquityInvestments"/>
     <link:label xlink:type="resource" xlink:label="current-standard"
@@ -26,6 +28,14 @@
                 xlink:role="http://www.xbrl.org/2003/role/documentation" xml:lang="en">
       Noncurrent marketable debt securities.
     </link:label>
+    <link:label xlink:type="resource" xlink:label="debt-current-standard"
+                xlink:role="http://www.xbrl.org/2003/role/label" xml:lang="en">
+      Current debt
+    </link:label>
+    <link:label xlink:type="resource" xlink:label="debt-current-documentation"
+                xlink:role="http://www.xbrl.org/2003/role/documentation" xml:lang="en">
+      Current debt carrying amount.
+    </link:label>
     <link:label xlink:type="resource" xlink:label="strategic-standard"
                 xlink:role="http://www.xbrl.org/2003/role/label" xml:lang="en">
       Strategic equity investments
@@ -38,6 +48,8 @@
     <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="current" xlink:to="current-documentation" order="2"/>
     <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="noncurrent" xlink:to="noncurrent-standard" order="1"/>
     <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="noncurrent" xlink:to="noncurrent-documentation" order="2"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="debt-current" xlink:to="debt-current-standard" order="1"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="debt-current" xlink:to="debt-current-documentation" order="2"/>
     <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="strategic" xlink:to="strategic-standard" order="1"/>
     <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="strategic" xlink:to="strategic-documentation" order="2"/>
   </link:labelLink>

@@ -17,4 +17,10 @@
   <xs:element name="LongTermInvestments" id="us-gaap_LongTermInvestments"
              type="xbrli:monetaryItemType" substitutionGroup="xbrli:item"
              xbrli:periodType="instant"/>
+  <xs:element name="LiabilitiesCurrentAbstract" id="us-gaap_LiabilitiesCurrentAbstract"
+             type="xbrli:monetaryItemType" substitutionGroup="xbrli:item"
+             xbrli:periodType="duration" abstract="true"/>
+  <xs:element name="DebtCurrent" id="us-gaap_DebtCurrent"
+             type="xbrli:monetaryItemType" substitutionGroup="xbrli:item"
+             xbrli:periodType="instant"/>
 </xs:schema>

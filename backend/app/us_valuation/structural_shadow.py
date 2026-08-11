@@ -8,10 +8,18 @@ from .concept_resolver import resolve_concept
 from .structural_xbrl import ResolutionRequest, StructuralFiling
 
 
-_MARKETABLE_SECURITIES_FIELDS = frozenset(
+SUPPORTED_STRUCTURAL_FIELDS = frozenset(
     {
         "marketable_securities_current",
         "marketable_securities_noncurrent",
+        "commercial_paper",
+        "current_debt",
+        "noncurrent_debt",
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+        "finance_lease_total",
+        "preferred_equity",
+        "noncontrolling_interests",
     }
 )
 
@@ -50,11 +58,11 @@ def _artifact_context(artifact: Mapping[str, Any]) -> tuple[str, str, str]:
 def shadow_requests_from_artifact(
     artifact: Mapping[str, Any],
 ) -> tuple[ResolutionRequest, ...]:
-    """Build marketable-securities resolution requests from explicit bridge gaps only."""
+    """Build structural bridge resolution requests from explicit bridge gaps only."""
 
     missing = _bridge_missing_fields(artifact)
     requested_fields = tuple(
-        field for field in missing if field in _MARKETABLE_SECURITIES_FIELDS
+        field for field in missing if field in SUPPORTED_STRUCTURAL_FIELDS
     )
     if not requested_fields:
         return ()
@@ -96,7 +104,7 @@ def _artifact_metadata(artifact: Mapping[str, Any]) -> dict[str, Any]:
             field: field_states.get(field) for field in missing
         },
         "skipped_fields": [
-            field for field in missing if field not in _MARKETABLE_SECURITIES_FIELDS
+            field for field in missing if field not in SUPPORTED_STRUCTURAL_FIELDS
         ],
     }
 

@@ -16,11 +16,17 @@
               xlink:href="us-gaap-2025.xsd#us-gaap_AssetsNoncurrent"/>
     <link:loc xlink:type="locator" xlink:label="liquid-noncurrent"
               xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesNoncurrent"/>
+    <link:loc xlink:type="locator" xlink:label="liabilities-current"
+              xlink:href="us-gaap-2025.xsd#us-gaap_LiabilitiesCurrentAbstract"/>
+    <link:loc xlink:type="locator" xlink:label="debt-current"
+              xlink:href="us-gaap-2025.xsd#us-gaap_DebtCurrent"/>
     <link:loc xlink:type="locator" xlink:label="strategic"
               xlink:href="fsi-2025.xsd#fsi_StrategicEquityInvestments"/>
     <link:presentationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/parent-child" xlink:from="assets-current" xlink:to="liquid-current"
                           order="1"/>
     <link:presentationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/parent-child" xlink:from="assets-noncurrent" xlink:to="liquid-noncurrent"
+                          order="1"/>
+    <link:presentationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/parent-child" xlink:from="liabilities-current" xlink:to="debt-current"
                           order="1"/>
     <link:presentationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/parent-child" xlink:from="assets-noncurrent" xlink:to="strategic"
                           order="2"/>

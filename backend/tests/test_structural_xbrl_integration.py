@@ -105,8 +105,14 @@ def test_cached_package_to_offline_arelle_to_shadow_report_is_hermetic(
                 },
             },
             "balance_sheet": {
-                "bridge_missing_fields": ["marketable_securities_current"],
-                "field_states": {"marketable_securities_current": "missing"},
+                "bridge_missing_fields": [
+                    "marketable_securities_current",
+                    "current_debt",
+                ],
+                "field_states": {
+                    "marketable_securities_current": "missing",
+                    "current_debt": "missing",
+                },
             },
         },
     }
@@ -130,16 +136,21 @@ def test_cached_package_to_offline_arelle_to_shadow_report_is_hermetic(
     ) == 0
 
     report = json.loads((output_root / "FSI.json").read_text())
-    decision = report["decisions"][0]
+    decisions = {decision["normalized_concept"]: decision for decision in report["decisions"]}
+    marketable_decision = decisions["marketable_securities_current"]
+    debt_decision = decisions["current_debt"]
     assert report["publication_effect"] == "none_shadow_only"
-    assert decision["status"] == "accepted"
-    assert decision["form"] == "10-K/A"
-    assert decision["evidence"]["filing_form"] == "10-K/A"
-    assert decision["evidence"]["decimals"] == "0"
-    assert decision["evidence"]["relationships"]
-    assert decision["evidence"]["filing_metadata"]
+    assert len(decisions) == 2
+    assert marketable_decision["status"] == "accepted"
+    assert marketable_decision["form"] == "10-K/A"
+    assert marketable_decision["evidence"]["filing_form"] == "10-K/A"
+    assert marketable_decision["evidence"]["decimals"] == "0"
+    assert marketable_decision["evidence"]["relationships"]
+    assert marketable_decision["evidence"]["filing_metadata"]
+    assert debt_decision["status"] == "accepted"
+    assert debt_decision["value"] == 125_000_000
     summary = json.loads((output_root / "summary.json").read_text())
-    assert summary["accepted_shadow"] == 1
+    assert summary["accepted_shadow"] == 2
     manifests = list((cache_root / "structural-filings").rglob("package-manifest.json"))
     assert len(manifests) == 1
     manifest = json.loads(manifests[0].read_text())

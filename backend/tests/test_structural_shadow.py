@@ -12,6 +12,7 @@ from types import ModuleType
 
 import pytest
 
+import app.us_valuation.structural_shadow as structural_shadow
 from app.us_valuation.structural_shadow import (
     evaluate_shadow_case,
     shadow_requests_from_artifact,
@@ -115,13 +116,41 @@ def test_shadow_case_emits_candidate_without_mutating_artifact() -> None:
     assert report["decisions"][0]["normalized_concept"] == "marketable_securities_current"
 
 
-def test_shadow_case_ignores_non_marketability_bridge_fields() -> None:
-    artifact = withheld_artifact(missing=["commercial_paper"])
+SUPPORTED = {
+    "marketable_securities_current",
+    "marketable_securities_noncurrent",
+    "commercial_paper",
+    "current_debt",
+    "noncurrent_debt",
+    "finance_lease_current",
+    "finance_lease_noncurrent",
+    "finance_lease_total",
+    "preferred_equity",
+    "noncontrolling_interests",
+}
 
+
+def test_supported_structural_fields_are_the_governed_bridge_policies() -> None:
+    assert structural_shadow.SUPPORTED_STRUCTURAL_FIELDS == SUPPORTED
+
+
+@pytest.mark.parametrize("field", sorted(SUPPORTED))
+def test_shadow_requests_every_supported_bridge_field_as_usd_balance_sheet(
+    field: str,
+) -> None:
+    artifact = withheld_artifact(missing=[field, "unknown_bridge_field"])
+    original = deepcopy(artifact)
+
+    requests = shadow_requests_from_artifact(artifact)
     report = evaluate_shadow_case(artifact, structural_filing())
 
-    assert report["decisions"] == []
-    assert report["skipped_fields"] == ["commercial_paper"]
+    assert artifact == original
+    assert len(requests) == 1
+    assert requests[0].normalized_concept == field
+    assert requests[0].unit == "USD"
+    assert requests[0].statement_role == "balance_sheet"
+    assert len(report["decisions"]) == 1
+    assert report["skipped_fields"] == ["unknown_bridge_field"]
 
 
 def test_shadow_requests_require_controlling_accession() -> None:
@@ -277,6 +306,7 @@ def _install_cli_fakes(
     fake_sec = ModuleType("app.us_valuation.sec_client")
     fake_sec.SecClient = FakeSecClient  # type: ignore[attr-defined]
     fake_shadow = ModuleType("app.us_valuation.structural_shadow")
+    fake_shadow.SUPPORTED_STRUCTURAL_FIELDS = structural_shadow.SUPPORTED_STRUCTURAL_FIELDS  # type: ignore[attr-defined]
     fake_shadow.shadow_requests_from_artifact = shadow_requests_from_artifact  # type: ignore[attr-defined]
     fake_shadow.evaluate_shadow_case = evaluate  # type: ignore[attr-defined]
     monkeypatch.setitem(sys.modules, "app.us_valuation.arelle_adapter", fake_arelle)
@@ -323,7 +353,7 @@ def test_shadow_cli_emits_immutable_reports_and_counts_all_decision_states(
     original_inputs["BADPER"] = _write_artifact(
         data_root / "BADPER.json", malformed_period
     )
-    skipped = withheld_artifact(missing=["commercial_paper"])
+    skipped = withheld_artifact(missing=["unknown_bridge_field"])
     skipped["ticker"] = "SKIP"
     original_inputs["SKIP"] = _write_artifact(data_root / "SKIP.json", skipped)
     calls = _install_cli_fakes(monkeypatch, decision_by_ticker=decision_by_ticker)

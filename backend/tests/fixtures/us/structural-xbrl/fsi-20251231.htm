@@ -6,6 +6,7 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
       xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31"
+      xmlns:us-gaap="http://fasb.org/us-gaap/2025"
       xmlns:fsi="https://example.test/fsi/2025">
   <head><title>FSI 2025 Structural Fixture</title></head>
   <body>
@@ -42,6 +43,10 @@
       <tr><td>Liquid investment securities, noncurrent</td><td>
         <ix:nonFraction name="fsi:LiquidInvestmentSecuritiesNoncurrent"
                         contextRef="CurrentYearInstant" unitRef="USD" decimals="0">8000000</ix:nonFraction>
+      </td></tr>
+      <tr><td>Current debt</td><td>
+        <ix:nonFraction name="us-gaap:DebtCurrent"
+                        contextRef="CurrentYearInstant" unitRef="USD" decimals="0">125000000</ix:nonFraction>
       </td></tr>
       <tr><td>Strategic equity investments</td><td>
         <ix:nonFraction name="fsi:StrategicEquityInvestments"

@@ -19,9 +19,6 @@ _PROTECTED_OUTPUT_ROOTS = (
     _DEFAULT_DATA_ROOT,
     _REPO_ROOT / "frontend" / "public" / "data",
 )
-_MARKETABLE_SECURITIES_FIELDS = frozenset(
-    {"marketable_securities_current", "marketable_securities_noncurrent"}
-)
 _CANONICAL_TICKER = re.compile(r"^[A-Z][A-Z0-9.-]{0,15}$")
 _COUNTER_NAMES = (
     "discovered",
@@ -76,7 +73,9 @@ def _controlling_filing(artifact: Mapping[str, Any]) -> Mapping[str, Any]:
     return _mapping(_mapping(financials.get("ttm")).get("controlling_filing"))
 
 
-def _marketable_securities_gaps(artifact: Mapping[str, Any]) -> tuple[str, ...]:
+def _structural_gaps(
+    artifact: Mapping[str, Any], supported_fields: frozenset[str]
+) -> tuple[str, ...]:
     financials = _mapping(artifact.get("financials"))
     balance_sheet = _mapping(financials.get("balance_sheet"))
     missing = balance_sheet.get("bridge_missing_fields")
@@ -85,7 +84,7 @@ def _marketable_securities_gaps(artifact: Mapping[str, Any]) -> tuple[str, ...]:
     return tuple(
         field
         for field in missing
-        if isinstance(field, str) and field in _MARKETABLE_SECURITIES_FIELDS
+        if isinstance(field, str) and field in supported_fields
     )
 
 
@@ -129,7 +128,11 @@ def _iter_withheld_artifacts(
 
 
 def _failure_report(
-    artifact: Mapping[str, Any], *, ticker: str, error: Exception
+    artifact: Mapping[str, Any],
+    *,
+    ticker: str,
+    error: Exception,
+    supported_fields: frozenset[str],
 ) -> dict[str, Any]:
     return {
         "ticker": ticker,
@@ -142,7 +145,7 @@ def _failure_report(
                     "field_states"
                 )
             ).get(field)
-            for field in _marketable_securities_gaps(artifact)
+            for field in _structural_gaps(artifact, supported_fields)
         },
         "parser_diagnostics": [],
         "decisions": [],
@@ -162,6 +165,7 @@ def main(argv: list[str] | None = None) -> int:
     from app.us_valuation.filing_package import cache_structural_filing_package
     from app.us_valuation.sec_client import SecClient
     from app.us_valuation.structural_shadow import (
+        SUPPORTED_STRUCTURAL_FIELDS,
         evaluate_shadow_case,
         shadow_requests_from_artifact,
     )
@@ -173,7 +177,7 @@ def main(argv: list[str] | None = None) -> int:
     for path, artifact in _iter_withheld_artifacts(args.data_root, ticker_filter):
         summary["discovered"] += 1
         ticker = _artifact_ticker(artifact, path)
-        if not _marketable_securities_gaps(artifact):
+        if not _structural_gaps(artifact, SUPPORTED_STRUCTURAL_FIELDS):
             summary["skipped"] += 1
             continue
         summary["eligible"] += 1
@@ -223,7 +227,12 @@ def main(argv: list[str] | None = None) -> int:
             report = evaluate_shadow_case(artifact, filing)
             summary["parsed"] += 1
         except (OSError, RuntimeError, ValueError) as error:
-            report = _failure_report(artifact, ticker=ticker, error=error)
+            report = _failure_report(
+                artifact,
+                ticker=ticker,
+                error=error,
+                supported_fields=SUPPORTED_STRUCTURAL_FIELDS,
+            )
             summary["parser_failed"] += 1
         else:
             for decision in report["decisions"]:
