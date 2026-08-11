@@ -196,24 +196,25 @@ def _statement_supported(
 def _dimensions_allowed(
     fact: StructuralFact, metric_rules: Mapping[str, Any]
 ) -> bool:
-    if not fact.dimensions:
-        return True
     allowed = metric_rules.get("allowed_dimensions", {})
     if not isinstance(allowed, Mapping):
-        return False
+        return not fact.dimensions
     combinations = allowed.get(fact.qname, allowed.get(fact.local_name, ()))
     if not isinstance(combinations, (list, tuple)):
-        return False
+        return not fact.dimensions
+    if not fact.dimensions:
+        return not (
+            _configured_concept_value(fact, metric_rules, "contextual_concepts")
+            and combinations
+        )
     actual = tuple(sorted(fact.dimensions))
-    for combination in combinations:
-        if not isinstance(combination, (list, tuple)):
-            continue
-        try:
-            expected = tuple(sorted(tuple(pair) for pair in combination))
-        except TypeError:
-            continue
-        if actual == expected:
-            return True
+    if all(
+        isinstance(pair, (list, tuple))
+        and len(pair) == 2
+        and all(isinstance(value, str) for value in pair)
+        for pair in combinations
+    ):
+        return actual == tuple(sorted(tuple(pair) for pair in combinations))
     return False
 
 

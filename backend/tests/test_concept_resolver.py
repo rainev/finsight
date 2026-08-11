@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 
+import app.us_valuation.concept_resolver as concept_resolver_module
 from app.us_valuation.concept_resolver import load_structural_rules, resolve_concept
 from app.us_valuation.structural_xbrl import (
     ResolutionRequest,
@@ -892,3 +893,82 @@ def test_no_candidate_is_unresolved() -> None:
     assert decision.source_concept is None
     assert decision.source_accession == ACCESSION
     assert decision.reason_codes == ("NO_CANDIDATE",)
+
+
+def _install_contextual_dimension_policy(monkeypatch: pytest.MonkeyPatch) -> None:
+    rules = load_structural_rules()
+    rules["contextual_metric"] = {
+        "statement_role": "balance_sheet",
+        "unit": "USD",
+        "orientation": "none",
+        "statement_support_parents": ["us-gaap:EquityRollForward"],
+        "direct_statement_parents": [],
+        "structural_parents": ["us-gaap:EquityRollForward"],
+        "extension_terms": ["contextual equity"],
+        "required_definition_phrases": [],
+        "excluded_economic_phrases": [],
+        "component_only_concepts": [],
+        "review_only_phrases": [],
+        "direct_statement_concepts": [],
+        "concept_reason_codes": {},
+        "allowed_dimensions": {
+            "us-gaap:ContextualEquity": [
+                [
+                    "us-gaap:StatementEquityComponentsAxis",
+                    "us-gaap:NoncontrollingInterestMember",
+                ]
+            ]
+        },
+        "contextual_concepts": ["us-gaap:ContextualEquity"],
+    }
+    monkeypatch.setattr(concept_resolver_module, "load_structural_rules", lambda: rules)
+    monkeypatch.setattr(
+        concept_resolver_module,
+        "_load_aliases",
+        lambda: {"fields": {"contextual_metric": {"concepts": []}}},
+    )
+
+
+def test_unsegmented_contextual_concept_is_not_accepted(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _install_contextual_dimension_policy(monkeypatch)
+    fact = account_fact(
+        "us-gaap:ContextualEquity",
+        statement_roles=(),
+        presentation_parents=("us-gaap:EquityRollForward",),
+        calculation_parents=(),
+        dimensions=(),
+        value=100.0,
+    )
+
+    decision = resolve_concept(metric_request("contextual_metric"), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("DIMENSIONED_NONCONSOLIDATED_FACT",)
+
+
+def test_contextual_concept_accepts_exact_configured_dimension(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _install_contextual_dimension_policy(monkeypatch)
+    fact = account_fact(
+        "us-gaap:ContextualEquity",
+        statement_roles=(),
+        presentation_parents=("us-gaap:EquityRollForward",),
+        calculation_parents=(),
+        dimensions=(
+            (
+                "us-gaap:StatementEquityComponentsAxis",
+                "us-gaap:NoncontrollingInterestMember",
+            ),
+        ),
+        value=100.0,
+    )
+
+    decision = resolve_concept(metric_request("contextual_metric"), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.value == 100.0
+    assert decision.mapping_method == "taxonomy_and_context"
+    assert "GOVERNED_DIMENSIONAL_CONTEXT" in decision.reason_codes
