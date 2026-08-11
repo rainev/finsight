@@ -2,11 +2,11 @@
 
 Date: 2026-08-11 (Asia/Manila)
 
-Status: in progress. Tasks 1–4 are implemented, independently reviewed, and committed. Task 5 is being implemented but is not yet reviewed or committed. Task 6 and the final broad review remain.
+Status: in progress. Tasks 1–5 are implemented, independently reviewed, and committed. Task 6 and the final broad review remain.
 
 ## Resume instruction
 
-Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Resume the approved plan at Task 5; do not redo Tasks 1–4.
+Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Resume the approved plan at Task 6; do not redo Tasks 1–5.
 
 Plan:
 
@@ -24,9 +24,9 @@ Branch:
 
 `feat/structural-xbrl-resolution`
 
-Verified checkpoint before active Task 5 edits:
+Latest independently reviewed implementation checkpoint:
 
-`70013ec fix: reject preferred stock share counts`
+`ecb183d feat: evaluate bridge accounts in structural shadow`
 
 ## Completed work
 
@@ -65,48 +65,45 @@ Verified checkpoint before active Task 5 edits:
 - Final committed range: `5f7a67e..70013ec`.
 - Independent review: clean.
 
-Latest verified focused result at Task 4 close:
+### Task 5 — structural shadow runner and hermetic Arelle integration
+
+- Exposes all ten governed bridge fields through public `SUPPORTED_STRUCTURAL_FIELDS`.
+- Every supported gap creates one USD balance-sheet request; unknown gaps remain skipped.
+- The CLI retains lazy Arelle imports and `publication_effect: none_shadow_only`.
+- The hermetic fixture now includes `DebtCurrent=125,000,000` with schema, labels, and presentation support.
+- Offline integration proves two accepted decisions—current marketable securities and current debt—without network access or source mutation.
+- Final implementation commit: `ecb183d`.
+- Independent review: clean.
+
+Latest verified focused result at Task 5 close:
 
 ```text
-pytest -q tests/test_concept_resolver.py tests/test_structural_xbrl_schema.py
-193 passed
+pytest -q tests/test_structural_xbrl_schema.py tests/test_concept_resolver.py tests/test_arelle_adapter.py tests/test_filing_package.py tests/test_structural_shadow.py tests/test_structural_xbrl_integration.py
+290 passed
 ```
-
-## Active Task 5 — not yet approved
-
-Goal: expose all governed bridge fields through the shadow runner and hermetic Arelle integration while retaining `publication_effect: none_shadow_only`.
-
-Task brief:
-
-`.superpowers/sdd/2026-08-11-structural-bridge-account-resolvers/task-5-brief.md`
-
-Active implementer at handoff creation:
-
-- Agent `019ff087-8777-75a3-b96f-b8e7a0fb68fa` (Sartre)
-- Model: Terra Medium
-
-The following Task 5 files are currently modified and must be treated as unverified until the implementer reports, the controller reruns tests, the changes are committed, and a fresh reviewer returns clean:
-
-- `backend/app/us_valuation/structural_shadow.py`
-- `scripts/run_structural_xbrl_shadow.py`
-- `backend/tests/test_structural_shadow.py`
-- `backend/tests/test_structural_xbrl_integration.py`
-- `backend/tests/fixtures/us/structural-xbrl/fsi-20251231.htm`
-- `backend/tests/fixtures/us/structural-xbrl/fsi-2025_pre.xml`
-- `backend/tests/fixtures/us/structural-xbrl/fsi-2025_lab.xml`
-- `backend/tests/fixtures/us/structural-xbrl/us-gaap-2025.xsd`
-
-Do not stage or commit these active files merely because they exist. First collect the Task 5 report and run the focused structural suite.
 
 ## Remaining sequence
 
-1. Finish Task 5 RED→GREEN implementation.
-2. Independently inspect and test the Task 5 delta.
-3. Commit only after tests pass; run a fresh scoped review and fix/re-review if needed.
-4. Execute Task 6 using Sol High locally: full backend tests and offline replay of cached ANET, CRM, DELL, FTNT, and WDC filings.
-5. Record `docs/plans/EVIDENCE.md` and update the main structural-XBRL handoff.
-6. Run a broad final review from design commit `1d7de4f` through HEAD.
-7. End with GoodBehavior status `verified — your confirmation needed`; do not claim production publication approval.
+1. Execute Task 6 using Sol High locally: full backend tests and offline replay of cached ANET, CRM, DELL, FTNT, and WDC filings.
+2. Record `docs/plans/EVIDENCE.md` and update the main structural-XBRL handoff.
+3. Run a broad final review from design commit `1d7de4f` through HEAD.
+4. End with GoodBehavior status `verified — your confirmation needed`; do not claim production publication approval.
+
+## Copy-paste continuation prompt
+
+```text
+Resume FinSight structural XBRL work from the saved handoff on branch `feat/structural-xbrl-resolution`.
+
+Repository: `/Users/carlosconda/Desktop/Investing Application`
+Worktree: `/Users/carlosconda/Desktop/Investing Application/.worktrees/structural-xbrl-resolution`
+Handoff: `docs/superpowers/handoffs/2026-08-11-structural-bridge-resolvers-in-progress-handoff.md`
+Plan: `docs/superpowers/plans/2026-08-11-structural-bridge-account-resolvers.md`
+Reviewed implementation checkpoint: `ecb183d`
+
+Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Read the handoff and inspect the branch first. Do not redo Tasks 1–5; they are committed and independently reviewed. Resume at Task 6: run the full backend regression suite and replay the cached ANET, CRM, DELL, FTNT, and WDC filings offline against the approved accounting baseline. Record durable evidence, update the main handoff, and run the broad final review. Keep `publication_effect: none_shadow_only`; do not change production valuation inputs. Never stage `output/` or `.superpowers/`. Use `pytest` directly. End with `verified — your confirmation needed`, not production approval.
+```
+
+If the branch is checked out in a fresh clone rather than this machine, create a normal worktree or work directly on the branch and supply the cached `output/structural-xbrl-pilot` evidence separately because `output/` is intentionally untracked.
 
 ## Safety and workspace notes
 
