@@ -436,6 +436,21 @@ def test_finance_lease_split_extension_under_payment_schedule_parent_is_not_acce
 
 
 @pytest.mark.parametrize(
+    "metric,qname,parent",
+    [
+        (
+            "finance_lease_current",
+            "us-gaap:FinanceLeaseLiabilityCurrent",
+            "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+        ),
+        (
+            "finance_lease_noncurrent",
+            "us-gaap:FinanceLeaseLiabilityNoncurrent",
+            "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+        ),
+    ],
+)
+@pytest.mark.parametrize(
     "overrides,reason",
     [
         ({"unit": "shares"}, "UNIT_MISMATCH"),
@@ -453,9 +468,12 @@ def test_finance_lease_split_extension_under_payment_schedule_parent_is_not_acce
     ],
 )
 def test_finance_lease_direct_alias_enforces_accounting_gates(
-    overrides: dict[str, object], reason: str
+    metric: str,
+    qname: str,
+    parent: str,
+    overrides: dict[str, object],
+    reason: str,
 ) -> None:
-    parent = "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract"
     fact_values: dict[str, object] = {
         "value": 220_000_000,
         "statement_roles": (),
@@ -465,8 +483,8 @@ def test_finance_lease_direct_alias_enforces_accounting_gates(
     fact_values.update(overrides)
 
     decision = resolve_concept(
-        metric_request("finance_lease_current"),
-        [account_fact("us-gaap:FinanceLeaseLiabilityCurrent", **fact_values)],
+        metric_request(metric),
+        [account_fact(qname, **fact_values)],
     )
 
     assert decision.status == "rejected"
