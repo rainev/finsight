@@ -13,6 +13,7 @@ from urllib.request import Request, urlopen
 
 
 SEC_DATA_ROOT = "https://data.sec.gov"
+SEC_ARCHIVES_ROOT = "https://www.sec.gov/Archives/edgar/data"
 
 
 def normalize_cik(cik: str | int) -> str:
@@ -20,6 +21,28 @@ def normalize_cik(cik: str | int) -> str:
     if not digits:
         raise ValueError("CIK must contain digits")
     return digits.zfill(10)
+
+
+def normalize_accession(accession: str | int) -> str:
+    """Return the digits-only SEC accession used in archive URLs."""
+    digits = "".join(character for character in str(accession) if character.isdigit())
+    if not digits:
+        raise ValueError("accession must contain digits")
+    return digits
+
+
+def safe_filing_filename(filename: str) -> str:
+    """Validate an SEC filing-directory entry before using it in a path or URL."""
+    candidate = str(filename)
+    if (
+        not candidate
+        or candidate in {".", ".."}
+        or "/" in candidate
+        or "\\" in candidate
+        or Path(candidate).name != candidate
+    ):
+        raise ValueError("filing attachment must use a safe file name")
+    return candidate
 
 
 class SecClient:
@@ -66,21 +89,82 @@ class SecClient:
             refresh=refresh,
         )
 
+    def filing_index(
+        self,
+        cik: str | int,
+        accession: str | int,
+        *,
+        refresh: bool = False,
+    ) -> dict[str, Any]:
+        """Retrieve a filing-directory index from the SEC archive."""
+        normalized_cik = normalize_cik(cik)
+        normalized_accession = normalize_accession(accession)
+        return self._get_json(
+            self._archive_url(normalized_cik, normalized_accession, "index.json"),
+            cache_name=(
+                f"archives/CIK{normalized_cik}/{normalized_accession}/index.json"
+            ),
+            refresh=refresh,
+        )
+
+    def filing_attachment(
+        self,
+        cik: str | int,
+        accession: str | int,
+        filename: str,
+        *,
+        refresh: bool = False,
+    ) -> bytes:
+        """Retrieve one safe, basename-only filing attachment from the SEC archive."""
+        normalized_cik = normalize_cik(cik)
+        normalized_accession = normalize_accession(accession)
+        safe_name = safe_filing_filename(filename)
+        return self._get_bytes(
+            self._archive_url(normalized_cik, normalized_accession, safe_name),
+            cache_name=(
+                f"archives/CIK{normalized_cik}/{normalized_accession}/{safe_name}"
+            ),
+            refresh=refresh,
+            accept="application/octet-stream, application/xml, text/html",
+        )
+
+    @staticmethod
+    def _archive_url(cik: str, accession: str, filename: str) -> str:
+        return f"{SEC_ARCHIVES_ROOT}/{cik}/{accession}/{filename}"
+
     def _get_json(self, url: str, *, cache_name: str, refresh: bool) -> dict[str, Any]:
+        raw = self._get_bytes(
+            url,
+            cache_name=cache_name,
+            refresh=refresh,
+            accept="application/json",
+        )
+        try:
+            return json.loads(raw.decode("utf-8"))
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(f"Invalid SEC cache file: {Path(cache_name).name}") from exc
+
+    def _get_bytes(
+        self,
+        url: str,
+        *,
+        cache_name: str,
+        refresh: bool,
+        accept: str,
+    ) -> bytes:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         path = self.cache_dir / cache_name
         if path.exists() and not refresh:
             try:
                 raw = path.read_bytes()
-                payload = json.loads(raw.decode("utf-8"))
                 self._write_cache_metadata(
                     path,
                     url=url,
                     raw=raw,
                     fetched_at_epoch=None,
                 )
-                return payload
-            except (OSError, json.JSONDecodeError) as exc:
+                return raw
+            except OSError as exc:
                 raise RuntimeError(f"Invalid SEC cache file: {path.name}") from exc
         if not self.user_agent or "@" not in self.user_agent:
             raise ValueError(
@@ -100,13 +184,13 @@ class SecClient:
                         url,
                         headers={
                             "User-Agent": self.user_agent,
-                            "Accept": "application/json",
+                            "Accept": accept,
                         },
                     )
                     type(self)._process_last_request_at = time.monotonic()
                     with urlopen(request, timeout=self.timeout_seconds) as response:
                         raw = response.read()
-                payload = json.loads(raw.decode("utf-8"))
+                path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(raw)
                 self._write_cache_metadata(
                     path,
@@ -114,8 +198,8 @@ class SecClient:
                     raw=raw,
                     fetched_at_epoch=time.time(),
                 )
-                return payload
-            except (HTTPError, URLError, TimeoutError, json.JSONDecodeError) as exc:
+                return raw
+            except (HTTPError, URLError, TimeoutError) as exc:
                 last_error = exc
                 if attempt == self.max_retries:
                     break
