@@ -9,6 +9,7 @@ from types import SimpleNamespace
 
 import pytest
 
+import app.us_valuation.arelle_worker as arelle_worker_module
 from app.us_valuation.arelle_adapter import (
     _BACKEND_DIR,
     ArelleParseError,
@@ -17,12 +18,15 @@ from app.us_valuation.arelle_adapter import (
     parse_structural_filing,
 )
 from app.us_valuation.concept_resolver import load_structural_rules
+from app.us_valuation.structural_xbrl import StructuralRelationship
 from app.us_valuation.arelle_worker import (
     _QNameCanonicalizer,
+    _deduplicate_relationship_records,
     _labels_for_concept,
     _numeric_fact_value,
     _relationship_set_role,
     _role_token,
+    _structural_links,
 )
 
 
@@ -225,6 +229,99 @@ def test_named_statement_role_without_relationship_roots_is_unclassified() -> No
     relationship_set = SimpleNamespace(modelRelationships=())
 
     assert _relationship_set_role(model, linkrole, relationship_set) is None
+
+
+def test_structural_link_records_do_not_override_failed_set_role(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+
+    def concept(local_name: str) -> SimpleNamespace:
+        return SimpleNamespace(
+            qname=SimpleNamespace(
+                namespaceURI="http://fasb.org/us-gaap/2025",
+                localName=local_name,
+            )
+        )
+
+    balance_root = concept("StatementOfFinancialPositionAbstract")
+    balance_child = concept("AssetsCurrent")
+    note_root = concept("DebtDisclosureAbstract")
+    note_child = concept("DebtInstrumentTable")
+
+    def relationship(parent: SimpleNamespace, child: SimpleNamespace) -> SimpleNamespace:
+        return SimpleNamespace(
+            arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+            linkrole=linkrole,
+            fromModelObject=parent,
+            toModelObject=child,
+            order=1.0,
+            preferredLabel=None,
+            weight=None,
+        )
+
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            relationship(balance_root, balance_child),
+            relationship(note_root, note_child),
+        )
+    )
+    model = SimpleNamespace(
+        roleTypes={
+            linkrole: (
+                SimpleNamespace(definition="StatementOfFinancialPosition"),
+            )
+        }
+    )
+
+    def relationship_sets(_model: object, arcrole: str):
+        if arcrole.endswith("parent-child"):
+            yield linkrole, relationship_set
+
+    monkeypatch.setattr(arelle_worker_module, "_relationship_sets", relationship_sets)
+    monkeypatch.setitem(
+        sys.modules,
+        "arelle",
+        SimpleNamespace(
+            XbrlConst=SimpleNamespace(
+                parentChild="http://www.xbrl.org/2003/arcrole/parent-child",
+                summationItem="http://www.xbrl.org/2003/arcrole/summation-item",
+                generalSpecial="http://www.xbrl.org/2003/arcrole/general-special",
+                dimensionDomain="http://xbrl.org/int/dim/arcrole/dimension-domain",
+                domainMember="http://xbrl.org/int/dim/arcrole/domain-member",
+            )
+        ),
+    )
+
+    links = _structural_links(model, note_child, _QNameCanonicalizer())
+
+    assert links["statement_roles"] == ()
+    assert links["relationships"]
+    assert all(item.statement_role is None for item in links["relationships"])
+
+
+def test_duplicate_relationship_with_conflicting_roles_fails_closed() -> None:
+    base = StructuralRelationship(
+        arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+        linkrole="https://issuer.test/role/custom-1001",
+        from_concept="us-gaap:AssetsCurrent",
+        to_concept="issuer:InvestmentSecuritiesCurrent",
+        order=1.0,
+        preferred_label=None,
+        calculation_weight=None,
+        statement_role="balance_sheet",
+    )
+    conflicting = StructuralRelationship(
+        **{
+            **base.as_dict(),
+            "statement_role": "income_statement",
+        }
+    )
+
+    result = _deduplicate_relationship_records((base, conflicting))
+
+    assert len(result) == 1
+    assert result[0].statement_role is None
 
 
 def test_arelle_adapter_extracts_extension_structure() -> None:

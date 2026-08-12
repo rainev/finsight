@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import replace
 from functools import lru_cache
 import hashlib
 import json
@@ -375,8 +376,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
                         relationship,
                         arcrole=XbrlConst.parentChild,
                         linkrole=linkrole,
-                        statement_role=role
-                        or _role_token(model, getattr(relationship, "linkrole", None)),
+                        statement_role=role,
                         qnames=qnames,
                     )
                 )
@@ -405,8 +405,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
                         relationship,
                         arcrole=XbrlConst.parentChild,
                         linkrole=linkrole,
-                        statement_role=role
-                        or _role_token(model, getattr(relationship, "linkrole", None)),
+                        statement_role=role,
                         qnames=qnames,
                     )
                 )
@@ -427,8 +426,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
                         relationship,
                         arcrole=XbrlConst.summationItem,
                         linkrole=linkrole,
-                        statement_role=role
-                        or _role_token(model, getattr(relationship, "linkrole", None)),
+                        statement_role=role,
                         qnames=qnames,
                     )
                 )
@@ -455,10 +453,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
                             relationship,
                             arcrole=arcrole,
                             linkrole=_linkrole,
-                            statement_role=role
-                            or _role_token(
-                                model, getattr(relationship, "linkrole", None)
-                            ),
+                            statement_role=role,
                             qnames=qnames,
                         )
                     )
@@ -469,18 +464,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
 
     return {
         **{key: tuple(sorted(values)) for key, values in result.items()},
-        "relationships": tuple(
-            sorted(
-                relationship_records,
-                key=lambda item: (
-                    item.arcrole,
-                    item.linkrole,
-                    item.from_concept,
-                    item.to_concept,
-                    item.order if item.order is not None else 0.0,
-                ),
-            )
-        ),
+        "relationships": _deduplicate_relationship_records(relationship_records),
     }
 
 
@@ -506,6 +490,37 @@ def _relationship_record(
         calculation_weight=_optional_float(getattr(relationship, "weight", None)),
         statement_role=statement_role,
     )
+
+
+def _deduplicate_relationship_records(
+    records: Iterable[StructuralRelationship],
+) -> tuple[StructuralRelationship, ...]:
+    groups: dict[tuple[object, ...], list[StructuralRelationship]] = {}
+    for record in records:
+        identity = (
+            record.arcrole,
+            record.linkrole,
+            record.from_concept,
+            record.to_concept,
+            record.order,
+            record.preferred_label,
+            record.calculation_weight,
+        )
+        groups.setdefault(identity, []).append(record)
+
+    deduplicated: list[StructuralRelationship] = []
+    for identity in sorted(groups, key=lambda item: tuple(str(value) for value in item)):
+        group = groups[identity]
+        classified_roles = {
+            record.statement_role
+            for record in group
+            if record.statement_role is not None
+        }
+        statement_role = (
+            next(iter(classified_roles)) if len(classified_roles) == 1 else None
+        )
+        deduplicated.append(replace(group[0], statement_role=statement_role))
+    return tuple(deduplicated)
 
 
 def _parser_diagnostics(model: Any) -> tuple[ParseDiagnostic, ...]:
