@@ -15,6 +15,7 @@ import pytest
 import app.us_valuation.structural_shadow as structural_shadow
 from app.us_valuation.structural_shadow import (
     evaluate_shadow_case,
+    shadow_case_eligibility,
     shadow_requests_from_artifact,
 )
 from app.us_valuation.structural_xbrl import (
@@ -33,7 +34,12 @@ def withheld_artifact(*, missing: list[str]) -> dict[str, object]:
     return {
         "ticker": "FSI",
         "valuation_date": "2026-08-01",
-        "issuer": {"cik": "0000000001", "ticker": "FSI"},
+        "issuer": {
+            "cik": "0000000001",
+            "ticker": "FSI",
+            "model_route_eligible": True,
+            "classification_confidence": 0.93,
+        },
         "review": {"publication_state": "withheld"},
         "financials": {
             "ttm": {
@@ -50,6 +56,118 @@ def withheld_artifact(*, missing: list[str]) -> dict[str, object]:
             },
         },
     }
+
+
+def decision(
+    field: str,
+    status: str = "accepted",
+    confidence: float = 1.0,
+) -> dict[str, object]:
+    return {
+        "normalized_concept": field,
+        "status": status,
+        "confidence": confidence,
+    }
+
+
+def test_shadow_case_eligibility_publishes_all_accepted_exact_aliases() -> None:
+    artifact = withheld_artifact(
+        missing=["marketable_securities_current", "current_debt"]
+    )
+
+    result = shadow_case_eligibility(
+        artifact,
+        [
+            decision("marketable_securities_current", confidence=1.0),
+            decision("current_debt", confidence=0.98),
+        ],
+    )
+
+    assert result == {
+        "model_route_eligible": True,
+        "classification_confidence": 0.93,
+        "data_quality_status": "pass",
+        "data_quality_score": 0.98,
+        "shadow_disposition": "publish_candidate",
+        "blocking_fields": [],
+        "publication_effect": "none_shadow_only",
+    }
+
+
+def test_shadow_case_eligibility_lowers_confidence_for_structural_extension() -> None:
+    artifact = withheld_artifact(missing=["marketable_securities_current"])
+
+    result = shadow_case_eligibility(
+        artifact,
+        [decision("marketable_securities_current", confidence=0.96)],
+    )
+
+    assert result["data_quality_status"] == "pass"
+    assert result["data_quality_score"] == 0.96
+    assert result["shadow_disposition"] == "lower_confidence_candidate"
+    assert result["blocking_fields"] == []
+
+
+@pytest.mark.parametrize("status", ["review", "rejected", "unresolved"])
+def test_shadow_case_eligibility_withholds_nonaccepted_without_zero_evidence(
+    status: str,
+) -> None:
+    artifact = withheld_artifact(
+        missing=["marketable_securities_current", "current_debt"]
+    )
+
+    result = shadow_case_eligibility(
+        artifact,
+        [
+            decision("marketable_securities_current", confidence=1.0),
+            decision("current_debt", status=status, confidence=0.0),
+        ],
+    )
+
+    assert result["data_quality_status"] == "fail"
+    assert result["data_quality_score"] is None
+    assert result["shadow_disposition"] == "withhold"
+    assert result["blocking_fields"] == ["current_debt"]
+
+
+def test_shadow_case_eligibility_withholds_model_ineligible_separately() -> None:
+    artifact = withheld_artifact(missing=["current_debt"])
+    artifact["issuer"]["model_route_eligible"] = False  # type: ignore[index]
+
+    result = shadow_case_eligibility(
+        artifact, [decision("current_debt", confidence=1.0)]
+    )
+
+    assert result["model_route_eligible"] is False
+    assert result["classification_confidence"] == 0.93
+    assert result["data_quality_status"] == "pass"
+    assert result["data_quality_score"] == 1.0
+    assert result["shadow_disposition"] == "withhold"
+    assert result["blocking_fields"] == ["model_route"]
+
+
+def test_shadow_case_eligibility_withholds_no_decisions() -> None:
+    artifact = withheld_artifact(missing=["current_debt"])
+
+    result = shadow_case_eligibility(artifact, [])
+
+    assert result["data_quality_status"] == "fail"
+    assert result["data_quality_score"] is None
+    assert result["shadow_disposition"] == "withhold"
+    assert result["blocking_fields"] == ["current_debt"]
+
+
+def test_shadow_case_eligibility_withholds_parser_failure() -> None:
+    artifact = withheld_artifact(missing=["current_debt"])
+
+    result = shadow_case_eligibility(
+        artifact, [decision("current_debt", confidence=1.0)], parser_failed=True
+    )
+
+    assert result["data_quality_status"] == "fail"
+    assert result["data_quality_score"] is None
+    assert result["shadow_disposition"] == "withhold"
+    assert result["blocking_fields"] == ["parser"]
 
 
 def extension_fact(**overrides: object) -> StructuralFact:
@@ -293,10 +411,13 @@ def _install_cli_fakes(
 
     def evaluate(artifact: dict[str, object], filing: object) -> dict[str, object]:
         ticker = str(artifact["ticker"])
+        decisions = [
+            {"normalized_concept": "marketable_securities_current", "status": decision_by_ticker[ticker], "confidence": 1.0}
+        ]
         return {
             "ticker": ticker,
-            "decisions": [{"status": decision_by_ticker[ticker]}],
-            "publication_effect": "none_shadow_only",
+            "decisions": decisions,
+            **structural_shadow.shadow_case_eligibility(artifact, decisions),
         }
 
     fake_arelle = ModuleType("app.us_valuation.arelle_adapter")
@@ -308,6 +429,7 @@ def _install_cli_fakes(
     fake_shadow = ModuleType("app.us_valuation.structural_shadow")
     fake_shadow.SUPPORTED_STRUCTURAL_FIELDS = structural_shadow.SUPPORTED_STRUCTURAL_FIELDS  # type: ignore[attr-defined]
     fake_shadow.shadow_requests_from_artifact = shadow_requests_from_artifact  # type: ignore[attr-defined]
+    fake_shadow.shadow_case_eligibility = structural_shadow.shadow_case_eligibility  # type: ignore[attr-defined]
     fake_shadow.evaluate_shadow_case = evaluate  # type: ignore[attr-defined]
     monkeypatch.setitem(sys.modules, "app.us_valuation.arelle_adapter", fake_arelle)
     monkeypatch.setitem(sys.modules, "app.us_valuation.filing_package", fake_package)
@@ -395,12 +517,15 @@ def test_shadow_cli_emits_immutable_reports_and_counts_all_decision_states(
         "accepted_shadow": 1,
         "discovered": 7,
         "eligible": 6,
+        "lower_confidence_candidate": 0,
         "parsed": 4,
         "parser_failed": 2,
+        "publish_candidate": 1,
         "rejected": 1,
         "review": 1,
         "skipped": 1,
         "unresolved": 1,
+        "withhold_cases": 5,
     }
     accession_failure = json.loads((output_root / "BADACC.json").read_text())
     assert accession_failure["decisions"] == []
@@ -466,12 +591,15 @@ def test_shadow_cli_emits_immutable_parser_failure_report(
         "accepted_shadow": 0,
         "discovered": 1,
         "eligible": 1,
+        "lower_confidence_candidate": 0,
         "parsed": 0,
         "parser_failed": 1,
+        "publish_candidate": 0,
         "rejected": 0,
         "review": 0,
         "skipped": 0,
         "unresolved": 0,
+        "withhold_cases": 1,
     }
     failure = json.loads((output_root / "PARSE.json").read_text())
     assert failure["decisions"] == []

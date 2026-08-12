@@ -30,6 +30,9 @@ _COUNTER_NAMES = (
     "unresolved",
     "parser_failed",
     "skipped",
+    "publish_candidate",
+    "lower_confidence_candidate",
+    "withhold_cases",
 )
 
 
@@ -134,7 +137,9 @@ def _failure_report(
     error: Exception,
     supported_fields: frozenset[str],
 ) -> dict[str, Any]:
-    return {
+    from app.us_valuation.structural_shadow import shadow_case_eligibility
+
+    report = {
         "ticker": ticker,
         "cik": _mapping(artifact.get("issuer")).get("cik"),
         "valuation_date": artifact.get("valuation_date"),
@@ -151,8 +156,9 @@ def _failure_report(
         "decisions": [],
         "skipped_fields": [],
         "parser_failure": str(error),
-        "publication_effect": "none_shadow_only",
     }
+    report.update(shadow_case_eligibility(artifact, [], parser_failed=True))
+    return report
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -208,24 +214,21 @@ def main(argv: list[str] | None = None) -> int:
                         form=normalized_form,
                     ),
                 )
-                for decision in report["decisions"]:
-                    summary[decision["status"]] += 1
-                _write_immutable_json(args.output_root / f"{ticker}.json", report)
-                continue
-            entrypoint = cache_structural_filing_package(
-                client,
-                cik=cik,
-                accession=accession,
-                primary_document=primary_document,
-                form=normalized_form,
-                output_dir=args.cache_dir / "structural-filings",
-                refresh=args.refresh,
-            )
-            filing = parse_structural_filing(
-                entrypoint, accession=accession, form=normalized_form
-            )
-            report = evaluate_shadow_case(artifact, filing)
-            summary["parsed"] += 1
+            else:
+                entrypoint = cache_structural_filing_package(
+                    client,
+                    cik=cik,
+                    accession=accession,
+                    primary_document=primary_document,
+                    form=normalized_form,
+                    output_dir=args.cache_dir / "structural-filings",
+                    refresh=args.refresh,
+                )
+                filing = parse_structural_filing(
+                    entrypoint, accession=accession, form=normalized_form
+                )
+                report = evaluate_shadow_case(artifact, filing)
+                summary["parsed"] += 1
         except (OSError, RuntimeError, ValueError) as error:
             report = _failure_report(
                 artifact,
@@ -241,6 +244,13 @@ def main(argv: list[str] | None = None) -> int:
                     summary["accepted_shadow"] += 1
                 elif status in {"review", "rejected", "unresolved"}:
                     summary[status] += 1
+        disposition = report.get("shadow_disposition")
+        if disposition == "publish_candidate":
+            summary["publish_candidate"] += 1
+        elif disposition == "lower_confidence_candidate":
+            summary["lower_confidence_candidate"] += 1
+        else:
+            summary["withhold_cases"] += 1
         _write_immutable_json(args.output_root / f"{ticker}.json", report)
 
     _write_immutable_json(args.output_root / "summary.json", summary)
