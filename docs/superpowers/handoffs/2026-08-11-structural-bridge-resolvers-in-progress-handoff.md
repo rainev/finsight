@@ -3,9 +3,8 @@
 Date: 2026-08-13 (Asia/Manila)
 
 Status: Current continuation Task 4 verified — user confirmation needed. The historical
-Tasks 1–6 and the current broader-corpus Tasks 1–4 are implemented and reviewed. Task 4's code
-checkpoints are committed; this durable evidence update is prepared for the final checkpoint
-commit. Production promotion has not been approved.
+Tasks 1–6 and the current broader-corpus Tasks 1–4 are implemented, reviewed, and committed.
+Production promotion has not been approved.
 
 ## Resume instruction
 
@@ -38,6 +37,7 @@ Latest independently reviewed implementation checkpoints:
 - `8155326 fix: preserve fail-closed relationship roles`
 - `c6db4b5 fix: reject unsafe preferred equity aliases`
 - `a76504e fix: close preferred equity resolver bypasses`
+- `f44c33c docs: record full structural XBRL replay`
 
 ## Completed work
 

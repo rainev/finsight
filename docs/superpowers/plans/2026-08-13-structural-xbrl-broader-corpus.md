@@ -219,6 +219,6 @@ Reconcile input count to discovered/eligible/skipped/parser-failed totals; aggre
 
 Run the focused structural suite and full backend suite. Report any pre-existing unrelated failure separately.
 
-- [ ] **Step 5: Record evidence and commit**
+- [x] **Step 5: Record evidence and commit**
 
 Update durable evidence and handoff with the exact full-corpus counts, remaining mapping gaps, and production-promotion boundary. Status remains `verified — your confirmation needed`.
