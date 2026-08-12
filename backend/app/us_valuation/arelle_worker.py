@@ -155,12 +155,79 @@ def _role_token(model: Any, linkrole: str | None) -> str | None:
         if definition:
             candidates.append(str(definition))
     text = " ".join(candidates).lower().replace("-", " ").replace("_", " ")
-    if "balance sheet" in text or "balancesheet" in text:
+    if (
+        "balance sheet" in text
+        or "balancesheet" in text
+        or "statementoffinancialposition" in text
+        or "statement of financial position" in text
+    ):
         return "balance_sheet"
     if "income statement" in text or "incomestatement" in text:
         return "income_statement"
     if "cash flow" in text or "cashflow" in text:
         return "cash_flow"
+    return None
+
+
+def _relationship_set_role(
+    model: Any, linkrole: str | None, relationship_set: Any
+) -> str | None:
+    role = _role_token(model, linkrole)
+    if not linkrole:
+        return None
+
+    relationships = tuple(
+        relationship
+        for relationship in _relationship_endpoints(relationship_set)
+        if getattr(relationship, "linkrole", linkrole) in {None, linkrole}
+    )
+    child_keys = {
+        _concept_key(getattr(relationship, "toModelObject", None))
+        for relationship in relationships
+        if getattr(relationship, "toModelObject", None) is not None
+    }
+    root_names = {
+        _concept_key(parent)[1].casefold().replace("_", "").replace("-", "")
+        for relationship in relationships
+        if (parent := getattr(relationship, "fromModelObject", None)) is not None
+        and _concept_key(parent) not in child_keys
+    }
+    balance_sheet_roots = {
+        "statementoffinancialpositionabstract",
+        "balancesheetabstract",
+        "assets",
+        "assetsabstract",
+        "assetscurrent",
+        "assetscurrentabstract",
+        "assetsnoncurrent",
+        "assetsnoncurrentabstract",
+        "liabilities",
+        "liabilitiesabstract",
+        "liabilitiescurrent",
+        "liabilitiescurrentabstract",
+        "liabilitiesnoncurrent",
+        "liabilitiesnoncurrentabstract",
+        "stockholdersequity",
+        "stockholdersequityabstract",
+        "equity",
+        "equityabstract",
+    }
+    root_roles: set[str | None] = set()
+    for name in root_names:
+        if name in balance_sheet_roots:
+            root_roles.add("balance_sheet")
+        elif "incomestatement" in name or "statementofoperations" in name:
+            root_roles.add("income_statement")
+        elif "cashflow" in name:
+            root_roles.add("cash_flow")
+        else:
+            root_roles.add(None)
+    if not root_roles:
+        return None
+    if len(root_roles) == 1:
+        root_role = next(iter(root_roles))
+        if root_role is not None and role in {None, root_role}:
+            return root_role
     return None
 
 
@@ -294,7 +361,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
     relationship_records: set[StructuralRelationship] = set()
 
     for linkrole, relationship_set in _relationship_sets(model, XbrlConst.parentChild):
-        role = _role_token(model, linkrole)
+        role = _relationship_set_role(model, linkrole, relationship_set)
         parent_map: dict[tuple[str, str], list[Any]] = {}
         for relationship in _relationship_endpoints(relationship_set):
             parent = getattr(relationship, "fromModelObject", None)
@@ -348,7 +415,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
                     raise RuntimeError("presentation ancestry exceeds governed count")
                 frontier.append((parent, depth + 1))
     for linkrole, relationship_set in _relationship_sets(model, XbrlConst.summationItem):
-        role = _role_token(model, linkrole)
+        role = _relationship_set_role(model, linkrole, relationship_set)
         for relationship in _relationship_endpoints(relationship_set):
             parent = getattr(relationship, "fromModelObject", None)
             child = getattr(relationship, "toModelObject", None)
@@ -376,7 +443,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
 
     for arcrole in (XbrlConst.generalSpecial, XbrlConst.dimensionDomain, XbrlConst.domainMember):
         for _linkrole, relationship_set in _relationship_sets(model, arcrole):
-            role = _role_token(model, _linkrole)
+            role = _relationship_set_role(model, _linkrole, relationship_set)
             for relationship in _relationship_endpoints(relationship_set):
                 parent = getattr(relationship, "fromModelObject", None)
                 child = getattr(relationship, "toModelObject", None)

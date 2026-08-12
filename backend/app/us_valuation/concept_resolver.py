@@ -244,6 +244,8 @@ def _dimensions_allowed(
     if not isinstance(allowed, Mapping):
         return not fact.dimensions
     combinations = allowed.get(fact.qname, allowed.get(fact.local_name, ()))
+    if not combinations:
+        combinations = metric_rules.get("allowed_extension_dimensions", ())
     if not isinstance(combinations, (list, tuple)):
         return not fact.dimensions
     if not fact.dimensions:

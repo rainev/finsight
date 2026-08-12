@@ -5,6 +5,7 @@ import subprocess
 import sys
 from decimal import Decimal
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -20,12 +21,210 @@ from app.us_valuation.arelle_worker import (
     _QNameCanonicalizer,
     _labels_for_concept,
     _numeric_fact_value,
+    _relationship_set_role,
+    _role_token,
 )
 
 
 FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "us" / "structural-xbrl"
 ENTRYPOINT = FIXTURE_ROOT / "fsi-20251231.htm"
 ACCESSION = "0000000000-26-000001"
+
+
+def test_role_token_recognizes_camel_case_statement_of_financial_position() -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+    model = SimpleNamespace(
+        roleTypes={
+            linkrole: (
+                SimpleNamespace(definition="StatementOfFinancialPosition"),
+            )
+        }
+    )
+
+    assert _role_token(model, linkrole) == "balance_sheet"
+
+
+def test_opaque_role_uses_statement_root_concept() -> None:
+    root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="StatementOfFinancialPositionAbstract",
+        )
+    )
+    child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="https://issuer.test/2025",
+            localName="InvestmentSecuritiesCurrent",
+        )
+    )
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            SimpleNamespace(fromModelObject=root, toModelObject=child),
+        )
+    )
+    model = SimpleNamespace(roleTypes={})
+
+    assert (
+        _relationship_set_role(
+            model,
+            "https://issuer.test/role/custom-1001",
+            relationship_set,
+        )
+        == "balance_sheet"
+    )
+
+
+def test_combined_fallback_relationship_set_is_not_given_one_statement_role() -> None:
+    balance_root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="StatementOfFinancialPositionAbstract",
+        )
+    )
+    balance_child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="AssetsCurrent",
+        )
+    )
+    note_root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="DebtDisclosureAbstract",
+        )
+    )
+    note_child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="DebtInstrumentTable",
+        )
+    )
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            SimpleNamespace(
+                linkrole="https://issuer.test/role/balance",
+                fromModelObject=balance_root,
+                toModelObject=balance_child,
+            ),
+            SimpleNamespace(
+                linkrole="https://issuer.test/role/debt-note",
+                fromModelObject=note_root,
+                toModelObject=note_child,
+            ),
+        )
+    )
+
+    assert _relationship_set_role(SimpleNamespace(roleTypes={}), None, relationship_set) is None
+
+
+def test_specific_relationship_set_with_mixed_roots_is_not_globally_classified() -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+    balance_root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="StatementOfFinancialPositionAbstract",
+        )
+    )
+    balance_child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="AssetsCurrent",
+        )
+    )
+    note_root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="DebtDisclosureAbstract",
+        )
+    )
+    note_child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="DebtInstrumentTable",
+        )
+    )
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            SimpleNamespace(
+                linkrole=linkrole,
+                fromModelObject=balance_root,
+                toModelObject=balance_child,
+            ),
+            SimpleNamespace(
+                linkrole=linkrole,
+                fromModelObject=note_root,
+                toModelObject=note_child,
+            ),
+        )
+    )
+
+    assert (
+        _relationship_set_role(
+            SimpleNamespace(roleTypes={}), linkrole, relationship_set
+        )
+        is None
+    )
+
+
+def test_named_statement_role_cannot_override_mixed_roots() -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            SimpleNamespace(
+                linkrole=linkrole,
+                fromModelObject=SimpleNamespace(
+                    qname=SimpleNamespace(
+                        namespaceURI="http://fasb.org/us-gaap/2025",
+                        localName="StatementOfFinancialPositionAbstract",
+                    )
+                ),
+                toModelObject=SimpleNamespace(
+                    qname=SimpleNamespace(
+                        namespaceURI="http://fasb.org/us-gaap/2025",
+                        localName="AssetsCurrent",
+                    )
+                ),
+            ),
+            SimpleNamespace(
+                linkrole=linkrole,
+                fromModelObject=SimpleNamespace(
+                    qname=SimpleNamespace(
+                        namespaceURI="http://fasb.org/us-gaap/2025",
+                        localName="DebtDisclosureAbstract",
+                    )
+                ),
+                toModelObject=SimpleNamespace(
+                    qname=SimpleNamespace(
+                        namespaceURI="http://fasb.org/us-gaap/2025",
+                        localName="DebtInstrumentTable",
+                    )
+                ),
+            ),
+        )
+    )
+    model = SimpleNamespace(
+        roleTypes={
+            linkrole: (
+                SimpleNamespace(definition="StatementOfFinancialPosition"),
+            )
+        }
+    )
+
+    assert _relationship_set_role(model, linkrole, relationship_set) is None
+
+
+def test_named_statement_role_without_relationship_roots_is_unclassified() -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+    model = SimpleNamespace(
+        roleTypes={
+            linkrole: (
+                SimpleNamespace(definition="StatementOfFinancialPosition"),
+            )
+        }
+    )
+    relationship_set = SimpleNamespace(modelRelationships=())
+
+    assert _relationship_set_role(model, linkrole, relationship_set) is None
 
 
 def test_arelle_adapter_extracts_extension_structure() -> None:

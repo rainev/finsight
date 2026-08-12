@@ -67,6 +67,7 @@
     "review_only_phrases": [],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
@@ -117,6 +118,7 @@
     "review_only_phrases": [],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
@@ -172,6 +174,7 @@
       "LongTermDebtCurrent"
     ],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
@@ -224,6 +227,7 @@
     "review_only_phrases": [],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
@@ -269,6 +273,12 @@
     "review_only_phrases": [],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [
+      [
+        "us-gaap:FinancialInstrumentAxis",
+        "us-gaap:CommercialPaperMember"
+      ]
+    ],
     "allowed_dimensions": {
       "us-gaap:CommercialPaper": [
         [
@@ -341,6 +351,7 @@
     ],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
@@ -400,6 +411,7 @@
     ],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
@@ -471,6 +483,7 @@
     ],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
@@ -559,6 +572,7 @@
       "TemporaryEquityCarryingAmountAttributableToParent": "TEMPORARY_EQUITY_CARRYING_AMOUNT",
       "TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests": "TEMPORARY_EQUITY_CARRYING_AMOUNT"
     },
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
@@ -614,6 +628,7 @@
     ],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
     "allowed_dimensions": {
       "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest": [
         [

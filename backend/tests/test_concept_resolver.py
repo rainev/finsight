@@ -986,6 +986,33 @@ def test_dimensional_commercial_paper_liability_is_not_treated_as_investment() -
     assert decision.reason_codes[0] == "EXACT_CONFIGURED_CONCEPT"
 
 
+def test_dimensional_commercial_paper_extension_uses_governed_context() -> None:
+    decision = resolve_concept(
+        metric_request("commercial_paper"),
+        [
+            account_fact(
+                "issuer:CommercialPaperBorrowings",
+                value=250_000_000,
+                labels=(("standard", "Commercial paper borrowings"),),
+                documentation="Commercial paper liability carrying amount.",
+                dimensions=(
+                    (
+                        "us-gaap:FinancialInstrumentAxis",
+                        "us-gaap:CommercialPaperMember",
+                    ),
+                ),
+                statement_roles=("balance_sheet",),
+                presentation_parents=("us-gaap:LiabilitiesCurrent",),
+                calculation_parents=("us-gaap:LiabilitiesCurrent",),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 250_000_000
+    assert decision.mapping_method == "extension_structural_match"
+
+
 def test_crm_commercial_paper_asset_is_not_obscured_by_unrelated_current_debt() -> None:
     investment_asset = account_fact(
         "us-gaap:AvailableForSaleSecuritiesDebtSecurities",
@@ -1523,6 +1550,7 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "direct_statement_concepts",
         "concept_reason_codes",
         "allowed_dimensions",
+        "allowed_extension_dimensions",
         "contextual_concepts",
     }
     assert all(required_policy_fields <= set(policy) for policy in metric_rules.values())
