@@ -31,6 +31,7 @@ Latest independently reviewed implementation checkpoints:
 
 - `1544335 fix: harden structural bridge resolution`
 - `432e9db fix: classify structural relationship roles safely`
+- `8155326 fix: preserve fail-closed relationship roles`
 
 ## Completed work
 
@@ -88,14 +89,14 @@ pytest -q tests/test_structural_xbrl_schema.py tests/test_concept_resolver.py te
 
 ## Task 6 result
 
-- Final focused structural suite: `314 passed`.
-- Final full backend suite: `457 passed, 3 skipped, 1 pre-existing unrelated failure`.
+- Final focused structural suite: `316 passed`.
+- Final full backend suite: `459 passed, 3 skipped, 1 pre-existing unrelated failure`.
 - Offline Arelle replay: 5/5 parsed, zero parser failures, 4,421 facts.
 - Governed decisions: 13 accepted, 2 review, 11 rejected, 0 unresolved.
-- Final runtime evidence: `output/structural-xbrl-pilot/results-run23/`.
+- Final runtime evidence: `output/structural-xbrl-pilot/results-run24/`.
 - Durable evidence: `docs/plans/EVIDENCE.md`.
 - Publication effect remained `none_shadow_only`; no serving valuation artifact changed.
-- Final independent closure review: clean.
+- Final independent re-review after closing the role-name fallback bypass: clean.
 
 The sole full-suite failure remains the unrelated missing `automated_review` public field.
 
@@ -108,7 +109,7 @@ Repository: `/Users/carlosconda/Desktop/Investing Application`
 Worktree: `/Users/carlosconda/Desktop/Investing Application/.worktrees/structural-xbrl-resolution`
 Handoff: `docs/superpowers/handoffs/2026-08-11-structural-bridge-resolvers-in-progress-handoff.md`
 Plan: `docs/superpowers/plans/2026-08-11-structural-bridge-account-resolvers.md`
-Reviewed implementation checkpoints: `1544335`, `432e9db`
+Reviewed implementation checkpoints: `1544335`, `432e9db`, `8155326`
 
 Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Read this handoff and `docs/plans/EVIDENCE.md` first. Do not redo Tasks 1–6. The five-company structural bridge pilot is verified but not production-approved. The next safe step is a broader representative-company replay in `none_shadow_only` mode, followed by user review. Keep `OtherShortTermInvestments` review-grade, do not change production valuation inputs, and never stage `output/` or `.superpowers/`.
 ```

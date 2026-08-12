@@ -8,6 +8,7 @@ Date: 2026-08-12 (Asia/Manila)
 
 - Task 6 implementation checkpoint: `1544335 fix: harden structural bridge resolution`
 - Independently reviewed follow-up: `432e9db fix: classify structural relationship roles safely`
+- Final role-bypass correction: `8155326 fix: preserve fail-closed relationship roles`
 - Mapping policy: `US-XBRL-RESOLVER-1.1`
 - Publication effect: `none_shadow_only`
 - Production valuation inputs and serving artifacts were not changed.
@@ -18,7 +19,7 @@ under `output/structural-xbrl-pilot/`.
 
 ## Automated verification
 
-At approximately 2026-08-12 23:41 PST:
+At approximately 2026-08-13 00:02 PST:
 
 ```text
 pytest -q backend/tests/test_structural_xbrl_schema.py \
@@ -28,13 +29,13 @@ pytest -q backend/tests/test_structural_xbrl_schema.py \
   backend/tests/test_structural_shadow.py \
   backend/tests/test_structural_xbrl_integration.py
 
-314 passed in 6.18s
+316 passed in 6.21s
 ```
 
 ```text
 pytest -q backend/tests
 
-457 passed, 3 skipped, 1 failed in 7.50s
+459 passed, 3 skipped, 1 failed in 7.42s
 ```
 
 The single full-suite failure is pre-existing and unrelated to structural XBRL:
@@ -56,10 +57,10 @@ the failing test was changed by Task 6.
 Final immutable local run:
 
 ```text
-output/structural-xbrl-pilot/results-run23/
+output/structural-xbrl-pilot/results-run24/
 ```
 
-Summary: [results-run23/summary.json](../../output/structural-xbrl-pilot/results-run23/summary.json)
+Summary: [results-run24/summary.json](../../output/structural-xbrl-pilot/results-run24/summary.json)
 
 | Ticker | Accession | Facts | Parser result |
 | --- | --- | ---: | --- |
@@ -122,9 +123,10 @@ policy does not yet have enough structural support to auto-accept it.
 - Rejected evidence prefers the fact that progressed furthest through the ordered hard
   gates; the hard-gate order for each fact remains unchanged.
 
-Independent Luna High reviews identified and then confirmed closure of cross-role
-contamination, unsafe relationship-role inference, commercial-paper dimensional policy,
-and failure-evidence ordering. The final bounded closure review was clean.
+Independent Luna High reviews identified cross-role contamination, unsafe relationship-role
+inference, commercial-paper dimensional policy, failure-evidence ordering, and a final
+role-name fallback bypass. Each finding received a regression and correction. The final
+bounded re-review of the corrected bypass was clean.
 
 ## Remaining boundary
 

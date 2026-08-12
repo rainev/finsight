@@ -78,11 +78,11 @@ known truth-set value. Independent review correctly identified that method as
 circular and prone to elevating unrelated zero-valued facts. Run 5 supersedes
 it: candidate discovery now uses only field terms, period, unit, dimensions,
 and statement placement. Expected values do not affect discovery or ranking.
-All non-marketable candidate lists are therefore observations only, with no
-claim that debt, leases, commercial paper, preferred/temporary equity, or NCI
-has been recovered. Those fields remain unresolved until account-specific
-governed resolvers exist. Zero/absence conclusions cannot be accepted merely
-because an unrelated fact has value zero.
+At run 5, all non-marketable candidate lists were observations only. Tasks 2–4
+subsequently added account-specific governed resolvers, and run 24 now verifies the
+accepted/non-accepted bridge baseline recorded in `docs/plans/EVIDENCE.md`. The enduring
+rule remains that zero/absence cannot be accepted merely because an unrelated fact has
+value zero.
 
 The first real run exposed two integration gaps that now have regression tests:
 
@@ -125,15 +125,15 @@ Use the existing filing-specific evidence as the truth set for:
 - WDC — debt and temporary/preferred-equity interpretation.
 
 Evidence lives in `/Users/carlosconda/Desktop/Investing Application/output/evidence-recovery/`.
-The first pilot can deterministically resolve only current/noncurrent marketable
-securities; the other accounts must be inspected as raw structural evidence
-until governed resolvers are added. Do not describe those accounts as recovered
-merely because Arelle emits a semantically similar fact.
+The first pilot resolved only current/noncurrent marketable securities. The final run 24
+also exercises governed debt, lease, preferred/temporary-equity, commercial-paper, and
+NCI policies. Only accepted decisions may be described as recovered; review and rejected
+decisions remain non-publishable evidence.
 
 ## Exact next step
 
-Task 6 is complete at commits `1544335` and `432e9db`. The final offline replay is
-`output/structural-xbrl-pilot/results-run23/`; all five filings parsed and the approved
+Task 6 is complete at commits `1544335`, `432e9db`, and `8155326`. The final offline replay is
+`output/structural-xbrl-pilot/results-run24/`; all five filings parsed and the approved
 debt, lease, preferred/temporary-equity, commercial-paper, and NCI baseline passed.
 
 Full evidence is recorded in `docs/plans/EVIDENCE.md`. Status is **verified — your
