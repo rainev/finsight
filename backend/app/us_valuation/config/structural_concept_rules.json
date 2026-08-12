@@ -546,9 +546,19 @@
       "asset",
       "receivable",
       "investment",
-      "fair value"
+      "fair value",
+      "noncontrolling interest"
     ],
     "preferred_exclusion_evidence_phrases": [],
+    "preferred_zero_value_conflict_companion_concepts": [
+      "us-gaap:PreferredStockSharesOutstanding",
+      "us-gaap:PreferredStockSharesIssued",
+      "us-gaap:PreferredStockParOrStatedValuePerShare",
+      "us-gaap:DividendsPreferredStockCash",
+      "us-gaap:ConvertiblePreferredDividendsNetOfTax",
+      "us-gaap:IncrementalCommonSharesAttributableToConversionOfPreferredStock"
+    ],
+    "preferred_zero_value_conflict_reason": "PREFERRED_ZERO_CONTRADICTED_BY_INSTRUMENT_EVIDENCE",
     "component_only_concepts": [],
     "review_only_phrases": [
       "liquidation preference",
@@ -570,8 +580,7 @@
       "PreferredStocksIncludingAdditionalPaidInCapitalParOrStatedValue": "PREFERRED_EQUITY_CARRYING_AMOUNT",
       "PreferredStockValue": "PREFERRED_EQUITY_CARRYING_AMOUNT",
       "PreferredStockValueOutstanding": "PREFERRED_EQUITY_CARRYING_AMOUNT",
-      "TemporaryEquityCarryingAmountAttributableToParent": "TEMPORARY_EQUITY_CARRYING_AMOUNT",
-      "TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests": "TEMPORARY_EQUITY_CARRYING_AMOUNT"
+      "TemporaryEquityCarryingAmountAttributableToParent": "TEMPORARY_EQUITY_CARRYING_AMOUNT"
     },
     "allowed_extension_dimensions": [],
     "allowed_dimensions": {},

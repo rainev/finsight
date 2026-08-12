@@ -234,6 +234,228 @@ def test_preferred_stock_value_outstanding_is_a_governed_preferred_equity_alias(
     assert "PREFERRED_EQUITY_CARRYING_AMOUNT" in decision.reason_codes
 
 
+def test_hpe_like_zero_preferred_value_is_rejected_by_companion_instrument_evidence() -> None:
+    preferred_value = account_fact(
+        "us-gaap:PreferredStockValueOutstanding",
+        value=0,
+        labels=(
+            (
+                "terse",
+                "7.625% Series C mandatory convertible preferred stock, $0.01 par value",
+            ),
+        ),
+        documentation="Preferred stock value outstanding.",
+        statement_roles=(),
+        presentation_parents=("us-gaap:StockholdersEquity",),
+        calculation_parents=("us-gaap:StockholdersEquity",),
+    )
+    preferred_shares = account_fact(
+        "us-gaap:PreferredStockSharesOutstanding",
+        value=30_000_000,
+        unit="shares",
+        labels=(("standard", "Preferred Stock, Shares Outstanding"),),
+        documentation="Preferred stock shares outstanding.",
+        statement_roles=(),
+        presentation_parents=("us-gaap:StockholdersEquity",),
+        calculation_parents=("us-gaap:StockholdersEquity",),
+    )
+
+    decision = resolve_concept(
+        metric_request("preferred_equity"), [preferred_value, preferred_shares]
+    )
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == (
+        "PREFERRED_ZERO_CONTRADICTED_BY_INSTRUMENT_EVIDENCE",
+    )
+
+
+def test_preferred_zero_value_is_rejected_by_configured_preferred_dividend_evidence() -> None:
+    preferred_value = account_fact(
+        "us-gaap:PreferredStockValueOutstanding",
+        value=0,
+        statement_roles=(),
+        presentation_parents=("us-gaap:StockholdersEquity",),
+        calculation_parents=("us-gaap:StockholdersEquity",),
+    )
+    preferred_dividends = account_fact(
+        "us-gaap:DividendsPreferredStockCash",
+        value=1_000_000,
+        labels=(("standard", "Dividends Preferred Stock Cash"),),
+        documentation="Dividends preferred stock cash.",
+        statement_roles=(),
+        presentation_parents=("us-gaap:StockholdersEquity",),
+        calculation_parents=("us-gaap:StockholdersEquity",),
+    )
+
+    decision = resolve_concept(
+        metric_request("preferred_equity"), [preferred_value, preferred_dividends]
+    )
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == (
+        "PREFERRED_ZERO_CONTRADICTED_BY_INSTRUMENT_EVIDENCE",
+    )
+
+
+def test_preferred_zero_conflict_requires_same_accession_and_period() -> None:
+    preferred_value = account_fact(
+        "us-gaap:PreferredStockValueOutstanding",
+        value=0,
+        statement_roles=(),
+        presentation_parents=("us-gaap:StockholdersEquity",),
+        calculation_parents=("us-gaap:StockholdersEquity",),
+    )
+    preferred_shares = account_fact(
+        "us-gaap:PreferredStockSharesOutstanding",
+        value=30_000_000,
+        unit="shares",
+    )
+
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            preferred_value,
+            preferred_shares,
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == (
+        "PREFERRED_ZERO_CONTRADICTED_BY_INSTRUMENT_EVIDENCE",
+    )
+
+    mismatched_decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            preferred_value,
+            account_fact(
+                "us-gaap:PreferredStockSharesOutstanding",
+                value=30_000_000,
+                unit="shares",
+                source_accession="0000000000-26-000002",
+                period_end="2024-12-31",
+            ),
+        ],
+    )
+
+    assert mismatched_decision.status == "accepted"
+    assert mismatched_decision.value == 0
+
+
+def test_nvda_like_zero_preferred_value_remains_accepted_without_companion_evidence() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:PreferredStockValueOutstanding",
+                value=0,
+                labels=(("terse", "Preferred stock"),),
+                documentation="Preferred Stock, Value, Outstanding.",
+                statement_roles=("balance_sheet",),
+                presentation_parents=(
+                    "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterestAbstract",
+                ),
+                calculation_parents=(),
+                relationships=(
+                    StructuralRelationship(
+                        arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                        linkrole="https://example.test/role/BalanceSheet",
+                        from_concept=(
+                            "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterestAbstract"
+                        ),
+                        to_concept="us-gaap:PreferredStockValueOutstanding",
+                        order=1.0,
+                        preferred_label=None,
+                        calculation_weight=None,
+                        statement_role="balance_sheet",
+                    ),
+                ),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 0
+    assert decision.confidence == 0.98
+
+
+def test_rtx_like_redeemable_nci_temporary_equity_is_not_preferred_equity() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
+                value=28_000_000,
+                labels=(("terse", "Redeemable noncontrolling interest"),),
+                documentation="Temporary Equity, Including Noncontrolling Interest.",
+                statement_roles=(),
+                presentation_parents=(
+                    "us-gaap:LiabilitiesAndStockholdersEquityAbstract",
+                ),
+                calculation_parents=(),
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
+def test_wdc_like_parent_attributable_temporary_equity_remains_preferred_equity() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:TemporaryEquityCarryingAmountAttributableToParent",
+                value=265_000_000,
+                labels=(
+                    (
+                        "standard",
+                        "Temporary Equity, Carrying Amount, Attributable to Parent",
+                    ),
+                ),
+                documentation="Temporary equity carrying amount attributable to parent.",
+                statement_roles=(),
+                presentation_parents=("us-gaap:TemporaryEquity",),
+                calculation_parents=("us-gaap:TemporaryEquity",),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 265_000_000
+    assert "TEMPORARY_EQUITY_CARRYING_AMOUNT" in decision.reason_codes
+
+
+def test_expe_like_governed_dimensional_nci_remains_accepted() -> None:
+    fact = account_fact(
+        "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        value=1_260_000_000,
+        dimensions=(
+            (
+                "us-gaap:StatementEquityComponentsAxis",
+                "us-gaap:NoncontrollingInterestMember",
+            ),
+        ),
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+        ),
+        calculation_parents=(),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.value == 1_260_000_000
+    assert decision.confidence == 0.96
+    assert "GOVERNED_DIMENSIONAL_CONTEXT" in decision.reason_codes
+
+
 def test_temporary_equity_alias_ignores_unrelated_fair_value_ancestry() -> None:
     decision = resolve_concept(
         metric_request("preferred_equity"),

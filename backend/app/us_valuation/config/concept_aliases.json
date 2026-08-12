@@ -179,8 +179,7 @@
         "PreferredStocksIncludingAdditionalPaidInCapitalParOrStatedValue",
         "PreferredStockValue",
         "PreferredStockValueOutstanding",
-        "TemporaryEquityCarryingAmountAttributableToParent",
-        "TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests"
+        "TemporaryEquityCarryingAmountAttributableToParent"
       ]
     },
     "noncontrolling_interests": {

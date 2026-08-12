@@ -195,10 +195,17 @@ def _excluded_reason(
     request: ResolutionRequest,
     metric_rules: Mapping[str, Any],
 ) -> str | None:
-    text = " ".join(
-        (_fact_text(fact), _role_scoped_parent_text(fact, request.statement_role))
-    )
-    if any(_contains_phrase(text, phrase) for phrase in _rule_strings(metric_rules, "excluded_economic_phrases")):
+    fact_text = _fact_text(fact)
+    parent_text = _role_scoped_parent_text(fact, request.statement_role)
+    excluded_phrases = _rule_strings(metric_rules, "excluded_economic_phrases")
+    if any(
+        _contains_phrase(fact_text, phrase)
+        or (
+            phrase.casefold() != "noncontrolling interest"
+            and _contains_phrase(parent_text, phrase)
+        )
+        for phrase in excluded_phrases
+    ):
         return "EXCLUDED_ECONOMIC_CLASS"
     return None
 
@@ -414,6 +421,39 @@ def _concept_reason_code(
     for concept, reason in configured.items():
         if isinstance(concept, str) and isinstance(reason, str) and _concept_matches(fact, concept):
             return reason
+    return None
+
+
+def _preferred_zero_conflict_reason(
+    fact: StructuralFact,
+    material_facts: tuple[StructuralFact, ...],
+    metric_rules: Mapping[str, Any],
+) -> str | None:
+    """Reject a displayed zero when exact same-filing instrument evidence exists."""
+
+    if fact.qname != "us-gaap:PreferredStockValueOutstanding" or fact.value != 0:
+        return None
+    companion_concepts = set(
+        _rule_strings(
+            metric_rules,
+            "preferred_zero_value_conflict_companion_concepts",
+        )
+    )
+    if not companion_concepts:
+        return None
+    if any(
+        companion.qname in companion_concepts
+        and companion.source_accession == fact.source_accession
+        and companion.period_end == fact.period_end
+        and companion.value is not None
+        and companion.value != 0
+        for companion in material_facts
+    ):
+        reason = metric_rules.get(
+            "preferred_zero_value_conflict_reason",
+            "PREFERRED_ZERO_CONTRADICTED_BY_INSTRUMENT_EVIDENCE",
+        )
+        return reason if isinstance(reason, str) and reason else None
     return None
 
 
@@ -747,6 +787,18 @@ def resolve_concept(
             reason_codes=("AMBIGUOUS_FACTS",),
         )
     selected = highest_rank[0]
+    preferred_zero_conflict = _preferred_zero_conflict_reason(
+        selected.fact, material_facts, metric_rules
+    )
+    if preferred_zero_conflict is not None:
+        return _decision(
+            request,
+            fact=selected.fact,
+            status="rejected",
+            confidence=0.0,
+            mapping_method="hard_gate_rejection",
+            reason_codes=(preferred_zero_conflict,),
+        )
 
     return _decision(
         request,
