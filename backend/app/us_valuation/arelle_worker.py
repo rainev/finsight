@@ -301,13 +301,15 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
             child = getattr(relationship, "toModelObject", None)
             if parent is None or child is None:
                 continue
-            parent_map.setdefault(_concept_key(child), []).append(parent)
+            parent_map.setdefault(_concept_key(child), []).append(relationship)
             if concept_key in {_concept_key(parent), _concept_key(child)}:
                 relationship_records.add(
                     _relationship_record(
                         relationship,
                         arcrole=XbrlConst.parentChild,
                         linkrole=linkrole,
+                        statement_role=role
+                        or _role_token(model, getattr(relationship, "linkrole", None)),
                         qnames=qnames,
                     )
                 )
@@ -323,11 +325,24 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
             parents = parent_map.get(_concept_key(child), ())
             if parents and depth >= MAX_PRESENTATION_DEPTH:
                 raise RuntimeError("presentation ancestry exceeds governed depth")
-            for parent in parents:
+            for relationship in parents:
+                parent = getattr(relationship, "fromModelObject", None)
+                if parent is None:
+                    continue
                 key = _concept_key(parent)
                 if key in visited:
                     continue
                 visited.add(key)
+                relationship_records.add(
+                    _relationship_record(
+                        relationship,
+                        arcrole=XbrlConst.parentChild,
+                        linkrole=linkrole,
+                        statement_role=role
+                        or _role_token(model, getattr(relationship, "linkrole", None)),
+                        qnames=qnames,
+                    )
+                )
                 result["presentation_ancestry"].add(qnames.qname(parent))
                 if len(result["presentation_ancestry"]) > MAX_PRESENTATION_ANCESTORS:
                     raise RuntimeError("presentation ancestry exceeds governed count")
@@ -345,6 +360,8 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
                         relationship,
                         arcrole=XbrlConst.summationItem,
                         linkrole=linkrole,
+                        statement_role=role
+                        or _role_token(model, getattr(relationship, "linkrole", None)),
                         qnames=qnames,
                     )
                 )
@@ -359,6 +376,7 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
 
     for arcrole in (XbrlConst.generalSpecial, XbrlConst.dimensionDomain, XbrlConst.domainMember):
         for _linkrole, relationship_set in _relationship_sets(model, arcrole):
+            role = _role_token(model, _linkrole)
             for relationship in _relationship_endpoints(relationship_set):
                 parent = getattr(relationship, "fromModelObject", None)
                 child = getattr(relationship, "toModelObject", None)
@@ -370,6 +388,10 @@ def _structural_links(model: Any, concept: Any, qnames: _QNameCanonicalizer) -> 
                             relationship,
                             arcrole=arcrole,
                             linkrole=_linkrole,
+                            statement_role=role
+                            or _role_token(
+                                model, getattr(relationship, "linkrole", None)
+                            ),
                             qnames=qnames,
                         )
                     )
@@ -400,6 +422,7 @@ def _relationship_record(
     *,
     arcrole: str,
     linkrole: str | None,
+    statement_role: str | None,
     qnames: _QNameCanonicalizer,
 ) -> StructuralRelationship:
     return StructuralRelationship(
@@ -414,6 +437,7 @@ def _relationship_record(
             else None
         ),
         calculation_weight=_optional_float(getattr(relationship, "weight", None)),
+        statement_role=statement_role,
     )
 
 

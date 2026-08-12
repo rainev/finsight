@@ -40,6 +40,8 @@
     ],
     "extension_terms": [
       "marketable securities",
+      "marketable investments",
+      "investment securities",
       "short term investments",
       "available for sale",
       "debt securities"
@@ -60,6 +62,7 @@
       "receivable",
       "trading assets"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [],
     "review_only_phrases": [],
     "direct_statement_concepts": [],
@@ -87,6 +90,8 @@
     ],
     "extension_terms": [
       "marketable securities",
+      "marketable investments",
+      "investment securities",
       "long term investments",
       "available for sale",
       "debt securities"
@@ -107,6 +112,7 @@
       "receivable",
       "trading assets"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [],
     "review_only_phrases": [],
     "direct_statement_concepts": [],
@@ -134,6 +140,7 @@
     ],
     "extension_terms": [
       "debt current",
+      "current borrowings",
       "current maturities",
       "short term borrowings"
     ],
@@ -154,6 +161,7 @@
       "proceeds",
       "repayments"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [
       "NotesPayableCurrent",
       "ConvertibleDebtCurrent",
@@ -208,6 +216,7 @@
       "repayments",
       "issuance costs"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [
       "LongTermDebt",
       "ConvertibleDebtNoncurrent"
@@ -249,15 +258,31 @@
     "structural_reason_prefix": "LIABILITY",
     "excluded_economic_phrases": [
       "available for sale",
-      "investment",
-      "assets fair value",
-      "financial instrument axis"
+      "assets fair value"
+    ],
+    "preferred_exclusion_evidence_phrases": [
+      "amortized cost",
+      "marketable securities",
+      "fair value"
     ],
     "component_only_concepts": [],
     "review_only_phrases": [],
     "direct_statement_concepts": [],
     "concept_reason_codes": {},
-    "allowed_dimensions": {},
+    "allowed_dimensions": {
+      "us-gaap:CommercialPaper": [
+        [
+          "us-gaap:FinancialInstrumentAxis",
+          "us-gaap:CommercialPaperMember"
+        ]
+      ],
+      "us-gaap:CommercialPaperAtCarryingValue": [
+        [
+          "us-gaap:FinancialInstrumentAxis",
+          "us-gaap:CommercialPaperMember"
+        ]
+      ]
+    },
     "contextual_concepts": []
   },
   "finance_lease_current": {
@@ -302,6 +327,7 @@
       "lease commitment",
       "lease commitments"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [],
     "review_only_phrases": [
       "finance lease liability payments due",
@@ -360,6 +386,7 @@
       "lease commitment",
       "lease commitments"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [],
     "review_only_phrases": [
       "finance lease liability payments due",
@@ -430,6 +457,7 @@
       "lease commitment",
       "lease commitments"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [],
     "review_only_phrases": [
       "finance lease liability payments due",
@@ -507,6 +535,7 @@
       "investment",
       "fair value"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [],
     "review_only_phrases": [
       "liquidation preference",
@@ -575,6 +604,7 @@
       "income statement",
       "dividends"
     ],
+    "preferred_exclusion_evidence_phrases": [],
     "component_only_concepts": [],
     "review_only_phrases": [
       "100% ownership",

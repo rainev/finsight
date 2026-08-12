@@ -214,7 +214,24 @@ def test_relationship_round_trip_preserves_governed_arc_evidence() -> None:
         "order": 1.0,
         "preferred_label": None,
         "calculation_weight": None,
+        "statement_role": None,
     }
+
+
+def test_relationship_round_trip_preserves_classified_statement_role() -> None:
+    relationship = StructuralRelationship(
+        arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+        linkrole="https://example.test/role/custom-1001",
+        from_concept="us-gaap:RestrictedAssetsAbstract",
+        to_concept="us-gaap:AssetsCurrent",
+        order=1.0,
+        preferred_label=None,
+        calculation_weight=None,
+        statement_role="balance_sheet",
+    )
+
+    assert StructuralRelationship.from_dict(relationship.as_dict()) == relationship
+    assert relationship.as_dict()["statement_role"] == "balance_sheet"
 
 
 @pytest.mark.parametrize("status", ["accepted", "review"])

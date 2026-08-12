@@ -150,6 +150,155 @@ def test_direct_preferred_or_temporary_carrying_amount_zero_is_accepted(
     assert reason_code in decision.reason_codes
 
 
+def test_preferred_stock_value_alias_outranks_descriptive_share_wording() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:PreferredStockValue",
+                value=0,
+                labels=(
+                    ("standard", "Preferred Stock, Value, Issued"),
+                    (
+                        "terse",
+                        "Preferred stock authorized and no shares issued or outstanding",
+                    ),
+                ),
+                documentation=None,
+                statement_roles=(),
+                presentation_parents=("us-gaap:EquityAbstract",),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 0
+    assert "PREFERRED_EQUITY_CARRYING_AMOUNT" in decision.reason_codes
+
+
+def test_temporary_equity_alias_ignores_unrelated_fair_value_ancestry() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:TemporaryEquityCarryingAmountAttributableToParent",
+                value=0,
+                labels=(
+                    (
+                        "standard",
+                        "Temporary Equity, Carrying Amount, Attributable to Parent",
+                    ),
+                ),
+                documentation=None,
+                statement_roles=(),
+                presentation_parents=("us-gaap:LiabilitiesAbstract",),
+                presentation_ancestry=(
+                    "us-gaap:FairValueDisclosuresAbstract",
+                    "us-gaap:LiabilitiesAbstract",
+                ),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 0
+    assert "TEMPORARY_EQUITY_CARRYING_AMOUNT" in decision.reason_codes
+
+
+def test_balance_sheet_restricted_parent_excludes_marketable_extension() -> None:
+    qname = "issuer:InvestmentSecuritiesCurrent"
+    decision = resolve_concept(
+        metric_request("marketable_securities_current"),
+        [
+            account_fact(
+                qname,
+                value=42_500_000,
+                labels=(("standard", "Investment securities"),),
+                documentation="Available-for-sale debt securities classified as current.",
+                statement_roles=("balance_sheet",),
+                presentation_parents=("us-gaap:AssetsCurrent",),
+                presentation_ancestry=(
+                    "us-gaap:AssetsCurrent",
+                    "us-gaap:RestrictedAssetsAbstract",
+                ),
+                calculation_parents=("us-gaap:AssetsCurrent",),
+                relationships=(
+                    StructuralRelationship(
+                        arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                        linkrole="https://issuer.test/role/custom-1001",
+                        statement_role="balance_sheet",
+                        from_concept="us-gaap:RestrictedAssetsAbstract",
+                        to_concept="us-gaap:AssetsCurrent",
+                        order=1.0,
+                        preferred_label=None,
+                        calculation_weight=None,
+                    ),
+                    StructuralRelationship(
+                        arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                        linkrole="https://issuer.test/role/custom-1001",
+                        statement_role="balance_sheet",
+                        from_concept="us-gaap:AssetsCurrent",
+                        to_concept=qname,
+                        order=2.0,
+                        preferred_label=None,
+                        calculation_weight=None,
+                    ),
+                ),
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
+def test_unrelated_disclosure_parent_does_not_exclude_marketable_extension() -> None:
+    qname = "issuer:InvestmentSecuritiesCurrent"
+    decision = resolve_concept(
+        metric_request("marketable_securities_current"),
+        [
+            account_fact(
+                qname,
+                value=42_500_000,
+                labels=(("standard", "Investment securities"),),
+                documentation="Available-for-sale debt securities classified as current.",
+                statement_roles=("balance_sheet",),
+                presentation_parents=("us-gaap:AssetsCurrent",),
+                presentation_ancestry=(
+                    "us-gaap:AssetsCurrent",
+                    "us-gaap:RestrictedAssetsAbstract",
+                ),
+                calculation_parents=("us-gaap:AssetsCurrent",),
+                relationships=(
+                    StructuralRelationship(
+                        arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                        linkrole="https://issuer.test/role/custom-1001",
+                        statement_role="balance_sheet",
+                        from_concept="us-gaap:AssetsCurrent",
+                        to_concept=qname,
+                        order=1.0,
+                        preferred_label=None,
+                        calculation_weight=None,
+                    ),
+                    StructuralRelationship(
+                        arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                        linkrole="https://issuer.test/role/RestrictedAssetsDisclosure",
+                        statement_role=None,
+                        from_concept="us-gaap:RestrictedAssetsAbstract",
+                        to_concept="us-gaap:AssetsCurrent",
+                        order=1.0,
+                        preferred_label=None,
+                        calculation_weight=None,
+                    ),
+                ),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 42_500_000
+
+
 def test_preferred_equity_alias_still_requires_usd_unit() -> None:
     decision = resolve_concept(
         metric_request("preferred_equity"),
@@ -378,6 +527,41 @@ def test_governed_nci_equity_member_is_accepted() -> None:
     assert "GOVERNED_DIMENSIONAL_CONTEXT" in decision.reason_codes
 
 
+def test_governed_nci_member_ignores_unrelated_income_statement_ancestry() -> None:
+    fact = account_fact(
+        "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        value=0,
+        dimensions=(
+            (
+                "us-gaap:StatementEquityComponentsAxis",
+                "us-gaap:NoncontrollingInterestMember",
+            ),
+        ),
+        labels=(
+            (
+                "standard",
+                "Equity, Including Portion Attributable to Noncontrolling Interest",
+            ),
+        ),
+        documentation=None,
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+        ),
+        presentation_ancestry=(
+            "us-gaap:IncomeStatementAbstract",
+            "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+            "us-gaap:StatementOfStockholdersEquityAbstract",
+        ),
+    )
+
+    decision = resolve_concept(metric_request("noncontrolling_interests"), [fact])
+
+    assert decision.status == "accepted"
+    assert decision.value == 0
+    assert decision.reason_codes[0] == "GOVERNED_DIMENSIONAL_CONTEXT"
+
+
 @pytest.mark.parametrize(
     "qname",
     [
@@ -571,6 +755,88 @@ def test_direct_debt_carrying_amounts_are_accepted(
     assert decision.value == value
 
 
+@pytest.mark.parametrize(
+    "metric,qname,value,valid_parent,unrelated_parent,unrelated_ancestor",
+    [
+        (
+            "current_debt",
+            "us-gaap:DebtCurrent",
+            7_550_000_000,
+            "us-gaap:LiabilitiesCurrentAbstract",
+            "us-gaap:AccountsNotesAndLoansReceivableLineItems",
+            "us-gaap:ReceivablesAbstract",
+        ),
+        (
+            "noncurrent_debt",
+            "us-gaap:LongTermDebtNoncurrent",
+            23_611_000_000,
+            "us-gaap:DebtInstrumentLineItems",
+            "us-gaap:AccountsNotesAndLoansReceivableLineItems",
+            "us-gaap:ReceivablesAbstract",
+        ),
+        (
+            "current_debt",
+            "us-gaap:LongTermDebtCurrent",
+            1_581_000_000,
+            "us-gaap:LiabilitiesCurrentAbstract",
+            "us-gaap:DebtInstrumentLineItems",
+            "us-gaap:FairValueDisclosuresAbstract",
+        ),
+    ],
+)
+def test_exact_debt_alias_ignores_unrelated_disclosure_relationships(
+    metric: str,
+    qname: str,
+    value: float,
+    valid_parent: str,
+    unrelated_parent: str,
+    unrelated_ancestor: str,
+) -> None:
+    decision = resolve_concept(
+        metric_request(metric),
+        [
+            account_fact(
+                qname,
+                value=value,
+                labels=(("standard", qname.split(":", 1)[-1]),),
+                documentation=None,
+                statement_roles=(),
+                presentation_parents=(valid_parent, unrelated_parent),
+                presentation_ancestry=(valid_parent, unrelated_ancestor),
+                calculation_parents=(),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == value
+
+
+def test_noncurrent_debt_label_excluding_current_maturities_is_not_a_conflict() -> None:
+    decision = resolve_concept(
+        metric_request("noncurrent_debt"),
+        [
+            account_fact(
+                "us-gaap:LongTermDebtNoncurrent",
+                value=496_900_000,
+                labels=(
+                    (
+                        "standard",
+                        "Long-Term Debt, Excluding Current Maturities",
+                    ),
+                    ("terse", "LONG-TERM DEBT"),
+                ),
+                documentation=None,
+                statement_roles=(),
+                presentation_parents=("us-gaap:DebtInstrumentLineItems",),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 496_900_000
+
+
 def test_convertible_current_debt_is_review_only_component() -> None:
     decision = resolve_concept(
         metric_request("current_debt"),
@@ -691,6 +957,203 @@ def test_crm_commercial_paper_investment_component_is_excluded() -> None:
 
     assert decision.status == "rejected"
     assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
+def test_dimensional_commercial_paper_liability_is_not_treated_as_investment() -> None:
+    decision = resolve_concept(
+        metric_request("commercial_paper"),
+        [
+            account_fact(
+                "us-gaap:CommercialPaper",
+                value=250_000_000,
+                labels=(("standard", "Commercial paper borrowings"),),
+                documentation="Commercial paper liability carrying amount.",
+                dimensions=(
+                    (
+                        "us-gaap:FinancialInstrumentAxis",
+                        "us-gaap:CommercialPaperMember",
+                    ),
+                ),
+                statement_roles=("balance_sheet",),
+                presentation_parents=("us-gaap:LiabilitiesCurrent",),
+                calculation_parents=("us-gaap:LiabilitiesCurrent",),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 250_000_000
+    assert decision.reason_codes[0] == "EXACT_CONFIGURED_CONCEPT"
+
+
+def test_crm_commercial_paper_asset_is_not_obscured_by_unrelated_current_debt() -> None:
+    investment_asset = account_fact(
+        "us-gaap:AvailableForSaleSecuritiesDebtSecurities",
+        value=94_000_000,
+        labels=(
+            ("standard", "Debt Securities, Available-for-Sale"),
+            ("verbose", "Marketable securities"),
+        ),
+        documentation=None,
+        dimensions=(
+            (
+                "us-gaap:FinancialInstrumentAxis",
+                "us-gaap:CommercialPaperMember",
+            ),
+        ),
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:ScheduleOfAvailableForSaleSecuritiesLineItems",
+        ),
+        calculation_parents=(),
+    )
+    unrelated_debt = account_fact(
+        "us-gaap:LongTermDebtCurrent",
+        value=0,
+        labels=(("standard", "Long-Term Debt, Current Maturities"),),
+        documentation=None,
+        statement_roles=(),
+        presentation_parents=("us-gaap:DebtInstrumentLineItems",),
+        calculation_parents=(),
+    )
+
+    decision = resolve_concept(
+        metric_request("commercial_paper"),
+        [investment_asset, unrelated_debt],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.source_concept == investment_asset.qname
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
+def test_crm_commercial_paper_asset_outranks_duration_gain_component() -> None:
+    current_asset = account_fact(
+        "us-gaap:AvailableForSaleSecuritiesDebtSecurities",
+        value=94_000_000,
+        labels=(
+            ("standard", "Debt Securities, Available-for-Sale"),
+            ("verbose", "Marketable securities"),
+        ),
+        documentation=None,
+        dimensions=(
+            (
+                "us-gaap:FinancialInstrumentAxis",
+                "us-gaap:CommercialPaperMember",
+            ),
+        ),
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:ScheduleOfAvailableForSaleSecuritiesLineItems",
+        ),
+        calculation_parents=(),
+    )
+    duration_gain = account_fact(
+        "us-gaap:AvailableForSaleDebtSecuritiesAccumulatedGrossUnrealizedGainBeforeTax",
+        value=0,
+        period_start="2025-01-01",
+        labels=(("standard", "Unrealized Gains"),),
+        documentation=None,
+        dimensions=(
+            (
+                "us-gaap:FinancialInstrumentAxis",
+                "us-gaap:CommercialPaperMember",
+            ),
+        ),
+        statement_roles=(),
+        presentation_parents=(),
+        calculation_parents=(),
+    )
+    stale_amortized_cost = account_fact(
+        "us-gaap:AvailableForSaleDebtSecuritiesAmortizedCostBasis",
+        value=30_000_000,
+        period_end="2024-12-31",
+        labels=(("standard", "Debt Securities, Available-for-Sale, Amortized Cost"),),
+        documentation=None,
+        dimensions=(
+            (
+                "us-gaap:FinancialInstrumentAxis",
+                "us-gaap:CommercialPaperMember",
+            ),
+        ),
+        statement_roles=(),
+        presentation_parents=(),
+        calculation_parents=(),
+    )
+    current_amortized_cost = account_fact(
+        "us-gaap:AvailableForSaleDebtSecuritiesAmortizedCostBasis",
+        value=94_000_000,
+        labels=(("standard", "Debt Securities, Available-for-Sale, Amortized Cost"),),
+        documentation=None,
+        dimensions=(
+            (
+                "us-gaap:FinancialInstrumentAxis",
+                "us-gaap:CommercialPaperMember",
+            ),
+        ),
+        statement_roles=(),
+        presentation_parents=(),
+        calculation_parents=(),
+    )
+    generic_fair_value_disclosure = account_fact(
+        "us-gaap:AssetsFairValueDisclosure",
+        value=94_000_000,
+        labels=(("standard", "Assets, Fair Value Disclosure"),),
+        documentation=None,
+        dimensions=(
+            (
+                "us-gaap:FinancialInstrumentAxis",
+                "us-gaap:CommercialPaperMember",
+            ),
+        ),
+        statement_roles=(),
+        presentation_parents=(),
+        calculation_parents=(),
+    )
+
+    decision = resolve_concept(
+        metric_request("commercial_paper"),
+        [
+            duration_gain,
+            stale_amortized_cost,
+            generic_fair_value_disclosure,
+            current_asset,
+            current_amortized_cost,
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.source_concept == current_amortized_cost.qname
+    assert decision.period == PERIOD
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
+@pytest.mark.parametrize(
+    "metric,qname",
+    [
+        ("current_debt", "us-gaap:AccountsPayableCurrent"),
+        ("noncurrent_debt", "us-gaap:ContractWithCustomerLiabilityNoncurrent"),
+        ("finance_lease_current", "us-gaap:AssetsCurrent"),
+        ("finance_lease_noncurrent", "us-gaap:AssetsNoncurrent"),
+    ],
+)
+def test_generic_orientation_words_do_not_create_structural_candidates(
+    metric: str, qname: str
+) -> None:
+    decision = resolve_concept(
+        metric_request(metric),
+        [
+            account_fact(
+                qname,
+                labels=(("standard", qname.split(":", 1)[-1]),),
+                documentation=None,
+            )
+        ],
+    )
+
+    assert decision.status == "unresolved"
+    assert decision.value is None
+    assert decision.reason_codes == ("NO_CANDIDATE",)
 
 
 def test_missing_commercial_paper_borrowing_is_unresolved_not_zero() -> None:
@@ -1054,6 +1517,7 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "extension_terms",
         "required_definition_phrases",
         "excluded_economic_phrases",
+        "preferred_exclusion_evidence_phrases",
         "component_only_concepts",
         "review_only_phrases",
         "direct_statement_concepts",
@@ -1068,6 +1532,15 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "none",
     }
     assert all(policy["excluded_economic_phrases"] for policy in metric_rules.values())
+    assert all(
+        isinstance(policy["preferred_exclusion_evidence_phrases"], list)
+        for policy in metric_rules.values()
+    )
+    assert rules["commercial_paper"]["preferred_exclusion_evidence_phrases"] == [
+        "amortized cost",
+        "marketable securities",
+        "fair value",
+    ]
     assert {rules["version"]} == {"US-XBRL-RESOLVER-1.1"}
     assert "excluded_economic_phrases" not in rules
     assert tuple(rules["official_us_gaap_namespaces"]) == OFFICIAL_NAMESPACES
@@ -1658,7 +2131,7 @@ def test_malformed_multiword_phrase_does_not_satisfy_definition() -> None:
     assert decision.mapping_method == "insufficient_structural_support"
 
 
-def test_gate_failure_order_is_stable_for_same_qname_and_accession() -> None:
+def test_gate_failure_order_prefers_fact_that_passed_more_hard_gates() -> None:
     period_failure = make_fact(
         period_end="2024-12-31",
         source_accession=ACCESSION,
@@ -1672,7 +2145,7 @@ def test_gate_failure_order_is_stable_for_same_qname_and_accession() -> None:
     reverse = resolve_concept(current_request(), [unit_failure, period_failure])
 
     assert forward.status == reverse.status == "rejected"
-    assert forward.reason_codes == reverse.reason_codes == ("PERIOD_MISMATCH",)
+    assert forward.reason_codes == reverse.reason_codes == ("UNIT_MISMATCH",)
     assert forward.source_concept == reverse.source_concept
     assert forward.source_accession == reverse.source_accession == ACCESSION
 

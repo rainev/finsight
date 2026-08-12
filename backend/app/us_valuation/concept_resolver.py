@@ -108,6 +108,8 @@ def _normalized_text(value: str) -> str:
 
 
 def _fact_text(fact: StructuralFact) -> str:
+    """Return semantic fact text without cross-role taxonomy relationships."""
+
     parts = [fact.qname, fact.local_name, fact.documentation or ""]
     parts.extend(label for _, label in fact.labels)
     parts.extend(
@@ -115,9 +117,6 @@ def _fact_text(fact: StructuralFact) -> str:
         for pair in fact.dimensions
         for value in pair
     )
-    parts.extend(fact.presentation_parents)
-    parts.extend(fact.calculation_parents)
-    parts.extend(fact.presentation_ancestry)
     return _normalized_text(" ".join(parts))
 
 
@@ -157,10 +156,48 @@ def _remove_phrases(text: str, phrases: tuple[str, ...]) -> str:
     return text
 
 
+def _linkrole_statement_role(linkrole: str) -> str | None:
+    compact = _normalized_text(linkrole).replace(" ", "")
+    if "balancesheet" in compact or "statementoffinancialposition" in compact:
+        return "balance_sheet"
+    if "incomestatement" in compact or "statementofoperations" in compact:
+        return "income_statement"
+    if "cashflow" in compact:
+        return "cash_flow"
+    return None
+
+
+def _role_scoped_parent_text(fact: StructuralFact, statement_role: str) -> str:
+    known_context = (
+        set(fact.presentation_parents)
+        | set(fact.calculation_parents)
+        | set(fact.presentation_ancestry)
+        | {fact.qname}
+    )
+    parents = {
+        relationship.from_concept
+        for relationship in fact.relationships
+        if relationship.from_concept in known_context
+        and relationship.to_concept in known_context
+        and relationship.arcrole.rsplit("/", 1)[-1]
+        in {"parent-child", "summation-item"}
+        and (
+            relationship.statement_role
+            or _linkrole_statement_role(relationship.linkrole)
+        )
+        == statement_role
+    }
+    return _normalized_text(" ".join(sorted(parents)))
+
+
 def _excluded_reason(
-    fact: StructuralFact, metric_rules: Mapping[str, Any]
+    fact: StructuralFact,
+    request: ResolutionRequest,
+    metric_rules: Mapping[str, Any],
 ) -> str | None:
-    text = _fact_text(fact)
+    text = " ".join(
+        (_fact_text(fact), _role_scoped_parent_text(fact, request.statement_role))
+    )
     if any(_contains_phrase(text, phrase) for phrase in _rule_strings(metric_rules, "excluded_economic_phrases")):
         return "EXCLUDED_ECONOMIC_CLASS"
     return None
@@ -269,7 +306,14 @@ def _orientation(
     if explicit_current_concept:
         orientations.add("current")
 
-    standalone_current_text = _remove_phrases(text, noncurrent_phrases + ("long term",))
+    standalone_current_text = _remove_phrases(
+        text,
+        noncurrent_phrases
+        + (
+            "long term",
+            "excluding current maturities",
+        ),
+    )
     if any(
         _contains_phrase(standalone_current_text, token)
         for token in ("current", "short term")
@@ -297,7 +341,7 @@ def _hard_gate_reason(
         return "PERIOD_MISMATCH"
     if fact.unit != request.unit or fact.unit != metric_rules.get("unit"):
         return "UNIT_MISMATCH"
-    excluded_reason = _excluded_reason(fact, metric_rules)
+    excluded_reason = _excluded_reason(fact, request, metric_rules)
     if excluded_reason is not None:
         return excluded_reason
     if not _statement_supported(request, fact, metric_rules):
@@ -323,16 +367,16 @@ def _is_plausible_extension(
     fact: StructuralFact, metric_rules: Mapping[str, Any]
 ) -> bool:
     text = _fact_text(fact)
-    extension_terms = _rule_strings(metric_rules, "extension_terms")
-    term_tokens = tuple(
-        token
-        for phrase in extension_terms
-        for token in _normalized_text(phrase).split()
-        if token not in {"and", "for", "of", "the", "to"}
+    deterministic_phrases = (
+        _rule_strings(metric_rules, "extension_terms")
+        + _rule_strings(metric_rules, "required_definition_phrases")
+        + _rule_strings(metric_rules, "review_only_phrases")
+        + _rule_strings(metric_rules, "excluded_economic_phrases")
     )
-    return _contextual_concept_match(fact, metric_rules) or any(
-        _contains_phrase(text, phrase)
-        for phrase in extension_terms + term_tokens
+    return (
+        _contextual_concept_match(fact, metric_rules)
+        or _configured_concept_value(fact, metric_rules, "component_only_concepts")
+        or any(_contains_phrase(text, phrase) for phrase in deterministic_phrases)
     )
 
 
@@ -432,7 +476,7 @@ def _classify_candidate(
                 mapping_method="component_only_concept",
                 reason_codes=("COMPONENT_ONLY_CONCEPT",),
             )
-        if review_only:
+        if review_only and _concept_reason_code(fact, metric_rules) is None:
             return candidate(
                 status="review",
                 confidence=0.75,
@@ -540,10 +584,28 @@ def _decision(
 
 def _gate_failure_sort_key(
     failure: tuple[StructuralFact, str],
-) -> tuple[int, str, str, str, str, str]:
+    metric_rules: Mapping[str, Any],
+) -> tuple[int, int, bool, int, str, str, str, str, str]:
+    """Prefer evidence that advanced furthest through the ordered hard gates."""
+
     fact, reason = failure
+    text = _fact_text(fact)
+    preferred_phrases = _rule_strings(
+        metric_rules, "preferred_exclusion_evidence_phrases"
+    )
+    preferred_exclusion_rank = next(
+        (
+            index
+            for index, phrase in enumerate(preferred_phrases)
+            if _contains_phrase(text, phrase)
+        ),
+        len(preferred_phrases),
+    )
     return (
-        _GATE_PRIORITY.get(reason, 999),
+        -_GATE_PRIORITY.get(reason, 999),
+        preferred_exclusion_rank,
+        fact.period_start is not None,
+        len(fact.dimensions),
         fact.qname,
         fact.source_accession,
         fact.period_end,
@@ -632,7 +694,10 @@ def resolve_concept(
 
     if not candidates:
         if gate_failures:
-            fact, reason = sorted(gate_failures, key=_gate_failure_sort_key)[0]
+            fact, reason = sorted(
+                gate_failures,
+                key=lambda failure: _gate_failure_sort_key(failure, metric_rules),
+            )[0]
             return _decision(
                 request,
                 fact=fact,

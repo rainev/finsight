@@ -90,6 +90,7 @@ class StructuralRelationship:
     order: float | None
     preferred_label: str | None
     calculation_weight: float | None
+    statement_role: str | None = None
 
     def __post_init__(self) -> None:
         for value, field in (
@@ -101,6 +102,13 @@ class StructuralRelationship:
             _require_text(value, field)
         if self.preferred_label is not None:
             _require_text(self.preferred_label, "preferred_label")
+        if self.statement_role not in {
+            None,
+            "balance_sheet",
+            "income_statement",
+            "cash_flow",
+        }:
+            raise ValueError("statement_role must be a recognized statement role")
         _validate_number(self.order, "order")
         _validate_number(self.calculation_weight, "calculation_weight")
 
@@ -113,6 +121,7 @@ class StructuralRelationship:
             "order": self.order,
             "preferred_label": self.preferred_label,
             "calculation_weight": self.calculation_weight,
+            "statement_role": self.statement_role,
         }
 
     @classmethod
@@ -125,6 +134,7 @@ class StructuralRelationship:
             order=value.get("order"),
             preferred_label=value.get("preferred_label"),
             calculation_weight=value.get("calculation_weight"),
+            statement_role=value.get("statement_role"),
         )
 
 

@@ -79,6 +79,13 @@ def test_arelle_adapter_extracts_extension_structure() -> None:
             1.0,
         ),
     }
+    assert {
+        relationship.statement_role
+        for relationship in current.relationships
+        if relationship.linkrole == "https://example.test/role/balanceSheet"
+        and relationship.arcrole.rsplit("/", 1)[-1]
+        in {"parent-child", "summation-item"}
+    } == {"balance_sheet"}
 
 
 def test_arelle_adapter_loads_sec_inline_transforms() -> None:
