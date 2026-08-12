@@ -54,11 +54,29 @@ Expected: the new unrelated-fact tests fail because negative/review phrases curr
 
 In `_is_plausible_extension`, candidate admission may use `extension_terms`, `required_definition_phrases`, contextual concepts, and configured component-only concepts. `review_only_phrases` and `excluded_economic_phrases` may classify or reject an already plausible candidate, but may not create one.
 
-- [ ] **Step 4: Write the failing NVIDIA preferred-equity test**
+- [ ] **Step 4: Write the failing structural-ambiguity test**
+
+Add two distinct, equally ranked candidate facts with different QNames or contexts but the same numeric value. Assert `AMBIGUOUS_FACTS`; numeric equality must not establish semantic equivalence.
+
+- [ ] **Step 5: Run the ambiguity test and verify RED**
+
+Run:
+
+```bash
+pytest -q backend/tests/test_concept_resolver.py -k 'same_value_distinct_candidates'
+```
+
+Expected: accepted status because ambiguity currently depends on differing numeric values.
+
+- [ ] **Step 6: Make ambiguity structural rather than value-based**
+
+After exact fact-identity deduplication, reject whenever more than one distinct candidate remains at the highest confidence. Do not compare candidate values to decide semantic equivalence.
+
+- [ ] **Step 7: Write the failing NVIDIA preferred-equity test**
 
 Add a standard US-GAAP `PreferredStockValueOutstanding` fact with value zero, USD unit, current period, no dimensions, and direct balance-sheet equity support. Assert accepted status and `PREFERRED_EQUITY_CARRYING_AMOUNT`.
 
-- [ ] **Step 5: Run the preferred-equity test and verify RED**
+- [ ] **Step 8: Run the preferred-equity test and verify RED**
 
 Run:
 
@@ -68,11 +86,11 @@ pytest -q backend/tests/test_concept_resolver.py -k 'preferred_stock_value_outst
 
 Expected: review status because the concept is not yet a configured alias.
 
-- [ ] **Step 6: Add the exact deterministic alias**
+- [ ] **Step 9: Add the exact deterministic alias**
 
 Add `PreferredStockValueOutstanding` to `fields.preferred_equity.concepts` and its stable reason code to the preferred-equity policy. Do not add common-stock concepts, `NonMarketableSecurities`, generic debt totals, or combined debt-and-lease concepts.
 
-- [ ] **Step 7: Run resolver regression tests**
+- [ ] **Step 10: Run resolver regression tests**
 
 Run:
 
@@ -80,7 +98,7 @@ Run:
 pytest -q backend/tests/test_concept_resolver.py backend/tests/test_structural_xbrl_schema.py
 ```
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 11: Commit**
 
 ```bash
 git add backend/app/us_valuation/concept_resolver.py backend/app/us_valuation/config/concept_aliases.json backend/app/us_valuation/config/structural_concept_rules.json backend/tests/test_concept_resolver.py
@@ -204,4 +222,3 @@ Run the focused structural suite and full backend suite. Report any pre-existing
 - [ ] **Step 5: Record evidence and commit**
 
 Update durable evidence and handoff with the exact full-corpus counts, remaining mapping gaps, and production-promotion boundary. Status remains `verified — your confirmation needed`.
-
