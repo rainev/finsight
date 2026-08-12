@@ -158,12 +158,18 @@ def shadow_case_eligibility(
         if decision.get("status") != "accepted"
     ]
     blocking_fields = _blocking_field_names(artifact, decision_list)
+    unsupported_fields = [
+        field
+        for field in _bridge_missing_fields(artifact)
+        if field not in SUPPORTED_STRUCTURAL_FIELDS
+    ]
+    blocking_fields.extend(unsupported_fields)
     if parser_failed:
         blocking_fields = ["parser", *blocking_fields]
     if not decision_list:
         data_quality_status = "fail"
         data_quality_score = None
-    elif nonaccepted or parser_failed:
+    elif nonaccepted or unsupported_fields or parser_failed:
         data_quality_status = "fail"
         data_quality_score = None
     else:

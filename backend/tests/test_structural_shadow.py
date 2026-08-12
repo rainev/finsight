@@ -108,6 +108,22 @@ def test_shadow_case_eligibility_lowers_confidence_for_structural_extension() ->
     assert result["blocking_fields"] == []
 
 
+def test_shadow_case_eligibility_withholds_unsupported_required_bridge_field() -> None:
+    artifact = withheld_artifact(
+        missing=["current_debt", "unsupported_required_bridge"]
+    )
+
+    result = shadow_case_eligibility(
+        artifact,
+        [decision("current_debt", confidence=1.0)],
+    )
+
+    assert result["data_quality_status"] == "fail"
+    assert result["data_quality_score"] is None
+    assert result["shadow_disposition"] == "withhold"
+    assert "unsupported_required_bridge" in result["blocking_fields"]
+
+
 @pytest.mark.parametrize("status", ["review", "rejected", "unresolved"])
 def test_shadow_case_eligibility_withholds_nonaccepted_without_zero_evidence(
     status: str,
@@ -391,9 +407,11 @@ def _install_cli_fakes(
     monkeypatch: pytest.MonkeyPatch,
     *,
     decision_by_ticker: dict[str, str],
+    confidence_by_ticker: dict[str, float] | None = None,
     failing_accessions: frozenset[str] = frozenset(),
 ) -> dict[str, list[object]]:
     calls: dict[str, list[object]] = {"cache": [], "parse": []}
+    confidence_by_ticker = confidence_by_ticker or {}
 
     class FakeSecClient:
         def __init__(self, **kwargs: object) -> None:
@@ -412,7 +430,11 @@ def _install_cli_fakes(
     def evaluate(artifact: dict[str, object], filing: object) -> dict[str, object]:
         ticker = str(artifact["ticker"])
         decisions = [
-            {"normalized_concept": "marketable_securities_current", "status": decision_by_ticker[ticker], "confidence": 1.0}
+            {
+                "normalized_concept": "marketable_securities_current",
+                "status": decision_by_ticker[ticker],
+                "confidence": confidence_by_ticker.get(ticker, 1.0),
+            }
         ]
         return {
             "ticker": ticker,
@@ -447,6 +469,7 @@ def test_shadow_cli_emits_immutable_reports_and_counts_all_decision_states(
     data_root.mkdir()
     decision_by_ticker = {
         "ACPT": "accepted",
+        "LOW": "accepted",
         "REVIEW": "review",
         "REJECT": "rejected",
         "UNRES": "unresolved",
@@ -478,7 +501,11 @@ def test_shadow_cli_emits_immutable_reports_and_counts_all_decision_states(
     skipped = withheld_artifact(missing=["unknown_bridge_field"])
     skipped["ticker"] = "SKIP"
     original_inputs["SKIP"] = _write_artifact(data_root / "SKIP.json", skipped)
-    calls = _install_cli_fakes(monkeypatch, decision_by_ticker=decision_by_ticker)
+    calls = _install_cli_fakes(
+        monkeypatch,
+        decision_by_ticker=decision_by_ticker,
+        confidence_by_ticker={"LOW": 0.96},
+    )
     cli = _load_shadow_cli()
     arguments = [
         "--data-root",
@@ -496,12 +523,12 @@ def test_shadow_cli_emits_immutable_reports_and_counts_all_decision_states(
     report_mtimes = {
         path.name: path.stat().st_mtime_ns for path in output_root.glob("*.json")
     }
-    assert len(calls["cache"]) == 4
-    assert len(calls["parse"]) == 4
+    assert len(calls["cache"]) == 5
+    assert len(calls["parse"]) == 5
     assert cli.main(arguments) == 0
 
-    assert len(calls["cache"]) == 8
-    assert len(calls["parse"]) == 8
+    assert len(calls["cache"]) == 10
+    assert len(calls["parse"]) == 10
     assert report_bytes == {
         path.name: path.read_bytes() for path in output_root.glob("*.json")
     }
@@ -514,11 +541,11 @@ def test_shadow_cli_emits_immutable_reports_and_counts_all_decision_states(
     )
     summary = json.loads((output_root / "summary.json").read_text())
     assert summary == {
-        "accepted_shadow": 1,
-        "discovered": 7,
-        "eligible": 6,
-        "lower_confidence_candidate": 0,
-        "parsed": 4,
+        "accepted_shadow": 2,
+        "discovered": 8,
+        "eligible": 7,
+        "lower_confidence_candidate": 1,
+        "parsed": 5,
         "parser_failed": 2,
         "publish_candidate": 1,
         "rejected": 1,
