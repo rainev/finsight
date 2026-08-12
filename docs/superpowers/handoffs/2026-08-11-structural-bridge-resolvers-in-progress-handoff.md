@@ -2,16 +2,18 @@
 
 Date: 2026-08-13 (Asia/Manila)
 
-Status: Current continuation Task 3 verified — user confirmation needed. The historical
-Tasks 1–6 and the current broader-corpus Tasks 1–3 are implemented, reviewed, and committed;
-production promotion has not been approved.
+Status: Current continuation Task 4 verified — user confirmation needed. The historical
+Tasks 1–6 and the current broader-corpus Tasks 1–4 are implemented and reviewed. Task 4's code
+checkpoints are committed; this durable evidence update is prepared for the final checkpoint
+commit. Production promotion has not been approved.
 
 ## Resume instruction
 
 Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Do not redo the
-five-company pilot, the completed 20-company baseline, or current-continuation Tasks 1–3.
-Read `docs/plans/EVIDENCE.md`, then continue at Task 4: run the full supported 104-company
-shadow corpus after user confirmation. Production promotion remains unapproved.
+five-company pilot, the completed 20-company baseline, or current-continuation Tasks 1–4.
+Read `docs/plans/EVIDENCE.md`, then continue with the remaining deterministic mapping gaps and
+another shadow eligibility replay after user confirmation. Production promotion remains
+unapproved.
 
 Plan:
 
@@ -34,6 +36,8 @@ Latest independently reviewed implementation checkpoints:
 - `1544335 fix: harden structural bridge resolution`
 - `432e9db fix: classify structural relationship roles safely`
 - `8155326 fix: preserve fail-closed relationship roles`
+- `c6db4b5 fix: reject unsafe preferred equity aliases`
+- `a76504e fix: close preferred equity resolver bypasses`
 
 ## Completed work
 
@@ -181,14 +185,24 @@ also recovered one previously unaccepted NVDA preferred-equity fact. However, th
 not make any case publishable because every company retained material data-quality blockers.
 The remaining challenge is accounting-context resolution and coverage, not file parsing.
 
-## Next step — current continuation Task 4
+## Current continuation — Task 4 final result
 
-Build an auditable, untracked manifest for the full supported 104-company boundary, then run
-the cached/network shadow replay under SEC fair-access controls. Reconcile discovered,
-eligible, skipped, and parser-failed counts; decision outcomes by field and archetype; every
-new recurring review mapping; and case-level dispositions. Preserve fail-closed behavior and
-`publication_effect: none_shadow_only`. Run the focused and full regression suites, document
-the results, and do not promote production until the evidence supports it.
+- Corrected immutable replay: `output/structural-xbrl-full-corpus/results-accounting-fix-20260813/`.
+- 104/104 eligible filings parsed by Arelle; zero parser failures or skips.
+- 545 decisions reconciled exactly: 2 accepted, 42 review, 353 rejected, 148 unresolved.
+- The only approved acceptances are NVDA preferred equity zero and EXPE NCI USD 1.26 billion.
+- HPE's displayed preferred zero is rejected by same-filing preferred-instrument evidence.
+- RTX's NCI-inclusive temporary equity is no longer accepted as preferred equity.
+- All 104 cases remain withheld with null data-quality scores and `none_shadow_only`.
+- Focused suite: 341 passed. Full backend: 484 passed, 3 skipped, and the same unrelated
+  `automated_review` KeyError.
+- Independent resolver review, accounting audit, and 545-key reconciliation passed.
+- Important audit caveat: HPE's rejection is safe, but its corrected row does not yet retain
+  the triggering companion fact as inline evidence; that reporting improvement is backlog B8.
+
+Production promotion remains unapproved. The next useful work is to close recurring
+deterministic mapping gaps, beginning with clearly liability-like preferred-equity review noise
+such as DE, then rerun shadow eligibility.
 
 ## Current copy-paste continuation prompt
 
@@ -201,10 +215,11 @@ Handoff: docs/superpowers/handoffs/2026-08-11-structural-bridge-resolvers-in-pro
 Evidence: docs/plans/EVIDENCE.md
 Plan: docs/superpowers/plans/2026-08-13-structural-xbrl-broader-corpus.md
 
-Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Task 3 is
-verified; do not redo the five-company pilot, the 20-company baseline, or the post-fix
-20-company replay. Start at Task 4: build and run the full supported 104-company shadow corpus.
-Keep Arelle and the deterministic fail-closed resolver, preserve review candidates as
-non-valuation diagnostics, keep publication_effect exactly none_shadow_only, do not change
-production inputs, and never stage output/ or .superpowers/.
+Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Task 4 is
+verified; do not redo the five-company pilot, 20-company replay, or corrected 104-company
+replay. Read the Task 4 section in docs/plans/EVIDENCE.md. Continue with recurring deterministic
+mapping gaps, starting with liability-like preferred-equity review noise such as DE, then rerun
+shadow eligibility. Keep Arelle and the deterministic fail-closed resolver, preserve review
+candidates as non-valuation diagnostics, keep publication_effect exactly none_shadow_only, do
+not change production inputs, and never stage output/ or .superpowers/.
 ```

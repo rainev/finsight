@@ -282,6 +282,94 @@ Limitations:
 
 ### Next boundary
 
-Task 3 is verified, but production promotion is not approved. Task 4 is next: build and run
-the full supported 104-company shadow corpus, preserving the same fail-closed rules, exact
-lineage, aggregate/stratified reconciliation, and `none_shadow_only` publication boundary.
+Task 3 remains verified. Task 4 is now also verified below; production promotion is still not
+approved.
+
+## Task 4 — full supported 104-company shadow corpus
+
+Status: **verified — your confirmation needed**. The corrected run is shadow-only and did not
+change production valuation inputs, serving artifacts, or publication gates.
+
+### Corpus, parser, and ledger reconciliation
+
+The auditable manifest contains 125 flagged snapshots: 104 supported US-GAAP 10-K/10-Q cases
+were included and 21 were excluded with recorded reasons. The included corpus contains 100
+Form 10-Q and 4 Form 10-K cases across 13 business archetypes. Its immutable corrected output
+is:
+
+```text
+output/structural-xbrl-full-corpus/results-accounting-fix-20260813/
+```
+
+| Metric | Corrected result |
+| --- | ---: |
+| Discovered / eligible / parsed | 104 / 104 / 104 |
+| Parser failures / skipped | 0 / 0 |
+| Manifest requests / unique decisions | 545 / 545 |
+| Missing / duplicate / extra decisions | 0 / 0 / 0 |
+| Accepted / review / rejected / unresolved | 2 / 42 / 353 / 148 |
+| Publish / lower-confidence candidates | 0 / 0 |
+| Withheld cases | 104 |
+
+All 104 reports have `data_quality_status: fail`, `data_quality_score: null`,
+`shadow_disposition: withhold`, and `publication_effect: none_shadow_only`. Nine unsupported
+required `cash` gaps (BIIB, CSX, ILMN, MDLZ, PG, QSR, SBUX, TGT, and WAB) remain explicit
+blockers. Review values are diagnostics only; rejected and unresolved decisions carry null
+values and no non-accepted value entered a valuation input.
+
+Arelle retained 6,619 fail-closed numeric diagnostics—6,414 inexact numeric values and 205 nil
+facts—while producing zero parser failures. These warnings represent facts intentionally
+skipped rather than accepted with unsafe precision or imputed values.
+
+### Accepted accounting results
+
+Independent accounting review approved the only two accepted decisions:
+
+| Ticker | Field | Value | Source concept | Confidence |
+| --- | --- | ---: | --- | ---: |
+| NVDA | preferred equity | 0 | `us-gaap:PreferredStockValueOutstanding` | 0.98 |
+| EXPE | noncontrolling interests | 1,260,000,000 | `us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest` with exact NCI member dimension | 0.96 |
+
+The corpus audit caught and corrected two initially unsafe acceptances before this evidence was
+approved:
+
+- HPE preferred equity zero is now rejected because the same filing and period contain nonzero
+  preferred-instrument evidence. The stable reason is
+  `PREFERRED_ZERO_CONTRADICTED_BY_INSTRUMENT_EVIDENCE`.
+- RTX's USD 28 million NCI-inclusive temporary-equity fact is no longer a preferred-equity
+  alias and is not accepted.
+
+The correction also removed redeemable-NCI review noise for APH, LIN, WMT, and XYL. DE and T
+remain review-grade and therefore withheld; DE is conservatively safe but its embedded evidence
+is liability-like and should become a future hard economic-class rejection. WDC remains governed
+by the separate five-company pilot: its accepted parent-attributable temporary-equity carrying
+amount is zero, while its USD 265 million liquidation preference remains non-selected.
+
+### Regression and independent review
+
+```text
+Focused structural suite: 341 passed in 6.26s
+Full backend suite: 484 passed, 3 skipped, 1 pre-existing unrelated failure
+```
+
+The sole full-suite failure remains
+`test_microsoft_public_artifact_contains_no_raw_financial_amounts` with missing
+`automated_review`; neither its production code nor test was changed here. Independent resolver
+review approved the implementation after the HPE/RTX corrections, and independent corpus
+reconciliation confirmed all 545 decision keys and all case gates. The final accounting audit
+also approved the corrected output for shadow-only use, with one important traceability caveat:
+HPE's corrected rejection row has `evidence: null`; the companion preferred-share evidence that
+triggers the rejection remains visible in the pre-correction artifact and regression tests, but
+a future report format should retain that triggering companion evidence directly. The corrected
+20-company control remained byte-for-byte unchanged: 97 decisions (1 accepted, 6 review, 71
+rejected, 19 unresolved) and all 20 cases withheld.
+
+### Remaining boundary
+
+Task 4 proves parser reliability and fail-closed accounting behavior across the full supported
+104-company boundary. It does **not** make any of those 104 cases publishable: every case still
+has at least one material blocker. Production promotion remains unapproved. The next engineering
+work is to eliminate recurring high-value deterministic mapping gaps—starting with clearly
+liability-like preferred-equity review noise—then rerun eligibility before considering any live
+valuation integration. HPE companion-evidence traceability is separately parked in the
+production backlog; it does not change the safe rejection or shadow-only result.

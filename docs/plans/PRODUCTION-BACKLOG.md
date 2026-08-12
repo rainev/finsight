@@ -35,6 +35,13 @@ the roadmap. Re-evaluate periodically — don't let items rot here.
   discount/franchise. Split + recalibrate before promoting to `pass`.
 - **B7 · `sales_to_capital` and dividend-growth are governed policy, not per-issuer.** Documented; refine with
   per-issuer evidence before final publish.
+- **B8 · Preserve contradiction-trigger evidence in structural rejection reports.** HPE is safely rejected when its
+  displayed preferred-stock zero conflicts with same-filing preferred-instrument evidence, but the corrected report
+  row currently has `evidence: null`. Retain the triggering companion fact, context, period, and accession directly in
+  future rejection artifacts before relying on those artifacts for analyst-facing audit trails.
+- **B9 · Reject clearly liability-like preferred-equity review noise.** The corrected DE candidate remains safely
+  review-grade and withheld, but its documentation and `LiabilitiesAbstract` parent identify a liability rather than
+  genuine preferred-equity ambiguity. Add a deterministic economic-class rejection after broader regression coverage.
 
 ## Notes
 - Nothing here is a hidden blocker for the NOW phase. These are explicitly parked so the roadmap stays focused on the

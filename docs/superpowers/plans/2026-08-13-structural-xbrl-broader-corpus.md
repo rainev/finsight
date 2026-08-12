@@ -203,19 +203,19 @@ Document exact counts, accepted mappings, non-accepted recurring patterns, limit
 - Consumes: all available private US-GAAP withheld artifacts with at least one field in `SUPPORTED_STRUCTURAL_FIELDS`.
 - Produces: full-corpus shadow reports and aggregate recovery/ambiguity/eligibility metrics.
 
-- [ ] **Step 1: Build an untracked, auditable input manifest**
+- [x] **Step 1: Build an untracked, auditable input manifest**
 
 Select only private artifacts with eligible 10-K/10-Q forms and at least one supported missing bridge field. Record ticker, CIK, archetype, filing accession/form/period, and requested fields. Exclude IFRS/20-F and unsupported-only cases.
 
-- [ ] **Step 2: Run the full cached/network replay under SEC fair-access controls**
+- [x] **Step 2: Run the full cached/network replay under SEC fair-access controls**
 
 Use the existing package cache, no production data roots, and a new immutable output directory. Preserve parser failures as withhold cases.
 
-- [ ] **Step 3: Validate aggregate and stratified results**
+- [x] **Step 3: Validate aggregate and stratified results**
 
 Reconcile input count to discovered/eligible/skipped/parser-failed totals; aggregate decisions and case dispositions by field and archetype; inspect every newly recurring review mapping; verify no rejected/unresolved decision became zero or entered a valuation.
 
-- [ ] **Step 4: Run final regression tests**
+- [x] **Step 4: Run final regression tests**
 
 Run the focused structural suite and full backend suite. Report any pre-existing unrelated failure separately.
 
