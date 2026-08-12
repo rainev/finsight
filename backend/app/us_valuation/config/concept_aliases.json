@@ -178,6 +178,7 @@
       "concepts": [
         "PreferredStocksIncludingAdditionalPaidInCapitalParOrStatedValue",
         "PreferredStockValue",
+        "PreferredStockValueOutstanding",
         "TemporaryEquityCarryingAmountAttributableToParent",
         "TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests"
       ]

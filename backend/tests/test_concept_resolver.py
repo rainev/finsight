@@ -176,6 +176,64 @@ def test_preferred_stock_value_alias_outranks_descriptive_share_wording() -> Non
     assert "PREFERRED_EQUITY_CARRYING_AMOUNT" in decision.reason_codes
 
 
+def test_negative_phrase_alone_does_not_admit_candidate() -> None:
+    fact = account_fact(
+        "issuer:OtherCurrentAsset",
+        labels=(("standard", "Strategic asset"),),
+        documentation="Strategic asset.",
+        statement_roles=(),
+        presentation_parents=("us-gaap:AssetsCurrent",),
+        calculation_parents=("us-gaap:AssetsCurrent",),
+    )
+
+    decision = resolve_concept(current_request(), [fact])
+
+    assert decision.status == "unresolved"
+    assert decision.reason_codes == ("NO_CANDIDATE",)
+
+
+def test_review_phrase_alone_does_not_admit_candidate() -> None:
+    fact = account_fact(
+        "issuer:OtherLiability",
+        labels=(("standard", "Year two through thereafter"),),
+        documentation="Year two through thereafter.",
+        statement_roles=(),
+        presentation_parents=(
+            "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract",
+        ),
+        calculation_parents=(
+            "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract",
+        ),
+    )
+
+    decision = resolve_concept(metric_request("finance_lease_total"), [fact])
+
+    assert decision.status == "unresolved"
+    assert decision.reason_codes == ("NO_CANDIDATE",)
+
+
+def test_preferred_stock_value_outstanding_is_a_governed_preferred_equity_alias() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:PreferredStockValueOutstanding",
+                value=0,
+                labels=(("standard", "Preferred Stock Value Outstanding"),),
+                documentation="Preferred stock value outstanding.",
+                statement_roles=(),
+                presentation_parents=("us-gaap:StockholdersEquity",),
+                calculation_parents=("us-gaap:StockholdersEquity",),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value == 0
+    assert decision.mapping_method == "known_taxonomy_alias"
+    assert "PREFERRED_EQUITY_CARRYING_AMOUNT" in decision.reason_codes
+
+
 def test_temporary_equity_alias_ignores_unrelated_fair_value_ancestry() -> None:
     decision = resolve_concept(
         metric_request("preferred_equity"),
@@ -884,23 +942,45 @@ def test_current_debt_subtype_with_only_generic_debt_note_support_is_rejected() 
 
 
 @pytest.mark.parametrize(
-    "qname,documentation",
+    "qname,documentation,expected_status,expected_reason",
     [
-        ("us-gaap:DebtMaturitySchedule", "Debt maturity repayments."),
-        ("us-gaap:DebtInstrumentFaceAmount", "Debt instrument face amount."),
-        ("us-gaap:DebtInstrumentFairValue", "Debt instrument fair value."),
+        (
+            "us-gaap:DebtMaturitySchedule",
+            "Debt maturity repayments.",
+            "unresolved",
+            "NO_CANDIDATE",
+        ),
+        (
+            "us-gaap:DebtInstrumentFaceAmount",
+            "Debt instrument face amount.",
+            "unresolved",
+            "NO_CANDIDATE",
+        ),
+        (
+            "us-gaap:DebtInstrumentFairValue",
+            "Debt instrument fair value.",
+            "unresolved",
+            "NO_CANDIDATE",
+        ),
         (
             "us-gaap:ProceedsFromIssuanceOfLongTermDebt",
             "Proceeds from debt issuance cash flows.",
+            "rejected",
+            "EXCLUDED_ECONOMIC_CLASS",
         ),
         (
             "us-gaap:RepaymentsOfLongTermDebt",
             "Repayments of long-term debt cash flows.",
+            "rejected",
+            "EXCLUDED_ECONOMIC_CLASS",
         ),
     ],
 )
-def test_debt_schedule_valuation_and_cash_flow_facts_are_rejected(
-    qname: str, documentation: str
+def test_debt_schedule_valuation_and_cash_flow_facts_are_not_candidates(
+    qname: str,
+    documentation: str,
+    expected_status: str,
+    expected_reason: str,
 ) -> None:
     decision = resolve_concept(
         metric_request("noncurrent_debt"),
@@ -914,8 +994,8 @@ def test_debt_schedule_valuation_and_cash_flow_facts_are_rejected(
         ],
     )
 
-    assert decision.status == "rejected"
-    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+    assert decision.status == expected_status
+    assert decision.reason_codes == (expected_reason,)
 
 
 def test_debt_maturity_schedule_is_excluded_with_carrying_amount_wording() -> None:
@@ -1476,23 +1556,40 @@ def test_finance_lease_payment_schedule_facts_cannot_satisfy_carrying_value_requ
 
 
 @pytest.mark.parametrize(
-    "qname,documentation",
+    "qname,documentation,expected_status,expected_reason",
     [
         (
             "us-gaap:OperatingLeaseLiabilityCurrent",
             "Operating lease liability current carrying value.",
+            "rejected",
+            "EXCLUDED_ECONOMIC_CLASS",
         ),
-        ("us-gaap:RightOfUseAsset", "Right of use asset."),
-        ("us-gaap:LeaseCost", "Lease cost."),
+        (
+            "us-gaap:RightOfUseAsset",
+            "Right of use asset.",
+            "rejected",
+            "EXCLUDED_ECONOMIC_CLASS",
+        ),
+        ("us-gaap:LeaseCost", "Lease cost.", "unresolved", "NO_CANDIDATE"),
         (
             "us-gaap:PaymentsForOperatingLeases",
             "Cash payments for operating leases.",
+            "unresolved",
+            "NO_CANDIDATE",
         ),
-        ("issuer:LeaseCommitments", "Generic lease commitments."),
+        (
+            "issuer:LeaseCommitments",
+            "Generic lease commitments.",
+            "unresolved",
+            "NO_CANDIDATE",
+        ),
     ],
 )
 def test_non_finance_lease_economics_are_rejected_from_carrying_value(
-    qname: str, documentation: str
+    qname: str,
+    documentation: str,
+    expected_status: str,
+    expected_reason: str,
 ) -> None:
     decision = resolve_concept(
         metric_request("finance_lease_total"),
@@ -1506,8 +1603,8 @@ def test_non_finance_lease_economics_are_rejected_from_carrying_value(
         ],
     )
 
-    assert decision.status == "rejected"
-    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+    assert decision.status == expected_status
+    assert decision.reason_codes == (expected_reason,)
 
 
 def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() -> None:
@@ -2198,7 +2295,7 @@ def test_equal_strength_conflicting_facts_are_ambiguous() -> None:
     assert decision.reason_codes == ("AMBIGUOUS_FACTS",)
 
 
-def test_equal_strength_same_value_facts_are_not_treated_as_conflicting() -> None:
+def test_equal_strength_same_value_distinct_candidates_are_ambiguous() -> None:
     first = make_fact(
         qname="us-gaap:AvailableForSaleSecuritiesCurrent",
         local_name="AvailableForSaleSecuritiesCurrent",
@@ -2212,9 +2309,10 @@ def test_equal_strength_same_value_facts_are_not_treated_as_conflicting() -> Non
 
     decision = resolve_concept(current_request(), [first, second])
 
-    assert decision.status == "accepted"
-    assert decision.value == 100.0
-    assert decision.source_concept == "us-gaap:AvailableForSaleSecuritiesCurrent"
+    assert decision.status == "rejected"
+    assert decision.confidence == 0.0
+    assert decision.mapping_method == "hard_gate_rejection"
+    assert decision.reason_codes == ("AMBIGUOUS_FACTS",)
 
 
 def test_canonical_candidate_outranks_conflicting_alias_before_ambiguity() -> None:

@@ -569,6 +569,7 @@
     "concept_reason_codes": {
       "PreferredStocksIncludingAdditionalPaidInCapitalParOrStatedValue": "PREFERRED_EQUITY_CARRYING_AMOUNT",
       "PreferredStockValue": "PREFERRED_EQUITY_CARRYING_AMOUNT",
+      "PreferredStockValueOutstanding": "PREFERRED_EQUITY_CARRYING_AMOUNT",
       "TemporaryEquityCarryingAmountAttributableToParent": "TEMPORARY_EQUITY_CARRYING_AMOUNT",
       "TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests": "TEMPORARY_EQUITY_CARRYING_AMOUNT"
     },
