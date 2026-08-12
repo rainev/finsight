@@ -124,6 +124,34 @@ def test_shadow_case_eligibility_withholds_unsupported_required_bridge_field() -
     assert "unsupported_required_bridge" in result["blocking_fields"]
 
 
+def test_shadow_case_eligibility_withholds_missing_supported_decision() -> None:
+    artifact = withheld_artifact(missing=["current_debt", "preferred_equity"])
+
+    result = shadow_case_eligibility(
+        artifact,
+        [decision("current_debt", confidence=1.0)],
+    )
+
+    assert result["data_quality_status"] == "fail"
+    assert result["data_quality_score"] is None
+    assert result["shadow_disposition"] == "withhold"
+    assert "preferred_equity" in result["blocking_fields"]
+
+
+def test_shadow_case_eligibility_withholds_malformed_accepted_decision() -> None:
+    artifact = withheld_artifact(missing=["current_debt"])
+
+    result = shadow_case_eligibility(
+        artifact,
+        [{"status": "accepted", "confidence": 1.0}],
+    )
+
+    assert result["data_quality_status"] == "fail"
+    assert result["data_quality_score"] is None
+    assert result["shadow_disposition"] == "withhold"
+    assert "unknown_field" in result["blocking_fields"]
+
+
 @pytest.mark.parametrize("status", ["review", "rejected", "unresolved"])
 def test_shadow_case_eligibility_withholds_nonaccepted_without_zero_evidence(
     status: str,

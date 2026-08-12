@@ -149,6 +149,24 @@ def shadow_case_eligibility(
     model_route_eligible = issuer.get("model_route_eligible") is True
     classification_confidence = issuer.get("classification_confidence")
     decision_list = [decision for decision in decisions if isinstance(decision, Mapping)]
+    requested_supported_fields = list(
+        dict.fromkeys(
+            field
+            for field in _bridge_missing_fields(artifact)
+            if field in SUPPORTED_STRUCTURAL_FIELDS
+        )
+    )
+    decision_fields = {
+        field
+        for decision in decision_list
+        if (field := _decision_field(decision)) is not None
+    }
+    missing_decision_fields = [
+        field for field in requested_supported_fields if field not in decision_fields
+    ]
+    malformed_decision = len(decision_list) != len(decisions) or any(
+        _decision_field(decision) is None for decision in decision_list
+    )
 
     # Status is the first gate. In particular, never treat a non-accepted
     # decision's zero confidence as evidence that can lower the case score.
@@ -158,6 +176,9 @@ def shadow_case_eligibility(
         if decision.get("status") != "accepted"
     ]
     blocking_fields = _blocking_field_names(artifact, decision_list)
+    blocking_fields.extend(missing_decision_fields)
+    if malformed_decision:
+        blocking_fields.append("unknown_field")
     unsupported_fields = [
         field
         for field in _bridge_missing_fields(artifact)
@@ -169,7 +190,13 @@ def shadow_case_eligibility(
     if not decision_list:
         data_quality_status = "fail"
         data_quality_score = None
-    elif nonaccepted or unsupported_fields or parser_failed:
+    elif (
+        nonaccepted
+        or missing_decision_fields
+        or malformed_decision
+        or unsupported_fields
+        or parser_failed
+    ):
         data_quality_status = "fail"
         data_quality_score = None
     else:
