@@ -2,11 +2,14 @@
 
 Date: 2026-08-11 (Asia/Manila)
 
-Status: in progress. Tasks 1–5 are implemented, independently reviewed, and committed. Task 6 and the final broad review remain.
+Status: Task 6 verified — user confirmation needed. Tasks 1–6 are implemented, reviewed,
+and committed; production promotion has not been approved.
 
 ## Resume instruction
 
-Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Resume the approved plan at Task 6; do not redo Tasks 1–5.
+Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Do not redo
+Tasks 1–6. Read `docs/plans/EVIDENCE.md`, then continue with a broader shadow-only corpus
+after user confirmation.
 
 Plan:
 
@@ -24,9 +27,10 @@ Branch:
 
 `feat/structural-xbrl-resolution`
 
-Latest independently reviewed implementation checkpoint:
+Latest independently reviewed implementation checkpoints:
 
-`ecb183d feat: evaluate bridge accounts in structural shadow`
+- `1544335 fix: harden structural bridge resolution`
+- `432e9db fix: classify structural relationship roles safely`
 
 ## Completed work
 
@@ -82,12 +86,18 @@ pytest -q tests/test_structural_xbrl_schema.py tests/test_concept_resolver.py te
 290 passed
 ```
 
-## Remaining sequence
+## Task 6 result
 
-1. Execute Task 6 using Sol High locally: full backend tests and offline replay of cached ANET, CRM, DELL, FTNT, and WDC filings.
-2. Record `docs/plans/EVIDENCE.md` and update the main structural-XBRL handoff.
-3. Run a broad final review from design commit `1d7de4f` through HEAD.
-4. End with GoodBehavior status `verified — your confirmation needed`; do not claim production publication approval.
+- Final focused structural suite: `314 passed`.
+- Final full backend suite: `457 passed, 3 skipped, 1 pre-existing unrelated failure`.
+- Offline Arelle replay: 5/5 parsed, zero parser failures, 4,421 facts.
+- Governed decisions: 13 accepted, 2 review, 11 rejected, 0 unresolved.
+- Final runtime evidence: `output/structural-xbrl-pilot/results-run23/`.
+- Durable evidence: `docs/plans/EVIDENCE.md`.
+- Publication effect remained `none_shadow_only`; no serving valuation artifact changed.
+- Final independent closure review: clean.
+
+The sole full-suite failure remains the unrelated missing `automated_review` public field.
 
 ## Copy-paste continuation prompt
 
@@ -98,9 +108,9 @@ Repository: `/Users/carlosconda/Desktop/Investing Application`
 Worktree: `/Users/carlosconda/Desktop/Investing Application/.worktrees/structural-xbrl-resolution`
 Handoff: `docs/superpowers/handoffs/2026-08-11-structural-bridge-resolvers-in-progress-handoff.md`
 Plan: `docs/superpowers/plans/2026-08-11-structural-bridge-account-resolvers.md`
-Reviewed implementation checkpoint: `ecb183d`
+Reviewed implementation checkpoints: `1544335`, `432e9db`
 
-Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Read the handoff and inspect the branch first. Do not redo Tasks 1–5; they are committed and independently reviewed. Resume at Task 6: run the full backend regression suite and replay the cached ANET, CRM, DELL, FTNT, and WDC filings offline against the approved accounting baseline. Record durable evidence, update the main handoff, and run the broad final review. Keep `publication_effect: none_shadow_only`; do not change production valuation inputs. Never stage `output/` or `.superpowers/`. Use `pytest` directly. End with `verified — your confirmation needed`, not production approval.
+Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Read this handoff and `docs/plans/EVIDENCE.md` first. Do not redo Tasks 1–6. The five-company structural bridge pilot is verified but not production-approved. The next safe step is a broader representative-company replay in `none_shadow_only` mode, followed by user review. Keep `OtherShortTermInvestments` review-grade, do not change production valuation inputs, and never stage `output/` or `.superpowers/`.
 ```
 
 If the branch is checked out in a fresh clone rather than this machine, create a normal worktree or work directly on the branch and supply the cached `output/structural-xbrl-pilot` evidence separately because `output/` is intentionally untracked.

@@ -132,14 +132,16 @@ merely because Arelle emits a semantically similar fact.
 
 ## Exact next step
 
-1. Add account-specific governed resolvers for debt, leases, preferred/temporary
-   equity, and NCI, beginning with the exact pilot facts above.
-2. Keep zero/absence and CRM commercial-paper decisions fail-closed until their
-   statement and dimensional rules are explicit.
-3. Test `OtherShortTermInvestments` across a broader company corpus before
-   deciding whether it becomes an accepted marketable-securities alias or stays
-   review-grade.
-4. Rerun the same five filings through those resolvers and compare every
-   accepted value against the filing-specific truth set.
-5. Keep all results shadow-only and request user confirmation before any
-   production promotion.
+Task 6 is complete at commits `1544335` and `432e9db`. The final offline replay is
+`output/structural-xbrl-pilot/results-run23/`; all five filings parsed and the approved
+debt, lease, preferred/temporary-equity, commercial-paper, and NCI baseline passed.
+
+Full evidence is recorded in `docs/plans/EVIDENCE.md`. Status is **verified — your
+confirmation needed**, not production-approved.
+
+1. Obtain user confirmation of the five-company result.
+2. Run a broader representative company corpus in `none_shadow_only` mode.
+3. Keep `OtherShortTermInvestments` review-grade until cross-company evidence supports
+   promotion.
+4. Address the unrelated `automated_review` public-artifact test in its own scope.
+5. Consider production integration only after broader shadow evidence is reviewed.
