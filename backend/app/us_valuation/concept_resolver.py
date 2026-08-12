@@ -62,6 +62,25 @@ def load_structural_rules() -> dict[str, Any]:
         or len(namespaces) != len(set(namespaces))
     ):
         raise ValueError("structural concept rules must contain a unique namespace allowlist")
+    preferred_equity = rules.get("preferred_equity")
+    if not isinstance(preferred_equity, Mapping):
+        raise ValueError("preferred_equity policy is required")
+    companion_concepts = preferred_equity.get(
+        "preferred_zero_value_conflict_companion_concepts"
+    )
+    if (
+        not isinstance(companion_concepts, list)
+        or not companion_concepts
+        or any(not isinstance(concept, str) or not concept.strip() for concept in companion_concepts)
+    ):
+        raise ValueError(
+            "preferred_zero_value_conflict_companion_concepts must be a nonempty list of nonempty strings"
+        )
+    conflict_reason = preferred_equity.get("preferred_zero_value_conflict_reason")
+    if not isinstance(conflict_reason, str) or not conflict_reason.strip():
+        raise ValueError(
+            "preferred_zero_value_conflict_reason must be a nonempty string"
+        )
     return rules
 
 
@@ -201,7 +220,10 @@ def _excluded_reason(
     if any(
         _contains_phrase(fact_text, phrase)
         or (
-            phrase.casefold() != "noncontrolling interest"
+            not (
+                phrase.casefold() == "noncontrolling interest"
+                and fact.qname == "us-gaap:PreferredStockValueOutstanding"
+            )
             and _contains_phrase(parent_text, phrase)
         )
         for phrase in excluded_phrases
@@ -755,6 +777,20 @@ def resolve_concept(
             reason_codes=("NO_CANDIDATE",),
         )
 
+    for candidate in sorted(candidates, key=_candidate_sort_key):
+        preferred_zero_conflict = _preferred_zero_conflict_reason(
+            candidate.fact, material_facts, metric_rules
+        )
+        if preferred_zero_conflict is not None:
+            return _decision(
+                request,
+                fact=candidate.fact,
+                status="rejected",
+                confidence=0.0,
+                mapping_method="hard_gate_rejection",
+                reason_codes=(preferred_zero_conflict,),
+            )
+
     deduplicated: dict[tuple[object, ...], _Candidate] = {}
     for candidate in sorted(candidates, key=_candidate_sort_key):
         deduplicated.setdefault(_fact_identity(candidate.fact), candidate)
@@ -787,19 +823,6 @@ def resolve_concept(
             reason_codes=("AMBIGUOUS_FACTS",),
         )
     selected = highest_rank[0]
-    preferred_zero_conflict = _preferred_zero_conflict_reason(
-        selected.fact, material_facts, metric_rules
-    )
-    if preferred_zero_conflict is not None:
-        return _decision(
-            request,
-            fact=selected.fact,
-            status="rejected",
-            confidence=0.0,
-            mapping_method="hard_gate_rejection",
-            reason_codes=(preferred_zero_conflict,),
-        )
-
     return _decision(
         request,
         fact=selected.fact,

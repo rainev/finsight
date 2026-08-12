@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 import pytest
 
 import app.us_valuation.concept_resolver as concept_resolver_module
@@ -345,6 +347,37 @@ def test_preferred_zero_conflict_requires_same_accession_and_period() -> None:
     assert mismatched_decision.value == 0
 
 
+def test_preferred_zero_conflict_cannot_be_bypassed_by_higher_ranked_alias() -> None:
+    decision = resolve_concept(
+        metric_request("preferred_equity"),
+        [
+            account_fact(
+                "us-gaap:PreferredStocksIncludingAdditionalPaidInCapitalParOrStatedValue",
+                value=0,
+                statement_roles=(),
+                presentation_parents=("us-gaap:StockholdersEquity",),
+            ),
+            account_fact(
+                "us-gaap:PreferredStockValueOutstanding",
+                value=0,
+                statement_roles=(),
+                presentation_parents=("us-gaap:StockholdersEquity",),
+            ),
+            account_fact(
+                "us-gaap:PreferredStockSharesOutstanding",
+                value=30_000_000,
+                unit="shares",
+            ),
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == (
+        "PREFERRED_ZERO_CONTRADICTED_BY_INSTRUMENT_EVIDENCE",
+    )
+
+
 def test_nvda_like_zero_preferred_value_remains_accepted_without_companion_evidence() -> None:
     decision = resolve_concept(
         metric_request("preferred_equity"),
@@ -405,29 +438,74 @@ def test_rtx_like_redeemable_nci_temporary_equity_is_not_preferred_equity() -> N
     assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
 
 
+def test_parent_only_nci_wording_rejects_preferred_equity_extension() -> None:
+    fact = account_fact(
+        "issuer:TemporaryPreferredEquityCarryingAmount",
+        value=100,
+        labels=(("standard", "Temporary equity carrying amount"),),
+        documentation="Temporary preferred equity carrying amount.",
+        statement_roles=("balance_sheet",),
+        presentation_parents=(
+            "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterestAbstract",
+        ),
+        calculation_parents=(
+            "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterestAbstract",
+        ),
+        relationships=(
+            StructuralRelationship(
+                arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                linkrole="https://example.test/role/BalanceSheet",
+                from_concept=(
+                    "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterestAbstract"
+                ),
+                to_concept="issuer:TemporaryPreferredEquityCarryingAmount",
+                order=1.0,
+                preferred_label=None,
+                calculation_weight=None,
+                statement_role="balance_sheet",
+            ),
+        ),
+    )
+
+    decision = resolve_concept(metric_request("preferred_equity"), [fact])
+
+    assert decision.status == "rejected"
+    assert decision.value is None
+    assert decision.reason_codes == ("EXCLUDED_ECONOMIC_CLASS",)
+
+
 def test_wdc_like_parent_attributable_temporary_equity_remains_preferred_equity() -> None:
+    carrying_amount = account_fact(
+        "us-gaap:TemporaryEquityCarryingAmountAttributableToParent",
+        value=0,
+        labels=(
+            (
+                "standard",
+                "Temporary Equity, Carrying Amount, Attributable to Parent",
+            ),
+        ),
+        documentation="Temporary equity carrying amount attributable to parent.",
+        statement_roles=(),
+        presentation_parents=("us-gaap:TemporaryEquity",),
+        calculation_parents=("us-gaap:TemporaryEquity",),
+    )
+    liquidation_preference = account_fact(
+        "wdc:TemporaryEquityLiquidationPreference",
+        value=265_000_000,
+        documentation="Temporary equity liquidation preference.",
+        statement_roles=(),
+        presentation_parents=("us-gaap:TemporaryEquity",),
+        calculation_parents=("us-gaap:TemporaryEquity",),
+    )
+
     decision = resolve_concept(
         metric_request("preferred_equity"),
-        [
-            account_fact(
-                "us-gaap:TemporaryEquityCarryingAmountAttributableToParent",
-                value=265_000_000,
-                labels=(
-                    (
-                        "standard",
-                        "Temporary Equity, Carrying Amount, Attributable to Parent",
-                    ),
-                ),
-                documentation="Temporary equity carrying amount attributable to parent.",
-                statement_roles=(),
-                presentation_parents=("us-gaap:TemporaryEquity",),
-                calculation_parents=("us-gaap:TemporaryEquity",),
-            )
-        ],
+        [liquidation_preference, carrying_amount],
     )
 
     assert decision.status == "accepted"
-    assert decision.value == 265_000_000
+    assert decision.source_concept == carrying_amount.qname
+    assert decision.value == 0
     assert "TEMPORARY_EQUITY_CARRYING_AMOUNT" in decision.reason_codes
 
 
@@ -1888,6 +1966,35 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "marketable securities",
         "fair value",
     ]
+
+
+def test_preferred_zero_conflict_companions_must_be_nonempty_strings(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: object
+) -> None:
+    rules = load_structural_rules()
+    rules["preferred_equity"]["preferred_zero_value_conflict_companion_concepts"] = [
+        "us-gaap:PreferredStockSharesOutstanding",
+        "",
+    ]
+    rules_path = tmp_path / "structural_concept_rules.json"  # type: ignore[operator]
+    rules_path.write_text(json.dumps(rules), encoding="utf-8")
+    monkeypatch.setattr(concept_resolver_module, "_RULES_PATH", rules_path)
+
+    with pytest.raises(ValueError, match="preferred_zero_value_conflict_companion_concepts"):
+        concept_resolver_module.load_structural_rules()
+
+
+def test_preferred_zero_conflict_reason_must_be_nonempty_string(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: object
+) -> None:
+    rules = load_structural_rules()
+    rules["preferred_equity"]["preferred_zero_value_conflict_reason"] = ""
+    rules_path = tmp_path / "structural_concept_rules.json"  # type: ignore[operator]
+    rules_path.write_text(json.dumps(rules), encoding="utf-8")
+    monkeypatch.setattr(concept_resolver_module, "_RULES_PATH", rules_path)
+
+    with pytest.raises(ValueError, match="preferred_zero_value_conflict_reason"):
+        concept_resolver_module.load_structural_rules()
     assert {rules["version"]} == {"US-XBRL-RESOLVER-1.1"}
     assert "excluded_economic_phrases" not in rules
     assert tuple(rules["official_us_gaap_namespaces"]) == OFFICIAL_NAMESPACES
