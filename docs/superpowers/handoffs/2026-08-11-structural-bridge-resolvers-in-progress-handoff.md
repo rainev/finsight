@@ -1,15 +1,17 @@
 # Structural bridge-account resolvers — in-progress handoff
 
-Date: 2026-08-11 (Asia/Manila)
+Date: 2026-08-13 (Asia/Manila)
 
-Status: Task 6 verified — user confirmation needed. Tasks 1–6 are implemented, reviewed,
-and committed; production promotion has not been approved.
+Status: Current continuation Task 3 verified — user confirmation needed. The historical
+Tasks 1–6 and the current broader-corpus Tasks 1–3 are implemented, reviewed, and committed;
+production promotion has not been approved.
 
 ## Resume instruction
 
-Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Do not redo
-Tasks 1–6. Read `docs/plans/EVIDENCE.md`, then continue with a broader shadow-only corpus
-after user confirmation.
+Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Do not redo the
+five-company pilot, the completed 20-company baseline, or current-continuation Tasks 1–3.
+Read `docs/plans/EVIDENCE.md`, then continue at Task 4: run the full supported 104-company
+shadow corpus after user confirmation. Production promotion remains unapproved.
 
 Plan:
 
@@ -100,7 +102,7 @@ pytest -q tests/test_structural_xbrl_schema.py tests/test_concept_resolver.py te
 
 The sole full-suite failure remains the unrelated missing `automated_review` public field.
 
-## Copy-paste continuation prompt
+## Historical continuation prompt
 
 ```text
 Resume FinSight structural XBRL work from the saved handoff on branch `feat/structural-xbrl-resolution`.
@@ -111,7 +113,7 @@ Handoff: `docs/superpowers/handoffs/2026-08-11-structural-bridge-resolvers-in-pr
 Plan: `docs/superpowers/plans/2026-08-11-structural-bridge-account-resolvers.md`
 Reviewed implementation checkpoints: `1544335`, `432e9db`, `8155326`
 
-Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Read this handoff and `docs/plans/EVIDENCE.md` first. Do not redo Tasks 1–6. The five-company structural bridge pilot is verified but not production-approved. The next safe step is a broader representative-company replay in `none_shadow_only` mode, followed by user review. Keep `OtherShortTermInvestments` review-grade, do not change production valuation inputs, and never stage `output/` or `.superpowers/`.
+Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Read this handoff and `docs/plans/EVIDENCE.md` first. Do not redo Tasks 1–6. The five-company structural bridge pilot and the broader replay are documented below; production is not approved. For the current continuation, use the Task 4 prompt below. Keep `OtherShortTermInvestments` review-grade, do not change production valuation inputs, and never stage `output/` or `.superpowers/`.
 ```
 
 If the branch is checked out in a fresh clone rather than this machine, create a normal worktree or work directly on the branch and supply the cached `output/structural-xbrl-pilot` evidence separately because `output/` is intentionally untracked.
@@ -122,7 +124,7 @@ If the branch is checked out in a fresh clone rather than this machine, create a
 - Preserve deterministic policy/accounting logic; no LLM primary mapping.
 - Absence is not zero.
 - Production valuation inputs must remain unchanged during this phase.
-- `output/` is intentionally untracked and contains pilot cache/evidence; never stage it.
+- `output/` is intentionally untracked and contains pilot and broader-corpus cache/evidence; never stage it.
 - `.superpowers/` is local SDD scratch evidence; do not stage it.
 - Use `pytest` directly. The shell's `python -m pytest` path may not contain pytest.
 - Subagents cannot reliably write the shared Git index; the controller stages and commits only verified files.
@@ -145,3 +147,64 @@ Must remain non-accepted:
 - DELL preferred share-count zero.
 - FTNT narrative-only NCI zero.
 - WDC temporary-equity liquidation preference of 265.
+
+## Current continuation — broader-corpus Task 3 result
+
+The current continuation used plan
+`docs/superpowers/plans/2026-08-13-structural-xbrl-broader-corpus.md`. Task 3 is verified and
+recorded in `docs/plans/EVIDENCE.md`; its runtime evidence remains untracked under
+`output/structural-xbrl-broad-corpus/`.
+
+### Verified replay summary
+
+- Focused structural suite: `330 passed in 6.34s` using the six-file command recorded in
+  `docs/plans/EVIDENCE.md`.
+- Representative corpus: 20 discovered, 20 eligible, 20 parsed by Arelle, 0 skipped, and
+  0 parser failures.
+- Decision totals: 1 accepted, 6 review, 71 rejected, and 19 unresolved, for 97 decisions.
+- Case totals: 0 `publish_candidate`, 0 `lower_confidence_candidate`, and 20 `withhold`.
+- All 20 cases were model-route eligible, but all had `data_quality_status: fail`,
+  `data_quality_score: null`, and `publication_effect: none_shadow_only`.
+- The only newly accepted deterministic mapping was NVDA `preferred_equity = 0` from
+  `us-gaap:PreferredStockValueOutstanding` at confidence 0.98. The six retained review
+  values remain diagnostic candidates only, never valuation inputs.
+- SBUX's unsupported required `cash` gap was explicitly skipped and remained a blocker.
+- The baseline-to-post-fix decision population conserved all 97 keys with no duplicates or
+  missing keys. The five-company current-code regression remained 5/5 parsed with zero
+  failures, unchanged fact counts, 13 accepted values unchanged, and zero new acceptances.
+- No production inputs, public serving data, or valuation artifacts changed.
+
+### Objective conclusion
+
+Arelle performed well as the parser: it parsed every staged file. The deterministic resolver
+also recovered one previously unaccepted NVDA preferred-equity fact. However, the replay did
+not make any case publishable because every company retained material data-quality blockers.
+The remaining challenge is accounting-context resolution and coverage, not file parsing.
+
+## Next step — current continuation Task 4
+
+Build an auditable, untracked manifest for the full supported 104-company boundary, then run
+the cached/network shadow replay under SEC fair-access controls. Reconcile discovered,
+eligible, skipped, and parser-failed counts; decision outcomes by field and archetype; every
+new recurring review mapping; and case-level dispositions. Preserve fail-closed behavior and
+`publication_effect: none_shadow_only`. Run the focused and full regression suites, document
+the results, and do not promote production until the evidence supports it.
+
+## Current copy-paste continuation prompt
+
+```text
+Resume FinSight structural XBRL work from the current continuation handoff.
+
+Worktree: /Users/carlosconda/Desktop/Investing Application/.worktrees/structural-xbrl-resolution
+Branch: feat/structural-xbrl-resolution
+Handoff: docs/superpowers/handoffs/2026-08-11-structural-bridge-resolvers-in-progress-handoff.md
+Evidence: docs/plans/EVIDENCE.md
+Plan: docs/superpowers/plans/2026-08-13-structural-xbrl-broader-corpus.md
+
+Use FinSight Efficiency Mode, GoodBehavior, and subagent-driven development. Task 3 is
+verified; do not redo the five-company pilot, the 20-company baseline, or the post-fix
+20-company replay. Start at Task 4: build and run the full supported 104-company shadow corpus.
+Keep Arelle and the deterministic fail-closed resolver, preserve review candidates as
+non-valuation diagnostics, keep publication_effect exactly none_shadow_only, do not change
+production inputs, and never stage output/ or .superpowers/.
+```
