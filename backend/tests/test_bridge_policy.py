@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 from dataclasses import FrozenInstanceError, replace
+from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -10,14 +12,17 @@ from app.us_valuation.bridge_policy import (
     BridgeResolution,
     reconcile_bridge,
 )
+from app.us_valuation.classification import classify_issuer
 from app.us_valuation.field_availability import (
     FieldAvailability,
     UncertaintyRange,
 )
+from app.us_valuation.xbrl import CompanyFactsNormalizer
 
 
 ACCESSION = "0000000000-26-000001"
 PERIOD_END = "2026-06-30"
+FIXTURES = Path(__file__).parent / "fixtures" / "us"
 DEBT_COMPONENTS = (
     "commercial_paper",
     "current_debt",
@@ -26,6 +31,22 @@ DEBT_COMPONENTS = (
     "noncurrent_debt",
 )
 LEASE_COMPONENTS = ("finance_lease_current", "finance_lease_noncurrent")
+
+
+def load_json(name: str) -> dict[str, Any]:
+    return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
+
+
+def filing_records(submission: dict[str, Any]) -> list[dict[str, Any]]:
+    recent = submission["filings"]["recent"]
+    return [
+        {
+            key: values[index]
+            for key, values in recent.items()
+            if isinstance(values, list) and index < len(values)
+        }
+        for index in range(len(recent["accessionNumber"]))
+    ]
 
 
 def point(
@@ -173,6 +194,47 @@ def test_complete_bridge_reconciles_point_values() -> None:
     assert resolution.bridge_adjustment.midpoint == 64.0
 
 
+def test_real_msft_normalizer_availability_reconciles_complete_bridge() -> None:
+    submission = load_json("msft-submissions.json")
+    classification = classify_issuer(submission)
+    financials = CompanyFactsNormalizer(
+        load_json("msft-companyfacts.json"),
+        fiscal_year_end=submission["fiscalYearEnd"],
+        filing_records=filing_records(submission),
+    ).normalize(
+        annual_count=5,
+        verified_zero_bridge_fields=classification["verified_zero_bridge_fields"],
+        governed_bridge_fields=classification["governed_bridge_fields"],
+    )
+    balance = financials["balance_sheet"]
+    availability = {
+        field: FieldAvailability.from_dict(payload)
+        for field, payload in balance["availability"].items()
+    }
+
+    resolution = reconcile_bridge(
+        availability,
+        fully_diluted_shares=balance["fully_diluted_shares_proxy"],
+    )
+
+    assert balance["bridge_complete"] is True
+    assert balance["bridge_missing_fields"] == []
+    assert resolution.complete is True
+    assert resolution.can_value is True
+    assert resolution.blocking_fields == ()
+    assert resolution.cash_and_investments == BridgeRange(
+        low=95_653_000_000.0,
+        midpoint=95_653_000_000.0,
+        high=95_653_000_000.0,
+    )
+    assert resolution.total_debt == BridgeRange(
+        low=42_881_000_000.0,
+        midpoint=42_881_000_000.0,
+        high=42_881_000_000.0,
+    )
+    assert resolution.bridge_adjustment.midpoint == 52_772_000_000.0
+
+
 def test_aggregate_finance_lease_replaces_missing_splits_once() -> None:
     availability = complete_availability(
         finance_lease_current=None,
@@ -225,6 +287,24 @@ def test_one_split_above_lease_total_high_endpoint_conflicts() -> None:
         8.0,
         9.0,
         covered_fields=LEASE_COMPONENTS,
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "FINANCE_LEASE_AGGREGATE_CONFLICT" in resolution.reason_codes
+
+
+def test_bounded_split_low_above_lease_total_high_endpoint_conflicts() -> None:
+    availability = complete_availability(
+        finance_lease_current=None,
+        finance_lease_noncurrent=None,
+        finance_lease_total=9.0,
+    )
+    availability["finance_lease_current"] = bounded(
+        "finance_lease_current",
+        11.0,
+        12.0,
     )
 
     resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
@@ -309,6 +389,24 @@ def test_conflicting_lease_total_and_splits_fail_closed() -> None:
     assert "FINANCE_LEASE_AGGREGATE_CONFLICT" in resolution.reason_codes
 
 
+def test_lease_total_does_not_cover_a_conflicting_split() -> None:
+    availability = complete_availability(
+        finance_lease_current=None,
+        finance_lease_noncurrent=None,
+        finance_lease_total=10.0,
+    )
+    availability["finance_lease_current"] = unavailable(
+        "finance_lease_current",
+        "conflict",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert resolution.blocking_fields == ("finance_lease_current",)
+    assert "TEST_CONFLICT" in resolution.reason_codes
+
+
 def test_conflicting_total_debt_aggregate_and_components_fail_closed() -> None:
     availability = with_total_debt(complete_availability(), 75.0)
 
@@ -316,6 +414,17 @@ def test_conflicting_total_debt_aggregate_and_components_fail_closed() -> None:
 
     assert resolution.can_value is False
     assert "TOTAL_DEBT_AGGREGATE_CONFLICT" in resolution.reason_codes
+
+
+def test_total_debt_aggregate_does_not_cover_a_conflicting_component() -> None:
+    availability = with_total_debt(complete_availability(), 60.0)
+    availability["current_debt"] = unavailable("current_debt", "conflict")
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert resolution.blocking_fields == ("current_debt",)
+    assert "TEST_CONFLICT" in resolution.reason_codes
 
 
 def test_total_debt_aggregate_requires_explicit_complete_component_coverage() -> None:
@@ -382,20 +491,153 @@ def test_stale_or_unknown_point_and_proxy_records_are_blockers(
     assert resolution.blocking_fields == ("current_debt",)
 
 
-@pytest.mark.parametrize("missing_source_field", ["source_kind", "evidence_class"])
-def test_current_production_records_without_complete_source_metadata_block(
-    missing_source_field: str,
+@pytest.mark.parametrize("optional_source_field", ["source_kind", "evidence_class"])
+def test_ordinary_bridge_records_allow_optional_source_metadata(
+    optional_source_field: str,
 ) -> None:
     availability = complete_availability()
     availability["current_debt"] = replace(
         point("current_debt", 10.0),
-        **{missing_source_field: None},
+        **{optional_source_field: None},
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.complete is True
+    assert resolution.can_value is True
+    assert resolution.blocking_fields == ()
+
+
+def test_finance_lease_total_allows_optional_source_metadata() -> None:
+    availability = complete_availability(
+        finance_lease_current=None,
+        finance_lease_noncurrent=None,
+        finance_lease_total=10.0,
+    )
+    availability["finance_lease_total"] = replace(
+        availability["finance_lease_total"],
+        source_kind=None,
+        evidence_class=None,
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.complete is True
+    assert resolution.can_value is True
+    assert resolution.total_debt.midpoint == 60.0
+
+
+@pytest.mark.parametrize("required_source_field", ["source_kind", "evidence_class"])
+def test_total_debt_aggregate_requires_extended_source_metadata(
+    required_source_field: str,
+) -> None:
+    availability = complete_availability(
+        commercial_paper=None,
+        current_debt=None,
+        noncurrent_debt=None,
+        finance_lease_current=None,
+        finance_lease_noncurrent=None,
+        finance_lease_total=None,
+    )
+    with_total_debt(availability, 60.0)
+    availability["total_interest_bearing_debt"] = replace(
+        availability["total_interest_bearing_debt"],
+        **{required_source_field: None},
     )
 
     resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
 
     assert resolution.can_value is False
-    assert resolution.blocking_fields == ("current_debt",)
+    assert "total_interest_bearing_debt" in resolution.blocking_fields
+    assert "BRIDGE_EVIDENCE_SOURCE_INCOMPLETE" in resolution.reason_codes
+
+
+@pytest.mark.parametrize("field", ["cash", "current_debt"])
+def test_not_applicable_is_not_usable_for_cash_or_debt(field: str) -> None:
+    availability = complete_availability()
+    availability[field] = replace(
+        point(field, 0.0),
+        state="not_applicable",
+        reason_code="TEST_NOT_APPLICABLE",
+        evidence_class="not_applicable",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert resolution.blocking_fields == (field,)
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "cash",
+        "marketable_securities_current",
+        "marketable_securities_noncurrent",
+        "commercial_paper",
+        "current_debt",
+        "noncurrent_debt",
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+        "preferred_equity",
+        "noncontrolling_interests",
+    ],
+)
+def test_current_proxy_is_not_usable_for_bridge_components(field: str) -> None:
+    availability = complete_availability()
+    availability[field] = replace(
+        availability[field],
+        state="proxy",
+        reason_code="TEST_PROXY",
+        evidence_class="proxy",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert resolution.blocking_fields == (field,)
+
+
+def test_current_proxy_is_not_usable_for_finance_lease_total() -> None:
+    availability = complete_availability(
+        finance_lease_current=None,
+        finance_lease_noncurrent=None,
+        finance_lease_total=10.0,
+    )
+    availability["finance_lease_total"] = replace(
+        availability["finance_lease_total"],
+        state="proxy",
+        reason_code="TEST_PROXY",
+        evidence_class="proxy",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "finance_lease_total" in resolution.blocking_fields
+
+
+def test_current_proxy_is_not_usable_for_total_debt_aggregate() -> None:
+    availability = complete_availability(
+        commercial_paper=None,
+        current_debt=None,
+        noncurrent_debt=None,
+        finance_lease_current=None,
+        finance_lease_noncurrent=None,
+        finance_lease_total=None,
+    )
+    with_total_debt(availability, 60.0)
+    availability["total_interest_bearing_debt"] = replace(
+        availability["total_interest_bearing_debt"],
+        state="proxy",
+        reason_code="TEST_PROXY",
+        evidence_class="proxy",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "total_interest_bearing_debt" in resolution.blocking_fields
 
 
 @pytest.mark.parametrize(
@@ -412,13 +654,14 @@ def test_unavailable_current_debt_states_block(state: str) -> None:
     assert resolution.blocking_fields == ("current_debt",)
 
 
-def test_current_not_applicable_preferred_equity_is_a_point_zero() -> None:
+@pytest.mark.parametrize("field", ["preferred_equity", "noncontrolling_interests"])
+def test_current_not_applicable_claim_is_a_point_zero(field: str) -> None:
     availability = complete_availability()
-    availability["preferred_equity"] = FieldAvailability(
-        field="preferred_equity",
+    availability[field] = FieldAvailability(
+        field=field,
         value=0.0,
         state="not_applicable",
-        reason_code="CURRENT_EQUITY_PRESENTATION_HAS_NO_PREFERRED_CLAIM",
+        reason_code="CURRENT_EQUITY_PRESENTATION_HAS_NO_CLAIM",
         period_end=PERIOD_END,
         source_accession=ACCESSION,
         source_kind="filing_equity_presentation",
@@ -429,7 +672,7 @@ def test_current_not_applicable_preferred_equity_is_a_point_zero() -> None:
     resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
 
     assert resolution.complete is True
-    assert resolution.preferred_equity.midpoint == 0.0
+    assert getattr(resolution, field).midpoint == 0.0
 
 
 def test_bounded_debt_endpoint_signs_reduce_the_equity_bridge() -> None:
@@ -506,6 +749,35 @@ def test_bridge_range_and_resolution_round_trip_through_json() -> None:
         resolution.as_balance_sheet_fields()["bridge_precheck"]
         == resolution.as_dict()
     )
+
+
+def test_resolution_constructor_rejects_inconsistent_bridge_adjustment() -> None:
+    resolution = reconcile_bridge(
+        complete_availability(),
+        fully_diluted_shares=10.0,
+    )
+
+    with pytest.raises(ValueError, match="bridge_adjustment"):
+        replace(
+            resolution,
+            bridge_adjustment=BridgeRange(low=0.0, midpoint=0.0, high=0.0),
+        )
+
+
+def test_resolution_from_dict_rejects_inconsistent_bridge_adjustment() -> None:
+    resolution = reconcile_bridge(
+        complete_availability(),
+        fully_diluted_shares=10.0,
+    )
+    serialized = resolution.as_dict()
+    serialized["bridge_adjustment"] = {
+        "low": 0.0,
+        "midpoint": 0.0,
+        "high": 0.0,
+    }
+
+    with pytest.raises(ValueError, match="bridge_adjustment"):
+        BridgeResolution.from_dict(serialized)
 
 
 @pytest.mark.parametrize(

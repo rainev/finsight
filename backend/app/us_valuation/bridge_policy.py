@@ -12,15 +12,10 @@ from .field_availability import FieldAvailability
 
 POLICY_VERSION = "US-BRIDGE-POLICY-1.0"
 
-_POINT_STATES = frozenset(
-    {
-        "reported",
-        "explicit_zero",
-        "evidence_backed_zero",
-        "not_applicable",
-        "proxy",
-    }
+_ACCOUNT_POINT_STATES = frozenset(
+    {"reported", "explicit_zero", "evidence_backed_zero"}
 )
+_CLAIM_POINT_STATES = _ACCOUNT_POINT_STATES | {"not_applicable"}
 _OPTIONAL_ABSENT_STATES = frozenset({"not_disclosed", "unresolved"})
 _LEASE_COMPONENTS = frozenset(
     {"finance_lease_current", "finance_lease_noncurrent"}
@@ -92,6 +87,34 @@ class BridgeRange:
         )
 
 
+def _bridge_adjustment_range(
+    cash_and_investments: BridgeRange,
+    total_debt: BridgeRange,
+    preferred_equity: BridgeRange,
+    noncontrolling_interests: BridgeRange,
+) -> BridgeRange:
+    return BridgeRange(
+        low=(
+            cash_and_investments.low
+            - total_debt.high
+            - preferred_equity.high
+            - noncontrolling_interests.high
+        ),
+        midpoint=(
+            cash_and_investments.midpoint
+            - total_debt.midpoint
+            - preferred_equity.midpoint
+            - noncontrolling_interests.midpoint
+        ),
+        high=(
+            cash_and_investments.high
+            - total_debt.low
+            - preferred_equity.low
+            - noncontrolling_interests.low
+        ),
+    )
+
+
 @dataclass(frozen=True)
 class BridgeResolution:
     complete: bool
@@ -147,6 +170,18 @@ class BridgeResolution:
         ):
             if not isinstance(getattr(self, field), BridgeRange):
                 raise ValueError(f"{field} must be a BridgeRange")
+
+        expected_adjustment = _bridge_adjustment_range(
+            self.cash_and_investments,
+            self.total_debt,
+            self.preferred_equity,
+            self.noncontrolling_interests,
+        )
+        if self.bridge_adjustment != expected_adjustment:
+            raise ValueError(
+                "bridge_adjustment must equal cash_and_investments minus "
+                "total_debt, preferred_equity, and noncontrolling_interests"
+            )
 
         _require_finite_number(self.fully_diluted_shares, "fully_diluted_shares")
         if self.fully_diluted_shares <= 0:
@@ -255,62 +290,90 @@ class _ResolutionContext:
 _ZERO_RANGE = BridgeRange(low=0.0, midpoint=0.0, high=0.0)
 
 
-def _source_metadata_is_complete(record: FieldAvailability) -> bool:
-    return all(
-        isinstance(value, str) and bool(value.strip())
-        for value in (
-            record.source_accession,
-            record.source_kind,
-            record.evidence_class,
-        )
+def _is_nonempty_text(value: object) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _source_metadata_is_complete(
+    record: FieldAvailability,
+    *,
+    require_extended_source: bool,
+) -> bool:
+    if not _is_nonempty_text(record.source_accession):
+        return False
+    if not require_extended_source:
+        return True
+    return _is_nonempty_text(record.source_kind) and _is_nonempty_text(
+        record.evidence_class
     )
 
 
 def _record_range(record: FieldAvailability) -> BridgeRange:
-    if record.state in _POINT_STATES:
-        assert record.value is not None
+    if record.state == "bounded_unresolved":
+        assert record.uncertainty is not None
         return BridgeRange(
-            low=record.value,
-            midpoint=record.value,
-            high=record.value,
+            low=record.uncertainty.low,
+            midpoint=(record.uncertainty.low + record.uncertainty.high) / 2,
+            high=record.uncertainty.high,
         )
-    assert record.uncertainty is not None
+    assert record.value is not None
     return BridgeRange(
-        low=record.uncertainty.low,
-        midpoint=(record.uncertainty.low + record.uncertainty.high) / 2,
-        high=record.uncertainty.high,
+        low=record.value,
+        midpoint=record.value,
+        high=record.value,
     )
+
+
+def _record_unusable_reason(
+    record: object,
+    *,
+    field: str,
+    allowed_point_states: frozenset[str],
+    allow_bounded: bool,
+    require_extended_source: bool,
+) -> str | None:
+    if not isinstance(record, FieldAvailability):
+        return "BRIDGE_FIELD_MISSING_OR_INVALID"
+    if record.field != field:
+        return "BRIDGE_FIELD_IDENTITY_MISMATCH"
+    if record.state not in allowed_point_states and not (
+        allow_bounded and record.state == "bounded_unresolved"
+    ):
+        return record.reason_code or "BRIDGE_EVIDENCE_UNUSABLE"
+    if record.authority != "production":
+        return "BRIDGE_EVIDENCE_NOT_PRODUCTION"
+    if record.freshness != "current":
+        return "BRIDGE_EVIDENCE_NOT_CURRENT"
+    if not _source_metadata_is_complete(
+        record,
+        require_extended_source=require_extended_source,
+    ):
+        return "BRIDGE_EVIDENCE_SOURCE_INCOMPLETE"
+    return None
 
 
 def _resolve_record(
     record: object,
     *,
     field: str,
+    allowed_point_states: frozenset[str],
     allow_bounded: bool,
     context: _ResolutionContext,
     mark_bounded: bool = True,
+    require_extended_source: bool = False,
 ) -> _ResolvedValue | None:
-    if not isinstance(record, FieldAvailability):
-        context.block(field, "BRIDGE_FIELD_MISSING_OR_INVALID")
-        return None
-    if record.field != field:
-        context.block(field, "BRIDGE_FIELD_IDENTITY_MISMATCH")
-        return None
-    if record.state not in _POINT_STATES and not (
-        allow_bounded and record.state == "bounded_unresolved"
-    ):
-        context.block(field, record.reason_code or "BRIDGE_EVIDENCE_UNUSABLE")
-        return None
-    if record.authority != "production":
-        context.block(field, "BRIDGE_EVIDENCE_NOT_PRODUCTION")
-        return None
-    if record.freshness != "current":
-        context.block(field, "BRIDGE_EVIDENCE_NOT_CURRENT")
-        return None
-    if not _source_metadata_is_complete(record):
-        context.block(field, "BRIDGE_EVIDENCE_SOURCE_INCOMPLETE")
+    unusable_reason = _record_unusable_reason(
+        record,
+        field=field,
+        allowed_point_states=allowed_point_states,
+        allow_bounded=allow_bounded,
+        require_extended_source=require_extended_source,
+    )
+    if unusable_reason is not None:
+        context.block(field, unusable_reason)
         return None
 
+    assert isinstance(record, FieldAvailability)
     is_bounded = record.state == "bounded_unresolved"
     if is_bounded and mark_bounded:
         context.bound(field, record.reason_code)
@@ -321,12 +384,14 @@ def _resolve_required(
     availability: Mapping[str, FieldAvailability],
     field: str,
     *,
+    allowed_point_states: frozenset[str],
     allow_bounded: bool,
     context: _ResolutionContext,
 ) -> BridgeRange:
     resolved = _resolve_record(
         availability.get(field),
         field=field,
+        allowed_point_states=allowed_point_states,
         allow_bounded=allow_bounded,
         context=context,
     )
@@ -340,6 +405,7 @@ def _aggregate_candidate(
     required_coverage: frozenset[str],
     incomplete_coverage_reason: str,
     context: _ResolutionContext,
+    require_extended_source: bool = False,
 ) -> _AggregateCandidate | None:
     raw_record = availability.get(field)
     if raw_record is None:
@@ -356,15 +422,27 @@ def _aggregate_candidate(
     resolved = _resolve_record(
         raw_record,
         field=field,
+        allowed_point_states=_ACCOUNT_POINT_STATES,
         allow_bounded=True,
         context=context,
         mark_bounded=False,
+        require_extended_source=require_extended_source,
     )
     if resolved is None:
         return None
     if frozenset(raw_record.covered_fields) != required_coverage:
         context.block(field, incomplete_coverage_reason)
         return None
+    for covered_field in required_coverage:
+        covered_record = availability.get(covered_field)
+        if (
+            isinstance(covered_record, FieldAvailability)
+            and covered_record.state == "conflict"
+        ):
+            context.block(
+                covered_field,
+                covered_record.reason_code or "BRIDGE_EVIDENCE_CONFLICT",
+            )
     return _AggregateCandidate(
         record=raw_record,
         value_range=resolved.value_range,
@@ -372,21 +450,37 @@ def _aggregate_candidate(
     )
 
 
+def _record_range_if_usable(
+    availability: Mapping[str, FieldAvailability],
+    field: str,
+    *,
+    allowed_point_states: frozenset[str],
+    allow_bounded: bool,
+) -> BridgeRange | None:
+    record = availability.get(field)
+    if _record_unusable_reason(
+        record,
+        field=field,
+        allowed_point_states=allowed_point_states,
+        allow_bounded=allow_bounded,
+        require_extended_source=False,
+    ) is not None:
+        return None
+    assert isinstance(record, FieldAvailability)
+    return _record_range(record)
+
+
 def _point_value_if_usable(
     availability: Mapping[str, FieldAvailability],
     field: str,
 ) -> float | None:
-    record = availability.get(field)
-    if (
-        not isinstance(record, FieldAvailability)
-        or record.field != field
-        or record.state not in _POINT_STATES
-        or record.authority != "production"
-        or record.freshness != "current"
-        or not _source_metadata_is_complete(record)
-    ):
-        return None
-    return record.value
+    value_range = _record_range_if_usable(
+        availability,
+        field,
+        allowed_point_states=_ACCOUNT_POINT_STATES,
+        allow_bounded=False,
+    )
+    return value_range.midpoint if value_range is not None else None
 
 
 def _tolerance(first: float, second: float) -> float:
@@ -405,21 +499,28 @@ def _corroborate_lease_candidate(
     candidate: _AggregateCandidate,
     context: _ResolutionContext,
 ) -> None:
-    split_values = tuple(
-        value
-        for field in ("finance_lease_current", "finance_lease_noncurrent")
-        if (value := _point_value_if_usable(availability, field)) is not None
-    )
-    if len(split_values) == 2:
-        if not _point_matches_range(sum(split_values), candidate.value_range):
+    split_values: list[float] = []
+    for field in ("finance_lease_current", "finance_lease_noncurrent"):
+        split_range = _record_range_if_usable(
+            availability,
+            field,
+            allowed_point_states=_ACCOUNT_POINT_STATES,
+            allow_bounded=True,
+        )
+        if split_range is None:
+            continue
+        if split_range.low > candidate.value_range.high + _tolerance(
+            split_range.low, candidate.value_range.high
+        ):
             context.block(
                 "finance_lease_total", "FINANCE_LEASE_AGGREGATE_CONFLICT"
             )
-    elif len(split_values) == 1:
-        known_split = split_values[0]
-        if known_split > candidate.value_range.high + _tolerance(
-            known_split, candidate.value_range.high
-        ):
+        split_record = availability[field]
+        if split_record.state in _ACCOUNT_POINT_STATES:
+            split_values.append(split_range.midpoint)
+
+    if len(split_values) == 2:
+        if not _point_matches_range(sum(split_values), candidate.value_range):
             context.block(
                 "finance_lease_total", "FINANCE_LEASE_AGGREGATE_CONFLICT"
             )
@@ -480,6 +581,7 @@ def _resolve_total_debt(
         required_coverage=_DEBT_COMPONENTS,
         incomplete_coverage_reason="TOTAL_DEBT_AGGREGATE_INCOMPLETE_COVERAGE",
         context=context,
+        require_extended_source=True,
     )
     if debt_candidate is not None:
         complete_detail = _complete_debt_detail_point(
@@ -501,6 +603,7 @@ def _resolve_total_debt(
         _resolve_required(
             availability,
             field,
+            allowed_point_states=_ACCOUNT_POINT_STATES,
             allow_bounded=True,
             context=context,
         )
@@ -515,12 +618,14 @@ def _resolve_total_debt(
             _resolve_required(
                 availability,
                 "finance_lease_current",
+                allowed_point_states=_ACCOUNT_POINT_STATES,
                 allow_bounded=True,
                 context=context,
             ),
             _resolve_required(
                 availability,
                 "finance_lease_noncurrent",
+                allowed_point_states=_ACCOUNT_POINT_STATES,
                 allow_bounded=True,
                 context=context,
             ),
@@ -545,18 +650,21 @@ def reconcile_bridge(
         _resolve_required(
             availability,
             "cash",
+            allowed_point_states=_ACCOUNT_POINT_STATES,
             allow_bounded=False,
             context=context,
         ),
         _resolve_required(
             availability,
             "marketable_securities_current",
+            allowed_point_states=_ACCOUNT_POINT_STATES,
             allow_bounded=True,
             context=context,
         ),
         _resolve_required(
             availability,
             "marketable_securities_noncurrent",
+            allowed_point_states=_ACCOUNT_POINT_STATES,
             allow_bounded=True,
             context=context,
         ),
@@ -565,35 +673,23 @@ def reconcile_bridge(
     preferred_equity = _resolve_required(
         availability,
         "preferred_equity",
+        allowed_point_states=_CLAIM_POINT_STATES,
         allow_bounded=True,
         context=context,
     )
     noncontrolling_interests = _resolve_required(
         availability,
         "noncontrolling_interests",
+        allowed_point_states=_CLAIM_POINT_STATES,
         allow_bounded=True,
         context=context,
     )
 
-    bridge_adjustment = BridgeRange(
-        low=(
-            cash_and_investments.low
-            - total_debt.high
-            - preferred_equity.high
-            - noncontrolling_interests.high
-        ),
-        midpoint=(
-            cash_and_investments.midpoint
-            - total_debt.midpoint
-            - preferred_equity.midpoint
-            - noncontrolling_interests.midpoint
-        ),
-        high=(
-            cash_and_investments.high
-            - total_debt.low
-            - preferred_equity.low
-            - noncontrolling_interests.low
-        ),
+    bridge_adjustment = _bridge_adjustment_range(
+        cash_and_investments,
+        total_debt,
+        preferred_equity,
+        noncontrolling_interests,
     )
 
     blocking_fields = tuple(sorted(context.blocking_fields))
