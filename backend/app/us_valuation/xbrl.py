@@ -9,6 +9,7 @@ from importlib.resources import files
 from statistics import median
 from typing import Any, Iterable, Mapping
 
+from .field_availability import availability_from_normalized_field
 from .filing_evidence import governed_bridge_fields_from_evidence
 
 
@@ -1027,6 +1028,21 @@ class CompanyFactsNormalizer:
                 "state": "weighted_average_diluted_proxy",
             }
             shares_from_weighted_average = True
+        availability = {
+            field: availability_from_normalized_field(
+                field=field,
+                value=item["value"],
+                source=item["source"],
+                legacy_state=item["state"],
+                period_end=ttm_end,
+                covered_fields=(
+                    ("finance_lease_current", "finance_lease_noncurrent")
+                    if field == "finance_lease_total"
+                    else ()
+                ),
+            )
+            for field, item in balance_fields.items()
+        }
         incremental_dilution = (
             balance_fields["incremental_dilutive_shares"]["value"] or 0.0
         )
@@ -1160,6 +1176,9 @@ class CompanyFactsNormalizer:
                 },
                 "field_states": {
                     field: item["state"] for field, item in balance_fields.items()
+                },
+                "availability": {
+                    field: item.as_dict() for field, item in availability.items()
                 },
                 "bridge_complete": not missing_bridge,
                 "bridge_missing_fields": missing_bridge,

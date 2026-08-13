@@ -36,6 +36,16 @@ _NONPOINT_STATES = frozenset({"not_disclosed", "unresolved", "stale", "conflict"
 _PRODUCTION_SOURCE_STATES = _POINT_STATES | _ZERO_STATES | _BOUNDED_STATES
 
 
+LEGACY_STATE_MAP: dict[str, AvailabilityState] = {
+    "reported": "reported",
+    "governed_filing_fact": "reported",
+    "policy_verified_zero": "evidence_backed_zero",
+    "weighted_average_diluted_proxy": "proxy",
+    "verification_stale": "stale",
+    "missing": "unresolved",
+}
+
+
 def _require_finite_number(value: object, field: str) -> None:
     if isinstance(value, bool) or not isinstance(value, Real):
         raise ValueError(f"{field} must be a finite number")
@@ -221,3 +231,74 @@ class FieldAvailability:
                 "mapping_version", "US-FIELD-AVAILABILITY-1.0"
             ),
         )
+
+
+def _reason_token(value: str) -> str:
+    normalized = "".join(
+        character if character.isalnum() else "_" for character in value.upper()
+    )
+    return "_".join(part for part in normalized.split("_") if part)
+
+
+def availability_from_normalized_field(
+    *,
+    field: str,
+    value: float | None,
+    source: Mapping[str, Any] | None,
+    legacy_state: str,
+    period_end: str,
+    covered_fields: tuple[str, ...] = (),
+) -> FieldAvailability:
+    """Project a legacy normalized field into its compatibility availability."""
+
+    try:
+        state = LEGACY_STATE_MAP[legacy_state]
+    except KeyError as error:
+        raise ValueError(f"unrecognized legacy field state: {legacy_state}") from error
+
+    source_record = source or {}
+    raw_evidence_class = source_record.get("evidence_class") or source_record.get(
+        "value_status"
+    )
+    evidence_class = (
+        str(raw_evidence_class) if raw_evidence_class is not None else None
+    )
+    if legacy_state == "governed_filing_fact" and value == 0:
+        state = (
+            "explicit_zero"
+            if evidence_class == "reported_zero"
+            else "evidence_backed_zero"
+        )
+
+    raw_accession = source_record.get("source_accession") or source_record.get(
+        "accession"
+    )
+    source_accession = str(raw_accession) if raw_accession is not None else None
+    raw_source_kind = source_record.get("source_kind")
+    source_kind = str(raw_source_kind) if raw_source_kind is not None else None
+    freshness: Freshness = (
+        "stale"
+        if state == "stale"
+        else "unknown"
+        if state == "unresolved"
+        else "current"
+    )
+    reason_code = "_".join(
+        (
+            _reason_token(state),
+            _reason_token(evidence_class or "unspecified"),
+        )
+    )
+
+    return FieldAvailability(
+        field=field,
+        value=value,
+        state=state,
+        reason_code=reason_code,
+        period_end=period_end,
+        source_accession=source_accession,
+        source_kind=source_kind,
+        evidence_class=evidence_class,
+        freshness=freshness,
+        covered_fields=covered_fields,
+    )
