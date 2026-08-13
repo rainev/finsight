@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import FrozenInstanceError, replace
+from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
@@ -204,6 +205,29 @@ def bounded_resolution(
 def exact_one_percent_resolution() -> BridgeResolution:
     zero = BridgeRange(low=0.0, midpoint=0.0, high=0.0)
     adjustment = BridgeRange(low=0.0, midpoint=0.5, high=1.0)
+    return BridgeResolution(
+        complete=False,
+        can_value=True,
+        missing_fields=("marketable_securities_noncurrent",),
+        blocking_fields=(),
+        bounded_fields=("marketable_securities_noncurrent",),
+        cash_and_investments=adjustment,
+        total_debt=zero,
+        preferred_equity=zero,
+        noncontrolling_interests=zero,
+        bridge_adjustment=adjustment,
+        fully_diluted_shares=1.0,
+        reason_codes=(),
+    )
+
+
+def bounded_adjustment_resolution(low: float, high: float) -> BridgeResolution:
+    zero = BridgeRange(low=0.0, midpoint=0.0, high=0.0)
+    adjustment = BridgeRange(
+        low=low,
+        midpoint=(low + high) / 2,
+        high=high,
+    )
     return BridgeResolution(
         complete=False,
         can_value=True,
@@ -948,6 +972,36 @@ def test_exact_one_percent_joint_spread_is_bounded_review() -> None:
     )
 
 
+def test_exact_one_percent_with_float_noise_is_bounded_review() -> None:
+    assessment = assess_bridge_materiality(
+        bounded_adjustment_resolution(2.985, 3.015),
+        enterprise_value=0.0,
+    )
+    serialized = json.loads(json.dumps(assessment.as_dict()))
+
+    assert assessment.intrinsic_value_range == BridgeRange(
+        low=2.985,
+        midpoint=3.0,
+        high=3.015,
+    )
+    assert assessment.spread_ratio == 0.010000000000000083
+    assert assessment.decision == "bounded_review"
+    assert assessment.usable is True
+    assert BridgeAssessment.from_dict(serialized) == assessment
+
+
+def test_spread_materially_above_float_noise_is_withheld() -> None:
+    assessment = assess_bridge_materiality(
+        bounded_adjustment_resolution(2.985, 3.015000003),
+        enterprise_value=0.0,
+    )
+
+    assert assessment.spread_ratio is not None
+    assert assessment.spread_ratio > 0.01
+    assert assessment.decision == "withheld"
+    assert assessment.usable is False
+
+
 def test_joint_spread_above_one_percent_is_withheld() -> None:
     resolution = bounded_resolution(
         securities=(0.0, 6.0),
@@ -1066,6 +1120,7 @@ def test_bounded_bridge_with_unavailable_base_ev_fails_closed(
         float("nan"),
         float("inf"),
         float("-inf"),
+        10**1000,
         0.010000001,
     ],
 )
@@ -1091,6 +1146,29 @@ def test_caller_can_tighten_but_not_loosen_materiality_limit() -> None:
     assert assessment.spread_ratio == pytest.approx(0.01)
     assert assessment.decision == "withheld"
     assert assessment.usable is False
+
+
+def test_fraction_spread_limit_is_rejected_and_float_limit_round_trips() -> None:
+    with pytest.raises(ValueError, match="spread_limit"):
+        assess_bridge_materiality(
+            exact_one_percent_resolution(),
+            enterprise_value=99.5,
+            spread_limit=Fraction(1, 100),  # type: ignore[arg-type]
+        )
+
+    assessment = assess_bridge_materiality(
+        exact_one_percent_resolution(),
+        enterprise_value=99.5,
+        spread_limit=0.005,
+    )
+    serialized = json.loads(json.dumps(assessment.as_dict()))
+    mutated = assessment.as_dict()
+    mutated["spread_limit"] = Fraction(1, 200)
+
+    assert type(serialized["spread_limit"]) is float
+    assert BridgeAssessment.from_dict(serialized) == assessment
+    with pytest.raises(ValueError, match="spread_limit"):
+        BridgeAssessment.from_dict(mutated)
 
 
 def test_assessment_is_frozen_and_round_trips_through_json() -> None:
@@ -1165,4 +1243,24 @@ def test_assessment_from_dict_rejects_mutated_range_arithmetic() -> None:
     serialized["intrinsic_value_range"]["high"] = 100.6
 
     with pytest.raises(ValueError, match="intrinsic_value_range|spread_ratio"):
+        BridgeAssessment.from_dict(serialized)
+
+
+def test_assessment_from_dict_requires_computable_positive_spread() -> None:
+    assessment = assess_bridge_materiality(
+        exact_one_percent_resolution(),
+        enterprise_value=99.5,
+    )
+    serialized = assessment.as_dict()
+    serialized.update(
+        {
+            "decision": "withheld",
+            "usable": False,
+            "spread_ratio": None,
+            "reason_codes": ["NONFINITE_INTRINSIC_VALUE_RESULT"],
+            "warning": None,
+        }
+    )
+
+    with pytest.raises(ValueError, match="spread_ratio"):
         BridgeAssessment.from_dict(serialized)

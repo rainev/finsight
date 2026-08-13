@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from math import isfinite
+from math import isclose, isfinite
 from numbers import Real
 from typing import Any, Literal, Mapping
 
@@ -12,6 +12,7 @@ from .field_availability import FieldAvailability
 
 POLICY_VERSION = "US-BRIDGE-POLICY-1.0"
 _MAX_SPREAD_LIMIT = 0.01
+_SPREAD_BOUNDARY_RELATIVE_TOLERANCE = 1e-14
 _BASE_ENTERPRISE_VALUE_UNAVAILABLE = "BASE_ENTERPRISE_VALUE_UNAVAILABLE"
 _NONFINITE_INTRINSIC_VALUE_RESULT = "NONFINITE_INTRINSIC_VALUE_RESULT"
 _NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT = (
@@ -271,12 +272,29 @@ def _bounded_review_warning(spread_ratio: float) -> str:
     )
 
 
-def _require_spread_limit(value: object) -> None:
-    _require_finite_number(value, "spread_limit")
-    if value <= 0 or value > _MAX_SPREAD_LIMIT:
+def _require_spread_limit(value: object) -> float:
+    if isinstance(value, bool) or not isinstance(value, (float, int)):
+        raise ValueError("spread_limit must be a finite float or int")
+    try:
+        normalized = float(value)
+    except (OverflowError, ValueError) as error:
+        raise ValueError("spread_limit must be a finite float or int") from error
+    if not isfinite(normalized):
+        raise ValueError("spread_limit must be a finite float or int")
+    if normalized <= 0 or normalized > _MAX_SPREAD_LIMIT:
         raise ValueError(
             "spread_limit must be positive and no greater than 0.01"
         )
+    return normalized
+
+
+def _spread_is_within_limit(spread_ratio: float, spread_limit: float) -> bool:
+    return spread_ratio <= spread_limit or isclose(
+        spread_ratio,
+        spread_limit,
+        rel_tol=_SPREAD_BOUNDARY_RELATIVE_TOLERANCE,
+        abs_tol=0.0,
+    )
 
 
 @dataclass(frozen=True)
@@ -319,7 +337,8 @@ class BridgeAssessment:
             _require_finite_number(self.spread_ratio, "spread_ratio")
             if self.spread_ratio < 0:
                 raise ValueError("spread_ratio must be nonnegative")
-        _require_spread_limit(self.spread_limit)
+        spread_limit = _require_spread_limit(self.spread_limit)
+        object.__setattr__(self, "spread_limit", spread_limit)
         if self.warning is not None and (
             not isinstance(self.warning, str) or not self.warning.strip()
         ):
@@ -360,6 +379,11 @@ class BridgeAssessment:
             raise ValueError(
                 "spread_ratio must match the intrinsic_value_range arithmetic"
             )
+        if expected_spread is not None and self.spread_ratio is None:
+            raise ValueError(
+                "spread_ratio is required when intrinsic_value_range has a "
+                "finite positive computable spread"
+            )
 
         if self.decision == "complete":
             if not self.usable or blocking_fields or bounded_fields:
@@ -382,7 +406,9 @@ class BridgeAssessment:
                 or value_range is None
                 or self.spread_ratio is None
                 or value_range.midpoint <= 0
-                or self.spread_ratio > self.spread_limit
+                or not _spread_is_within_limit(
+                    self.spread_ratio, self.spread_limit
+                )
             ):
                 raise ValueError(
                     "bounded_review requires a usable, positive, in-limit "
@@ -430,7 +456,7 @@ class BridgeAssessment:
                     "missing spread_ratio requires a non-finite result reason"
                 )
             return
-        if self.spread_ratio <= self.spread_limit:
+        if _spread_is_within_limit(self.spread_ratio, self.spread_limit):
             raise ValueError("withheld spread_ratio must exceed spread_limit")
 
     def as_dict(self) -> dict[str, Any]:
@@ -942,7 +968,7 @@ def assess_bridge_materiality(
 
     if not isinstance(resolution, BridgeResolution):
         raise ValueError("resolution must be a BridgeResolution")
-    _require_spread_limit(spread_limit)
+    spread_limit = _require_spread_limit(spread_limit)
 
     common = {
         "spread_limit": spread_limit,
@@ -1063,7 +1089,7 @@ def assess_bridge_materiality(
             **common,
         )
 
-    if spread_ratio <= spread_limit:
+    if _spread_is_within_limit(spread_ratio, spread_limit):
         return BridgeAssessment(
             decision="bounded_review",
             usable=True,
