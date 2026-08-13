@@ -294,6 +294,22 @@ def _apply_bridge_publication_ceiling(
         row["publication_state"] = "withheld"
 
 
+def _store_bridge_assessment(
+    *,
+    balance_sheet: dict[str, Any],
+    resolution: BridgeResolution,
+    enterprise_value: float | None,
+) -> BridgeAssessment:
+    assessment = assess_bridge_materiality(
+        resolution,
+        enterprise_value=enterprise_value,
+    )
+    balance_sheet["bridge_uncertainty"] = assessment.as_dict()
+    balance_sheet["bridge_usable"] = assessment.usable
+    balance_sheet["bridge_decision"] = assessment.decision
+    return assessment
+
+
 def _withheld_segment_evidence_result(
     *,
     classification: dict[str, Any],
@@ -559,13 +575,11 @@ def build_us_valuation(
         bridge_resolution.fully_diluted_shares
     )
     if not bridge_resolution.can_value:
-        bridge_assessment = assess_bridge_materiality(
-            bridge_resolution,
+        _store_bridge_assessment(
+            balance_sheet=balance_sheet,
+            resolution=bridge_resolution,
             enterprise_value=None,
         )
-        balance_sheet["bridge_uncertainty"] = bridge_assessment.as_dict()
-        balance_sheet["bridge_usable"] = bridge_assessment.usable
-        balance_sheet["bridge_decision"] = bridge_assessment.decision
         blocking = ", ".join(bridge_resolution.blocking_fields)
         return _withheld_segment_evidence_result(
             classification=classification,
@@ -582,6 +596,11 @@ def build_us_valuation(
                 ),
             ),
         )
+    _store_bridge_assessment(
+        balance_sheet=balance_sheet,
+        resolution=bridge_resolution,
+        enterprise_value=None,
+    )
     issuer_evidence = load_issuer_forecast_evidence(classification["cik"])
     if classification["requires_segment_forecast"] and not issuer_evidence:
         return _withheld_segment_evidence_result(
@@ -618,13 +637,11 @@ def build_us_valuation(
         discount_rate=discount_rate,
         financials=financials,
     )
-    bridge_assessment = assess_bridge_materiality(
-        bridge_resolution,
+    bridge_assessment = _store_bridge_assessment(
+        balance_sheet=balance_sheet,
+        resolution=bridge_resolution,
         enterprise_value=base.get("enterprise_value"),
     )
-    balance_sheet["bridge_uncertainty"] = bridge_assessment.as_dict()
-    balance_sheet["bridge_usable"] = bridge_assessment.usable
-    balance_sheet["bridge_decision"] = bridge_assessment.decision
     epv = earnings_power_value(
         assumptions=forecast_assumptions,
         discount_rate=discount_rate,

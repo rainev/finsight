@@ -338,6 +338,48 @@ def assert_bridge_warning_placement(
     assert all("warnings" not in row for row in result["sensitivities"])
 
 
+def assert_bounded_early_forecast_withholding(
+    result: dict[str, Any],
+    *,
+    bounded_field: str,
+    native_error: str,
+) -> None:
+    balance = result["financials"]["balance_sheet"]
+    assessment = balance["bridge_uncertainty"]
+
+    assert balance["bridge_precheck"]["complete"] is False
+    assert balance["bridge_precheck"]["can_value"] is True
+    assert balance["bridge_complete"] is False
+    assert balance["bridge_can_value"] is True
+    assert balance["bridge_missing_fields"] == [bounded_field]
+    assert balance["bridge_blocking_fields"] == []
+    assert balance["bridge_bounded_fields"] == [bounded_field]
+    assert balance["cash_and_nonoperating_investments"] == (
+        AAPL_CASH_AND_INVESTMENTS
+    )
+    assert balance["total_interest_bearing_debt"] == AAPL_DEBT
+    assert balance["preferred_equity"] == 0.0
+    assert balance["noncontrolling_interests"] == 0.0
+    assert balance["fully_diluted_shares_proxy"] == AAPL_SHARES
+    assert balance["bridge_decision"] == "withheld"
+    assert balance["bridge_usable"] is False
+    assert assessment["decision"] == "withheld"
+    assert assessment["usable"] is False
+    assert assessment["intrinsic_value_range"] is None
+    assert assessment["spread_ratio"] is None
+    assert assessment["blocking_fields"] == []
+    assert assessment["bounded_fields"] == [bounded_field]
+    assert "BASE_ENTERPRISE_VALUE_UNAVAILABLE" in assessment["reason_codes"]
+    assert result["models"]["fcff_dcf"]["publication_state"] == "withheld"
+    assert result["models"]["epv"]["publication_state"] == "withheld"
+    assert native_error in " ".join(result["models"]["fcff_dcf"]["errors"])
+    assert native_error in " ".join(result["review"]["errors"])
+    assert result["review"]["publication_state"] == "withheld"
+    assert result["forecast_quality"]["status"] == "withheld"
+    assert result["scenarios"] == {}
+    assert result["sensitivities"] == []
+
+
 def install_invalid_base_assumptions(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -569,6 +611,135 @@ def test_validated_precheck_canonicalizes_all_model_and_compatibility_aliases(
         "midpoint"
     ] == pytest.approx(AAPL_BASE_INTRINSIC_VALUE)
     assert publication_states(result) == ["review_required"] * 14
+
+
+def test_bounded_precheck_without_required_segment_evidence_gets_final_assessment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    bounded_field = "marketable_securities_noncurrent"
+    install_bounded_aapl_normalizer(
+        monkeypatch,
+        field=bounded_field,
+        low=78_087_500_000.0,
+        high=78_088_500_000.0,
+    )
+    original_classify_issuer = valuation_pipeline.classify_issuer
+
+    def require_segment_forecast(submissions: dict[str, Any]) -> dict[str, Any]:
+        classification = original_classify_issuer(submissions)
+        return {**classification, "requires_segment_forecast": True}
+
+    def unexpected_derive(*args: Any, **kwargs: Any) -> Any:
+        pytest.fail("forecast assumptions derived without required issuer evidence")
+
+    monkeypatch.setattr(
+        valuation_pipeline,
+        "classify_issuer",
+        require_segment_forecast,
+    )
+    monkeypatch.setattr(
+        valuation_pipeline,
+        "load_issuer_forecast_evidence",
+        lambda _cik: None,
+    )
+    monkeypatch.setattr(
+        valuation_pipeline,
+        "derive_forecast_assumptions",
+        unexpected_derive,
+    )
+
+    result = build_aapl()
+
+    assert_bounded_early_forecast_withholding(
+        result,
+        bounded_field=bounded_field,
+        native_error=(
+            "A segment forecast is required but no governed issuer evidence is "
+            "registered"
+        ),
+    )
+
+
+def test_bounded_precheck_forecast_derivation_failure_gets_final_assessment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    bounded_field = "marketable_securities_noncurrent"
+    install_bounded_aapl_normalizer(
+        monkeypatch,
+        field=bounded_field,
+        low=78_087_500_000.0,
+        high=78_088_500_000.0,
+    )
+    native_error = "TEST_GOVERNED_FORECAST_EVIDENCE_UNAVAILABLE"
+
+    def unavailable_forecast(
+        financials: dict[str, Any],
+        *args: Any,
+        **kwargs: Any,
+    ) -> Any:
+        raise valuation_pipeline.ForecastEvidenceUnavailable(
+            period_end=financials["ttm"]["period_end"],
+            available_periods=[],
+            reason=native_error,
+        )
+
+    monkeypatch.setattr(
+        valuation_pipeline,
+        "derive_forecast_assumptions",
+        unavailable_forecast,
+    )
+
+    result = build_aapl()
+
+    assert_bounded_early_forecast_withholding(
+        result,
+        bounded_field=bounded_field,
+        native_error=native_error,
+    )
+
+
+def test_complete_bridge_forecast_derivation_failure_stays_complete_and_usable(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    native_error = "TEST_COMPLETE_BRIDGE_FORECAST_EVIDENCE_UNAVAILABLE"
+
+    def unavailable_forecast(
+        financials: dict[str, Any],
+        *args: Any,
+        **kwargs: Any,
+    ) -> Any:
+        raise valuation_pipeline.ForecastEvidenceUnavailable(
+            period_end=financials["ttm"]["period_end"],
+            available_periods=[],
+            reason=native_error,
+        )
+
+    monkeypatch.setattr(
+        valuation_pipeline,
+        "derive_forecast_assumptions",
+        unavailable_forecast,
+    )
+
+    result = build_aapl()
+    balance = result["financials"]["balance_sheet"]
+    assessment = balance["bridge_uncertainty"]
+
+    assert balance["bridge_precheck"]["complete"] is True
+    assert balance["bridge_precheck"]["can_value"] is True
+    assert balance["bridge_complete"] is True
+    assert balance["bridge_can_value"] is True
+    assert balance["bridge_missing_fields"] == []
+    assert balance["bridge_blocking_fields"] == []
+    assert balance["bridge_bounded_fields"] == []
+    assert balance["bridge_decision"] == "complete"
+    assert balance["bridge_usable"] is True
+    assert assessment["decision"] == "complete"
+    assert assessment["usable"] is True
+    assert assessment["intrinsic_value_range"] is None
+    assert assessment["spread_ratio"] == 0.0
+    assert "BASE_ENTERPRISE_VALUE_UNAVAILABLE" not in assessment["reason_codes"]
+    assert result["review"]["publication_state"] == "withheld"
+    assert native_error in " ".join(result["review"]["errors"])
 
 
 def test_bounded_asset_midpoint_runs_and_caps_every_publication_sink(
