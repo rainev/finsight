@@ -5,7 +5,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import isfinite
 from numbers import Real
-from typing import Any, Literal, Mapping, get_args
+from typing import TYPE_CHECKING, Any, Literal, Mapping, get_args
+
+if TYPE_CHECKING:
+    from .structural_xbrl import ResolutionDecision
 
 
 AvailabilityState = Literal[
@@ -238,6 +241,128 @@ def _reason_token(value: str) -> str:
         character if character.isalnum() else "_" for character in value.upper()
     )
     return "_".join(part for part in normalized.split("_") if part)
+
+
+def _nonempty_text_or_none(value: object) -> str | None:
+    return value if isinstance(value, str) and value.strip() else None
+
+
+def _finite_float_or_none(value: object) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, Real):
+        return None
+    try:
+        normalized = float(value)
+    except (OverflowError, TypeError, ValueError):
+        return None
+    return normalized if isfinite(normalized) else None
+
+
+def _structural_reason_code(
+    decision: ResolutionDecision, *, accepted_is_valid: bool
+) -> str:
+    if decision.status == "accepted" and not accepted_is_valid:
+        return "STRUCTURAL_SHADOW_INVALID_ACCEPTED_DECISION"
+
+    status = (
+        _reason_token(decision.status)
+        if isinstance(decision.status, str)
+        else "INVALID_STATUS"
+    )
+    reasons = decision.reason_codes
+    reason_tokens = (
+        tuple(_reason_token(reason) for reason in reasons)
+        if isinstance(reasons, tuple)
+        and all(isinstance(reason, str) and reason.strip() for reason in reasons)
+        else ()
+    )
+    return "_".join(("STRUCTURAL", "SHADOW", status, *reason_tokens))
+
+
+def _accepted_structural_value(decision: ResolutionDecision) -> float | None:
+    if decision.status != "accepted":
+        return None
+
+    value = _finite_float_or_none(decision.value)
+    required_text = (
+        decision.normalized_concept,
+        decision.period,
+        decision.source_accession,
+        decision.source_concept,
+        decision.unit,
+        decision.mapping_method,
+        decision.form,
+        decision.mapping_version,
+    )
+    if value is None or any(
+        _nonempty_text_or_none(item) is None for item in required_text
+    ):
+        return None
+    if not isinstance(decision.reason_codes, tuple) or not decision.reason_codes:
+        return None
+    if any(
+        _nonempty_text_or_none(reason) is None for reason in decision.reason_codes
+    ):
+        return None
+
+    confidence = _finite_float_or_none(decision.confidence)
+    if confidence is None or not 0 <= confidence <= 1:
+        return None
+    evidence = decision.evidence
+    if evidence is None:
+        return None
+    try:
+        evidence.validate_complete()
+        fact = evidence.fact
+        evidence_value = _finite_float_or_none(fact.value)
+    except (AttributeError, TypeError, ValueError):
+        return None
+    if evidence_value is None:
+        return None
+    if (
+        fact.qname != decision.source_concept
+        or evidence_value != value
+        or fact.unit != decision.unit
+        or fact.period_end != decision.period
+        or fact.source_accession != decision.source_accession
+        or fact.filing_form != decision.form
+        or evidence.mapping_version != decision.mapping_version
+        or evidence.confidence != decision.confidence
+        or evidence.reason_codes != decision.reason_codes
+    ):
+        return None
+    return value
+
+
+def availability_from_resolution_decision(
+    decision: ResolutionDecision,
+) -> FieldAvailability:
+    """Project a structural resolution into a non-authoritative diagnostic."""
+
+    accepted_value = _accepted_structural_value(decision)
+    accepted_is_valid = decision.status == "accepted" and accepted_value is not None
+    source_accession = _nonempty_text_or_none(decision.source_accession)
+    return FieldAvailability(
+        field=(
+            decision.normalized_concept
+            if _nonempty_text_or_none(decision.normalized_concept) is not None
+            else "unknown_structural_field"
+        ),
+        value=accepted_value if accepted_is_valid else None,
+        state="reported" if accepted_is_valid else "unresolved",
+        reason_code=_structural_reason_code(
+            decision, accepted_is_valid=accepted_is_valid
+        ),
+        period_end=(
+            decision.period
+            if _nonempty_text_or_none(decision.period) is not None
+            else ""
+        ),
+        source_accession=source_accession,
+        source_kind="structural_xbrl",
+        evidence_class=_nonempty_text_or_none(decision.mapping_method),
+        freshness="current" if accepted_is_valid else "unknown",
+        authority="shadow",
+    )
 
 
 def availability_from_normalized_field(

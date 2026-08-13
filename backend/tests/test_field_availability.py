@@ -8,6 +8,13 @@ import pytest
 from app.us_valuation.field_availability import (
     FieldAvailability,
     UncertaintyRange,
+    availability_from_resolution_decision,
+)
+from app.us_valuation.structural_xbrl import (
+    ResolutionDecision,
+    ResolutionEvidence,
+    StructuralFact,
+    StructuralRelationship,
 )
 
 
@@ -309,3 +316,200 @@ def test_schema_records_are_frozen_and_hashable() -> None:
         item.value = 1.0  # type: ignore[misc]
     with pytest.raises(FrozenInstanceError):
         uncertainty.low = 1.0  # type: ignore[misc]
+
+
+def _structural_fact() -> StructuralFact:
+    return StructuralFact(
+        qname="issuer:LiquidInvestmentSecuritiesCurrent",
+        namespace="https://issuer.example/2026",
+        local_name="LiquidInvestmentSecuritiesCurrent",
+        labels=(("standard", "Liquid investment securities"),),
+        documentation="Current liquid investment securities.",
+        value=42_500_000.0,
+        unit="USD",
+        period_start=None,
+        period_end="2026-06-30",
+        context_id="CurrentQuarterInstant",
+        dimensions=(),
+        statement_roles=("balance_sheet",),
+        presentation_parents=("us-gaap:AssetsCurrent",),
+        calculation_parents=("us-gaap:AssetsCurrent",),
+        calculation_children=(),
+        definition_parents=("us-gaap:ShortTermInvestments",),
+        definition_children=(),
+        source_accession="0000000000-26-000001",
+        decimals="0",
+        scale=None,
+        sign=None,
+        filing_form="10-Q",
+        filing_metadata=(("primary_document", "issuer-20260630.htm"),),
+        presentation_ancestry=("us-gaap:AssetsCurrent",),
+        relationships=(
+            StructuralRelationship(
+                arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+                linkrole="https://issuer.example/role/BalanceSheet",
+                from_concept="us-gaap:AssetsCurrent",
+                to_concept="issuer:LiquidInvestmentSecuritiesCurrent",
+                order=1.0,
+                preferred_label=None,
+                calculation_weight=None,
+            ),
+        ),
+    )
+
+
+def _structural_decision(
+    status: str = "accepted",
+) -> ResolutionDecision:
+    fact = _structural_fact()
+    reason_codes = (
+        ("CURRENT_ASSET_PRESENTATION_PARENT",)
+        if status == "accepted"
+        else ("INSUFFICIENT_STRUCTURAL_SUPPORT",)
+        if status == "review"
+        else ("NO_ELIGIBLE_FACT",)
+    )
+    confidence = (
+        0.96 if status == "accepted" else 0.75 if status == "review" else 0.0
+    )
+    evidence = (
+        ResolutionEvidence.from_fact(
+            fact,
+            mapping_version="US-XBRL-RESOLVER-1.1",
+            confidence=confidence,
+            reason_codes=reason_codes,
+        )
+        if status in {"accepted", "review"}
+        else None
+    )
+    return ResolutionDecision(
+        status=status,  # type: ignore[arg-type]
+        normalized_concept="marketable_securities_current",
+        source_concept=(fact.qname if status in {"accepted", "review"} else None),
+        value=(fact.value if status in {"accepted", "review"} else None),
+        unit=(fact.unit if status in {"accepted", "review"} else None),
+        period=fact.period_end,
+        source_accession=fact.source_accession,
+        confidence=confidence,
+        mapping_method=(
+            "extension_structural_match"
+            if status == "accepted"
+            else "insufficient_structural_support"
+            if status == "review"
+            else "no_eligible_fact"
+        ),
+        reason_codes=reason_codes,
+        form="10-Q",
+        evidence=evidence,
+    )
+
+
+def test_accepted_structural_decision_is_reported_with_shadow_authority() -> None:
+    availability = availability_from_resolution_decision(_structural_decision())
+
+    assert availability.state == "reported"
+    assert availability.value == 42_500_000.0
+    assert availability.authority == "shadow"
+    assert availability.source_kind == "structural_xbrl"
+    assert availability.evidence_class == "extension_structural_match"
+    assert availability.reason_code == (
+        "STRUCTURAL_SHADOW_ACCEPTED_CURRENT_ASSET_PRESENTATION_PARENT"
+    )
+
+
+@pytest.mark.parametrize("status", ["review", "rejected", "unresolved"])
+def test_nonaccepted_structural_decisions_never_carry_a_bridge_point(
+    status: str,
+) -> None:
+    availability = availability_from_resolution_decision(
+        _structural_decision(status)
+    )
+
+    assert availability.state == "unresolved"
+    assert availability.value is None
+    assert availability.freshness == "unknown"
+    assert availability.authority == "shadow"
+    assert availability.reason_code.startswith(
+        f"STRUCTURAL_SHADOW_{status.upper()}_"
+    )
+
+
+@pytest.mark.parametrize(
+    "invalid_value",
+    [True, float("nan"), float("inf"), float("-inf"), 10**400],
+)
+def test_invalid_accepted_structural_values_fail_closed(
+    invalid_value: object,
+) -> None:
+    decision = _structural_decision()
+    object.__setattr__(decision, "value", invalid_value)
+
+    availability = availability_from_resolution_decision(decision)
+
+    assert availability.state == "unresolved"
+    assert availability.value is None
+    assert availability.authority == "shadow"
+    assert availability.reason_code == "STRUCTURAL_SHADOW_INVALID_ACCEPTED_DECISION"
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("period", ""),
+        ("source_accession", ""),
+        ("source_concept", None),
+        ("mapping_method", ""),
+        ("reason_codes", ()),
+        ("evidence", None),
+    ],
+)
+def test_accepted_structural_decision_requires_complete_metadata(
+    field: str,
+    value: object,
+) -> None:
+    decision = _structural_decision()
+    object.__setattr__(decision, field, value)
+
+    availability = availability_from_resolution_decision(decision)
+
+    assert availability.state == "unresolved"
+    assert availability.value is None
+    assert availability.authority == "shadow"
+    assert availability.reason_code == "STRUCTURAL_SHADOW_INVALID_ACCEPTED_DECISION"
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("period", "2026-03-31"),
+        ("source_accession", "0000000000-26-999999"),
+        ("source_concept", "issuer:DifferentConcept"),
+        ("unit", "EUR"),
+        ("confidence", 0.50),
+        ("reason_codes", ("DIFFERENT_REASON",)),
+        ("mapping_version", "US-XBRL-RESOLVER-OTHER"),
+    ],
+)
+def test_accepted_structural_decision_requires_coherent_evidence(
+    field: str,
+    value: object,
+) -> None:
+    decision = _structural_decision()
+    object.__setattr__(decision, field, value)
+
+    availability = availability_from_resolution_decision(decision)
+
+    assert availability.state == "unresolved"
+    assert availability.value is None
+    assert availability.authority == "shadow"
+    assert availability.reason_code == "STRUCTURAL_SHADOW_INVALID_ACCEPTED_DECISION"
+
+
+def test_structural_availability_is_json_round_trip_safe() -> None:
+    availability = availability_from_resolution_decision(_structural_decision())
+
+    serialized = json.loads(json.dumps(availability.as_dict()))
+    restored = FieldAvailability.from_dict(serialized)
+
+    assert restored == availability
+    assert restored.authority == "shadow"

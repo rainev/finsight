@@ -6,6 +6,7 @@ import math
 from typing import Any, Mapping
 
 from .concept_resolver import resolve_concept
+from .field_availability import availability_from_resolution_decision
 from .structural_xbrl import ResolutionRequest, StructuralFiling
 
 
@@ -265,9 +266,14 @@ def evaluate_shadow_case(
 
     requests = shadow_requests_from_artifact(artifact)
     report = _artifact_metadata(artifact)
-    decisions = [
-        resolve_concept(request, filing.facts).as_dict() for request in requests
-    ]
+    resolutions = [resolve_concept(request, filing.facts) for request in requests]
+    decisions = []
+    for resolution in resolutions:
+        decision = resolution.as_dict()
+        decision["availability_candidate"] = availability_from_resolution_decision(
+            resolution
+        ).as_dict()
+        decisions.append(decision)
     report.update(
         {
             "parser_diagnostics": _diagnostics_as_dict(filing),

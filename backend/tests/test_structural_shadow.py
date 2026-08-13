@@ -278,6 +278,34 @@ def test_shadow_case_emits_candidate_without_mutating_artifact() -> None:
     assert report["decisions"][0]["normalized_concept"] == "marketable_securities_current"
 
 
+def test_shadow_case_emits_non_authoritative_availability_candidate() -> None:
+    artifact = withheld_artifact(missing=["marketable_securities_current"])
+
+    report = evaluate_shadow_case(artifact, structural_filing(extension_fact()))
+
+    candidate = report["decisions"][0]["availability_candidate"]
+    assert candidate["authority"] == "shadow"
+    assert candidate["field"] == "marketable_securities_current"
+    assert candidate["state"] == "reported"
+    assert candidate["value"] == 42_500_000.0
+    assert report["publication_effect"] == "none_shadow_only"
+    assert json.loads(json.dumps(report)) == report
+
+
+def test_shadow_review_candidate_discards_its_non_authoritative_point() -> None:
+    artifact = withheld_artifact(missing=["marketable_securities_current"])
+    review_fact = extension_fact(calculation_parents=())
+
+    report = evaluate_shadow_case(artifact, structural_filing(review_fact))
+
+    assert report["decisions"][0]["status"] == "review"
+    candidate = report["decisions"][0]["availability_candidate"]
+    assert candidate["state"] == "unresolved"
+    assert candidate["value"] is None
+    assert candidate["authority"] == "shadow"
+    assert report["publication_effect"] == "none_shadow_only"
+
+
 SUPPORTED = {
     "marketable_securities_current",
     "marketable_securities_noncurrent",
