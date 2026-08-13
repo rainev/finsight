@@ -15,4 +15,3 @@ bounded range only when the raw input is already withheld and every model,
 scenario, sensitivity, and aggregate range sink is withheld/null. A top-level
 `withheld` label by itself is insufficient. Test the malicious initial shape and
 the twice-sanitized control separately.
-

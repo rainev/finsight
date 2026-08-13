@@ -15,4 +15,3 @@ allowlisted public path.
 `models.fcff_dcf.intrinsic_value_per_share` and bind the bridge midpoint to it at
 the public sanitizer boundary. Fail the bridge closed when the model is missing,
 non-finite, or mismatched. Keep a regression using a large plausible raw amount.
-
