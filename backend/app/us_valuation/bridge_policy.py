@@ -357,14 +357,15 @@ class BridgeAssessment:
                 raise ValueError(
                     "intrinsic_value_range midpoint must equal (low + high) / 2"
                 )
-            if value_range.low == value_range.high:
-                expected_spread = 0.0
-            elif value_range.midpoint > 0:
-                candidate_spread = (
-                    value_range.high - value_range.low
-                ) / value_range.midpoint
-                if isfinite(candidate_spread):
-                    expected_spread = candidate_spread
+            if value_range.midpoint > 0:
+                if value_range.low == value_range.high:
+                    expected_spread = 0.0
+                else:
+                    candidate_spread = (
+                        value_range.high - value_range.low
+                    ) / value_range.midpoint
+                    if isfinite(candidate_spread):
+                        expected_spread = candidate_spread
 
         complete_without_value = (
             self.decision == "complete"

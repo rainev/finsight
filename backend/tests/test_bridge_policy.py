@@ -1057,6 +1057,30 @@ def test_nonpositive_midpoint_is_withheld() -> None:
     assert "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT" in assessment.reason_codes
 
 
+def test_negative_point_intrinsic_range_is_withheld_without_spread() -> None:
+    assessment = assess_bridge_materiality(
+        bounded_adjustment_resolution(-1.0, -1.0),
+        enterprise_value=0.0,
+    )
+
+    assert assessment.decision == "withheld"
+    assert assessment.usable is False
+    assert assessment.spread_ratio is None
+    assert "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT" in assessment.reason_codes
+
+
+def test_zero_point_intrinsic_range_is_withheld_without_spread() -> None:
+    assessment = assess_bridge_materiality(
+        bounded_adjustment_resolution(0.0, 0.0),
+        enterprise_value=0.0,
+    )
+
+    assert assessment.decision == "withheld"
+    assert assessment.usable is False
+    assert assessment.spread_ratio is None
+    assert "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT" in assessment.reason_codes
+
+
 def test_blockers_are_returned_before_placeholder_range_or_ev_evaluation() -> None:
     availability = complete_availability(cash=None)
     availability["marketable_securities_noncurrent"] = bounded(
