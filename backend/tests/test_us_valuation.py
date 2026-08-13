@@ -98,6 +98,11 @@ def is_permitted_public_numeric_path(path: tuple[str, ...]) -> bool:
     ) or (
         path[:1] == ("scenario_range",)
         and path[1:] in {("low",), ("base",), ("high",)}
+    ) or (
+        len(path) == 3
+        and path[:2] == ("bridge_quality", "intrinsic_value_range")
+        and path[2]
+        in {"low", "midpoint", "high", "spread_ratio", "spread_limit"}
     )
 
 
@@ -122,6 +127,9 @@ def assert_public_artifact_is_safe(
         "sources",
         "values",
         "source_manifest",
+        "availability",
+        "bridge_precheck",
+        "bridge_uncertainty",
         "forecast_assumptions",
         "discount_rate",
         "source_pdf",
@@ -298,6 +306,25 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
     assert public["data_boundary"]["stock_prices_used"] is False
     assert public["automated_review"]["review_version"] == "US-AUTO-REVIEW-1.0"
     assert public["automated_review"]["decision"] == "blocked"
+    assert "model_not_pass:epv" in public["automated_review"][
+        "blocking_reasons"
+    ]
+    assert set(public["bridge_quality"]) == {
+        "decision",
+        "complete",
+        "usable",
+        "bounded_fields",
+        "blocking_fields",
+        "reason_codes",
+        "intrinsic_value_range",
+    }
+    assert set(public["bridge_quality"]["intrinsic_value_range"]) == {
+        "low",
+        "midpoint",
+        "high",
+        "spread_ratio",
+        "spread_limit",
+    }
     assert set(public) == {
         "schema_version",
         "valuation_date",
@@ -314,6 +341,7 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
         "forecast_quality",
         "review",
         "automated_review",
+        "bridge_quality",
         "methodology",
         "data_boundary",
     }
@@ -390,6 +418,24 @@ def test_api_loader_scrubs_adversarial_withheld_stored_artifact(
     artifact["models"]["fcff_dcf"]["intrinsic_value_per_share"] = 999.0
     artifact["scenarios"]["base"]["fcff_dcf"]["intrinsic_value_per_share"] = 999.0
     artifact["scenario_range"].update({"low": 999.0, "base": 999.0, "high": 999.0})
+    artifact["bridge_quality"] = {
+        "decision": "withheld",
+        "complete": False,
+        "usable": False,
+        "bounded_fields": ["marketable_securities_noncurrent"],
+        "blocking_fields": [],
+        "reason_codes": [
+            "CURRENT_NOTE_SUPPLIES_FINITE_RANGE",
+            "JOINT_INTRINSIC_VALUE_SPREAD_EXCEEDS_LIMIT",
+        ],
+        "intrinsic_value_range": {
+            "low": 80.0,
+            "midpoint": 100.0,
+            "high": 120.0,
+            "spread_ratio": 0.4,
+            "spread_limit": 0.01,
+        },
+    }
     (tmp_path / "AAPL.json").write_text(json.dumps(artifact), encoding="utf-8")
     monkeypatch.setattr(us_valuations_router, "DATA_ROOT", tmp_path)
 
@@ -399,6 +445,27 @@ def test_api_loader_scrubs_adversarial_withheld_stored_artifact(
     assert loaded["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
     assert loaded["scenarios"]["base"]["fcff_dcf"]["intrinsic_value_per_share"] is None
     assert loaded["scenario_range"]["base"] is None
+    assert loaded["bridge_quality"]["intrinsic_value_range"]["low"] is None
+
+
+def test_list_endpoint_sanitizes_before_reading_state_or_base(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    artifact = json.loads(
+        Path("backend/app/data/us_valuations/AAPL.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    artifact["review"]["publication_state"] = "pass"
+    artifact["scenario_range"]["base"] = 999.0
+    (tmp_path / "AAPL.json").write_text(json.dumps(artifact), encoding="utf-8")
+    monkeypatch.setattr(us_valuations_router, "DATA_ROOT", tmp_path)
+
+    response = us_valuations_router.list_us_valuations()
+
+    assert response["count"] == 1
+    assert response["items"][0]["publication_state"] == "withheld"
+    assert response["items"][0]["base"] is None
 
 
 def test_api_loader_fails_closed_for_legacy_publication_state(
@@ -824,6 +891,10 @@ def test_public_artifact_allows_governed_rates_and_derived_value_paths() -> None
     permitted["models"]["fcff_dcf"]["intrinsic_value_per_share"] = result[
         "financials"
     ]["annual"][-1]["sources"]["revenue"]["value"]
+    for field in ("low", "midpoint", "high", "spread_ratio", "spread_limit"):
+        permitted["bridge_quality"]["intrinsic_value_range"][field] = result[
+            "financials"
+        ]["annual"][-1]["sources"]["revenue"]["value"]
     permitted["forecast_quality"]["metadata"] = {
         "normalized_tax_rate": result["financials"]["normalized"]["tax_rate"],
         "zero": 0,
@@ -1414,10 +1485,12 @@ def test_public_api_artifact_excludes_raw_financials():
     assert "financials" not in public
     assert "discount_rate" not in public
     assert "forecast_assumptions" not in public
-    assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] == pytest.approx(
-        137.8839487,
-        abs=0.001,
-    )
+    assert public["review"]["publication_state"] == "withheld"
+    assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
+    assert public["scenario_range"]["base"] is None
+    assert public["bridge_quality"]["reason_codes"] == [
+        "BRIDGE_QUALITY_INVALID_OR_MISSING"
+    ]
 
 
 def test_apple_uses_segment_aware_ten_year_forecast(result: dict):
