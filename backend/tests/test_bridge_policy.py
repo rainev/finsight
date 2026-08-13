@@ -912,26 +912,130 @@ def test_bridge_records_are_frozen() -> None:
         resolution.complete = False  # type: ignore[misc]
 
 
-def test_complete_bridge_has_zero_spread_and_complete_decision() -> None:
-    resolution = reconcile_bridge(
-        complete_availability(),
-        fully_diluted_shares=10.0,
-    )
+@pytest.mark.parametrize(
+    (
+        "resolution_kind",
+        "enterprise_value",
+        "bounded_point",
+        "expected_range",
+        "expected_decision",
+        "expected_usable",
+        "expected_spread",
+        "expected_reason_codes",
+        "expected_warning",
+    ),
+    [
+        pytest.param(
+            "complete",
+            1_000.0,
+            None,
+            BridgeRange(low=106.4, midpoint=106.4, high=106.4),
+            "complete",
+            True,
+            0.0,
+            (),
+            None,
+            id="complete-positive-point",
+        ),
+        pytest.param(
+            "complete",
+            -64.0,
+            None,
+            BridgeRange(low=0.0, midpoint=0.0, high=0.0),
+            "complete",
+            True,
+            0.0,
+            (),
+            None,
+            id="complete-zero-point",
+        ),
+        pytest.param(
+            "complete",
+            -74.0,
+            None,
+            BridgeRange(low=-1.0, midpoint=-1.0, high=-1.0),
+            "complete",
+            True,
+            0.0,
+            (),
+            None,
+            id="complete-negative-point",
+        ),
+        pytest.param(
+            "bounded",
+            0.0,
+            1.0,
+            BridgeRange(low=1.0, midpoint=1.0, high=1.0),
+            "bounded_review",
+            True,
+            0.0,
+            (),
+            (
+                "Enterprise-to-equity bridge uses source-bounded uncertainty; "
+                "the joint intrinsic-value spread is 0.00% and requires review."
+            ),
+            id="bounded-positive-point",
+        ),
+        pytest.param(
+            "bounded",
+            0.0,
+            0.0,
+            BridgeRange(low=0.0, midpoint=0.0, high=0.0),
+            "withheld",
+            False,
+            None,
+            ("NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT",),
+            None,
+            id="bounded-zero-point",
+        ),
+        pytest.param(
+            "bounded",
+            0.0,
+            -1.0,
+            BridgeRange(low=-1.0, midpoint=-1.0, high=-1.0),
+            "withheld",
+            False,
+            None,
+            ("NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT",),
+            None,
+            id="bounded-negative-point",
+        ),
+    ],
+)
+def test_bridge_assessment_decision_range_matrix(
+    resolution_kind: str,
+    enterprise_value: float,
+    bounded_point: float | None,
+    expected_range: BridgeRange,
+    expected_decision: str,
+    expected_usable: bool,
+    expected_spread: float | None,
+    expected_reason_codes: tuple[str, ...],
+    expected_warning: str | None,
+) -> None:
+    if resolution_kind == "complete":
+        resolution = reconcile_bridge(
+            complete_availability(),
+            fully_diluted_shares=10.0,
+        )
+    else:
+        assert bounded_point is not None
+        resolution = bounded_adjustment_resolution(
+            bounded_point,
+            bounded_point,
+        )
 
     assessment = assess_bridge_materiality(
         resolution,
-        enterprise_value=1_000.0,
+        enterprise_value=enterprise_value,
     )
 
-    assert assessment.decision == "complete"
-    assert assessment.usable is True
-    assert assessment.intrinsic_value_range == BridgeRange(
-        low=106.4,
-        midpoint=106.4,
-        high=106.4,
-    )
-    assert assessment.spread_ratio == 0.0
-    assert assessment.warning is None
+    assert assessment.decision == expected_decision
+    assert assessment.usable is expected_usable
+    assert assessment.intrinsic_value_range == expected_range
+    assert assessment.spread_ratio == expected_spread
+    assert assessment.reason_codes == expected_reason_codes
+    assert assessment.warning == expected_warning
 
 
 def test_joint_spread_below_one_percent_is_bounded_review() -> None:
@@ -1049,30 +1153,6 @@ def test_nonpositive_midpoint_is_withheld() -> None:
     assessment = assess_bridge_materiality(
         resolution,
         enterprise_value=-100.0,
-    )
-
-    assert assessment.decision == "withheld"
-    assert assessment.usable is False
-    assert assessment.spread_ratio is None
-    assert "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT" in assessment.reason_codes
-
-
-def test_negative_point_intrinsic_range_is_withheld_without_spread() -> None:
-    assessment = assess_bridge_materiality(
-        bounded_adjustment_resolution(-1.0, -1.0),
-        enterprise_value=0.0,
-    )
-
-    assert assessment.decision == "withheld"
-    assert assessment.usable is False
-    assert assessment.spread_ratio is None
-    assert "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT" in assessment.reason_codes
-
-
-def test_zero_point_intrinsic_range_is_withheld_without_spread() -> None:
-    assessment = assess_bridge_materiality(
-        bounded_adjustment_resolution(0.0, 0.0),
-        enterprise_value=0.0,
     )
 
     assert assessment.decision == "withheld"
