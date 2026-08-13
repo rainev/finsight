@@ -9,6 +9,7 @@ from importlib.resources import files
 from statistics import median
 from typing import Any, Iterable, Mapping
 
+from .bridge_policy import reconcile_bridge
 from .field_availability import availability_from_normalized_field
 from .filing_evidence import governed_bridge_fields_from_evidence
 
@@ -1054,59 +1055,9 @@ class CompanyFactsNormalizer:
         diluted_proxy = balance_fields["common_shares_outstanding"]["value"] + (
             0.0 if shares_from_weighted_average else incremental_dilution
         )
-        required_bridge_fields = (
-            "cash",
-            "marketable_securities_current",
-            "marketable_securities_noncurrent",
-            "commercial_paper",
-            "current_debt",
-            "noncurrent_debt",
-            "preferred_equity",
-            "noncontrolling_interests",
-            "finance_lease_current",
-            "finance_lease_noncurrent",
-        )
-        # Some issuers tag only the aggregate FinanceLeaseLiability, not the
-        # current/noncurrent split. Finance leases are financing debt (not
-        # operating NWC), so the split is immaterial to the bridge: when both
-        # split fields are absent but the aggregate is reported, use the
-        # aggregate and treat the split as satisfied.
-        fl_current = balance_fields["finance_lease_current"]["value"]
-        fl_noncurrent = balance_fields["finance_lease_noncurrent"]["value"]
-        fl_total_reported = balance_fields["finance_lease_total"]["value"]
-        finance_lease_from_total = (
-            fl_current is None
-            and fl_noncurrent is None
-            and fl_total_reported is not None
-        )
-        finance_lease_debt = (
-            fl_total_reported
-            if finance_lease_from_total
-            else (fl_current or 0.0) + (fl_noncurrent or 0.0)
-        )
-        missing_bridge = [
-            field
-            for field in required_bridge_fields
-            if balance_fields[field]["value"] is None
-            and not (
-                finance_lease_from_total
-                and field in ("finance_lease_current", "finance_lease_noncurrent")
-            )
-        ]
-        # Missing bridge components are captured by ``missing_bridge`` above and
-        # force ``bridge_complete`` to False, which routes the pipeline to a
-        # governed "withheld" result. Guard the arithmetic with 0.0 so an absent
-        # field surfaces through that review gate instead of raising here.
-        cash_and_investments = (
-            (balance_fields["cash"]["value"] or 0.0)
-            + (balance_fields["marketable_securities_current"]["value"] or 0.0)
-            + (balance_fields["marketable_securities_noncurrent"]["value"] or 0.0)
-        )
-        total_debt = (
-            (balance_fields["commercial_paper"]["value"] or 0.0)
-            + (balance_fields["current_debt"]["value"] or 0.0)
-            + (balance_fields["noncurrent_debt"]["value"] or 0.0)
-            + finance_lease_debt
+        bridge_resolution = reconcile_bridge(
+            availability,
+            fully_diluted_shares=diluted_proxy,
         )
 
         tax_rates = [
@@ -1180,14 +1131,7 @@ class CompanyFactsNormalizer:
                 "availability": {
                     field: item.as_dict() for field, item in availability.items()
                 },
-                "bridge_complete": not missing_bridge,
-                "bridge_missing_fields": missing_bridge,
-                "cash_and_nonoperating_investments": cash_and_investments,
-                "total_interest_bearing_debt": total_debt,
-                "preferred_equity": balance_fields["preferred_equity"]["value"],
-                "noncontrolling_interests": balance_fields[
-                    "noncontrolling_interests"
-                ]["value"],
+                **bridge_resolution.as_balance_sheet_fields(),
                 "fully_diluted_shares_proxy": diluted_proxy,
                 "dilution_proxy_state": (
                     "cover_only_incremental_dilution_missing"

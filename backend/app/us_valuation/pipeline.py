@@ -15,6 +15,11 @@ from .assumptions import (
     load_issuer_forecast_evidence,
 )
 from .classification import classify_issuer
+from .bridge_policy import (
+    BridgeAssessment,
+    BridgeResolution,
+    assess_bridge_materiality,
+)
 from .eligibility import model_eligibility
 from .equity_models import build_equity_level_result
 from .models import (
@@ -171,6 +176,7 @@ def _publication_review(
     base: dict[str, Any],
     scenarios: dict[str, Any],
     forecast_quality: dict[str, Any],
+    bridge_assessment: BridgeAssessment | None = None,
 ) -> dict[str, Any]:
     errors = [
         *base.get("errors", []),
@@ -181,6 +187,12 @@ def _publication_review(
         *base.get("warnings", []),
         *forecast_quality.get("warnings", []),
     ]
+    if bridge_assessment is not None:
+        if bridge_assessment.decision == "bounded_review":
+            assert bridge_assessment.warning is not None
+            warnings.append(bridge_assessment.warning)
+        elif bridge_assessment.decision == "withheld":
+            errors.append(_bridge_withheld_error(bridge_assessment))
     if classification["classification_confidence"] < 0.8:
         errors.append("Classification confidence is below the publication floor.")
     annual_count = len(financials["annual"])
@@ -224,6 +236,62 @@ def _publication_review(
             "trading_multiples": False,
         },
     }
+
+
+def _bridge_withheld_error(assessment: BridgeAssessment) -> str:
+    reason_codes = list(assessment.reason_codes)
+    if (
+        assessment.spread_ratio is not None
+        and assessment.spread_ratio > assessment.spread_limit
+    ):
+        reason_codes.append("JOINT_INTRINSIC_VALUE_SPREAD_EXCEEDS_LIMIT")
+    stable_reasons = ",".join(sorted(set(reason_codes))) or "BRIDGE_POLICY_WITHHELD"
+    bounded_fields = ",".join(assessment.bounded_fields) or "none"
+    return (
+        "Enterprise-to-equity bridge is withheld: "
+        f"reason_codes={stable_reasons}; "
+        f"spread_ratio={assessment.spread_ratio}; "
+        f"spread_limit={assessment.spread_limit}; "
+        f"bounded_fields={bounded_fields}."
+    )
+
+
+def _append_bridge_warning(model: dict[str, Any], warning: str) -> None:
+    warnings = model.setdefault("warnings", [])
+    if warning not in warnings:
+        warnings.append(warning)
+
+
+def _apply_bridge_publication_ceiling(
+    *,
+    assessment: BridgeAssessment,
+    base: dict[str, Any],
+    epv: dict[str, Any],
+    scenarios: dict[str, Any],
+    sensitivities: list[dict[str, Any]],
+) -> None:
+    if assessment.decision == "complete":
+        return
+
+    models = [base, epv]
+    scenario_models = [
+        scenario["fcff_dcf"] for scenario in scenarios.values()
+    ]
+    if assessment.decision == "bounded_review":
+        assert assessment.warning is not None
+        for model in [*models, *scenario_models]:
+            if model.get("publication_state") != "withheld":
+                model["publication_state"] = "review_required"
+            _append_bridge_warning(model, assessment.warning)
+        for row in sensitivities:
+            if row.get("publication_state") != "withheld":
+                row["publication_state"] = "review_required"
+        return
+
+    for model in [*models, *scenario_models]:
+        model["publication_state"] = "withheld"
+    for row in sensitivities:
+        row["publication_state"] = "withheld"
 
 
 def _withheld_segment_evidence_result(
@@ -482,8 +550,19 @@ def build_us_valuation(
         tax_rate=financials["normalized"]["tax_rate"],
         market=market_assumptions,
     )
-    if not financials["balance_sheet"]["bridge_complete"]:
-        missing = ", ".join(financials["balance_sheet"]["bridge_missing_fields"])
+    balance_sheet = financials["balance_sheet"]
+    bridge_resolution = BridgeResolution.from_dict(
+        balance_sheet["bridge_precheck"]
+    )
+    if not balance_sheet["bridge_can_value"]:
+        bridge_assessment = assess_bridge_materiality(
+            bridge_resolution,
+            enterprise_value=None,
+        )
+        balance_sheet["bridge_uncertainty"] = bridge_assessment.as_dict()
+        balance_sheet["bridge_usable"] = bridge_assessment.usable
+        balance_sheet["bridge_decision"] = bridge_assessment.decision
+        blocking = ", ".join(balance_sheet["bridge_blocking_fields"])
         return _withheld_segment_evidence_result(
             classification=classification,
             financials=financials,
@@ -495,7 +574,7 @@ def build_us_valuation(
                 available_periods=[],
                 reason=(
                     "Enterprise-to-equity bridge requires current filing evidence for "
-                    + missing
+                    + blocking
                 ),
             ),
         )
@@ -535,6 +614,13 @@ def build_us_valuation(
         discount_rate=discount_rate,
         financials=financials,
     )
+    bridge_assessment = assess_bridge_materiality(
+        bridge_resolution,
+        enterprise_value=base.get("enterprise_value"),
+    )
+    balance_sheet["bridge_uncertainty"] = bridge_assessment.as_dict()
+    balance_sheet["bridge_usable"] = bridge_assessment.usable
+    balance_sheet["bridge_decision"] = bridge_assessment.decision
     epv = earnings_power_value(
         assumptions=forecast_assumptions,
         discount_rate=discount_rate,
@@ -550,6 +636,13 @@ def build_us_valuation(
         discount_rate=discount_rate,
         financials=financials,
     )
+    _apply_bridge_publication_ceiling(
+        assessment=bridge_assessment,
+        base=base,
+        epv=epv,
+        scenarios=scenarios,
+        sensitivities=sensitivities,
+    )
     forecast_quality = _forecast_quality_review(
         classification=classification,
         assumptions=forecast_assumptions,
@@ -562,6 +655,7 @@ def build_us_valuation(
         base=base,
         scenarios=scenarios,
         forecast_quality=forecast_quality,
+        bridge_assessment=bridge_assessment,
     )
     scenario_values = [
         scenario["fcff_dcf"]["intrinsic_value_per_share"]
