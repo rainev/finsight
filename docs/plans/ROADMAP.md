@@ -42,6 +42,18 @@ The loudest gap: we tripled computable coverage but users still see 12, and noth
 | **F2** | Main's own bulk SEC cache | **deferred** — 3 GB `fetch_sec_bulk download`; low urgency (live per-issuer path already works from main; sweep references the pipeline-repo cache). |
 | **F3** | Verify the page against the live stack | **✔ API-level done** (deployed staging serves 195, spot-checked live). Full browser login→render still worth a manual pass. |
 
+### Evidence-aware bridge policy gate (2026-08-13)
+
+Evidence: `docs/audit/02-evidence-aware-bridge-replay.md`. Overall tooling
+status: **verified — user confirmation needed**.
+
+| ID | What | Status |
+|---|---|---|
+| **BP1** | Structural shadow serialization and non-authority boundary | **✔ FIRSTHAND VERIFIED** — 104/104 cached filings parsed; 545/545 decisions carry a shadow `availability_candidate`; all publication effects remain `none_shadow_only`. |
+| **BP2** | Source-linked availability schema and exact modern/legacy replay | **✔ FIRSTHAND VERIFIED** — strict serialization tests pass; 104 real legacy private artifacts reconstruct without mutation or synthesized total-debt evidence. |
+| **BP3** | Deterministic bridge-policy corpus replay | **✔ FIRSTHAND VERIFIED** — 106 candidates counted, 104 valid plus ADBE/SNPS invalid, all 106 withheld, byte-identical rerun, zero serving writes. |
+| **BP4** | Activate bounded-review eligibility | **⏸ WITHHELD PENDING EVIDENCE** — zero real bounded candidates and five requested current private artifacts are absent; no production promotion is authorized. |
+
 ## Phase 3 — model coverage for the remaining sectors (per-area; the 188 unsupported)
 | ID | What | Status |
 |---|---|---|

@@ -43,6 +43,19 @@ the roadmap. Re-evaluate periodically — don't let items rot here.
   review-grade and withheld, but its documentation and `LiabilitiesAbstract` parent identify a liability rather than
   genuine preferred-equity ambiguity. Add a deterministic economic-class rejection after broader regression coverage.
 
+- **B10 · BP4 bounded-review activation evidence.**
+  *Why deferred:* the 104 valid preserved private artifacts are legacy and produce zero real bounded candidates; the
+  requested current private artifacts for AAPL, MSFT, ANET, CRM, and WDC are absent. The replay therefore proves
+  fail-closed behavior, not activation safety.
+  *Reconsider only when:* current source-linked private artifacts exist, all required accessions reconcile, the joint
+  intrinsic-value spread is at most 1%, and public artifacts remain unchanged.
+
+- **B11 · Recover stale bridge-shadow writer locks automatically.**
+  *Why deferred:* an abrupt process termination can leave `.bridge-policy-shadow.lock`; this fails safely and requires
+  an operator to verify no writer is active before removing the lock. It does not risk serving writes or overwrite
+  immutable output.
+  *Reconsider when:* the replay CLI becomes scheduled or routinely concurrent and needs PID-aware stale-lock recovery.
+
 ## Notes
 - Nothing here is a hidden blocker for the NOW phase. These are explicitly parked so the roadmap stays focused on the
   cheap, visible wins (ship + serve) and the genuinely high-value model work (insurance, REITs).
