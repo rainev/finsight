@@ -554,7 +554,11 @@ def build_us_valuation(
     bridge_resolution = BridgeResolution.from_dict(
         balance_sheet["bridge_precheck"]
     )
-    if not balance_sheet["bridge_can_value"]:
+    balance_sheet.update(bridge_resolution.as_balance_sheet_fields())
+    balance_sheet["fully_diluted_shares_proxy"] = (
+        bridge_resolution.fully_diluted_shares
+    )
+    if not bridge_resolution.can_value:
         bridge_assessment = assess_bridge_materiality(
             bridge_resolution,
             enterprise_value=None,
@@ -562,7 +566,7 @@ def build_us_valuation(
         balance_sheet["bridge_uncertainty"] = bridge_assessment.as_dict()
         balance_sheet["bridge_usable"] = bridge_assessment.usable
         balance_sheet["bridge_decision"] = bridge_assessment.decision
-        blocking = ", ".join(balance_sheet["bridge_blocking_fields"])
+        blocking = ", ".join(bridge_resolution.blocking_fields)
         return _withheld_segment_evidence_result(
             classification=classification,
             financials=financials,

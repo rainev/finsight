@@ -25,6 +25,7 @@ ORIGINAL_NORMALIZE = CompanyFactsNormalizer.normalize
 ORIGINAL_DERIVE_FORECAST_ASSUMPTIONS = (
     valuation_pipeline.derive_forecast_assumptions
 )
+ORIGINAL_FCFF_DCF = valuation_pipeline.fcff_dcf
 ORIGINAL_SCENARIO_SET = valuation_pipeline.scenario_set
 
 AAPL_CASH_AND_INVESTMENTS = 146_595_000_000.0
@@ -196,6 +197,121 @@ def install_unavailable_aapl_normalizer(
         field=field,
         replacement=unavailable_record,
     )
+
+
+def install_tampered_blocked_aapl_normalizer(
+    monkeypatch: pytest.MonkeyPatch,
+) -> str:
+    field = "marketable_securities_noncurrent"
+
+    def normalize_with_tampered_aliases(
+        self: CompanyFactsNormalizer,
+        *args: Any,
+        **kwargs: Any,
+    ) -> dict[str, Any]:
+        financials = ORIGINAL_NORMALIZE(self, *args, **kwargs)
+        balance = financials["balance_sheet"]
+        original = _availability(balance)[field]
+        _replace_availability_record(
+            financials,
+            field=field,
+            replacement=FieldAvailability(
+                field=field,
+                value=None,
+                state="conflict",
+                reason_code="TEST_AUTHORITATIVE_CONFLICT",
+                period_end=balance["period_end"],
+                source_accession=original.source_accession,
+                source_kind=original.source_kind,
+                evidence_class="conflict",
+                freshness="unknown",
+            ),
+        )
+        balance.update(
+            {
+                "bridge_complete": True,
+                "bridge_can_value": True,
+                "bridge_usable": True,
+                "bridge_decision": "complete",
+                "bridge_missing_fields": [],
+                "bridge_blocking_fields": [],
+                "bridge_bounded_fields": [],
+            }
+        )
+        return financials
+
+    monkeypatch.setattr(
+        CompanyFactsNormalizer,
+        "normalize",
+        normalize_with_tampered_aliases,
+    )
+    return field
+
+
+def install_tampered_bounded_aapl_normalizer(
+    monkeypatch: pytest.MonkeyPatch,
+) -> tuple[str, dict[str, Any]]:
+    field = "marketable_securities_noncurrent"
+    canonical_precheck: dict[str, Any] = {}
+
+    def normalize_with_tampered_aliases(
+        self: CompanyFactsNormalizer,
+        *args: Any,
+        **kwargs: Any,
+    ) -> dict[str, Any]:
+        financials = ORIGINAL_NORMALIZE(self, *args, **kwargs)
+        balance = financials["balance_sheet"]
+        availability = _availability(balance)
+        original = availability[field]
+        assert original.source_accession is not None
+        _replace_availability_record(
+            financials,
+            field=field,
+            replacement=FieldAvailability(
+                field=field,
+                value=None,
+                state="bounded_unresolved",
+                reason_code="TEST_CURRENT_NOTE_RANGE",
+                period_end=balance["period_end"],
+                source_accession=original.source_accession,
+                source_kind="test_current_filing_note",
+                evidence_class="reported_range",
+                freshness="current",
+                uncertainty=UncertaintyRange(
+                    low=78_087_500_000.0,
+                    high=78_088_500_000.0,
+                    basis="Hand-checked integration-test filing range.",
+                    source_accessions=(original.source_accession,),
+                ),
+            ),
+        )
+        canonical_precheck.update(balance["bridge_precheck"])
+        balance["bridge_precheck"]["missing_fields"] = [field, field]
+        balance["bridge_precheck"]["bounded_fields"] = [field, field]
+        balance.update(
+            {
+                "cash_and_nonoperating_investments": 1_146_595_000_000.0,
+                "total_interest_bearing_debt": 1.0,
+                "preferred_equity": 250_000_000_000.0,
+                "noncontrolling_interests": 125_000_000_000.0,
+                "fully_diluted_shares_proxy": 1.0,
+                "bridge_complete": True,
+                "bridge_can_value": False,
+                "bridge_usable": True,
+                "bridge_decision": "complete",
+                "bridge_missing_fields": [],
+                "bridge_blocking_fields": ["cash"],
+                "bridge_bounded_fields": [],
+            }
+        )
+        return financials
+
+    monkeypatch.setattr(
+        CompanyFactsNormalizer,
+        "normalize",
+        normalize_with_tampered_aliases,
+    )
+    return field, canonical_precheck
 
 
 def publication_states(result: dict[str, Any]) -> list[str]:
@@ -388,6 +504,73 @@ def test_precheck_blockers_stop_before_forecast_and_models(
     assert field in " ".join(result["review"]["errors"])
 
 
+def test_blocked_precheck_ignores_permissive_aliases_and_restores_canonical_state(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    field = install_tampered_blocked_aapl_normalizer(monkeypatch)
+
+    def unexpected(*args: Any, **kwargs: Any) -> Any:
+        pytest.fail("forecast executed despite authoritative blocked precheck")
+
+    monkeypatch.setattr(
+        valuation_pipeline,
+        "load_issuer_forecast_evidence",
+        unexpected,
+    )
+    monkeypatch.setattr(
+        valuation_pipeline,
+        "derive_forecast_assumptions",
+        unexpected,
+    )
+
+    result = build_aapl()
+    balance = result["financials"]["balance_sheet"]
+
+    assert balance["bridge_precheck"]["can_value"] is False
+    assert balance["bridge_complete"] is False
+    assert balance["bridge_can_value"] is False
+    assert balance["bridge_usable"] is False
+    assert balance["bridge_decision"] == "withheld"
+    assert balance["bridge_missing_fields"] == [field]
+    assert balance["bridge_blocking_fields"] == [field]
+    assert balance["bridge_bounded_fields"] == []
+    assert result["review"]["publication_state"] == "withheld"
+    assert field in " ".join(result["review"]["errors"])
+
+
+def test_validated_precheck_canonicalizes_all_model_and_compatibility_aliases(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    field, canonical_precheck = install_tampered_bounded_aapl_normalizer(
+        monkeypatch
+    )
+
+    result = build_aapl()
+    balance = result["financials"]["balance_sheet"]
+    base = result["models"]["fcff_dcf"]
+
+    assert balance["bridge_precheck"] == canonical_precheck
+    assert balance["cash_and_nonoperating_investments"] == AAPL_CASH_AND_INVESTMENTS
+    assert balance["total_interest_bearing_debt"] == AAPL_DEBT
+    assert balance["preferred_equity"] == 0.0
+    assert balance["noncontrolling_interests"] == 0.0
+    assert balance["fully_diluted_shares_proxy"] == AAPL_SHARES
+    assert balance["bridge_complete"] is False
+    assert balance["bridge_can_value"] is True
+    assert balance["bridge_usable"] is True
+    assert balance["bridge_decision"] == "bounded_review"
+    assert balance["bridge_missing_fields"] == [field]
+    assert balance["bridge_blocking_fields"] == []
+    assert balance["bridge_bounded_fields"] == [field]
+    assert base["enterprise_value"] == AAPL_BASE_ENTERPRISE_VALUE
+    assert base["equity_value"] == AAPL_BASE_EQUITY_VALUE
+    assert base["intrinsic_value_per_share"] == AAPL_BASE_INTRINSIC_VALUE
+    assert balance["bridge_uncertainty"]["intrinsic_value_range"][
+        "midpoint"
+    ] == pytest.approx(AAPL_BASE_INTRINSIC_VALUE)
+    assert publication_states(result) == ["review_required"] * 14
+
+
 def test_bounded_asset_midpoint_runs_and_caps_every_publication_sink(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -572,6 +755,46 @@ def test_bounded_bridge_without_base_enterprise_value_fails_closed(
     assert "BASE_ENTERPRISE_VALUE_UNAVAILABLE" in review_error
     assert "spread_ratio=None" in review_error
     assert "spread_limit=0.01" in review_error
+
+
+@pytest.mark.parametrize(
+    "enterprise_value",
+    [float("nan"), float("inf"), float("-inf")],
+)
+def test_bounded_bridge_with_nonfinite_base_enterprise_value_fails_closed(
+    monkeypatch: pytest.MonkeyPatch,
+    enterprise_value: float,
+) -> None:
+    install_bounded_aapl_normalizer(
+        monkeypatch,
+        field="marketable_securities_noncurrent",
+        low=78_087_500_000.0,
+        high=78_088_500_000.0,
+    )
+
+    def fcff_with_nonfinite_enterprise_value(
+        *args: Any,
+        **kwargs: Any,
+    ) -> dict[str, Any]:
+        base = ORIGINAL_FCFF_DCF(*args, **kwargs)
+        base["enterprise_value"] = enterprise_value
+        return base
+
+    monkeypatch.setattr(
+        valuation_pipeline,
+        "fcff_dcf",
+        fcff_with_nonfinite_enterprise_value,
+    )
+
+    result = build_aapl()
+    assessment = result["financials"]["balance_sheet"]["bridge_uncertainty"]
+
+    assert assessment["decision"] == "withheld"
+    assert assessment["usable"] is False
+    assert assessment["intrinsic_value_range"] is None
+    assert assessment["spread_ratio"] is None
+    assert "BASE_ENTERPRISE_VALUE_UNAVAILABLE" in assessment["reason_codes"]
+    assert publication_states(result) == ["withheld"] * 14
 
 
 def test_base_fcff_is_the_single_run_level_materiality_discriminator(
