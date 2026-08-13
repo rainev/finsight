@@ -891,10 +891,6 @@ def test_public_artifact_allows_governed_rates_and_derived_value_paths() -> None
     permitted["models"]["fcff_dcf"]["intrinsic_value_per_share"] = result[
         "financials"
     ]["annual"][-1]["sources"]["revenue"]["value"]
-    for field in ("low", "midpoint", "high", "spread_ratio", "spread_limit"):
-        permitted["bridge_quality"]["intrinsic_value_range"][field] = result[
-            "financials"
-        ]["annual"][-1]["sources"]["revenue"]["value"]
     permitted["forecast_quality"]["metadata"] = {
         "normalized_tax_rate": result["financials"]["normalized"]["tax_rate"],
         "zero": 0,

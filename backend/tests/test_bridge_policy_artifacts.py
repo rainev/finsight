@@ -122,6 +122,7 @@ def _install_private_assessment(
 def _bounded_private(private_aapl: dict[str, Any]) -> dict[str, Any]:
     result = deepcopy(private_aapl)
     _make_native_pass(result)
+    result["models"]["fcff_dcf"]["intrinsic_value_per_share"] = 100.0
     _install_private_assessment(
         result,
         decision="bounded_review",
@@ -597,6 +598,265 @@ def test_valid_automated_review_is_byte_for_byte_unchanged_across_bridge_decisio
     assert sanitized["review"]["publication_state"] == "withheld"
 
 
+def test_unsanitized_bounded_review_requires_finite_absolute_range() -> None:
+    quality = bounded_quality()
+    quality["intrinsic_value_range"] = _range(None, None, None, 0.005)
+    artifact = public_artifact(quality=quality)
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert sanitized["bridge_quality"] == {
+        "decision": "withheld",
+        "complete": False,
+        "usable": False,
+        "bounded_fields": [],
+        "blocking_fields": [],
+        "reason_codes": ["BRIDGE_QUALITY_INVALID_OR_MISSING"],
+        "intrinsic_value_range": _range(None, None, None, None),
+    }
+    assert set(_all_value_sinks(sanitized)) == {None}
+
+
+def test_unsanitized_complete_bridge_requires_a_finite_point_range() -> None:
+    artifact = public_artifact(quality=complete_quality(None))
+    assert artifact["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["bridge_quality"]["reason_codes"] == [
+        "BRIDGE_QUALITY_INVALID_OR_MISSING"
+    ]
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert set(_all_value_sinks(sanitized)) == {None}
+
+
+def test_fully_scrubbed_bounded_review_is_idempotent() -> None:
+    artifact = public_artifact(
+        quality=bounded_quality(), automated_review=_blocked_review()
+    )
+
+    once = sanitize_public_artifact(artifact)
+    twice = sanitize_public_artifact(once)
+
+    assert twice == once
+    assert once["bridge_quality"]["decision"] == "bounded_review"
+    assert once["bridge_quality"]["intrinsic_value_range"] == _range(
+        None, None, None, 0.01
+    )
+    assert set(_all_value_sinks(once)) == {None}
+
+
+def test_fully_scrubbed_complete_bridge_is_idempotent() -> None:
+    artifact = public_artifact(
+        quality=complete_quality(), automated_review=_blocked_review()
+    )
+
+    once = sanitize_public_artifact(artifact)
+    twice = sanitize_public_artifact(once)
+
+    assert twice == once
+    assert once["bridge_quality"]["decision"] == "complete"
+    assert once["bridge_quality"]["intrinsic_value_range"] == _range(
+        None, None, None, 0.0
+    )
+    assert set(_all_value_sinks(once)) == {None}
+
+
+def test_withheld_label_does_not_bypass_null_bounded_range_validation() -> None:
+    quality = bounded_quality()
+    quality["intrinsic_value_range"] = _range(None, None, None, 0.005)
+    artifact = public_artifact(quality=quality, review_state="withheld")
+    assert artifact["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["bridge_quality"]["reason_codes"] == [
+        "BRIDGE_QUALITY_INVALID_OR_MISSING"
+    ]
+    assert sanitized["review"]["publication_state"] == "withheld"
+
+
+def test_fcff_missing_automated_review_fails_closed_even_with_valid_bridge() -> None:
+    artifact = public_artifact(quality=complete_quality())
+    del artifact["automated_review"]
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["automated_review"]["decision"] == "blocked"
+    assert sanitized["automated_review"]["blocking_reasons"] == [
+        "invalid_automated_review_payload"
+    ]
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert set(_all_value_sinks(sanitized)) == {None}
+
+
+@pytest.mark.parametrize("fcff_surface", ["model", "scenario", "bridge"])
+def test_fcff_surface_cannot_spoof_equity_policy_to_omit_automated_review(
+    fcff_surface: str,
+) -> None:
+    artifact = public_artifact(quality=complete_quality())
+    del artifact["automated_review"]
+    artifact["model_policy"]["primary"] = "residual_income"
+    if fcff_surface != "model":
+        artifact["models"] = {
+            "residual_income": {
+                "publication_state": "pass",
+                "intrinsic_value_per_share": 42.0,
+            }
+        }
+    if fcff_surface != "scenario":
+        artifact["scenarios"] = {}
+    if fcff_surface != "bridge":
+        del artifact["bridge_quality"]
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["automated_review"]["decision"] == "blocked"
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert set(_all_value_sinks(sanitized)) == {None}
+
+
+def test_fcff_surface_must_agree_with_model_policy_even_with_valid_review() -> None:
+    artifact = public_artifact(quality=complete_quality())
+    artifact["model_policy"]["primary"] = "residual_income"
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert any("model policy" in error.lower() for error in sanitized["review"]["errors"])
+    assert set(_all_value_sinks(sanitized)) == {None}
+
+
+@pytest.mark.parametrize("fcff_surface", ["model", "scenario"])
+def test_fcff_model_discriminator_cannot_hide_behind_renamed_key(
+    fcff_surface: str,
+) -> None:
+    artifact = public_artifact(quality=complete_quality())
+    del artifact["automated_review"]
+    del artifact["bridge_quality"]
+    artifact["model_policy"]["primary"] = "residual_income"
+    if fcff_surface == "model":
+        artifact["models"] = {
+            "renamed_equity_model": {
+                "model": "fcff_dcf",
+                "publication_state": "pass",
+                "intrinsic_value_per_share": 100.0,
+            }
+        }
+        artifact["scenarios"] = {}
+    else:
+        artifact["models"] = {
+            "residual_income": {
+                "model": "residual_income",
+                "publication_state": "pass",
+                "intrinsic_value_per_share": 42.0,
+            }
+        }
+        artifact["scenarios"] = {
+            "base": {
+                "renamed_equity_model": {
+                    "model": "fcff_dcf",
+                    "publication_state": "pass",
+                    "intrinsic_value_per_share": 100.0,
+                }
+            }
+        }
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["automated_review"]["decision"] == "blocked"
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert set(_all_value_sinks(sanitized)) == {None}
+
+
+@pytest.mark.parametrize("location", ["model", "scenario"])
+def test_model_key_and_discriminator_must_agree(location: str) -> None:
+    artifact = public_artifact(quality=complete_quality())
+    if location == "model":
+        artifact["models"]["fcff_dcf"]["model"] = "residual_income"
+    else:
+        artifact["scenarios"]["stress"]["fcff_dcf"] = {
+            "model": "residual_income",
+            "publication_state": "pass",
+            "intrinsic_value_per_share": 100.0,
+        }
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert any("model" in error.lower() for error in sanitized["review"]["errors"])
+    assert set(_all_value_sinks(sanitized)) == {None}
+
+
+def test_bridge_midpoint_must_match_canonical_fcff_value() -> None:
+    artifact = public_artifact(quality=complete_quality(331_839_000_000.0))
+    assert artifact["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["bridge_quality"]["reason_codes"] == [
+        "BRIDGE_QUALITY_INVALID_OR_MISSING"
+    ]
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert set(_all_value_sinks(sanitized)) == {None}
+
+
+@pytest.mark.parametrize(
+    "canonical_value",
+    [None, True, float("nan"), float("inf"), float("-inf")],
+)
+def test_bridge_absolutes_require_finite_canonical_fcff_value(
+    canonical_value: object,
+) -> None:
+    artifact = public_artifact(quality=bounded_quality())
+    artifact["models"]["fcff_dcf"][
+        "intrinsic_value_per_share"
+    ] = canonical_value
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["bridge_quality"]["reason_codes"] == [
+        "BRIDGE_QUALITY_INVALID_OR_MISSING"
+    ]
+    assert sanitized["review"]["publication_state"] == "withheld"
+
+
+def test_bridge_absolutes_require_canonical_fcff_model() -> None:
+    artifact = public_artifact(quality=bounded_quality())
+    del artifact["models"]["fcff_dcf"]
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["bridge_quality"]["reason_codes"] == [
+        "BRIDGE_QUALITY_INVALID_OR_MISSING"
+    ]
+    assert sanitized["review"]["publication_state"] == "withheld"
+
+
+@pytest.mark.parametrize(
+    ("model_state", "expected_review_state", "expected_midpoint"),
+    [
+        ("review_required", "review_required", 100.0),
+        ("withheld", "withheld", None),
+    ],
+)
+def test_canonical_fcff_state_constrains_review_and_bridge_range(
+    model_state: str,
+    expected_review_state: str,
+    expected_midpoint: float | None,
+) -> None:
+    artifact = public_artifact(quality=complete_quality())
+    artifact["models"]["fcff_dcf"]["publication_state"] = model_state
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == expected_review_state
+    assert sanitized["bridge_quality"]["intrinsic_value_range"][
+        "midpoint"
+    ] == expected_midpoint
+
+
 def _delete_decision(quality: dict[str, Any]) -> None:
     del quality["decision"]
 
@@ -787,6 +1047,7 @@ def test_private_over_limit_reason_is_deduplicated_before_publication(
     low = 99.4999995
     midpoint = 100.0
     high = 100.5000005
+    private["models"]["fcff_dcf"]["intrinsic_value_per_share"] = midpoint
     _install_private_assessment(
         private,
         decision="withheld",

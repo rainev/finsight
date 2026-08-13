@@ -168,6 +168,12 @@ _INVALID_BRIDGE_ERROR = (
 _INVALID_AUTOMATED_REVIEW_ERROR = (
     "Public automated review is invalid; valuation was withheld."
 )
+_INCONSISTENT_MODEL_POLICY_ERROR = (
+    "Public model policy is inconsistent with FCFF valuation surfaces and was withheld."
+)
+_INCONSISTENT_MODEL_IDENTITY_ERROR = (
+    "Public model key and discriminator are inconsistent; valuation was withheld."
+)
 
 _BRIDGE_FIELDS = (
     "cash",
@@ -429,19 +435,15 @@ def _validated_public_bridge_quality(value: object) -> dict[str, Any] | None:
                 or blocking_fields
                 or spread_ratio is None
                 or not _spread_within_limit(spread_ratio)
-                or (
-                    not all_null
-                    and (
-                        midpoint is None
-                        or midpoint <= 0
-                        or expected_spread is None
-                        or not isclose(
-                            spread_ratio,
-                            expected_spread,
-                            rel_tol=1e-14,
-                            abs_tol=0.0,
-                        )
-                    )
+                or all_null
+                or midpoint is None
+                or midpoint <= 0
+                or expected_spread is None
+                or not isclose(
+                    spread_ratio,
+                    expected_spread,
+                    rel_tol=1e-14,
+                    abs_tol=0.0,
                 )
             ):
                 raise ValueError("bounded bridge quality is inconsistent")
@@ -507,6 +509,152 @@ def _validated_public_bridge_quality(value: object) -> dict[str, Any] | None:
         }
     except (KeyError, TypeError, ValueError, OverflowError, ZeroDivisionError):
         return None
+
+
+def _validated_scrubbed_bounded_bridge_quality(
+    value: object,
+) -> dict[str, Any] | None:
+    """Validate the null-valued form produced only after public withholding."""
+    try:
+        if not isinstance(value, dict) or value.get("decision") != "bounded_review":
+            raise ValueError("not a scrubbed bounded bridge")
+        raw_range = value["intrinsic_value_range"]
+        if not isinstance(raw_range, dict) or set(raw_range) != _BRIDGE_RANGE_KEYS:
+            raise ValueError("bridge range has an unsupported shape")
+        if any(raw_range[key] is not None for key in ("low", "midpoint", "high")):
+            raise ValueError("scrubbed bridge absolutes must be null")
+        spread_ratio = _json_number(raw_range["spread_ratio"])
+        assert spread_ratio is not None
+
+        probe = deepcopy(value)
+        half_width = spread_ratio * 50.0
+        probe["intrinsic_value_range"].update(
+            {
+                "low": 100.0 - half_width,
+                "midpoint": 100.0,
+                "high": 100.0 + half_width,
+            }
+        )
+        validated = _validated_public_bridge_quality(probe)
+        if validated is None:
+            raise ValueError("scrubbed bounded bridge metadata is invalid")
+        validated["intrinsic_value_range"].update(
+            {"low": None, "midpoint": None, "high": None}
+        )
+        return validated
+    except (
+        AssertionError,
+        KeyError,
+        TypeError,
+        ValueError,
+        OverflowError,
+    ):
+        return None
+
+
+def _withheld_value_sink(value: object) -> bool:
+    return (
+        isinstance(value, dict)
+        and value.get("publication_state") == "withheld"
+        and value.get("intrinsic_value_per_share") is None
+    )
+
+
+def _artifact_is_fully_scrubbed(artifact: object) -> bool:
+    """Recognize only an artifact previously scrubbed at every value sink."""
+    if not isinstance(artifact, dict):
+        return False
+    review = artifact.get("review")
+    models = artifact.get("models")
+    scenarios = artifact.get("scenarios")
+    scenario_range = artifact.get("scenario_range")
+    sensitivities = artifact.get("sensitivities", [])
+    if (
+        not isinstance(review, dict)
+        or review.get("publication_state") != "withheld"
+        or not isinstance(models, dict)
+        or not _withheld_value_sink(models.get("fcff_dcf"))
+        or not all(_withheld_value_sink(model) for model in models.values())
+        or not isinstance(scenarios, dict)
+        or not all(
+            isinstance(scenario, dict)
+            and all(_withheld_value_sink(model) for model in scenario.values())
+            for scenario in scenarios.values()
+        )
+        or not isinstance(sensitivities, list)
+        or not all(_withheld_value_sink(row) for row in sensitivities)
+        or not isinstance(scenario_range, dict)
+        or any(scenario_range.get(key) is not None for key in ("low", "base", "high"))
+    ):
+        return False
+    return True
+
+
+def _artifact_has_fcff_surface(artifact: dict[str, Any]) -> bool:
+    models = artifact.get("models")
+    scenarios = artifact.get("scenarios")
+    return (
+        "bridge_quality" in artifact
+        or (
+            isinstance(models, dict)
+            and any(
+                name == "fcff_dcf"
+                or (isinstance(model, dict) and model.get("model") == "fcff_dcf")
+                for name, model in models.items()
+            )
+        )
+        or (
+            isinstance(scenarios, dict)
+            and any(
+                isinstance(scenario, dict)
+                and any(
+                    name == "fcff_dcf"
+                    or (
+                        isinstance(model, dict)
+                        and model.get("model") == "fcff_dcf"
+                    )
+                    for name, model in scenario.items()
+                )
+                for scenario in scenarios.values()
+            )
+        )
+    )
+
+
+def _artifact_model_identities_agree(artifact: dict[str, Any]) -> bool:
+    def collection_agrees(value: object) -> bool:
+        return not isinstance(value, dict) or all(
+            not isinstance(model, dict)
+            or "model" not in model
+            or model["model"] == name
+            for name, model in value.items()
+        )
+
+    models = artifact.get("models")
+    scenarios = artifact.get("scenarios")
+    return collection_agrees(models) and (
+        not isinstance(scenarios, dict)
+        or all(collection_agrees(scenario) for scenario in scenarios.values())
+    )
+
+
+def _bridge_absolutes_match_canonical_fcff(
+    bridge_quality: dict[str, Any],
+    models: dict[str, Any],
+) -> bool:
+    value_range = bridge_quality["intrinsic_value_range"]
+    if all(value_range[key] is None for key in ("low", "midpoint", "high")):
+        return True
+    fcff = models.get("fcff_dcf")
+    if not isinstance(fcff, dict):
+        return False
+    try:
+        canonical = _json_number(fcff.get("intrinsic_value_per_share"))
+        midpoint = _json_number(value_range["midpoint"])
+    except (TypeError, ValueError, OverflowError):
+        return False
+    assert canonical is not None and midpoint is not None
+    return isclose(canonical, midpoint, rel_tol=1e-14, abs_tol=0.0)
 
 
 def _public_bridge_quality(result: dict[str, Any]) -> dict[str, Any]:
@@ -663,6 +811,7 @@ def _invalid_automated_review() -> dict[str, Any]:
 def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     """Validate public state vocabulary and fail closed at every serving boundary."""
     public = deepcopy(artifact) if isinstance(artifact, dict) else {}
+    was_fully_scrubbed = _artifact_is_fully_scrubbed(public)
     review = public.get("review")
     if not isinstance(review, dict):
         review = {}
@@ -675,33 +824,27 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     review["errors"] = errors or []
     review["warnings"] = warnings or []
 
+    if not _artifact_model_identities_agree(public):
+        invalid_state = True
+        _append_unique(review["errors"], _INCONSISTENT_MODEL_IDENTITY_ERROR)
+
+    policy = public.get("model_policy")
+    primary = policy.get("primary") if isinstance(policy, dict) else None
+    policy_declares_fcff = primary == "fcff_dcf"
+    has_fcff_surface = _artifact_has_fcff_surface(public)
+    fcff_required = policy_declares_fcff or has_fcff_surface
+    if has_fcff_surface and not policy_declares_fcff:
+        invalid_state = True
+        _append_unique(review["errors"], _INCONSISTENT_MODEL_POLICY_ERROR)
+
     automated_ceiling = "pass"
-    if "automated_review" in public:
-        if _valid_automated_review(public["automated_review"]):
+    if "automated_review" in public or fcff_required:
+        if _valid_automated_review(public.get("automated_review")):
             automated_ceiling = public["automated_review"]["publication_state"]
         else:
             public["automated_review"] = _invalid_automated_review()
             automated_ceiling = "withheld"
             _append_unique(review["errors"], _INVALID_AUTOMATED_REVIEW_ERROR)
-
-    policy = public.get("model_policy")
-    primary = policy.get("primary") if isinstance(policy, dict) else None
-    bridge_applicable = primary == "fcff_dcf"
-    bridge_quality: dict[str, Any] | None = None
-    bridge_ceiling = "pass"
-    if bridge_applicable or "bridge_quality" in public:
-        bridge_quality = _validated_public_bridge_quality(
-            public.get("bridge_quality")
-        )
-        if bridge_quality is None:
-            bridge_quality = _invalid_bridge_quality()
-            _append_unique(review["errors"], _INVALID_BRIDGE_ERROR)
-        public["bridge_quality"] = bridge_quality
-        bridge_ceiling = {
-            "complete": "pass",
-            "bounded_review": "review_required",
-            "withheld": "withheld",
-        }[bridge_quality["decision"]]
 
     fallback_reason = _legacy_fcff_fallback_reason(public)
     if fallback_reason:
@@ -724,6 +867,45 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             model["publication_state"] = "withheld"
             model["intrinsic_value_per_share"] = None
             invalid_state = True
+
+    bridge_quality: dict[str, Any] | None = None
+    bridge_ceiling = "pass"
+    if fcff_required:
+        bridge_quality = _validated_public_bridge_quality(
+            public.get("bridge_quality")
+        )
+        if bridge_quality is None and was_fully_scrubbed:
+            bridge_quality = _validated_scrubbed_bounded_bridge_quality(
+                public.get("bridge_quality")
+            )
+        if (
+            bridge_quality is not None
+            and bridge_quality["decision"] == "complete"
+            and all(
+                bridge_quality["intrinsic_value_range"][key] is None
+                for key in ("low", "midpoint", "high")
+            )
+            and not was_fully_scrubbed
+        ):
+            bridge_quality = None
+        if bridge_quality is not None and not _bridge_absolutes_match_canonical_fcff(
+            bridge_quality, models
+        ):
+            bridge_quality = None
+        if bridge_quality is None:
+            bridge_quality = _invalid_bridge_quality()
+            _append_unique(review["errors"], _INVALID_BRIDGE_ERROR)
+        public["bridge_quality"] = bridge_quality
+        bridge_ceiling = {
+            "complete": "pass",
+            "bounded_review": "review_required",
+            "withheld": "withheld",
+        }[bridge_quality["decision"]]
+
+    canonical_fcff_ceiling = "pass"
+    canonical_fcff = models.get("fcff_dcf")
+    if isinstance(canonical_fcff, dict):
+        canonical_fcff_ceiling = canonical_fcff["publication_state"]
 
     scenarios = public.get("scenarios")
     if not isinstance(scenarios, dict):
@@ -776,7 +958,10 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         native_state = "withheld"
         _append_unique(review["errors"], _INVALID_STATE_ERROR)
     effective_review_state = _stricter_state(
-        native_state, automated_ceiling, bridge_ceiling
+        native_state,
+        automated_ceiling,
+        bridge_ceiling,
+        canonical_fcff_ceiling,
     )
     review["publication_state"] = effective_review_state
 
