@@ -5,12 +5,18 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import isfinite
 from numbers import Real
-from typing import Any, Mapping
+from typing import Any, Literal, Mapping
 
 from .field_availability import FieldAvailability
 
 
 POLICY_VERSION = "US-BRIDGE-POLICY-1.0"
+_MAX_SPREAD_LIMIT = 0.01
+_BASE_ENTERPRISE_VALUE_UNAVAILABLE = "BASE_ENTERPRISE_VALUE_UNAVAILABLE"
+_NONFINITE_INTRINSIC_VALUE_RESULT = "NONFINITE_INTRINSIC_VALUE_RESULT"
+_NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT = (
+    "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT"
+)
 
 _ACCOUNT_POINT_STATES = frozenset(
     {"reported", "explicit_zero", "evidence_backed_zero"}
@@ -255,6 +261,222 @@ class BridgeResolution:
             "preferred_equity": self.preferred_equity.midpoint,
             "noncontrolling_interests": self.noncontrolling_interests.midpoint,
         }
+
+
+def _bounded_review_warning(spread_ratio: float) -> str:
+    return (
+        "Enterprise-to-equity bridge uses source-bounded uncertainty; "
+        f"the joint intrinsic-value spread is {spread_ratio * 100:.2f}% "
+        "and requires review."
+    )
+
+
+def _require_spread_limit(value: object) -> None:
+    _require_finite_number(value, "spread_limit")
+    if value <= 0 or value > _MAX_SPREAD_LIMIT:
+        raise ValueError(
+            "spread_limit must be positive and no greater than 0.01"
+        )
+
+
+@dataclass(frozen=True)
+class BridgeAssessment:
+    decision: Literal["complete", "bounded_review", "withheld"]
+    usable: bool
+    intrinsic_value_range: BridgeRange | None
+    spread_ratio: float | None
+    spread_limit: float
+    blocking_fields: tuple[str, ...]
+    bounded_fields: tuple[str, ...]
+    reason_codes: tuple[str, ...]
+    warning: str | None
+    policy_version: str = POLICY_VERSION
+
+    def __post_init__(self) -> None:
+        if self.decision not in {"complete", "bounded_review", "withheld"}:
+            raise ValueError("decision must be complete, bounded_review, or withheld")
+        if not isinstance(self.usable, bool):
+            raise ValueError("usable must be a boolean")
+
+        blocking_fields = _require_string_tuple(
+            self.blocking_fields, "blocking_fields"
+        )
+        bounded_fields = _require_string_tuple(
+            self.bounded_fields, "bounded_fields"
+        )
+        reason_codes = _require_string_tuple(self.reason_codes, "reason_codes")
+        object.__setattr__(self, "blocking_fields", blocking_fields)
+        object.__setattr__(self, "bounded_fields", bounded_fields)
+        object.__setattr__(self, "reason_codes", reason_codes)
+
+        if self.intrinsic_value_range is not None and not isinstance(
+            self.intrinsic_value_range, BridgeRange
+        ):
+            raise ValueError(
+                "intrinsic_value_range must be a BridgeRange or None"
+            )
+        if self.spread_ratio is not None:
+            _require_finite_number(self.spread_ratio, "spread_ratio")
+            if self.spread_ratio < 0:
+                raise ValueError("spread_ratio must be nonnegative")
+        _require_spread_limit(self.spread_limit)
+        if self.warning is not None and (
+            not isinstance(self.warning, str) or not self.warning.strip()
+        ):
+            raise ValueError("warning must be nonempty or None")
+        if not isinstance(self.policy_version, str) or not self.policy_version.strip():
+            raise ValueError("policy_version must be nonempty")
+
+        value_range = self.intrinsic_value_range
+        expected_spread: float | None = None
+        if value_range is not None:
+            expected_midpoint = (value_range.low + value_range.high) / 2
+            if (
+                not isfinite(expected_midpoint)
+                or value_range.midpoint != expected_midpoint
+            ):
+                raise ValueError(
+                    "intrinsic_value_range midpoint must equal (low + high) / 2"
+                )
+            if value_range.low == value_range.high:
+                expected_spread = 0.0
+            elif value_range.midpoint > 0:
+                candidate_spread = (
+                    value_range.high - value_range.low
+                ) / value_range.midpoint
+                if isfinite(candidate_spread):
+                    expected_spread = candidate_spread
+
+        complete_without_value = (
+            self.decision == "complete"
+            and value_range is None
+            and self.spread_ratio == 0.0
+        )
+        if (
+            self.spread_ratio is not None
+            and self.spread_ratio != expected_spread
+            and not complete_without_value
+        ):
+            raise ValueError(
+                "spread_ratio must match the intrinsic_value_range arithmetic"
+            )
+
+        if self.decision == "complete":
+            if not self.usable or blocking_fields or bounded_fields:
+                raise ValueError(
+                    "complete must be usable with no blocking or bounded fields"
+                )
+            if self.spread_ratio != 0.0:
+                raise ValueError("complete must have a zero spread_ratio")
+            if value_range is not None and value_range.low != value_range.high:
+                raise ValueError("complete must have a point intrinsic-value range")
+            if self.warning is not None:
+                raise ValueError("complete must not have a warning")
+            return
+
+        if self.decision == "bounded_review":
+            if (
+                not self.usable
+                or blocking_fields
+                or not bounded_fields
+                or value_range is None
+                or self.spread_ratio is None
+                or value_range.midpoint <= 0
+                or self.spread_ratio > self.spread_limit
+            ):
+                raise ValueError(
+                    "bounded_review requires a usable, positive, in-limit "
+                    "bounded range with no blockers"
+                )
+            if self.warning != _bounded_review_warning(self.spread_ratio):
+                raise ValueError("bounded_review warning does not match spread_ratio")
+            return
+
+        if self.usable:
+            raise ValueError("withheld must not be usable")
+        if not blocking_fields and not bounded_fields:
+            raise ValueError("withheld requires blocking or bounded fields")
+        if self.warning is not None:
+            raise ValueError("withheld must not have a warning")
+        if blocking_fields:
+            if value_range is not None or self.spread_ratio is not None:
+                raise ValueError(
+                    "blocked assessments must not expose a provisional range or spread"
+                )
+            return
+        if value_range is None:
+            if self.spread_ratio is not None or not (
+                {_BASE_ENTERPRISE_VALUE_UNAVAILABLE, _NONFINITE_INTRINSIC_VALUE_RESULT}
+                & set(reason_codes)
+            ):
+                raise ValueError(
+                    "withheld bounded assessments without a range require an "
+                    "unavailable or non-finite value reason"
+                )
+            return
+        if value_range.midpoint <= 0:
+            if (
+                self.spread_ratio is not None
+                or _NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT not in reason_codes
+            ):
+                raise ValueError(
+                    "nonpositive intrinsic-value midpoint must be withheld "
+                    "without a spread"
+                )
+            return
+        if self.spread_ratio is None:
+            if _NONFINITE_INTRINSIC_VALUE_RESULT not in reason_codes:
+                raise ValueError(
+                    "missing spread_ratio requires a non-finite result reason"
+                )
+            return
+        if self.spread_ratio <= self.spread_limit:
+            raise ValueError("withheld spread_ratio must exceed spread_limit")
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "decision": self.decision,
+            "usable": self.usable,
+            "intrinsic_value_range": (
+                self.intrinsic_value_range.as_dict()
+                if self.intrinsic_value_range is not None
+                else None
+            ),
+            "spread_ratio": self.spread_ratio,
+            "spread_limit": self.spread_limit,
+            "blocking_fields": list(self.blocking_fields),
+            "bounded_fields": list(self.bounded_fields),
+            "reason_codes": list(self.reason_codes),
+            "warning": self.warning,
+            "policy_version": self.policy_version,
+        }
+
+    @classmethod
+    def from_dict(cls, value: Mapping[str, Any]) -> BridgeAssessment:
+        if not isinstance(value, Mapping):
+            raise ValueError("bridge assessment must be a mapping")
+        raw_range = value["intrinsic_value_range"]
+        intrinsic_value_range = (
+            None if raw_range is None else BridgeRange.from_dict(raw_range)
+        )
+        return cls(
+            decision=value["decision"],
+            usable=value["usable"],
+            intrinsic_value_range=intrinsic_value_range,
+            spread_ratio=value["spread_ratio"],
+            spread_limit=value["spread_limit"],
+            blocking_fields=_restore_string_tuple(
+                value["blocking_fields"], "blocking_fields"
+            ),
+            bounded_fields=_restore_string_tuple(
+                value["bounded_fields"], "bounded_fields"
+            ),
+            reason_codes=_restore_string_tuple(
+                value["reason_codes"], "reason_codes"
+            ),
+            warning=value["warning"],
+            policy_version=value.get("policy_version", POLICY_VERSION),
+        )
 
 
 @dataclass(frozen=True)
@@ -708,4 +930,155 @@ def reconcile_bridge(
         bridge_adjustment=bridge_adjustment,
         fully_diluted_shares=fully_diluted_shares,
         reason_codes=tuple(sorted(context.reason_codes)),
+    )
+
+
+def assess_bridge_materiality(
+    resolution: BridgeResolution,
+    enterprise_value: float | None,
+    spread_limit: float = _MAX_SPREAD_LIMIT,
+) -> BridgeAssessment:
+    """Assess joint per-share bridge uncertainty against the global ceiling."""
+
+    if not isinstance(resolution, BridgeResolution):
+        raise ValueError("resolution must be a BridgeResolution")
+    _require_spread_limit(spread_limit)
+
+    common = {
+        "spread_limit": spread_limit,
+        "blocking_fields": resolution.blocking_fields,
+        "bounded_fields": resolution.bounded_fields,
+        "policy_version": resolution.policy_version,
+    }
+    if resolution.blocking_fields:
+        return BridgeAssessment(
+            decision="withheld",
+            usable=False,
+            intrinsic_value_range=None,
+            spread_ratio=None,
+            reason_codes=resolution.reason_codes,
+            warning=None,
+            **common,
+        )
+
+    try:
+        _require_finite_number(enterprise_value, "enterprise_value")
+        finite_enterprise_value = True
+    except ValueError:
+        finite_enterprise_value = False
+
+    if not resolution.bounded_fields:
+        intrinsic_value_range = None
+        if finite_enterprise_value:
+            shares = resolution.fully_diluted_shares
+            low = (enterprise_value + resolution.bridge_adjustment.low) / shares
+            high = (enterprise_value + resolution.bridge_adjustment.high) / shares
+            midpoint = (low + high) / 2
+            if all(isfinite(value) for value in (low, high, midpoint)):
+                intrinsic_value_range = BridgeRange(
+                    low=low,
+                    midpoint=midpoint,
+                    high=high,
+                )
+        return BridgeAssessment(
+            decision="complete",
+            usable=True,
+            intrinsic_value_range=intrinsic_value_range,
+            spread_ratio=0.0,
+            reason_codes=resolution.reason_codes,
+            warning=None,
+            **common,
+        )
+
+    if not finite_enterprise_value:
+        return BridgeAssessment(
+            decision="withheld",
+            usable=False,
+            intrinsic_value_range=None,
+            spread_ratio=None,
+            reason_codes=tuple(
+                sorted(
+                    {*resolution.reason_codes, _BASE_ENTERPRISE_VALUE_UNAVAILABLE}
+                )
+            ),
+            warning=None,
+            **common,
+        )
+
+    shares = resolution.fully_diluted_shares
+    low = (enterprise_value + resolution.bridge_adjustment.low) / shares
+    high = (enterprise_value + resolution.bridge_adjustment.high) / shares
+    midpoint = (low + high) / 2
+    if not all(isfinite(value) for value in (low, high, midpoint)):
+        return BridgeAssessment(
+            decision="withheld",
+            usable=False,
+            intrinsic_value_range=None,
+            spread_ratio=None,
+            reason_codes=tuple(
+                sorted(
+                    {*resolution.reason_codes, _NONFINITE_INTRINSIC_VALUE_RESULT}
+                )
+            ),
+            warning=None,
+            **common,
+        )
+
+    intrinsic_value_range = BridgeRange(
+        low=low,
+        midpoint=midpoint,
+        high=high,
+    )
+    if midpoint <= 0:
+        return BridgeAssessment(
+            decision="withheld",
+            usable=False,
+            intrinsic_value_range=intrinsic_value_range,
+            spread_ratio=None,
+            reason_codes=tuple(
+                sorted(
+                    {
+                        *resolution.reason_codes,
+                        _NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT,
+                    }
+                )
+            ),
+            warning=None,
+            **common,
+        )
+
+    spread_ratio = (high - low) / midpoint
+    if not isfinite(spread_ratio):
+        return BridgeAssessment(
+            decision="withheld",
+            usable=False,
+            intrinsic_value_range=intrinsic_value_range,
+            spread_ratio=None,
+            reason_codes=tuple(
+                sorted(
+                    {*resolution.reason_codes, _NONFINITE_INTRINSIC_VALUE_RESULT}
+                )
+            ),
+            warning=None,
+            **common,
+        )
+
+    if spread_ratio <= spread_limit:
+        return BridgeAssessment(
+            decision="bounded_review",
+            usable=True,
+            intrinsic_value_range=intrinsic_value_range,
+            spread_ratio=spread_ratio,
+            reason_codes=resolution.reason_codes,
+            warning=_bounded_review_warning(spread_ratio),
+            **common,
+        )
+    return BridgeAssessment(
+        decision="withheld",
+        usable=False,
+        intrinsic_value_range=intrinsic_value_range,
+        spread_ratio=spread_ratio,
+        reason_codes=resolution.reason_codes,
+        warning=None,
+        **common,
     )

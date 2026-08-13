@@ -8,8 +8,10 @@ from typing import Any
 import pytest
 
 from app.us_valuation.bridge_policy import (
+    BridgeAssessment,
     BridgeRange,
     BridgeResolution,
+    assess_bridge_materiality,
     reconcile_bridge,
 )
 from app.us_valuation.classification import classify_issuer
@@ -168,6 +170,54 @@ def with_total_debt(
         covered_fields=covered_fields,
     )
     return availability
+
+
+def bounded_resolution(
+    *,
+    securities: tuple[float, float] | None = None,
+    preferred: tuple[float, float] | None = None,
+    debt: tuple[float, float] | None = None,
+    shares: float,
+) -> BridgeResolution:
+    availability = complete_availability()
+    if securities is not None:
+        availability["marketable_securities_noncurrent"] = bounded(
+            "marketable_securities_noncurrent",
+            *securities,
+        )
+    if preferred is not None:
+        availability["preferred_equity"] = bounded(
+            "preferred_equity",
+            *preferred,
+        )
+    if debt is not None:
+        availability["noncurrent_debt"] = bounded(
+            "noncurrent_debt",
+            *debt,
+        )
+    return reconcile_bridge(
+        availability,
+        fully_diluted_shares=shares,
+    )
+
+
+def exact_one_percent_resolution() -> BridgeResolution:
+    zero = BridgeRange(low=0.0, midpoint=0.0, high=0.0)
+    adjustment = BridgeRange(low=0.0, midpoint=0.5, high=1.0)
+    return BridgeResolution(
+        complete=False,
+        can_value=True,
+        missing_fields=("marketable_securities_noncurrent",),
+        blocking_fields=(),
+        bounded_fields=("marketable_securities_noncurrent",),
+        cash_and_investments=adjustment,
+        total_debt=zero,
+        preferred_equity=zero,
+        noncontrolling_interests=zero,
+        bridge_adjustment=adjustment,
+        fully_diluted_shares=1.0,
+        reason_codes=(),
+    )
 
 
 def test_complete_bridge_reconciles_point_values() -> None:
@@ -836,3 +886,283 @@ def test_bridge_records_are_frozen() -> None:
         range_value.low = 0.0  # type: ignore[misc]
     with pytest.raises(FrozenInstanceError):
         resolution.complete = False  # type: ignore[misc]
+
+
+def test_complete_bridge_has_zero_spread_and_complete_decision() -> None:
+    resolution = reconcile_bridge(
+        complete_availability(),
+        fully_diluted_shares=10.0,
+    )
+
+    assessment = assess_bridge_materiality(
+        resolution,
+        enterprise_value=1_000.0,
+    )
+
+    assert assessment.decision == "complete"
+    assert assessment.usable is True
+    assert assessment.intrinsic_value_range == BridgeRange(
+        low=106.4,
+        midpoint=106.4,
+        high=106.4,
+    )
+    assert assessment.spread_ratio == 0.0
+    assert assessment.warning is None
+
+
+def test_joint_spread_below_one_percent_is_bounded_review() -> None:
+    resolution = bounded_resolution(
+        securities=(0.0, 0.8),
+        preferred=(0.0, 0.1),
+        shares=10.0,
+    )
+
+    assessment = assess_bridge_materiality(
+        resolution,
+        enterprise_value=1_000.0,
+    )
+
+    assert assessment.decision == "bounded_review"
+    assert assessment.usable is True
+    assert assessment.spread_ratio is not None
+    assert assessment.spread_ratio < 0.01
+
+
+def test_exact_one_percent_joint_spread_is_bounded_review() -> None:
+    assessment = assess_bridge_materiality(
+        exact_one_percent_resolution(),
+        enterprise_value=99.5,
+    )
+
+    assert assessment.intrinsic_value_range == BridgeRange(
+        low=99.5,
+        midpoint=100.0,
+        high=100.5,
+    )
+    assert assessment.spread_ratio == pytest.approx(0.01)
+    assert assessment.decision == "bounded_review"
+    assert assessment.usable is True
+    assert assessment.warning == (
+        "Enterprise-to-equity bridge uses source-bounded uncertainty; "
+        "the joint intrinsic-value spread is 1.00% and requires review."
+    )
+
+
+def test_joint_spread_above_one_percent_is_withheld() -> None:
+    resolution = bounded_resolution(
+        securities=(0.0, 6.0),
+        preferred=(0.0, 6.0),
+        shares=10.0,
+    )
+
+    assessment = assess_bridge_materiality(
+        resolution,
+        enterprise_value=1_000.0,
+    )
+
+    assert assessment.decision == "withheld"
+    assert assessment.usable is False
+    assert assessment.spread_ratio is not None
+    assert assessment.spread_ratio > 0.01
+    assert assessment.warning is None
+
+
+def test_individually_small_fields_are_assessed_jointly() -> None:
+    resolution = bounded_resolution(
+        securities=(0.0, 6.0),
+        preferred=(0.0, 6.0),
+        shares=10.0,
+    )
+
+    assessment = assess_bridge_materiality(
+        resolution,
+        enterprise_value=1_000.0,
+    )
+
+    assert set(assessment.bounded_fields) == {
+        "marketable_securities_noncurrent",
+        "preferred_equity",
+    }
+    assert assessment.decision == "withheld"
+
+
+def test_nonpositive_midpoint_is_withheld() -> None:
+    resolution = bounded_resolution(
+        debt=(0.0, 10.0),
+        shares=10.0,
+    )
+
+    assessment = assess_bridge_materiality(
+        resolution,
+        enterprise_value=-100.0,
+    )
+
+    assert assessment.decision == "withheld"
+    assert assessment.usable is False
+    assert assessment.spread_ratio is None
+    assert "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT" in assessment.reason_codes
+
+
+def test_blockers_are_returned_before_placeholder_range_or_ev_evaluation() -> None:
+    availability = complete_availability(cash=None)
+    availability["marketable_securities_noncurrent"] = bounded(
+        "marketable_securities_noncurrent",
+        0.0,
+        1.0,
+    )
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assessment = assess_bridge_materiality(
+        resolution,
+        enterprise_value=None,
+    )
+
+    assert assessment.decision == "withheld"
+    assert assessment.usable is False
+    assert assessment.intrinsic_value_range is None
+    assert assessment.spread_ratio is None
+    assert assessment.blocking_fields == resolution.blocking_fields
+    assert assessment.bounded_fields == resolution.bounded_fields
+    assert assessment.reason_codes == resolution.reason_codes
+    assert "BASE_ENTERPRISE_VALUE_UNAVAILABLE" not in assessment.reason_codes
+    assert assessment.warning is None
+
+
+@pytest.mark.parametrize(
+    "enterprise_value",
+    [None, True, "1000", float("nan"), float("inf"), float("-inf")],
+)
+def test_bounded_bridge_with_unavailable_base_ev_fails_closed(
+    enterprise_value: object,
+) -> None:
+    resolution = bounded_resolution(
+        securities=(0.0, 0.8),
+        shares=10.0,
+    )
+
+    assessment = assess_bridge_materiality(
+        resolution,
+        enterprise_value=enterprise_value,  # type: ignore[arg-type]
+    )
+
+    assert assessment.decision == "withheld"
+    assert assessment.usable is False
+    assert assessment.intrinsic_value_range is None
+    assert assessment.spread_ratio is None
+    assert assessment.blocking_fields == ()
+    assert assessment.bounded_fields == resolution.bounded_fields
+    assert "BASE_ENTERPRISE_VALUE_UNAVAILABLE" in assessment.reason_codes
+    assert assessment.warning is None
+
+
+@pytest.mark.parametrize(
+    "spread_limit",
+    [
+        0.0,
+        -0.001,
+        True,
+        None,
+        "0.01",
+        float("nan"),
+        float("inf"),
+        float("-inf"),
+        0.010000001,
+    ],
+)
+def test_spread_limit_must_be_finite_positive_and_at_most_one_percent(
+    spread_limit: object,
+) -> None:
+    with pytest.raises(ValueError, match="spread_limit"):
+        assess_bridge_materiality(
+            exact_one_percent_resolution(),
+            enterprise_value=99.5,
+            spread_limit=spread_limit,  # type: ignore[arg-type]
+        )
+
+
+def test_caller_can_tighten_but_not_loosen_materiality_limit() -> None:
+    assessment = assess_bridge_materiality(
+        exact_one_percent_resolution(),
+        enterprise_value=99.5,
+        spread_limit=0.005,
+    )
+
+    assert assessment.spread_limit == 0.005
+    assert assessment.spread_ratio == pytest.approx(0.01)
+    assert assessment.decision == "withheld"
+    assert assessment.usable is False
+
+
+def test_assessment_is_frozen_and_round_trips_through_json() -> None:
+    assessment = assess_bridge_materiality(
+        exact_one_percent_resolution(),
+        enterprise_value=99.5,
+    )
+    serialized = json.loads(json.dumps(assessment.as_dict()))
+
+    assert BridgeAssessment.from_dict(serialized) == assessment
+    assert serialized == {
+        "decision": "bounded_review",
+        "usable": True,
+        "intrinsic_value_range": {
+            "low": 99.5,
+            "midpoint": 100.0,
+            "high": 100.5,
+        },
+        "spread_ratio": pytest.approx(0.01),
+        "spread_limit": 0.01,
+        "blocking_fields": [],
+        "bounded_fields": ["marketable_securities_noncurrent"],
+        "reason_codes": [],
+        "warning": (
+            "Enterprise-to-equity bridge uses source-bounded uncertainty; "
+            "the joint intrinsic-value spread is 1.00% and requires review."
+        ),
+        "policy_version": "US-BRIDGE-POLICY-1.0",
+    }
+    with pytest.raises(FrozenInstanceError):
+        assessment.usable = False  # type: ignore[misc]
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("decision", "complete"),
+        ("decision", "unsupported"),
+        ("usable", False),
+        ("intrinsic_value_range", None),
+        ("spread_ratio", None),
+        ("spread_ratio", 0.02),
+        ("spread_limit", 0.005),
+        ("blocking_fields", ["cash"]),
+        ("bounded_fields", []),
+        ("reason_codes", [""]),
+        ("warning", None),
+        ("policy_version", ""),
+    ],
+)
+def test_assessment_from_dict_rejects_mutated_payloads(
+    field: str,
+    value: object,
+) -> None:
+    assessment = assess_bridge_materiality(
+        exact_one_percent_resolution(),
+        enterprise_value=99.5,
+    )
+    serialized = assessment.as_dict()
+    serialized[field] = value
+
+    with pytest.raises(ValueError):
+        BridgeAssessment.from_dict(serialized)
+
+
+def test_assessment_from_dict_rejects_mutated_range_arithmetic() -> None:
+    assessment = assess_bridge_materiality(
+        exact_one_percent_resolution(),
+        enterprise_value=99.5,
+    )
+    serialized = assessment.as_dict()
+    serialized["intrinsic_value_range"]["high"] = 100.6
+
+    with pytest.raises(ValueError, match="intrinsic_value_range|spread_ratio"):
+        BridgeAssessment.from_dict(serialized)
