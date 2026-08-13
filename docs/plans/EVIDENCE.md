@@ -373,3 +373,90 @@ work is to eliminate recurring high-value deterministic mapping gaps—starting 
 liability-like preferred-equity review noise—then rerun eligibility before considering any live
 valuation integration. HPE companion-evidence traceability is separately parked in the
 production backlog; it does not change the safe rejection or shadow-only result.
+
+## XBRL US XUSSS/XULE public-normalizer shadow benchmark
+
+Status: **verified — integration rejected**. This was a shadow-only external-tool experiment;
+it changed no production dependency, resolver rule, valuation input, serving artifact, or
+publication gate.
+
+### Reproducible environment and corpus
+
+The experiment reproduced the official XBRL US notebook in a disposable environment:
+
+| Component | Pinned version / revision |
+| --- | --- |
+| Arelle | `2.36.4` |
+| XULE | tag `30044`, commit `af87cacc8c6748c77f27314f832fddb36c301aab` |
+| Arelle EDGAR plugin | tag `25.0.1`, commit `196ed4ffaa34c8fe40f80ad03a14f3425989c62b` |
+| `aniso8601` | `9.0.1` |
+| Compiled normalization rules | `2024-ugt-norm.zip`, SHA-256 `0ee539689dabdaedcf357ffdad56cb7620a6720c4094cd06c27b062796b59d9b` |
+| XUSSS schema | SHA-256 `fe64aa22b3b921a9a729895d9ee95b06e38ef39d1153cd32a00285428bc79c48` |
+
+The inspected current `jupyter` branch at commit
+`c996b01691e69dd2df31dc2e72bed525d178b517` (2025-10-13) still contains only
+`2024-ugt-norm-xule.ipynb` and `2024-ugt-norm.zip`; it does not publish a 2025 or 2026
+normalization bundle. The notebook itself states that the compiled rules map reports created
+with the 2024 US-GAAP taxonomy.
+
+The adversarial ten-company sample was `DE, APD, MO, ORCL, LRCX, KR, T, EXPE, NVDA, A`.
+It covers 51 existing bridge requests across marketable securities, commercial paper, debt,
+preferred equity, NCI, and finance leases. Each controlling package came from FinSight's
+immutable SEC cache. After hydrating a disposable Arelle web cache, all ten runs completed
+offline and all eleven successful logs (including the control) contained no error or traceback.
+The generated shadow artifacts are retained under:
+
+```text
+output/structural-xbrl-xusss-benchmark-20260813/results/
+```
+
+### Result
+
+| Ticker | Missing bridge requests | XUSSS financial facts | Recovered requests | Financial concepts emitted |
+| --- | ---: | ---: | ---: | --- |
+| DE | 7 | 4 | 0 | `OtherAssetsNoncurrent` |
+| APD | 6 | 2 | 0 | `OtherAssetsNoncurrent` |
+| MO | 6 | 3 | 0 | `OtherAssetsNoncurrent` |
+| ORCL | 2 | 3 | 0 | `OtherAssetsNoncurrent` |
+| LRCX | 5 | 3 | 0 | `OtherAssetsNoncurrent` |
+| KR | 5 | 4 | 0 | `LongTermDebtNoncurrent`, `OtherAssetsNoncurrent` |
+| T | 5 | 4 | 0 | `OtherAssetsNoncurrent` |
+| EXPE | 5 | 2 | 0 | `OtherAssetsNoncurrent` |
+| NVDA | 6 | 2 | 0 | `OtherAssetsNoncurrent` |
+| A | 4 | 2 | 0 | `OtherAssetsNoncurrent` |
+| **Total** | **51** | **29** | **0** | **2 distinct concepts** |
+
+The exact official 2024 notebook filing was then run as a real positive control in the same
+environment. It emitted 317 facts, including 241 standardized facts and 237 standardized
+financial facts across 118 distinct financial concepts. This proves that the installation and
+execution path work in the rule set's intended taxonomy year; the ten-company collapse is a
+version-coverage failure, not an environment failure.
+
+### Unsafe classification evidence
+
+Two source-package reconciliations independently fail the zero-unsafe-promotion gate:
+
+- APD: XUSSS emitted `OtherAssetsNoncurrent = 60,574,200,000`. The controlling filing's
+  consolidated, un-dimensioned `OtherAssetsNoncurrent` fact is `1,653,800,000`, and total
+  `Assets` is `40,445,600,000`. The synthetic normalized amount reconciles to neither account.
+- KR: XUSSS emitted `LongTermDebtNoncurrent = 15,731,000,000`. Its own footnote identifies
+  the source as `LongTermDebtAndFinanceLease` and records
+  `LeasesInLongTermDebtAdjustments, value : 0`. The filing's separate
+  `LongTermDebtNoncurrent` fact is `14,512,000,000`. The rule therefore classified the entire
+  combined debt-and-finance-lease amount as debt rather than isolating the lease component.
+
+Both checks were reproduced through FinSight's current Arelle parser against the immutable
+package manifests. They are accounting errors, not label disagreements.
+
+### Decision
+
+Do **not** integrate the public `2024-ugt-norm.zip` bundle into FinSight's 2025/2026 pipeline,
+even as an automatic fallback. It recovered 0/51 required fields and produced at least two
+unsafe normalized values. Running it across the remaining 104-company corpus would add cost
+without credible incremental evidence.
+
+Retain Arelle as the authoritative XBRL parser and FinSight's deterministic, provenance-preserving
+resolver as the economic decision layer. XUSSS remains potentially useful as a canonical output
+vocabulary, and XULE remains a capable rule engine, but only FinSight-owned or externally supplied
+taxonomy-year-matched rules may be considered—and they must pass the same positive-control,
+source-reconciliation, and zero-unsafe-promotion gates before any production use.
