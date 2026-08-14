@@ -1,0 +1,1 @@
+- [Reliability thresholds are provisional](reliability-thresholds-are-provisional.md) — replay-test the approved V1 bands and raise evidence of unfair grading to the user before changing them.
