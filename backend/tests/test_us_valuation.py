@@ -819,7 +819,7 @@ def test_wdc_bridge_evidence_is_available_from_filing_date_not_review_date() -> 
     assert financials["balance_sheet"]["bridge_complete"] is True
 
 
-def test_crm_stale_lease_and_nonoperating_facts_do_not_clear_current_bridge() -> None:
+def test_crm_recent_annual_lease_facts_clear_current_bridge() -> None:
     submission = load_fixture("crm-submissions.json")
     classification = classify_issuer(submission)
     financials = CompanyFactsNormalizer(
@@ -833,11 +833,8 @@ def test_crm_stale_lease_and_nonoperating_facts_do_not_clear_current_bridge() ->
     )
 
     balance_sheet = financials["balance_sheet"]
-    assert balance_sheet["bridge_complete"] is False
-    assert set(balance_sheet["bridge_missing_fields"]) == {
-        "finance_lease_current",
-        "finance_lease_noncurrent",
-    }
+    assert balance_sheet["bridge_complete"] is True
+    assert balance_sheet["bridge_missing_fields"] == []
     assert balance_sheet["values"]["marketable_securities_noncurrent"] == 0
     assert balance_sheet["values"]["commercial_paper"] == 0
     assert balance_sheet["values"]["noncontrolling_interests"] == 0
@@ -848,10 +845,18 @@ def test_crm_stale_lease_and_nonoperating_facts_do_not_clear_current_bridge() ->
     assert balance_sheet["field_states"]["preferred_equity"] == "policy_verified_zero"
     for field in ("finance_lease_current", "finance_lease_noncurrent"):
         assert balance_sheet["field_states"][field] == "verification_stale"
+        assert balance_sheet["availability"][field]["freshness"] == (
+            "carried_forward"
+        )
+        assert balance_sheet["availability"][field]["fallback_level"] == (
+            "annual_carried_forward"
+        )
         assert balance_sheet["values"][field] is None
     assert balance_sheet["values"]["commercial_paper"] == 0.0
     assert balance_sheet["total_interest_bearing_debt"] == pytest.approx(
         balance_sheet["values"]["noncurrent_debt"]
+        + 275_000_000.0
+        + 260_000_000.0
     )
 
 

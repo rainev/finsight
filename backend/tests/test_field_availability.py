@@ -55,6 +55,53 @@ def test_bounded_field_requires_null_point_value_and_current_sources() -> None:
     assert FieldAvailability.from_dict(item.as_dict()) == item
 
 
+def test_carried_forward_company_fact_round_trips_with_age_metadata() -> None:
+    item = FieldAvailability(
+        field="finance_lease_noncurrent",
+        value=25.0,
+        state="reported",
+        reason_code="ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+        period_end="2025-12-31",
+        source_accession="0000000000-26-000001",
+        source_kind="companyfacts",
+        evidence_class="reported",
+        freshness="carried_forward",
+        fallback_level="annual_carried_forward",
+        source_age_days=181,
+    )
+
+    serialized = item.as_dict()
+
+    assert serialized["fallback_level"] == "annual_carried_forward"
+    assert serialized["source_age_days"] == 181
+    assert FieldAvailability.from_dict(serialized) == item
+
+
+@pytest.mark.parametrize(
+    "overrides",
+    [
+        {"source_age_days": None},
+        {"source_age_days": -1},
+        {"source_age_days": 366},
+        {"source_accession": None},
+        {"authority": "shadow"},
+    ],
+)
+def test_annual_carried_forward_requires_production_source_with_valid_age(
+    overrides: dict[str, object],
+) -> None:
+    with pytest.raises(ValueError):
+        values = {
+            "field": "finance_lease_noncurrent",
+            "reason_code": "ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+            "freshness": "carried_forward",
+            "fallback_level": "annual_carried_forward",
+            "source_age_days": 181,
+            **overrides,
+        }
+        _reported(**values)
+
+
 @pytest.mark.parametrize(
     "state,value",
     [

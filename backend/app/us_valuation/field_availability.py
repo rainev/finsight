@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import date
 from math import isfinite
 from numbers import Real
 from typing import TYPE_CHECKING, Any, Literal, Mapping, get_args
@@ -24,11 +25,20 @@ AvailabilityState = Literal[
     "conflict",
 ]
 AvailabilityAuthority = Literal["production", "shadow"]
-Freshness = Literal["current", "stale", "unknown"]
+FallbackLevel = Literal[
+    "current_reported",
+    "current_structural",
+    "reported_aggregate",
+    "annual_carried_forward",
+    "company_history",
+    "sector_estimate",
+]
+Freshness = Literal["current", "carried_forward", "stale", "unknown"]
 
 
 _AVAILABILITY_STATES = frozenset(get_args(AvailabilityState))
 _AVAILABILITY_AUTHORITIES = frozenset(get_args(AvailabilityAuthority))
+_FALLBACK_LEVELS = frozenset(get_args(FallbackLevel))
 _FRESHNESS_STATES = frozenset(get_args(Freshness))
 _POINT_STATES = frozenset({"reported", "proxy"})
 _ZERO_STATES = frozenset(
@@ -112,6 +122,8 @@ class FieldAvailability:
     source_kind: str | None
     evidence_class: str | None
     freshness: Freshness
+    fallback_level: FallbackLevel = "current_reported"
+    source_age_days: int | None = None
     uncertainty: UncertaintyRange | None = None
     covered_fields: tuple[str, ...] = ()
     authority: AvailabilityAuthority = "production"
@@ -122,8 +134,21 @@ class FieldAvailability:
             raise ValueError("state must be a recognized availability state")
         if self.authority not in _AVAILABILITY_AUTHORITIES:
             raise ValueError("authority must be production or shadow")
+        if self.fallback_level not in _FALLBACK_LEVELS:
+            raise ValueError("fallback_level must be a recognized fallback level")
         if self.freshness not in _FRESHNESS_STATES:
-            raise ValueError("freshness must be current, stale, or unknown")
+            raise ValueError(
+                "freshness must be current, carried_forward, stale, or unknown"
+            )
+        if (
+            self.source_age_days is not None
+            and (
+                isinstance(self.source_age_days, bool)
+                or not isinstance(self.source_age_days, int)
+                or self.source_age_days < 0
+            )
+        ):
+            raise ValueError("source_age_days must be a nonnegative integer or None")
 
         if self.value is not None:
             _require_finite_number(self.value, "value")
@@ -170,6 +195,26 @@ class FieldAvailability:
                 f"production {self.state} requires source_accession"
             )
 
+        if self.fallback_level == "annual_carried_forward":
+            if self.authority != "production":
+                raise ValueError(
+                    "annual_carried_forward requires production authority"
+                )
+            if self.state != "reported":
+                raise ValueError("annual_carried_forward requires reported state")
+            if self.freshness != "carried_forward":
+                raise ValueError(
+                    "annual_carried_forward requires carried_forward freshness"
+                )
+            if self.source_accession is None:
+                raise ValueError(
+                    "annual_carried_forward requires source_accession"
+                )
+            if self.source_age_days is None or self.source_age_days > 365:
+                raise ValueError(
+                    "annual_carried_forward requires source_age_days between 0 and 365"
+                )
+
     def as_dict(self) -> dict[str, Any]:
         uncertainty = None
         if self.uncertainty is not None:
@@ -189,6 +234,8 @@ class FieldAvailability:
             "source_kind": self.source_kind,
             "evidence_class": self.evidence_class,
             "freshness": self.freshness,
+            "fallback_level": self.fallback_level,
+            "source_age_days": self.source_age_days,
             "uncertainty": uncertainty,
             "covered_fields": list(self.covered_fields),
             "authority": self.authority,
@@ -225,6 +272,8 @@ class FieldAvailability:
             source_kind=value["source_kind"],
             evidence_class=value["evidence_class"],
             freshness=value["freshness"],
+            fallback_level=value.get("fallback_level", "current_reported"),
+            source_age_days=value.get("source_age_days"),
             uncertainty=uncertainty,
             covered_fields=_restore_string_tuple(
                 value.get("covered_fields", []), "covered_fields"
@@ -373,6 +422,7 @@ def availability_from_normalized_field(
     legacy_state: str,
     period_end: str,
     covered_fields: tuple[str, ...] = (),
+    reference_date: str | None = None,
 ) -> FieldAvailability:
     """Project a legacy normalized field into its compatibility availability."""
 
@@ -401,6 +451,44 @@ def availability_from_normalized_field(
     source_accession = str(raw_accession) if raw_accession is not None else None
     raw_source_kind = source_record.get("source_kind")
     source_kind = str(raw_source_kind) if raw_source_kind is not None else None
+
+    if legacy_state == "verification_stale" and reference_date is not None:
+        raw_value = _finite_float_or_none(source_record.get("value"))
+        raw_end = source_record.get("end")
+        raw_form = source_record.get("form")
+        raw_authority = source_record.get("authority", "production")
+        if (
+            raw_value is not None
+            and raw_value >= 0
+            and isinstance(raw_end, str)
+            and raw_form in {"10-K", "10-K/A"}
+            and source_kind == "companyfacts"
+            and raw_authority == "production"
+            and source_accession is not None
+        ):
+            try:
+                source_age_days = (
+                    date.fromisoformat(reference_date)
+                    - date.fromisoformat(raw_end)
+                ).days
+            except (TypeError, ValueError):
+                source_age_days = None
+            if source_age_days is not None and 0 <= source_age_days <= 365:
+                return FieldAvailability(
+                    field=field,
+                    value=raw_value,
+                    state="reported",
+                    reason_code="ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+                    period_end=period_end,
+                    source_accession=source_accession,
+                    source_kind=source_kind,
+                    evidence_class=evidence_class,
+                    freshness="carried_forward",
+                    fallback_level="annual_carried_forward",
+                    source_age_days=source_age_days,
+                    covered_fields=covered_fields,
+                )
+
     freshness: Freshness = (
         "stale"
         if state == "stale"

@@ -592,7 +592,7 @@ def _record_unusable_reason(
         return record.reason_code or "BRIDGE_EVIDENCE_UNUSABLE"
     if record.authority != "production":
         return "BRIDGE_EVIDENCE_NOT_PRODUCTION"
-    if record.freshness != "current":
+    if record.freshness not in {"current", "carried_forward"}:
         return "BRIDGE_EVIDENCE_NOT_CURRENT"
     if not _source_metadata_is_complete(
         record,

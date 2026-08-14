@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -73,6 +74,81 @@ def test_stale_fact_keeps_diagnostic_source_but_nulls_point_value() -> None:
     assert item.state == "stale"
     assert item.value is None
     assert item.freshness == "stale"
+
+
+def _reduced_annual_bridge_fixture() -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    submission = load_json("msft-submissions.json")
+    companyfacts = deepcopy(load_json("msft-companyfacts.json"))
+    companyfacts["facts"]["us-gaap"]["FinanceLeaseLiabilityNoncurrent"] = {
+        "label": "Finance lease liability, noncurrent",
+        "description": "Noncurrent finance lease liability.",
+        "units": {
+            "USD": [
+                {
+                    "val": 25,
+                    "accn": "0000000000-24-000001",
+                    "fy": 2024,
+                    "fp": "FY",
+                    "form": "10-K",
+                    "filed": "2024-08-01",
+                    "frame": "CY2024I",
+                    "end": "2024-06-30",
+                }
+            ]
+        },
+    }
+    return companyfacts, filing_records(submission)
+
+
+def test_normalizer_carries_forward_annual_fact_at_exact_365_day_boundary() -> None:
+    companyfacts, submissions = _reduced_annual_bridge_fixture()
+    financials = CompanyFactsNormalizer(
+        companyfacts,
+        fiscal_year_end="0630",
+        as_of_date="2025-06-30",
+        filing_records=submissions,
+    ).normalize()
+
+    availability = financials["balance_sheet"]["availability"]
+
+    assert availability["finance_lease_noncurrent"]["value"] == 25.0
+    assert availability["finance_lease_noncurrent"]["freshness"] == (
+        "carried_forward"
+    )
+    assert availability["finance_lease_noncurrent"]["fallback_level"] == (
+        "annual_carried_forward"
+    )
+    assert availability["finance_lease_noncurrent"]["source_age_days"] == 365
+    assert availability["finance_lease_noncurrent"]["source_accession"] == (
+        "0000000000-24-000001"
+    )
+    assert availability["finance_lease_noncurrent"]["source_kind"] == "companyfacts"
+    assert financials["balance_sheet"]["sources"]["finance_lease_noncurrent"][
+        "form"
+    ] == "10-K"
+    assert financials["balance_sheet"]["sources"]["finance_lease_noncurrent"][
+        "end"
+    ] == "2024-06-30"
+    assert financials["balance_sheet"]["sources"]["finance_lease_noncurrent"][
+        "filed"
+    ] == "2024-08-01"
+
+
+def test_normalizer_rejects_annual_fact_one_day_beyond_365_day_boundary() -> None:
+    companyfacts, submissions = _reduced_annual_bridge_fixture()
+    financials = CompanyFactsNormalizer(
+        companyfacts,
+        fiscal_year_end="0630",
+        as_of_date="2025-07-01",
+        filing_records=submissions,
+    ).normalize()
+
+    item = financials["balance_sheet"]["availability"]["finance_lease_noncurrent"]
+
+    assert item["state"] == "stale"
+    assert item["value"] is None
+    assert item["freshness"] == "stale"
+    assert item["source_accession"] == "0000000000-24-000001"
 
 
 def test_missing_fact_stays_unresolved_without_a_source() -> None:

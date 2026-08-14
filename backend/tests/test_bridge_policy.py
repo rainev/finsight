@@ -268,6 +268,51 @@ def test_complete_bridge_reconciles_point_values() -> None:
     assert resolution.bridge_adjustment.midpoint == 64.0
 
 
+def test_carried_forward_company_fact_is_usable_in_complete_bridge() -> None:
+    availability = complete_availability()
+    availability["finance_lease_noncurrent"] = FieldAvailability(
+        field="finance_lease_noncurrent",
+        value=8.0,
+        state="reported",
+        reason_code="ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+        period_end=PERIOD_END,
+        source_accession=ACCESSION,
+        source_kind="companyfacts",
+        evidence_class="reported",
+        freshness="carried_forward",
+        fallback_level="annual_carried_forward",
+        source_age_days=365,
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.complete is True
+    assert resolution.can_value is True
+    assert resolution.blocking_fields == ()
+
+
+def test_366_day_source_remains_unusable_for_bridge() -> None:
+    availability = complete_availability()
+    availability["finance_lease_noncurrent"] = FieldAvailability(
+        field="finance_lease_noncurrent",
+        value=8.0,
+        state="reported",
+        reason_code="ANNUAL_COMPANY_FACT_TOO_OLD",
+        period_end=PERIOD_END,
+        source_accession=ACCESSION,
+        source_kind="companyfacts",
+        evidence_class="reported",
+        freshness="stale",
+        source_age_days=366,
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "finance_lease_noncurrent" in resolution.blocking_fields
+    assert "BRIDGE_EVIDENCE_NOT_CURRENT" in resolution.reason_codes
+
+
 def test_real_msft_normalizer_availability_reconciles_complete_bridge() -> None:
     submission = load_json("msft-submissions.json")
     classification = classify_issuer(submission)

@@ -991,6 +991,7 @@ class CompanyFactsNormalizer:
                     if field in verified_zero_fields
                     else {
                         **stale_fact.as_dict(),
+                        "source_kind": "companyfacts",
                         "value_status": "stale_reported_fact",
                     }
                     if stale_fact
@@ -1041,6 +1042,7 @@ class CompanyFactsNormalizer:
                     if field == "finance_lease_total"
                     else ()
                 ),
+                reference_date=self.as_of_date or ttm_end,
             )
             for field, item in balance_fields.items()
         }
