@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -103,6 +104,12 @@ def is_permitted_public_numeric_path(path: tuple[str, ...]) -> bool:
         and path[:2] == ("bridge_quality", "intrinsic_value_range")
         and path[2]
         in {"low", "midpoint", "high", "spread_ratio", "spread_limit"}
+    ) or (
+        path
+        in {
+            ("reliability", "accounting_impact_ratio"),
+            ("reliability", "scenario_movement_ratio"),
+        }
     )
 
 
@@ -305,10 +312,14 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
     }
     assert public["data_boundary"]["stock_prices_used"] is False
     assert public["automated_review"]["review_version"] == "US-AUTO-REVIEW-1.0"
-    assert public["automated_review"]["decision"] == "blocked"
-    assert "model_not_pass:epv" in public["automated_review"][
-        "blocking_reasons"
-    ]
+    assert public["automated_review"]["decision"] == "approved_with_caveat"
+    assert public["automated_review"]["blocking_reasons"] == []
+    assert "Supporting model 'epv' is review_required." in public[
+        "automated_review"
+    ]["warnings"]
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] is not None
+    assert public["reliability"]["label"] == "Medium"
     assert set(public["bridge_quality"]) == {
         "decision",
         "complete",
@@ -342,6 +353,7 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
         "review",
         "automated_review",
         "bridge_quality",
+        "reliability",
         "methodology",
         "data_boundary",
     }
@@ -466,6 +478,50 @@ def test_list_endpoint_sanitizes_before_reading_state_or_base(
     assert response["count"] == 1
     assert response["items"][0]["publication_state"] == "withheld"
     assert response["items"][0]["base"] is None
+
+
+def test_configured_data_root_drives_both_read_only_endpoints(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    artifact = json.loads(
+        Path("backend/app/data/us_valuations/WFC.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    (tmp_path / "WFC.json").write_text(json.dumps(artifact), encoding="utf-8")
+
+    try:
+        with monkeypatch.context() as scoped:
+            scoped.setenv("FINSIGHT_US_VALUATION_DATA_ROOT", str(tmp_path))
+            configured = importlib.reload(us_valuations_router)
+
+            listed = configured.list_us_valuations()
+            detailed = configured.get_us_valuation("WFC")
+
+            assert configured.DATA_ROOT == tmp_path
+            assert listed["count"] == 1
+            assert listed["items"][0]["ticker"] == "WFC"
+            assert detailed["issuer"]["ticker"] == "WFC"
+    finally:
+        importlib.reload(us_valuations_router)
+
+
+def test_unset_data_root_uses_package_relative_default(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    try:
+        with monkeypatch.context() as scoped:
+            scoped.delenv("FINSIGHT_US_VALUATION_DATA_ROOT", raising=False)
+            configured = importlib.reload(us_valuations_router)
+            expected = (
+                Path(configured.__file__).resolve().parents[1]
+                / "data"
+                / "us_valuations"
+            )
+
+            assert configured.DATA_ROOT == expected
+    finally:
+        importlib.reload(us_valuations_router)
 
 
 def test_api_loader_fails_closed_for_legacy_publication_state(
@@ -1681,3 +1737,147 @@ def test_public_equity_artifact_strips_internal_fields():
     assert "financial_period_end" not in art
     assert "source_manifest" not in art
     assert "models" in art and "review" in art  # public fields retained
+
+
+def _synthetic_equity_result(primary: str) -> dict[str, Any]:
+    model_cap = "Low" if primary == "ffo" else "High"
+    label = "Low" if primary == "ffo" else "Medium"
+    reasons = ["INTERIM_FFO_ROUTE"] if primary == "ffo" else []
+    model = {
+        "model": primary,
+        "output_type": "intrinsic_value_per_share",
+        "currency": "USD",
+        "intrinsic_value_per_share": 100.0,
+        "publication_state": "review_required",
+        "errors": [],
+        "warnings": [],
+    }
+    return {
+        "schema_version": "US-VALUATION-RESULT-1.0",
+        "valuation_date": "2026-08-14",
+        "market": "US",
+        "currency": "USD",
+        "issuer": {
+            "cik": "0000000001",
+            "ticker": "TEST",
+            "issuer_name": "Test Issuer",
+            "classification_confidence": 0.95,
+        },
+        "financial_period_end": "2026-03-31",
+        "source_manifest": {"private_cache_hash": "ATTACKER_PRIVATE_HASH"},
+        "source_financial_statement": {
+            "form": "10-Q",
+            "period_end": "2026-03-31",
+            "filed_date": "2026-05-01",
+            "accession": "0000000001-26-000001",
+            "url": (
+                "https://www.sec.gov/Archives/edgar/data/1/"
+                "000000000126000001/test.htm"
+            ),
+            "note": "Exact SEC source used for the synthetic contract test.",
+        },
+        "model_policy": {
+            "primary": primary,
+            "supporting": [],
+            "blend_models": False,
+            "reason": "Declared equity-level route.",
+        },
+        "public_assumptions": {},
+        "models": {primary: model},
+        "scenarios": {
+            name: {
+                primary: {
+                    "model": primary,
+                    "intrinsic_value_per_share": value,
+                    "publication_state": "review_required",
+                }
+            }
+            for name, value in (("bear", 75.0), ("base", 100.0), ("bull", 125.0))
+        },
+        "scenario_range": {
+            "low": 75.0,
+            "base": 100.0,
+            "high": 125.0,
+            "label": "assumption range, not a statistical confidence interval",
+        },
+        "reliability": {
+            "label": label,
+            "accounting_label": "High",
+            "scenario_label": "Medium",
+            "model_cap": model_cap,
+            "source_cap": "High",
+            "accounting_impact_ratio": 0.0,
+            "scenario_movement_ratio": 0.25,
+            "reasons": reasons,
+        },
+        "review": {
+            "publication_state": "review_required",
+            "errors": [],
+            "warnings": [],
+        },
+        "methodology": {"source_policy": "test"},
+    }
+
+
+@pytest.mark.parametrize(
+    ("primary", "expected_label", "expected_reasons"),
+    [
+        ("residual_income", "Medium", []),
+        ("ddm", "Medium", []),
+        ("ffo", "Low", ["INTERIM_FFO_ROUTE"]),
+    ],
+)
+def test_equity_lanes_use_canonical_public_result_and_safe_reliability(
+    primary: str, expected_label: str, expected_reasons: list[str]
+) -> None:
+    private = _synthetic_equity_result(primary)
+    before = deepcopy(private)
+
+    public = public_result(private)
+
+    assert private == before
+    assert public["schema_version"] == "US-PUBLIC-VALUATION-1.1"
+    assert public["model_policy"]["primary"] == primary
+    assert public["models"][primary]["intrinsic_value_per_share"] == 100.0
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["automated_review"]["blocking_reasons"] == []
+    assert public["reliability"]["label"] == expected_label
+    assert public["reliability"]["reasons"] == expected_reasons
+    assert "financial_period_end" not in public
+    assert "source_manifest" not in public
+    assert "ATTACKER_PRIVATE_HASH" not in json.dumps(public)
+
+
+def test_canonical_equity_serializer_preserves_exact_sec_provenance_blocker() -> None:
+    private = _synthetic_equity_result("residual_income")
+    private["source_financial_statement"].update(
+        {
+            "filed_date": None,
+            "url": (
+                "https://www.sec.gov/cgi-bin/browse-edgar?"
+                "action=getcompany&CIK=1"
+            ),
+        }
+    )
+
+    public = public_result(private)
+
+    assert public["automated_review"]["blocking_reasons"] == [
+        "weak_sec_provenance"
+    ]
+    assert public["review"]["publication_state"] == "withheld"
+    assert public["models"]["residual_income"][
+        "intrinsic_value_per_share"
+    ] is None
+    assert public["reliability"]["accounting_impact_ratio"] is None
+    assert public["reliability"]["scenario_movement_ratio"] is None
+    assert public["reliability"]["reasons"] == ["VALUATION_WITHHELD"]
+
+
+def test_public_result_rejects_unsupported_primary_before_equity_copy() -> None:
+    private = _synthetic_equity_result("residual_income")
+    private["model_policy"]["primary"] = "ATTACKER_PRIVATE_MODEL"
+    private["financials"] = {"raw_statement_value": 9_999_999_999.0}
+
+    with pytest.raises(ValueError, match="unsupported primary model"):
+        public_result(private)

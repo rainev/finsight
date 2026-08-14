@@ -10,6 +10,13 @@ from typing import Any
 
 from .automated_review import REVIEW_VERSION, assess_artifact
 from .bridge_policy import BridgeAssessment, POLICY_VERSION
+from .equity_models import public_equity_artifact
+from .reliability import (
+    accounting_label,
+    lowest_label,
+    relative_movement,
+    scenario_label,
+)
 from .sec_client import normalize_cik
 from .xbrl import load_concept_config
 
@@ -157,6 +164,12 @@ def _public_model(model: dict[str, Any]) -> dict[str, Any]:
 
 PUBLICATION_STATES = {"pass", "review_required", "withheld"}
 _STATE_STRICTNESS = {"pass": 0, "review_required": 1, "withheld": 2}
+PUBLIC_SCHEMA_VERSION = "US-PUBLIC-VALUATION-1.1"
+_LEGACY_SCHEMA_VERSIONS = {
+    "US-PUBLIC-VALUATION-1.0",
+    "US-VALUATION-RESULT-1.0",
+}
+_PUBLIC_MODEL_NAMES = {"fcff_dcf", "residual_income", "ddm", "ffo"}
 _BRIDGE_SPREAD_LIMIT = 0.01
 _SPREAD_BOUNDARY_RELATIVE_TOLERANCE = 1e-14
 _INVALID_STATE_ERROR = (
@@ -173,6 +186,9 @@ _INCONSISTENT_MODEL_POLICY_ERROR = (
 )
 _INCONSISTENT_MODEL_IDENTITY_ERROR = (
     "Public model key and discriminator are inconsistent; valuation was withheld."
+)
+_INVALID_PRIMARY_MODEL_ERROR = (
+    "Public primary model policy is invalid or missing; valuation was withheld."
 )
 
 _BRIDGE_FIELDS = (
@@ -211,6 +227,24 @@ _PUBLIC_BRIDGE_REASONS = (
     "TOTAL_DEBT_AGGREGATE_INCOMPLETE_COVERAGE",
     "UNRESOLVED_UNSPECIFIED",
 )
+_PUBLIC_RELIABILITY_REASONS = (
+    *_PUBLIC_BRIDGE_REASONS,
+    "INTERIM_FFO_ROUTE",
+    "LEGACY_ARTIFACT_NOT_REGENERATED",
+    "RELIABILITY_PAYLOAD_INVALID",
+    "VALUATION_WITHHELD",
+)
+_RELIABILITY_KEYS = {
+    "label",
+    "accounting_label",
+    "scenario_label",
+    "model_cap",
+    "source_cap",
+    "accounting_impact_ratio",
+    "scenario_movement_ratio",
+    "reasons",
+}
+_RELIABILITY_LABELS = {"High", "Medium", "Low"}
 _BRIDGE_QUALITY_KEYS = {
     "decision",
     "complete",
@@ -321,6 +355,104 @@ def _json_number(value: object, *, nullable: bool = False) -> float | None:
     return normalized
 
 
+def _validated_public_reliability(value: object) -> dict[str, Any] | None:
+    """Validate and copy only the allowlisted public reliability DTO."""
+    try:
+        if not isinstance(value, dict) or set(value) != _RELIABILITY_KEYS:
+            raise ValueError("reliability has an unsupported shape")
+        labels = {
+            key: value[key]
+            for key in (
+                "label",
+                "accounting_label",
+                "scenario_label",
+                "model_cap",
+                "source_cap",
+            )
+        }
+        if any(label not in _RELIABILITY_LABELS for label in labels.values()):
+            raise ValueError("reliability label is invalid")
+
+        accounting_impact = _json_number(value["accounting_impact_ratio"])
+        scenario_movement = _json_number(value["scenario_movement_ratio"])
+        assert accounting_impact is not None and scenario_movement is not None
+        if accounting_impact < 0 or scenario_movement < 0:
+            raise ValueError("reliability ratios must be nonnegative")
+
+        reasons = _canonical_identifiers(
+            value["reasons"], allowed=_PUBLIC_RELIABILITY_REASONS
+        )
+        if labels["accounting_label"] != accounting_label(accounting_impact):
+            raise ValueError("accounting label disagrees with its ratio")
+        if labels["scenario_label"] != scenario_label(scenario_movement):
+            raise ValueError("scenario label disagrees with its ratio")
+        expected_label = lowest_label(
+            labels["accounting_label"],
+            labels["scenario_label"],
+            labels["model_cap"],
+            labels["source_cap"],
+        )
+        if labels["label"] != expected_label:
+            raise ValueError("overall reliability label is inconsistent")
+        return {
+            **labels,
+            "accounting_impact_ratio": accounting_impact,
+            "scenario_movement_ratio": scenario_movement,
+            "reasons": reasons,
+        }
+    except (
+        AssertionError,
+        KeyError,
+        TypeError,
+        ValueError,
+        OverflowError,
+    ):
+        return None
+
+
+def _fallback_reliability(
+    scenario_range: object,
+    *,
+    reason: str,
+) -> dict[str, Any] | None:
+    try:
+        if not isinstance(scenario_range, dict):
+            raise ValueError("scenario range is malformed")
+        movement = _json_number(
+            relative_movement(
+                low=scenario_range["low"],
+                base=scenario_range["base"],
+                high=scenario_range["high"],
+            )
+        )
+        assert movement is not None
+        return {
+            "label": "Low",
+            "accounting_label": "Low",
+            "scenario_label": "Low",
+            "model_cap": "Low",
+            "source_cap": "Low",
+            "accounting_impact_ratio": 0.0,
+            "scenario_movement_ratio": movement,
+            "reasons": [reason],
+        }
+    except (KeyError, TypeError, ValueError, OverflowError):
+        return None
+
+
+def _withheld_reliability() -> dict[str, Any]:
+    return {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": None,
+        "scenario_movement_ratio": None,
+        "reasons": ["VALUATION_WITHHELD"],
+    }
+
+
 def _spread_within_limit(spread_ratio: float) -> bool:
     return spread_ratio <= _BRIDGE_SPREAD_LIMIT or isclose(
         spread_ratio,
@@ -348,7 +480,11 @@ def _invalid_bridge_quality() -> dict[str, Any]:
     }
 
 
-def _validated_public_bridge_quality(value: object) -> dict[str, Any] | None:
+def _validated_public_bridge_quality(
+    value: object,
+    *,
+    allow_bounded_over_limit: bool = False,
+) -> dict[str, Any] | None:
     """Validate and canonicalize only the allowlisted public bridge DTO."""
     try:
         if not isinstance(value, dict) or set(value) != _BRIDGE_QUALITY_KEYS:
@@ -434,7 +570,10 @@ def _validated_public_bridge_quality(value: object) -> dict[str, Any] | None:
                 or not bounded_fields
                 or blocking_fields
                 or spread_ratio is None
-                or not _spread_within_limit(spread_ratio)
+                or (
+                    not allow_bounded_over_limit
+                    and not _spread_within_limit(spread_ratio)
+                )
                 or all_null
                 or midpoint is None
                 or midpoint <= 0
@@ -513,6 +652,8 @@ def _validated_public_bridge_quality(value: object) -> dict[str, Any] | None:
 
 def _validated_scrubbed_bounded_bridge_quality(
     value: object,
+    *,
+    allow_bounded_over_limit: bool = False,
 ) -> dict[str, Any] | None:
     """Validate the null-valued form produced only after public withholding."""
     try:
@@ -535,7 +676,10 @@ def _validated_scrubbed_bounded_bridge_quality(
                 "high": 100.0 + half_width,
             }
         )
-        validated = _validated_public_bridge_quality(probe)
+        validated = _validated_public_bridge_quality(
+            probe,
+            allow_bounded_over_limit=allow_bounded_over_limit,
+        )
         if validated is None:
             raise ValueError("scrubbed bounded bridge metadata is invalid")
         validated["intrinsic_value_range"].update(
@@ -756,7 +900,10 @@ def _public_bridge_quality(result: dict[str, Any]) -> dict[str, Any]:
                 "spread_limit": _BRIDGE_SPREAD_LIMIT,
             },
         }
-        validated = _validated_public_bridge_quality(candidate)
+        validated = _validated_public_bridge_quality(
+            candidate,
+            allow_bounded_over_limit=True,
+        )
         if validated is None:
             raise ValueError("derived bridge quality did not validate")
         return validated
@@ -812,11 +959,17 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     """Validate public state vocabulary and fail closed at every serving boundary."""
     public = deepcopy(artifact) if isinstance(artifact, dict) else {}
     was_fully_scrubbed = _artifact_is_fully_scrubbed(public)
+    schema_version = public.get("schema_version")
+    schema_is_current = schema_version == PUBLIC_SCHEMA_VERSION
+    schema_is_legacy = schema_version in _LEGACY_SCHEMA_VERSIONS
     review = public.get("review")
     if not isinstance(review, dict):
         review = {}
         public["review"] = review
-    invalid_state = review.get("publication_state") not in PUBLICATION_STATES
+    invalid_state = (
+        review.get("publication_state") not in PUBLICATION_STATES
+        or not (schema_is_current or schema_is_legacy)
+    )
     errors = _deduplicated_strings(review.get("errors", []))
     warnings = _deduplicated_strings(review.get("warnings", []))
     if errors is None or warnings is None:
@@ -830,6 +983,9 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
 
     policy = public.get("model_policy")
     primary = policy.get("primary") if isinstance(policy, dict) else None
+    if primary not in _PUBLIC_MODEL_NAMES:
+        invalid_state = True
+        _append_unique(review["errors"], _INVALID_PRIMARY_MODEL_ERROR)
     policy_declares_fcff = primary == "fcff_dcf"
     has_fcff_surface = _artifact_has_fcff_surface(public)
     fcff_required = policy_declares_fcff or has_fcff_surface
@@ -838,7 +994,7 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         _append_unique(review["errors"], _INCONSISTENT_MODEL_POLICY_ERROR)
 
     automated_ceiling = "pass"
-    if "automated_review" in public or fcff_required:
+    if "automated_review" in public or fcff_required or schema_is_current:
         if _valid_automated_review(public.get("automated_review")):
             automated_ceiling = public["automated_review"]["publication_state"]
         else:
@@ -867,16 +1023,33 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             model["publication_state"] = "withheld"
             model["intrinsic_value_per_share"] = None
             invalid_state = True
+        elif model["publication_state"] == "withheld":
+            model["intrinsic_value_per_share"] = None
+        else:
+            try:
+                value = _json_number(model.get("intrinsic_value_per_share"))
+                if value is None or value <= 0:
+                    raise ValueError("model value must be finite and positive")
+            except (TypeError, ValueError, OverflowError):
+                model["publication_state"] = "withheld"
+                model["intrinsic_value_per_share"] = None
+                invalid_state = True
+
+    if not isinstance(primary, str) or not isinstance(models.get(primary), dict):
+        invalid_state = True
+        _append_unique(review["errors"], _INVALID_PRIMARY_MODEL_ERROR)
 
     bridge_quality: dict[str, Any] | None = None
     bridge_ceiling = "pass"
     if fcff_required:
         bridge_quality = _validated_public_bridge_quality(
-            public.get("bridge_quality")
+            public.get("bridge_quality"),
+            allow_bounded_over_limit=schema_is_current,
         )
         if bridge_quality is None and was_fully_scrubbed:
             bridge_quality = _validated_scrubbed_bounded_bridge_quality(
-                public.get("bridge_quality")
+                public.get("bridge_quality"),
+                allow_bounded_over_limit=schema_is_current,
             )
         if (
             bridge_quality is not None
@@ -902,10 +1075,10 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             "withheld": "withheld",
         }[bridge_quality["decision"]]
 
-    canonical_fcff_ceiling = "pass"
-    canonical_fcff = models.get("fcff_dcf")
-    if isinstance(canonical_fcff, dict):
-        canonical_fcff_ceiling = canonical_fcff["publication_state"]
+    canonical_primary_ceiling = "withheld"
+    canonical_primary = models.get(primary) if isinstance(primary, str) else None
+    if isinstance(canonical_primary, dict):
+        canonical_primary_ceiling = canonical_primary["publication_state"]
 
     scenarios = public.get("scenarios")
     if not isinstance(scenarios, dict):
@@ -928,6 +1101,19 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
                 model["publication_state"] = "withheld"
                 model["intrinsic_value_per_share"] = None
                 invalid_state = True
+            elif model["publication_state"] == "withheld":
+                model["intrinsic_value_per_share"] = None
+            else:
+                try:
+                    value = _json_number(model.get("intrinsic_value_per_share"))
+                    if value is None or value <= 0:
+                        raise ValueError(
+                            "scenario value must be finite and positive"
+                        )
+                except (TypeError, ValueError, OverflowError):
+                    model["publication_state"] = "withheld"
+                    model["intrinsic_value_per_share"] = None
+                    invalid_state = True
 
     sensitivities = public.get("sensitivities", [])
     if "sensitivities" in public and not isinstance(sensitivities, list):
@@ -947,9 +1133,43 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             invalid_state = True
 
     raw_scenario_range = public.get("scenario_range")
+    reliability_scenario_range: dict[str, float] | None = None
     if not isinstance(raw_scenario_range, dict):
         raw_scenario_range = {}
         invalid_state = True
+    raw_range_values = [
+        raw_scenario_range.get(key) for key in ("low", "base", "high")
+    ]
+    if all(value is None for value in raw_range_values):
+        if review.get("publication_state") != "withheld" and not was_fully_scrubbed:
+            invalid_state = True
+    elif any(value is None for value in raw_range_values):
+        invalid_state = True
+    else:
+        try:
+            low = _json_number(raw_range_values[0])
+            base = _json_number(raw_range_values[1])
+            high = _json_number(raw_range_values[2])
+            assert low is not None and base is not None and high is not None
+            if base <= 0 or not low <= base <= high:
+                raise ValueError("scenario range arithmetic is invalid")
+            reliability_scenario_range = {
+                "low": low,
+                "base": base,
+                "high": high,
+            }
+            derived_movement = _json_number(
+                relative_movement(low=low, base=base, high=high)
+            )
+            if derived_movement is None:
+                raise ValueError("scenario movement is not finite")
+        except (
+            AssertionError,
+            TypeError,
+            ValueError,
+            OverflowError,
+        ):
+            invalid_state = True
 
     native_state = review.get("publication_state")
     if native_state not in PUBLICATION_STATES:
@@ -961,7 +1181,7 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         native_state,
         automated_ceiling,
         bridge_ceiling,
-        canonical_fcff_ceiling,
+        canonical_primary_ceiling,
     )
     review["publication_state"] = effective_review_state
 
@@ -1018,11 +1238,29 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         bridge_range["low"] = None
         bridge_range["midpoint"] = None
         bridge_range["high"] = None
+
+    if effective_review_state == "withheld":
+        public["reliability"] = _withheld_reliability()
+    elif schema_is_current:
+        reliability = _validated_public_reliability(public.get("reliability"))
+        if reliability is None:
+            reliability = _fallback_reliability(
+                reliability_scenario_range,
+                reason="RELIABILITY_PAYLOAD_INVALID",
+            )
+        public["reliability"] = reliability or _withheld_reliability()
+    else:
+        public["reliability"] = _fallback_reliability(
+            reliability_scenario_range,
+            reason="LEGACY_ARTIFACT_NOT_REGENERATED",
+        ) or _withheld_reliability()
     return public
 
 
-def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[str, Any]:
-    """Convert a private valuation result into a raw-statement-free artifact."""
+def _public_fcff_result(
+    result: dict[str, Any], submissions: dict[str, Any]
+) -> dict[str, Any]:
+    """Build the FCFF-specific public surface before canonical review."""
     assumptions = result["forecast_assumptions"]
     discount_rate = result["discount_rate"]
     market_assumptions = discount_rate["market_assumptions"]
@@ -1051,7 +1289,7 @@ def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[s
         else {}
     )
     public = {
-        "schema_version": "US-PUBLIC-VALUATION-1.0",
+        "schema_version": PUBLIC_SCHEMA_VERSION,
         "valuation_date": result["valuation_date"],
         "market": "US",
         "currency": "USD",
@@ -1109,6 +1347,31 @@ def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[s
             "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution",
         },
     }
+    return public
+
+
+def public_result(
+    result: dict[str, Any],
+    submissions: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Canonically serialize, review, sanitize, and grade a valuation result."""
+    policy = result.get("model_policy")
+    primary = policy.get("primary") if isinstance(policy, dict) else None
+    if primary == "fcff_dcf":
+        if not isinstance(submissions, dict):
+            raise ValueError("submissions are required for FCFF publication")
+        public = _public_fcff_result(result, submissions)
+    elif primary in {"residual_income", "ddm", "ffo"}:
+        public = public_equity_artifact(result)
+    else:
+        raise ValueError("unsupported primary model for public serialization")
+
+    public["schema_version"] = PUBLIC_SCHEMA_VERSION
+    if "reliability" in result:
+        public["reliability"] = deepcopy(result["reliability"])
+    else:
+        public.pop("reliability", None)
+
     automated_review = assess_artifact(public)
     public["automated_review"] = automated_review
     current_state = public["review"].get("publication_state")

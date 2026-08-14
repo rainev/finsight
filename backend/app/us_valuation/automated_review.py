@@ -44,32 +44,73 @@ def _source_check(artifact: dict[str, Any]) -> tuple[list[str], list[str], str]:
     return [], [], "complete"
 
 
-def _scenario_check(artifact: dict[str, Any]) -> list[str]:
+def _value_problem(value: object, *, missing: str, nonfinite: str) -> str | None:
+    if value is None:
+        return missing
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not isfinite(float(value))
+    ):
+        return nonfinite
+    return None
+
+
+def _scenario_check(artifact: dict[str, Any]) -> tuple[list[str], list[str]]:
     reasons: list[str] = []
-    bridge_quality = artifact.get("bridge_quality")
-    bounded_bridge = (
-        isinstance(bridge_quality, dict)
-        and bridge_quality.get("decision") == "bounded_review"
-    )
+    caveats: list[str] = []
+
+    policy = artifact.get("model_policy")
+    primary: str | None = None
+    supporting: list[str] = []
+    if isinstance(policy, dict):
+        raw_primary = policy.get("primary")
+        raw_supporting = policy.get("supporting", [])
+        if isinstance(raw_primary, str) and raw_primary:
+            primary = raw_primary
+        if (
+            isinstance(raw_supporting, list)
+            and all(isinstance(name, str) and name for name in raw_supporting)
+            and len(raw_supporting) == len(set(raw_supporting))
+            and primary not in raw_supporting
+        ):
+            supporting = raw_supporting
+        else:
+            _add_reason(reasons, "invalid_model_policy")
+    if primary is None:
+        _add_reason(reasons, "invalid_model_policy")
+    declared = ({primary} if primary is not None else set()) | set(supporting)
 
     models = artifact.get("models", {})
     if not isinstance(models, dict) or not models:
         reasons.append("missing_model_outputs")
     else:
+        if primary is not None and primary not in models:
+            _add_reason(reasons, f"missing_primary_model:{primary}")
         for name in sorted(models):
             model = models[name]
             if not isinstance(model, dict):
                 _add_reason(reasons, f"invalid_model_output:{name}")
                 continue
+            if name not in declared:
+                _add_reason(reasons, f"undeclared_model_output:{name}")
             state = model.get("publication_state")
             if state not in _PUBLICATION_STATES:
                 _add_reason(reasons, f"invalid_model_state:{name}")
-            elif state == "withheld" or (
-                state == "review_required" and not bounded_bridge
-            ):
+            elif state == "withheld":
                 _add_reason(reasons, f"model_not_pass:{name}")
-            if model.get("intrinsic_value_per_share") is None:
-                _add_reason(reasons, f"missing_model_value:{name}")
+            value_problem = _value_problem(
+                model.get("intrinsic_value_per_share"),
+                missing=f"missing_model_value:{name}",
+                nonfinite=f"nonfinite_model_value:{name}",
+            )
+            if value_problem is not None:
+                _add_reason(reasons, value_problem)
+            elif state == "review_required":
+                role = "Primary" if name == primary else "Supporting"
+                warning = f"{role} model '{name}' is review_required."
+                if warning not in caveats:
+                    caveats.append(warning)
 
     scenarios = artifact.get("scenarios")
     if scenarios:
@@ -95,14 +136,31 @@ def _scenario_check(artifact: dict[str, Any]) -> list[str]:
                             reasons,
                             f"invalid_scenario_state:{name}:{model_name}",
                         )
-                    elif state == "withheld" or (
-                        state == "review_required" and not bounded_bridge
-                    ):
+                    elif state == "withheld":
                         _add_reason(
                             reasons,
                             f"scenario_not_pass:{name}:{model_name}",
                         )
-    return reasons
+                        continue
+                    value_problem = _value_problem(
+                        model.get("intrinsic_value_per_share"),
+                        missing=(
+                            f"missing_scenario_value:{name}:{model_name}"
+                        ),
+                        nonfinite=(
+                            f"nonfinite_scenario_value:{name}:{model_name}"
+                        ),
+                    )
+                    if value_problem is not None:
+                        _add_reason(reasons, value_problem)
+                    elif state == "review_required":
+                        warning = (
+                            f"Scenario '{name}' model '{model_name}' "
+                            "is review_required."
+                        )
+                        if warning not in caveats:
+                            caveats.append(warning)
+    return reasons, caveats
 
 
 def _review_messages(value: object, invalid_reason: str) -> tuple[list[str], str | None]:
@@ -171,13 +229,21 @@ def assess_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             elif warning not in warnings:
                 warnings.append(warning)
 
-    for reason in _scenario_check(artifact):
+    scenario_reasons, scenario_caveats = _scenario_check(artifact)
+    for reason in scenario_reasons:
         _add_reason(blocking, reason)
         if (
             reason.startswith("model_not_pass")
             or reason.startswith("missing_model_value")
+            or reason.startswith("nonfinite_model_value")
+            or reason.startswith("missing_primary_model")
+            or reason.startswith("missing_scenario_value")
+            or reason.startswith("nonfinite_scenario_value")
         ):
             _add_reason(repair_actions, "rebuild_valuation_models")
+    for warning in scenario_caveats:
+        if warning not in warnings:
+            warnings.append(warning)
 
     if any(reason.startswith("hard_warning:") for reason in blocking):
         _add_reason(repair_actions, "resolve_model_warnings")

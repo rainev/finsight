@@ -4,11 +4,15 @@ Auth is overridden and market assumptions / storage are stubbed so these run
 without a live DB or MinIO — they exercise input validation, the resolve
 logic, and response shaping. (Persistence paths use save=False.)"""
 
+import json
+from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
 
 import app.main as main_module
 from app import deps
+import app.routers.us_valuations as us_valuations_router
 from app.services import market_service
 from app.valuation.assumptions import PH
 
@@ -114,3 +118,51 @@ def test_invalid_shares_is_422(client):
         json={"projected_fcf": [100], "discount_rate": 0.1, "shares_outstanding": 0},
     )
     assert r.status_code == 422
+
+
+def test_us_valuation_list_and_detail_share_safe_reliability(
+    client: TestClient,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    for ticker in ("AAPL", "WFC"):
+        artifact = json.loads(
+            Path(f"backend/app/data/us_valuations/{ticker}.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        (tmp_path / f"{ticker}.json").write_text(
+            json.dumps(artifact), encoding="utf-8"
+        )
+    monkeypatch.setattr(us_valuations_router, "DATA_ROOT", tmp_path)
+
+    listed_response = client.get("/api/us-valuations")
+
+    assert listed_response.status_code == 200
+    listed = listed_response.json()
+    assert listed["count"] == 2
+    assert all(item["reliability"] in {"High", "Medium", "Low"} for item in listed["items"])
+
+    details = {}
+    for item in listed["items"]:
+        detail_response = client.get(f"/api/us-valuations/{item['ticker']}")
+        assert detail_response.status_code == 200
+        detail = detail_response.json()
+        details[item["ticker"]] = detail
+        assert detail["reliability"]["label"] == item["reliability"]
+        assert set(detail["reliability"]) == {
+            "label",
+            "accounting_label",
+            "scenario_label",
+            "model_cap",
+            "source_cap",
+            "accounting_impact_ratio",
+            "scenario_movement_ratio",
+            "reasons",
+        }
+
+    assert details["WFC"]["scenario_range"]["base"] is not None
+    assert details["WFC"]["reliability"]["label"] == "Low"
+    assert details["WFC"]["reliability"]["reasons"] == [
+        "LEGACY_ARTIFACT_NOT_REGENERATED"
+    ]

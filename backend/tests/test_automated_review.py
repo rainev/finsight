@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import math
+
+import pytest
 
 from app.us_valuation.automated_review import REVIEW_VERSION, assess_artifact
 
@@ -34,7 +37,7 @@ def clean_artifact() -> dict:
                 "000032019326000013/aapl-20260328.htm"
             ),
         },
-        "model_policy": {"primary": "fcff_dcf"},
+        "model_policy": {"primary": "fcff_dcf", "supporting": ["epv"]},
         "review": {
             "publication_state": "pass",
             "errors": [],
@@ -172,16 +175,83 @@ def test_bounded_bridge_review_states_are_not_misclassified_as_model_failures() 
     assert result["blocking_reasons"] == []
 
 
-def test_complete_bridge_review_grade_model_is_blocked_with_concrete_reason() -> None:
+def test_declared_supporting_review_grade_model_is_a_public_caveat() -> None:
     artifact = clean_artifact()
     artifact["bridge_quality"] = {"decision": "complete"}
     artifact["models"]["epv"]["publication_state"] = "review_required"
 
     result = assess_artifact(artifact)
 
+    assert result["decision"] == "approved_with_caveat"
+    assert result["publication_state"] == "review_required"
+    assert result["blocking_reasons"] == []
+    assert result["repair_actions"] == []
+    assert result["warnings"] == [
+        "Supporting model 'epv' is review_required."
+    ]
+
+
+def test_finite_primary_review_grade_model_remains_visible_with_caveat() -> None:
+    artifact = clean_artifact()
+    artifact["review"]["publication_state"] = "review_required"
+    artifact["models"]["fcff_dcf"]["publication_state"] = "review_required"
+
+    result = assess_artifact(artifact)
+
+    assert result["decision"] == "approved_with_caveat"
+    assert result["publication_state"] == "review_required"
+    assert result["blocking_reasons"] == []
+    assert result["warnings"] == [
+        "Primary model 'fcff_dcf' is review_required."
+    ]
+
+
+def test_withheld_primary_model_remains_blocking() -> None:
+    artifact = clean_artifact()
+    artifact["models"]["fcff_dcf"].update(
+        {
+            "publication_state": "withheld",
+            "intrinsic_value_per_share": None,
+        }
+    )
+
+    result = assess_artifact(artifact)
+
     assert result["decision"] == "blocked"
-    assert result["blocking_reasons"] == ["model_not_pass:epv"]
-    assert result["repair_actions"] == ["rebuild_valuation_models"]
+    assert result["publication_state"] == "withheld"
+    assert result["blocking_reasons"] == [
+        "model_not_pass:fcff_dcf",
+        "missing_model_value:fcff_dcf",
+    ]
+
+
+@pytest.mark.parametrize("value", [True, math.inf, -math.inf, math.nan])
+def test_nonfinite_primary_model_value_remains_blocking(value: object) -> None:
+    artifact = clean_artifact()
+    artifact["models"]["fcff_dcf"]["intrinsic_value_per_share"] = value
+
+    result = assess_artifact(artifact)
+
+    assert result["decision"] == "blocked"
+    assert result["publication_state"] == "withheld"
+    assert result["blocking_reasons"] == [
+        "nonfinite_model_value:fcff_dcf"
+    ]
+
+
+def test_finite_review_grade_scenario_is_a_caveat_not_a_bypass() -> None:
+    artifact = clean_artifact()
+    artifact["scenarios"]["base"]["fcff_dcf"][
+        "publication_state"
+    ] = "review_required"
+
+    result = assess_artifact(artifact)
+
+    assert result["decision"] == "approved_with_caveat"
+    assert result["blocking_reasons"] == []
+    assert result["warnings"] == [
+        "Scenario 'base' model 'fcff_dcf' is review_required."
+    ]
 
 
 def test_arbitrary_scenario_model_withheld_is_blocked_once() -> None:
@@ -198,6 +268,22 @@ def test_arbitrary_scenario_model_withheld_is_blocked_once() -> None:
     assert result["decision"] == "blocked"
     assert result["blocking_reasons"] == [
         "scenario_not_pass:stress:custom_model"
+    ]
+
+
+@pytest.mark.parametrize("value", [True, math.inf, math.nan])
+def test_malformed_scenario_value_remains_blocking(value: object) -> None:
+    artifact = clean_artifact()
+    artifact["scenarios"]["base"]["fcff_dcf"][
+        "intrinsic_value_per_share"
+    ] = value
+
+    result = assess_artifact(artifact)
+
+    assert result["decision"] == "blocked"
+    assert result["publication_state"] == "withheld"
+    assert result["blocking_reasons"] == [
+        "nonfinite_scenario_value:base:fcff_dcf"
     ]
 
 

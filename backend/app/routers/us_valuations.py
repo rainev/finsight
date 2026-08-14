@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 
@@ -13,7 +14,10 @@ from ..us_valuation.artifacts import sanitize_public_artifact
 
 
 router = APIRouter(prefix="/us-valuations", tags=["us-valuations"])
-DATA_ROOT = Path(__file__).resolve().parents[1] / "data" / "us_valuations"
+DEFAULT_DATA_ROOT = Path(__file__).resolve().parents[1] / "data" / "us_valuations"
+DATA_ROOT = Path(
+    os.environ.get("FINSIGHT_US_VALUATION_DATA_ROOT") or DEFAULT_DATA_ROOT
+)
 TICKER = re.compile(r"^[A-Z][A-Z0-9.-]{0,9}$")
 
 
@@ -51,6 +55,7 @@ def list_us_valuations() -> dict:
             "model": data.get("model_policy", {}).get("primary"),
             "base": data.get("scenario_range", {}).get("base"),
             "publication_state": data.get("review", {}).get("publication_state"),
+            "reliability": data["reliability"]["label"],
         })
     return {"count": len(items), "items": items}
 

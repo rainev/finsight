@@ -38,6 +38,16 @@ RANGE_KEYS = {
     "spread_ratio",
     "spread_limit",
 }
+RELIABILITY_KEYS = {
+    "label",
+    "accounting_label",
+    "scenario_label",
+    "model_cap",
+    "source_cap",
+    "accounting_impact_ratio",
+    "scenario_movement_ratio",
+    "reasons",
+}
 
 
 def load_json(name: str) -> dict[str, Any]:
@@ -202,6 +212,41 @@ def bounded_quality() -> dict[str, Any]:
     }
 
 
+def wide_bounded_quality() -> dict[str, Any]:
+    return {
+        "decision": "bounded_review",
+        "complete": False,
+        "usable": True,
+        "bounded_fields": [BRIDGE_FIELD],
+        "blocking_fields": [],
+        "reason_codes": ["CURRENT_NOTE_SUPPLIES_FINITE_RANGE"],
+        "intrinsic_value_range": _range(95.0, 100.0, 105.0, 0.10),
+    }
+
+
+def reliability_dto(
+    *,
+    label: str = "High",
+    accounting_label: str = "High",
+    scenario_label: str = "High",
+    model_cap: str = "High",
+    source_cap: str = "High",
+    accounting_impact_ratio: float = 0.0,
+    scenario_movement_ratio: float = 0.20,
+    reasons: list[str] | None = None,
+) -> dict[str, Any]:
+    return {
+        "label": label,
+        "accounting_label": accounting_label,
+        "scenario_label": scenario_label,
+        "model_cap": model_cap,
+        "source_cap": source_cap,
+        "accounting_impact_ratio": accounting_impact_ratio,
+        "scenario_movement_ratio": scenario_movement_ratio,
+        "reasons": [] if reasons is None else reasons,
+    }
+
+
 def over_limit_quality() -> dict[str, Any]:
     low = 99.4999995
     midpoint = 100.0
@@ -345,16 +390,15 @@ def _all_value_sinks(artifact: dict[str, Any]) -> list[Any]:
 def test_public_result_signature_has_no_sanitizer_bypass(
     private_aapl: dict[str, Any], submissions: dict[str, Any]
 ) -> None:
-    assert list(inspect.signature(public_result).parameters) == [
+    signature = inspect.signature(public_result)
+    assert list(signature.parameters) == [
         "result",
         "submissions",
     ]
+    assert signature.parameters["submissions"].default is None
     public = public_result(private_aapl, submissions)
-    assert public["review"]["publication_state"] == "withheld"
-    assert all(
-        model["intrinsic_value_per_share"] is None
-        for model in public["models"].values()
-    )
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] is not None
 
 
 def test_complete_public_result_exposes_exact_allowlisted_quality(
@@ -427,6 +471,260 @@ def test_exact_one_percent_bounded_result_is_review_required_and_public_safe(
         '"enterprise_value"',
     ):
         assert private_token not in serialized
+
+
+def test_new_public_result_exposes_exact_allowlisted_reliability(
+    private_aapl: dict[str, Any], submissions: dict[str, Any]
+) -> None:
+    private = deepcopy(private_aapl)
+    _make_native_pass(private)
+    private["models"]["fcff_dcf"]["intrinsic_value_per_share"] = 100.0
+    private["scenario_range"].update(
+        {"low": 75.0, "base": 100.0, "high": 125.0}
+    )
+    _install_private_assessment(
+        private,
+        decision="bounded_review",
+        usable=True,
+        low=95.0,
+        midpoint=100.0,
+        high=105.0,
+        spread_ratio=0.10,
+        blocking_fields=[],
+        bounded_fields=[BRIDGE_FIELD],
+        reason_codes=[],
+        warning=(
+            "Enterprise-to-equity bridge uses source-bounded uncertainty; "
+            "the joint intrinsic-value spread is 10.00% and requires review."
+        ),
+    )
+    private["reliability"] = reliability_dto(
+        label="Medium",
+        accounting_label="High",
+        scenario_label="Medium",
+        accounting_impact_ratio=0.05,
+        scenario_movement_ratio=0.25,
+    )
+
+    public = public_result(private, submissions)
+
+    assert public["schema_version"] == "US-PUBLIC-VALUATION-1.1"
+    assert set(public["reliability"]) == RELIABILITY_KEYS
+    assert public["reliability"] == {
+        "label": "Medium",
+        "accounting_label": "High",
+        "scenario_label": "Medium",
+        "model_cap": "High",
+        "source_cap": "High",
+        "accounting_impact_ratio": pytest.approx(0.05),
+        "scenario_movement_ratio": pytest.approx(0.25),
+        "reasons": [],
+    }
+    assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+
+
+def test_regenerated_wide_bounded_review_is_graded_instead_of_scrubbed() -> None:
+    artifact = public_artifact(quality=wide_bounded_quality())
+    artifact["schema_version"] = "US-PUBLIC-VALUATION-1.1"
+    artifact["reliability"] = reliability_dto(
+        accounting_impact_ratio=0.05,
+        reasons=["CURRENT_NOTE_SUPPLIES_FINITE_RANGE"],
+    )
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "review_required"
+    assert sanitized["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+    assert sanitized["bridge_quality"]["intrinsic_value_range"] == _range(
+        95.0, 100.0, 105.0, 0.10
+    )
+    assert sanitized["reliability"]["label"] == "High"
+
+
+def test_historical_one_zero_wide_bounded_review_remains_fail_closed() -> None:
+    artifact = public_artifact(quality=wide_bounded_quality())
+    artifact["reliability"] = reliability_dto(
+        accounting_impact_ratio=0.05,
+        reasons=["CURRENT_NOTE_SUPPLIES_FINITE_RANGE"],
+    )
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert sanitized["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
+    assert sanitized["reliability"] == {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": None,
+        "scenario_movement_ratio": None,
+        "reasons": ["VALUATION_WITHHELD"],
+    }
+
+
+def _reliability_unknown_label(artifact: dict[str, Any]) -> None:
+    artifact["reliability"]["label"] = "Certain"
+
+
+def _reliability_boolean_ratio(artifact: dict[str, Any]) -> None:
+    artifact["reliability"]["accounting_impact_ratio"] = True
+
+
+def _reliability_nonfinite_ratio(artifact: dict[str, Any]) -> None:
+    artifact["reliability"]["scenario_movement_ratio"] = float("nan")
+
+
+def _reliability_duplicate_reasons(artifact: dict[str, Any]) -> None:
+    artifact["reliability"]["reasons"] = [
+        "CURRENT_NOTE_SUPPLIES_FINITE_RANGE",
+        "CURRENT_NOTE_SUPPLIES_FINITE_RANGE",
+    ]
+
+
+def _reliability_unknown_reason(artifact: dict[str, Any]) -> None:
+    artifact["reliability"]["reasons"] = ["ATTACKER_PRIVATE_REASON"]
+
+
+def _reliability_extra_private_key(artifact: dict[str, Any]) -> None:
+    artifact["reliability"]["private_warning"] = "ATTACKER_PRIVATE_WARNING"
+
+
+def _reliability_missing_key(artifact: dict[str, Any]) -> None:
+    del artifact["reliability"]["source_cap"]
+
+
+def _reliability_nonmapping(artifact: dict[str, Any]) -> None:
+    artifact["reliability"] = ["ATTACKER_PRIVATE_ERROR"]
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        _reliability_unknown_label,
+        _reliability_boolean_ratio,
+        _reliability_nonfinite_ratio,
+        _reliability_duplicate_reasons,
+        _reliability_unknown_reason,
+        _reliability_extra_private_key,
+        _reliability_missing_key,
+        _reliability_nonmapping,
+    ],
+)
+def test_malformed_reliability_uses_generic_numeric_fallback_without_scrubbing(
+    mutation: Callable[[dict[str, Any]], None],
+) -> None:
+    artifact = public_artifact(quality=complete_quality())
+    artifact["schema_version"] = "US-PUBLIC-VALUATION-1.1"
+    artifact["reliability"] = reliability_dto()
+    mutation(artifact)
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "pass"
+    assert sanitized["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+    assert sanitized["scenario_range"] == {
+        "low": 80.0,
+        "base": 100.0,
+        "high": 120.0,
+        "label": "assumption range, not a statistical confidence interval",
+    }
+    assert sanitized["reliability"] == {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": 0.0,
+        "scenario_movement_ratio": pytest.approx(0.20),
+        "reasons": ["RELIABILITY_PAYLOAD_INVALID"],
+    }
+    serialized = json.dumps(sanitized)
+    assert "ATTACKER_PRIVATE" not in serialized
+    assert "Certain" not in serialized
+
+
+@pytest.mark.parametrize(
+    ("schema_version", "reason"),
+    [
+        (
+            "US-PUBLIC-VALUATION-1.0",
+            "LEGACY_ARTIFACT_NOT_REGENERATED",
+        ),
+        (
+            "US-PUBLIC-VALUATION-1.1",
+            "RELIABILITY_PAYLOAD_INVALID",
+        ),
+    ],
+)
+def test_missing_reliability_uses_versioned_numeric_fallback(
+    schema_version: str, reason: str
+) -> None:
+    artifact = public_artifact(quality=complete_quality())
+    artifact["schema_version"] = schema_version
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "pass"
+    assert sanitized["scenario_range"]["base"] == 100.0
+    assert sanitized["reliability"] == {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": 0.0,
+        "scenario_movement_ratio": pytest.approx(0.20),
+        "reasons": [reason],
+    }
+
+
+def test_overflowing_derived_reliability_ratio_withholds_malformed_contract() -> None:
+    artifact = public_artifact(quality=complete_quality())
+    artifact["scenario_range"].update(
+        {"low": -1.7e308, "base": 1e-308, "high": 1.7e308}
+    )
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert sanitized["scenario_range"]["base"] is None
+    assert sanitized["reliability"] == {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": None,
+        "scenario_movement_ratio": None,
+        "reasons": ["VALUATION_WITHHELD"],
+    }
+
+
+def test_withheld_artifact_uses_nonfabricated_reliability_without_private_text() -> None:
+    artifact = public_artifact(quality=blocked_quality())
+    artifact["schema_version"] = "US-PUBLIC-VALUATION-1.1"
+    artifact["reliability"] = {
+        **reliability_dto(),
+        "reasons": ["ATTACKER_PRIVATE_WITHHOLDING_REASON"],
+        "private_error": "ATTACKER_PRIVATE_ERROR",
+    }
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert sanitized["reliability"] == {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": None,
+        "scenario_movement_ratio": None,
+        "reasons": ["VALUATION_WITHHELD"],
+    }
+    assert "ATTACKER_PRIVATE" not in json.dumps(sanitized)
 
 
 @pytest.mark.parametrize(
