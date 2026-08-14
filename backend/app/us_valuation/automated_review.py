@@ -1,0 +1,203 @@
+"""Deterministic, fail-closed automated review for public U.S. artifacts."""
+
+from __future__ import annotations
+
+from math import isfinite
+from typing import Any
+
+
+REVIEW_VERSION = "US-AUTO-REVIEW-1.0"
+
+_PUBLICATION_STATES = {"pass", "review_required", "withheld"}
+_HARD_WARNING_MARKERS = (
+    "manual review is required",
+    "terminal value exceeds 85%",
+    "negative dcf intrinsic value",
+    "non-positive dcf intrinsic value",
+    "fallback",
+    "bridge incomplete",
+    "withheld",
+)
+
+
+def _add_reason(reasons: list[str], reason: str) -> None:
+    if reason not in reasons:
+        reasons.append(reason)
+
+
+def _source_check(artifact: dict[str, Any]) -> tuple[list[str], list[str], str]:
+    source = artifact.get("source_financial_statement")
+    if not isinstance(source, dict):
+        return ["missing_sec_provenance"], ["refresh_sec_provenance"], "missing"
+
+    url = str(source.get("url") or "")
+    exact_url = "/Archives/edgar/data/" in url and url.endswith(
+        (".htm", ".html", ".txt")
+    )
+    required = (
+        source.get("filed_date"),
+        source.get("period_end"),
+        source.get("accession"),
+    )
+    if not exact_url or any(value in (None, "") for value in required):
+        return ["weak_sec_provenance"], ["refresh_sec_provenance"], "incomplete"
+    return [], [], "complete"
+
+
+def _scenario_check(artifact: dict[str, Any]) -> list[str]:
+    reasons: list[str] = []
+    bridge_quality = artifact.get("bridge_quality")
+    bounded_bridge = (
+        isinstance(bridge_quality, dict)
+        and bridge_quality.get("decision") == "bounded_review"
+    )
+
+    models = artifact.get("models", {})
+    if not isinstance(models, dict) or not models:
+        reasons.append("missing_model_outputs")
+    else:
+        for name in sorted(models):
+            model = models[name]
+            if not isinstance(model, dict):
+                _add_reason(reasons, f"invalid_model_output:{name}")
+                continue
+            state = model.get("publication_state")
+            if state not in _PUBLICATION_STATES:
+                _add_reason(reasons, f"invalid_model_state:{name}")
+            elif state == "withheld" or (
+                state == "review_required" and not bounded_bridge
+            ):
+                _add_reason(reasons, f"model_not_pass:{name}")
+            if model.get("intrinsic_value_per_share") is None:
+                _add_reason(reasons, f"missing_model_value:{name}")
+
+    scenarios = artifact.get("scenarios")
+    if scenarios:
+        if not isinstance(scenarios, dict):
+            reasons.append("invalid_scenarios")
+        else:
+            for name in sorted(scenarios):
+                scenario = scenarios[name]
+                if not isinstance(scenario, dict) or not scenario:
+                    _add_reason(reasons, f"invalid_scenario:{name}")
+                    continue
+                for model_name in sorted(scenario):
+                    model = scenario[model_name]
+                    if not isinstance(model, dict):
+                        _add_reason(
+                            reasons,
+                            f"invalid_scenario_output:{name}:{model_name}",
+                        )
+                        continue
+                    state = model.get("publication_state")
+                    if state not in _PUBLICATION_STATES:
+                        _add_reason(
+                            reasons,
+                            f"invalid_scenario_state:{name}:{model_name}",
+                        )
+                    elif state == "withheld" or (
+                        state == "review_required" and not bounded_bridge
+                    ):
+                        _add_reason(
+                            reasons,
+                            f"scenario_not_pass:{name}:{model_name}",
+                        )
+    return reasons
+
+
+def _review_messages(value: object, invalid_reason: str) -> tuple[list[str], str | None]:
+    if value in (None, []):
+        return [], None
+    if not isinstance(value, list) or any(not isinstance(item, str) for item in value):
+        return [], invalid_reason
+    return value, None
+
+
+def assess_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
+    """Return a concrete versioned review DTO without mutating ``artifact``."""
+    blocking: list[str] = []
+    repair_actions: list[str] = []
+    warnings: list[str] = []
+
+    if not isinstance(artifact, dict):
+        artifact = {}
+
+    source_reasons, source_actions, evidence_status = _source_check(artifact)
+    for reason in source_reasons:
+        _add_reason(blocking, reason)
+    for action in source_actions:
+        _add_reason(repair_actions, action)
+
+    issuer = artifact.get("issuer", {})
+    confidence = (
+        issuer.get("classification_confidence")
+        if isinstance(issuer, dict)
+        else None
+    )
+    if (
+        isinstance(confidence, bool)
+        or not isinstance(confidence, (int, float))
+        or not isfinite(float(confidence))
+    ):
+        _add_reason(blocking, "missing_classification_confidence")
+        _add_reason(repair_actions, "reclassify_issuer_or_switch_model")
+    elif confidence < 0.8:
+        warnings.append(
+            "Classification confidence is below the 0.80 review threshold."
+        )
+        _add_reason(repair_actions, "reclassify_issuer_or_switch_model")
+
+    review = artifact.get("review", {})
+    if not isinstance(review, dict):
+        _add_reason(blocking, "missing_review_payload")
+    else:
+        if review.get("publication_state") == "withheld":
+            _add_reason(blocking, "review_state_withheld")
+        errors, error_problem = _review_messages(
+            review.get("errors", []), "invalid_review_errors"
+        )
+        review_warnings, warning_problem = _review_messages(
+            review.get("warnings", []), "invalid_review_warnings"
+        )
+        if error_problem:
+            _add_reason(blocking, error_problem)
+        if warning_problem:
+            _add_reason(blocking, warning_problem)
+        for error in errors:
+            _add_reason(blocking, f"review_error:{error}")
+        for warning in review_warnings:
+            if any(marker in warning.lower() for marker in _HARD_WARNING_MARKERS):
+                _add_reason(blocking, f"hard_warning:{warning}")
+            elif warning not in warnings:
+                warnings.append(warning)
+
+    for reason in _scenario_check(artifact):
+        _add_reason(blocking, reason)
+        if (
+            reason.startswith("model_not_pass")
+            or reason.startswith("missing_model_value")
+        ):
+            _add_reason(repair_actions, "rebuild_valuation_models")
+
+    if any(reason.startswith("hard_warning:") for reason in blocking):
+        _add_reason(repair_actions, "resolve_model_warnings")
+
+    if blocking:
+        decision = "blocked"
+        publication_state = "withheld"
+    elif warnings:
+        decision = "approved_with_caveat"
+        publication_state = "review_required"
+    else:
+        decision = "approved"
+        publication_state = "pass"
+
+    return {
+        "review_version": REVIEW_VERSION,
+        "decision": decision,
+        "publication_state": publication_state,
+        "evidence_status": evidence_status,
+        "blocking_reasons": blocking,
+        "repair_actions": repair_actions,
+        "warnings": warnings,
+    }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<link:linkbase xmlns:link="http://www.xbrl.org/2003/linkbase"
+               xmlns:xlink="http://www.w3.org/1999/xlink"
+               xmlns:fsi="https://example.test/fsi/2025"
+               xmlns:us-gaap="http://fasb.org/us-gaap/2025">
+  <link:roleType id="balance-sheet" roleURI="https://example.test/role/balanceSheet">
+    <link:definition>Balance Sheet</link:definition>
+    <link:usedOn>link:presentationLink</link:usedOn>
+  </link:roleType>
+  <link:presentationLink xlink:type="extended" xlink:role="https://example.test/role/balanceSheet">
+    <link:loc xlink:type="locator" xlink:label="assets-current"
+              xlink:href="us-gaap-2025.xsd#us-gaap_AssetsCurrent"/>
+    <link:loc xlink:type="locator" xlink:label="liquid-current"
+              xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesCurrent"/>
+    <link:loc xlink:type="locator" xlink:label="assets-noncurrent"
+              xlink:href="us-gaap-2025.xsd#us-gaap_AssetsNoncurrent"/>
+    <link:loc xlink:type="locator" xlink:label="liquid-noncurrent"
+              xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesNoncurrent"/>
+    <link:loc xlink:type="locator" xlink:label="liabilities-current"
+              xlink:href="us-gaap-2025.xsd#us-gaap_LiabilitiesCurrentAbstract"/>
+    <link:loc xlink:type="locator" xlink:label="debt-current"
+              xlink:href="us-gaap-2025.xsd#us-gaap_DebtCurrent"/>
+    <link:loc xlink:type="locator" xlink:label="strategic"
+              xlink:href="fsi-2025.xsd#fsi_StrategicEquityInvestments"/>
+    <link:presentationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/parent-child" xlink:from="assets-current" xlink:to="liquid-current"
+                          order="1"/>
+    <link:presentationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/parent-child" xlink:from="assets-noncurrent" xlink:to="liquid-noncurrent"
+                          order="1"/>
+    <link:presentationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/parent-child" xlink:from="liabilities-current" xlink:to="debt-current"
+                          order="1"/>
+    <link:presentationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/parent-child" xlink:from="assets-noncurrent" xlink:to="strategic"
+                          order="2"/>
+  </link:presentationLink>
+</link:linkbase>

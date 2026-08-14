@@ -86,6 +86,25 @@ cd backend && python -m pytest        # engine correctness, jwt, API routes
 The engine tests verify the models against the original spreadsheet's numbers
 (where it was correct) and against hand-computed values (where bugs were fixed).
 
+## Structural XBRL shadow diagnostics
+
+Install the optional XBRL dependencies, then run the non-publishing shadow
+analysis with a monitored SEC contact:
+
+```bash
+cd backend
+python3 -m pip install -r requirements-xbrl.txt
+cd ..
+python3 scripts/run_structural_xbrl_shadow.py \
+  --data-root backend/app/data/us_valuations \
+  --cache-dir /path/to/sec-cache \
+  --output-root output/structural-xbrl-shadow \
+  --user-agent "FinSight monitored-contact@example.com"
+```
+
+Shadow results are diagnostics only: they cannot clear publication gates or
+change published valuation data.
+
 ## Notes / v1 scope
 
 - **Data entry is manual** for v1 (no PSE scraping; `GOOGLEFINANCE` doesn't cover

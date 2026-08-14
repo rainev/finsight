@@ -42,6 +42,7 @@ def list_us_valuations() -> dict:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
+        data = sanitize_public_artifact(data)
         issuer = data.get("issuer", {})
         items.append({
             "ticker": issuer.get("ticker", path.stem),

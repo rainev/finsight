@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.xbrl.org/2003/instance"
+           xmlns:xbrli="http://www.xbrl.org/2003/instance"
+           elementFormDefault="qualified">
+  <xs:element name="item" id="item" abstract="true" type="xbrli:itemType"/>
+  <xs:complexType name="itemType" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="xs:anyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="monetaryItemType" mixed="true">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attribute name="contextRef" type="xs:IDREF" use="required"/>
+        <xs:attribute name="unitRef" type="xs:IDREF" use="required"/>
+        <xs:attribute name="decimals" type="xs:string"/>
+        <xs:attribute name="precision" type="xs:string"/>
+        <xs:attribute name="id" type="xs:ID"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="context" type="xbrli:contextType"/>
+  <xs:complexType name="contextType">
+    <xs:sequence>
+      <xs:element name="entity" type="xbrli:entityType"/>
+      <xs:element name="period" type="xbrli:periodType"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="entityType">
+    <xs:sequence><xs:element name="identifier" type="xbrli:identifierType"/></xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="identifierType" mixed="true">
+    <xs:simpleContent><xs:extension base="xs:string"><xs:attribute name="scheme" type="xs:anyURI" use="required"/></xs:extension></xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="periodType">
+    <xs:choice>
+      <xs:element name="instant" type="xs:date"/>
+      <xs:sequence>
+        <xs:element name="startDate" type="xs:date"/>
+        <xs:element name="endDate" type="xs:date"/>
+      </xs:sequence>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="unit" type="xbrli:unitType"/>
+  <xs:complexType name="unitType">
+    <xs:sequence><xs:element name="measure" type="xs:QName"/></xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+</xs:schema>

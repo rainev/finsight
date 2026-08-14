@@ -1,0 +1,654 @@
+{
+  "version": "US-XBRL-RESOLVER-1.1",
+  "official_us_gaap_namespaces": [
+    "http://xbrl.us/us-gaap/2008-01-31",
+    "http://xbrl.us/us-gaap/2009-01-31",
+    "http://fasb.org/us-gaap/2011-01-31",
+    "http://fasb.org/us-gaap/2012-01-31",
+    "http://fasb.org/us-gaap/2013-01-31",
+    "http://fasb.org/us-gaap/2014-01-31",
+    "http://fasb.org/us-gaap/2015-01-31",
+    "http://fasb.org/us-gaap/2016-01-31",
+    "http://fasb.org/us-gaap/2017-01-31",
+    "http://fasb.org/us-gaap/2018-01-31",
+    "http://fasb.org/us-gaap/2019-01-31",
+    "http://fasb.org/us-gaap/2020-01-31",
+    "http://fasb.org/us-gaap/2021-01-31",
+    "http://fasb.org/us-gaap/2022",
+    "http://fasb.org/us-gaap/2023",
+    "http://fasb.org/us-gaap/2024",
+    "http://fasb.org/us-gaap/2025",
+    "http://fasb.org/us-gaap/2026"
+  ],
+  "marketable_securities_current": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "current",
+    "statement_support_parents": [
+      "us-gaap:AssetsCurrent",
+      "us-gaap:AssetsCurrentAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:AssetsCurrent",
+      "us-gaap:AssetsCurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:AssetsCurrent",
+      "us-gaap:AssetsCurrentAbstract",
+      "us-gaap:ShortTermInvestments",
+      "us-gaap:MarketableSecuritiesCurrent"
+    ],
+    "extension_terms": [
+      "marketable securities",
+      "marketable investments",
+      "investment securities",
+      "short term investments",
+      "available for sale",
+      "debt securities"
+    ],
+    "required_definition_phrases": [
+      "available for sale",
+      "debt securities",
+      "marketable securities",
+      "short term investments"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES",
+    "excluded_economic_phrases": [
+      "strategic",
+      "equity method",
+      "restricted",
+      "trust",
+      "collateral",
+      "receivable",
+      "trading assets"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "marketable_securities_noncurrent": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "noncurrent",
+    "statement_support_parents": [
+      "us-gaap:AssetsNoncurrent",
+      "us-gaap:AssetsNoncurrentAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:AssetsNoncurrent",
+      "us-gaap:AssetsNoncurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:AssetsNoncurrent",
+      "us-gaap:AssetsNoncurrentAbstract",
+      "us-gaap:LongTermInvestments",
+      "us-gaap:MarketableSecuritiesNoncurrent"
+    ],
+    "extension_terms": [
+      "marketable securities",
+      "marketable investments",
+      "investment securities",
+      "long term investments",
+      "available for sale",
+      "debt securities"
+    ],
+    "required_definition_phrases": [
+      "available for sale",
+      "debt securities",
+      "marketable securities",
+      "long term investments"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_MARKETABLE_SECURITIES",
+    "excluded_economic_phrases": [
+      "strategic",
+      "equity method",
+      "restricted",
+      "trust",
+      "collateral",
+      "receivable",
+      "trading assets"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "current_debt": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "current",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "extension_terms": [
+      "debt current",
+      "current borrowings",
+      "current maturities",
+      "short term borrowings"
+    ],
+    "required_definition_phrases": [
+      "current debt carrying amount",
+      "aggregate current debt carrying amount"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_DEBT",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "available for sale",
+      "investment",
+      "receivable",
+      "maturity schedule",
+      "maturity repayments",
+      "fair value",
+      "face amount",
+      "proceeds",
+      "repayments"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [
+      "NotesPayableCurrent",
+      "ConvertibleDebtCurrent",
+      "ShortTermBorrowings"
+    ],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [
+      "LongTermDebtCurrent"
+    ],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "noncurrent_debt": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "noncurrent",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "extension_terms": [
+      "debt noncurrent",
+      "long term borrowings",
+      "long term debt"
+    ],
+    "required_definition_phrases": [
+      "noncurrent debt carrying amount",
+      "aggregate noncurrent debt carrying amount"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_DEBT",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "available for sale",
+      "investment",
+      "receivable",
+      "maturity schedule",
+      "maturity repayments",
+      "fair value",
+      "face amount",
+      "proceeds",
+      "repayments",
+      "issuance costs"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [
+      "LongTermDebt",
+      "ConvertibleDebtNoncurrent"
+    ],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "commercial_paper": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "current",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:DebtInstrumentLineItems"
+    ],
+    "extension_terms": [
+      "commercial paper",
+      "commercial paper borrowing",
+      "short term borrowings"
+    ],
+    "required_definition_phrases": [
+      "commercial paper borrowing",
+      "commercial paper liability"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_COMMERCIAL_PAPER",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "available for sale",
+      "assets fair value"
+    ],
+    "preferred_exclusion_evidence_phrases": [
+      "amortized cost",
+      "marketable securities",
+      "fair value"
+    ],
+    "component_only_concepts": [],
+    "review_only_phrases": [],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [
+      [
+        "us-gaap:FinancialInstrumentAxis",
+        "us-gaap:CommercialPaperMember"
+      ]
+    ],
+    "allowed_dimensions": {
+      "us-gaap:CommercialPaper": [
+        [
+          "us-gaap:FinancialInstrumentAxis",
+          "us-gaap:CommercialPaperMember"
+        ]
+      ],
+      "us-gaap:CommercialPaperAtCarryingValue": [
+        [
+          "us-gaap:FinancialInstrumentAxis",
+          "us-gaap:CommercialPaperMember"
+        ]
+      ]
+    },
+    "contextual_concepts": []
+  },
+  "finance_lease_current": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "current",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract"
+    ],
+    "extension_terms": [
+      "finance lease",
+      "finance lease liability",
+      "lease liability",
+      "lease payments",
+      "right of use asset"
+    ],
+    "required_definition_phrases": [
+      "finance lease carrying value",
+      "finance lease liability carrying value",
+      "finance lease liability"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_FINANCE_LEASE_CARRYING_VALUE",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "operating lease",
+      "operating leases",
+      "right of use asset",
+      "lease cost",
+      "cash payments",
+      "lease commitment",
+      "lease commitments"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "finance lease liability payments due",
+      "minimum lease payments",
+      "lease payment",
+      "lease payments",
+      "next twelve months",
+      "year two through thereafter",
+      "maturity period",
+      "maturity periods"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "finance_lease_noncurrent": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "noncurrent",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract"
+    ],
+    "extension_terms": [
+      "finance lease",
+      "finance lease liability",
+      "lease liability",
+      "lease payments",
+      "right of use asset"
+    ],
+    "required_definition_phrases": [
+      "finance lease carrying value",
+      "finance lease liability carrying value",
+      "finance lease liability"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_FINANCE_LEASE_CARRYING_VALUE",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "operating lease",
+      "operating leases",
+      "right of use asset",
+      "lease cost",
+      "cash payments",
+      "lease commitment",
+      "lease commitments"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "finance lease liability payments due",
+      "minimum lease payments",
+      "lease payment",
+      "lease payments",
+      "next twelve months",
+      "year two through thereafter",
+      "maturity period",
+      "maturity periods"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "finance_lease_total": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "none",
+    "statement_support_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:LiabilitiesCurrent",
+      "us-gaap:LiabilitiesCurrentAbstract",
+      "us-gaap:LiabilitiesNoncurrent",
+      "us-gaap:LiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesCurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesNoncurrentAbstract",
+      "us-gaap:FinanceLeaseLiabilitiesPaymentsDueAbstract"
+    ],
+    "extension_terms": [
+      "finance lease",
+      "finance lease liability",
+      "lease liability",
+      "lease payments",
+      "right of use asset"
+    ],
+    "required_definition_phrases": [
+      "finance lease carrying value",
+      "finance lease liability carrying value",
+      "finance lease liability"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_FINANCE_LEASE_CARRYING_VALUE",
+    "structural_reason_prefix": "LIABILITY",
+    "excluded_economic_phrases": [
+      "operating lease",
+      "operating leases",
+      "right of use asset",
+      "lease cost",
+      "cash payments",
+      "lease commitment",
+      "lease commitments"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "finance lease liability payments due",
+      "minimum lease payments",
+      "lease payment",
+      "lease payments",
+      "next twelve months",
+      "year two through thereafter",
+      "maturity period",
+      "maturity periods"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "preferred_equity": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "none",
+    "statement_support_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:TemporaryEquity",
+      "us-gaap:TemporaryEquityAbstract",
+      "us-gaap:Liabilities",
+      "us-gaap:LiabilitiesAbstract",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:TemporaryEquity",
+      "us-gaap:TemporaryEquityAbstract",
+      "us-gaap:Liabilities",
+      "us-gaap:LiabilitiesAbstract",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:TemporaryEquity",
+      "us-gaap:TemporaryEquityAbstract",
+      "us-gaap:Liabilities",
+      "us-gaap:LiabilitiesAbstract",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "extension_terms": [
+      "preferred stock",
+      "preferred equity",
+      "temporary equity",
+      "mezzanine equity",
+      "redeemable equity",
+      "carrying amount",
+      "liquidation preference",
+      "preferred dividends",
+      "conversion value",
+      "preferred stock proceeds",
+      "eps",
+      "preferred share counts"
+    ],
+    "required_definition_phrases": [
+      "preferred stock",
+      "preferred equity carrying amount",
+      "temporary equity carrying amount",
+      "mezzanine equity carrying amount"
+    ],
+    "structural_reason_prefix": "EQUITY",
+    "excluded_economic_phrases": [
+      "asset",
+      "receivable",
+      "investment",
+      "fair value",
+      "noncontrolling interest"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "preferred_zero_value_conflict_companion_concepts": [
+      "us-gaap:PreferredStockSharesOutstanding",
+      "us-gaap:PreferredStockSharesIssued",
+      "us-gaap:PreferredStockParOrStatedValuePerShare",
+      "us-gaap:DividendsPreferredStockCash",
+      "us-gaap:ConvertiblePreferredDividendsNetOfTax",
+      "us-gaap:IncrementalCommonSharesAttributableToConversionOfPreferredStock"
+    ],
+    "preferred_zero_value_conflict_reason": "PREFERRED_ZERO_CONTRADICTED_BY_INSTRUMENT_EVIDENCE",
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "liquidation preference",
+      "preferred dividends",
+      "conversion value",
+      "conversion price",
+      "preferred stock proceeds",
+      "earnings per share",
+      "eps",
+      "preferred share counts",
+      "preferred stock number of shares",
+      "preferred stock shares",
+      "redemption amount",
+      "shares issued",
+      "share count"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {
+      "PreferredStocksIncludingAdditionalPaidInCapitalParOrStatedValue": "PREFERRED_EQUITY_CARRYING_AMOUNT",
+      "PreferredStockValue": "PREFERRED_EQUITY_CARRYING_AMOUNT",
+      "PreferredStockValueOutstanding": "PREFERRED_EQUITY_CARRYING_AMOUNT",
+      "TemporaryEquityCarryingAmountAttributableToParent": "TEMPORARY_EQUITY_CARRYING_AMOUNT"
+    },
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
+  "noncontrolling_interests": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "none",
+    "required_statement_support_parents": [
+      "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward"
+    ],
+    "statement_support_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:StockholdersEquity",
+      "us-gaap:StockholdersEquityAbstract",
+      "us-gaap:IncreaseDecreaseInStockholdersEquityRollForward",
+      "us-gaap:Equity",
+      "us-gaap:EquityAbstract"
+    ],
+    "extension_terms": [
+      "noncontrolling interest",
+      "minority interest",
+      "100% ownership"
+    ],
+    "required_definition_phrases": [
+      "noncontrolling interest",
+      "minority interest"
+    ],
+    "structural_reason_prefix": "EQUITY",
+    "excluded_economic_phrases": [
+      "income statement",
+      "dividends"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "100% ownership",
+      "wholly owned",
+      "minority interest",
+      "noncontrolling interest in consolidated entity"
+    ],
+    "direct_statement_concepts": [],
+    "concept_reason_codes": {},
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {
+      "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest": [
+        [
+          "us-gaap:StatementEquityComponentsAxis",
+          "us-gaap:NoncontrollingInterestMember"
+        ]
+      ]
+    },
+    "contextual_concepts": [
+      "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"
+    ]
+  }
+}

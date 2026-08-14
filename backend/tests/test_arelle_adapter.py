@@ -1,0 +1,931 @@
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from decimal import Decimal
+from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
+
+import app.us_valuation.arelle_worker as arelle_worker_module
+from app.us_valuation.arelle_adapter import (
+    _BACKEND_DIR,
+    ArelleParseError,
+    ArelleParseTimeout,
+    ArelleUnavailable,
+    parse_structural_filing,
+)
+from app.us_valuation.concept_resolver import load_structural_rules
+from app.us_valuation.structural_xbrl import StructuralRelationship
+from app.us_valuation.arelle_worker import (
+    _QNameCanonicalizer,
+    _deduplicate_relationship_records,
+    _labels_for_concept,
+    _numeric_fact_value,
+    _relationship_set_role,
+    _role_token,
+    _structural_links,
+)
+
+
+FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "us" / "structural-xbrl"
+ENTRYPOINT = FIXTURE_ROOT / "fsi-20251231.htm"
+ACCESSION = "0000000000-26-000001"
+
+
+def test_role_token_recognizes_camel_case_statement_of_financial_position() -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+    model = SimpleNamespace(
+        roleTypes={
+            linkrole: (
+                SimpleNamespace(definition="StatementOfFinancialPosition"),
+            )
+        }
+    )
+
+    assert _role_token(model, linkrole) == "balance_sheet"
+
+
+def test_opaque_role_uses_statement_root_concept() -> None:
+    root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="StatementOfFinancialPositionAbstract",
+        )
+    )
+    child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="https://issuer.test/2025",
+            localName="InvestmentSecuritiesCurrent",
+        )
+    )
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            SimpleNamespace(fromModelObject=root, toModelObject=child),
+        )
+    )
+    model = SimpleNamespace(roleTypes={})
+
+    assert (
+        _relationship_set_role(
+            model,
+            "https://issuer.test/role/custom-1001",
+            relationship_set,
+        )
+        == "balance_sheet"
+    )
+
+
+def test_combined_fallback_relationship_set_is_not_given_one_statement_role() -> None:
+    balance_root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="StatementOfFinancialPositionAbstract",
+        )
+    )
+    balance_child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="AssetsCurrent",
+        )
+    )
+    note_root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="DebtDisclosureAbstract",
+        )
+    )
+    note_child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="DebtInstrumentTable",
+        )
+    )
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            SimpleNamespace(
+                linkrole="https://issuer.test/role/balance",
+                fromModelObject=balance_root,
+                toModelObject=balance_child,
+            ),
+            SimpleNamespace(
+                linkrole="https://issuer.test/role/debt-note",
+                fromModelObject=note_root,
+                toModelObject=note_child,
+            ),
+        )
+    )
+
+    assert _relationship_set_role(SimpleNamespace(roleTypes={}), None, relationship_set) is None
+
+
+def test_specific_relationship_set_with_mixed_roots_is_not_globally_classified() -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+    balance_root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="StatementOfFinancialPositionAbstract",
+        )
+    )
+    balance_child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="AssetsCurrent",
+        )
+    )
+    note_root = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="DebtDisclosureAbstract",
+        )
+    )
+    note_child = SimpleNamespace(
+        qname=SimpleNamespace(
+            namespaceURI="http://fasb.org/us-gaap/2025",
+            localName="DebtInstrumentTable",
+        )
+    )
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            SimpleNamespace(
+                linkrole=linkrole,
+                fromModelObject=balance_root,
+                toModelObject=balance_child,
+            ),
+            SimpleNamespace(
+                linkrole=linkrole,
+                fromModelObject=note_root,
+                toModelObject=note_child,
+            ),
+        )
+    )
+
+    assert (
+        _relationship_set_role(
+            SimpleNamespace(roleTypes={}), linkrole, relationship_set
+        )
+        is None
+    )
+
+
+def test_named_statement_role_cannot_override_mixed_roots() -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            SimpleNamespace(
+                linkrole=linkrole,
+                fromModelObject=SimpleNamespace(
+                    qname=SimpleNamespace(
+                        namespaceURI="http://fasb.org/us-gaap/2025",
+                        localName="StatementOfFinancialPositionAbstract",
+                    )
+                ),
+                toModelObject=SimpleNamespace(
+                    qname=SimpleNamespace(
+                        namespaceURI="http://fasb.org/us-gaap/2025",
+                        localName="AssetsCurrent",
+                    )
+                ),
+            ),
+            SimpleNamespace(
+                linkrole=linkrole,
+                fromModelObject=SimpleNamespace(
+                    qname=SimpleNamespace(
+                        namespaceURI="http://fasb.org/us-gaap/2025",
+                        localName="DebtDisclosureAbstract",
+                    )
+                ),
+                toModelObject=SimpleNamespace(
+                    qname=SimpleNamespace(
+                        namespaceURI="http://fasb.org/us-gaap/2025",
+                        localName="DebtInstrumentTable",
+                    )
+                ),
+            ),
+        )
+    )
+    model = SimpleNamespace(
+        roleTypes={
+            linkrole: (
+                SimpleNamespace(definition="StatementOfFinancialPosition"),
+            )
+        }
+    )
+
+    assert _relationship_set_role(model, linkrole, relationship_set) is None
+
+
+def test_named_statement_role_without_relationship_roots_is_unclassified() -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+    model = SimpleNamespace(
+        roleTypes={
+            linkrole: (
+                SimpleNamespace(definition="StatementOfFinancialPosition"),
+            )
+        }
+    )
+    relationship_set = SimpleNamespace(modelRelationships=())
+
+    assert _relationship_set_role(model, linkrole, relationship_set) is None
+
+
+def test_structural_link_records_do_not_override_failed_set_role(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    linkrole = "https://issuer.test/role/custom-1001"
+
+    def concept(local_name: str) -> SimpleNamespace:
+        return SimpleNamespace(
+            qname=SimpleNamespace(
+                namespaceURI="http://fasb.org/us-gaap/2025",
+                localName=local_name,
+            )
+        )
+
+    balance_root = concept("StatementOfFinancialPositionAbstract")
+    balance_child = concept("AssetsCurrent")
+    note_root = concept("DebtDisclosureAbstract")
+    note_child = concept("DebtInstrumentTable")
+
+    def relationship(parent: SimpleNamespace, child: SimpleNamespace) -> SimpleNamespace:
+        return SimpleNamespace(
+            arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+            linkrole=linkrole,
+            fromModelObject=parent,
+            toModelObject=child,
+            order=1.0,
+            preferredLabel=None,
+            weight=None,
+        )
+
+    relationship_set = SimpleNamespace(
+        modelRelationships=(
+            relationship(balance_root, balance_child),
+            relationship(note_root, note_child),
+        )
+    )
+    model = SimpleNamespace(
+        roleTypes={
+            linkrole: (
+                SimpleNamespace(definition="StatementOfFinancialPosition"),
+            )
+        }
+    )
+
+    def relationship_sets(_model: object, arcrole: str):
+        if arcrole.endswith("parent-child"):
+            yield linkrole, relationship_set
+
+    monkeypatch.setattr(arelle_worker_module, "_relationship_sets", relationship_sets)
+    monkeypatch.setitem(
+        sys.modules,
+        "arelle",
+        SimpleNamespace(
+            XbrlConst=SimpleNamespace(
+                parentChild="http://www.xbrl.org/2003/arcrole/parent-child",
+                summationItem="http://www.xbrl.org/2003/arcrole/summation-item",
+                generalSpecial="http://www.xbrl.org/2003/arcrole/general-special",
+                dimensionDomain="http://xbrl.org/int/dim/arcrole/dimension-domain",
+                domainMember="http://xbrl.org/int/dim/arcrole/domain-member",
+            )
+        ),
+    )
+
+    links = _structural_links(model, note_child, _QNameCanonicalizer())
+
+    assert links["statement_roles"] == ()
+    assert links["relationships"]
+    assert all(item.statement_role is None for item in links["relationships"])
+
+
+def test_duplicate_relationship_with_conflicting_roles_fails_closed() -> None:
+    base = StructuralRelationship(
+        arcrole="http://www.xbrl.org/2003/arcrole/parent-child",
+        linkrole="https://issuer.test/role/custom-1001",
+        from_concept="us-gaap:AssetsCurrent",
+        to_concept="issuer:InvestmentSecuritiesCurrent",
+        order=1.0,
+        preferred_label=None,
+        calculation_weight=None,
+        statement_role="balance_sheet",
+    )
+    conflicting = StructuralRelationship(
+        **{
+            **base.as_dict(),
+            "statement_role": "income_statement",
+        }
+    )
+
+    result = _deduplicate_relationship_records((base, conflicting))
+
+    assert len(result) == 1
+    assert result[0].statement_role is None
+
+
+def test_arelle_adapter_extracts_extension_structure() -> None:
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    current = next(
+        fact for fact in filing.facts if fact.local_name == "LiquidInvestmentSecuritiesCurrent"
+    )
+    assert current.value == 42_500_000
+    assert current.unit == "USD"
+    assert current.period_start is None
+    assert current.period_end == "2025-12-31"
+    assert current.context_id == "CurrentYearInstant"
+    assert current.statement_roles == ("balance_sheet",)
+    assert "us-gaap:AssetsCurrent" in current.presentation_parents
+    assert "us-gaap:AssetsCurrent" in current.calculation_parents
+    assert "us-gaap:ShortTermInvestments" in current.definition_parents
+    assert "available-for-sale" in (current.documentation or "").lower()
+    assert current.labels
+    assert all(isinstance(label, tuple) for label in current.labels)
+    assert filing.source_accession == ACCESSION
+    assert filing.period_end == "2025-12-31"
+    assert current.decimals == "0"
+    assert current.scale is None
+    assert current.sign is None
+    assert current.filing_form == "10-K"
+    assert current.presentation_ancestry == ("us-gaap:AssetsCurrent",)
+    assert current.filing_metadata
+    assert {
+        (
+            relationship.arcrole,
+            relationship.linkrole,
+            relationship.order,
+            relationship.preferred_label,
+            relationship.calculation_weight,
+        )
+        for relationship in current.relationships
+    } >= {
+        (
+            "http://www.xbrl.org/2003/arcrole/parent-child",
+            "https://example.test/role/balanceSheet",
+            1.0,
+            None,
+            None,
+        ),
+        (
+            "http://www.xbrl.org/2003/arcrole/summation-item",
+            "https://example.test/role/balanceSheet",
+            1.0,
+            None,
+            1.0,
+        ),
+    }
+    assert {
+        relationship.statement_role
+        for relationship in current.relationships
+        if relationship.linkrole == "https://example.test/role/balanceSheet"
+        and relationship.arcrole.rsplit("/", 1)[-1]
+        in {"parent-child", "summation-item"}
+    } == {"balance_sheet"}
+
+
+def test_arelle_adapter_loads_sec_inline_transforms() -> None:
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    current = next(
+        fact for fact in filing.facts if fact.local_name == "LiquidInvestmentSecuritiesCurrent"
+    )
+    assert current.value == 42_500_000
+    assert all("invalidTransformation" not in item.code for item in filing.diagnostics)
+
+
+def test_observed_sec_inline_transform_functions_are_compatible_with_pinned_arelle() -> None:
+    script = """
+import json
+from app.us_valuation.vendor.arelle_edgar_transform import (
+    boolballotbox,
+    durday,
+    durmonth,
+    durwordsen,
+    duryear,
+    entityfilercategoryen,
+    exchnameen,
+    numwordsen,
+    stateprovnameen,
+)
+print(json.dumps({
+    "boolballotbox": boolballotbox("☒"),
+    "durday": durday("2"),
+    "durmonth": durmonth("3"),
+    "durwordsen": durwordsen("Two years three months four days"),
+    "duryear": duryear("5"),
+    "entityfilercategoryen": entityfilercategoryen("Large Accelerated Filer"),
+    "exchnameen": exchnameen("NASDAQ"),
+    "numwordsen": numwordsen("Forty Two"),
+    "stateprovnameen": stateprovnameen("California"),
+}))
+"""
+
+    completed = subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=_BACKEND_DIR,
+        capture_output=True,
+        check=True,
+        text=True,
+    )
+
+    assert json.loads(completed.stdout) == {
+        "boolballotbox": "true",
+        "durday": "P2D",
+        "durmonth": "P3M",
+        "durwordsen": "P2Y3M4D",
+        "duryear": "P5Y",
+        "entityfilercategoryen": "Large Accelerated Filer",
+        "exchnameen": "NASDAQ",
+        "numwordsen": "42",
+        "stateprovnameen": "CA",
+    }
+
+
+def test_arelle_adapter_carries_normalized_filing_form() -> None:
+    filing = parse_structural_filing(
+        ENTRYPOINT,
+        accession=ACCESSION,
+        form="10-q/a",
+    )
+
+    assert filing.form == "10-Q/A"
+    assert {fact.filing_form for fact in filing.facts} == {"10-Q/A"}
+
+
+def test_arelle_adapter_bootstraps_worker_when_parent_cwd_is_repository_root(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(Path(__file__).resolve().parents[2].parent)
+
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    assert len(filing.facts) == 6
+
+
+def test_arelle_adapter_resolves_relative_entrypoint_before_worker_chdir(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repository_root = Path(__file__).resolve().parents[2]
+    monkeypatch.chdir(repository_root)
+    relative_entrypoint = ENTRYPOINT.relative_to(repository_root)
+
+    filing = parse_structural_filing(relative_entrypoint, accession=ACCESSION)
+
+    assert len(filing.facts) == 6
+
+
+def test_arelle_adapter_extracts_all_representative_facts_and_relationships() -> None:
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+    facts = {fact.local_name: fact for fact in filing.facts}
+
+    assert facts["LiquidInvestmentSecuritiesNoncurrent"].value == 8_000_000
+    assert facts["LiquidInvestmentSecuritiesNoncurrent"].unit == "USD"
+    assert "us-gaap:AssetsNoncurrent" in facts[
+        "LiquidInvestmentSecuritiesNoncurrent"
+    ].presentation_parents
+    assert "us-gaap:AssetsNoncurrent" in facts[
+        "LiquidInvestmentSecuritiesNoncurrent"
+    ].calculation_parents
+    assert "us-gaap:LongTermInvestments" in facts[
+        "LiquidInvestmentSecuritiesNoncurrent"
+    ].definition_parents
+
+    strategic = facts["StrategicEquityInvestments"]
+    assert strategic.value == 70_000_000
+    assert strategic.unit == "USD"
+    assert strategic.context_id == "CurrentYearInstant"
+    assert strategic.statement_roles == ("balance_sheet",)
+    assert "strategic nonmarketable equity investments" in (
+        strategic.documentation or ""
+    ).lower()
+
+    assert {fact.qname for fact in filing.facts} >= {
+        "ns_a4613fe2c4:LiquidInvestmentSecuritiesCurrent",
+        "ns_a4613fe2c4:LiquidInvestmentSecuritiesNoncurrent",
+        "ns_a4613fe2c4:StrategicEquityInvestments",
+    }
+    large = facts["LargeIntegralAmount"]
+    assert large.value == 9_007_199_254_740_993
+    assert isinstance(large.value, int)
+    assert all(not type(fact).__module__.startswith("arelle") for fact in filing.facts)
+
+
+def test_arelle_adapter_normalizes_duration_end_date_from_exclusive_datetime() -> None:
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    duration = next(fact for fact in filing.facts if fact.local_name == "TestDurationAmount")
+
+    assert duration.period_start == "2025-01-01"
+    assert duration.period_end == "2025-12-31"
+
+
+def test_qname_canonicalizer_only_trusts_exact_governed_namespaces() -> None:
+    canonicalizer = _QNameCanonicalizer()
+
+    for namespace in load_structural_rules()["official_us_gaap_namespaces"]:
+        assert canonicalizer.prefix(namespace) == "us-gaap"
+    assert canonicalizer.prefix("https://fasb.org/us-gaap/2025") != "us-gaap"
+    assert canonicalizer.prefix("http://www.xbrl.org/2003/iso4217") == "iso4217"
+    assert canonicalizer.prefix("http://www.xbrl.org/2003/instance") == "xbrli"
+    for namespace in (
+        "https://issuer.example/us-gaap/2025",
+        "https://issuer.example/iso4217/USD",
+        "https://issuer.example/fsi/2025",
+    ):
+        assert canonicalizer.prefix(namespace) not in {"us-gaap", "iso4217", "xbrli", "fsi"}
+
+
+def test_qname_canonicalizer_preserves_unknown_namespace_in_stable_qname() -> None:
+    canonicalizer = _QNameCanonicalizer()
+    namespace = "https://issuer.example/us-gaap/2025"
+
+    qname = canonicalizer.qname(type("QName", (), {"namespaceURI": namespace, "localName": "Cash"})())
+
+    assert qname.endswith(":Cash")
+    assert qname.split(":", 1)[0] == canonicalizer.prefix(namespace)
+    assert canonicalizer.prefix(namespace).startswith("ns_")
+
+
+def test_numeric_conversion_preserves_large_integral_values_and_rejects_nonfinite() -> None:
+    large = 9_007_199_254_740_993
+
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal(str(large))})()
+    )
+    assert converted == large
+    assert isinstance(converted, int)
+    assert diagnostic is None
+
+    fractional, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal("1.25")})()
+    )
+    assert fractional == 1.25
+    assert isinstance(fractional, float)
+    assert diagnostic is None
+
+    nonfinite, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal("Infinity")})()
+    )
+    assert nonfinite is None
+    assert diagnostic is not None
+    assert diagnostic.code == "nonfinite_numeric_value"
+
+
+@pytest.mark.parametrize("value", [Decimal("0.5"), Decimal("42.25")])
+def test_numeric_conversion_accepts_exactly_representable_fractional_decimals(
+    value: Decimal,
+) -> None:
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": value})()
+    )
+
+    assert converted == float(value)
+    assert isinstance(converted, float)
+    assert diagnostic is None
+
+
+@pytest.mark.parametrize("value", [Decimal("9007199254740993.5"), Decimal("1E-400")])
+def test_numeric_conversion_rejects_inexact_fractional_decimals(value: Decimal) -> None:
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": value})()
+    )
+
+    assert converted is None
+    assert diagnostic is not None
+    assert diagnostic.code == "inexact_numeric_value"
+
+
+def test_numeric_conversion_rejects_fractional_overflow() -> None:
+    overflowing_fraction = Decimal("1" + "0" * 309 + ".5")
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": overflowing_fraction})()
+    )
+
+    assert converted is None
+    assert diagnostic is not None
+    assert diagnostic.code in {"nonfinite_numeric_value", "numeric_out_of_range"}
+
+
+def test_numeric_conversion_rejects_oversized_integral_decimal() -> None:
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal("1E309")})()
+    )
+
+    assert converted is None
+    assert diagnostic is not None
+    assert diagnostic.code == "numeric_out_of_range"
+
+
+def test_numeric_conversion_accepts_exact_float_integer_boundary() -> None:
+    maximum = int(sys.float_info.max)
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal(maximum)})()
+    )
+
+    assert converted == maximum
+    assert isinstance(converted, int)
+    assert diagnostic is None
+
+
+def test_numeric_conversion_rejects_exact_float_integer_boundary_plus_one() -> None:
+    maximum = int(sys.float_info.max)
+    converted, diagnostic = _numeric_fact_value(
+        type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": Decimal(maximum + 1)})()
+    )
+
+    assert converted is None
+    assert diagnostic is not None
+    assert diagnostic.code == "numeric_out_of_range"
+
+
+@pytest.mark.parametrize(
+    ("fact", "code"),
+    [
+        (type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": None})(), "nil_fact"),
+        (type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})()})(), "missing_fact_value"),
+        (type("Fact", (), {"concept": type("Concept", (), {"isNumeric": True})(), "xValue": "not-a-number"})(), "invalid_numeric_value"),
+    ],
+)
+def test_worker_emits_stable_diagnostic_before_skipping_invalid_fact(fact: object, code: str) -> None:
+    value, diagnostic = _numeric_fact_value(fact)
+
+    assert value is None
+    assert diagnostic is not None
+    assert diagnostic.code == code
+
+
+def test_worker_silently_ignores_legitimate_text_facts() -> None:
+    text_fact = type(
+        "Fact",
+        (),
+        {"concept": type("Concept", (), {"isNumeric": False})(), "xValue": "Balance sheet"},
+    )()
+
+    value, diagnostic = _numeric_fact_value(text_fact)
+
+    assert value is None
+    assert diagnostic is None
+
+
+def test_labels_never_fallback_to_qname_or_documentation() -> None:
+    calls: list[dict[str, object]] = []
+
+    class Concept:
+        def label(self, **kwargs: object) -> None:
+            calls.append(kwargs)
+            return None
+
+    assert _labels_for_concept(Concept()) == ()
+    assert calls
+    assert all(call.get("fallbackToQname") is False for call in calls)
+
+
+def test_arelle_adapter_rejects_malformed_diagnostic_objects(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def run(*args: object, **kwargs: object) -> subprocess.CompletedProcess[str]:
+        output_path = Path(args[0][args[0].index("--output") + 1])
+        output_path.write_text(
+            json.dumps(
+                {
+                        "source_accession": ACCESSION,
+                        "period_end": "2025-12-31",
+                        "form": "10-K",
+                        "facts": [
+                        {
+                            "qname": "fsi:TestFact",
+                            "namespace": "https://example.test/fsi/2025",
+                            "local_name": "TestFact",
+                            "labels": [],
+                            "documentation": None,
+                            "value": 1,
+                            "unit": "USD",
+                            "period_start": None,
+                            "period_end": "2025-12-31",
+                            "context_id": "CurrentYearInstant",
+                            "dimensions": [],
+                            "statement_roles": [],
+                            "presentation_parents": [],
+                            "calculation_parents": [],
+                            "calculation_children": [],
+                            "definition_parents": [],
+                            "definition_children": [],
+                            "source_accession": ACCESSION,
+                        }
+                    ],
+                    "diagnostics": ["not-an-object"],
+                }
+            ),
+            encoding="utf-8",
+        )
+        return subprocess.CompletedProcess(args[0], 0, "", "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(ArelleParseError, match="invalid filing data"):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+
+def test_arelle_adapter_uses_worker_json_command(monkeypatch: pytest.MonkeyPatch) -> None:
+    captured: dict[str, object] = {}
+
+    def run(command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        captured["command"] = command
+        captured["kwargs"] = kwargs
+        output_path = Path(command[command.index("--output") + 1])
+        output_path.write_text(
+            json.dumps(
+                {
+                    "source_accession": ACCESSION,
+                    "period_end": "2025-12-31",
+                    "facts": [
+                        {
+                            "qname": "fsi:TestFact",
+                            "namespace": "https://example.test/fsi/2025",
+                            "local_name": "TestFact",
+                            "labels": [["standard", "Test fact"]],
+                            "documentation": None,
+                            "value": 1.0,
+                            "unit": "USD",
+                            "period_start": None,
+                            "period_end": "2025-12-31",
+                            "context_id": "CurrentYearInstant",
+                            "dimensions": [],
+                            "statement_roles": ["balance_sheet"],
+                            "presentation_parents": [],
+                            "calculation_parents": [],
+                            "calculation_children": [],
+                            "definition_parents": [],
+                            "definition_children": [],
+                            "source_accession": ACCESSION,
+                        }
+                    ],
+                    "diagnostics": [],
+                    "form": "10-K",
+                }
+            ),
+            encoding="utf-8",
+        )
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    command = captured["command"]
+    assert isinstance(command, list)
+    assert command[1:4] == ["-m", "app.us_valuation.arelle_worker", "--entrypoint"]
+    assert "--accession" in command
+    assert "--output" in command
+    assert captured["kwargs"]["timeout"] == 120  # type: ignore[index]
+    assert captured["kwargs"]["cwd"] == str(_BACKEND_DIR)  # type: ignore[index]
+    assert filing.facts[0].qname == "fsi:TestFact"
+
+
+def test_arelle_adapter_sanitizes_worker_import_environment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, object] = {}
+
+    def run(command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        captured["env"] = kwargs["env"]
+        output_path = Path(command[command.index("--output") + 1])
+        output_path.write_text(
+            json.dumps(
+                {
+                    "source_accession": ACCESSION,
+                    "period_end": "2025-12-31",
+                    "facts": [],
+                    "diagnostics": [],
+                }
+            ),
+            encoding="utf-8",
+        )
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setenv("PYTHONPATH", "/tmp/hostile-app")
+    monkeypatch.setenv("PYTHONSAFEPATH", "/tmp/hostile-safe-path")
+    monkeypatch.setattr(subprocess, "run", run)
+
+    with pytest.raises(ArelleParseError, match="no facts"):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    env = captured["env"]
+    assert isinstance(env, dict)
+    assert env["PYTHONPATH"] == str(_BACKEND_DIR)
+    assert "PYTHONSAFEPATH" not in env
+    assert "PYTHONHOME" not in env
+    assert env["PYTHONNOUSERSITE"] == "1"
+    assert env["PYTHONHASHSEED"] == "0"
+
+
+def test_arelle_adapter_extracts_with_hostile_python_environment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("PYTHONHOME", "/tmp/hostile-python-home")
+    monkeypatch.setenv("PYTHONPATH", "/tmp/hostile-app")
+    monkeypatch.setenv("PYTHONSAFEPATH", "/tmp/hostile-safe-path")
+
+    filing = parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+    assert any(fact.local_name == "LiquidInvestmentSecuritiesCurrent" for fact in filing.facts)
+
+
+def test_arelle_adapter_maps_worker_launch_oserror_to_parse_error(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def launch_failure(*args: object, **kwargs: object) -> None:
+        raise OSError("exec failed")
+
+    monkeypatch.setattr(subprocess, "run", launch_failure)
+    with pytest.raises(ArelleParseError, match="exec failed"):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+
+def test_arelle_adapter_converts_timeout_to_domain_error(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def timeout(*args: object, **kwargs: object) -> None:
+        raise subprocess.TimeoutExpired(cmd=args[0], timeout=kwargs["timeout"])
+
+    monkeypatch.setattr(subprocess, "run", timeout)
+    with pytest.raises(ArelleParseTimeout):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION, timeout_seconds=1)
+
+
+def test_arelle_adapter_reports_missing_dependency(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def run(*args: object, **kwargs: object) -> subprocess.CompletedProcess[str]:
+        return subprocess.CompletedProcess(
+            args[0], 1, "", "ModuleNotFoundError: No module named 'arelle'"
+        )
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(ArelleUnavailable, match="Arelle"):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+
+def test_arelle_adapter_reports_nonzero_worker_exit(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def run(*args: object, **kwargs: object) -> subprocess.CompletedProcess[str]:
+        return subprocess.CompletedProcess(args[0], 2, "", "fatal parse error")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(ArelleParseError, match="fatal parse error"):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+
+def test_arelle_adapter_does_not_misclassify_worker_bootstrap_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def run(*args: object, **kwargs: object) -> subprocess.CompletedProcess[str]:
+        return subprocess.CompletedProcess(args[0], 1, "", "ModuleNotFoundError: No module named 'app'")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(ArelleParseError, match="No module named 'app'"):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+
+def test_arelle_adapter_reports_malformed_worker_output(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def run(*args: object, **kwargs: object) -> subprocess.CompletedProcess[str]:
+        output_path = Path(args[0][args[0].index("--output") + 1])
+        output_path.write_text("not-json", encoding="utf-8")
+        return subprocess.CompletedProcess(args[0], 0, "", "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(ArelleParseError, match="JSON"):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+
+def test_arelle_adapter_reports_empty_fact_result(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def run(*args: object, **kwargs: object) -> subprocess.CompletedProcess[str]:
+        output_path = Path(args[0][args[0].index("--output") + 1])
+        output_path.write_text(
+            json.dumps(
+                {
+                    "source_accession": ACCESSION,
+                    "period_end": "2025-12-31",
+                    "facts": [],
+                    "diagnostics": [],
+                    "form": "10-K",
+                }
+            ),
+            encoding="utf-8",
+        )
+        return subprocess.CompletedProcess(args[0], 0, "", "")
+
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(ArelleParseError, match="no facts"):
+        parse_structural_filing(ENTRYPOINT, accession=ACCESSION)
+
+
+def test_parent_adapter_module_does_not_import_arelle() -> None:
+    import sys
+
+    assert "arelle" not in sys.modules

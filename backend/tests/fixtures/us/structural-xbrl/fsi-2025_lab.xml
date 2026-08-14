@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<link:linkbase xmlns:link="http://www.xbrl.org/2003/linkbase"
+               xmlns:xlink="http://www.w3.org/1999/xlink"
+               xmlns:fsi="https://example.test/fsi/2025"
+               xmlns:us-gaap="http://fasb.org/us-gaap/2025">
+  <link:labelLink xlink:type="extended" xlink:role="http://www.xbrl.org/2003/role/labelLinkbaseRef">
+    <link:loc xlink:type="locator" xlink:label="current"
+              xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesCurrent"/>
+    <link:loc xlink:type="locator" xlink:label="noncurrent"
+              xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesNoncurrent"/>
+    <link:loc xlink:type="locator" xlink:label="debt-current"
+              xlink:href="us-gaap-2025.xsd#us-gaap_DebtCurrent"/>
+    <link:loc xlink:type="locator" xlink:label="strategic"
+              xlink:href="fsi-2025.xsd#fsi_StrategicEquityInvestments"/>
+    <link:label xlink:type="resource" xlink:label="current-standard"
+                xlink:role="http://www.xbrl.org/2003/role/label" xml:lang="en">
+      Liquid investment securities, current
+    </link:label>
+    <link:label xlink:type="resource" xlink:label="current-documentation"
+                xlink:role="http://www.xbrl.org/2003/role/documentation" xml:lang="en">
+      Available-for-sale debt securities classified as current.
+    </link:label>
+    <link:label xlink:type="resource" xlink:label="noncurrent-standard"
+                xlink:role="http://www.xbrl.org/2003/role/label" xml:lang="en">
+      Liquid investment securities, noncurrent
+    </link:label>
+    <link:label xlink:type="resource" xlink:label="noncurrent-documentation"
+                xlink:role="http://www.xbrl.org/2003/role/documentation" xml:lang="en">
+      Noncurrent marketable debt securities.
+    </link:label>
+    <link:label xlink:type="resource" xlink:label="debt-current-standard"
+                xlink:role="http://www.xbrl.org/2003/role/label" xml:lang="en">
+      Current debt
+    </link:label>
+    <link:label xlink:type="resource" xlink:label="debt-current-documentation"
+                xlink:role="http://www.xbrl.org/2003/role/documentation" xml:lang="en">
+      Current debt carrying amount.
+    </link:label>
+    <link:label xlink:type="resource" xlink:label="strategic-standard"
+                xlink:role="http://www.xbrl.org/2003/role/label" xml:lang="en">
+      Strategic equity investments
+    </link:label>
+    <link:label xlink:type="resource" xlink:label="strategic-documentation"
+                xlink:role="http://www.xbrl.org/2003/role/documentation" xml:lang="en">
+      Strategic nonmarketable equity investments.
+    </link:label>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="current" xlink:to="current-standard" order="1"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="current" xlink:to="current-documentation" order="2"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="noncurrent" xlink:to="noncurrent-standard" order="1"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="noncurrent" xlink:to="noncurrent-documentation" order="2"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="debt-current" xlink:to="debt-current-standard" order="1"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="debt-current" xlink:to="debt-current-documentation" order="2"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="strategic" xlink:to="strategic-standard" order="1"/>
+    <link:labelArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/concept-label" xlink:from="strategic" xlink:to="strategic-documentation" order="2"/>
+  </link:labelLink>
+
+  <link:definitionLink xlink:type="extended" xlink:role="https://example.test/role/definition">
+    <link:loc xlink:type="locator" xlink:label="short-term"
+              xlink:href="us-gaap-2025.xsd#us-gaap_ShortTermInvestments"/>
+    <link:loc xlink:type="locator" xlink:label="long-term"
+              xlink:href="us-gaap-2025.xsd#us-gaap_LongTermInvestments"/>
+    <link:loc xlink:type="locator" xlink:label="current-definition"
+              xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesCurrent"/>
+    <link:loc xlink:type="locator" xlink:label="noncurrent-definition"
+              xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesNoncurrent"/>
+    <link:definitionArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/general-special"
+                        xlink:from="short-term" xlink:to="current-definition" order="1"/>
+    <link:definitionArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/general-special"
+                        xlink:from="long-term" xlink:to="noncurrent-definition" order="1"/>
+  </link:definitionLink>
+</link:linkbase>

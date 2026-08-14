@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<link:linkbase xmlns:link="http://www.xbrl.org/2003/linkbase"
+               xmlns:xlink="http://www.w3.org/1999/xlink">
+  <link:calculationLink xlink:type="extended" xlink:role="https://example.test/role/balanceSheet">
+    <link:loc xlink:type="locator" xlink:label="assets-current"
+              xlink:href="us-gaap-2025.xsd#us-gaap_AssetsCurrent"/>
+    <link:loc xlink:type="locator" xlink:label="liquid-current"
+              xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesCurrent"/>
+    <link:loc xlink:type="locator" xlink:label="assets-noncurrent"
+              xlink:href="us-gaap-2025.xsd#us-gaap_AssetsNoncurrent"/>
+    <link:loc xlink:type="locator" xlink:label="liquid-noncurrent"
+              xlink:href="fsi-2025.xsd#fsi_LiquidInvestmentSecuritiesNoncurrent"/>
+    <link:calculationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/summation-item" xlink:from="assets-current" xlink:to="liquid-current"
+                         order="1" weight="1"/>
+    <link:calculationArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/summation-item" xlink:from="assets-noncurrent" xlink:to="liquid-noncurrent"
+                         order="1" weight="1"/>
+  </link:calculationLink>
+</link:linkbase>

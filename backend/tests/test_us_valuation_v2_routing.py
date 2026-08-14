@@ -156,10 +156,59 @@ def test_incomplete_fcff_bridge_is_withheld_without_model_fallback(monkeypatch) 
         "normalized": {"tax_rate": 0.21},
         "balance_sheet": {
             "bridge_complete": False,
+            "bridge_can_value": False,
+            "bridge_usable": False,
+            "bridge_decision": "withheld",
             "bridge_missing_fields": [
                 "preferred_equity",
                 "noncontrolling_interests",
             ],
+            "bridge_blocking_fields": [
+                "noncontrolling_interests",
+                "preferred_equity",
+            ],
+            "bridge_bounded_fields": [],
+            "bridge_precheck": {
+                "complete": False,
+                "can_value": False,
+                "missing_fields": [
+                    "noncontrolling_interests",
+                    "preferred_equity",
+                ],
+                "blocking_fields": [
+                    "noncontrolling_interests",
+                    "preferred_equity",
+                ],
+                "bounded_fields": [],
+                "cash_and_investments": {
+                    "low": 0.0,
+                    "midpoint": 0.0,
+                    "high": 0.0,
+                },
+                "total_debt": {
+                    "low": 0.0,
+                    "midpoint": 0.0,
+                    "high": 0.0,
+                },
+                "preferred_equity": {
+                    "low": 0.0,
+                    "midpoint": 0.0,
+                    "high": 0.0,
+                },
+                "noncontrolling_interests": {
+                    "low": 0.0,
+                    "midpoint": 0.0,
+                    "high": 0.0,
+                },
+                "bridge_adjustment": {
+                    "low": 0.0,
+                    "midpoint": 0.0,
+                    "high": 0.0,
+                },
+                "fully_diluted_shares": 1.0,
+                "reason_codes": ["TEST_INCOMPLETE_BRIDGE"],
+                "policy_version": "US-BRIDGE-POLICY-1.0",
+            },
         },
         "ttm": {"period_end": "2025-06-30"},
     }
@@ -176,8 +225,17 @@ def test_incomplete_fcff_bridge_is_withheld_without_model_fallback(monkeypatch) 
     )
 
     assert result["model_policy"]["primary"] == "fcff_dcf"
+    assert result["financials"]["balance_sheet"]["bridge_blocking_fields"] == [
+        "noncontrolling_interests",
+        "preferred_equity",
+    ]
     assert result["review"]["publication_state"] == "withheld"
     assert result["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
+    assert result["models"]["fcff_dcf"]["publication_state"] == "withheld"
+    assert result["models"]["epv"]["intrinsic_value_per_share"] is None
+    assert result["models"]["epv"]["publication_state"] == "withheld"
+    assert result["scenarios"] == {}
+    assert result["sensitivities"] == []
     errors = " ".join(result["review"]["errors"])
     assert "preferred_equity" in errors
     assert "noncontrolling_interests" in errors

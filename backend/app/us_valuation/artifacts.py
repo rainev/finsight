@@ -4,9 +4,12 @@ from __future__ import annotations
 
 import json
 from copy import deepcopy
+from math import isclose, isfinite
 from pathlib import Path
 from typing import Any
 
+from .automated_review import REVIEW_VERSION, assess_artifact
+from .bridge_policy import BridgeAssessment, POLICY_VERSION
 from .sec_client import normalize_cik
 from .xbrl import load_concept_config
 
@@ -153,6 +156,104 @@ def _public_model(model: dict[str, Any]) -> dict[str, Any]:
 
 
 PUBLICATION_STATES = {"pass", "review_required", "withheld"}
+_STATE_STRICTNESS = {"pass": 0, "review_required": 1, "withheld": 2}
+_BRIDGE_SPREAD_LIMIT = 0.01
+_SPREAD_BOUNDARY_RELATIVE_TOLERANCE = 1e-14
+_INVALID_STATE_ERROR = (
+    "Public artifact has an unsupported publication state and was withheld."
+)
+_INVALID_BRIDGE_ERROR = (
+    "Public bridge quality is invalid or missing; valuation was withheld."
+)
+_INVALID_AUTOMATED_REVIEW_ERROR = (
+    "Public automated review is invalid; valuation was withheld."
+)
+_INCONSISTENT_MODEL_POLICY_ERROR = (
+    "Public model policy is inconsistent with FCFF valuation surfaces and was withheld."
+)
+_INCONSISTENT_MODEL_IDENTITY_ERROR = (
+    "Public model key and discriminator are inconsistent; valuation was withheld."
+)
+
+_BRIDGE_FIELDS = (
+    "cash",
+    "commercial_paper",
+    "current_debt",
+    "finance_lease_current",
+    "finance_lease_noncurrent",
+    "finance_lease_total",
+    "marketable_securities_current",
+    "marketable_securities_noncurrent",
+    "noncontrolling_interests",
+    "noncurrent_debt",
+    "preferred_equity",
+    "total_interest_bearing_debt",
+)
+_PUBLIC_BRIDGE_REASONS = (
+    "BASE_ENTERPRISE_VALUE_UNAVAILABLE",
+    "BRIDGE_EVIDENCE_CONFLICT",
+    "BRIDGE_EVIDENCE_NOT_CURRENT",
+    "BRIDGE_EVIDENCE_NOT_PRODUCTION",
+    "BRIDGE_EVIDENCE_SOURCE_INCOMPLETE",
+    "BRIDGE_EVIDENCE_UNUSABLE",
+    "BRIDGE_FIELD_IDENTITY_MISMATCH",
+    "BRIDGE_FIELD_MISSING_OR_INVALID",
+    "BRIDGE_POLICY_WITHHELD",
+    "BRIDGE_QUALITY_INVALID_OR_MISSING",
+    "CURRENT_NOTE_SUPPLIES_FINITE_RANGE",
+    "FINANCE_LEASE_AGGREGATE_CONFLICT",
+    "FINANCE_LEASE_AGGREGATE_INCOMPLETE_COVERAGE",
+    "JOINT_INTRINSIC_VALUE_SPREAD_EXCEEDS_LIMIT",
+    "NONFINITE_INTRINSIC_VALUE_RESULT",
+    "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT",
+    "STALE_STALE_REPORTED_FACT",
+    "TOTAL_DEBT_AGGREGATE_CONFLICT",
+    "TOTAL_DEBT_AGGREGATE_INCOMPLETE_COVERAGE",
+    "UNRESOLVED_UNSPECIFIED",
+)
+_BRIDGE_QUALITY_KEYS = {
+    "decision",
+    "complete",
+    "usable",
+    "bounded_fields",
+    "blocking_fields",
+    "reason_codes",
+    "intrinsic_value_range",
+}
+_BRIDGE_RANGE_KEYS = {
+    "low",
+    "midpoint",
+    "high",
+    "spread_ratio",
+    "spread_limit",
+}
+_PRIVATE_ASSESSMENT_KEYS = {
+    "decision",
+    "usable",
+    "intrinsic_value_range",
+    "spread_ratio",
+    "spread_limit",
+    "blocking_fields",
+    "bounded_fields",
+    "reason_codes",
+    "warning",
+    "policy_version",
+}
+_PRIVATE_RANGE_KEYS = {"low", "midpoint", "high"}
+_AUTOMATED_REVIEW_KEYS = {
+    "review_version",
+    "decision",
+    "publication_state",
+    "evidence_status",
+    "blocking_reasons",
+    "repair_actions",
+    "warnings",
+}
+_AUTOMATED_DECISION_STATES = {
+    "approved": "pass",
+    "approved_with_caveat": "review_required",
+    "blocked": "withheld",
+}
 
 
 def _legacy_fcff_fallback_reason(artifact: dict[str, Any]) -> str | None:
@@ -177,57 +278,746 @@ def _legacy_fcff_fallback_reason(artifact: dict[str, Any]) -> str | None:
     return None
 
 
+def _stricter_state(*states: str) -> str:
+    return max(states, key=lambda state: _STATE_STRICTNESS[state])
+
+
+def _deduplicated_strings(value: object) -> list[str] | None:
+    if not isinstance(value, list) or any(
+        not isinstance(item, str) for item in value
+    ):
+        return None
+    return list(dict.fromkeys(value))
+
+
+def _append_unique(messages: list[str], message: str) -> None:
+    if message not in messages:
+        messages.append(message)
+
+
+def _canonical_identifiers(
+    value: object,
+    *,
+    allowed: tuple[str, ...],
+) -> list[str]:
+    if not isinstance(value, list) or any(
+        not isinstance(item, str) for item in value
+    ):
+        raise ValueError("identifier list is malformed")
+    if len(value) != len(set(value)) or any(item not in allowed for item in value):
+        raise ValueError("identifier list contains duplicates or unknown values")
+    present = set(value)
+    return [item for item in allowed if item in present]
+
+
+def _json_number(value: object, *, nullable: bool = False) -> float | None:
+    if value is None and nullable:
+        return None
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError("value must be a JSON-safe finite number")
+    normalized = float(value)
+    if not isfinite(normalized):
+        raise ValueError("value must be a JSON-safe finite number")
+    return normalized
+
+
+def _spread_within_limit(spread_ratio: float) -> bool:
+    return spread_ratio <= _BRIDGE_SPREAD_LIMIT or isclose(
+        spread_ratio,
+        _BRIDGE_SPREAD_LIMIT,
+        rel_tol=_SPREAD_BOUNDARY_RELATIVE_TOLERANCE,
+        abs_tol=0.0,
+    )
+
+
+def _invalid_bridge_quality() -> dict[str, Any]:
+    return {
+        "decision": "withheld",
+        "complete": False,
+        "usable": False,
+        "bounded_fields": [],
+        "blocking_fields": [],
+        "reason_codes": ["BRIDGE_QUALITY_INVALID_OR_MISSING"],
+        "intrinsic_value_range": {
+            "low": None,
+            "midpoint": None,
+            "high": None,
+            "spread_ratio": None,
+            "spread_limit": _BRIDGE_SPREAD_LIMIT,
+        },
+    }
+
+
+def _validated_public_bridge_quality(value: object) -> dict[str, Any] | None:
+    """Validate and canonicalize only the allowlisted public bridge DTO."""
+    try:
+        if not isinstance(value, dict) or set(value) != _BRIDGE_QUALITY_KEYS:
+            raise ValueError("bridge quality has an unsupported shape")
+        decision = value["decision"]
+        complete = value["complete"]
+        usable = value["usable"]
+        if decision not in {"complete", "bounded_review", "withheld"}:
+            raise ValueError("unsupported bridge decision")
+        if not isinstance(complete, bool) or not isinstance(usable, bool):
+            raise ValueError("bridge booleans are malformed")
+
+        bounded_fields = _canonical_identifiers(
+            value["bounded_fields"], allowed=_BRIDGE_FIELDS
+        )
+        blocking_fields = _canonical_identifiers(
+            value["blocking_fields"], allowed=_BRIDGE_FIELDS
+        )
+        reason_codes = _canonical_identifiers(
+            value["reason_codes"], allowed=_PUBLIC_BRIDGE_REASONS
+        )
+
+        raw_range = value["intrinsic_value_range"]
+        if not isinstance(raw_range, dict) or set(raw_range) != _BRIDGE_RANGE_KEYS:
+            raise ValueError("bridge range has an unsupported shape")
+        spread_limit = _json_number(raw_range["spread_limit"])
+        if spread_limit != _BRIDGE_SPREAD_LIMIT:
+            raise ValueError("bridge spread limit does not match policy")
+        spread_ratio = _json_number(
+            raw_range["spread_ratio"], nullable=True
+        )
+        if spread_ratio is not None and spread_ratio < 0:
+            raise ValueError("bridge spread ratio cannot be negative")
+
+        absolute_values = (
+            raw_range["low"],
+            raw_range["midpoint"],
+            raw_range["high"],
+        )
+        all_null = all(item is None for item in absolute_values)
+        if not all_null and any(item is None for item in absolute_values):
+            raise ValueError("bridge range cannot be partially null")
+        if all_null:
+            low = midpoint = high = None
+            expected_spread = None
+        else:
+            low = _json_number(absolute_values[0])
+            midpoint = _json_number(absolute_values[1])
+            high = _json_number(absolute_values[2])
+            assert low is not None and midpoint is not None and high is not None
+            if not low <= midpoint <= high or not isclose(
+                midpoint,
+                (low + high) / 2,
+                rel_tol=1e-14,
+                abs_tol=0.0,
+            ):
+                raise ValueError("bridge range arithmetic is invalid")
+            expected_spread = (
+                0.0
+                if low == high
+                else (high - low) / midpoint
+                if midpoint > 0
+                else None
+            )
+
+        if decision == "complete":
+            if (
+                complete is not True
+                or usable is not True
+                or bounded_fields
+                or blocking_fields
+                or spread_ratio != 0.0
+                or (
+                    not all_null
+                    and (low != midpoint or midpoint != high)
+                )
+            ):
+                raise ValueError("complete bridge quality is inconsistent")
+        elif decision == "bounded_review":
+            if (
+                complete is not False
+                or usable is not True
+                or not bounded_fields
+                or blocking_fields
+                or spread_ratio is None
+                or not _spread_within_limit(spread_ratio)
+                or all_null
+                or midpoint is None
+                or midpoint <= 0
+                or expected_spread is None
+                or not isclose(
+                    spread_ratio,
+                    expected_spread,
+                    rel_tol=1e-14,
+                    abs_tol=0.0,
+                )
+            ):
+                raise ValueError("bounded bridge quality is inconsistent")
+        else:
+            invalid_boundary = reason_codes == [
+                "BRIDGE_QUALITY_INVALID_OR_MISSING"
+            ]
+            if complete is not False or usable is not False:
+                raise ValueError("withheld bridge quality is inconsistent")
+            if invalid_boundary:
+                if (
+                    bounded_fields
+                    or blocking_fields
+                    or spread_ratio is not None
+                    or not all_null
+                ):
+                    raise ValueError("invalid bridge sentinel is malformed")
+            elif not bounded_fields and not blocking_fields:
+                raise ValueError("withheld bridge quality lacks affected fields")
+            elif not all_null:
+                if midpoint is None or midpoint <= 0:
+                    if (
+                        spread_ratio is not None
+                        or "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT"
+                        not in reason_codes
+                    ):
+                        raise ValueError("nonpositive bridge range is malformed")
+                elif (
+                    spread_ratio is None
+                    or expected_spread is None
+                    or not isclose(
+                        spread_ratio,
+                        expected_spread,
+                        rel_tol=1e-14,
+                        abs_tol=0.0,
+                    )
+                    or _spread_within_limit(spread_ratio)
+                    or "JOINT_INTRINSIC_VALUE_SPREAD_EXCEEDS_LIMIT"
+                    not in reason_codes
+                ):
+                    raise ValueError("withheld bridge spread is malformed")
+            elif spread_ratio is not None and (
+                _spread_within_limit(spread_ratio)
+                or "JOINT_INTRINSIC_VALUE_SPREAD_EXCEEDS_LIMIT"
+                not in reason_codes
+            ):
+                raise ValueError("scrubbed bridge spread is malformed")
+
+        return {
+            "decision": decision,
+            "complete": complete,
+            "usable": usable,
+            "bounded_fields": bounded_fields,
+            "blocking_fields": blocking_fields,
+            "reason_codes": reason_codes,
+            "intrinsic_value_range": {
+                "low": low,
+                "midpoint": midpoint,
+                "high": high,
+                "spread_ratio": spread_ratio,
+                "spread_limit": _BRIDGE_SPREAD_LIMIT,
+            },
+        }
+    except (KeyError, TypeError, ValueError, OverflowError, ZeroDivisionError):
+        return None
+
+
+def _validated_scrubbed_bounded_bridge_quality(
+    value: object,
+) -> dict[str, Any] | None:
+    """Validate the null-valued form produced only after public withholding."""
+    try:
+        if not isinstance(value, dict) or value.get("decision") != "bounded_review":
+            raise ValueError("not a scrubbed bounded bridge")
+        raw_range = value["intrinsic_value_range"]
+        if not isinstance(raw_range, dict) or set(raw_range) != _BRIDGE_RANGE_KEYS:
+            raise ValueError("bridge range has an unsupported shape")
+        if any(raw_range[key] is not None for key in ("low", "midpoint", "high")):
+            raise ValueError("scrubbed bridge absolutes must be null")
+        spread_ratio = _json_number(raw_range["spread_ratio"])
+        assert spread_ratio is not None
+
+        probe = deepcopy(value)
+        half_width = spread_ratio * 50.0
+        probe["intrinsic_value_range"].update(
+            {
+                "low": 100.0 - half_width,
+                "midpoint": 100.0,
+                "high": 100.0 + half_width,
+            }
+        )
+        validated = _validated_public_bridge_quality(probe)
+        if validated is None:
+            raise ValueError("scrubbed bounded bridge metadata is invalid")
+        validated["intrinsic_value_range"].update(
+            {"low": None, "midpoint": None, "high": None}
+        )
+        return validated
+    except (
+        AssertionError,
+        KeyError,
+        TypeError,
+        ValueError,
+        OverflowError,
+    ):
+        return None
+
+
+def _withheld_value_sink(value: object) -> bool:
+    return (
+        isinstance(value, dict)
+        and value.get("publication_state") == "withheld"
+        and value.get("intrinsic_value_per_share") is None
+    )
+
+
+def _artifact_is_fully_scrubbed(artifact: object) -> bool:
+    """Recognize only an artifact previously scrubbed at every value sink."""
+    if not isinstance(artifact, dict):
+        return False
+    review = artifact.get("review")
+    models = artifact.get("models")
+    scenarios = artifact.get("scenarios")
+    scenario_range = artifact.get("scenario_range")
+    sensitivities = artifact.get("sensitivities", [])
+    if (
+        not isinstance(review, dict)
+        or review.get("publication_state") != "withheld"
+        or not isinstance(models, dict)
+        or not _withheld_value_sink(models.get("fcff_dcf"))
+        or not all(_withheld_value_sink(model) for model in models.values())
+        or not isinstance(scenarios, dict)
+        or not all(
+            isinstance(scenario, dict)
+            and all(_withheld_value_sink(model) for model in scenario.values())
+            for scenario in scenarios.values()
+        )
+        or not isinstance(sensitivities, list)
+        or not all(_withheld_value_sink(row) for row in sensitivities)
+        or not isinstance(scenario_range, dict)
+        or any(scenario_range.get(key) is not None for key in ("low", "base", "high"))
+    ):
+        return False
+    return True
+
+
+def _artifact_has_fcff_surface(artifact: dict[str, Any]) -> bool:
+    models = artifact.get("models")
+    scenarios = artifact.get("scenarios")
+    return (
+        "bridge_quality" in artifact
+        or (
+            isinstance(models, dict)
+            and any(
+                name == "fcff_dcf"
+                or (isinstance(model, dict) and model.get("model") == "fcff_dcf")
+                for name, model in models.items()
+            )
+        )
+        or (
+            isinstance(scenarios, dict)
+            and any(
+                isinstance(scenario, dict)
+                and any(
+                    name == "fcff_dcf"
+                    or (
+                        isinstance(model, dict)
+                        and model.get("model") == "fcff_dcf"
+                    )
+                    for name, model in scenario.items()
+                )
+                for scenario in scenarios.values()
+            )
+        )
+    )
+
+
+def _artifact_model_identities_agree(artifact: dict[str, Any]) -> bool:
+    def collection_agrees(value: object) -> bool:
+        return not isinstance(value, dict) or all(
+            not isinstance(model, dict)
+            or "model" not in model
+            or model["model"] == name
+            for name, model in value.items()
+        )
+
+    models = artifact.get("models")
+    scenarios = artifact.get("scenarios")
+    return collection_agrees(models) and (
+        not isinstance(scenarios, dict)
+        or all(collection_agrees(scenario) for scenario in scenarios.values())
+    )
+
+
+def _bridge_absolutes_match_canonical_fcff(
+    bridge_quality: dict[str, Any],
+    models: dict[str, Any],
+) -> bool:
+    value_range = bridge_quality["intrinsic_value_range"]
+    if all(value_range[key] is None for key in ("low", "midpoint", "high")):
+        return True
+    fcff = models.get("fcff_dcf")
+    if not isinstance(fcff, dict):
+        return False
+    try:
+        canonical = _json_number(fcff.get("intrinsic_value_per_share"))
+        midpoint = _json_number(value_range["midpoint"])
+    except (TypeError, ValueError, OverflowError):
+        return False
+    assert canonical is not None and midpoint is not None
+    return isclose(canonical, midpoint, rel_tol=1e-14, abs_tol=0.0)
+
+
+def _public_bridge_quality(result: dict[str, Any]) -> dict[str, Any]:
+    """Build a public DTO from the final private assessment and aliases only."""
+    try:
+        balance = result["financials"]["balance_sheet"]
+        if not isinstance(balance, dict):
+            raise ValueError("balance sheet must be a mapping")
+        raw = balance["bridge_uncertainty"]
+        if not isinstance(raw, dict) or set(raw) != _PRIVATE_ASSESSMENT_KEYS:
+            raise ValueError("private bridge assessment has an unsupported shape")
+        if raw["policy_version"] != POLICY_VERSION:
+            raise ValueError("private bridge policy version mismatch")
+        if _json_number(raw["spread_limit"]) != _BRIDGE_SPREAD_LIMIT:
+            raise ValueError("private bridge spread limit mismatch")
+        _json_number(raw["spread_ratio"], nullable=True)
+
+        raw_range = raw["intrinsic_value_range"]
+        if raw_range is not None:
+            if not isinstance(raw_range, dict) or set(raw_range) != _PRIVATE_RANGE_KEYS:
+                raise ValueError("private bridge range has an unsupported shape")
+            for key in _PRIVATE_RANGE_KEYS:
+                _json_number(raw_range[key])
+
+        raw_blocking = _canonical_identifiers(
+            raw["blocking_fields"], allowed=_BRIDGE_FIELDS
+        )
+        raw_bounded = _canonical_identifiers(
+            raw["bounded_fields"], allowed=_BRIDGE_FIELDS
+        )
+        raw_reasons = _canonical_identifiers(
+            raw["reason_codes"], allowed=_PUBLIC_BRIDGE_REASONS
+        )
+        assessment = BridgeAssessment.from_dict(raw)
+
+        alias_blocking = _canonical_identifiers(
+            balance["bridge_blocking_fields"], allowed=_BRIDGE_FIELDS
+        )
+        alias_bounded = _canonical_identifiers(
+            balance["bridge_bounded_fields"], allowed=_BRIDGE_FIELDS
+        )
+        alias_missing = _canonical_identifiers(
+            balance["bridge_missing_fields"], allowed=_BRIDGE_FIELDS
+        )
+        for key in ("bridge_complete", "bridge_can_value", "bridge_usable"):
+            if not isinstance(balance[key], bool):
+                raise ValueError(f"{key} must be a boolean")
+        if (
+            balance["bridge_decision"] != assessment.decision
+            or balance["bridge_usable"] != assessment.usable
+            or balance["bridge_complete"] != (assessment.decision == "complete")
+            or balance["bridge_can_value"] != (not raw_blocking)
+            or alias_blocking != raw_blocking
+            or alias_bounded != raw_bounded
+            or alias_missing
+            != [
+                field
+                for field in _BRIDGE_FIELDS
+                if field in set(raw_blocking) | set(raw_bounded)
+            ]
+            or list(assessment.blocking_fields) != sorted(raw_blocking)
+            or list(assessment.bounded_fields) != sorted(raw_bounded)
+            or list(assessment.reason_codes) != sorted(raw_reasons)
+        ):
+            raise ValueError("private bridge aliases disagree with assessment")
+
+        reason_codes = list(raw_reasons)
+        if (
+            assessment.decision == "withheld"
+            and assessment.spread_ratio is not None
+            and not _spread_within_limit(float(assessment.spread_ratio))
+        ):
+            reason_codes = _canonical_identifiers(
+                list(
+                    dict.fromkeys(
+                        [
+                            *reason_codes,
+                            "JOINT_INTRINSIC_VALUE_SPREAD_EXCEEDS_LIMIT",
+                        ]
+                    )
+                ),
+                allowed=_PUBLIC_BRIDGE_REASONS,
+            )
+        value_range = assessment.intrinsic_value_range
+        candidate = {
+            "decision": assessment.decision,
+            "complete": balance["bridge_complete"],
+            "usable": assessment.usable,
+            "bounded_fields": raw_bounded,
+            "blocking_fields": raw_blocking,
+            "reason_codes": reason_codes,
+            "intrinsic_value_range": {
+                "low": value_range.low if value_range is not None else None,
+                "midpoint": (
+                    value_range.midpoint if value_range is not None else None
+                ),
+                "high": value_range.high if value_range is not None else None,
+                "spread_ratio": assessment.spread_ratio,
+                "spread_limit": _BRIDGE_SPREAD_LIMIT,
+            },
+        }
+        validated = _validated_public_bridge_quality(candidate)
+        if validated is None:
+            raise ValueError("derived bridge quality did not validate")
+        return validated
+    except (
+        AssertionError,
+        KeyError,
+        TypeError,
+        ValueError,
+        OverflowError,
+        ZeroDivisionError,
+    ):
+        return _invalid_bridge_quality()
+
+
+def _valid_automated_review(value: object) -> bool:
+    if not isinstance(value, dict) or set(value) != _AUTOMATED_REVIEW_KEYS:
+        return False
+    decision = value.get("decision")
+    if (
+        value.get("review_version") != REVIEW_VERSION
+        or decision not in _AUTOMATED_DECISION_STATES
+        or value.get("publication_state")
+        != _AUTOMATED_DECISION_STATES.get(decision)
+        or value.get("evidence_status") not in {"missing", "incomplete", "complete"}
+    ):
+        return False
+    for key in ("blocking_reasons", "repair_actions", "warnings"):
+        items = value.get(key)
+        if (
+            not isinstance(items, list)
+            or any(not isinstance(item, str) for item in items)
+            or len(items) != len(set(items))
+        ):
+            return False
+    if decision == "blocked":
+        return bool(value["blocking_reasons"])
+    return not value["blocking_reasons"]
+
+
+def _invalid_automated_review() -> dict[str, Any]:
+    return {
+        "review_version": REVIEW_VERSION,
+        "decision": "blocked",
+        "publication_state": "withheld",
+        "evidence_status": "missing",
+        "blocking_reasons": ["invalid_automated_review_payload"],
+        "repair_actions": [],
+        "warnings": [],
+    }
+
+
 def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     """Validate public state vocabulary and fail closed at every serving boundary."""
-    public = deepcopy(artifact)
+    public = deepcopy(artifact) if isinstance(artifact, dict) else {}
+    was_fully_scrubbed = _artifact_is_fully_scrubbed(public)
     review = public.get("review")
     if not isinstance(review, dict):
         review = {}
         public["review"] = review
-    state = review.get("publication_state")
-    invalid_state = state not in PUBLICATION_STATES
-    for model in public.get("models", {}).values():
-        if not isinstance(model, dict) or model.get("publication_state") not in PUBLICATION_STATES:
+    invalid_state = review.get("publication_state") not in PUBLICATION_STATES
+    errors = _deduplicated_strings(review.get("errors", []))
+    warnings = _deduplicated_strings(review.get("warnings", []))
+    if errors is None or warnings is None:
+        invalid_state = True
+    review["errors"] = errors or []
+    review["warnings"] = warnings or []
+
+    if not _artifact_model_identities_agree(public):
+        invalid_state = True
+        _append_unique(review["errors"], _INCONSISTENT_MODEL_IDENTITY_ERROR)
+
+    policy = public.get("model_policy")
+    primary = policy.get("primary") if isinstance(policy, dict) else None
+    policy_declares_fcff = primary == "fcff_dcf"
+    has_fcff_surface = _artifact_has_fcff_surface(public)
+    fcff_required = policy_declares_fcff or has_fcff_surface
+    if has_fcff_surface and not policy_declares_fcff:
+        invalid_state = True
+        _append_unique(review["errors"], _INCONSISTENT_MODEL_POLICY_ERROR)
+
+    automated_ceiling = "pass"
+    if "automated_review" in public or fcff_required:
+        if _valid_automated_review(public.get("automated_review")):
+            automated_ceiling = public["automated_review"]["publication_state"]
+        else:
+            public["automated_review"] = _invalid_automated_review()
+            automated_ceiling = "withheld"
+            _append_unique(review["errors"], _INVALID_AUTOMATED_REVIEW_ERROR)
+
+    fallback_reason = _legacy_fcff_fallback_reason(public)
+    if fallback_reason:
+        _append_unique(review["errors"], fallback_reason)
+        invalid_state = True
+
+    models = public.get("models")
+    if not isinstance(models, dict):
+        models = {}
+        public["models"] = models
+        invalid_state = True
+    for name, model in list(models.items()):
+        if not isinstance(model, dict):
+            models[name] = {
+                "publication_state": "withheld",
+                "intrinsic_value_per_share": None,
+            }
             invalid_state = True
-    for scenario in public.get("scenarios", {}).values():
-        # Scenarios are keyed by model name (fcff_dcf, residual_income, ddm, ...);
-        # validate whichever model each scenario carries.
-        scenario_models = list(scenario.values()) if isinstance(scenario, dict) else []
-        if not scenario_models:
+        elif model.get("publication_state") not in PUBLICATION_STATES:
+            model["publication_state"] = "withheld"
+            model["intrinsic_value_per_share"] = None
             invalid_state = True
-        for model in scenario_models:
-            if not isinstance(model, dict) or model.get("publication_state") not in PUBLICATION_STATES:
-                invalid_state = True
-    if invalid_state:
-        review["publication_state"] = "withheld"
-        review.setdefault("errors", []).append(
-            "Public artifact has an unsupported publication state and was withheld."
+
+    bridge_quality: dict[str, Any] | None = None
+    bridge_ceiling = "pass"
+    if fcff_required:
+        bridge_quality = _validated_public_bridge_quality(
+            public.get("bridge_quality")
         )
-    if review["publication_state"] != "withheld":
-        return public
-    models = public.setdefault("models", {})
-    scenarios = public.setdefault("scenarios", {})
+        if bridge_quality is None and was_fully_scrubbed:
+            bridge_quality = _validated_scrubbed_bounded_bridge_quality(
+                public.get("bridge_quality")
+            )
+        if (
+            bridge_quality is not None
+            and bridge_quality["decision"] == "complete"
+            and all(
+                bridge_quality["intrinsic_value_range"][key] is None
+                for key in ("low", "midpoint", "high")
+            )
+            and not was_fully_scrubbed
+        ):
+            bridge_quality = None
+        if bridge_quality is not None and not _bridge_absolutes_match_canonical_fcff(
+            bridge_quality, models
+        ):
+            bridge_quality = None
+        if bridge_quality is None:
+            bridge_quality = _invalid_bridge_quality()
+            _append_unique(review["errors"], _INVALID_BRIDGE_ERROR)
+        public["bridge_quality"] = bridge_quality
+        bridge_ceiling = {
+            "complete": "pass",
+            "bounded_review": "review_required",
+            "withheld": "withheld",
+        }[bridge_quality["decision"]]
+
+    canonical_fcff_ceiling = "pass"
+    canonical_fcff = models.get("fcff_dcf")
+    if isinstance(canonical_fcff, dict):
+        canonical_fcff_ceiling = canonical_fcff["publication_state"]
+
+    scenarios = public.get("scenarios")
+    if not isinstance(scenarios, dict):
+        scenarios = {}
+        public["scenarios"] = scenarios
+        invalid_state = True
+    for scenario_name, scenario in list(scenarios.items()):
+        if not isinstance(scenario, dict) or not scenario:
+            scenarios[scenario_name] = {}
+            invalid_state = True
+            continue
+        for model_name, model in list(scenario.items()):
+            if not isinstance(model, dict):
+                scenario[model_name] = {
+                    "publication_state": "withheld",
+                    "intrinsic_value_per_share": None,
+                }
+                invalid_state = True
+            elif model.get("publication_state") not in PUBLICATION_STATES:
+                model["publication_state"] = "withheld"
+                model["intrinsic_value_per_share"] = None
+                invalid_state = True
+
+    sensitivities = public.get("sensitivities", [])
+    if "sensitivities" in public and not isinstance(sensitivities, list):
+        sensitivities = []
+        public["sensitivities"] = sensitivities
+        invalid_state = True
+    for index, row in enumerate(list(sensitivities)):
+        if not isinstance(row, dict):
+            sensitivities[index] = {
+                "publication_state": "withheld",
+                "intrinsic_value_per_share": None,
+            }
+            invalid_state = True
+        elif row.get("publication_state") not in PUBLICATION_STATES:
+            row["publication_state"] = "withheld"
+            row["intrinsic_value_per_share"] = None
+            invalid_state = True
+
+    raw_scenario_range = public.get("scenario_range")
+    if not isinstance(raw_scenario_range, dict):
+        raw_scenario_range = {}
+        invalid_state = True
+
+    native_state = review.get("publication_state")
+    if native_state not in PUBLICATION_STATES:
+        native_state = "withheld"
+    if invalid_state:
+        native_state = "withheld"
+        _append_unique(review["errors"], _INVALID_STATE_ERROR)
+    effective_review_state = _stricter_state(
+        native_state,
+        automated_ceiling,
+        bridge_ceiling,
+        canonical_fcff_ceiling,
+    )
+    review["publication_state"] = effective_review_state
+
     for model in models.values():
-        model["intrinsic_value_per_share"] = None
-        model["publication_state"] = "withheld"
+        effective_state = _stricter_state(
+            model["publication_state"], bridge_ceiling
+        )
+        if effective_review_state == "withheld" or effective_state == "withheld":
+            model["publication_state"] = "withheld"
+            model["intrinsic_value_per_share"] = None
+        else:
+            model["publication_state"] = effective_state
+
+    scenario_withheld = False
     for scenario in scenarios.values():
-        for scenario_model in (scenario.values() if isinstance(scenario, dict) else []):
-            if isinstance(scenario_model, dict):
-                scenario_model["intrinsic_value_per_share"] = None
-                scenario_model["publication_state"] = "withheld"
+        for model in scenario.values():
+            effective_state = _stricter_state(
+                model["publication_state"], bridge_ceiling
+            )
+            if effective_review_state == "withheld" or effective_state == "withheld":
+                model["publication_state"] = "withheld"
+                model["intrinsic_value_per_share"] = None
+                scenario_withheld = True
+            else:
+                model["publication_state"] = effective_state
+
+    for row in sensitivities:
+        effective_state = _stricter_state(
+            row["publication_state"], bridge_ceiling
+        )
+        if effective_review_state == "withheld" or effective_state == "withheld":
+            row["publication_state"] = "withheld"
+            row["intrinsic_value_per_share"] = None
+        else:
+            row["publication_state"] = effective_state
+
+    scrub_scenario_range = (
+        effective_review_state == "withheld" or scenario_withheld
+    )
     public["scenario_range"] = {
-        "low": None,
-        "base": None,
-        "high": None,
-            "label": public.get("scenario_range", {}).get(
+        "low": None if scrub_scenario_range else raw_scenario_range.get("low"),
+        "base": None if scrub_scenario_range else raw_scenario_range.get("base"),
+        "high": None if scrub_scenario_range else raw_scenario_range.get("high"),
+        "label": raw_scenario_range.get(
             "label", "assumption range, not a statistical confidence interval"
         ),
     }
-    # Sensitivities are not part of the current public schema. Keep this branch
-    # defensive so a future public extension cannot bypass the fail-closed gate.
-    for row in public.get("sensitivities", []):
-        row["intrinsic_value_per_share"] = None
-        row["publication_state"] = "withheld"
+
+    if bridge_quality is not None and (
+        bridge_quality["decision"] == "withheld"
+        or effective_review_state == "withheld"
+    ):
+        bridge_range = bridge_quality["intrinsic_value_range"]
+        bridge_range["low"] = None
+        bridge_range["midpoint"] = None
+        bridge_range["high"] = None
     return public
 
 
@@ -310,7 +1100,8 @@ def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[s
         },
         "scenario_range": result["scenario_range"],
         "forecast_quality": result["forecast_quality"],
-        "review": result["review"],
+        "review": deepcopy(result["review"]),
+        "bridge_quality": _public_bridge_quality(result),
         "methodology": result["methodology"],
         "data_boundary": {
             "raw_financial_statement_values_included": False,
@@ -318,6 +1109,15 @@ def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[s
             "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution",
         },
     }
+    automated_review = assess_artifact(public)
+    public["automated_review"] = automated_review
+    current_state = public["review"].get("publication_state")
+    if current_state not in PUBLICATION_STATES:
+        current_state = "withheld"
+    public["review"]["publication_state"] = _stricter_state(
+        current_state,
+        automated_review["publication_state"],
+    )
     return sanitize_public_artifact(public)
 
 
@@ -325,6 +1125,7 @@ def frontend_company(
     result: dict[str, Any], public: dict[str, Any], issuer_metadata: dict[str, Any]
 ) -> dict[str, Any]:
     """Build a frontend record without copying private filing amounts."""
+    public = sanitize_public_artifact(public)
     financials = result["financials"]
     annual = [
         {
