@@ -1,7 +1,7 @@
 """Pure reliability labels for valuation evidence and scenario movement."""
 
 from dataclasses import dataclass
-from math import isclose, isfinite
+from math import isfinite
 from numbers import Real
 from typing import Literal
 
@@ -12,10 +12,6 @@ _LABEL_RANK: dict[ReliabilityLabel, int] = {
     "Medium": 1,
     "Low": 2,
 }
-_BOUNDARY_RELATIVE_TOLERANCE = 1e-12
-_BOUNDARY_ABSOLUTE_TOLERANCE = 1e-15
-
-
 @dataclass(frozen=True)
 class ReliabilityAssessment:
     label: ReliabilityLabel
@@ -71,12 +67,7 @@ def _nonnegative_ratio(value: float) -> float:
 
 
 def _at_or_below(value: float, boundary: float) -> bool:
-    return value < boundary or isclose(
-        value,
-        boundary,
-        rel_tol=_BOUNDARY_RELATIVE_TOLERANCE,
-        abs_tol=_BOUNDARY_ABSOLUTE_TOLERANCE,
-    )
+    return value <= boundary
 
 
 def accounting_label(impact: float) -> ReliabilityLabel:

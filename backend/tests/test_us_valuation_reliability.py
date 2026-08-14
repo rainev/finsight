@@ -20,6 +20,21 @@ def test_relative_movement_uses_largest_distance_from_base() -> None:
 
 
 @pytest.mark.parametrize(
+    ("function", "boundary", "expected"),
+    [
+        (accounting_label, 0.05, "Medium"),
+        (accounting_label, 0.20, "Low"),
+        (scenario_label, 0.20, "Medium"),
+        (scenario_label, 0.40, "Low"),
+    ],
+)
+def test_labels_change_at_the_next_representable_float_above_boundary(
+    function, boundary: float, expected: str
+) -> None:
+    assert function(math.nextafter(boundary, math.inf)) == expected
+
+
+@pytest.mark.parametrize(
     ("low", "base", "high", "expected"),
     [
         (95.0, 100.0, 105.0, "High"),
