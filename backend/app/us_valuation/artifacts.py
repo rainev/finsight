@@ -283,11 +283,302 @@ _AUTOMATED_REVIEW_KEYS = {
     "repair_actions",
     "warnings",
 }
+_PUBLIC_AUTOMATED_REVIEW_FIELDS = (
+    "review_version",
+    "decision",
+    "publication_state",
+    "evidence_status",
+    "blocking_reasons",
+    "repair_actions",
+    "warnings",
+)
 _AUTOMATED_DECISION_STATES = {
     "approved": "pass",
     "approved_with_caveat": "review_required",
     "blocked": "withheld",
 }
+_PUBLIC_TOP_LEVEL_FIELDS = (
+    "schema_version",
+    "valuation_date",
+    "market",
+    "currency",
+    "ticker",
+    "issuer",
+    "source_financial_statement",
+    "model_policy",
+    "public_assumptions",
+    "models",
+    "scenarios",
+    "scenario_range",
+    "sensitivities",
+    "forecast_quality",
+    "review",
+    "automated_review",
+    "bridge_quality",
+    "reliability",
+    "methodology",
+    "data_boundary",
+)
+_PUBLIC_ISSUER_FIELDS = (
+    "cik",
+    "ticker",
+    "issuer_name",
+    "filing_regime",
+    "accounting_standard",
+    "sec_sic_code",
+    "sec_sic_label",
+    "finsight_sector",
+    "primary_archetype",
+    "secondary_archetypes",
+    "classification_confidence",
+    "mapping_version",
+    "classification_reason",
+    "override_applied",
+    "source_accessions",
+)
+_PUBLIC_SOURCE_FIELDS = (
+    "form",
+    "period_end",
+    "filed_date",
+    "accession",
+    "url",
+    "note",
+)
+_PUBLIC_POLICY_FIELDS = (
+    "primary",
+    "supporting",
+    "blend_models",
+    "reason",
+    "fallback_from",
+)
+_PUBLIC_MODEL_FIELDS = (
+    "model",
+    "output_type",
+    "currency",
+    "intrinsic_value_per_share",
+    "publication_state",
+    "errors",
+    "warnings",
+)
+_PUBLIC_SCENARIO_RANGE_FIELDS = ("low", "base", "high", "label")
+_PUBLIC_REVIEW_FIELDS = (
+    "publication_state",
+    "confidence_grade",
+    "errors",
+    "warnings",
+    "price_dependent_inputs_used",
+    "prohibited_output_check",
+)
+_PUBLIC_PROHIBITED_OUTPUT_FIELDS = (
+    "current_price",
+    "upside_downside",
+    "buy_hold_sell",
+    "trading_multiples",
+)
+_PUBLIC_ASSUMPTION_FIELDS = (
+    "forecast_policy_version",
+    "forecast_years",
+    "forecast_mode",
+    "initial_revenue_growth",
+    "target_operating_margin",
+    "segment_assumptions",
+    "sales_to_capital",
+    "terminal_growth",
+    "discount_policy_version",
+    "discount_calibration_type",
+    "policy_wacc",
+    "risk_free_rate",
+    "risk_free_effective_date",
+    "risk_free_source_url",
+    "equity_risk_premium",
+    "cost_of_equity",
+    "policy_beta",
+    "book_value_per_share",
+    "current_roe",
+    "current_payout_ratio",
+    "terminal_roe",
+    "last_dividend",
+    "high_dividend_growth",
+    "high_growth_years",
+    "ffo_per_share",
+    "pffo_multiple",
+)
+_PUBLIC_SEGMENT_ASSUMPTION_FIELDS = (
+    "label",
+    "initial_revenue_growth",
+    "target_operating_margin",
+    "target_gross_margin",
+)
+_PUBLIC_SENSITIVITY_FIELDS = (
+    "field",
+    "delta",
+    "intrinsic_value_per_share",
+    "publication_state",
+    "terminal_marginal_roic",
+    "initial_marginal_roic",
+)
+_PUBLIC_FORECAST_QUALITY_FIELDS = (
+    "policy_version",
+    "status",
+    "errors",
+    "warnings",
+    "checks",
+)
+_PUBLIC_FORECAST_CHECK_FIELDS = (
+    "status",
+    "value",
+    "limit",
+    "target",
+    "revenue_cagr",
+    "fcff_cagr",
+    "review_threshold",
+    "available_periods",
+    "normalized_period_end",
+)
+_PUBLIC_FORECAST_CHECK_VALUE_FIELDS = (
+    "segment_revenue_to_consolidated",
+    "segment_operating_income_to_consolidated",
+    "gross_profit_less_opex_to_operating_income",
+)
+_PUBLIC_METHODOLOGY_FIELDS = (
+    "forecast_policy",
+    "sector_framework",
+    "source_policy",
+)
+_PUBLIC_DATA_BOUNDARY_FIELDS = (
+    "raw_financial_statement_values_included",
+    "stock_prices_used",
+    "public_payload_contains",
+)
+
+
+def _allowlisted_mapping(
+    value: object, fields: tuple[str, ...]
+) -> dict[str, Any]:
+    if not isinstance(value, dict):
+        return {}
+    return {key: deepcopy(value[key]) for key in fields if key in value}
+
+
+def _canonical_model(value: object) -> object:
+    if not isinstance(value, dict):
+        return deepcopy(value)
+    return _allowlisted_mapping(value, _PUBLIC_MODEL_FIELDS)
+
+
+def _canonical_models(value: object) -> object:
+    if not isinstance(value, dict):
+        return deepcopy(value)
+    return {name: _canonical_model(model) for name, model in value.items()}
+
+
+def _canonical_scenarios(value: object) -> object:
+    if not isinstance(value, dict):
+        return deepcopy(value)
+    return {
+        name: (
+            {model_name: _canonical_model(model) for model_name, model in scenario.items()}
+            if isinstance(scenario, dict)
+            else deepcopy(scenario)
+        )
+        for name, scenario in value.items()
+    }
+
+
+def _canonical_public_assumptions(value: object) -> dict[str, Any]:
+    public = _allowlisted_mapping(value, _PUBLIC_ASSUMPTION_FIELDS)
+    segments = public.get("segment_assumptions")
+    if isinstance(segments, dict):
+        public["segment_assumptions"] = {
+            name: _allowlisted_mapping(
+                segment, _PUBLIC_SEGMENT_ASSUMPTION_FIELDS
+            )
+            for name, segment in segments.items()
+            if isinstance(segment, dict)
+        }
+    elif "segment_assumptions" in public:
+        public["segment_assumptions"] = {}
+    return public
+
+
+def _canonical_forecast_quality(value: object) -> dict[str, Any]:
+    quality = _allowlisted_mapping(value, _PUBLIC_FORECAST_QUALITY_FIELDS)
+    checks = quality.get("checks")
+    if isinstance(checks, dict):
+        canonical_checks: dict[str, Any] = {}
+        for name, check in checks.items():
+            if not isinstance(check, dict):
+                continue
+            canonical = _allowlisted_mapping(
+                check, _PUBLIC_FORECAST_CHECK_FIELDS
+            )
+            if isinstance(canonical.get("value"), dict):
+                canonical["value"] = _allowlisted_mapping(
+                    canonical["value"], _PUBLIC_FORECAST_CHECK_VALUE_FIELDS
+                )
+            canonical_checks[name] = canonical
+        quality["checks"] = canonical_checks
+    elif "checks" in quality:
+        quality["checks"] = {}
+    return quality
+
+
+def _canonical_review(value: object) -> dict[str, Any]:
+    review = _allowlisted_mapping(value, _PUBLIC_REVIEW_FIELDS)
+    if "prohibited_output_check" in review:
+        review["prohibited_output_check"] = _allowlisted_mapping(
+            review["prohibited_output_check"],
+            _PUBLIC_PROHIBITED_OUTPUT_FIELDS,
+        )
+    return review
+
+
+def _canonical_public_artifact(value: object) -> dict[str, Any]:
+    """Copy only the explicit public artifact contract and its nested DTOs."""
+    public = _allowlisted_mapping(value, _PUBLIC_TOP_LEVEL_FIELDS)
+    public["issuer"] = _allowlisted_mapping(
+        public.get("issuer"), _PUBLIC_ISSUER_FIELDS
+    )
+    public["source_financial_statement"] = _allowlisted_mapping(
+        public.get("source_financial_statement"), _PUBLIC_SOURCE_FIELDS
+    )
+    public["model_policy"] = _allowlisted_mapping(
+        public.get("model_policy"), _PUBLIC_POLICY_FIELDS
+    )
+    public["public_assumptions"] = _canonical_public_assumptions(
+        public.get("public_assumptions")
+    )
+    public["models"] = _canonical_models(public.get("models"))
+    public["scenarios"] = _canonical_scenarios(public.get("scenarios"))
+    if "scenario_range" in public:
+        public["scenario_range"] = _allowlisted_mapping(
+            public["scenario_range"], _PUBLIC_SCENARIO_RANGE_FIELDS
+        )
+    if "sensitivities" in public and isinstance(public["sensitivities"], list):
+        public["sensitivities"] = [
+            _allowlisted_mapping(row, _PUBLIC_SENSITIVITY_FIELDS)
+            if isinstance(row, dict)
+            else deepcopy(row)
+            for row in public["sensitivities"]
+        ]
+    if "forecast_quality" in public:
+        public["forecast_quality"] = _canonical_forecast_quality(
+            public["forecast_quality"]
+        )
+    public["review"] = _canonical_review(public.get("review"))
+    if "automated_review" in public:
+        public["automated_review"] = _allowlisted_mapping(
+            public["automated_review"], _PUBLIC_AUTOMATED_REVIEW_FIELDS
+        )
+    if "methodology" in public:
+        public["methodology"] = _allowlisted_mapping(
+            public["methodology"], _PUBLIC_METHODOLOGY_FIELDS
+        )
+    if "data_boundary" in public:
+        public["data_boundary"] = _allowlisted_mapping(
+            public["data_boundary"], _PUBLIC_DATA_BOUNDARY_FIELDS
+        )
+    return public
 
 
 def _legacy_fcff_fallback_reason(artifact: dict[str, Any]) -> str | None:
@@ -408,6 +699,76 @@ def _validated_public_reliability(value: object) -> dict[str, Any] | None:
         OverflowError,
     ):
         return None
+
+
+def _ratios_agree(left: float, right: float) -> bool:
+    return isclose(left, right, rel_tol=1e-14, abs_tol=0.0)
+
+
+def _reliability_matches_artifact(
+    reliability: dict[str, Any],
+    *,
+    primary: object,
+    scenario_range: dict[str, float] | None,
+    bridge_quality: dict[str, Any] | None,
+) -> bool:
+    if scenario_range is None:
+        return False
+    try:
+        expected_scenario = _json_number(
+            relative_movement(
+                low=scenario_range["low"],
+                base=scenario_range["base"],
+                high=scenario_range["high"],
+            )
+        )
+        assert expected_scenario is not None
+        if not _ratios_agree(
+            reliability["scenario_movement_ratio"], expected_scenario
+        ):
+            return False
+
+        if primary == "fcff_dcf":
+            if not isinstance(bridge_quality, dict):
+                return False
+            value_range = bridge_quality["intrinsic_value_range"]
+            if bridge_quality["decision"] == "complete":
+                expected_accounting = 0.0
+            elif bridge_quality["decision"] == "bounded_review":
+                expected_accounting = _json_number(
+                    relative_movement(
+                        low=value_range["low"],
+                        base=value_range["midpoint"],
+                        high=value_range["high"],
+                    )
+                )
+                assert expected_accounting is not None
+            else:
+                return False
+            expected_cap = accounting_label(expected_accounting)
+            return (
+                _ratios_agree(
+                    reliability["accounting_impact_ratio"],
+                    expected_accounting,
+                )
+                and reliability["accounting_label"] == expected_cap
+                and reliability["source_cap"] == expected_cap
+            )
+
+        return (
+            primary in {"residual_income", "ddm", "ffo"}
+            and reliability["accounting_impact_ratio"] == 0.0
+            and reliability["accounting_label"] == "High"
+        )
+    except (
+        AssertionError,
+        KeyError,
+        TypeError,
+        ValueError,
+        OverflowError,
+        ZeroDivisionError,
+    ):
+        return False
 
 
 def _fallback_reliability(
@@ -957,8 +1318,9 @@ def _invalid_automated_review() -> dict[str, Any]:
 
 def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     """Validate public state vocabulary and fail closed at every serving boundary."""
-    public = deepcopy(artifact) if isinstance(artifact, dict) else {}
-    was_fully_scrubbed = _artifact_is_fully_scrubbed(public)
+    incoming = deepcopy(artifact) if isinstance(artifact, dict) else {}
+    was_fully_scrubbed = _artifact_is_fully_scrubbed(incoming)
+    public = _canonical_public_artifact(incoming)
     schema_version = public.get("schema_version")
     schema_is_current = schema_version == PUBLIC_SCHEMA_VERSION
     schema_is_legacy = schema_version in _LEGACY_SCHEMA_VERSIONS
@@ -994,7 +1356,17 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         _append_unique(review["errors"], _INCONSISTENT_MODEL_POLICY_ERROR)
 
     automated_ceiling = "pass"
-    if "automated_review" in public or fcff_required or schema_is_current:
+    if schema_is_current:
+        stored_automated_review = public.get("automated_review")
+        recomputed_automated_review = assess_artifact(public)
+        public["automated_review"] = (
+            stored_automated_review
+            if was_fully_scrubbed
+            and _valid_automated_review(stored_automated_review)
+            else recomputed_automated_review
+        )
+        automated_ceiling = public["automated_review"]["publication_state"]
+    elif "automated_review" in public or fcff_required:
         if _valid_automated_review(public.get("automated_review")):
             automated_ceiling = public["automated_review"]["publication_state"]
         else:
@@ -1243,6 +1615,13 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         public["reliability"] = _withheld_reliability()
     elif schema_is_current:
         reliability = _validated_public_reliability(public.get("reliability"))
+        if reliability is not None and not _reliability_matches_artifact(
+            reliability,
+            primary=primary,
+            scenario_range=reliability_scenario_range,
+            bridge_quality=bridge_quality,
+        ):
+            reliability = None
         if reliability is None:
             reliability = _fallback_reliability(
                 reliability_scenario_range,
@@ -1372,15 +1751,6 @@ def public_result(
     else:
         public.pop("reliability", None)
 
-    automated_review = assess_artifact(public)
-    public["automated_review"] = automated_review
-    current_state = public["review"].get("publication_state")
-    if current_state not in PUBLICATION_STATES:
-        current_state = "withheld"
-    public["review"]["publication_state"] = _stricter_state(
-        current_state,
-        automated_review["publication_state"],
-    )
     return sanitize_public_artifact(public)
 
 

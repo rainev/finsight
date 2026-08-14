@@ -25,6 +25,41 @@ def _add_reason(reasons: list[str], reason: str) -> None:
         reasons.append(reason)
 
 
+def _is_hard_warning(message: str) -> bool:
+    return any(marker in message.lower() for marker in _HARD_WARNING_MARKERS)
+
+
+def _local_review_messages(
+    value: dict[str, Any],
+    *,
+    context: str,
+    identity: str,
+    caveat_prefix: str,
+) -> tuple[list[str], list[str]]:
+    reasons: list[str] = []
+    caveats: list[str] = []
+    errors, error_problem = _review_messages(
+        value.get("errors", []), f"invalid_{context}_errors:{identity}"
+    )
+    warnings, warning_problem = _review_messages(
+        value.get("warnings", []), f"invalid_{context}_warnings:{identity}"
+    )
+    if error_problem:
+        _add_reason(reasons, error_problem)
+    elif errors:
+        _add_reason(reasons, f"{context}_errors:{identity}")
+    if warning_problem:
+        _add_reason(reasons, warning_problem)
+    for warning in warnings:
+        if _is_hard_warning(warning):
+            _add_reason(reasons, f"{context}_hard_warning:{identity}")
+        else:
+            caveat = f"{caveat_prefix}: {warning}"
+            if caveat not in caveats:
+                caveats.append(caveat)
+    return reasons, caveats
+
+
 def _source_check(artifact: dict[str, Any]) -> tuple[list[str], list[str], str]:
     source = artifact.get("source_financial_statement")
     if not isinstance(source, dict):
@@ -94,6 +129,17 @@ def _scenario_check(artifact: dict[str, Any]) -> tuple[list[str], list[str]]:
                 continue
             if name not in declared:
                 _add_reason(reasons, f"undeclared_model_output:{name}")
+            local_reasons, local_caveats = _local_review_messages(
+                model,
+                context="model",
+                identity=name,
+                caveat_prefix=f"Model '{name}'",
+            )
+            for reason in local_reasons:
+                _add_reason(reasons, reason)
+            for caveat in local_caveats:
+                if caveat not in caveats:
+                    caveats.append(caveat)
             state = model.get("publication_state")
             if state not in _PUBLICATION_STATES:
                 _add_reason(reasons, f"invalid_model_state:{name}")
@@ -130,6 +176,19 @@ def _scenario_check(artifact: dict[str, Any]) -> tuple[list[str], list[str]]:
                             f"invalid_scenario_output:{name}:{model_name}",
                         )
                         continue
+                    local_reasons, local_caveats = _local_review_messages(
+                        model,
+                        context="scenario_model",
+                        identity=f"{name}:{model_name}",
+                        caveat_prefix=(
+                            f"Scenario '{name}' model '{model_name}'"
+                        ),
+                    )
+                    for reason in local_reasons:
+                        _add_reason(reasons, reason)
+                    for caveat in local_caveats:
+                        if caveat not in caveats:
+                            caveats.append(caveat)
                     state = model.get("publication_state")
                     if state not in _PUBLICATION_STATES:
                         _add_reason(
@@ -221,11 +280,11 @@ def assess_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             _add_reason(blocking, error_problem)
         if warning_problem:
             _add_reason(blocking, warning_problem)
-        for error in errors:
-            _add_reason(blocking, f"review_error:{error}")
+        if errors:
+            _add_reason(blocking, "review_errors_present")
         for warning in review_warnings:
-            if any(marker in warning.lower() for marker in _HARD_WARNING_MARKERS):
-                _add_reason(blocking, f"hard_warning:{warning}")
+            if _is_hard_warning(warning):
+                _add_reason(blocking, "review_hard_warning")
             elif warning not in warnings:
                 warnings.append(warning)
 
@@ -239,13 +298,17 @@ def assess_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             or reason.startswith("missing_primary_model")
             or reason.startswith("missing_scenario_value")
             or reason.startswith("nonfinite_scenario_value")
+            or reason.startswith("model_errors:")
+            or reason.startswith("invalid_model_")
+            or reason.startswith("scenario_model_errors:")
+            or reason.startswith("invalid_scenario_model_")
         ):
             _add_reason(repair_actions, "rebuild_valuation_models")
     for warning in scenario_caveats:
         if warning not in warnings:
             warnings.append(warning)
 
-    if any(reason.startswith("hard_warning:") for reason in blocking):
+    if any("hard_warning" in reason for reason in blocking):
         _add_reason(repair_actions, "resolve_model_warnings")
 
     if blocking:

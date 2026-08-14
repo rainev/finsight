@@ -21,6 +21,30 @@ DATA_ROOT = Path(
 TICKER = re.compile(r"^[A-Z][A-Z0-9.-]{0,9}$")
 
 
+def _read_artifact_object(path: Path) -> dict:
+    try:
+        result = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise AppError("U.S. valuation artifact is invalid", 500) from exc
+    if not isinstance(result, dict):
+        raise AppError("U.S. valuation artifact is invalid", 500)
+
+    filename_ticker = path.stem
+    issuer = result.get("issuer")
+    top_level_ticker = result.get("ticker")
+    if (
+        not TICKER.fullmatch(filename_ticker)
+        or not isinstance(issuer, dict)
+        or issuer.get("ticker") != filename_ticker
+        or (
+            top_level_ticker is not None
+            and top_level_ticker != filename_ticker
+        )
+    ):
+        raise AppError("U.S. valuation artifact identity mismatch", 500)
+    return result
+
+
 def load_generated_result(ticker: str) -> dict:
     normalized = ticker.upper()
     if not TICKER.fullmatch(normalized):
@@ -28,12 +52,7 @@ def load_generated_result(ticker: str) -> dict:
     path = DATA_ROOT / f"{normalized}.json"
     if not path.exists():
         raise AppError("U.S. valuation not available", 404)
-    try:
-        result = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise AppError("U.S. valuation artifact is invalid", 500) from exc
-    if result.get("issuer", {}).get("ticker") != normalized:
-        raise AppError("U.S. valuation artifact identity mismatch", 500)
+    result = _read_artifact_object(path)
     return sanitize_public_artifact(result)
 
 
@@ -43,8 +62,8 @@ def list_us_valuations() -> dict:
     items = []
     for path in sorted(DATA_ROOT.glob("*.json")):
         try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+            data = _read_artifact_object(path)
+        except AppError:
             continue
         data = sanitize_public_artifact(data)
         issuer = data.get("issuer", {})

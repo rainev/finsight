@@ -166,3 +166,86 @@ def test_us_valuation_list_and_detail_share_safe_reliability(
     assert details["WFC"]["reliability"]["reasons"] == [
         "LEGACY_ARTIFACT_NOT_REGENERATED"
     ]
+
+
+def test_us_valuation_endpoints_share_object_and_filename_identity_validation(
+    client: TestClient,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    valid = json.loads(
+        Path("backend/app/data/us_valuations/WFC.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    (tmp_path / "WFC.json").write_text(json.dumps(valid), encoding="utf-8")
+    (tmp_path / "BROKEN.json").write_text("{", encoding="utf-8")
+    (tmp_path / "ARRAY.json").write_text("[]", encoding="utf-8")
+
+    mismatched = json.loads(json.dumps(valid))
+    (tmp_path / "MISMATCH.json").write_text(
+        json.dumps(mismatched), encoding="utf-8"
+    )
+    invalid_filename = json.loads(json.dumps(valid))
+    invalid_filename["issuer"]["ticker"] = "bad!"
+    (tmp_path / "bad!.json").write_text(
+        json.dumps(invalid_filename), encoding="utf-8"
+    )
+    monkeypatch.setattr(us_valuations_router, "DATA_ROOT", tmp_path)
+
+    listed_response = client.get("/api/us-valuations")
+
+    assert listed_response.status_code == 200
+    listed = listed_response.json()
+    assert listed["count"] == 1
+    assert [item["ticker"] for item in listed["items"]] == ["WFC"]
+
+    detail_response = client.get("/api/us-valuations/WFC")
+    assert detail_response.status_code == 200
+    detail = detail_response.json()
+    item = listed["items"][0]
+    assert detail["issuer"]["ticker"] == item["ticker"]
+    assert detail["scenario_range"]["base"] == item["base"]
+    assert detail["review"]["publication_state"] == item["publication_state"]
+    assert detail["reliability"]["label"] == item["reliability"]
+
+    for ticker, error in (
+        ("BROKEN", "U.S. valuation artifact is invalid"),
+        ("ARRAY", "U.S. valuation artifact is invalid"),
+        ("MISMATCH", "U.S. valuation artifact identity mismatch"),
+    ):
+        response = client.get(f"/api/us-valuations/{ticker}")
+        assert response.status_code == 500
+        assert response.json() == {"error": error}
+
+
+@pytest.mark.parametrize(
+    ("ticker", "payload", "expected_error"),
+    [
+        ("BROKEN", "{", "U.S. valuation artifact is invalid"),
+        ("ARRAY", "[]", "U.S. valuation artifact is invalid"),
+        ("MISMATCH", None, "U.S. valuation artifact identity mismatch"),
+    ],
+)
+def test_us_valuation_detail_returns_controlled_artifact_errors(
+    client: TestClient,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    ticker: str,
+    payload: str | None,
+    expected_error: str,
+) -> None:
+    if payload is None:
+        mismatched = json.loads(
+            Path("backend/app/data/us_valuations/WFC.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        payload = json.dumps(mismatched)
+    (tmp_path / f"{ticker}.json").write_text(payload, encoding="utf-8")
+    monkeypatch.setattr(us_valuations_router, "DATA_ROOT", tmp_path)
+
+    response = client.get(f"/api/us-valuations/{ticker}")
+
+    assert response.status_code == 500
+    assert response.json() == {"error": expected_error}

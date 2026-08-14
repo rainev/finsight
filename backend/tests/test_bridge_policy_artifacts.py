@@ -312,7 +312,11 @@ def public_artifact(
                 "000000000126000001/test.htm"
             ),
         },
-        "model_policy": {"primary": "fcff_dcf", "reason": "test"},
+        "model_policy": {
+            "primary": "fcff_dcf",
+            "supporting": ["arbitrary_top_model"],
+            "reason": "test",
+        },
         "review": {
             "publication_state": review_state,
             "errors": [],
@@ -369,6 +373,15 @@ def public_artifact(
     }
     if quality is not None:
         artifact["bridge_quality"] = deepcopy(quality)
+    return artifact
+
+
+def current_public_artifact(
+    *, quality: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    artifact = public_artifact(quality=quality or complete_quality())
+    artifact["schema_version"] = "US-PUBLIC-VALUATION-1.1"
+    artifact["reliability"] = reliability_dto()
     return artifact
 
 
@@ -643,6 +656,163 @@ def test_malformed_reliability_uses_generic_numeric_fallback_without_scrubbing(
     serialized = json.dumps(sanitized)
     assert "ATTACKER_PRIVATE" not in serialized
     assert "Certain" not in serialized
+
+
+def test_self_consistent_reliability_must_match_current_scenario_range() -> None:
+    artifact = current_public_artifact()
+    artifact["reliability"] = reliability_dto(
+        label="Medium",
+        scenario_label="Medium",
+        scenario_movement_ratio=0.25,
+    )
+    before = deepcopy(artifact)
+
+    once = sanitize_public_artifact(artifact)
+    twice = sanitize_public_artifact(once)
+
+    assert artifact == before
+    assert twice == once
+    assert once["review"]["publication_state"] == "pass"
+    assert once["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+    assert once["scenario_range"]["base"] == 100.0
+    assert once["reliability"] == {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": 0.0,
+        "scenario_movement_ratio": pytest.approx(0.20),
+        "reasons": ["RELIABILITY_PAYLOAD_INVALID"],
+    }
+
+
+@pytest.mark.parametrize(
+    "reliability",
+    [
+        reliability_dto(accounting_impact_ratio=0.05),
+        reliability_dto(label="Medium", source_cap="Medium"),
+    ],
+)
+def test_fcff_reliability_must_match_bridge_arithmetic_and_source_cap(
+    reliability: dict[str, Any],
+) -> None:
+    artifact = current_public_artifact()
+    artifact["reliability"] = reliability
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "pass"
+    assert sanitized["bridge_quality"]["decision"] == "complete"
+    assert sanitized["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+    assert sanitized["reliability"]["label"] == "Low"
+    assert sanitized["reliability"]["accounting_impact_ratio"] == 0.0
+    assert sanitized["reliability"]["scenario_movement_ratio"] == pytest.approx(
+        0.20
+    )
+    assert sanitized["reliability"]["reasons"] == [
+        "RELIABILITY_PAYLOAD_INVALID"
+    ]
+
+
+def _weaken_current_provenance(artifact: dict[str, Any]) -> None:
+    artifact["source_financial_statement"].update(
+        {
+            "filed_date": None,
+            "url": "https://www.sec.gov/cgi-bin/browse-edgar?CIK=1",
+        }
+    )
+
+
+def _malform_current_model_policy(artifact: dict[str, Any]) -> None:
+    artifact["model_policy"]["supporting"] = "arbitrary_top_model"
+
+
+def _add_current_review_error(artifact: dict[str, Any]) -> None:
+    artifact["review"]["errors"] = ["ATTACKER_PRIVATE_REVIEW_ERROR"]
+
+
+@pytest.mark.parametrize(
+    ("mutation", "blocking_reason"),
+    [
+        (_weaken_current_provenance, "weak_sec_provenance"),
+        (_malform_current_model_policy, "invalid_model_policy"),
+        (_add_current_review_error, "review_errors_present"),
+    ],
+)
+def test_current_sanitizer_recomputes_stale_shape_valid_automated_review(
+    mutation: Callable[[dict[str, Any]], None], blocking_reason: str
+) -> None:
+    artifact = current_public_artifact()
+    artifact["automated_review"] = _approved_review()
+    mutation(artifact)
+
+    once = sanitize_public_artifact(artifact)
+    twice = sanitize_public_artifact(once)
+
+    assert twice == once
+    assert once["automated_review"]["publication_state"] == "withheld"
+    assert blocking_reason in once["automated_review"]["blocking_reasons"]
+    assert once["review"]["publication_state"] == "withheld"
+    assert once["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
+    assert once["scenario_range"]["base"] is None
+    assert once["reliability"] == _withheld_reliability_for_test()
+
+
+def _withheld_reliability_for_test() -> dict[str, Any]:
+    return {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": None,
+        "scenario_movement_ratio": None,
+        "reasons": ["VALUATION_WITHHELD"],
+    }
+
+
+@pytest.mark.parametrize(
+    ("location", "field", "message", "blocking_reason"),
+    [
+        (
+            "model",
+            "errors",
+            "ATTACKER_PRIVATE_MODEL_ERROR",
+            "model_errors:fcff_dcf",
+        ),
+        (
+            "scenario",
+            "warnings",
+            "ATTACKER_PRIVATE fallback warning",
+            "scenario_model_hard_warning:base:fcff_dcf",
+        ),
+    ],
+)
+def test_current_sanitizer_blocks_local_errors_and_hard_warnings(
+    location: str,
+    field: str,
+    message: str,
+    blocking_reason: str,
+) -> None:
+    artifact = current_public_artifact()
+    target = (
+        artifact["models"]["fcff_dcf"]
+        if location == "model"
+        else artifact["scenarios"]["base"]["fcff_dcf"]
+    )
+    target[field] = [message]
+    artifact["automated_review"] = _approved_review()
+
+    once = sanitize_public_artifact(artifact)
+    twice = sanitize_public_artifact(once)
+
+    assert twice == once
+    assert once["review"]["publication_state"] == "withheld"
+    assert blocking_reason in once["automated_review"]["blocking_reasons"]
+    assert message not in json.dumps(once["automated_review"]["blocking_reasons"])
+    assert message not in json.dumps(once["reliability"])
+    assert once["reliability"] == _withheld_reliability_for_test()
 
 
 @pytest.mark.parametrize(
@@ -1497,7 +1667,7 @@ def test_frontend_copy_uses_sanitized_bridge_quality_and_review_eligibility(
     assert public["review"]["publication_state"] == "review_required"
 
 
-def test_frontend_replay_sanitizes_without_recomputing_automated_review(
+def test_frontend_replay_recomputes_current_automated_review_and_is_idempotent(
     private_aapl: dict[str, Any], submissions: dict[str, Any]
 ) -> None:
     private = _bounded_private(private_aapl)
@@ -1521,10 +1691,17 @@ def test_frontend_replay_sanitizes_without_recomputing_automated_review(
     )
     replayed = frontend["valuation"]["us"]
 
-    assert replayed["automated_review"] == automated_before
+    assert replayed["automated_review"] != automated_before
+    assert replayed["automated_review"]["publication_state"] == "review_required"
+    assert replayed["automated_review"]["blocking_reasons"] == []
+    assert all(
+        warning.startswith("Scenario ")
+        for warning in replayed["automated_review"]["warnings"]
+    )
     assert replayed["review"]["publication_state"] == "withheld"
     assert replayed["bridge_quality"]["intrinsic_value_range"]["low"] is None
     assert all(
         model["intrinsic_value_per_share"] is None
         for model in replayed["models"].values()
     )
+    assert sanitize_public_artifact(replayed) == replayed

@@ -806,6 +806,8 @@ git commit -m "feat: expose valuation reliability safely"
 - Rebuilds each valid company through `build_us_valuation()` using the artifact's original valuation date and source manifest, with network access disabled.
 - Produces a non-serving JSON report, per-company private artifacts, and flat `public/{TICKER}.json` artifacts under a fresh `output/` directory so a local API process can consume them without copying into the serving tree.
 - Reports source-integrity failures, valid/invalid input counts, before/after numeric counts, reliability/fallback counts, impact buckets, near-boundary cases, remaining blockers, and serving-tree hashes.
+- Enumerates immediate candidate directories under the input root, excluding only `sec-cache`; cache files never define the denominator.
+- Reads SEC bytes directly after hash verification and never instantiates `SecClient`.
 
 - [ ] **Step 1: Write failing replay-schema tests**
 
@@ -816,21 +818,28 @@ Build a tiny corpus from the existing reduced SEC fixtures and require these sum
     "input_candidate_count",
     "valid_private_count",
     "invalid_input_count",
+    "source_verified_count",
     "numeric_before_count",
     "numeric_after_count",
     "reliability_counts",
     "fallback_level_counts",
+    "fallback_level_company_counts",
     "accounting_impact_buckets",
+    "scenario_movement_buckets",
     "near_boundary_cases",
     "remaining_blocker_counts",
     "source_integrity_failure_count",
     "build_error_count",
+    "public_contract_failure_count",
     "unsafe_promotion_count",
+    "serving_hash_before",
+    "serving_hash_after",
     "serving_artifacts_changed",
+    "denominators",
 }
 ```
 
-Assert the test calls the real `build_us_valuation()` path rather than mocking it. Define accounting near-boundary as within `0.005` absolute ratio of `0.05` or `0.20`, and scenario near-boundary as within `0.005` of `0.20` or `0.40`. Require explicit accounting and scenario bucket counts on both sides of every boundary. Require every count to name its denominator in the Markdown output. Add negative tests proving the runner rejects an output directory inside `backend/app/data/us_valuations`, rejects a source whose SHA-256 does not match the private artifact's source manifest, rejects mismatched optional filing-evidence, reports a public-shaped input as invalid rather than building it, and cannot enter a network path.
+Assert the test calls the real `build_us_valuation()` path rather than mocking it. Define accounting near-boundary as within `0.005` absolute ratio of `0.05` or `0.20`, and scenario near-boundary as within `0.005` of `0.20` or `0.40`. Require explicit accounting and scenario bucket counts on both sides of every boundary. Require every count to name its denominator in both JSON `denominators` and Markdown. Add negative tests proving the runner rejects an output directory inside `backend/app/data/us_valuations`, rejects a source whose SHA-256 does not match the private artifact's source manifest, rejects mismatched or non-reproducible optional filing evidence, reports a public-shaped input as invalid rather than building it, keeps an immediate candidate directory with a missing/duplicate private artifact in the denominator as invalid, and cannot enter a network path.
 
 - [ ] **Step 2: Run tests and verify RED**
 
@@ -844,18 +853,21 @@ Expected: collection fails because `scripts/run_reliability_pipeline_replay.py` 
 
 The runner must:
 
-1. discover exactly one `valuation-private.json` in each candidate directory while excluding `sec-cache/`;
+1. enumerate every immediate child directory except `sec-cache`, then require exactly one direct-child `valuation-private.json`; missing or duplicate artifacts remain explicit invalid candidates;
 2. validate private schema shape, canonical ticker/CIK, valuation date, and source manifest before using a candidate;
-3. resolve its CIK to the cached Companyfacts and submissions files and, when declared, the exact `filing-evidence-used.json`;
+3. resolve its CIK to the cached Companyfacts and submissions files by verified manifest `cache_file`, never by enumerating the larger cache and never through `SecClient`;
 4. recompute SHA-256 for every declared source file and refuse that company if any hash differs from the artifact's manifest;
-5. call the real `build_us_valuation()` with the cached JSON, original valuation date, and source manifest, with no download or network fallback;
-6. call `public_result()` on the rebuilt private result and fail that company if public sanitization rejects it;
-7. write per-company regenerated output only beneath the requested fresh non-serving output directory;
-8. hash `backend/app/data/us_valuations` before and after the run and set `serving_artifacts_changed` from the comparison; and
-9. make network access structurally unavailable and prove that guard in tests; and
-10. exit non-zero for source-integrity failures, build errors, unsafe promotions, or serving-tree changes, while still writing the report.
+5. when `filing-evidence-used.json` is nonempty, require each used record to be an exact member of sibling `filing-evidence.json` and validate an exact schema allowlist, ticker, CIK, period, filing date, accession, form, archive URL, finite value/unit, confidence/status, `evidence_class` in `reported|reported_zero|inferred_zero`, and `parser_version="US-FILING-EVIDENCE-1.0"`; resolve the accession in verified submissions, verify the matching cached filing HTML against its metadata SHA-256/source URL, and require the whitespace-normalized evidence excerpt to occur in that filing's parsed visible text. This lexical/source replay is the frozen-corpus verification rule; do not require equality with today's `extract_filing_evidence()`, whose output schema is not the legacy enriched evidence schema. Any mismatch fails source integrity;
+6. call the real `build_us_valuation()` with the verified cached JSON, original valuation date, source manifest, and only verified used filing evidence, with no download or network fallback;
+7. call `public_result()` on the rebuilt private result; count a `public_contract_failure` when serialization raises or a previously finite private primary is withheld by sanitizer-generated invalid-contract reasons, while an honestly withheld private result remains a normal remaining blocker;
+8. write per-company regenerated output only beneath the requested fresh non-serving output directory;
+9. hash `backend/app/data/us_valuations` before and after the run, record both hashes, and set `serving_artifacts_changed` from exact equality;
+10. make network access structurally unavailable and prove that guard in tests; and
+11. exit non-zero for source-integrity failures, build errors, public-contract failures, unsafe promotions, or serving-tree changes, while still writing the report.
 
-`numeric_before_count` and `numeric_after_count` mean companies with a finite public intrinsic value, not merely a directory or a parsed filing. Count reliability only among after-run numeric companies. Count annual carried-forward use from private availability metadata. Count unresolved withholding reasons separately. Report accounting impact buckets around 5% and 20%, scenario movement buckets around 20% and 40%, and literal near-boundary company examples. The runner must be deterministic for the same immutable inputs and must not alter 5%, 20%, or 40%, promote Arelle shadow candidates to production authority, or convert unresolved conflicts to estimates.
+`numeric_before_count` means finite public base values in the 106 preserved `valuation-public-candidate.json` files. Also report the valid-private subset explicitly. `numeric_after_count` means finite public base values among source-verified valid private candidates rebuilt successfully. Reliability counts use the after-run numeric denominator only. `fallback_level_counts` counts accepted availability fields; `fallback_level_company_counts` counts distinct companies using each level, so neither denominator is ambiguous. Count unresolved withholding reasons separately. Report accounting impact buckets around 5% and 20%, scenario movement buckets around 20% and 40%, and literal near-boundary company examples.
+
+`unsafe_promotion_count` counts a finite public result when any safety invariant fails: source bytes/evidence were not verified; the rebuilt private primary or top-level review is withheld; FCFF `BridgeAssessment.from_dict()` is invalid or unusable; prohibited-output flags are non-false; public/private primary values disagree; or the public artifact contains forbidden private keys. A legitimate withheld result is not an unsafe promotion. The runner must be deterministic for the same immutable inputs and must not alter 5%, 20%, or 40%, promote Arelle shadow candidates to production authority, convert unresolved conflicts to estimates, or infer candidate count from cache contents.
 
 - [ ] **Step 4: Run focused and full tests**
 
@@ -882,7 +894,7 @@ python3 scripts/run_reliability_pipeline_replay.py \
   --output-dir output/reliability-pipeline-replay-20260814
 ```
 
-Expected input denominator: 106 candidate directories, consisting of 104 valid private artifacts and two known invalid public-shaped cases. This is an expected input shape, not a required success count; record any observed difference. Record the exact number attempted, valid, invalid, source-verified, numeric before/after, `High`/`Medium`/`Low`, carried-forward usage, remaining blockers, near-boundary companies, source-integrity failures, build errors, unsafe promotions, and serving-artifact changes.
+Expected input denominator: 106 immediate candidate directories, consisting of 104 valid private artifacts and two known invalid public-shaped cases (`ADBE` and `SNPS`). This is an expected input shape, not a required success count; record any observed difference. The larger cache contains non-candidate CIKs and must not change the denominator. Record the exact number attempted, valid, invalid, source-verified, numeric before/after with their distinct denominators, `High`/`Medium`/`Low`, field-level and company-level fallback usage, remaining blockers, near-boundary companies, source-integrity failures, build errors, public-contract failures, unsafe promotions, and before/after serving hashes.
 
 - [ ] **Step 6: Write the replay audit**
 

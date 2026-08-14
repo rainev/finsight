@@ -1848,6 +1848,76 @@ def test_equity_lanes_use_canonical_public_result_and_safe_reliability(
     assert "ATTACKER_PRIVATE_HASH" not in json.dumps(public)
 
 
+@pytest.mark.parametrize("primary", ["residual_income", "ddm", "ffo"])
+def test_canonical_equity_public_boundary_allowlists_nested_fields(
+    primary: str,
+) -> None:
+    from app.us_valuation.equity_models import public_equity_artifact
+
+    private = _synthetic_equity_result(primary)
+    secret = f"ATTACKER_PRIVATE_{primary.upper()}_EVIDENCE"
+    private["financials"] = {"raw_statement_value": 9_999_999_999.0}
+    private["private_evidence"] = {"text": secret}
+    private["issuer"]["private_issuer_key"] = secret
+    private["source_financial_statement"]["private_source_key"] = secret
+    private["model_policy"]["private_policy_key"] = secret
+    private["public_assumptions"].update(
+        {"cost_of_equity": 0.09, "private_assumption_key": secret}
+    )
+    private["models"][primary]["private_model_key"] = secret
+    private["scenarios"]["base"][primary]["private_scenario_key"] = secret
+    private["review"]["private_review_key"] = secret
+    private["methodology"]["private_methodology_key"] = secret
+    before = deepcopy(private)
+    stripped = public_equity_artifact(private)
+    stripped_before = deepcopy(stripped)
+
+    public = public_result(stripped)
+
+    assert private == before
+    assert stripped == stripped_before
+    assert public["issuer"]["ticker"] == "TEST"
+    assert public["source_financial_statement"]["accession"] == (
+        "0000000001-26-000001"
+    )
+    assert public["model_policy"]["primary"] == primary
+    assert public["models"][primary]["intrinsic_value_per_share"] == 100.0
+    assert public["scenarios"]["base"][primary][
+        "intrinsic_value_per_share"
+    ] == 100.0
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["public_assumptions"]["cost_of_equity"] == 0.09
+    assert public["methodology"]["source_policy"] == "test"
+    serialized = json.dumps(public)
+    assert secret not in serialized
+    assert "raw_statement_value" not in serialized
+    assert "private_evidence" not in serialized
+    assert "private_" not in serialized.lower()
+
+
+def test_equity_reliability_accounting_ratio_must_be_zero() -> None:
+    private = _synthetic_equity_result("residual_income")
+    private["reliability"]["accounting_impact_ratio"] = 0.05
+
+    public = public_result(private)
+
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["models"]["residual_income"][
+        "intrinsic_value_per_share"
+    ] == 100.0
+    assert public["scenario_range"]["base"] == 100.0
+    assert public["reliability"] == {
+        "label": "Low",
+        "accounting_label": "Low",
+        "scenario_label": "Low",
+        "model_cap": "Low",
+        "source_cap": "Low",
+        "accounting_impact_ratio": 0.0,
+        "scenario_movement_ratio": pytest.approx(0.25),
+        "reasons": ["RELIABILITY_PAYLOAD_INVALID"],
+    }
+
+
 def test_canonical_equity_serializer_preserves_exact_sec_provenance_blocker() -> None:
     private = _synthetic_equity_result("residual_income")
     private["source_financial_statement"].update(

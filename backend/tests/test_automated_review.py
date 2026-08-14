@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import json
 import math
 
 import pytest
@@ -154,7 +155,8 @@ def test_structural_model_warning_is_a_hard_failure() -> None:
 
     assert result["decision"] == "blocked"
     assert result["publication_state"] == "withheld"
-    assert result["blocking_reasons"] == [f"hard_warning:{warning}"]
+    assert result["blocking_reasons"] == ["review_hard_warning"]
+    assert warning not in json.dumps(result["blocking_reasons"])
     assert result["repair_actions"] == ["resolve_model_warnings"]
 
 
@@ -294,5 +296,106 @@ def test_duplicate_review_messages_are_deduplicated_in_source_order() -> None:
 
     result = assess_artifact(artifact)
 
-    assert result["blocking_reasons"] == ["review_error:same"]
+    assert result["blocking_reasons"] == ["review_errors_present"]
     assert result["warnings"] == ["soft"]
+
+
+@pytest.mark.parametrize(
+    ("location", "field", "message", "expected_reason"),
+    [
+        (
+            "model",
+            "errors",
+            "ATTACKER_PRIVATE_MODEL_ERROR",
+            "model_errors:fcff_dcf",
+        ),
+        (
+            "model",
+            "warnings",
+            "ATTACKER_PRIVATE fallback warning",
+            "model_hard_warning:fcff_dcf",
+        ),
+        (
+            "scenario",
+            "errors",
+            "ATTACKER_PRIVATE_SCENARIO_ERROR",
+            "scenario_model_errors:base:fcff_dcf",
+        ),
+        (
+            "scenario",
+            "warnings",
+            "ATTACKER_PRIVATE bridge incomplete warning",
+            "scenario_model_hard_warning:base:fcff_dcf",
+        ),
+    ],
+)
+def test_model_and_scenario_local_failures_block_with_generic_reasons(
+    location: str,
+    field: str,
+    message: str,
+    expected_reason: str,
+) -> None:
+    artifact = clean_artifact()
+    target = (
+        artifact["models"]["fcff_dcf"]
+        if location == "model"
+        else artifact["scenarios"]["base"]["fcff_dcf"]
+    )
+    target[field] = [message]
+
+    result = assess_artifact(artifact)
+
+    assert result["decision"] == "blocked"
+    assert result["publication_state"] == "withheld"
+    assert result["blocking_reasons"] == [expected_reason]
+    assert message not in json.dumps(result["blocking_reasons"])
+
+
+@pytest.mark.parametrize(
+    ("location", "field", "expected_reason"),
+    [
+        ("model", "errors", "invalid_model_errors:fcff_dcf"),
+        (
+            "scenario",
+            "warnings",
+            "invalid_scenario_model_warnings:base:fcff_dcf",
+        ),
+    ],
+)
+def test_model_and_scenario_message_lists_are_validated(
+    location: str, field: str, expected_reason: str
+) -> None:
+    artifact = clean_artifact()
+    target = (
+        artifact["models"]["fcff_dcf"]
+        if location == "model"
+        else artifact["scenarios"]["base"]["fcff_dcf"]
+    )
+    target[field] = "ATTACKER_PRIVATE_NOT_A_LIST"
+
+    result = assess_artifact(artifact)
+
+    assert result["publication_state"] == "withheld"
+    assert result["blocking_reasons"] == [expected_reason]
+    assert "ATTACKER_PRIVATE" not in json.dumps(result)
+
+
+@pytest.mark.parametrize("location", ["model", "scenario"])
+def test_ordinary_model_and_scenario_warnings_are_public_caveats(
+    location: str,
+) -> None:
+    artifact = clean_artifact()
+    message = "Sensitivity should be reviewed before publication."
+    target = (
+        artifact["models"]["fcff_dcf"]
+        if location == "model"
+        else artifact["scenarios"]["base"]["fcff_dcf"]
+    )
+    target["warnings"] = [message]
+
+    result = assess_artifact(artifact)
+
+    assert result["decision"] == "approved_with_caveat"
+    assert result["publication_state"] == "review_required"
+    assert result["blocking_reasons"] == []
+    assert any(message in warning for warning in result["warnings"])
