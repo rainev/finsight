@@ -992,6 +992,8 @@ class CompanyFactsNormalizer:
                     else {
                         **stale_fact.as_dict(),
                         "source_kind": "companyfacts",
+                        "authority": "production",
+                        "evidence_class": "reported",
                         "value_status": "stale_reported_fact",
                     }
                     if stale_fact

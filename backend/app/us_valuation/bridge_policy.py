@@ -586,6 +586,13 @@ def _record_unusable_reason(
         return "BRIDGE_FIELD_MISSING_OR_INVALID"
     if record.field != field:
         return "BRIDGE_FIELD_IDENTITY_MISMATCH"
+    if record.freshness == "carried_forward" or record.fallback_level == (
+        "annual_carried_forward"
+    ):
+        try:
+            FieldAvailability.from_dict(record.as_dict())
+        except (AttributeError, KeyError, TypeError, ValueError):
+            return "BRIDGE_EVIDENCE_INVALID_CONTRACT"
     if record.state not in allowed_point_states and not (
         allow_bounded and record.state == "bounded_unresolved"
     ):

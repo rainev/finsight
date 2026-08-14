@@ -313,6 +313,45 @@ def test_366_day_source_remains_unusable_for_bridge() -> None:
     assert "BRIDGE_EVIDENCE_NOT_CURRENT" in resolution.reason_codes
 
 
+@pytest.mark.parametrize(
+    "attribute,value",
+    [
+        ("value", -1.0),
+        ("source_kind", "filing_note"),
+        ("source_kind", None),
+        ("evidence_class", "conflict"),
+        ("evidence_class", None),
+        ("authority", "shadow"),
+        ("authority", None),
+        ("source_age_days", 366),
+    ],
+)
+def test_bridge_rejects_malformed_carried_forward_record(
+    attribute: str, value: object
+) -> None:
+    availability = complete_availability()
+    carried = FieldAvailability(
+        field="finance_lease_noncurrent",
+        value=8.0,
+        state="reported",
+        reason_code="ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+        period_end=PERIOD_END,
+        source_accession=ACCESSION,
+        source_kind="companyfacts",
+        evidence_class="reported",
+        freshness="carried_forward",
+        fallback_level="annual_carried_forward",
+        source_age_days=365,
+    )
+    object.__setattr__(carried, attribute, value)
+    availability["finance_lease_noncurrent"] = carried
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "finance_lease_noncurrent" in resolution.blocking_fields
+
+
 def test_real_msft_normalizer_availability_reconciles_complete_bridge() -> None:
     submission = load_json("msft-submissions.json")
     classification = classify_issuer(submission)

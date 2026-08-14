@@ -168,6 +168,7 @@ def _reconstruct_legacy_availability(
                 covered_fields=(
                     _LEASE_COMPONENTS if field == "finance_lease_total" else ()
                 ),
+                reference_date=period_end,
             )
     except ArtifactEvaluationError:
         raise

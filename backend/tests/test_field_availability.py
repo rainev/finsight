@@ -80,11 +80,17 @@ def test_carried_forward_company_fact_round_trips_with_age_metadata() -> None:
 @pytest.mark.parametrize(
     "overrides",
     [
+        {"value": -1.0},
+        {"source_kind": "filing_note"},
+        {"source_kind": None},
+        {"evidence_class": "conflict"},
+        {"evidence_class": None},
         {"source_age_days": None},
         {"source_age_days": -1},
         {"source_age_days": 366},
         {"source_accession": None},
         {"authority": "shadow"},
+        {"authority": None},
     ],
 )
 def test_annual_carried_forward_requires_production_source_with_valid_age(
@@ -97,9 +103,44 @@ def test_annual_carried_forward_requires_production_source_with_valid_age(
             "freshness": "carried_forward",
             "fallback_level": "annual_carried_forward",
             "source_age_days": 181,
+            "evidence_class": "reported",
             **overrides,
         }
         _reported(**values)
+
+
+@pytest.mark.parametrize(
+    "freshness,fallback_level",
+    [
+        ("carried_forward", "current_reported"),
+        ("current", "annual_carried_forward"),
+    ],
+)
+def test_annual_carried_forward_contract_is_bidirectional(
+    freshness: str, fallback_level: str
+) -> None:
+    with pytest.raises(ValueError):
+        _reported(
+            field="finance_lease_noncurrent",
+            evidence_class="reported",
+            freshness=freshness,
+            fallback_level=fallback_level,
+            source_age_days=181,
+        )
+
+
+def test_from_dict_rejects_missing_authority_on_carried_forward_record() -> None:
+    serialized = _reported(
+        field="finance_lease_noncurrent",
+        evidence_class="reported",
+        freshness="carried_forward",
+        fallback_level="annual_carried_forward",
+        source_age_days=181,
+    ).as_dict()
+    del serialized["authority"]
+
+    with pytest.raises(ValueError):
+        FieldAvailability.from_dict(serialized)
 
 
 @pytest.mark.parametrize(

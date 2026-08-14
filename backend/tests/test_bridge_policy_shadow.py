@@ -122,6 +122,7 @@ def legacy_availability(artifact: dict[str, Any]) -> dict[str, FieldAvailability
             legacy_state=balance["field_states"][field],
             period_end=balance["period_end"],
             covered_fields=LEASE_COMPONENTS if field == "finance_lease_total" else (),
+            reference_date=balance["period_end"],
         )
         for field, value in balance["values"].items()
     }

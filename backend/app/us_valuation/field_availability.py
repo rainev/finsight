@@ -140,6 +140,12 @@ class FieldAvailability:
             raise ValueError(
                 "freshness must be current, carried_forward, stale, or unknown"
             )
+        if (self.fallback_level == "annual_carried_forward") != (
+            self.freshness == "carried_forward"
+        ):
+            raise ValueError(
+                "annual_carried_forward and carried_forward must be used together"
+            )
         if (
             self.source_age_days is not None
             and (
@@ -202,6 +208,18 @@ class FieldAvailability:
                 )
             if self.state != "reported":
                 raise ValueError("annual_carried_forward requires reported state")
+            if self.value is None or self.value < 0:
+                raise ValueError(
+                    "annual_carried_forward requires a finite nonnegative value"
+                )
+            if self.source_kind != "companyfacts":
+                raise ValueError(
+                    "annual_carried_forward requires source_kind companyfacts"
+                )
+            if self.evidence_class != "reported":
+                raise ValueError(
+                    "annual_carried_forward requires evidence_class reported"
+                )
             if self.freshness != "carried_forward":
                 raise ValueError(
                     "annual_carried_forward requires carried_forward freshness"
@@ -262,6 +280,15 @@ class FieldAvailability:
                 ),
             )
 
+        fallback_level = value.get("fallback_level", "current_reported")
+        if (
+            fallback_level == "annual_carried_forward"
+            and "authority" not in value
+        ):
+            raise ValueError(
+                "annual_carried_forward requires explicit authority metadata"
+            )
+
         return cls(
             field=value["field"],
             value=value["value"],
@@ -269,10 +296,10 @@ class FieldAvailability:
             reason_code=value["reason_code"],
             period_end=value["period_end"],
             source_accession=value["source_accession"],
-            source_kind=value["source_kind"],
-            evidence_class=value["evidence_class"],
+            source_kind=value.get("source_kind"),
+            evidence_class=value.get("evidence_class"),
             freshness=value["freshness"],
-            fallback_level=value.get("fallback_level", "current_reported"),
+            fallback_level=fallback_level,
             source_age_days=value.get("source_age_days"),
             uncertainty=uncertainty,
             covered_fields=_restore_string_tuple(
@@ -421,8 +448,8 @@ def availability_from_normalized_field(
     source: Mapping[str, Any] | None,
     legacy_state: str,
     period_end: str,
+    reference_date: str,
     covered_fields: tuple[str, ...] = (),
-    reference_date: str | None = None,
 ) -> FieldAvailability:
     """Project a legacy normalized field into its compatibility availability."""
 
@@ -452,18 +479,20 @@ def availability_from_normalized_field(
     raw_source_kind = source_record.get("source_kind")
     source_kind = str(raw_source_kind) if raw_source_kind is not None else None
 
-    if legacy_state == "verification_stale" and reference_date is not None:
+    if legacy_state == "verification_stale":
         raw_value = _finite_float_or_none(source_record.get("value"))
         raw_end = source_record.get("end")
         raw_form = source_record.get("form")
-        raw_authority = source_record.get("authority", "production")
+        raw_authority = source_record.get("authority")
+        raw_evidence_class = source_record.get("evidence_class")
         if (
             raw_value is not None
             and raw_value >= 0
             and isinstance(raw_end, str)
             and raw_form in {"10-K", "10-K/A"}
-            and source_kind == "companyfacts"
+            and raw_source_kind == "companyfacts"
             and raw_authority == "production"
+            and raw_evidence_class == "reported"
             and source_accession is not None
         ):
             try:
