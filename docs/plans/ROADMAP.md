@@ -22,7 +22,7 @@ Tests alone are not completion. Each phase requires the real-data or consumer-pa
 
 Detailed plan: `docs/superpowers/plans/2026-08-14-evidence-aware-reliability-pipeline.md`
 
-### Inherited evidence-aware bridge policy gate (2026-08-13)
+### Historical evidence-aware bridge baseline (superseded by Phase 1)
 
 Evidence: `docs/audit/02-evidence-aware-bridge-replay.md`. Overall tooling
 status: **verified — user confirmation needed**.
@@ -32,16 +32,7 @@ status: **verified — user confirmation needed**.
 | **BP1** | Structural shadow serialization and non-authority boundary | **✔ FIRSTHAND VERIFIED** — 104/104 cached filings parsed; 545/545 decisions carry a shadow `availability_candidate`; all publication effects remain `none_shadow_only`. |
 | **BP2** | Source-linked availability schema and exact modern/legacy replay | **✔ FIRSTHAND VERIFIED** — strict serialization tests pass; 104 real legacy private artifacts reconstruct without mutation or synthesized total-debt evidence. |
 | **BP3** | Deterministic bridge-policy corpus replay | **✔ FIRSTHAND VERIFIED** — 106 candidates counted, 104 valid plus ADBE/SNPS invalid, all 106 withheld, byte-identical rerun, zero serving writes. |
-| **BP4** | Activate bounded-review eligibility | **⏸ WITHHELD PENDING EVIDENCE** — zero real bounded candidates and five requested current private artifacts are absent; no production promotion is authorized. |
-
-## Inherited evidence-branch model notes
-| ID | What | Status |
-|---|---|---|
-| **M1** | Insurance (SIC 6300-6411) → residual income | **✔ DONE** — AIG $88, PGR $70, TRV $222 (review_required, live) |
-| **M3** | Securities/credit (6200-6299 / 6100-6199) → residual income | **✔ DONE** — GS $543, MS $95, AXP $83 (live) |
-| **M2** | **REIT FFO/NAV model** (65/67xx, ~15: O/PLD/WELL) | **remaining — LARGE** (genuinely new model; FCFF/RI don't fit REITs) |
-| **M4** | Commodity/energy reserve-aware (~40: CVX/OXY/FCX) | **remaining — LARGE** (FCFF runs but reserves/cycle distort; needs care before publish) |
-| **M5** | Remaining tail archetypes (agriculture, misc) | remaining — small |
+| **BP4** | Historical bounded-review baseline | **⏸ SUPERSEDED BY PHASE 1** — the pre-Phase-1 replay had zero bounded candidates and five requested current private artifacts absent; this records historical fail-closed evidence and implies no current threshold. |
 
 | ID | Work | Source gap | Severity | Verify method | Status |
 | --- | --- | --- | --- | --- | --- |

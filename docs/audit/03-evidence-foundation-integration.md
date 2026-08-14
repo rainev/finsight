@@ -90,3 +90,13 @@ Verified: The evidence-aware foundation is present in the staged merge, includin
 Verified: The focused suite, full backend baseline, and reproducible offline replay completed with the exact results recorded above.
 
 Unverified: Final commit SHA and post-commit `0997f62..HEAD` self-review are recorded in the task report after commit execution.
+
+## Pre-review documentation correction
+
+Verified: A pre-review inspection found that the original additive resolution duplicated backlog entries and reintroduced the obsolete `Full-500 publishable-AND-credible` deferral, contrary to the approved whole-universe roadmap.
+
+Verified: The corrected `docs/plans/PRODUCTION-BACKLOG.md` retains only one B1–B11 sequence, removes the obsolete full-500 and thin-history deferrals, preserves non-contradictory B5–B9 and B11 evidence-specific caveats, and reframes B10 as historical pre-Phase-1 baseline evidence rather than a live 1% threshold.
+
+Verified: The corrected `docs/plans/ROADMAP.md` has one historical bridge-policy baseline, labels BP4 as superseded by Phase 1 without a current threshold, removes duplicated inherited model notes, and keeps 500/500 coverage, specialist lanes, price comparison, and backtesting on the scheduled critical path.
+
+Verified: This correction is a follow-up documentation commit; the original merge commit remains unchanged and no implementation files are modified by the correction.
