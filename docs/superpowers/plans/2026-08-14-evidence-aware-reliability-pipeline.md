@@ -547,7 +547,7 @@ git commit -m "feat: carry recent annual accounting facts forward"
 
 - `BridgeAssessment` adds `accounting_impact_ratio` and `reliability_cap`.
 - `assess_bridge_materiality(resolution, enterprise_value)` returns usable finite bounded ranges at every size.
-- `build_us_valuation()` and `build_equity_level_result()` attach one `ReliabilityAssessment` dictionary to every newly generated private result.
+- `build_us_valuation()` and `build_equity_level_result()` attach one `ReliabilityAssessment` dictionary to every newly generated finite private valuation result. A true withheld result has no fabricated impact ratios.
 
 - [ ] **Step 1: Replace old cutoff tests with failing impact tests**
 
@@ -652,16 +652,21 @@ git commit -m "feat: grade bounded bridge uncertainty by impact"
 **Files:**
 
 - Modify: `backend/app/us_valuation/artifacts.py`
+- Modify: `backend/app/us_valuation/automated_review.py`
 - Modify: `backend/app/routers/us_valuations.py`
 - Modify: `backend/tests/test_bridge_policy_artifacts.py`
+- Modify: `backend/tests/test_automated_review.py`
 - Modify: `backend/tests/test_us_valuation.py`
 - Modify: `backend/tests/test_api.py`
 
 **Interfaces:**
 
-- Public detail adds `reliability` with `label`, accounting impact, scenario movement, caps, and reason codes.
+- `public_result(result, submissions=None)` becomes the canonical serializer for FCFF, residual-income, DDM, and FFO results. It reuses `public_equity_artifact()` for equity-level lanes before applying the same sanitizer and reliability contract.
+- Newly generated public artifacts use `schema_version="US-PUBLIC-VALUATION-1.1"`; a 1.1 artifact missing reliability is invalid rather than being mislabeled as legacy.
+- Public detail adds an allowlisted `reliability` DTO with `label`, accounting impact, scenario movement, caps, and reason codes.
 - Public list adds `reliability` as `High`, `Medium`, or `Low`.
-- Old finite artifacts without reliability receive `Low` plus `LEGACY_ARTIFACT_NOT_REGENERATED`; they do not pretend to be high confidence.
+- Old finite 1.0 artifacts without reliability receive `Low` plus `LEGACY_ARTIFACT_NOT_REGENERATED`; they do not pretend to be high confidence.
+- Withheld artifacts receive a canonical `Low` reliability DTO with null impact metrics and only `VALUATION_WITHHELD`; no private withholding text is echoed.
 - `FINSIGHT_US_VALUATION_DATA_ROOT` may point a local verification server at regenerated public artifacts; when unset, the production data root remains `backend/app/data/us_valuations`.
 
 - [ ] **Step 1: Write failing public-contract tests**
@@ -683,7 +688,29 @@ assert public["reliability"] == {
 
 Add adversarial tests for unknown labels, booleans/non-finite ratios, duplicate reasons, extra keys, and malformed dictionaries. Assert malformed reliability becomes `Low` with `RELIABILITY_PAYLOAD_INVALID`, while pre-existing finite model/range values remain visible unless another genuine publication blocker requires scrubbing.
 
-Add API list tests asserting `reliability` is present for every item and detail tests asserting the same label.
+Add tests proving:
+
+- a finite `bounded_review` artifact above the historical 1% spread is preserved and graded instead of scrubbed;
+- FCFF, residual-income, DDM, and FFO all pass through canonical `public_result()` and expose safe reliability;
+- a `review_required` supporting EPV model is a caveat and does not hide a finite primary FCFF value;
+- a withheld primary model, non-finite primary value, source-integrity blocker, hard warning, or malformed public contract still withholds;
+- every list item and detail response has reliability, and the list/detail labels match;
+- finite legacy and malformed-reliability fallbacks use numeric derived ratios, while a withheld artifact uses this non-fabricated shape:
+
+```python
+{
+    "label": "Low",
+    "accounting_label": "Low",
+    "scenario_label": "Low",
+    "model_cap": "Low",
+    "source_cap": "Low",
+    "accounting_impact_ratio": None,
+    "scenario_movement_ratio": None,
+    "reasons": ["VALUATION_WITHHELD"],
+}
+```
+
+Unknown reason strings and private warning/error text must never be echoed. Only explicitly allowlisted public reason codes may survive.
 
 Add a configuration test that reloads or invokes the router with `FINSIGHT_US_VALUATION_DATA_ROOT` set to a temporary directory and proves both endpoints read that directory. Also prove the unset default still resolves to `backend/app/data/us_valuations`.
 
@@ -692,6 +719,7 @@ Add a configuration test that reloads or invokes the router with `FINSIGHT_US_VA
 ```bash
 PYTHONPATH=backend pytest -q \
   backend/tests/test_bridge_policy_artifacts.py \
+  backend/tests/test_automated_review.py \
   backend/tests/test_us_valuation.py \
   backend/tests/test_api.py \
   -k 'reliability or artifact or us_valuation'
@@ -699,11 +727,21 @@ PYTHONPATH=backend pytest -q \
 
 - [ ] **Step 3: Add an allowlisted public reliability DTO**
 
-In `artifacts.py`, validate exactly the fields produced by `ReliabilityAssessment.as_dict()`. Copy only those keys into `public_result()`. Do not expose raw statement values or private field-by-field evidence.
+In `artifacts.py`, validate exactly the fields produced by `ReliabilityAssessment.as_dict()`. Copy only those keys into the canonical `public_result()`. Do not expose raw statement values or private field-by-field evidence. Dispatch equity-level results through the existing `public_equity_artifact()` first, then apply the same schema, automated review, sanitizer, and reliability DTO used by FCFF.
 
-For a finite legacy artifact with no reliability object, derive its scenario movement from `scenario_range`, set accounting impact to `0.0`, set both caps and the overall label to `Low`, and include `LEGACY_ARTIFACT_NOT_REGENERATED`. A withheld legacy artifact remains withheld and scrubbed.
+For a finite legacy 1.0 artifact with no reliability object, derive its scenario movement from `scenario_range`, set accounting impact to `0.0`, set all qualitative fields and the overall label to `Low`, and include `LEGACY_ARTIFACT_NOT_REGENERATED`. For a finite 1.1 artifact with malformed or missing reliability, use the same conservative numeric fallback with `RELIABILITY_PAYLOAD_INVALID`. A withheld artifact remains scrubbed and receives only the canonical null-ratio `VALUATION_WITHHELD` DTO.
 
-- [ ] **Step 4: Expose the same label from list and detail APIs**
+Validate bridge arithmetic and canonical FCFF agreement, but remove the historical 1% public rejection for regenerated 1.1 `bounded_review` artifacts. Preserve the existing fail-closed handling of historical 1.0 artifacts that were already marked withheld, and preserve all genuine source-integrity, identity, non-finite, and model-policy blockers.
+
+Allow only the bridge-policy reason codes, `INTERIM_FFO_ROUTE`, `LEGACY_ARTIFACT_NOT_REGENERATED`, `RELIABILITY_PAYLOAD_INVALID`, and `VALUATION_WITHHELD`. Any unknown or private reason makes the incoming reliability payload invalid and is replaced by the generic fallback; it is never echoed.
+
+- [ ] **Step 4: Correct primary-versus-supporting model review semantics**
+
+In `automated_review.py`, use `model_policy.primary` to distinguish the main valuation from supporting checks. A finite supporting model in `review_required` state, including EPV, adds a public caveat but is not a blocking reason. A finite primary model in `review_required` state also remains visible as a caveated valuation when the artifact has no errors, hard warning, source-integrity failure, or malformed contract. A withheld primary model, a missing/non-finite primary value, an unknown model state, or a genuine hard warning remains blocking. Scenario checks continue to validate every scenario and never weaken a withheld or malformed scenario.
+
+Do not special-case a ticker or EPV by name: the rule is based on declared primary/supporting role. Preserve deterministic reason ordering and add focused tests in `test_automated_review.py`.
+
+- [ ] **Step 5: Expose the same label from list and detail APIs**
 
 Make `list_us_valuations()` sanitize each artifact before reading its summary. Add:
 
@@ -715,11 +753,12 @@ Do not read raw, unsanitized reliability fields into the list response.
 
 Resolve `DATA_ROOT` from `FINSIGHT_US_VALUATION_DATA_ROOT` at process startup, falling back to the existing package-relative directory. This override changes only which already-generated JSON files a deliberately configured local process reads; it must not write, download, or mutate artifacts.
 
-- [ ] **Step 5: Run focused, full, and direct API checks**
+- [ ] **Step 6: Run focused, full, and direct API checks**
 
 ```bash
 PYTHONPATH=backend pytest -q \
   backend/tests/test_bridge_policy_artifacts.py \
+  backend/tests/test_automated_review.py \
   backend/tests/test_us_valuation.py \
   backend/tests/test_api.py
 PYTHONPATH=backend pytest -q backend/tests
@@ -734,13 +773,15 @@ GET /api/us-valuations/MSFT
 
 Capture one list item and one detail response showing the same reliability label and finite value.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
 git add \
   backend/app/us_valuation/artifacts.py \
+  backend/app/us_valuation/automated_review.py \
   backend/app/routers/us_valuations.py \
   backend/tests/test_bridge_policy_artifacts.py \
+  backend/tests/test_automated_review.py \
   backend/tests/test_us_valuation.py \
   backend/tests/test_api.py
 git diff --cached --check
@@ -761,7 +802,7 @@ git commit -m "feat: expose valuation reliability safely"
 
 **Interfaces:**
 
-- Consumes the preserved private artifacts and matching `sec-cache/CIK*-companyfacts.json`, `CIK*-submissions.json`, and metadata files under the immutable corpus.
+- Consumes the preserved private artifacts and matching `sec-cache/CIK*-companyfacts.json`, `CIK*-submissions.json`, metadata files, and optional `filing-evidence-used.json` under the immutable corpus.
 - Rebuilds each valid company through `build_us_valuation()` using the artifact's original valuation date and source manifest, with network access disabled.
 - Produces a non-serving JSON report, per-company private artifacts, and flat `public/{TICKER}.json` artifacts under a fresh `output/` directory so a local API process can consume them without copying into the serving tree.
 - Reports source-integrity failures, valid/invalid input counts, before/after numeric counts, reliability/fallback counts, impact buckets, near-boundary cases, remaining blockers, and serving-tree hashes.
@@ -789,7 +830,7 @@ Build a tiny corpus from the existing reduced SEC fixtures and require these sum
 }
 ```
 
-Assert the test calls the real `build_us_valuation()` path rather than mocking it. Define near-boundary as within `0.005` absolute ratio of `0.05` or `0.20`. Require every count to name its denominator in the Markdown output. Add negative tests proving the runner rejects an output directory inside `backend/app/data/us_valuations`, rejects a source whose SHA-256 does not match the private artifact's source manifest, and reports a public-shaped input as invalid rather than building it.
+Assert the test calls the real `build_us_valuation()` path rather than mocking it. Define accounting near-boundary as within `0.005` absolute ratio of `0.05` or `0.20`, and scenario near-boundary as within `0.005` of `0.20` or `0.40`. Require explicit accounting and scenario bucket counts on both sides of every boundary. Require every count to name its denominator in the Markdown output. Add negative tests proving the runner rejects an output directory inside `backend/app/data/us_valuations`, rejects a source whose SHA-256 does not match the private artifact's source manifest, rejects mismatched optional filing-evidence, reports a public-shaped input as invalid rather than building it, and cannot enter a network path.
 
 - [ ] **Step 2: Run tests and verify RED**
 
@@ -805,15 +846,16 @@ The runner must:
 
 1. discover exactly one `valuation-private.json` in each candidate directory while excluding `sec-cache/`;
 2. validate private schema shape, canonical ticker/CIK, valuation date, and source manifest before using a candidate;
-3. resolve its CIK to the cached Companyfacts and submissions files;
-4. recompute SHA-256 for both source files and refuse that company if either hash differs from the artifact's manifest;
+3. resolve its CIK to the cached Companyfacts and submissions files and, when declared, the exact `filing-evidence-used.json`;
+4. recompute SHA-256 for every declared source file and refuse that company if any hash differs from the artifact's manifest;
 5. call the real `build_us_valuation()` with the cached JSON, original valuation date, and source manifest, with no download or network fallback;
 6. call `public_result()` on the rebuilt private result and fail that company if public sanitization rejects it;
 7. write per-company regenerated output only beneath the requested fresh non-serving output directory;
 8. hash `backend/app/data/us_valuations` before and after the run and set `serving_artifacts_changed` from the comparison; and
-9. exit non-zero for source-integrity failures, build errors, unsafe promotions, or serving-tree changes, while still writing the report.
+9. make network access structurally unavailable and prove that guard in tests; and
+10. exit non-zero for source-integrity failures, build errors, unsafe promotions, or serving-tree changes, while still writing the report.
 
-`numeric_before_count` and `numeric_after_count` mean companies with a finite public intrinsic value, not merely a directory or a parsed filing. Count reliability only among after-run numeric companies. Count annual carried-forward use from private availability metadata. Count unresolved withholding reasons separately. The runner must not alter 5%, 20%, or 40%, promote Arelle shadow candidates to production authority, or convert unresolved conflicts to estimates.
+`numeric_before_count` and `numeric_after_count` mean companies with a finite public intrinsic value, not merely a directory or a parsed filing. Count reliability only among after-run numeric companies. Count annual carried-forward use from private availability metadata. Count unresolved withholding reasons separately. Report accounting impact buckets around 5% and 20%, scenario movement buckets around 20% and 40%, and literal near-boundary company examples. The runner must be deterministic for the same immutable inputs and must not alter 5%, 20%, or 40%, promote Arelle shadow candidates to production authority, or convert unresolved conflicts to estimates.
 
 - [ ] **Step 4: Run focused and full tests**
 
@@ -920,14 +962,14 @@ curl --fail --silent http://127.0.0.1:8011/api/us-valuations
 curl --fail --silent http://127.0.0.1:8011/api/us-valuations/AMZN
 ```
 
-`AMZN` is the known corpus identity check. Repeat the detail request using the exact tickers recorded in `docs/audit/04-reliability-policy-replay.md` for the first finite numeric company, one annual-carried-forward company, and one `Low` company; record those literal curl commands in the phase audit. Confirm list/detail labels match and that the numeric selection is finite. If any requested category has no member, do not invent one: mark that gate `partial` and record `0 out of Y`. Do not substitute direct function calls for this HTTP check.
+`AMZN` is the known corpus identity check. Repeat the detail request using the exact tickers recorded in `docs/audit/04-reliability-policy-replay.md` for up to three category details: the first finite numeric company, one annual-carried-forward company, and one `Low` company. Record those literal curl commands in the phase audit. Confirm list/detail labels match and that the numeric selection is finite. If any requested category has no member, do not invent one: mark that gate `partial` and record `0 out of Y`. Do not substitute direct function calls for this HTTP check.
 
 - [ ] **Step 3: Re-check serving boundaries**
 
 Hash or compare `backend/app/data/us_valuations` before and after the replay. Confirm the replay changed zero serving artifacts. Confirm Arelle is absent from FastAPI imports:
 
 ```bash
-rg -n "arelle" backend/app/main.py backend/app/routers backend/app/dependencies.py
+rg -n "arelle" backend/app/main.py backend/app/routers backend/app/deps.py
 ```
 
 Expected: no live-serving import.
