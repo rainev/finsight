@@ -13,10 +13,13 @@ from __future__ import annotations
 
 from copy import deepcopy
 from datetime import date
+from math import isfinite
 from typing import Any
 
 from app.valuation.bank import residual_income_valuation
 from app.valuation.ddm import two_stage_ddm
+
+from .reliability import ReliabilityLabel, assess_reliability
 
 _ISSUER_KEYS = (
     "cik", "ticker", "issuer_name", "filing_regime", "accounting_standard",
@@ -223,21 +226,62 @@ def _withheld(classification, valuation_date, source_manifest, model_name, messa
 
 
 def _finalize(classification, valuation_date, source_manifest, period_end, model_name,
-              scenarios: dict[str, float], public_assumptions: dict, warnings: list[str]):
+              scenarios: dict[str, float], public_assumptions: dict, warnings: list[str],
+              *, model_cap: ReliabilityLabel = "High", reasons: tuple[str, ...] = ()):
     base = scenarios["base"]
-    errors: list[str] = []
     if base is None:
         return _withheld(classification, valuation_date, source_manifest, model_name,
                          "Model did not produce a base value.")
+    if any(
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not isfinite(value)
+        for value in scenarios.values()
+    ):
+        return _withheld(
+            classification,
+            valuation_date,
+            source_manifest,
+            model_name,
+            f"Non-finite {model_name} scenario value; withheld.",
+        )
     if base <= 0:
-        errors.append(f"Non-positive {model_name} intrinsic value; equity model does not apply.")
+        return _withheld(
+            classification,
+            valuation_date,
+            source_manifest,
+            model_name,
+            f"Non-positive {model_name} intrinsic value; equity model does not apply.",
+        )
     if base > 50000:
-        errors.append(f"Implausible {model_name} intrinsic value (~${base:,.0f}/share); withheld.")
-    state = "withheld" if errors else "review_required"
+        return _withheld(
+            classification,
+            valuation_date,
+            source_manifest,
+            model_name,
+            f"Implausible {model_name} intrinsic value (~${base:,.0f}/share); withheld.",
+        )
+    state = "review_required"
+    scenario_range = {
+        "low": min(scenarios.values()),
+        "base": base,
+        "high": max(scenarios.values()),
+        "label": "assumption range, not a statistical confidence interval",
+    }
+    reliability = assess_reliability(
+        accounting_low=base,
+        accounting_base=base,
+        accounting_high=base,
+        scenario_low=scenario_range["low"],
+        scenario_base=scenario_range["base"],
+        scenario_high=scenario_range["high"],
+        model_cap=model_cap,
+        reasons=reasons,
+    )
     model = {
         "model": model_name, "output_type": "intrinsic_value_per_share", "currency": "USD",
         "intrinsic_value_per_share": base, "publication_state": state,
-        "errors": errors, "warnings": warnings,
+        "errors": [], "warnings": warnings,
     }
     result = _shell(classification, valuation_date, source_manifest, period_end)
     result.update({
@@ -245,12 +289,10 @@ def _finalize(classification, valuation_date, source_manifest, period_end, model
         "models": {model_name: model},
         "scenarios": {k: {model_name: {"intrinsic_value_per_share": v, "publication_state": state}}
                       for k, v in scenarios.items()},
-        "scenario_range": {
-            "low": min(scenarios.values()), "base": base, "high": max(scenarios.values()),
-            "label": "assumption range, not a statistical confidence interval",
-        },
-        "review": {"publication_state": state, "confidence_grade": "insufficient" if errors else "medium",
-                   "errors": errors, "warnings": warnings,
+        "scenario_range": scenario_range,
+        "reliability": reliability.as_dict(),
+        "review": {"publication_state": state, "confidence_grade": "medium",
+                   "errors": [], "warnings": warnings,
                    "prohibited_output_check": {"current_price": False, "upside_downside": False,
                                                "buy_hold_sell": False, "trading_multiples": False}},
     })
@@ -335,7 +377,8 @@ def build_equity_level_result(*, classification, companyfacts, valuation_date, s
               "risk_free_rate": policy["risk_free_rate"], "equity_risk_premium": policy["equity_risk_premium"]}
         warnings = ["FFO is a filing-derived approximation (non-GAAP); valued at a governed P/FFO multiple."]
         return _finalize(classification, valuation_date, source_manifest, inp["period_end"],
-                         model_name, scenarios, pa, warnings)
+                         model_name, scenarios, pa, warnings,
+                         model_cap="Low", reasons=("INTERIM_FFO_ROUTE",))
 
     raise ValueError(f"build_equity_level_result cannot handle primary_model={model_name!r}")
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from math import isfinite
 from pathlib import Path
 from typing import Any, Callable
 
@@ -824,7 +825,7 @@ def test_bounded_liability_midpoint_reduces_equity_not_enterprise_value(
     assert publication_states(result) == ["review_required"] * 14
 
 
-def test_bounded_over_limit_withholds_all_states_but_keeps_private_values(
+def test_low_reliability_bridge_preserves_all_finite_private_values(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     field = "marketable_securities_noncurrent"
@@ -840,23 +841,39 @@ def test_bounded_over_limit_withholds_all_states_but_keeps_private_values(
     assessment = balance["bridge_uncertainty"]
 
     assert balance["values"][field] is None
-    assert balance["bridge_usable"] is False
-    assert balance["bridge_decision"] == "withheld"
+    assert balance["bridge_usable"] is True
+    assert balance["bridge_decision"] == "bounded_review"
     assert assessment["spread_ratio"] > 0.01
-    assert assessment["spread_limit"] == 0.01
     assert assessment["bounded_fields"] == [field]
-    assert set(publication_states(result)) == {"withheld"}
+    assert publication_states(result) == ["review_required"] * 14
     assert result["models"]["fcff_dcf"]["enterprise_value"] == (
         AAPL_BASE_ENTERPRISE_VALUE
     )
-    assert result["models"]["fcff_dcf"]["intrinsic_value_per_share"] is not None
-    assert result["models"]["epv"]["intrinsic_value_per_share"] is not None
-    assert result["scenario_range"]["low"] is not None
-    review_error = " ".join(result["review"]["errors"])
-    assert "Enterprise-to-equity bridge is withheld" in review_error
-    assert "spread_ratio=" in review_error
-    assert "spread_limit=0.01" in review_error
-    assert field in review_error
+    private_values = [
+        result["models"]["fcff_dcf"]["intrinsic_value_per_share"],
+        result["models"]["epv"]["intrinsic_value_per_share"],
+        *(
+            scenario["fcff_dcf"]["intrinsic_value_per_share"]
+            for scenario in result["scenarios"].values()
+        ),
+        *(row["intrinsic_value_per_share"] for row in result["sensitivities"]),
+        result["scenario_range"]["low"],
+        result["scenario_range"]["base"],
+        result["scenario_range"]["high"],
+    ]
+    assert all(
+        isinstance(value, (int, float)) and isfinite(value)
+        for value in private_values
+    )
+    assert result["reliability"]["label"] == "Low"
+    assert result["reliability"]["accounting_label"] == "Low"
+    assert result["reliability"]["accounting_impact_ratio"] > 0.20
+    assert result["reliability"]["source_cap"] == "Low"
+    assert result["review"]["publication_state"] == "review_required"
+    assert not any(
+        "Enterprise-to-equity bridge is withheld" in error
+        for error in result["review"]["errors"]
+    )
 
 
 def test_bounded_review_never_promotes_a_native_withheld_scenario(
@@ -968,7 +985,7 @@ def test_bounded_bridge_with_nonfinite_base_enterprise_value_fails_closed(
     assert publication_states(result) == ["withheld"] * 14
 
 
-def test_base_fcff_is_the_single_run_level_materiality_discriminator(
+def test_base_fcff_bridge_assessment_governs_epv_without_withholding(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     install_bounded_aapl_normalizer(
@@ -990,6 +1007,7 @@ def test_base_fcff_is_the_single_run_level_materiality_discriminator(
     assert balance["bridge_decision"] == "bounded_review"
     assert independent_epv_assessment.spread_ratio is not None
     assert independent_epv_assessment.spread_ratio > 0.01
-    assert independent_epv_assessment.decision == "withheld"
+    assert independent_epv_assessment.decision == "bounded_review"
+    assert independent_epv_assessment.usable is True
     assert result["models"]["epv"]["publication_state"] == "review_required"
     assert all(state != "pass" for state in publication_states(result))

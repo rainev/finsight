@@ -1446,6 +1446,29 @@ def test_apple_golden_values_and_scenario_order(result: dict):
     assert scenario_range["low"] < scenario_range["base"] < scenario_range["high"]
 
 
+def test_complete_bridge_reliability_uses_point_accounting_values(
+    result: dict,
+) -> None:
+    """Catch complete bridge evidence being treated as accounting movement."""
+    assert result["financials"]["balance_sheet"]["bridge_decision"] == "complete"
+    reliability = result["reliability"]
+    scenario_range = result["scenario_range"]
+    expected_scenario_movement = max(
+        abs(scenario_range["low"] - scenario_range["base"]),
+        abs(scenario_range["high"] - scenario_range["base"]),
+    ) / abs(scenario_range["base"])
+
+    assert reliability["accounting_impact_ratio"] == 0.0
+    assert reliability["accounting_label"] == "High"
+    assert reliability["scenario_movement_ratio"] == pytest.approx(
+        expected_scenario_movement
+    )
+    assert reliability["label"] == reliability["scenario_label"]
+    assert reliability["model_cap"] == "High"
+    assert reliability["source_cap"] == "High"
+    assert reliability["reasons"] == []
+
+
 def test_sensitivities_move_in_the_expected_direction(result: dict):
     rows = {
         (row["field"], row["delta"]): row["intrinsic_value_per_share"]

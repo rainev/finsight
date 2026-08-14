@@ -8,6 +8,7 @@ from numbers import Real
 from typing import Any, Literal, Mapping
 
 from .field_availability import FieldAvailability
+from .reliability import ReliabilityLabel, accounting_label
 
 
 POLICY_VERSION = "US-BRIDGE-POLICY-1.0"
@@ -304,6 +305,8 @@ class BridgeAssessment:
     intrinsic_value_range: BridgeRange | None
     spread_ratio: float | None
     spread_limit: float
+    accounting_impact_ratio: float | None
+    reliability_cap: ReliabilityLabel
     blocking_fields: tuple[str, ...]
     bounded_fields: tuple[str, ...]
     reason_codes: tuple[str, ...]
@@ -337,6 +340,15 @@ class BridgeAssessment:
             _require_finite_number(self.spread_ratio, "spread_ratio")
             if self.spread_ratio < 0:
                 raise ValueError("spread_ratio must be nonnegative")
+        if self.accounting_impact_ratio is not None:
+            _require_finite_number(
+                self.accounting_impact_ratio,
+                "accounting_impact_ratio",
+            )
+            if self.accounting_impact_ratio < 0:
+                raise ValueError("accounting_impact_ratio must be nonnegative")
+        if self.reliability_cap not in {"High", "Medium", "Low"}:
+            raise ValueError("reliability_cap must be High, Medium, or Low")
         spread_limit = _require_spread_limit(self.spread_limit)
         object.__setattr__(self, "spread_limit", spread_limit)
         if self.warning is not None and (
@@ -348,6 +360,7 @@ class BridgeAssessment:
 
         value_range = self.intrinsic_value_range
         expected_spread: float | None = None
+        expected_accounting_impact: float | None = None
         if value_range is not None:
             expected_midpoint = (value_range.low + value_range.high) / 2
             if (
@@ -367,6 +380,13 @@ class BridgeAssessment:
                 ) / value_range.midpoint
                 if isfinite(candidate_spread):
                     expected_spread = candidate_spread
+            if value_range.midpoint > 0:
+                candidate_impact = max(
+                    abs(value_range.low - value_range.midpoint),
+                    abs(value_range.high - value_range.midpoint),
+                ) / abs(value_range.midpoint)
+                if isfinite(candidate_impact):
+                    expected_accounting_impact = candidate_impact
 
         complete_without_value = (
             self.decision == "complete"
@@ -386,6 +406,14 @@ class BridgeAssessment:
                 "spread_ratio is required when intrinsic_value_range has a "
                 "finite positive computable spread"
             )
+        if self.accounting_impact_ratio != expected_accounting_impact and not (
+            self.decision == "complete"
+            and self.accounting_impact_ratio == 0.0
+        ):
+            raise ValueError(
+                "accounting_impact_ratio must match the "
+                "intrinsic_value_range arithmetic"
+            )
 
         if self.decision == "complete":
             if not self.usable or blocking_fields or bounded_fields:
@@ -394,6 +422,12 @@ class BridgeAssessment:
                 )
             if self.spread_ratio != 0.0:
                 raise ValueError("complete must have a zero spread_ratio")
+            if self.accounting_impact_ratio != 0.0:
+                raise ValueError(
+                    "complete must have a zero accounting_impact_ratio"
+                )
+            if self.reliability_cap != "High":
+                raise ValueError("complete must have High reliability_cap")
             if value_range is not None and value_range.low != value_range.high:
                 raise ValueError("complete must have a point intrinsic-value range")
             if self.warning is not None:
@@ -407,14 +441,18 @@ class BridgeAssessment:
                 or not bounded_fields
                 or value_range is None
                 or self.spread_ratio is None
+                or self.accounting_impact_ratio is None
                 or value_range.midpoint <= 0
-                or not _spread_is_within_limit(
-                    self.spread_ratio, self.spread_limit
-                )
             ):
                 raise ValueError(
-                    "bounded_review requires a usable, positive, in-limit "
+                    "bounded_review requires a usable, finite positive "
                     "bounded range with no blockers"
+                )
+            if self.reliability_cap != accounting_label(
+                self.accounting_impact_ratio
+            ):
+                raise ValueError(
+                    "reliability_cap must match accounting_impact_ratio"
                 )
             if self.warning != _bounded_review_warning(self.spread_ratio):
                 raise ValueError("bounded_review warning does not match spread_ratio")
@@ -426,40 +464,44 @@ class BridgeAssessment:
             raise ValueError("withheld requires blocking or bounded fields")
         if self.warning is not None:
             raise ValueError("withheld must not have a warning")
-        if blocking_fields:
-            if value_range is not None or self.spread_ratio is not None:
-                raise ValueError(
-                    "blocked assessments must not expose a provisional range or spread"
-                )
-            return
-        if value_range is None:
-            if self.spread_ratio is not None or not (
-                {_BASE_ENTERPRISE_VALUE_UNAVAILABLE, _NONFINITE_INTRINSIC_VALUE_RESULT}
-                & set(reason_codes)
-            ):
-                raise ValueError(
-                    "withheld bounded assessments without a range require an "
-                    "unavailable or non-finite value reason"
-                )
-            return
-        if value_range.midpoint <= 0:
+        if value_range is not None:
             if (
-                self.spread_ratio is not None
-                or _NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT not in reason_codes
+                blocking_fields
+                or value_range.midpoint <= 0
+                or self.spread_ratio is None
+                or self.accounting_impact_ratio is None
+                or _spread_is_within_limit(
+                    self.spread_ratio,
+                    self.spread_limit,
+                )
+                or self.reliability_cap
+                != accounting_label(self.accounting_impact_ratio)
             ):
                 raise ValueError(
-                    "nonpositive intrinsic-value midpoint must be withheld "
-                    "without a spread"
+                    "legacy withheld ranges require a finite positive "
+                    "over-limit bounded assessment"
                 )
             return
-        if self.spread_ratio is None:
-            if _NONFINITE_INTRINSIC_VALUE_RESULT not in reason_codes:
-                raise ValueError(
-                    "missing spread_ratio requires a non-finite result reason"
-                )
-            return
-        if _spread_is_within_limit(self.spread_ratio, self.spread_limit):
-            raise ValueError("withheld spread_ratio must exceed spread_limit")
+        if (
+            self.spread_ratio is not None
+            or self.accounting_impact_ratio is not None
+        ):
+            raise ValueError("withheld assessments without ranges need null metrics")
+        if self.reliability_cap != "Low":
+            raise ValueError(
+                "withheld assessments without ranges need Low reliability_cap"
+            )
+        if not blocking_fields and not (
+            {
+                _BASE_ENTERPRISE_VALUE_UNAVAILABLE,
+                _NONFINITE_INTRINSIC_VALUE_RESULT,
+                _NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT,
+            }
+            & set(reason_codes)
+        ):
+            raise ValueError(
+                "withheld bounded assessments require a source or value blocker"
+            )
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -472,6 +514,8 @@ class BridgeAssessment:
             ),
             "spread_ratio": self.spread_ratio,
             "spread_limit": self.spread_limit,
+            "accounting_impact_ratio": self.accounting_impact_ratio,
+            "reliability_cap": self.reliability_cap,
             "blocking_fields": list(self.blocking_fields),
             "bounded_fields": list(self.bounded_fields),
             "reason_codes": list(self.reason_codes),
@@ -487,12 +531,39 @@ class BridgeAssessment:
         intrinsic_value_range = (
             None if raw_range is None else BridgeRange.from_dict(raw_range)
         )
+        accounting_impact_ratio = value.get("accounting_impact_ratio")
+        reliability_cap = value.get("reliability_cap")
+        if "accounting_impact_ratio" not in value:
+            if (
+                intrinsic_value_range is not None
+                and intrinsic_value_range.midpoint != 0
+            ):
+                accounting_impact_ratio = max(
+                    abs(
+                        intrinsic_value_range.low
+                        - intrinsic_value_range.midpoint
+                    ),
+                    abs(
+                        intrinsic_value_range.high
+                        - intrinsic_value_range.midpoint
+                    ),
+                ) / abs(intrinsic_value_range.midpoint)
+            elif value["decision"] == "complete":
+                accounting_impact_ratio = 0.0
+        if "reliability_cap" not in value:
+            reliability_cap = (
+                accounting_label(accounting_impact_ratio)
+                if accounting_impact_ratio is not None
+                else "Low"
+            )
         return cls(
             decision=value["decision"],
             usable=value["usable"],
             intrinsic_value_range=intrinsic_value_range,
             spread_ratio=value["spread_ratio"],
             spread_limit=value["spread_limit"],
+            accounting_impact_ratio=accounting_impact_ratio,
+            reliability_cap=reliability_cap,
             blocking_fields=_restore_string_tuple(
                 value["blocking_fields"], "blocking_fields"
             ),
@@ -991,6 +1062,8 @@ def assess_bridge_materiality(
             usable=False,
             intrinsic_value_range=None,
             spread_ratio=None,
+            accounting_impact_ratio=None,
+            reliability_cap="Low",
             reason_codes=resolution.reason_codes,
             warning=None,
             **common,
@@ -1020,6 +1093,8 @@ def assess_bridge_materiality(
             usable=True,
             intrinsic_value_range=intrinsic_value_range,
             spread_ratio=0.0,
+            accounting_impact_ratio=0.0,
+            reliability_cap="High",
             reason_codes=resolution.reason_codes,
             warning=None,
             **common,
@@ -1031,6 +1106,8 @@ def assess_bridge_materiality(
             usable=False,
             intrinsic_value_range=None,
             spread_ratio=None,
+            accounting_impact_ratio=None,
+            reliability_cap="Low",
             reason_codes=tuple(
                 sorted(
                     {*resolution.reason_codes, _BASE_ENTERPRISE_VALUE_UNAVAILABLE}
@@ -1050,6 +1127,8 @@ def assess_bridge_materiality(
             usable=False,
             intrinsic_value_range=None,
             spread_ratio=None,
+            accounting_impact_ratio=None,
+            reliability_cap="Low",
             reason_codes=tuple(
                 sorted(
                     {*resolution.reason_codes, _NONFINITE_INTRINSIC_VALUE_RESULT}
@@ -1068,8 +1147,10 @@ def assess_bridge_materiality(
         return BridgeAssessment(
             decision="withheld",
             usable=False,
-            intrinsic_value_range=intrinsic_value_range,
+            intrinsic_value_range=None,
             spread_ratio=None,
+            accounting_impact_ratio=None,
+            reliability_cap="Low",
             reason_codes=tuple(
                 sorted(
                     {
@@ -1087,8 +1168,10 @@ def assess_bridge_materiality(
         return BridgeAssessment(
             decision="withheld",
             usable=False,
-            intrinsic_value_range=intrinsic_value_range,
+            intrinsic_value_range=None,
             spread_ratio=None,
+            accounting_impact_ratio=None,
+            reliability_cap="Low",
             reason_codes=tuple(
                 sorted(
                     {*resolution.reason_codes, _NONFINITE_INTRINSIC_VALUE_RESULT}
@@ -1098,22 +1181,18 @@ def assess_bridge_materiality(
             **common,
         )
 
-    if _spread_is_within_limit(spread_ratio, spread_limit):
-        return BridgeAssessment(
-            decision="bounded_review",
-            usable=True,
-            intrinsic_value_range=intrinsic_value_range,
-            spread_ratio=spread_ratio,
-            reason_codes=resolution.reason_codes,
-            warning=_bounded_review_warning(spread_ratio),
-            **common,
-        )
+    accounting_impact_ratio = max(
+        abs(intrinsic_value_range.low - intrinsic_value_range.midpoint),
+        abs(intrinsic_value_range.high - intrinsic_value_range.midpoint),
+    ) / abs(intrinsic_value_range.midpoint)
     return BridgeAssessment(
-        decision="withheld",
-        usable=False,
+        decision="bounded_review",
+        usable=True,
         intrinsic_value_range=intrinsic_value_range,
         spread_ratio=spread_ratio,
+        accounting_impact_ratio=accounting_impact_ratio,
+        reliability_cap=accounting_label(accounting_impact_ratio),
         reason_codes=resolution.reason_codes,
-        warning=None,
+        warning=_bounded_review_warning(spread_ratio),
         **common,
     )

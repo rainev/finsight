@@ -10,6 +10,7 @@ import pytest
 
 import app.us_valuation.pipeline as valuation_pipeline
 from app.us_valuation.classification import load_archetype_config
+from app.us_valuation.equity_models import build_equity_level_result
 from app.us_valuation.eligibility import model_eligibility
 
 
@@ -239,3 +240,207 @@ def test_incomplete_fcff_bridge_is_withheld_without_model_fallback(monkeypatch) 
     errors = " ".join(result["review"]["errors"])
     assert "preferred_equity" in errors
     assert "noncontrolling_interests" in errors
+
+
+def _equity_classification(archetype: str, ticker: str) -> dict:
+    policy = deepcopy(
+        load_archetype_config()["valuation_policies"][archetype]
+    )
+    return {
+        "cik": "0000000001",
+        "ticker": ticker,
+        "issuer_name": f"{ticker} Test Issuer",
+        "filing_regime": "domestic_issuer",
+        "accounting_standard": "US GAAP",
+        "sec_sic_code": "0000",
+        "sec_sic_label": "Test",
+        "finsight_sector": "Test",
+        "primary_archetype": archetype,
+        "secondary_archetypes": [],
+        "classification_confidence": 1.0,
+        "mapping_version": "test",
+        "override_applied": False,
+        "classification_reason": "Routing reliability test.",
+        "source_accessions": ["0000000001-26-000001"],
+        "valuation_policy": policy,
+    }
+
+
+def _annual_usd(value: float) -> dict:
+    return {
+        "units": {
+            "USD": [
+                {
+                    "val": value,
+                    "fy": 2025,
+                    "end": "2025-12-31",
+                    "form": "10-K",
+                    "fp": "FY",
+                }
+            ]
+        }
+    }
+
+
+def _shares(value: float) -> dict:
+    return {
+        "units": {
+            "shares": [
+                {
+                    "val": value,
+                    "fy": 2025,
+                    "end": "2025-12-31",
+                    "form": "10-K",
+                    "fp": "FY",
+                }
+            ]
+        }
+    }
+
+
+@pytest.mark.parametrize(
+    ("archetype", "ticker", "companyfacts", "expected_model"),
+    [
+        (
+            "us_bank",
+            "BANK",
+            {
+                "facts": {
+                    "us-gaap": {
+                        "NetIncomeLoss": _annual_usd(1_000.0),
+                        "StockholdersEquity": _annual_usd(8_000.0),
+                        "CommonStockSharesOutstanding": _shares(100.0),
+                        "PaymentsOfDividendsCommonStock": _annual_usd(300.0),
+                    }
+                }
+            },
+            "residual_income",
+        ),
+        (
+            "us_utility",
+            "UTIL",
+            {
+                "facts": {
+                    "us-gaap": {
+                        "CommonStockDividendsPerShareCashPaid": {
+                            "units": {
+                                "USD/shares": [
+                                    {
+                                        "val": 2.8,
+                                        "fy": 2025,
+                                        "end": "2025-12-31",
+                                        "form": "10-K",
+                                        "fp": "FY",
+                                    }
+                                ]
+                            }
+                        },
+                        "StockholdersEquity": _annual_usd(50_000.0),
+                    }
+                }
+            },
+            "ddm",
+        ),
+    ],
+)
+def test_governed_equity_routes_derive_reliability_from_scenario_range(
+    archetype: str,
+    ticker: str,
+    companyfacts: dict,
+    expected_model: str,
+) -> None:
+    """Catch absent or hard-coded reliability on residual-income and DDM lanes."""
+    result = build_equity_level_result(
+        classification=_equity_classification(archetype, ticker),
+        companyfacts=companyfacts,
+        valuation_date="2026-08-01",
+        source_manifest=None,
+    )
+
+    assert set(result["models"]) == {expected_model}
+    assert "reliability" in result
+    scenario_range = result["scenario_range"]
+    expected_movement = max(
+        abs(scenario_range["low"] - scenario_range["base"]),
+        abs(scenario_range["high"] - scenario_range["base"]),
+    ) / abs(scenario_range["base"])
+    reliability = result["reliability"]
+    assert reliability["accounting_impact_ratio"] == 0.0
+    assert reliability["accounting_label"] == "High"
+    assert reliability["scenario_movement_ratio"] == pytest.approx(
+        expected_movement
+    )
+    assert reliability["label"] == reliability["scenario_label"]
+    assert reliability["model_cap"] == "High"
+    assert reliability["source_cap"] == "High"
+    assert reliability["reasons"] == []
+    assert result["review"]["publication_state"] == "review_required"
+
+
+def test_interim_ffo_route_has_low_model_cap_without_switching_lanes() -> None:
+    """Catch the interim FFO lane being presented above its explicit model cap."""
+    companyfacts = {
+        "facts": {
+            "us-gaap": {
+                "NetIncomeLoss": _annual_usd(100_000_000.0),
+                "DepreciationDepletionAndAmortization": _annual_usd(
+                    50_000_000.0
+                ),
+                "CommonStockSharesOutstanding": _shares(10_000_000.0),
+            }
+        }
+    }
+
+    result = build_equity_level_result(
+        classification=_equity_classification("us_reit", "REIT"),
+        companyfacts=companyfacts,
+        valuation_date="2026-08-01",
+        source_manifest=None,
+    )
+
+    assert set(result["models"]) == {"ffo"}
+    assert "reliability" in result
+    assert result["reliability"]["label"] == "Low"
+    assert result["reliability"]["model_cap"] == "Low"
+    assert result["reliability"]["reasons"] == ["INTERIM_FFO_ROUTE"]
+    assert result["models"]["ffo"]["intrinsic_value_per_share"] is not None
+    assert result["review"]["publication_state"] == "review_required"
+
+
+@pytest.mark.parametrize(
+    "net_income",
+    [1_000_000_000_000_000.0, float("inf"), float("nan")],
+)
+def test_true_withheld_equity_result_has_no_finite_range_or_reliability(
+    net_income: float,
+) -> None:
+    """Catch a withheld route leaking finite values or fabricated ratios."""
+    companyfacts = {
+        "facts": {
+            "us-gaap": {
+                "NetIncomeLoss": _annual_usd(net_income),
+                "DepreciationDepletionAndAmortization": _annual_usd(
+                    500_000_000_000_000.0
+                ),
+                "CommonStockSharesOutstanding": _shares(10_000_000.0),
+            }
+        }
+    }
+
+    result = build_equity_level_result(
+        classification=_equity_classification("us_reit", "REIT"),
+        companyfacts=companyfacts,
+        valuation_date="2026-08-01",
+        source_manifest=None,
+    )
+
+    assert set(result["models"]) == {"ffo"}
+    assert result["review"]["publication_state"] == "withheld"
+    assert result["models"]["ffo"]["intrinsic_value_per_share"] is None
+    assert result["scenario_range"] == {
+        "low": None,
+        "base": None,
+        "high": None,
+        "label": "assumption range, not a statistical confidence interval",
+    }
+    assert "reliability" not in result

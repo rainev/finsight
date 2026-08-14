@@ -28,6 +28,7 @@ from .models import (
     one_way_sensitivities,
     scenario_set,
 )
+from .reliability import assess_reliability
 from .xbrl import CompanyFactsNormalizer
 
 
@@ -304,7 +305,10 @@ def _store_bridge_assessment(
         resolution,
         enterprise_value=enterprise_value,
     )
-    balance_sheet["bridge_uncertainty"] = assessment.as_dict()
+    serialized = assessment.as_dict()
+    serialized.pop("accounting_impact_ratio")
+    serialized.pop("reliability_cap")
+    balance_sheet["bridge_uncertainty"] = serialized
     balance_sheet["bridge_usable"] = assessment.usable
     balance_sheet["bridge_decision"] = assessment.decision
     return assessment
@@ -683,7 +687,13 @@ def build_us_valuation(
         for scenario in scenarios.values()
         if scenario["fcff_dcf"].get("intrinsic_value_per_share") is not None
     ]
-    return {
+    scenario_range = {
+        "low": min(scenario_values) if scenario_values else None,
+        "base": base.get("intrinsic_value_per_share"),
+        "high": max(scenario_values) if scenario_values else None,
+        "label": "assumption range, not a statistical confidence interval",
+    }
+    result = {
         "schema_version": "US-VALUATION-RESULT-1.0",
         "valuation_date": valuation_date or date.today().isoformat(),
         "market": "US",
@@ -730,12 +740,7 @@ def build_us_valuation(
             "epv": epv,
         },
         "scenarios": scenarios,
-        "scenario_range": {
-            "low": min(scenario_values) if scenario_values else None,
-            "base": base.get("intrinsic_value_per_share"),
-            "high": max(scenario_values) if scenario_values else None,
-            "label": "assumption range, not a statistical confidence interval",
-        },
+        "scenario_range": scenario_range,
         "sensitivities": sensitivities,
         "forecast_quality": forecast_quality,
         "review": review,
@@ -745,3 +750,29 @@ def build_us_valuation(
             "source_policy": "SEC Companyfacts, submissions and governed filing-specific Products/Services tables; no exchange prices",
         },
     }
+    if bridge_assessment.usable and all(
+        isinstance(value, (int, float))
+        for value in (
+            scenario_range["low"],
+            scenario_range["base"],
+            scenario_range["high"],
+        )
+    ):
+        if bridge_assessment.decision == "complete":
+            bridge_low = bridge_midpoint = bridge_high = scenario_range["base"]
+        else:
+            assert bridge_assessment.intrinsic_value_range is not None
+            bridge_low = bridge_assessment.intrinsic_value_range.low
+            bridge_midpoint = bridge_assessment.intrinsic_value_range.midpoint
+            bridge_high = bridge_assessment.intrinsic_value_range.high
+        result["reliability"] = assess_reliability(
+            accounting_low=bridge_low,
+            accounting_base=bridge_midpoint,
+            accounting_high=bridge_high,
+            scenario_low=scenario_range["low"],
+            scenario_base=scenario_range["base"],
+            scenario_high=scenario_range["high"],
+            source_cap=bridge_assessment.reliability_cap,
+            reasons=bridge_assessment.reason_codes,
+        ).as_dict()
+    return result

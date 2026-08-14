@@ -1064,7 +1064,7 @@ def test_bridge_records_are_frozen() -> None:
             "bounded",
             0.0,
             0.0,
-            BridgeRange(low=0.0, midpoint=0.0, high=0.0),
+            None,
             "withheld",
             False,
             None,
@@ -1076,7 +1076,7 @@ def test_bridge_records_are_frozen() -> None:
             "bounded",
             0.0,
             -1.0,
-            BridgeRange(low=-1.0, midpoint=-1.0, high=-1.0),
+            None,
             "withheld",
             False,
             None,
@@ -1090,7 +1090,7 @@ def test_bridge_assessment_decision_range_matrix(
     resolution_kind: str,
     enterprise_value: float,
     bounded_point: float | None,
-    expected_range: BridgeRange,
+    expected_range: BridgeRange | None,
     expected_decision: str,
     expected_usable: bool,
     expected_spread: float | None,
@@ -1178,7 +1178,7 @@ def test_exact_one_percent_with_float_noise_is_bounded_review() -> None:
     assert BridgeAssessment.from_dict(serialized) == assessment
 
 
-def test_spread_materially_above_float_noise_is_withheld() -> None:
+def test_spread_materially_above_float_noise_remains_bounded_review() -> None:
     assessment = assess_bridge_materiality(
         bounded_adjustment_resolution(2.985, 3.015000003),
         enterprise_value=0.0,
@@ -1186,11 +1186,12 @@ def test_spread_materially_above_float_noise_is_withheld() -> None:
 
     assert assessment.spread_ratio is not None
     assert assessment.spread_ratio > 0.01
-    assert assessment.decision == "withheld"
-    assert assessment.usable is False
+    assert assessment.decision == "bounded_review"
+    assert assessment.usable is True
+    assert assessment.reliability_cap == "High"
 
 
-def test_joint_spread_above_one_percent_is_withheld() -> None:
+def test_joint_spread_above_one_percent_remains_bounded_review() -> None:
     resolution = bounded_resolution(
         securities=(0.0, 6.0),
         preferred=(0.0, 6.0),
@@ -1202,11 +1203,12 @@ def test_joint_spread_above_one_percent_is_withheld() -> None:
         enterprise_value=1_000.0,
     )
 
-    assert assessment.decision == "withheld"
-    assert assessment.usable is False
+    assert assessment.decision == "bounded_review"
+    assert assessment.usable is True
     assert assessment.spread_ratio is not None
     assert assessment.spread_ratio > 0.01
-    assert assessment.warning is None
+    assert assessment.reliability_cap == "High"
+    assert assessment.warning is not None
 
 
 def test_individually_small_fields_are_assessed_jointly() -> None:
@@ -1225,7 +1227,8 @@ def test_individually_small_fields_are_assessed_jointly() -> None:
         "marketable_securities_noncurrent",
         "preferred_equity",
     }
-    assert assessment.decision == "withheld"
+    assert assessment.decision == "bounded_review"
+    assert assessment.usable is True
 
 
 def test_nonpositive_midpoint_is_withheld() -> None:
@@ -1323,7 +1326,7 @@ def test_spread_limit_must_be_finite_positive_and_at_most_one_percent(
         )
 
 
-def test_caller_can_tighten_but_not_loosen_materiality_limit() -> None:
+def test_legacy_spread_limit_cannot_withhold_a_finite_bounded_bridge() -> None:
     assessment = assess_bridge_materiality(
         exact_one_percent_resolution(),
         enterprise_value=99.5,
@@ -1332,8 +1335,9 @@ def test_caller_can_tighten_but_not_loosen_materiality_limit() -> None:
 
     assert assessment.spread_limit == 0.005
     assert assessment.spread_ratio == pytest.approx(0.01)
-    assert assessment.decision == "withheld"
-    assert assessment.usable is False
+    assert assessment.decision == "bounded_review"
+    assert assessment.usable is True
+    assert assessment.reliability_cap == "High"
 
 
 def test_fraction_spread_limit_is_rejected_and_float_limit_round_trips() -> None:
@@ -1377,6 +1381,8 @@ def test_assessment_is_frozen_and_round_trips_through_json() -> None:
         },
         "spread_ratio": pytest.approx(0.01),
         "spread_limit": 0.01,
+        "accounting_impact_ratio": pytest.approx(0.005),
+        "reliability_cap": "High",
         "blocking_fields": [],
         "bounded_fields": ["marketable_securities_noncurrent"],
         "reason_codes": [],
@@ -1399,7 +1405,8 @@ def test_assessment_is_frozen_and_round_trips_through_json() -> None:
         ("intrinsic_value_range", None),
         ("spread_ratio", None),
         ("spread_ratio", 0.02),
-        ("spread_limit", 0.005),
+        ("accounting_impact_ratio", 0.02),
+        ("reliability_cap", "Low"),
         ("blocking_fields", ["cash"]),
         ("bounded_fields", []),
         ("reason_codes", [""]),
@@ -1452,3 +1459,48 @@ def test_assessment_from_dict_requires_computable_positive_spread() -> None:
 
     with pytest.raises(ValueError, match="spread_ratio"):
         BridgeAssessment.from_dict(serialized)
+
+
+@pytest.mark.parametrize(
+    ("impact_ratio", "expected_cap"),
+    [
+        (0.05, "High"),
+        (0.050001, "Medium"),
+        (0.20, "Medium"),
+        (0.200001, "Low"),
+    ],
+)
+def test_bounded_bridge_uses_accounting_impact_reliability_bands(
+    impact_ratio: float,
+    expected_cap: str,
+) -> None:
+    """Catch a regression to withholding finite bridges above a size cutoff."""
+    half_width = impact_ratio * 100.0
+    cash = BridgeRange(low=0.0, midpoint=half_width, high=half_width * 2.0)
+    debt = BridgeRange(low=half_width, midpoint=half_width, high=half_width)
+    zero = BridgeRange(low=0.0, midpoint=0.0, high=0.0)
+    resolution = BridgeResolution(
+        complete=False,
+        can_value=True,
+        missing_fields=("cash_and_investments",),
+        blocking_fields=(),
+        bounded_fields=("cash_and_investments",),
+        cash_and_investments=cash,
+        total_debt=debt,
+        preferred_equity=zero,
+        noncontrolling_interests=zero,
+        bridge_adjustment=BridgeRange(
+            low=-half_width,
+            midpoint=0.0,
+            high=half_width,
+        ),
+        fully_diluted_shares=1.0,
+        reason_codes=("BOUNDED_CASH_AND_INVESTMENTS",),
+    )
+
+    assessment = assess_bridge_materiality(resolution, enterprise_value=100.0)
+
+    assert assessment.usable is True
+    assert assessment.decision == "bounded_review"
+    assert assessment.accounting_impact_ratio == pytest.approx(impact_ratio)
+    assert assessment.reliability_cap == expected_cap

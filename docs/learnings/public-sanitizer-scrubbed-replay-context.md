@@ -15,3 +15,16 @@ bounded range only when the raw input is already withheld and every model,
 scenario, sensitivity, and aggregate range sink is withheld/null. A top-level
 `withheld` label by itself is insufficient. Test the malicious initial shape and
 the twice-sanitized control separately.
+
+The FCFF public sanitizer also validates the private
+`financials.balance_sheet.bridge_uncertainty` object against an exact legacy key
+set before constructing `bridge_quality`. Until the dedicated public-sanitizer
+schema task changes that allowlist, new private reliability fields belong in the
+result's top-level `reliability` object; the stored bridge projection must retain
+its legacy shape. `BridgeAssessment.from_dict()` must continue deriving the new
+impact/cap fields when it reads that projection or historical artifacts.
+
+**Why:** Adding `accounting_impact_ratio` and `reliability_cap` directly to the
+stored bridge projection caused otherwise-valid complete and bounded artifacts
+to fail closed as `BRIDGE_QUALITY_INVALID_OR_MISSING`, even though the private
+valuation itself was correct.
