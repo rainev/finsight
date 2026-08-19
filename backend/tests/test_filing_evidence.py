@@ -191,7 +191,11 @@ def test_recovered_evidence_enters_normalizer_as_governed_bridge_fact() -> None:
     assert balance_sheet["field_states"]["commercial_paper"] == "governed_filing_fact"
     assert balance_sheet["values"]["commercial_paper"] == 0
     assert "investment asset" in balance_sheet["sources"]["commercial_paper"]["rationale"]
-    assert balance_sheet["bridge_missing_fields"] == []
+    assert balance_sheet["bridge_blocking_fields"] == []
+    assert balance_sheet["bridge_bounded_fields"] == [
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+    ]
     for field, value in {
         "finance_lease_current": 275_000_000.0,
         "finance_lease_noncurrent": 260_000_000.0,

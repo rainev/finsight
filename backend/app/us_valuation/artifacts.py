@@ -206,6 +206,7 @@ _BRIDGE_FIELDS = (
     "total_interest_bearing_debt",
 )
 _PUBLIC_BRIDGE_REASONS = (
+    "ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
     "BASE_ENTERPRISE_VALUE_UNAVAILABLE",
     "BRIDGE_EVIDENCE_CONFLICT",
     "BRIDGE_EVIDENCE_NOT_CURRENT",
@@ -217,11 +218,16 @@ _PUBLIC_BRIDGE_REASONS = (
     "BRIDGE_POLICY_WITHHELD",
     "BRIDGE_QUALITY_INVALID_OR_MISSING",
     "CURRENT_NOTE_SUPPLIES_FINITE_RANGE",
+    "COMPANY_HISTORY_RANGE",
     "FINANCE_LEASE_AGGREGATE_CONFLICT",
     "FINANCE_LEASE_AGGREGATE_INCOMPLETE_COVERAGE",
     "JOINT_INTRINSIC_VALUE_SPREAD_EXCEEDS_LIMIT",
     "NONFINITE_INTRINSIC_VALUE_RESULT",
     "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT",
+    "REPORTED_AGGREGATE_REPLACEMENT",
+    "SECTOR_ESTIMATE_RANGE",
+    "MAJOR_EVENT_RANGE_WIDENED",
+    "MAJOR_EVENT_UNBOUNDED",
     "STALE_STALE_REPORTED_FACT",
     "TOTAL_DEBT_AGGREGATE_CONFLICT",
     "TOTAL_DEBT_AGGREGATE_INCOMPLETE_COVERAGE",
@@ -229,8 +235,10 @@ _PUBLIC_BRIDGE_REASONS = (
 )
 _PUBLIC_RELIABILITY_REASONS = (
     *_PUBLIC_BRIDGE_REASONS,
+    "CONSOLIDATED_SEGMENT_FALLBACK",
     "INTERIM_FFO_ROUTE",
     "LEGACY_ARTIFACT_NOT_REGENERATED",
+    "LOW_CLASSIFICATION_CONFIDENCE",
     "RELIABILITY_PAYLOAD_INVALID",
     "VALUATION_WITHHELD",
 )
@@ -752,7 +760,8 @@ def _reliability_matches_artifact(
                     expected_accounting,
                 )
                 and reliability["accounting_label"] == expected_cap
-                and reliability["source_cap"] == expected_cap
+                and lowest_label(expected_cap, reliability["source_cap"])
+                == reliability["source_cap"]
             )
 
         return (
@@ -896,12 +905,7 @@ def _validated_public_bridge_quality(
             midpoint = _json_number(absolute_values[1])
             high = _json_number(absolute_values[2])
             assert low is not None and midpoint is not None and high is not None
-            if not low <= midpoint <= high or not isclose(
-                midpoint,
-                (low + high) / 2,
-                rel_tol=1e-14,
-                abs_tol=0.0,
-            ):
+            if not low <= midpoint <= high:
                 raise ValueError("bridge range arithmetic is invalid")
             expected_spread = (
                 0.0
@@ -1643,6 +1647,26 @@ def _public_fcff_result(
     assumptions = result["forecast_assumptions"]
     discount_rate = result["discount_rate"]
     market_assumptions = discount_rate["market_assumptions"]
+    public_policy = deepcopy(result["model_policy"])
+    public_review = deepcopy(result["review"])
+    public_models = {
+        key: _public_model(model) for key, model in result["models"].items()
+    }
+    epv = public_models.get("epv")
+    epv_value = epv.get("intrinsic_value_per_share") if isinstance(epv, dict) else None
+    if (
+        isinstance(epv_value, (int, float))
+        and not isinstance(epv_value, bool)
+        and epv_value <= 0
+    ):
+        public_models.pop("epv", None)
+        public_policy["supporting"] = [
+            name for name in public_policy.get("supporting", []) if name != "epv"
+        ]
+        public_review.setdefault("warnings", []).append(
+            "The no-growth EPV cross-check is nonpositive and is omitted from "
+            "the public model set; the primary FCFF valuation remains reviewable."
+        )
     segment_forecast = assumptions.get("segment_forecast")
     forecast_mode = (
         segment_forecast["mode"]
@@ -1690,7 +1714,7 @@ def _public_fcff_result(
         "source_financial_statement": _source_financial_statement(
             result, submissions
         ),
-        "model_policy": result["model_policy"],
+        "model_policy": public_policy,
         "public_assumptions": {
             "forecast_policy_version": assumptions.get("forecast_policy_version"),
             "forecast_years": assumptions.get("forecast_years"),
@@ -1710,14 +1734,14 @@ def _public_fcff_result(
             "risk_free_source_url": market_assumptions["risk_free_source_url"],
             "equity_risk_premium": market_assumptions["equity_risk_premium"],
         },
-        "models": {key: _public_model(model) for key, model in result["models"].items()},
+        "models": public_models,
         "scenarios": {
             name: {"fcff_dcf": _public_model(scenario["fcff_dcf"])}
             for name, scenario in result["scenarios"].items()
         },
         "scenario_range": result["scenario_range"],
         "forecast_quality": result["forecast_quality"],
-        "review": deepcopy(result["review"]),
+        "review": public_review,
         "bridge_quality": _public_bridge_quality(result),
         "methodology": result["methodology"],
         "data_boundary": {

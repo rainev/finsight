@@ -29,7 +29,39 @@ from app.us_valuation.artifacts import (
 import app.us_valuation.pipeline as valuation_pipeline
 from app.us_valuation.pipeline import build_us_valuation
 from app.us_valuation.sec_client import SecClient
-from app.us_valuation.xbrl import CompanyFactsNormalizer
+from app.us_valuation.xbrl import (
+    CompanyFactsNormalizer,
+    _estimate_ttm_flow_from_annual_history,
+)
+
+
+def test_lagging_ttm_flow_is_scaled_from_company_history_not_copied() -> None:
+    annual = [
+        {
+            "values": {"revenue": 100.0, "capital_expenditures": 10.0},
+            "sources": {"revenue": {"accession": "A"}, "capital_expenditures": {"accession": "A"}},
+        },
+        {
+            "values": {"revenue": 200.0, "capital_expenditures": 30.0},
+            "sources": {"revenue": {"accession": "B"}, "capital_expenditures": {"accession": "B"}},
+        },
+    ]
+
+    estimate = _estimate_ttm_flow_from_annual_history(
+        field="capital_expenditures",
+        ttm_revenue=300.0,
+        annual_periods=annual,
+    )
+
+    assert estimate["method"] == "company_history_ratio_to_ttm_revenue"
+    assert estimate["value"] == pytest.approx(37.5)
+    assert estimate["value"] not in {10.0, 30.0}
+    assert estimate["estimated_range"] == {
+        "low": pytest.approx(30.0),
+        "base": pytest.approx(37.5),
+        "high": pytest.approx(45.0),
+        "basis": "capital_expenditures divided by revenue for 2 recent annual periods",
+    }
 
 
 FIXTURES = Path(__file__).parent / "fixtures" / "us"
@@ -570,10 +602,10 @@ def test_intentional_equity_level_artifacts_remain_eligible(ticker: str) -> None
     ] is not None
 
 
-def test_segment_required_issuer_without_registry_evidence_fails_before_models(
+def test_segment_required_issuer_without_registry_uses_low_consolidated_fallback(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """A missing MSFT registry entry cannot fall back to a consolidated DCF."""
+    """Missing segment detail lowers reliability without erasing consolidated DCF."""
     monkeypatch.setattr(
         valuation_pipeline,
         "load_issuer_forecast_evidence",
@@ -585,15 +617,17 @@ def test_segment_required_issuer_without_registry_evidence_fails_before_models(
         valuation_date="2026-08-01",
     )
 
-    assert result["review"]["publication_state"] == "withheld"
-    assert result["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
-    assert result["scenarios"] == {}
+    assert result["review"]["publication_state"] == "review_required"
+    assert result["models"]["fcff_dcf"]["intrinsic_value_per_share"] is not None
+    assert result["forecast_assumptions"]["consolidated_segment_fallback"] is True
+    assert result["reliability"]["label"] == "Low"
+    assert "CONSOLIDATED_SEGMENT_FALLBACK" in result["reliability"]["reasons"]
 
 
-def test_low_confidence_post_model_withholding_scrubs_public_values(
+def test_low_classification_confidence_caps_reliability_without_scrubbing(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """A classification gate reached after modeling cannot leak through the DTO."""
+    """An eligible but uncertain route stays visible with an explicit Low label."""
     original = valuation_pipeline.classify_issuer
 
     def low_confidence(submissions: dict) -> dict:
@@ -607,11 +641,10 @@ def test_low_confidence_post_model_withholding_scrubs_public_values(
     )
     public = public_result(result, load_fixture("aapl-submissions.json"))
 
-    assert result["review"]["publication_state"] == "withheld"
-    assert all(
-        model["intrinsic_value_per_share"] is None
-        for model in public["models"].values()
-    )
+    assert result["review"]["publication_state"] == "review_required"
+    assert public["scenario_range"]["base"] is not None
+    assert public["reliability"]["label"] == "Low"
+    assert "LOW_CLASSIFICATION_CONFIDENCE" in public["reliability"]["reasons"]
 
 
 def test_model_validation_failure_uses_withheld_vocabulary() -> None:
@@ -889,8 +922,13 @@ def test_crm_recent_annual_lease_facts_clear_current_bridge() -> None:
     )
 
     balance_sheet = financials["balance_sheet"]
-    assert balance_sheet["bridge_complete"] is True
-    assert balance_sheet["bridge_missing_fields"] == []
+    assert balance_sheet["bridge_complete"] is False
+    assert balance_sheet["bridge_can_value"] is True
+    assert balance_sheet["bridge_blocking_fields"] == []
+    assert balance_sheet["bridge_bounded_fields"] == [
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+    ]
     assert balance_sheet["values"]["marketable_securities_noncurrent"] == 0
     assert balance_sheet["values"]["commercial_paper"] == 0
     assert balance_sheet["values"]["noncontrolling_interests"] == 0
@@ -907,6 +945,7 @@ def test_crm_recent_annual_lease_facts_clear_current_bridge() -> None:
         assert balance_sheet["availability"][field]["fallback_level"] == (
             "annual_carried_forward"
         )
+        assert balance_sheet["availability"][field]["uncertainty"] is not None
         assert balance_sheet["values"][field] is None
     assert balance_sheet["values"]["commercial_paper"] == 0.0
     assert balance_sheet["total_interest_bearing_debt"] == pytest.approx(
@@ -914,6 +953,68 @@ def test_crm_recent_annual_lease_facts_clear_current_bridge() -> None:
         + 275_000_000.0
         + 260_000_000.0
     )
+
+
+def test_crm_bounded_annual_balance_sheet_remains_public_numeric() -> None:
+    submissions = load_fixture("crm-submissions.json")
+    result = build_us_valuation(
+        submissions=submissions,
+        companyfacts=load_fixture("crm-companyfacts.json"),
+        valuation_date="2026-08-01",
+    )
+
+    public = public_result(result, submissions)
+
+    assert result["financials"]["balance_sheet"]["bridge_decision"] == (
+        "bounded_review"
+    )
+    assert result["reliability"]["accounting_impact_ratio"] < 0.05
+    assert public["scenario_range"]["base"] == pytest.approx(
+        result["scenario_range"]["base"]
+    )
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["bridge_quality"]["decision"] == "bounded_review"
+    assert public["reliability"]["label"] == "Low"
+
+
+def test_nonpositive_epv_is_omitted_without_scrubbing_positive_primary() -> None:
+    submissions = load_fixture("aapl-submissions.json")
+    result = build_us_valuation(
+        submissions=submissions,
+        companyfacts=load_fixture("aapl-companyfacts.json"),
+        valuation_date="2026-08-01",
+    )
+    result["models"]["epv"]["intrinsic_value_per_share"] = -1.0
+    before = deepcopy(result)
+
+    public = public_result(result, submissions)
+
+    assert result == before
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["scenario_range"]["base"] is not None
+    assert "epv" not in public["models"]
+    assert public["model_policy"]["supporting"] == []
+
+
+def test_unquantified_major_change_withholds_carried_annual_field() -> None:
+    submissions = load_fixture("crm-submissions.json")
+    result = build_us_valuation(
+        submissions=submissions,
+        companyfacts=load_fixture("crm-companyfacts.json"),
+        valuation_date="2026-08-01",
+        major_changes={
+            "finance_lease_noncurrent": {
+                "flags": ["material_lease_modification"],
+            }
+        },
+    )
+
+    balance = result["financials"]["balance_sheet"]
+    assert "finance_lease_noncurrent" in balance["bridge_blocking_fields"]
+    assert balance["availability"]["finance_lease_noncurrent"]["reason_code"] == (
+        "MAJOR_EVENT_UNBOUNDED"
+    )
+    assert result["review"]["publication_state"] == "withheld"
 
 
 def test_valuation_date_excludes_later_filed_facts(
@@ -1253,7 +1354,7 @@ def test_segment_operating_income_governance_rejects_invalid_evidence() -> None:
             )
 
 
-def test_segment_operating_income_without_contemporaneous_evidence_is_withheld(
+def test_segment_operating_income_without_current_detail_uses_low_consolidated_fallback(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     evidence = load_issuer_forecast_evidence("0000789019")
@@ -1272,17 +1373,17 @@ def test_segment_operating_income_without_contemporaneous_evidence_is_withheld(
         source_manifest=microsoft_source_manifest(),
     )
 
-    assert result["review"]["publication_state"] == "withheld"
-    assert result["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
-    assert result["models"]["epv"]["intrinsic_value_per_share"] is None
-    assert result["forecast_quality"]["checks"]["segment_evidence_as_of"]["status"] == "fail"
-    assert "hardware/services" not in result["model_policy"]["reason"].lower()
+    assert result["review"]["publication_state"] == "review_required"
+    assert result["models"]["fcff_dcf"]["intrinsic_value_per_share"] is not None
+    assert result["forecast_assumptions"]["consolidated_segment_fallback"] is True
+    assert result["forecast_quality"]["checks"]["segment_forecast_required"]["status"] == "review_required"
+    assert result["reliability"]["label"] == "Low"
 
 
-def test_withheld_segment_forecast_public_mode_is_unavailable(
+def test_missing_current_segment_forecast_public_mode_is_consolidated_low(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Catch a withheld segment route mislabeled as a consolidated forecast."""
+    """The public result identifies the bounded consolidated fallback."""
     evidence = deepcopy(load_issuer_forecast_evidence("0000789019"))
     assert evidence is not None
     evidence["periods"] = {}
@@ -1298,8 +1399,12 @@ def test_withheld_segment_forecast_public_mode_is_unavailable(
     )
     public = public_result(result, load_fixture("msft-submissions.json"))
 
-    assert result["review"]["publication_state"] == "withheld"
-    assert public["public_assumptions"]["forecast_mode"] == "unavailable"
+    assert result["review"]["publication_state"] == "review_required"
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["public_assumptions"]["forecast_mode"] == "consolidated"
+    assert public["scenario_range"]["base"] is not None
+    assert public["reliability"]["label"] == "Low"
+    assert "CONSOLIDATED_SEGMENT_FALLBACK" in public["reliability"]["reasons"]
 
 
 def test_segment_operating_income_future_dated_source_is_withheld(

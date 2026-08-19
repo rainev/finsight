@@ -28,7 +28,8 @@ from .models import (
     one_way_sensitivities,
     scenario_set,
 )
-from .reliability import assess_reliability
+from .period_fallbacks import FallbackDecision
+from .reliability import assess_reliability, lowest_label
 from .xbrl import CompanyFactsNormalizer
 
 
@@ -47,11 +48,16 @@ def _forecast_quality_review(
 
     segment_required = bool(classification["requires_segment_forecast"])
     if segment_required and not segment_forecast:
-        errors.append(
-            "A material secondary business is classified but no segment forecast is available."
+        warnings.append(
+            "A material secondary business lacks current segment detail; the "
+            "valuation uses consolidated company history and is capped at Low reliability."
         )
     checks["segment_forecast_required"] = {
-        "status": "pass" if not segment_required or segment_forecast else "fail",
+        "status": (
+            "pass"
+            if not segment_required or segment_forecast
+            else "review_required"
+        ),
         "value": segment_required,
     }
 
@@ -147,7 +153,12 @@ def _forecast_quality_review(
         "review_threshold": 0.40,
     }
 
-    if assumptions.get("forecast_evidence_status") != "automated_filing_extraction":
+    if assumptions.get("consolidated_segment_fallback"):
+        checks["segment_evidence_automation"] = {
+            "status": "review_required",
+            "value": "consolidated_company_history_fallback",
+        }
+    elif assumptions.get("forecast_evidence_status") != "automated_filing_extraction":
         warnings.append(
             "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
         )
@@ -195,7 +206,10 @@ def _publication_review(
         elif bridge_assessment.decision == "withheld":
             errors.append(_bridge_withheld_error(bridge_assessment))
     if classification["classification_confidence"] < 0.8:
-        errors.append("Classification confidence is below the publication floor.")
+        warnings.append(
+            "Classification confidence is below 0.80; the governed model remains "
+            "reviewable but reliability is capped at Low."
+        )
     annual_count = len(financials["annual"])
     if annual_count < 3:
         errors.append("Fewer than three annual periods were normalized.")
@@ -510,6 +524,8 @@ def build_us_valuation(
     valuation_date: str | None = None,
     source_manifest: dict[str, Any] | None = None,
     filing_evidence: Iterable[Mapping[str, Any]] | None = None,
+    sector_estimates: Mapping[str, FallbackDecision] | None = None,
+    major_changes: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
     if valuation_date:
         cutoff_submissions = deepcopy(submissions)
@@ -563,6 +579,8 @@ def build_us_valuation(
         ],
         governed_bridge_fields=classification["governed_bridge_fields"],
         filing_evidence=filing_evidence,
+        sector_estimates=sector_estimates,
+        major_changes=major_changes,
     )
     policy = classification["valuation_policy"]
     discount_rate = build_discount_rate(
@@ -606,19 +624,9 @@ def build_us_valuation(
         enterprise_value=None,
     )
     issuer_evidence = load_issuer_forecast_evidence(classification["cik"])
-    if classification["requires_segment_forecast"] and not issuer_evidence:
-        return _withheld_segment_evidence_result(
-            classification=classification,
-            financials=financials,
-            discount_rate=discount_rate,
-            valuation_date=valuation_date,
-            source_manifest=source_manifest,
-            error=ForecastEvidenceUnavailable(
-                period_end=financials["ttm"]["period_end"],
-                available_periods=[],
-                reason="A segment forecast is required but no governed issuer evidence is registered",
-            ),
-        )
+    used_consolidated_segment_fallback = bool(
+        classification["requires_segment_forecast"] and not issuer_evidence
+    )
     try:
         forecast_assumptions = derive_forecast_assumptions(
             financials,
@@ -628,14 +636,26 @@ def build_us_valuation(
             issuer_evidence=issuer_evidence,
         )
     except ForecastEvidenceUnavailable as error:
-        return _withheld_segment_evidence_result(
-            classification=classification,
-            financials=financials,
+        if error.reason is not None:
+            return _withheld_segment_evidence_result(
+                classification=classification,
+                financials=financials,
+                discount_rate=discount_rate,
+                valuation_date=valuation_date,
+                source_manifest=source_manifest,
+                error=error,
+            )
+        forecast_assumptions = derive_forecast_assumptions(
+            financials,
+            policy=policy,
             discount_rate=discount_rate,
-            valuation_date=valuation_date,
-            source_manifest=source_manifest,
-            error=error,
+            market=market_assumptions,
+            issuer_evidence=None,
         )
+        used_consolidated_segment_fallback = True
+    forecast_assumptions["consolidated_segment_fallback"] = (
+        used_consolidated_segment_fallback
+    )
     base = fcff_dcf(
         assumptions=forecast_assumptions,
         discount_rate=discount_rate,
@@ -765,6 +785,24 @@ def build_us_valuation(
             bridge_low = bridge_assessment.intrinsic_value_range.low
             bridge_midpoint = bridge_assessment.intrinsic_value_range.midpoint
             bridge_high = bridge_assessment.intrinsic_value_range.high
+        fallback_caps = [
+            decision.get("reliability_cap")
+            for decision in balance_sheet.get("fallback_decisions", {}).values()
+            if isinstance(decision, Mapping)
+            and decision.get("reliability_cap") in {"High", "Medium", "Low"}
+        ]
+        source_cap = lowest_label(
+            bridge_assessment.reliability_cap,
+            *fallback_caps,
+        )
+        model_reasons: list[str] = []
+        model_caps = ["High"]
+        if classification["classification_confidence"] < 0.8:
+            model_caps.append("Low")
+            model_reasons.append("LOW_CLASSIFICATION_CONFIDENCE")
+        if used_consolidated_segment_fallback:
+            model_caps.append("Low")
+            model_reasons.append("CONSOLIDATED_SEGMENT_FALLBACK")
         result["reliability"] = assess_reliability(
             accounting_low=bridge_low,
             accounting_base=bridge_midpoint,
@@ -772,7 +810,10 @@ def build_us_valuation(
             scenario_low=scenario_range["low"],
             scenario_base=scenario_range["base"],
             scenario_high=scenario_range["high"],
-            source_cap=bridge_assessment.reliability_cap,
-            reasons=bridge_assessment.reason_codes,
+            model_cap=lowest_label(*model_caps),
+            source_cap=source_cap,
+            reasons=tuple(
+                dict.fromkeys([*bridge_assessment.reason_codes, *model_reasons])
+            ),
         ).as_dict()
     return result

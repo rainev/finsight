@@ -688,14 +688,24 @@ def test_self_consistent_reliability_must_match_current_scenario_range() -> None
 
 
 @pytest.mark.parametrize(
-    "reliability",
+    ("reliability", "expected_label", "expected_reasons"),
     [
-        reliability_dto(accounting_impact_ratio=0.05),
-        reliability_dto(label="Medium", source_cap="Medium"),
+        (
+            reliability_dto(accounting_impact_ratio=0.05),
+            "Low",
+            ["RELIABILITY_PAYLOAD_INVALID"],
+        ),
+        (
+            reliability_dto(label="Medium", source_cap="Medium"),
+            "Medium",
+            [],
+        ),
     ],
 )
 def test_fcff_reliability_must_match_bridge_arithmetic_and_source_cap(
     reliability: dict[str, Any],
+    expected_label: str,
+    expected_reasons: list[str],
 ) -> None:
     artifact = current_public_artifact()
     artifact["reliability"] = reliability
@@ -705,14 +715,12 @@ def test_fcff_reliability_must_match_bridge_arithmetic_and_source_cap(
     assert sanitized["review"]["publication_state"] == "pass"
     assert sanitized["bridge_quality"]["decision"] == "complete"
     assert sanitized["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
-    assert sanitized["reliability"]["label"] == "Low"
+    assert sanitized["reliability"]["label"] == expected_label
     assert sanitized["reliability"]["accounting_impact_ratio"] == 0.0
     assert sanitized["reliability"]["scenario_movement_ratio"] == pytest.approx(
         0.20
     )
-    assert sanitized["reliability"]["reasons"] == [
-        "RELIABILITY_PAYLOAD_INVALID"
-    ]
+    assert sanitized["reliability"]["reasons"] == expected_reasons
 
 
 def _weaken_current_provenance(artifact: dict[str, Any]) -> None:

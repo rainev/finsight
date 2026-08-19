@@ -362,14 +362,6 @@ class BridgeAssessment:
         expected_spread: float | None = None
         expected_accounting_impact: float | None = None
         if value_range is not None:
-            expected_midpoint = (value_range.low + value_range.high) / 2
-            if (
-                not isfinite(expected_midpoint)
-                or value_range.midpoint != expected_midpoint
-            ):
-                raise ValueError(
-                    "intrinsic_value_range midpoint must equal (low + high) / 2"
-                )
             if value_range.low == value_range.high and (
                 value_range.midpoint > 0 or self.decision == "complete"
             ):
@@ -630,11 +622,15 @@ def _source_metadata_is_complete(
 
 
 def _record_range(record: FieldAvailability) -> BridgeRange:
-    if record.state == "bounded_unresolved":
+    if record.uncertainty is not None:
         assert record.uncertainty is not None
         return BridgeRange(
             low=record.uncertainty.low,
-            midpoint=(record.uncertainty.low + record.uncertainty.high) / 2,
+            midpoint=(
+                record.value
+                if record.value is not None
+                else (record.uncertainty.low + record.uncertainty.high) / 2
+            ),
             high=record.uncertainty.high,
         )
     assert record.value is not None
@@ -702,7 +698,10 @@ def _resolve_record(
         return None
 
     assert isinstance(record, FieldAvailability)
-    is_bounded = record.state == "bounded_unresolved"
+    is_bounded = record.state == "bounded_unresolved" or (
+        record.uncertainty is not None
+        and record.uncertainty.low != record.uncertainty.high
+    )
     if is_bounded and mark_bounded:
         context.bound(field, record.reason_code)
     return _ResolvedValue(value_range=_record_range(record), bounded=is_bounded)
@@ -1120,7 +1119,9 @@ def assess_bridge_materiality(
     shares = resolution.fully_diluted_shares
     low = (enterprise_value + resolution.bridge_adjustment.low) / shares
     high = (enterprise_value + resolution.bridge_adjustment.high) / shares
-    midpoint = (low + high) / 2
+    midpoint = (
+        enterprise_value + resolution.bridge_adjustment.midpoint
+    ) / shares
     if not all(isfinite(value) for value in (low, high, midpoint)):
         return BridgeAssessment(
             decision="withheld",

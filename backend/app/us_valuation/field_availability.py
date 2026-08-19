@@ -34,12 +34,14 @@ FallbackLevel = Literal[
     "sector_estimate",
 ]
 Freshness = Literal["current", "carried_forward", "stale", "unknown"]
+PeriodRole = Literal["operating_ttm", "balance_sheet_snapshot"]
 
 
 _AVAILABILITY_STATES = frozenset(get_args(AvailabilityState))
 _AVAILABILITY_AUTHORITIES = frozenset(get_args(AvailabilityAuthority))
 _FALLBACK_LEVELS = frozenset(get_args(FallbackLevel))
 _FRESHNESS_STATES = frozenset(get_args(Freshness))
+_PERIOD_ROLES = frozenset(get_args(PeriodRole))
 _POINT_STATES = frozenset({"reported", "proxy"})
 _ZERO_STATES = frozenset(
     {"explicit_zero", "evidence_backed_zero", "not_applicable"}
@@ -123,6 +125,7 @@ class FieldAvailability:
     evidence_class: str | None
     freshness: Freshness
     fallback_level: FallbackLevel = "current_reported"
+    period_role: PeriodRole = "balance_sheet_snapshot"
     source_age_days: int | None = None
     uncertainty: UncertaintyRange | None = None
     covered_fields: tuple[str, ...] = ()
@@ -139,6 +142,16 @@ class FieldAvailability:
         if self.freshness not in _FRESHNESS_STATES:
             raise ValueError(
                 "freshness must be current, carried_forward, stale, or unknown"
+            )
+        if self.period_role not in _PERIOD_ROLES:
+            raise ValueError(
+                "period_role must be operating_ttm or balance_sheet_snapshot"
+            )
+        if self.fallback_level == "annual_carried_forward" and self.period_role != (
+            "balance_sheet_snapshot"
+        ):
+            raise ValueError(
+                "annual_carried_forward is only valid for balance-sheet snapshots"
             )
         if (self.fallback_level == "annual_carried_forward") != (
             self.freshness == "carried_forward"
@@ -162,6 +175,12 @@ class FieldAvailability:
             self.uncertainty, UncertaintyRange
         ):
             raise ValueError("uncertainty must be an UncertaintyRange or None")
+        if (
+            self.uncertainty is not None
+            and self.value is not None
+            and not self.uncertainty.low <= self.value <= self.uncertainty.high
+        ):
+            raise ValueError("point value must lie inside its uncertainty range")
         if self.source_accession is not None:
             _require_nonempty_text(self.source_accession, "source_accession")
 
@@ -253,6 +272,7 @@ class FieldAvailability:
             "evidence_class": self.evidence_class,
             "freshness": self.freshness,
             "fallback_level": self.fallback_level,
+            "period_role": self.period_role,
             "source_age_days": self.source_age_days,
             "uncertainty": uncertainty,
             "covered_fields": list(self.covered_fields),
@@ -300,6 +320,7 @@ class FieldAvailability:
             evidence_class=value.get("evidence_class"),
             freshness=value["freshness"],
             fallback_level=fallback_level,
+            period_role=value.get("period_role", "balance_sheet_snapshot"),
             source_age_days=value.get("source_age_days"),
             uncertainty=uncertainty,
             covered_fields=_restore_string_tuple(
@@ -450,6 +471,7 @@ def availability_from_normalized_field(
     period_end: str,
     reference_date: str,
     covered_fields: tuple[str, ...] = (),
+    period_role: PeriodRole = "balance_sheet_snapshot",
 ) -> FieldAvailability:
     """Project a legacy normalized field into its compatibility availability."""
 
@@ -514,6 +536,7 @@ def availability_from_normalized_field(
                     evidence_class=evidence_class,
                     freshness="carried_forward",
                     fallback_level="annual_carried_forward",
+                    period_role=period_role,
                     source_age_days=source_age_days,
                     covered_fields=covered_fields,
                 )
@@ -542,5 +565,6 @@ def availability_from_normalized_field(
         source_kind=source_kind,
         evidence_class=evidence_class,
         freshness=freshness,
+        period_role=period_role,
         covered_fields=covered_fields,
     )

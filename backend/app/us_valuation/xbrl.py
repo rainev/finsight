@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 from importlib.resources import files
 from statistics import median
@@ -12,11 +12,68 @@ from typing import Any, Iterable, Mapping
 from .bridge_policy import reconcile_bridge
 from .field_availability import availability_from_normalized_field
 from .filing_evidence import governed_bridge_fields_from_evidence
+from .period_fallbacks import (
+    FallbackDecision,
+    annual_carried_forward_decision,
+    company_history_decision,
+)
 
 
 # Fallback effective tax rate for issuers with no year in the normal 0-40% band
 # (persistent pretax losses). The US federal statutory corporate rate.
 _STATUTORY_TAX_FALLBACK = 0.21
+
+
+def _estimate_ttm_flow_from_annual_history(
+    *,
+    field: str,
+    ttm_revenue: float,
+    annual_periods: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Scale a lagging flow from company history instead of copying an annual value."""
+
+    observations: list[tuple[float, dict[str, Any], dict[str, Any]]] = []
+    for row in annual_periods[-3:]:
+        revenue = row.get("values", {}).get("revenue")
+        value = row.get("values", {}).get(field)
+        if (
+            not isinstance(revenue, (int, float))
+            or isinstance(revenue, bool)
+            or revenue == 0
+            or not isinstance(value, (int, float))
+            or isinstance(value, bool)
+        ):
+            continue
+        observations.append(
+            (
+                float(value) / float(revenue),
+                row.get("sources", {}).get(field),
+                row.get("sources", {}).get("revenue"),
+            )
+        )
+    if len(observations) < 2:
+        raise ValueError(
+            f"TTM flow input {field} has no current reconstruction and fewer "
+            "than two comparable annual history points"
+        )
+    ratios = [item[0] for item in observations]
+    estimates = sorted(float(ttm_revenue) * ratio for ratio in ratios)
+    return {
+        "value": float(ttm_revenue) * median(ratios),
+        "method": "company_history_ratio_to_ttm_revenue",
+        "estimated_range": {
+            "low": estimates[0],
+            "base": float(ttm_revenue) * median(ratios),
+            "high": estimates[-1],
+            "basis": f"{field} divided by revenue for {len(ratios)} recent annual periods",
+        },
+        "sources": [
+            source
+            for _, field_source, revenue_source in observations
+            for source in (field_source, revenue_source)
+            if isinstance(source, dict)
+        ],
+    }
 
 
 @dataclass(frozen=True)
@@ -585,6 +642,30 @@ class CompanyFactsNormalizer:
             "Latest filed point-in-time fact for the requested balance-sheet date.",
         )
 
+    def annual_instant_series(
+        self,
+        field: str,
+        count: int = 3,
+    ) -> list[SelectedFact]:
+        """Return annual point-in-time facts, one latest-filed value per period."""
+
+        candidates = [
+            item
+            for item in self._candidates(field)
+            if not item[3].get("start")
+            and item[3].get("form") in {"10-K", "10-K/A"}
+        ]
+        deduped = self._select_latest_duplicate(candidates)
+        deduped.sort(key=lambda item: item[3]["end"])
+        return [
+            self._selected(
+                field,
+                item,
+                "Latest filed annual point-in-time fact for the balance-sheet period.",
+            )
+            for item in deduped[-count:]
+        ]
+
     def _controlling_filing(self, period_end: str) -> dict[str, Any] | None:
         """Return the latest eligible filing that controls a balance-sheet date."""
         candidates = [
@@ -745,6 +826,8 @@ class CompanyFactsNormalizer:
         | Iterable[str] = (),
         governed_bridge_fields: Mapping[str, dict[str, Any]] | None = None,
         filing_evidence: Iterable[Mapping[str, Any]] | None = None,
+        sector_estimates: Mapping[str, FallbackDecision] | None = None,
+        major_changes: Mapping[str, Mapping[str, Any]] | None = None,
     ) -> dict[str, Any]:
         if isinstance(verified_zero_bridge_fields, Mapping):
             verified_zero_evidence = dict(verified_zero_bridge_fields)
@@ -807,30 +890,29 @@ class CompanyFactsNormalizer:
                 "capital_expenditures",
             )
         }
-        # Most issuers advance every flow to the same post-fiscal-year quarter.
-        # A minority tag a slow-moving line (typically D&A) only annually, so it
-        # lags at the prior fiscal-year end while the rest reach a newer quarter.
-        # Rather than reject the issuer, anchor to the newest shared period and
-        # substitute each lagging field's latest annual value as a TTM proxy, and
-        # record which fields were proxied so review sees the approximation.
+        # Quarterly/YTD facts define current operating performance. A lagging flow
+        # must be scaled from company history; an annual flow is never copied as if
+        # it were already a trailing-twelve-month amount.
         ttm_end = max(fact["period_end"] for fact in ttm_fields.values())
         lagging_ttm_fields: list[str] = []
+        if ttm_fields["revenue"]["period_end"] != ttm_end:
+            raise ValueError("Current TTM revenue is required to scale lagging flows")
         for field, fact in list(ttm_fields.items()):
             if fact["period_end"] == ttm_end:
                 continue
-            annual = self.annual_series(field, 1)
-            if not annual:
-                raise ValueError(
-                    f"TTM flow input {field} lags {ttm_end} with no annual proxy"
-                )
-            proxy = annual[-1]
+            estimate = _estimate_ttm_flow_from_annual_history(
+                field=field,
+                ttm_revenue=ttm_fields["revenue"]["value"],
+                annual_periods=annual_periods,
+            )
             ttm_fields[field] = {
-                "value": proxy.value,
+                **estimate,
                 "period_end": ttm_end,
-                "method": "latest_annual_proxy_for_lagging_flow",
-                "sources": [proxy.as_dict()],
+                "period_role": "operating_ttm",
             }
             lagging_ttm_fields.append(field)
+        for fact in ttm_fields.values():
+            fact["period_role"] = "operating_ttm"
         controlling_filings = [
             record
             for record in self.filing_records
@@ -911,8 +993,9 @@ class CompanyFactsNormalizer:
             else None
         )
         balance_fields = {}
-        for field in (
+        balance_field_names = (
             "cash",
+            "total_assets",
             "marketable_securities_current",
             "marketable_securities_noncurrent",
             "commercial_paper",
@@ -926,7 +1009,13 @@ class CompanyFactsNormalizer:
             "common_shares_outstanding",
             "diluted_weighted_average_shares",
             "incremental_dilutive_shares",
-        ):
+        )
+        annual_instant_history = {
+            field: self.annual_instant_series(field, 3)
+            for field in balance_field_names
+            if self.config["fields"][field]["kind"] == "instant"
+        }
+        for field in balance_field_names:
             if field in {
                 "diluted_weighted_average_shares",
                 "incremental_dilutive_shares",
@@ -1013,6 +1102,7 @@ class CompanyFactsNormalizer:
                     or field in verified_zero_evidence
                     else "missing"
                 ),
+                "annual_history": annual_instant_history.get(field, []),
             }
 
         # Some issuers (often multi-class) tag no cover-page common-share count in
@@ -1048,6 +1138,114 @@ class CompanyFactsNormalizer:
             )
             for field, item in balance_fields.items()
         }
+        fallback_decisions: dict[str, FallbackDecision] = {}
+        total_assets_record = availability["total_assets"]
+        current_total_assets = (
+            total_assets_record.value
+            if total_assets_record.value is not None
+            else None
+        )
+        annual_assets_by_end = {
+            fact.end: fact
+            for fact in annual_instant_history.get("total_assets", [])
+        }
+        range_fields = {
+            "cash",
+            "marketable_securities_current",
+            "marketable_securities_noncurrent",
+            "commercial_paper",
+            "current_debt",
+            "noncurrent_debt",
+            "finance_lease_current",
+            "finance_lease_noncurrent",
+            "finance_lease_total",
+            "preferred_equity",
+            "noncontrolling_interests",
+        }
+        for field in sorted(range_fields):
+            record = availability[field]
+            history = annual_instant_history.get(field, [])
+            if record.fallback_level == "annual_carried_forward":
+                event = (major_changes or {}).get(field, {})
+                flags = event.get("flags", ())
+                quantified_change = event.get("quantified_change")
+                try:
+                    decision = annual_carried_forward_decision(
+                        field=field,
+                        base=record.value,
+                        annual_values=[fact.value for fact in history],
+                        source_age_days=record.source_age_days,
+                        source_accessions=[fact.accession for fact in history],
+                        major_change_flags=flags,
+                        quantified_change=quantified_change,
+                    )
+                except ValueError as error:
+                    if "unquantified" not in str(error):
+                        raise
+                    availability[field] = replace(
+                        record,
+                        value=None,
+                        state="unresolved",
+                        reason_code="MAJOR_EVENT_UNBOUNDED",
+                        freshness="unknown",
+                        fallback_level="current_reported",
+                        source_age_days=None,
+                        uncertainty=None,
+                    )
+                    continue
+                availability[field] = replace(
+                    record,
+                    uncertainty=decision.uncertainty(),
+                )
+                fallback_decisions[field] = decision
+                continue
+            if record.state not in {"stale", "unresolved", "not_disclosed"}:
+                continue
+            observations = [
+                (fact.value, annual_assets_by_end[fact.end].value, fact.accession)
+                for fact in history
+                if fact.end in annual_assets_by_end
+            ]
+            decision = None
+            if current_total_assets is not None and len(observations) >= 2:
+                latest_end = history[-1].end
+                source_age_days = (
+                    date.fromisoformat(self.as_of_date or ttm_end)
+                    - date.fromisoformat(latest_end)
+                ).days
+                decision = company_history_decision(
+                    field=field,
+                    observations=observations,
+                    current_total_assets=current_total_assets,
+                    source_age_days=source_age_days,
+                )
+            elif field in (sector_estimates or {}):
+                candidate = (sector_estimates or {})[field]
+                if candidate.field != field or candidate.fallback_level != (
+                    "sector_estimate"
+                ):
+                    raise ValueError("sector estimate does not match requested field")
+                decision = candidate
+            if decision is None:
+                continue
+            availability[field] = replace(
+                record,
+                state="bounded_unresolved",
+                reason_code=(
+                    "COMPANY_HISTORY_RANGE"
+                    if decision.fallback_level == "company_history"
+                    else "SECTOR_ESTIMATE_RANGE"
+                ),
+                source_accession=decision.source_accessions[-1],
+                source_kind=decision.fallback_level,
+                evidence_class="estimated_range",
+                freshness="current",
+                fallback_level=decision.fallback_level,
+                source_age_days=decision.source_age_days,
+                uncertainty=decision.uncertainty(),
+                authority="production",
+            )
+            fallback_decisions[field] = decision
         incremental_dilution = (
             balance_fields["incremental_dilutive_shares"]["value"] or 0.0
         )
@@ -1092,6 +1290,7 @@ class CompanyFactsNormalizer:
             "currency": "USD",
             "annual": annual_periods,
             "ttm": {
+                "period_role": "operating_ttm",
                 "period_end": ttm_end,
                 "method": ttm_fields["revenue"]["method"],
                 "source_cutoff_date": self.as_of_date,
@@ -1122,6 +1321,7 @@ class CompanyFactsNormalizer:
                 },
             },
             "balance_sheet": {
+                "period_role": "balance_sheet_snapshot",
                 "period_end": ttm_end,
                 "values": {
                     field: item["value"] for field, item in balance_fields.items()
@@ -1134,6 +1334,10 @@ class CompanyFactsNormalizer:
                 },
                 "availability": {
                     field: item.as_dict() for field, item in availability.items()
+                },
+                "fallback_decisions": {
+                    field: decision.as_dict()
+                    for field, decision in sorted(fallback_decisions.items())
                 },
                 **bridge_resolution.as_balance_sheet_fields(),
                 "fully_diluted_shares_proxy": diluted_proxy,
@@ -1179,7 +1383,7 @@ class CompanyFactsNormalizer:
                     [
                         "TTM inputs "
                         + ", ".join(lagging_ttm_fields)
-                        + f" were tagged only annually and are carried as a latest-annual proxy at {ttm_end}; review the trailing-twelve-month approximation."
+                        + f" were unavailable at {ttm_end} and estimated from company-history ratios to current TTM revenue; review the trailing-twelve-month range."
                     ]
                     if lagging_ttm_fields
                     else []

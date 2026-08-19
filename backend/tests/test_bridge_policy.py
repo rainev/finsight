@@ -159,6 +159,40 @@ def complete_availability(
     }
 
 
+def test_large_finite_annual_range_is_low_reliability_not_withheld() -> None:
+    availability = complete_availability()
+    availability["noncurrent_debt"] = FieldAvailability(
+        field="noncurrent_debt",
+        value=40.0,
+        state="reported",
+        reason_code="ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+        period_end=PERIOD_END,
+        source_accession=ACCESSION,
+        source_kind="companyfacts",
+        evidence_class="reported",
+        freshness="carried_forward",
+        fallback_level="annual_carried_forward",
+        source_age_days=180,
+        uncertainty=UncertaintyRange(
+            low=0.0,
+            high=100.0,
+            basis="Large but finite annual movement range.",
+            source_accessions=(ACCESSION,),
+        ),
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+    assessment = assess_bridge_materiality(resolution, enterprise_value=100.0)
+
+    assert resolution.can_value is True
+    assert assessment.decision == "bounded_review"
+    assert assessment.usable is True
+    assert assessment.accounting_impact_ratio > 0.20
+    assert assessment.reliability_cap == "Low"
+    assert assessment.intrinsic_value_range is not None
+    assert assessment.intrinsic_value_range.midpoint == pytest.approx(
+        (100.0 + resolution.bridge_adjustment.midpoint) / 10.0
+    )
 def with_total_debt(
     availability: dict[str, FieldAvailability],
     value: float,

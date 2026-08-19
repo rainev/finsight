@@ -614,7 +614,7 @@ def test_validated_precheck_canonicalizes_all_model_and_compatibility_aliases(
     assert publication_states(result) == ["review_required"] * 14
 
 
-def test_bounded_precheck_without_required_segment_evidence_gets_final_assessment(
+def test_bounded_precheck_without_segment_detail_uses_low_consolidated_fallback(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     bounded_field = "marketable_securities_noncurrent"
@@ -630,9 +630,6 @@ def test_bounded_precheck_without_required_segment_evidence_gets_final_assessmen
         classification = original_classify_issuer(submissions)
         return {**classification, "requires_segment_forecast": True}
 
-    def unexpected_derive(*args: Any, **kwargs: Any) -> Any:
-        pytest.fail("forecast assumptions derived without required issuer evidence")
-
     monkeypatch.setattr(
         valuation_pipeline,
         "classify_issuer",
@@ -643,22 +640,13 @@ def test_bounded_precheck_without_required_segment_evidence_gets_final_assessmen
         "load_issuer_forecast_evidence",
         lambda _cik: None,
     )
-    monkeypatch.setattr(
-        valuation_pipeline,
-        "derive_forecast_assumptions",
-        unexpected_derive,
-    )
-
     result = build_aapl()
-
-    assert_bounded_early_forecast_withholding(
-        result,
-        bounded_field=bounded_field,
-        native_error=(
-            "A segment forecast is required but no governed issuer evidence is "
-            "registered"
-        ),
+    assert result["financials"]["balance_sheet"]["bridge_decision"] == (
+        "bounded_review"
     )
+    assert result["models"]["fcff_dcf"]["intrinsic_value_per_share"] is not None
+    assert result["reliability"]["label"] == "Low"
+    assert "CONSOLIDATED_SEGMENT_FALLBACK" in result["reliability"]["reasons"]
 
 
 def test_bounded_precheck_forecast_derivation_failure_gets_final_assessment(

@@ -118,7 +118,14 @@ def test_normalizer_carries_forward_annual_fact_at_exact_365_day_boundary() -> N
 
     availability = financials["balance_sheet"]["availability"]
 
+    assert financials["ttm"]["period_role"] == "operating_ttm"
+    assert financials["balance_sheet"]["period_role"] == (
+        "balance_sheet_snapshot"
+    )
     assert availability["finance_lease_noncurrent"]["value"] == 25.0
+    assert availability["finance_lease_noncurrent"]["period_role"] == (
+        "balance_sheet_snapshot"
+    )
     assert availability["finance_lease_noncurrent"]["freshness"] == (
         "carried_forward"
     )

@@ -73,8 +73,30 @@ def test_carried_forward_company_fact_round_trips_with_age_metadata() -> None:
     serialized = item.as_dict()
 
     assert serialized["fallback_level"] == "annual_carried_forward"
+    assert serialized["period_role"] == "balance_sheet_snapshot"
     assert serialized["source_age_days"] == 181
     assert FieldAvailability.from_dict(serialized) == item
+
+
+def test_annual_carried_forward_cannot_be_used_as_operating_ttm() -> None:
+    with pytest.raises(
+        ValueError,
+        match="only valid for balance-sheet snapshots",
+    ):
+        FieldAvailability(
+            field="capital_expenditures",
+            value=25.0,
+            state="reported",
+            reason_code="ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+            period_end="2025-12-31",
+            source_accession="0000000000-26-000001",
+            source_kind="companyfacts",
+            evidence_class="reported",
+            freshness="carried_forward",
+            fallback_level="annual_carried_forward",
+            period_role="operating_ttm",
+            source_age_days=181,
+        )
 
 
 @pytest.mark.parametrize(

@@ -7,3 +7,4 @@
 - [CompanyFacts availability provenance contract](companyfacts-availability-provenance-contract.md) — keep optional ordinary metadata optional; require stronger provenance only for replacement aggregates.
 - [Public sanitizer scrubbed replay context](public-sanitizer-scrubbed-replay-context.md) — distinguish a fully scrubbed replay from a forged initial null range.
 - [Public bridge range binds to FCFF](public-bridge-range-binds-to-fcff.md) — tie bridge absolutes to the canonical FCFF per-share output.
+- [Annual balance is not a TTM flow](annual-balance-is-not-ttm-flow.md) — carry annual snapshots forward, but scale missing current flows from history instead of copying annual amounts.

@@ -103,6 +103,13 @@
         "CashAndCashEquivalentsAtCarryingValue"
       ]
     },
+    "total_assets": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "Assets"
+      ]
+    },
     "marketable_securities_current": {
       "unit": "USD",
       "kind": "instant",
@@ -185,7 +192,9 @@
     "noncontrolling_interests": {
       "unit": "USD",
       "kind": "instant",
-      "concepts": []
+      "concepts": [
+        "MinorityInterest"
+      ]
     },
     "common_shares_outstanding": {
       "unit": "shares",
