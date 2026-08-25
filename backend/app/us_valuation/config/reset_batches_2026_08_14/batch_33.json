@@ -1,0 +1,124 @@
+{
+  "batch": 33,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "financials",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000004962",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Consumer Finance",
+      "issuer_name": "American Express",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "AXP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000004977",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "issuer_name": "Aflac",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "AFL"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000005272",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Multi-line Insurance",
+      "issuer_name": "American International Group",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "AIG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000011544",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "issuer_name": "W. R. Berkley Corporation",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "WRB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000020286",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "issuer_name": "Cincinnati Financial",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "CINF"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000035527",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "issuer_name": "Fifth Third Bancorp",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "FITB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000036270",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "issuer_name": "M&T Bank",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "MTB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000038777",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "Franklin Resources",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "BEN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000049196",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "issuer_name": "Huntington Bancshares",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "HBAN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000062709",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "issuer_name": "Marsh McLennan",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "MRSH"
+    }
+  ],
+  "partition_families": [
+    "financial_equity"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

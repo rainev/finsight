@@ -208,6 +208,8 @@ def test_us_valuation_endpoints_share_object_and_filename_identity_validation(
     assert detail["scenario_range"]["base"] == item["base"]
     assert detail["review"]["publication_state"] == item["publication_state"]
     assert detail["reliability"]["label"] == item["reliability"]
+    assert detail["availability_type"] == item["availability_type"]
+    assert detail["confidence"] == item["confidence"]
 
     for ticker, error in (
         ("BROKEN", "U.S. valuation artifact is invalid"),

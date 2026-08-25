@@ -1,0 +1,125 @@
+{
+  "batch": 40,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "financials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001408198",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "MSCI",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "MSCI"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001512673",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "Block, Inc.",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "XYZ"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001571949",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "Intercontinental Exchange",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "ICE"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001601712",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Consumer Finance",
+      "issuer_name": "Synchrony Financial",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "SYF"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001633917",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "PayPal",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "PYPL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001679788",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "Coinbase",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "COIN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001783879",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "issuer_name": "Robinhood Markets",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "HOOD"
+    },
+    {
+      "boundary_reason": "asset_backed_capital_structure_boundary",
+      "cik": "0001811074",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "issuer_name": "Texas Pacific Land Corporation",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "boundary",
+      "ticker": "TPL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001858681",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "Apollo Global Management",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "APO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0002012383",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "BlackRock",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "BLK"
+    }
+  ],
+  "partition_families": [
+    "financial_equity",
+    "resource_cycle_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

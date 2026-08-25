@@ -68,10 +68,15 @@ CREATE TABLE IF NOT EXISTS valuations (
   inputs      JSONB NOT NULL,
   assumptions JSONB NOT NULL DEFAULT '{}'::jsonb,
   result      JSONB NOT NULL,
+  us_company  BOOLEAN NOT NULL DEFAULT FALSE,
+  ticker      TEXT,
+  model_version TEXT,
+  user_price  NUMERIC,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_valuations_user ON valuations (user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_valuations_company ON valuations (company_id);
+CREATE INDEX IF NOT EXISTS idx_valuations_us_ticker ON valuations (ticker) WHERE us_company;
 
 -- ---------------------------------------------------------------------------
 -- Portfolio-aware insights (see docs/architecture.md)

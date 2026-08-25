@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .automated_review import REVIEW_VERSION, assess_artifact
+from .baseline import apply_public_baseline_contract
 from .bridge_policy import BridgeAssessment, POLICY_VERSION
 from .equity_models import public_equity_artifact
 from .reliability import (
@@ -164,12 +165,24 @@ def _public_model(model: dict[str, Any]) -> dict[str, Any]:
 
 PUBLICATION_STATES = {"pass", "review_required", "withheld"}
 _STATE_STRICTNESS = {"pass": 0, "review_required": 1, "withheld": 2}
-PUBLIC_SCHEMA_VERSION = "US-PUBLIC-VALUATION-1.1"
+PUBLIC_SCHEMA_VERSION = "US-PUBLIC-VALUATION-1.2"
+_CURRENT_SCHEMA_VERSIONS = {
+    PUBLIC_SCHEMA_VERSION,
+    "US-PUBLIC-VALUATION-1.1",
+}
 _LEGACY_SCHEMA_VERSIONS = {
     "US-PUBLIC-VALUATION-1.0",
     "US-VALUATION-RESULT-1.0",
 }
-_PUBLIC_MODEL_NAMES = {"fcff_dcf", "residual_income", "ddm", "ffo"}
+_PUBLIC_MODEL_NAMES = {
+    "fcff_dcf",
+    "fcfe_dcf",
+    "residual_income",
+    "ddm",
+    "ffo",
+    "conditional_estimate",
+    "relative_value",
+}
 _BRIDGE_SPREAD_LIMIT = 0.01
 _SPREAD_BOUNDARY_RELATIVE_TOLERANCE = 1e-14
 _INVALID_STATE_ERROR = (
@@ -200,6 +213,7 @@ _BRIDGE_FIELDS = (
     "finance_lease_total",
     "marketable_securities_current",
     "marketable_securities_noncurrent",
+    "marketable_securities_total",
     "noncontrolling_interests",
     "noncurrent_debt",
     "preferred_equity",
@@ -210,6 +224,7 @@ _PUBLIC_BRIDGE_REASONS = (
     "BASE_ENTERPRISE_VALUE_UNAVAILABLE",
     "BRIDGE_EVIDENCE_CONFLICT",
     "BRIDGE_EVIDENCE_NOT_CURRENT",
+    "BRIDGE_EVIDENCE_NOT_ISSUER_SPECIFIC",
     "BRIDGE_EVIDENCE_NOT_PRODUCTION",
     "BRIDGE_EVIDENCE_SOURCE_INCOMPLETE",
     "BRIDGE_EVIDENCE_UNUSABLE",
@@ -224,6 +239,7 @@ _PUBLIC_BRIDGE_REASONS = (
     "JOINT_INTRINSIC_VALUE_SPREAD_EXCEEDS_LIMIT",
     "NONFINITE_INTRINSIC_VALUE_RESULT",
     "NONPOSITIVE_INTRINSIC_VALUE_MIDPOINT",
+    "NOT_DISCLOSED_COMPLETE_EXTRACTION",
     "REPORTED_AGGREGATE_REPLACEMENT",
     "SECTOR_ESTIMATE_RANGE",
     "MAJOR_EVENT_RANGE_WIDENED",
@@ -231,11 +247,23 @@ _PUBLIC_BRIDGE_REASONS = (
     "STALE_STALE_REPORTED_FACT",
     "TOTAL_DEBT_AGGREGATE_CONFLICT",
     "TOTAL_DEBT_AGGREGATE_INCOMPLETE_COVERAGE",
+    "TOTAL_INVESTMENTS_AGGREGATE_CONFLICT",
+    "TOTAL_INVESTMENTS_AGGREGATE_INCOMPLETE_COVERAGE",
+    "TOTAL_INVESTMENTS_AGGREGATE_SCOPE_INVALID",
     "UNRESOLVED_UNSPECIFIED",
 )
 _PUBLIC_RELIABILITY_REASONS = (
     *_PUBLIC_BRIDGE_REASONS,
     "CONSOLIDATED_SEGMENT_FALLBACK",
+    "CONSOLIDATED_MODEL_FALLBACK",
+    "RD_LIFE_SENSITIVITY",
+    "CAPEX_CASH_CONVERSION_SENSITIVITY",
+    "NORMALIZED_CYCLICAL_RANGE",
+    "PROVISIONAL_BANK_CAPITAL_RANGE",
+    "CONSOLIDATED_MIXED_UTILITY_FALLBACK",
+    "REPORTED_AFFO_FALLBACK",
+    "SPECIALIST_MODEL_UNCERTAINTY",
+    "CONDITIONAL_EVENT_MODEL",
     "INTERIM_FFO_ROUTE",
     "LEGACY_ARTIFACT_NOT_REGENERATED",
     "LOW_CLASSIFICATION_CONFIDENCE",
@@ -323,9 +351,16 @@ _PUBLIC_TOP_LEVEL_FIELDS = (
     "review",
     "automated_review",
     "bridge_quality",
+    "contractual_consideration",
     "reliability",
     "methodology",
     "data_boundary",
+    "availability_type",
+    "primary_valuation_method",
+    "confidence",
+    "market_comparison",
+    "relative_value_summary",
+    "calculator_link",
 )
 _PUBLIC_ISSUER_FIELDS = (
     "cik",
@@ -364,6 +399,7 @@ _PUBLIC_MODEL_FIELDS = (
     "output_type",
     "currency",
     "intrinsic_value_per_share",
+    "conditional_value_per_share",
     "publication_state",
     "errors",
     "warnings",
@@ -410,6 +446,40 @@ _PUBLIC_ASSUMPTION_FIELDS = (
     "high_growth_years",
     "ffo_per_share",
     "pffo_multiple",
+    "adjusted_fcf_low",
+    "adjusted_fcf_base",
+    "adjusted_fcf_high",
+    "dfs_debt_to_equity",
+    "cycle_wdc_weight",
+    "cycle_stx_weight",
+    "normalized_tax_rate",
+    "operating_nwc_ratio",
+    "diluted_shares",
+    "diluted_shares_low",
+    "diluted_shares_high",
+    "bridge_claims_basis",
+    "cash_conversion_margin",
+    "cash_conversion_margin_low",
+    "cash_conversion_margin_high",
+    "normalized_earnings_factor",
+    "earnings_multiple",
+    "policy_wacc_low",
+    "policy_wacc_high",
+    "terminal_growth_low",
+    "terminal_growth_high",
+    "equity_floor_applied",
+    "equity_floor_basis",
+    "commitment_horizon_years_bear",
+    "commitment_horizon_years_base",
+    "commitment_horizon_years_bull",
+    "commitment_reserve_bear",
+    "commitment_reserve_base",
+    "commitment_reserve_bull",
+    "unresolved_claims_reserve_bear",
+    "unresolved_claims_reserve_base",
+    "unresolved_claims_reserve_bull",
+    "nci_share_reconciled",
+    "nci_share_reconciliation_difference",
 )
 _PUBLIC_SEGMENT_ASSUMPTION_FIELDS = (
     "label",
@@ -457,6 +527,14 @@ _PUBLIC_DATA_BOUNDARY_FIELDS = (
     "raw_financial_statement_values_included",
     "stock_prices_used",
     "public_payload_contains",
+)
+_PUBLIC_CONTRACTUAL_CONSIDERATION_FIELDS = (
+    "amount_per_share",
+    "ticking_per_day",
+    "illustration_date",
+    "illustration_amount_per_share",
+    "status",
+    "note",
 )
 
 
@@ -585,6 +663,11 @@ def _canonical_public_artifact(value: object) -> dict[str, Any]:
     if "data_boundary" in public:
         public["data_boundary"] = _allowlisted_mapping(
             public["data_boundary"], _PUBLIC_DATA_BOUNDARY_FIELDS
+        )
+    if "contractual_consideration" in public:
+        public["contractual_consideration"] = _allowlisted_mapping(
+            public["contractual_consideration"],
+            _PUBLIC_CONTRACTUAL_CONSIDERATION_FIELDS,
         )
     return public
 
@@ -723,13 +806,16 @@ def _reliability_matches_artifact(
     if scenario_range is None:
         return False
     try:
-        expected_scenario = _json_number(
-            relative_movement(
-                low=scenario_range["low"],
-                base=scenario_range["base"],
-                high=scenario_range["high"],
+        if primary == "conditional_estimate" and scenario_range["base"] == 0:
+            expected_scenario = 1.0
+        else:
+            expected_scenario = _json_number(
+                relative_movement(
+                    low=scenario_range["low"],
+                    base=scenario_range["base"],
+                    high=scenario_range["high"],
+                )
             )
-        )
         assert expected_scenario is not None
         if not _ratios_agree(
             reliability["scenario_movement_ratio"], expected_scenario
@@ -764,8 +850,13 @@ def _reliability_matches_artifact(
                 == reliability["source_cap"]
             )
 
+        if primary == "conditional_estimate":
+            # Conditional baselines may deliberately quantify unresolved claims.
+            # The sanitizer above has already proved the ratio/label pair and the
+            # overall Low cap are internally consistent.
+            return True
         return (
-            primary in {"residual_income", "ddm", "ffo"}
+            primary in {"fcfe_dcf", "residual_income", "ddm", "ffo"}
             and reliability["accounting_impact_ratio"] == 0.0
             and reliability["accounting_label"] == "High"
         )
@@ -1326,7 +1417,7 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     was_fully_scrubbed = _artifact_is_fully_scrubbed(incoming)
     public = _canonical_public_artifact(incoming)
     schema_version = public.get("schema_version")
-    schema_is_current = schema_version == PUBLIC_SCHEMA_VERSION
+    schema_is_current = schema_version in _CURRENT_SCHEMA_VERSIONS
     schema_is_legacy = schema_version in _LEGACY_SCHEMA_VERSIONS
     review = public.get("review")
     if not isinstance(review, dict):
@@ -1365,7 +1456,13 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         recomputed_automated_review = assess_artifact(public)
         public["automated_review"] = (
             stored_automated_review
-            if was_fully_scrubbed
+            if (
+                was_fully_scrubbed
+                or (
+                    schema_version == "US-PUBLIC-VALUATION-1.1"
+                    and primary == "conditional_estimate"
+                )
+            )
             and _valid_automated_review(stored_automated_review)
             else recomputed_automated_review
         )
@@ -1398,17 +1495,39 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         elif model.get("publication_state") not in PUBLICATION_STATES:
             model["publication_state"] = "withheld"
             model["intrinsic_value_per_share"] = None
+            if "conditional_value_per_share" in model:
+                model["conditional_value_per_share"] = None
             invalid_state = True
         elif model["publication_state"] == "withheld":
             model["intrinsic_value_per_share"] = None
+            if "conditional_value_per_share" in model:
+                model["conditional_value_per_share"] = None
         else:
             try:
-                value = _json_number(model.get("intrinsic_value_per_share"))
-                if value is None or value <= 0:
-                    raise ValueError("model value must be finite and positive")
+                value_field = (
+                    "conditional_value_per_share"
+                    if name == "conditional_estimate"
+                    else "intrinsic_value_per_share"
+                )
+                raw_value = model.get(value_field)
+                if name == "conditional_estimate" and raw_value is None:
+                    # v1.1 staged conditional artifacts used the generic intrinsic
+                    # field. Accept it for one compatibility cycle and publish both
+                    # aliases so older clients keep rendering the value.
+                    raw_value = model.get("intrinsic_value_per_share")
+                value = _json_number(raw_value)
+                if value is None or value < 0 or (
+                    name != "conditional_estimate" and value == 0
+                ):
+                    raise ValueError("model value must be finite and nonnegative")
+                if name == "conditional_estimate":
+                    model["conditional_value_per_share"] = value
+                    model.pop("intrinsic_value_per_share", None)
             except (TypeError, ValueError, OverflowError):
                 model["publication_state"] = "withheld"
                 model["intrinsic_value_per_share"] = None
+                if "conditional_value_per_share" in model:
+                    model["conditional_value_per_share"] = None
                 invalid_state = True
 
     if not isinstance(primary, str) or not isinstance(models.get(primary), dict):
@@ -1476,9 +1595,13 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             elif model.get("publication_state") not in PUBLICATION_STATES:
                 model["publication_state"] = "withheld"
                 model["intrinsic_value_per_share"] = None
+                if "conditional_value_per_share" in model:
+                    model["conditional_value_per_share"] = None
                 invalid_state = True
             elif model["publication_state"] == "withheld":
                 model["intrinsic_value_per_share"] = None
+                if "conditional_value_per_share" in model:
+                    model["conditional_value_per_share"] = None
             else:
                 try:
                     value = _json_number(model.get("intrinsic_value_per_share"))
@@ -1489,6 +1612,8 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
                 except (TypeError, ValueError, OverflowError):
                     model["publication_state"] = "withheld"
                     model["intrinsic_value_per_share"] = None
+                    if "conditional_value_per_share" in model:
+                        model["conditional_value_per_share"] = None
                     invalid_state = True
 
     sensitivities = public.get("sensitivities", [])
@@ -1527,15 +1652,26 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             base = _json_number(raw_range_values[1])
             high = _json_number(raw_range_values[2])
             assert low is not None and base is not None and high is not None
-            if base <= 0 or not low <= base <= high:
+            conditional_zero_base = (
+                primary == "conditional_estimate"
+                and base == 0
+                and low == 0
+                and high > 0
+            )
+            if (
+                (base <= 0 and not conditional_zero_base)
+                or not low <= base <= high
+            ):
                 raise ValueError("scenario range arithmetic is invalid")
             reliability_scenario_range = {
                 "low": low,
                 "base": base,
                 "high": high,
             }
-            derived_movement = _json_number(
-                relative_movement(low=low, base=base, high=high)
+            derived_movement = (
+                1.0
+                if conditional_zero_base
+                else _json_number(relative_movement(low=low, base=base, high=high))
             )
             if derived_movement is None:
                 raise ValueError("scenario movement is not finite")
@@ -1568,6 +1704,8 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         if effective_review_state == "withheld" or effective_state == "withheld":
             model["publication_state"] = "withheld"
             model["intrinsic_value_per_share"] = None
+            if "conditional_value_per_share" in model:
+                model["conditional_value_per_share"] = None
         else:
             model["publication_state"] = effective_state
 
@@ -1580,6 +1718,8 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             if effective_review_state == "withheld" or effective_state == "withheld":
                 model["publication_state"] = "withheld"
                 model["intrinsic_value_per_share"] = None
+                if "conditional_value_per_share" in model:
+                    model["conditional_value_per_share"] = None
                 scenario_withheld = True
             else:
                 model["publication_state"] = effective_state
@@ -1637,7 +1777,7 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             reliability_scenario_range,
             reason="LEGACY_ARTIFACT_NOT_REGENERATED",
         ) or _withheld_reliability()
-    return public
+    return apply_public_baseline_contract(public)
 
 
 def _public_fcff_result(
@@ -1669,13 +1809,17 @@ def _public_fcff_result(
         )
     segment_forecast = assumptions.get("segment_forecast")
     forecast_mode = (
-        segment_forecast["mode"]
+        assumptions.get("forecast_mode_override")
+        or segment_forecast["mode"]
         if segment_forecast
         else (
-            "unavailable"
-            if assumptions.get("forecast_evidence_status")
-            == "unavailable_for_normalized_period"
-            else "consolidated"
+            assumptions.get("forecast_mode_override")
+            or (
+                "unavailable"
+                if assumptions.get("forecast_evidence_status")
+                == "unavailable_for_normalized_period"
+                else "consolidated"
+            )
         )
     )
     segment_assumptions = (
@@ -1733,6 +1877,21 @@ def _public_fcff_result(
             ],
             "risk_free_source_url": market_assumptions["risk_free_source_url"],
             "equity_risk_premium": market_assumptions["equity_risk_premium"],
+            **{
+                key: value
+                for key, value in result.get("public_assumptions", {}).items()
+                if key
+                in {
+                    "cycle_wdc_weight",
+                    "cycle_stx_weight",
+                    "normalized_tax_rate",
+                    "operating_nwc_ratio",
+                    "diluted_shares",
+                    "diluted_shares_low",
+                    "diluted_shares_high",
+                    "bridge_claims_basis",
+                }
+            },
         },
         "models": public_models,
         "scenarios": {
@@ -1750,6 +1909,11 @@ def _public_fcff_result(
             "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution",
         },
     }
+    public["public_assumptions"] = {
+        key: value
+        for key, value in public["public_assumptions"].items()
+        if value is not None
+    }
     return public
 
 
@@ -1764,7 +1928,7 @@ def public_result(
         if not isinstance(submissions, dict):
             raise ValueError("submissions are required for FCFF publication")
         public = _public_fcff_result(result, submissions)
-    elif primary in {"residual_income", "ddm", "ffo"}:
+    elif primary in {"residual_income", "ddm", "ffo", "fcfe_dcf"}:
         public = public_equity_artifact(result)
     else:
         raise ValueError("unsupported primary model for public serialization")
@@ -1836,8 +2000,8 @@ def frontend_company(
         "valuation": {
             "us": public,
             "modelPolicy": {
-                "primary": "fcff_dcf",
-                "crossChecks": ["epv"],
+                "primary": public["model_policy"]["primary"],
+                "crossChecks": list(public["model_policy"].get("supporting") or []),
                 "publishable": public["review"]["publication_state"] != "withheld",
                 "reason": public["model_policy"]["reason"],
                 "warnings": public["review"]["warnings"],

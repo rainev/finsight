@@ -1,0 +1,124 @@
+{
+  "batch": 20,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "industrials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000077360",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "Pentair",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "PNR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000084839",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Environmental & Facilities Services",
+      "issuer_name": "Rollins, Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "ROL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000091142",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "issuer_name": "A. O. Smith",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "AOS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000091440",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "Snap-on",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "SNA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000092380",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Passenger Airlines",
+      "issuer_name": "Southwest Airlines",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "LUV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000093556",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "Stanley Black & Decker",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "SWK"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000100517",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Passenger Airlines",
+      "issuer_name": "United Airlines Holdings",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "UAL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000100885",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Rail Transportation",
+      "issuer_name": "Union Pacific Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "UNP"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000723254",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Diversified Support Services",
+      "issuer_name": "Cintas",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "CTAS"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000723531",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Human Resource & Employment Services",
+      "issuer_name": "Paychex",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "PAYX"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

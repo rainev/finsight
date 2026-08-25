@@ -121,6 +121,11 @@ _STATEMENTS: tuple[str, ...] = (
     """,
     "CREATE INDEX IF NOT EXISTS idx_valuations_user ON valuations (user_id, created_at DESC)",
     "CREATE INDEX IF NOT EXISTS idx_valuations_company ON valuations (company_id)",
+    "ALTER TABLE valuations ADD COLUMN IF NOT EXISTS us_company BOOLEAN NOT NULL DEFAULT FALSE",
+    "ALTER TABLE valuations ADD COLUMN IF NOT EXISTS ticker TEXT",
+    "ALTER TABLE valuations ADD COLUMN IF NOT EXISTS model_version TEXT",
+    "ALTER TABLE valuations ADD COLUMN IF NOT EXISTS user_price NUMERIC",
+    "CREATE INDEX IF NOT EXISTS idx_valuations_us_ticker ON valuations (ticker) WHERE us_company",
     # --- Portfolio-aware insights (see docs/architecture.md) ---
     # What a user owns — the personalization key. Everything in the feed is
     # scoped to these rows via holdings.user_id.

@@ -1,0 +1,124 @@
+{
+  "batch": 43,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "resource_cycle",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000916076",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Construction Materials",
+      "issuer_name": "Martin Marietta Materials",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "MLM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001022671",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Steel",
+      "issuer_name": "Steel Dynamics",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "STLD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001090012",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "issuer_name": "Devon Energy",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "core",
+      "ticker": "DVN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001163165",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "issuer_name": "ConocoPhillips",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "core",
+      "ticker": "COP"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001164727",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Gold",
+      "issuer_name": "Newmont",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "boundary",
+      "ticker": "NEM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001285785",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Fertilizers & Agricultural Chemicals",
+      "issuer_name": "Mosaic Company (The)",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "MOS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001324404",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Fertilizers & Agricultural Chemicals",
+      "issuer_name": "CF Industries",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "CF"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001396009",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Construction Materials",
+      "issuer_name": "Vulcan Materials Company",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "VMC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001489393",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "issuer_name": "LyondellBasell",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "LYB"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001707925",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Industrial Gases",
+      "issuer_name": "Linde plc",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "boundary",
+      "ticker": "LIN"
+    }
+  ],
+  "partition_families": [
+    "resource_cycle_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

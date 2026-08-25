@@ -388,6 +388,12 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
         "reliability",
         "methodology",
         "data_boundary",
+        "availability_type",
+        "primary_valuation_method",
+        "confidence",
+        "market_comparison",
+        "relative_value_summary",
+        "calculator_link",
     }
 
     raw_statement_amounts = reported_statement_amounts(result["financials"])
@@ -645,6 +651,54 @@ def test_low_classification_confidence_caps_reliability_without_scrubbing(
     assert public["scenario_range"]["base"] is not None
     assert public["reliability"]["label"] == "Low"
     assert "LOW_CLASSIFICATION_CONFIDENCE" in public["reliability"]["reasons"]
+
+
+def test_stale_segment_detail_falls_back_to_consolidated_model(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    submissions = load_fixture("aapl-submissions.json")
+    companyfacts = load_fixture("aapl-companyfacts.json")
+    stale_segment_evidence = {
+        "forecast_mode": "segment_gross_profit",
+        "growth_weights": {
+            "recent_ytd": 0.4,
+            "company_history": 0.4,
+            "archetype_anchor": 0.2,
+        },
+        "segments": {
+            "stale": {
+                "label": "Stale segment",
+                "annual_revenue": [80.0, 90.0, 100.0],
+                "annual_gross_profit": [40.0, 45.0, 50.0],
+                "latest_ytd_revenue": 50.0,
+                "prior_ytd_revenue": 45.0,
+                "ttm_revenue": 1.0,
+                "ttm_gross_profit": 0.5,
+                "archetype_growth_anchor": 0.05,
+            }
+        },
+        "ttm_operating_expense": 0.1,
+        "annual_operating_expense": [20.0, 21.0, 22.0],
+        "annual_total_revenue": [80.0, 90.0, 100.0],
+        "forecast_years": 8,
+        "growth_persistence": 0.8,
+        "margin_persistence": 0.8,
+        "sources": [],
+    }
+    monkeypatch.setattr(
+        "app.us_valuation.pipeline.load_issuer_forecast_evidence",
+        lambda _cik: stale_segment_evidence,
+    )
+
+    result = build_us_valuation(
+        submissions=submissions,
+        companyfacts=companyfacts,
+        valuation_date="2026-08-14",
+    )
+
+    assert result["forecast_assumptions"]["consolidated_segment_fallback"] is True
+    assert result["forecast_assumptions"]["segment_forecast"] is None
+    assert "CONSOLIDATED_SEGMENT_FALLBACK" in result["reliability"]["reasons"]
 
 
 def test_model_validation_failure_uses_withheld_vocabulary() -> None:
@@ -1941,7 +1995,8 @@ def test_equity_lanes_use_canonical_public_result_and_safe_reliability(
     public = public_result(private)
 
     assert private == before
-    assert public["schema_version"] == "US-PUBLIC-VALUATION-1.1"
+    assert public["schema_version"] == "US-PUBLIC-VALUATION-1.2"
+    assert public["ticker"] == private["issuer"]["ticker"]
     assert public["model_policy"]["primary"] == primary
     assert public["models"][primary]["intrinsic_value_per_share"] == 100.0
     assert public["review"]["publication_state"] == "review_required"
@@ -2056,3 +2111,12 @@ def test_public_result_rejects_unsupported_primary_before_equity_copy() -> None:
 
     with pytest.raises(ValueError, match="unsupported primary model"):
         public_result(private)
+
+
+def test_public_result_supports_equity_level_fcfe_without_submissions() -> None:
+    private = _synthetic_equity_result("fcfe_dcf")
+
+    public = public_result(private)
+
+    assert public["ticker"] == private["issuer"]["ticker"]
+    assert public["scenario_range"] == private["scenario_range"]

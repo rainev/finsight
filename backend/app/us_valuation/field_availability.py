@@ -33,6 +33,11 @@ FallbackLevel = Literal[
     "company_history",
     "sector_estimate",
 ]
+CoverageBasis = Literal[
+    "direct_issuer_total",
+    "calculation_relationship",
+    "reconciled_disjoint_components",
+]
 Freshness = Literal["current", "carried_forward", "stale", "unknown"]
 PeriodRole = Literal["operating_ttm", "balance_sheet_snapshot"]
 
@@ -40,6 +45,7 @@ PeriodRole = Literal["operating_ttm", "balance_sheet_snapshot"]
 _AVAILABILITY_STATES = frozenset(get_args(AvailabilityState))
 _AVAILABILITY_AUTHORITIES = frozenset(get_args(AvailabilityAuthority))
 _FALLBACK_LEVELS = frozenset(get_args(FallbackLevel))
+_COVERAGE_BASES = frozenset(get_args(CoverageBasis))
 _FRESHNESS_STATES = frozenset(get_args(Freshness))
 _PERIOD_ROLES = frozenset(get_args(PeriodRole))
 _POINT_STATES = frozenset({"reported", "proxy"})
@@ -93,6 +99,19 @@ def _restore_string_tuple(value: object, field: str) -> tuple[str, ...]:
     return restored
 
 
+def _coverage_source_fact_parts(value: str) -> tuple[str, str, str, str]:
+    parts = tuple(value.split("|"))
+    if (
+        len(parts) != 4
+        or any(not part.strip() for part in parts)
+        or ":" not in parts[2]
+    ):
+        raise ValueError(
+            "coverage_source_facts must use accession|period|concept|context"
+        )
+    return parts  # type: ignore[return-value]
+
+
 @dataclass(frozen=True)
 class UncertaintyRange:
     low: float
@@ -129,6 +148,11 @@ class FieldAvailability:
     source_age_days: int | None = None
     uncertainty: UncertaintyRange | None = None
     covered_fields: tuple[str, ...] = ()
+    coverage_basis: CoverageBasis | None = None
+    coverage_source_facts: tuple[str, ...] = ()
+    economic_scope: str | None = None
+    extraction_complete: bool = False
+    searched_concepts: tuple[str, ...] = ()
     authority: AvailabilityAuthority = "production"
     mapping_version: str = "US-FIELD-AVAILABILITY-1.0"
 
@@ -183,9 +207,68 @@ class FieldAvailability:
             raise ValueError("point value must lie inside its uncertainty range")
         if self.source_accession is not None:
             _require_nonempty_text(self.source_accession, "source_accession")
+        if not isinstance(self.extraction_complete, bool):
+            raise ValueError("extraction_complete must be a boolean")
 
         covered_fields = _require_string_tuple(self.covered_fields, "covered_fields")
         object.__setattr__(self, "covered_fields", tuple(sorted(set(covered_fields))))
+        coverage_source_facts = _require_string_tuple(
+            self.coverage_source_facts, "coverage_source_facts"
+        )
+        object.__setattr__(
+            self,
+            "coverage_source_facts",
+            tuple(sorted(set(coverage_source_facts))),
+        )
+        has_coverage_proof = any(
+            (
+                self.coverage_basis is not None,
+                bool(coverage_source_facts),
+                self.economic_scope is not None,
+            )
+        )
+        if has_coverage_proof or self.fallback_level == "reported_aggregate":
+            if not covered_fields:
+                raise ValueError("aggregate coverage proof requires covered_fields")
+            if self.coverage_basis not in _COVERAGE_BASES:
+                raise ValueError("aggregate coverage proof requires coverage_basis")
+            if not coverage_source_facts:
+                raise ValueError(
+                    "aggregate coverage proof requires coverage_source_facts"
+                )
+            _require_nonempty_text(self.economic_scope, "economic_scope")
+            parsed_coverage_facts = tuple(
+                _coverage_source_fact_parts(item)
+                for item in coverage_source_facts
+            )
+            if self.fallback_level == "reported_aggregate" and any(
+                accession != self.source_accession or period != self.period_end
+                for accession, period, _, _ in parsed_coverage_facts
+            ):
+                raise ValueError(
+                    "current aggregate coverage facts must match source accession and period"
+                )
+            if (
+                self.fallback_level in {"annual_carried_forward", "company_history"}
+                and self.uncertainty is not None
+                and any(
+                    accession not in self.uncertainty.source_accessions
+                    for accession, _, _, _ in parsed_coverage_facts
+                )
+            ):
+                raise ValueError(
+                    "historical aggregate coverage facts must match uncertainty sources"
+                )
+        searched_concepts = _require_string_tuple(
+            self.searched_concepts, "searched_concepts"
+        )
+        object.__setattr__(
+            self, "searched_concepts", tuple(sorted(set(searched_concepts)))
+        )
+        if self.extraction_complete and not searched_concepts:
+            raise ValueError(
+                "complete extraction requires searched_concepts"
+            )
 
         if self.state in _POINT_STATES:
             if self.value is None:
@@ -198,8 +281,12 @@ class FieldAvailability:
         elif self.state in _BOUNDED_STATES:
             if self.value is not None:
                 raise ValueError("bounded_unresolved requires value is None")
-            if self.freshness != "current":
-                raise ValueError("bounded_unresolved requires current freshness")
+            if self.freshness not in (
+                {"carried_forward"}
+                if self.fallback_level == "annual_carried_forward"
+                else {"current"}
+            ):
+                raise ValueError("bounded_unresolved freshness does not match its fallback")
             if self.uncertainty is None:
                 raise ValueError("bounded_unresolved requires uncertainty")
         elif self.state in _NONPOINT_STATES:
@@ -210,6 +297,21 @@ class FieldAvailability:
 
         if self.state == "stale" and self.freshness != "stale":
             raise ValueError("stale requires stale freshness")
+        if self.state == "not_disclosed":
+            if not self.extraction_complete:
+                raise ValueError(
+                    "not_disclosed requires complete extraction"
+                )
+            if self.freshness != "current":
+                raise ValueError("not_disclosed requires current freshness")
+            if (
+                self.source_accession is None
+                or self.source_kind is None
+                or self.evidence_class is None
+            ):
+                raise ValueError(
+                    "not_disclosed requires current source metadata"
+                )
 
         if (
             self.authority == "production"
@@ -225,20 +327,18 @@ class FieldAvailability:
                 raise ValueError(
                     "annual_carried_forward requires production authority"
                 )
-            if self.state != "reported":
-                raise ValueError("annual_carried_forward requires reported state")
-            if self.value is None or self.value < 0:
-                raise ValueError(
-                    "annual_carried_forward requires a finite nonnegative value"
-                )
+            if self.state not in {"reported", "bounded_unresolved"}:
+                raise ValueError("annual_carried_forward requires reported or bounded state")
+            if self.state == "reported" and (self.value is None or self.value < 0):
+                raise ValueError("reported annual carry-forward requires a finite nonnegative value")
+            if self.state == "bounded_unresolved" and self.uncertainty is None:
+                raise ValueError("bounded annual carry-forward requires uncertainty")
             if self.source_kind != "companyfacts":
                 raise ValueError(
                     "annual_carried_forward requires source_kind companyfacts"
                 )
-            if self.evidence_class != "reported":
-                raise ValueError(
-                    "annual_carried_forward requires evidence_class reported"
-                )
+            if self.evidence_class not in {"reported", "bounded_estimate"}:
+                raise ValueError("annual_carried_forward requires reported or bounded evidence class")
             if self.freshness != "carried_forward":
                 raise ValueError(
                     "annual_carried_forward requires carried_forward freshness"
@@ -276,6 +376,11 @@ class FieldAvailability:
             "source_age_days": self.source_age_days,
             "uncertainty": uncertainty,
             "covered_fields": list(self.covered_fields),
+            "coverage_basis": self.coverage_basis,
+            "coverage_source_facts": list(self.coverage_source_facts),
+            "economic_scope": self.economic_scope,
+            "extraction_complete": self.extraction_complete,
+            "searched_concepts": list(self.searched_concepts),
             "authority": self.authority,
             "mapping_version": self.mapping_version,
         }
@@ -325,6 +430,16 @@ class FieldAvailability:
             uncertainty=uncertainty,
             covered_fields=_restore_string_tuple(
                 value.get("covered_fields", []), "covered_fields"
+            ),
+            coverage_basis=value.get("coverage_basis"),
+            coverage_source_facts=_restore_string_tuple(
+                value.get("coverage_source_facts", []),
+                "coverage_source_facts",
+            ),
+            economic_scope=value.get("economic_scope"),
+            extraction_complete=value.get("extraction_complete", False),
+            searched_concepts=_restore_string_tuple(
+                value.get("searched_concepts", []), "searched_concepts"
             ),
             authority=value.get("authority", "production"),
             mapping_version=value.get(
@@ -481,6 +596,8 @@ def availability_from_normalized_field(
         raise ValueError(f"unrecognized legacy field state: {legacy_state}") from error
 
     source_record = source or {}
+    if state == "unresolved" and source_record.get("extraction_complete") is True:
+        state = "not_disclosed"
     raw_evidence_class = source_record.get("evidence_class") or source_record.get(
         "value_status"
     )
@@ -500,6 +617,26 @@ def availability_from_normalized_field(
     source_accession = str(raw_accession) if raw_accession is not None else None
     raw_source_kind = source_record.get("source_kind")
     source_kind = str(raw_source_kind) if raw_source_kind is not None else None
+    raw_fallback_level = source_record.get("fallback_level", "current_reported")
+    if raw_fallback_level not in _FALLBACK_LEVELS:
+        raise ValueError("source fallback_level is not recognized")
+    fallback_level = raw_fallback_level
+    source_covered_fields = source_record.get("covered_fields", ())
+    normalized_covered_fields = (
+        covered_fields
+        if covered_fields
+        else _restore_string_tuple(source_covered_fields, "covered_fields")
+    )
+    coverage_basis = source_record.get("coverage_basis")
+    coverage_source_facts = _restore_string_tuple(
+        source_record.get("coverage_source_facts", ()),
+        "coverage_source_facts",
+    )
+    economic_scope = source_record.get("economic_scope")
+    extraction_complete = source_record.get("extraction_complete", False)
+    searched_concepts = _restore_string_tuple(
+        source_record.get("searched_concepts", ()), "searched_concepts"
+    )
 
     if legacy_state == "verification_stale":
         raw_value = _finite_float_or_none(source_record.get("value"))
@@ -538,7 +675,12 @@ def availability_from_normalized_field(
                     fallback_level="annual_carried_forward",
                     period_role=period_role,
                     source_age_days=source_age_days,
-                    covered_fields=covered_fields,
+                    covered_fields=normalized_covered_fields,
+                    coverage_basis=coverage_basis,
+                    coverage_source_facts=coverage_source_facts,
+                    economic_scope=economic_scope,
+                    extraction_complete=extraction_complete,
+                    searched_concepts=searched_concepts,
                 )
 
     freshness: Freshness = (
@@ -548,10 +690,14 @@ def availability_from_normalized_field(
         if state == "unresolved"
         else "current"
     )
-    reason_code = "_".join(
-        (
-            _reason_token(state),
-            _reason_token(evidence_class or "unspecified"),
+    reason_code = (
+        "NOT_DISCLOSED_COMPLETE_EXTRACTION"
+        if state == "not_disclosed"
+        else "_".join(
+            (
+                _reason_token(state),
+                _reason_token(evidence_class or "unspecified"),
+            )
         )
     )
 
@@ -565,6 +711,12 @@ def availability_from_normalized_field(
         source_kind=source_kind,
         evidence_class=evidence_class,
         freshness=freshness,
+        fallback_level=fallback_level,
         period_role=period_role,
-        covered_fields=covered_fields,
+        covered_fields=normalized_covered_fields,
+        coverage_basis=coverage_basis,
+        coverage_source_facts=coverage_source_facts,
+        economic_scope=economic_scope,
+        extraction_complete=extraction_complete,
+        searched_concepts=searched_concepts,
     )

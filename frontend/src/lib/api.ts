@@ -18,6 +18,8 @@ import type {
   SavedValuation,
   Sentiment,
   SmartBrief,
+  UsCalculatorResult,
+  UsCalculatorView,
   UsValuation,
   UsValuationList,
   ValuationResult,
@@ -184,4 +186,18 @@ export function listUsValuations(): Promise<UsValuationList> {
 
 export function getUsValuation(ticker: string): Promise<UsValuation> {
   return request<UsValuation>(`/us-valuations/${ticker}`)
+}
+
+export function getUsValuationCalculator(ticker: string): Promise<UsCalculatorView> {
+  return request<UsCalculatorView>(`/us-valuations/${ticker}/calculator`)
+}
+
+export function calculateUsValuation(
+  ticker: string,
+  body: { overrides: Record<string, number>; manual_price?: number; save?: boolean },
+): Promise<UsCalculatorResult> {
+  return request<UsCalculatorResult>(`/us-valuations/${ticker}/calculator`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  })
 }

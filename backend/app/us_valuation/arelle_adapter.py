@@ -70,12 +70,24 @@ def _filing_from_payload(payload: Any, accession: str, form: str) -> StructuralF
             _diagnostic_from_dict(diagnostic)
             for diagnostic in payload.get("diagnostics", ())
         )
+        filed_date = payload.get("filed_date")
+        report_date = payload.get("report_date")
+        if filed_date is not None and any(
+            fact.filed_date != filed_date for fact in facts
+        ):
+            raise ValueError("worker fact filed_date does not match filing metadata")
+        if report_date is not None and any(
+            fact.report_date != report_date for fact in facts
+        ):
+            raise ValueError("worker fact report_date does not match filing metadata")
         return StructuralFiling(
             source_accession=str(payload["source_accession"]),
             period_end=str(payload["period_end"]),
             facts=facts,
             diagnostics=diagnostics,
             form=payload.get("form"),
+            filed_date=filed_date,
+            report_date=report_date,
             filing_metadata=tuple(
                 (str(pair[0]), str(pair[1]))
                 for pair in payload.get("filing_metadata", ())

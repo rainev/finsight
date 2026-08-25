@@ -1,0 +1,124 @@
+{
+  "batch": 5,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "consumer_discretionary",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000719955",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homefurnishing Retail",
+      "issuer_name": "Williams-Sonoma, Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "boundary",
+      "ticker": "WSM"
+    },
+    {
+      "boundary_reason": "consumer_retail_demand_boundary",
+      "cik": "0000726958",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Food Retail",
+      "issuer_name": "Casey's",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "boundary",
+      "ticker": "CASY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000815097",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "issuer_name": "Carnival Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "CCL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000822416",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homebuilding",
+      "issuer_name": "PulteGroup",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "PHM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000829224",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "issuer_name": "Starbucks",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "SBUX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000866787",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automotive Retail",
+      "issuer_name": "AutoZone",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "AZO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000882184",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homebuilding",
+      "issuer_name": "D. R. Horton",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "DHI"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000884887",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "issuer_name": "Royal Caribbean Group",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "RCL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000898173",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automotive Retail",
+      "issuer_name": "O'Reilly Automotive",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "ORLY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000906163",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homebuilding",
+      "issuer_name": "NVR, Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "NVR"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

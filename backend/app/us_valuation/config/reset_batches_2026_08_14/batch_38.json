@@ -1,0 +1,124 @@
+{
+  "batch": 38,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "financials",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001095073",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Reinsurance",
+      "issuer_name": "Everest Group",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "EG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001123360",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "Global Payments",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "GPN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001126328",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "issuer_name": "Principal Financial Group",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "PFG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001136893",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "Fidelity National Information Services",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "FIS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001137774",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "issuer_name": "Prudential Financial",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "PRU"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001140536",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "issuer_name": "Willis Towers Watson",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "WTW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001141391",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "Mastercard",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "MA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001156375",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "CME Group",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "CME"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001175454",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "Corpay",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "CPAY"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001267238",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Multi-line Insurance",
+      "issuer_name": "Assurant",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "AIZ"
+    }
+  ],
+  "partition_families": [
+    "financial_equity"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

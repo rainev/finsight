@@ -309,6 +309,7 @@ def test_shadow_review_candidate_discards_its_non_authoritative_point() -> None:
 SUPPORTED = {
     "marketable_securities_current",
     "marketable_securities_noncurrent",
+    "marketable_securities_total",
     "commercial_paper",
     "current_debt",
     "noncurrent_debt",

@@ -9,6 +9,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 
 const php = (n: number) =>
   new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', maximumFractionDigits: 2 }).format(n)
+const usd = (n: number) =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(n)
 
 function verdictBadge(v: string | null) {
   const s = (v ?? '').toLowerCase()
@@ -68,12 +70,16 @@ export default function Saved() {
               {rows.map((r) => (
                 <TableRow key={r.id}>
                   <TableCell className="text-muted-foreground">{new Date(r.created_at).toLocaleString()}</TableCell>
-                  <TableCell className="font-mono text-xs uppercase">{r.model}</TableCell>
-                  <TableCell className="tnum text-right font-mono font-medium">{php(r.result.intrinsic_value)}</TableCell>
-                  <TableCell className="tnum text-right font-mono text-muted-foreground">
-                    {r.result.current_price != null ? php(r.result.current_price) : '—'}
+                  <TableCell className="font-mono text-xs uppercase">{r.us_company ? `${r.ticker} · ${r.model}` : r.model}</TableCell>
+                  <TableCell className="tnum text-right font-mono font-medium">
+                    {r.us_company ? usd(r.result.base ?? 0) : php(r.result.intrinsic_value)}
                   </TableCell>
-                  <TableCell>{verdictBadge(r.result.verdict)}</TableCell>
+                  <TableCell className="tnum text-right font-mono text-muted-foreground">
+                    {r.us_company
+                      ? r.user_price != null ? usd(r.user_price) : 'Automatic EOD'
+                      : r.result.current_price != null ? php(r.result.current_price) : '—'}
+                  </TableCell>
+                  <TableCell>{r.us_company ? (r.result.comparison?.label ?? '—') : verdictBadge(r.result.verdict)}</TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="icon" onClick={() => remove(r.id)} aria-label="Delete">
                       <Trash2 className="h-4 w-4 text-muted-foreground" />

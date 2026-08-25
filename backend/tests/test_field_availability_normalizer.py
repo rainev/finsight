@@ -262,6 +262,129 @@ def test_missing_fact_stays_unresolved_without_a_source() -> None:
     assert item.value is None
 
 
+def test_complete_current_search_maps_missing_to_not_disclosed_not_zero() -> None:
+    item = availability_from_normalized_field(
+        field="marketable_securities_noncurrent",
+        value=None,
+        source={
+            "source_accession": "0000000000-26-000001",
+            "source_kind": "structural_xbrl",
+            "evidence_class": "complete_search",
+            "extraction_complete": True,
+            "searched_concepts": [
+                "MarketableSecuritiesNoncurrent",
+                "LongTermInvestments",
+            ],
+        },
+        legacy_state="missing",
+        period_end="2026-06-30",
+        reference_date="2026-06-30",
+    )
+
+    assert item.state == "not_disclosed"
+    assert item.value is None
+    assert item.reason_code == "NOT_DISCLOSED_COMPLETE_EXTRACTION"
+    assert item.extraction_complete is True
+    assert item.searched_concepts == (
+        "LongTermInvestments",
+        "MarketableSecuritiesNoncurrent",
+    )
+
+
+def test_generic_total_marketable_securities_fact_is_not_coverage_proof() -> None:
+    submission = load_json("msft-submissions.json")
+    companyfacts = deepcopy(load_json("msft-companyfacts.json"))
+    companyfacts["facts"]["us-gaap"]["MarketableSecurities"] = {
+        "label": "Marketable Securities",
+        "description": "Amount of investment in marketable security.",
+        "units": {
+            "USD": [
+                {
+                    "val": 25_000_000_000,
+                    "accn": "0000950170-25-061046",
+                    "fy": 2025,
+                    "fp": "Q3",
+                    "form": "10-Q",
+                    "filed": "2025-04-30",
+                    "frame": "CY2025Q1I",
+                    "end": "2025-03-31",
+                }
+            ]
+        },
+    }
+
+    financials = CompanyFactsNormalizer(
+        companyfacts,
+        fiscal_year_end="0630",
+        as_of_date="2026-08-01",
+        filing_records=filing_records(submission),
+    ).normalize()
+
+    total = financials["balance_sheet"]["availability"][
+        "marketable_securities_total"
+    ]
+    assert total["value"] == 25_000_000_000
+    assert total["state"] == "reported"
+    assert total["fallback_level"] == "current_reported"
+    assert total["covered_fields"] == []
+    assert total["source_kind"] == "companyfacts"
+    assert total["evidence_class"] == "reported"
+    assert total["authority"] == "production"
+
+
+def test_governed_total_marketable_securities_requires_proof_metadata() -> None:
+    submission = load_json("msft-submissions.json")
+    financials = CompanyFactsNormalizer(
+        load_json("msft-companyfacts.json"),
+        fiscal_year_end="0630",
+        as_of_date="2026-08-01",
+        filing_records=filing_records(submission),
+    ).normalize(
+        governed_bridge_fields={
+            "marketable_securities_total": {
+                "value": 25_000_000_000,
+                "controlled_period_end": "2025-03-31",
+                "source_accession": "0000950170-25-061046",
+                "form": "10-Q",
+                "filing_date": "2025-04-30",
+                "unit": "USD",
+                "source_kind": "filing_balance_sheet",
+                "evidence_class": "reported_aggregate",
+                "fallback_level": "reported_aggregate",
+                "covered_fields": [
+                    "marketable_securities_current",
+                    "marketable_securities_noncurrent",
+                ],
+                "coverage_basis": "direct_issuer_total",
+                "coverage_source_facts": [
+                    "0000950170-25-061046|2025-03-31|us-gaap:MarketableSecurities|CurrentQuarterInstant"
+                ],
+                "economic_scope": (
+                    "marketable_securities_current_and_noncurrent"
+                ),
+                "rationale": "The consolidated balance sheet reports the issuer total.",
+            }
+        }
+    )
+
+    total = financials["balance_sheet"]["availability"][
+        "marketable_securities_total"
+    ]
+    assert total["value"] == 25_000_000_000
+    assert total["fallback_level"] == "reported_aggregate"
+    assert total["covered_fields"] == [
+        "marketable_securities_current",
+        "marketable_securities_noncurrent",
+    ]
+    assert total["coverage_basis"] == "direct_issuer_total"
+    assert total["coverage_source_facts"] == [
+        "0000950170-25-061046|2025-03-31|us-gaap:MarketableSecurities|CurrentQuarterInstant"
+    ]
+    assert total["economic_scope"] == (
+        "marketable_securities_current_and_noncurrent"
+    )
+
+
 def test_governed_reported_zero_maps_to_explicit_zero_with_preferred_accession() -> None:
     item = availability_from_normalized_field(
         field="commercial_paper",

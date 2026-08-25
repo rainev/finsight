@@ -521,7 +521,7 @@ def test_new_public_result_exposes_exact_allowlisted_reliability(
 
     public = public_result(private, submissions)
 
-    assert public["schema_version"] == "US-PUBLIC-VALUATION-1.1"
+    assert public["schema_version"] == "US-PUBLIC-VALUATION-1.2"
     assert set(public["reliability"]) == RELIABILITY_KEYS
     assert public["reliability"] == {
         "label": "Medium",
@@ -534,6 +534,43 @@ def test_new_public_result_exposes_exact_allowlisted_reliability(
         "reasons": [],
     }
     assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] == 100.0
+
+
+def test_public_sanitizer_retains_allowlisted_practical_policy_reason(
+    private_aapl: dict[str, Any], submissions: dict[str, Any]
+) -> None:
+    private = deepcopy(private_aapl)
+    _make_native_pass(private)
+    private["models"]["fcff_dcf"]["intrinsic_value_per_share"] = 100.0
+    private["scenario_range"].update({"low": 90.0, "base": 100.0, "high": 110.0})
+    _install_private_assessment(
+        private,
+        decision="complete",
+        usable=True,
+        low=100.0,
+        midpoint=100.0,
+        high=100.0,
+        spread_ratio=0.0,
+        blocking_fields=[],
+        bounded_fields=[],
+        reason_codes=[],
+        warning=None,
+    )
+    private["reliability"] = reliability_dto(
+        label="Low",
+        model_cap="Low",
+        scenario_movement_ratio=0.10,
+        reasons=["CONSOLIDATED_MODEL_FALLBACK", "SPECIALIST_MODEL_UNCERTAINTY"],
+    )
+
+    once = public_result(private, submissions)
+    twice = sanitize_public_artifact(once)
+
+    assert once["reliability"]["reasons"] == [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY",
+    ]
+    assert twice == once
 
 
 def test_regenerated_wide_bounded_review_is_graded_instead_of_scrubbed() -> None:

@@ -1915,6 +1915,7 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "version",
         "marketable_securities_current",
         "marketable_securities_noncurrent",
+        "marketable_securities_total",
     }
     metric_rules = {
         key: value
@@ -1924,6 +1925,7 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
     assert set(metric_rules) == {
         "marketable_securities_current",
         "marketable_securities_noncurrent",
+        "marketable_securities_total",
         "current_debt",
         "noncurrent_debt",
         "commercial_paper",
@@ -1966,6 +1968,41 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         "marketable securities",
         "fair value",
     ]
+
+
+def test_generic_marketable_securities_under_current_assets_is_not_total() -> None:
+    decision = resolve_concept(
+        metric_request("marketable_securities_total"),
+        [
+            account_fact(
+                "us-gaap:MarketableSecurities",
+                documentation="Amount of investment in marketable security.",
+                presentation_parents=("us-gaap:AssetsCurrent",),
+                calculation_parents=("us-gaap:AssetsCurrent",),
+            )
+        ],
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == ("STATEMENT_ROLE_MISMATCH",)
+
+
+def test_unclassified_direct_issuer_total_is_structural_shadow_candidate() -> None:
+    decision = resolve_concept(
+        metric_request("marketable_securities_total"),
+        [
+            account_fact(
+                "us-gaap:MarketableSecurities",
+                documentation="Total current and noncurrent marketable securities.",
+                presentation_parents=("us-gaap:Assets",),
+                calculation_parents=("us-gaap:Assets",),
+            )
+        ],
+    )
+
+    assert decision.status == "accepted"
+    assert decision.value is not None
+    assert decision.mapping_method == "exact_configured_concept"
 
 
 def test_preferred_zero_conflict_companions_must_be_nonempty_strings(
@@ -2734,6 +2771,28 @@ def test_no_candidate_is_unresolved() -> None:
     assert decision.source_concept is None
     assert decision.source_accession == ACCESSION
     assert decision.reason_codes == ("NO_CANDIDATE",)
+
+
+@pytest.mark.parametrize(
+    "filed_date,reason",
+    [
+        (None, "MISSING_FILED_DATE"),
+        ("2026-08-15", "FILED_AFTER_VALUATION_DATE"),
+    ],
+)
+def test_point_in_time_request_rejects_missing_or_post_cutoff_filing_date(
+    filed_date: str | None, reason: str
+) -> None:
+    fact = account_fact(
+        "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+        filed_date=filed_date,
+    )
+    decision = resolve_concept(
+        current_request(valuation_date="2026-08-14"), [fact]
+    )
+
+    assert decision.status == "rejected"
+    assert decision.reason_codes == (reason,)
 
 
 def _install_contextual_dimension_policy(monkeypatch: pytest.MonkeyPatch) -> None:

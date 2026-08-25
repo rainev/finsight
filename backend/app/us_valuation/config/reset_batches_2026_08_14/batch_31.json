@@ -1,0 +1,124 @@
+{
+  "batch": 31,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "information_technology",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001327567",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "issuer_name": "Palo Alto Networks",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "PANW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001327811",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Workday, Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "WDAY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001341439",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Oracle Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "ORCL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001373715",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "issuer_name": "ServiceNow",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "NOW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001375365",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "issuer_name": "Supermicro",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "SMCI"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001402057",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Distributors",
+      "issuer_name": "CDW Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "CDW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001413447",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "NXP Semiconductors",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "NXPI"
+    },
+    {
+      "boundary_reason": "data_and_analytics_platform_boundary",
+      "cik": "0001442145",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Research & Consulting Services",
+      "issuer_name": "Verisk Analytics",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "VRSK"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001467373",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "IT Consulting & Other Services",
+      "issuer_name": "Accenture",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "ACN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001535527",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "issuer_name": "CrowdStrike",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "CRWD"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

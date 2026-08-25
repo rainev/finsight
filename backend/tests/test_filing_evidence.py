@@ -104,6 +104,30 @@ def test_crm_parser_keeps_finance_lease_split_unresolved() -> None:
     assert commercial_paper["status"] == "resolved"
 
 
+def test_generic_note_total_is_not_assumed_current() -> None:
+    records = extract_filing_evidence(
+        CRM_HTML,
+        metadata=_metadata(
+            "OTHER",
+            "0000000001",
+            "2026-04-30",
+            "https://www.sec.gov/Archives/edgar/data/1/000000000126000001/other-20260430.htm",
+        ),
+    )
+
+    totals = [
+        record
+        for record in records
+        if record["field"] == "marketable_securities_total"
+    ]
+    assert len(totals) == 1
+    assert totals[0]["value"] == 2_902
+    assert not any(
+        record["field"] == "marketable_securities_current"
+        for record in records
+    )
+
+
 def test_wdc_parser_resolves_converted_preferred_equity() -> None:
     records = extract_filing_evidence(
         WDC_HTML,

@@ -10,7 +10,8 @@ from statistics import median
 from typing import Any, Iterable, Mapping
 
 from .bridge_policy import reconcile_bridge
-from .field_availability import availability_from_normalized_field
+from .bridge_evidence_merge import merge_bridge_evidence
+from .field_availability import FieldAvailability, availability_from_normalized_field
 from .filing_evidence import governed_bridge_fields_from_evidence
 from .period_fallbacks import (
     FallbackDecision,
@@ -826,6 +827,7 @@ class CompanyFactsNormalizer:
         | Iterable[str] = (),
         governed_bridge_fields: Mapping[str, dict[str, Any]] | None = None,
         filing_evidence: Iterable[Mapping[str, Any]] | None = None,
+        bridge_evidence: Iterable[FieldAvailability] = (),
         sector_estimates: Mapping[str, FallbackDecision] | None = None,
         major_changes: Mapping[str, Mapping[str, Any]] | None = None,
     ) -> dict[str, Any]:
@@ -998,6 +1000,7 @@ class CompanyFactsNormalizer:
             "total_assets",
             "marketable_securities_current",
             "marketable_securities_noncurrent",
+            "marketable_securities_total",
             "commercial_paper",
             "current_debt",
             "noncurrent_debt",
@@ -1122,11 +1125,26 @@ class CompanyFactsNormalizer:
                 "state": "weighted_average_diluted_proxy",
             }
             shares_from_weighted_average = True
-        availability = {
-            field: availability_from_normalized_field(
+        availability = {}
+        for field, item in balance_fields.items():
+            source = item["source"]
+            if (
+                field == "marketable_securities_total"
+                and isinstance(source, dict)
+                and item["state"] in {"reported", "governed_filing_fact"}
+            ):
+                source = {
+                    **source,
+                    "source_kind": source.get("source_kind") or "companyfacts",
+                    "evidence_class": source.get("evidence_class")
+                    or "reported",
+                    "authority": "production",
+                }
+                item["source"] = source
+            record = availability_from_normalized_field(
                 field=field,
                 value=item["value"],
-                source=item["source"],
+                source=source,
                 legacy_state=item["state"],
                 period_end=ttm_end,
                 covered_fields=(
@@ -1136,8 +1154,43 @@ class CompanyFactsNormalizer:
                 ),
                 reference_date=self.as_of_date or ttm_end,
             )
-            for field, item in balance_fields.items()
-        }
+            availability[field] = record
+        evidence_merge = merge_bridge_evidence(availability, bridge_evidence)
+        availability = evidence_merge.availability
+        bridge_evidence_diagnostics = list(evidence_merge.diagnostics)
+        for diagnostic in evidence_merge.diagnostics:
+            field = diagnostic["field"]
+            decision = diagnostic["decision"]
+            record = availability[field]
+            if field not in balance_fields:
+                balance_fields[field] = {
+                    "value": None,
+                    "source": None,
+                    "state": "missing",
+                    "annual_history": [],
+                }
+            if decision in {
+                "structural_added",
+                "structural_replaced_unusable_detail",
+                "newer_official_period_replaced_stale_current",
+            }:
+                balance_fields[field]["value"] = record.value
+                balance_fields[field]["state"] = "governed_filing_fact"
+                balance_fields[field]["source"] = {
+                    "value_status": "governed_filing_fact",
+                    "value": record.value,
+                    "source_accession": record.source_accession,
+                    "controlled_period_end": record.period_end,
+                    "source_kind": record.source_kind,
+                    "evidence_class": record.evidence_class,
+                    "fallback_level": record.fallback_level,
+                    "authority": record.authority,
+                    "reason_code": record.reason_code,
+                }
+            elif decision == "conflict":
+                balance_fields[field]["value"] = None
+                balance_fields[field]["state"] = "conflict"
+                balance_fields[field]["source"] = dict(diagnostic)
         fallback_decisions: dict[str, FallbackDecision] = {}
         total_assets_record = availability["total_assets"]
         current_total_assets = (
@@ -1153,6 +1206,7 @@ class CompanyFactsNormalizer:
             "cash",
             "marketable_securities_current",
             "marketable_securities_noncurrent",
+            "marketable_securities_total",
             "commercial_paper",
             "current_debt",
             "noncurrent_debt",
@@ -1166,6 +1220,20 @@ class CompanyFactsNormalizer:
             record = availability[field]
             history = annual_instant_history.get(field, [])
             if record.fallback_level == "annual_carried_forward":
+                if record.state == "bounded_unresolved" and record.uncertainty is not None:
+                    fallback_decisions[field] = FallbackDecision(
+                        field=field,
+                        low=record.uncertainty.low,
+                        base=(record.uncertainty.low + record.uncertainty.high) / 2,
+                        high=record.uncertainty.high,
+                        period_role="balance_sheet_snapshot",
+                        fallback_level="annual_carried_forward",
+                        source_age_days=record.source_age_days,
+                        source_accessions=record.uncertainty.source_accessions,
+                        basis=record.uncertainty.basis,
+                        reliability_cap="Low",
+                    )
+                    continue
                 event = (major_changes or {}).get(field, {})
                 flags = event.get("flags", ())
                 quantified_change = event.get("quantified_change")
@@ -1243,7 +1311,11 @@ class CompanyFactsNormalizer:
                 fallback_level=decision.fallback_level,
                 source_age_days=decision.source_age_days,
                 uncertainty=decision.uncertainty(),
-                authority="production",
+                authority=(
+                    "shadow"
+                    if decision.fallback_level == "sector_estimate"
+                    else "production"
+                ),
             )
             fallback_decisions[field] = decision
         incremental_dilution = (
@@ -1335,6 +1407,7 @@ class CompanyFactsNormalizer:
                 "availability": {
                     field: item.as_dict() for field, item in availability.items()
                 },
+                "bridge_evidence_diagnostics": bridge_evidence_diagnostics,
                 "fallback_decisions": {
                     field: decision.as_dict()
                     for field, decision in sorted(fallback_decisions.items())

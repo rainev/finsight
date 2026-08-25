@@ -1,0 +1,124 @@
+{
+  "batch": 50,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "real_estate_reit",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001053507",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Telecom Tower REITs",
+      "issuer_name": "American Tower",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "AMT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001057352",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Real Estate Services",
+      "issuer_name": "CoStar Group",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "CSGP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001063761",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "issuer_name": "Simon Property Group",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "SPG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001070750",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Hotel & Resort REITs",
+      "issuer_name": "Host Hotels & Resorts",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "HST"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001138118",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Real Estate Services",
+      "issuer_name": "CBRE Group",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "CBRE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001289490",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Self-Storage REITs",
+      "issuer_name": "Extra Space Storage",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "EXR"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001297996",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Data Center REITs",
+      "issuer_name": "Digital Realty",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "boundary",
+      "ticker": "DLR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001393311",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Self-Storage REITs",
+      "issuer_name": "Public Storage",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "PSA"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001687229",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Single-Family Residential REITs",
+      "issuer_name": "Invitation Homes",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "boundary",
+      "ticker": "INVH"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001705696",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Hotel & Resort REITs",
+      "issuer_name": "Vici Properties",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "VICI"
+    }
+  ],
+  "partition_families": [
+    "reit_affo"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

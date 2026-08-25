@@ -1,0 +1,124 @@
+{
+  "batch": 15,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "health_care",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000920148",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "issuer_name": "Labcorp",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "LH"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000927066",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "issuer_name": "DaVita",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "DVA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000943819",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "ResMed|",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "RMD"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001000228",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Distributors",
+      "issuer_name": "Henry Schein",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "HSIC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001000697",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "issuer_name": "Waters Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "WAT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001022079",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "issuer_name": "Quest Diagnostics",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "DGX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001035267",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Intuitive Surgical",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "ISRG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001037646",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "issuer_name": "Mettler Toledo",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "MTD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001071739",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Managed Health Care",
+      "issuer_name": "Centene Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "CNC"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001097149",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Supplies",
+      "issuer_name": "Align Technology",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "ALGN"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

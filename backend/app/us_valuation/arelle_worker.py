@@ -336,6 +336,15 @@ def _dimensions(context: Any, qnames: _QNameCanonicalizer) -> tuple[tuple[str, s
     return tuple(dimensions)
 
 
+def _entity(context: Any) -> tuple[str | None, str | None]:
+    raw = getattr(context, "entityIdentifier", None)
+    if not isinstance(raw, (tuple, list)) or len(raw) != 2:
+        return None, None
+    scheme = str(raw[0]).strip()
+    identifier = str(raw[1]).strip()
+    return (identifier or None, scheme or None)
+
+
 def _optional_float(value: Any) -> float | None:
     if value is None:
         return None
@@ -571,7 +580,7 @@ def _package_manifest(
                 raise ValueError("package resource hash mismatch")
     except (KeyError, OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
         raise RuntimeError(f"invalid structural package manifest: {exc}") from exc
-    return manifest, (
+    metadata = [
         ("accession", accession),
         ("form", form),
         ("primary_document", entrypoint.name),
@@ -581,7 +590,12 @@ def _package_manifest(
         ("retrieved_at_epoch", str(manifest["cached_at_epoch"])),
         ("resource_count", str(manifest["resource_count"])),
         ("total_bytes", str(manifest["total_bytes"])),
-    )
+    ]
+    for key in ("filed_date", "report_date"):
+        value = manifest.get(key)
+        if isinstance(value, str) and value:
+            metadata.append((key, value))
+    return manifest, tuple(metadata)
 
 
 def _hydrate_offline_cache(controller: Any, package_dir: Path, manifest: dict[str, Any] | None) -> None:
@@ -607,6 +621,7 @@ def _extract_payload(entrypoint: Path, accession: str, form: str = "10-K") -> di
     qnames = _QNameCanonicalizer()
     normalized_form = normalize_filing_form(form)
     manifest, filing_metadata = _package_manifest(entrypoint, accession, normalized_form)
+    filing_metadata_map = dict(filing_metadata)
     worker_temp_dir = tempfile.TemporaryDirectory(prefix="arelle-worker-")
     try:
         controller = Cntlr.Cntlr(logFileName="logToPrint", disable_persistent_config=True)
@@ -664,6 +679,7 @@ def _extract_payload(entrypoint: Path, accession: str, form: str = "10-K") -> di
             concept_qname = getattr(concept, "qname", concept)
             namespace = str(getattr(concept_qname, "namespaceURI", ""))
             local_name = str(getattr(concept_qname, "localName", ""))
+            entity_identifier, entity_scheme = _entity(context)
             raw_facts.append(
                 StructuralFact(
                     qname=qnames.qname(concept),
@@ -688,6 +704,10 @@ def _extract_payload(entrypoint: Path, accession: str, form: str = "10-K") -> di
                     scale=_fact_attribute(fact, "scale"),
                     sign=_fact_attribute(fact, "sign"),
                     filing_form=normalized_form,
+                    filed_date=filing_metadata_map.get("filed_date"),
+                    report_date=filing_metadata_map.get("report_date"),
+                    entity_identifier=entity_identifier,
+                    entity_scheme=entity_scheme,
                     filing_metadata=filing_metadata,
                     presentation_ancestry=links["presentation_ancestry"],
                     relationships=links["relationships"],
@@ -710,6 +730,8 @@ def _extract_payload(entrypoint: Path, accession: str, form: str = "10-K") -> di
                 for diagnostic in diagnostics
             ],
             "form": normalized_form,
+            "filed_date": filing_metadata_map.get("filed_date"),
+            "report_date": filing_metadata_map.get("report_date"),
             "filing_metadata": filing_metadata,
         }
     finally:

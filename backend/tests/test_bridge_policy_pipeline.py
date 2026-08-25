@@ -188,9 +188,22 @@ def install_unavailable_aapl_normalizer(
             source_accession=(
                 original.source_accession if keep_source else None
             ),
-            source_kind=original.source_kind if keep_source else None,
-            evidence_class=state if keep_source else None,
-            freshness="stale" if state == "stale" else "unknown",
+            source_kind=(
+                original.source_kind or "structural_xbrl"
+                if state == "not_disclosed"
+                else original.source_kind if keep_source else None
+            ),
+            evidence_class=(
+                "complete_search"
+                if state == "not_disclosed"
+                else state if keep_source else None
+            ),
+            freshness=(
+                "stale" if state == "stale" else "current"
+                if state == "not_disclosed" else "unknown"
+            ),
+            extraction_complete=state == "not_disclosed",
+            searched_concepts=(field,) if state == "not_disclosed" else (),
         )
 
     _install_aapl_record(

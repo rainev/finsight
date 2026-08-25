@@ -1,0 +1,124 @@
+{
+  "batch": 18,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "industrials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000004281",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "Howmet Aerospace",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "HWM"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000008670",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Human Resource & Employment Services",
+      "issuer_name": "Automatic Data Processing",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "ADP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000012927",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "Boeing",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "BA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000018230",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction Machinery & Heavy Transportation Equipment",
+      "issuer_name": "Caterpillar Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "CAT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000026172",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction Machinery & Heavy Transportation Equipment",
+      "issuer_name": "Cummins",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "CMI"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000027904",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Passenger Airlines",
+      "issuer_name": "Delta Air Lines",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "DAL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000029905",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "Dover Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "DOV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000032604",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "issuer_name": "Emerson Electric",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "EMR"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000033185",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Research & Consulting Services",
+      "issuer_name": "Equifax",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "EFX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000040533",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "General Dynamics",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "GD"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

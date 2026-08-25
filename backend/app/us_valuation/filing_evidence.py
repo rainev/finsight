@@ -18,6 +18,7 @@ BRIDGE_FIELDS = frozenset(
     {
         "marketable_securities_current",
         "marketable_securities_noncurrent",
+        "marketable_securities_total",
         "commercial_paper",
         "current_debt",
         "noncurrent_debt",
@@ -172,8 +173,10 @@ def extract_filing_evidence(
     records: list[FilingEvidence] = []
     ticker = str(metadata["ticker"]).upper()
 
-    # Marketable securities: the first current-period total is the balance-sheet
-    # classification. Later tables are historical or contractual-maturity views.
+    # A note-table total is not a current/noncurrent classification by itself.
+    # CRM is the governed pilot whose balance sheet separately proves the full
+    # amount is current; other issuers retain the observation as an unproven
+    # total candidate until coverage metadata is supplied.
     total_index = next(
         (
             index
@@ -188,14 +191,22 @@ def extract_filing_evidence(
             records.append(
                 _record(
                     metadata,
-                    field="marketable_securities_current",
+                    field=(
+                        "marketable_securities_current"
+                        if ticker == "CRM"
+                        else "marketable_securities_total"
+                    ),
                     value=total,
                     source_kind="filing_table",
                     status="resolved",
                     confidence="high",
                     locator="marketable securities table/current-period total",
                     excerpt=_line_excerpt(compact_lines, total_index),
-                    rationale="The filing presents the total marketable-securities balance in the current-period table.",
+                    rationale=(
+                        "CRM's balance-sheet classification proves this full marketable-securities balance is current."
+                        if ticker == "CRM"
+                        else "The filing presents a marketable-securities total, but current/noncurrent and complete economic coverage remain unproven."
+                    ),
                 )
             )
 

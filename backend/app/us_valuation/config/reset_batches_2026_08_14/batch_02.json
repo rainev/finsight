@@ -1,0 +1,124 @@
+{
+  "batch": 2,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "communication_services",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000029989",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Advertising",
+      "issuer_name": "Omnicom Group",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "OMC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000732712",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Integrated Telecommunication Services",
+      "issuer_name": "Verizon",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "VZ"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000732717",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Integrated Telecommunication Services",
+      "issuer_name": "AT&T",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "T"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000946581",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Interactive Home Entertainment",
+      "issuer_name": "Take-Two Interactive",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "boundary",
+      "ticker": "TTWO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001065280",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "issuer_name": "Netflix",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "NFLX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001091667",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Cable & Satellite",
+      "issuer_name": "Charter Communications",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "CHTR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001166691",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Cable & Satellite",
+      "issuer_name": "Comcast",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "CMCSA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001283699",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Wireless Telecommunication Services",
+      "issuer_name": "T-Mobile US",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "TMUS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001326801",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Interactive Media & Services",
+      "issuer_name": "Meta Platforms",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "META"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001437107",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Broadcasting",
+      "issuer_name": "Warner Bros. Discovery",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "boundary",
+      "ticker": "WBD"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

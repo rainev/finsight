@@ -43,3 +43,75 @@ If a defect is discovered while executing a phase and it does not block that pha
   an operator to verify no writer is active before removing the lock. It does not risk serving writes or overwrite
   immutable output.
   *Reconsider when:* the replay CLI becomes scheduled or routinely concurrent and needs PID-aware stale-lock recovery.
+
+- **B12 · Retire or rewrite the older Batch 01 all-or-nothing implementation plan.**
+  *Why deferred:* `docs/superpowers/plans/2026-08-14-batch-01-ten-company-valuation.md`
+  remains useful implementation research, but its branch assumptions and requirement that all
+  ten pass before any promotion conflict with the user-approved controlled reset. The active
+  roadmap and controlled-reset rules govern; the old file must not silently drive promotion.
+  *Reconsider when:* Batch 01 is reported and the historical plan can be annotated or archived
+  without losing useful design evidence.
+
+- **B13 · Canonical 500-universe proof.**
+  **Resolved 2026-08-24 by explicit user authorization.** Exhaustive local/Git review found no
+  original historical 500-row artifact, so the workflow stopped before selection. The user then
+  authorized a replacement S&P 500 issuer universe effective 2026-08-14. A pinned public table,
+  official S&P cutoff-change evidence, and captured SEC mapping reconcile 503 securities to 500
+  CIKs; the canonical manifest and all Batches 02–50 are frozen and independently challenged.
+
+- **B14 · Batch 01 SEC acquisition lacks a monitored contact.**
+  **Resolved 2026-08-20.** The user supplied a monitored contact, the capture completed 10/10,
+  and a cached rerun reproduced the same immutable packets without serving changes. Retained as
+  history because future fresh acquisition still requires an explicit monitored contact; never
+  invent one or bypass this provenance gate.
+
+- **B15 · Representative browser UAT for controlled Batch 01.**
+  *Why deferred:* the worktree has no installed frontend runtime (`vite: command not found`) and
+  the U.S. valuation route is authentication-protected. No UI code changed in this phase, and a
+  faked login would not be real consumer evidence. The real staged FastAPI path is verified.
+  *Reconsider when:* frontend dependencies and a local authenticated test user/database are
+  available; then exercise the 10-item selector and withheld detail state in the browser.
+
+- **B16 · NEE specialist FPL/NEER sum-of-parts.**
+  *Why deferred:* direct Q2 extraction fixed the period defect, but the approved consolidated
+  FCFE fallback produces nonpositive bear/base common cash flow once commercial paper and parent/
+  NCI allocation are complete. A dividend-only value would conceal the mixed-business problem.
+  *Reconsider when:* source-linked FPL regulated equity/rate-base economics, Energy Resources
+  project cash flow, parent claims, and segment financing can be reconciled into a provisional
+  specialist SOTP and independently challenged.
+
+- **B17 · Batch 02 real localhost HTTP acceptance.**
+  **Resolved 2026-08-24 after explicit user approval.** Uvicorn served the exact staged ten on
+  `127.0.0.1:8765`; list count was 10, all 10 details returned HTTP 200 with exact range/state/
+  reliability parity, no private fields leaked, zero Arelle modules loaded in the serving import,
+  and the process shut down cleanly.
+
+- **B18 · Reconstruct the exact difficult-corpus official-package denominator.**
+  **Denominator resolved by FOD5.** The retained period-aware report proves exactly 106 candidates. Combined with Batch 01/02 and the withheld subset, the de-duplicated manifest has 121 unique issuers and 133 cohort memberships.
+
+- **B19 · Capture unified official-evidence packets for the remaining difficult 101.**
+  **Resolved after the user supplied a monitored SEC contact.** All 106 source packets and 205 unique controller/annual packages were frozen, the initial 11 XBRL-ZIP package failures were repaired safely, and the complete evidence/consumer/API replay passed twice without serving changes.
+
+- **B20 · Obtain promotable specialist source payloads.**
+  *Why blocked:* FR Y-9C bulk access returned HTTP 403, FERC CID/payload/allocation is unresolved, and the SEC-filed Realty Income supplement is link-verified but not frozen locally with a complete AFFO reconciliation.
+  *Unblocks when:* immutable official payloads, parent identity/allocation, cutoff, units, and reconciliations pass the specialist contracts.
+
+- **B21 · Supply approved private U.S. EOD and peer records.**
+  *Why blocked:* the worktree contains no private vendor EOD dataset, peer cohort, or provider
+  client/credentials. The launch-first implementation can validate and consume provider-neutral
+  private records, but it must not fabricate prices or silently substitute an unapproved source.
+  *Unblocks when:* approved records include canonical security/listing, USD currency,
+  split-adjusted close, price date, provider, and payload hash under the private contract.
+
+- **B22 · Batch 04, serving promotion, merge, push, and deployment.**
+  *Current state:* the user confirmed LF4 on 2026-08-25. Main pushes auto-deploy staging.
+  *Why still blocked:* confirmation approved the staged behavior only; it did not name or authorize
+  Batch 04, promotion, merge, push, or deployment.
+  *Unblocks when:* the user separately authorizes the specific next-batch or outward-facing action.
+
+- **B23 · Real Postgres U.S. saved-run migration and persistence acceptance.**
+  *Why blocked:* this machine has no Docker command or reachable local Postgres. Nullable U.S.
+  columns, migration SQL, `save_us`, API scoping, safe payload tests, and the browser save response
+  pass, but no real row was inserted/read back.
+  *Unblocks when:* a staging/local database is available; run migrations, save a custom U.S. result,
+  read it through `/api/valuations`, verify user scoping and fields, then delete the test row.

@@ -28,6 +28,9 @@ _OPTIONAL_ABSENT_STATES = frozenset({"not_disclosed", "unresolved"})
 _LEASE_COMPONENTS = frozenset(
     {"finance_lease_current", "finance_lease_noncurrent"}
 )
+_INVESTMENT_COMPONENTS = frozenset(
+    {"marketable_securities_current", "marketable_securities_noncurrent"}
+)
 _DEBT_COMPONENTS = frozenset(
     {
         "commercial_paper",
@@ -660,6 +663,13 @@ def _record_unusable_reason(
             FieldAvailability.from_dict(record.as_dict())
         except (AttributeError, KeyError, TypeError, ValueError):
             return "BRIDGE_EVIDENCE_INVALID_CONTRACT"
+    if record.fallback_level == "sector_estimate" and not (
+        record.state == "bounded_unresolved"
+        and record.evidence_class == "bounded_estimate"
+        and record.source_kind == "sector_range"
+        and record.uncertainty is not None
+    ):
+        return "BRIDGE_EVIDENCE_NOT_ISSUER_SPECIFIC"
     if record.state not in allowed_point_states and not (
         allow_bounded and record.state == "bounded_unresolved"
     ):
@@ -801,6 +811,9 @@ def _point_value_if_usable(
     availability: Mapping[str, FieldAvailability],
     field: str,
 ) -> float | None:
+    record = availability.get(field)
+    if not isinstance(record, FieldAvailability) or record.freshness != "current":
+        return None
     value_range = _record_range_if_usable(
         availability,
         field,
@@ -818,6 +831,113 @@ def _point_matches_range(point: float, value_range: BridgeRange) -> bool:
     return (
         point >= value_range.low - _tolerance(point, value_range.low)
         and point <= value_range.high + _tolerance(point, value_range.high)
+    )
+
+
+def _resolve_cash_and_investments(
+    availability: Mapping[str, FieldAvailability],
+    context: _ResolutionContext,
+) -> BridgeRange:
+    cash = _resolve_required(
+        availability,
+        "cash",
+        allowed_point_states=_ACCOUNT_POINT_STATES,
+        allow_bounded=False,
+        context=context,
+    )
+    raw_total = availability.get("marketable_securities_total")
+    total_candidate = None
+    current_split = _point_value_if_usable(
+        availability, "marketable_securities_current"
+    )
+    noncurrent_split = _point_value_if_usable(
+        availability, "marketable_securities_noncurrent"
+    )
+    if (
+        isinstance(raw_total, FieldAvailability)
+        and raw_total.coverage_basis is not None
+        and raw_total.fallback_level
+        in {"reported_aggregate", "annual_carried_forward", "company_history"}
+        and not (
+            raw_total.fallback_level
+            in {"annual_carried_forward", "company_history"}
+            and (current_split is not None or noncurrent_split is not None)
+        )
+    ):
+        if raw_total.economic_scope != (
+            "marketable_securities_current_and_noncurrent"
+        ):
+            context.block(
+                "marketable_securities_total",
+                "TOTAL_INVESTMENTS_AGGREGATE_SCOPE_INVALID",
+            )
+        else:
+            total_candidate = _aggregate_candidate(
+                availability,
+                "marketable_securities_total",
+                required_coverage=_INVESTMENT_COMPONENTS,
+                incomplete_coverage_reason=(
+                    "TOTAL_INVESTMENTS_AGGREGATE_INCOMPLETE_COVERAGE"
+                ),
+                context=context,
+                require_extended_source=True,
+            )
+    if total_candidate is not None:
+        current = current_split
+        noncurrent = noncurrent_split
+        if (
+            current is not None
+            and noncurrent is not None
+            and not _point_matches_range(
+                current + noncurrent,
+                total_candidate.value_range,
+            )
+        ):
+            context.block(
+                "marketable_securities_total",
+                "TOTAL_INVESTMENTS_AGGREGATE_CONFLICT",
+            )
+        elif (
+            (
+                current is not None
+                and current
+                > total_candidate.value_range.high
+                + _tolerance(current, total_candidate.value_range.high)
+            )
+            or (
+                noncurrent is not None
+                and noncurrent
+                > total_candidate.value_range.high
+                + _tolerance(noncurrent, total_candidate.value_range.high)
+            )
+        ):
+            context.block(
+                "marketable_securities_total",
+                "TOTAL_INVESTMENTS_AGGREGATE_CONFLICT",
+            )
+        if total_candidate.bounded:
+            context.bound(
+                "marketable_securities_total",
+                total_candidate.record.reason_code,
+            )
+        return _add_ranges(cash, total_candidate.value_range)
+
+    return _add_ranges(
+        cash,
+        _resolve_required(
+            availability,
+            "marketable_securities_current",
+            allowed_point_states=_ACCOUNT_POINT_STATES,
+            allow_bounded=True,
+            context=context,
+        ),
+        _resolve_required(
+            availability,
+            "marketable_securities_noncurrent",
+            allowed_point_states=_ACCOUNT_POINT_STATES,
+            allow_bounded=True,
+            context=context,
+        ),
     )
 
 
@@ -843,7 +963,11 @@ def _corroborate_lease_candidate(
                 "finance_lease_total", "FINANCE_LEASE_AGGREGATE_CONFLICT"
             )
         split_record = availability[field]
-        if split_record.state in _ACCOUNT_POINT_STATES:
+        if (
+            split_record.state in _ACCOUNT_POINT_STATES
+            and split_record.freshness == "current"
+            and split_record.uncertainty is None
+        ):
             split_values.append(split_range.midpoint)
 
     if len(split_values) == 2:
@@ -892,16 +1016,6 @@ def _resolve_total_debt(
     availability: Mapping[str, FieldAvailability],
     context: _ResolutionContext,
 ) -> BridgeRange:
-    lease_candidate = _aggregate_candidate(
-        availability,
-        "finance_lease_total",
-        required_coverage=_LEASE_COMPONENTS,
-        incomplete_coverage_reason="FINANCE_LEASE_AGGREGATE_INCOMPLETE_COVERAGE",
-        context=context,
-    )
-    if lease_candidate is not None:
-        _corroborate_lease_candidate(availability, lease_candidate, context)
-
     debt_candidate = _aggregate_candidate(
         availability,
         "total_interest_bearing_debt",
@@ -912,7 +1026,7 @@ def _resolve_total_debt(
     )
     if debt_candidate is not None:
         complete_detail = _complete_debt_detail_point(
-            availability, lease_candidate
+            availability, None
         )
         if complete_detail is not None and not _point_matches_range(
             complete_detail, debt_candidate.value_range
@@ -925,6 +1039,16 @@ def _resolve_total_debt(
                 "total_interest_bearing_debt", debt_candidate.record.reason_code
             )
         return debt_candidate.value_range
+
+    lease_candidate = _aggregate_candidate(
+        availability,
+        "finance_lease_total",
+        required_coverage=_LEASE_COMPONENTS,
+        incomplete_coverage_reason="FINANCE_LEASE_AGGREGATE_INCOMPLETE_COVERAGE",
+        context=context,
+    )
+    if lease_candidate is not None:
+        _corroborate_lease_candidate(availability, lease_candidate, context)
 
     ordinary_debt = tuple(
         _resolve_required(
@@ -973,28 +1097,8 @@ def reconcile_bridge(
         raise ValueError("availability must be a mapping")
 
     context = _ResolutionContext()
-    cash_and_investments = _add_ranges(
-        _resolve_required(
-            availability,
-            "cash",
-            allowed_point_states=_ACCOUNT_POINT_STATES,
-            allow_bounded=False,
-            context=context,
-        ),
-        _resolve_required(
-            availability,
-            "marketable_securities_current",
-            allowed_point_states=_ACCOUNT_POINT_STATES,
-            allow_bounded=True,
-            context=context,
-        ),
-        _resolve_required(
-            availability,
-            "marketable_securities_noncurrent",
-            allowed_point_states=_ACCOUNT_POINT_STATES,
-            allow_bounded=True,
-            context=context,
-        ),
+    cash_and_investments = _resolve_cash_and_investments(
+        availability, context
     )
     total_debt = _resolve_total_debt(availability, context)
     preferred_equity = _resolve_required(

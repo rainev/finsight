@@ -10,11 +10,53 @@ import pytest
 
 import app.us_valuation.pipeline as valuation_pipeline
 from app.us_valuation.classification import load_archetype_config
-from app.us_valuation.equity_models import build_equity_level_result
+from app.us_valuation.equity_models import (
+    _annual_10k,
+    _cutoff_eligible_fact,
+    _latest_instant,
+    build_equity_level_result,
+)
 from app.us_valuation.eligibility import model_eligibility
 
 
 FIXTURES = Path(__file__).parent / "fixtures" / "us"
+
+
+def test_specialist_generic_fact_requires_filed_lineage_when_accession_exists() -> None:
+    assert not _cutoff_eligible_fact(
+        {"accn": "0000000001-26-000001", "end": "2026-06-30"},
+        "2026-08-14",
+    )
+    assert not _cutoff_eligible_fact(
+        {
+            "accn": "0000000001-26-000001",
+            "end": "2026-06-30",
+            "filed": "2026-08-15",
+        },
+        "2026-08-14",
+    )
+    assert _cutoff_eligible_fact(
+        {
+            "accn": "0000000001-26-000001",
+            "end": "2026-06-30",
+            "filed": "2026-08-10",
+        },
+        "2026-08-14",
+    )
+
+
+def test_specialist_fallback_selects_latest_filing_not_largest_value() -> None:
+    rows = [
+        {"val": 200.0, "fy": 2025, "fp": "FY", "form": "10-K", "end": "2025-12-31", "filed": "2026-02-01", "accn": "0000000001-26-000001"},
+        {"val": 150.0, "fy": 2025, "fp": "FY", "form": "10-K/A", "end": "2025-12-31", "filed": "2026-03-01", "accn": "0000000001-26-000002"},
+    ]
+    gaap = {"Metric": {"units": {"USD": rows, "shares": rows}}}
+
+    assert _annual_10k(gaap, ["Metric"], "2026-08-14") == {2025: 150.0}
+    assert _latest_instant(gaap, ["Metric"], "shares", "2026-08-14") == (
+        "2025-12-31",
+        150.0,
+    )
 
 
 def load_fixture(name: str) -> dict:
@@ -383,10 +425,11 @@ def test_interim_ffo_route_has_low_model_cap_without_switching_lanes() -> None:
         "facts": {
             "us-gaap": {
                 "NetIncomeLoss": _annual_usd(100_000_000.0),
-                "DepreciationDepletionAndAmortization": _annual_usd(
-                    50_000_000.0
-                ),
-                "CommonStockSharesOutstanding": _shares(10_000_000.0),
+                    "DepreciationDepletionAndAmortization": _annual_usd(
+                        50_000_000.0
+                    ),
+                    "GainLossOnSaleOfProperties": _annual_usd(0.0),
+                    "CommonStockSharesOutstanding": _shares(10_000_000.0),
             }
         }
     }

@@ -55,6 +55,90 @@ def test_bounded_field_requires_null_point_value_and_current_sources() -> None:
     assert FieldAvailability.from_dict(item.as_dict()) == item
 
 
+def test_reported_aggregate_requires_proof_bearing_coverage() -> None:
+    with pytest.raises(ValueError, match="coverage_basis"):
+        FieldAvailability(
+            field="marketable_securities_total",
+            value=25.0,
+            state="reported",
+            reason_code="REPORTED_AGGREGATE_REPLACEMENT",
+            period_end="2026-06-30",
+            source_accession="0000000000-26-000001",
+            source_kind="filing_balance_sheet",
+            evidence_class="reported_aggregate",
+            freshness="current",
+            fallback_level="reported_aggregate",
+            covered_fields=(
+                "marketable_securities_current",
+                "marketable_securities_noncurrent",
+            ),
+        )
+
+
+def test_reported_aggregate_round_trips_coverage_lineage() -> None:
+    item = FieldAvailability(
+        field="marketable_securities_total",
+        value=25.0,
+        state="reported",
+        reason_code="REPORTED_AGGREGATE_REPLACEMENT",
+        period_end="2026-06-30",
+        source_accession="0000000000-26-000001",
+        source_kind="filing_balance_sheet",
+        evidence_class="reported_aggregate",
+        freshness="current",
+        fallback_level="reported_aggregate",
+        covered_fields=(
+            "marketable_securities_current",
+            "marketable_securities_noncurrent",
+        ),
+        coverage_basis="direct_issuer_total",
+        coverage_source_facts=(
+            "0000000000-26-000001|2026-06-30|us-gaap:MarketableSecurities|CurrentQuarterInstant",
+        ),
+        economic_scope="marketable_securities_current_and_noncurrent",
+    )
+
+    assert FieldAvailability.from_dict(item.as_dict()) == item
+
+
+def test_reported_aggregate_rejects_opaque_coverage_fact_identifier() -> None:
+    with pytest.raises(ValueError, match="accession\\|period\\|concept\\|context"):
+        FieldAvailability(
+            field="marketable_securities_total",
+            value=25.0,
+            state="reported",
+            reason_code="REPORTED_AGGREGATE_REPLACEMENT",
+            period_end="2026-06-30",
+            source_accession="0000000000-26-000001",
+            source_kind="filing_balance_sheet",
+            evidence_class="reported_aggregate",
+            freshness="current",
+            fallback_level="reported_aggregate",
+            covered_fields=(
+                "marketable_securities_current",
+                "marketable_securities_noncurrent",
+            ),
+            coverage_basis="direct_issuer_total",
+            coverage_source_facts=("opaque-source-fact",),
+            economic_scope="marketable_securities_current_and_noncurrent",
+        )
+
+
+def test_not_disclosed_requires_complete_extraction_proof() -> None:
+    with pytest.raises(ValueError, match="complete extraction"):
+        FieldAvailability(
+            field="marketable_securities_noncurrent",
+            value=None,
+            state="not_disclosed",
+            reason_code="NOT_DISCLOSED",
+            period_end="2026-06-30",
+            source_accession="0000000000-26-000001",
+            source_kind="structural_xbrl",
+            evidence_class="complete_search",
+            freshness="current",
+        )
+
+
 def test_carried_forward_company_fact_round_trips_with_age_metadata() -> None:
     item = FieldAvailability(
         field="finance_lease_noncurrent",

@@ -1,0 +1,124 @@
+{
+  "batch": 26,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "information_technology",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000002488",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Advanced Micro Devices",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "AMD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000004127",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Skyworks Solutions",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "SWKS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000006281",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Analog Devices",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "ADI"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000006951",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductor Materials & Equipment",
+      "issuer_name": "Applied Materials",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "AMAT"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000024741",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Components",
+      "issuer_name": "Corning Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "GLW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000047217",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "issuer_name": "HP Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "HPQ"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000050863",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Intel",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "INTC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000051143",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "IT Consulting & Other Services",
+      "issuer_name": "IBM",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "IBM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000068505",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "issuer_name": "Motorola Solutions",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "MSI"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000820313",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Components",
+      "issuer_name": "Amphenol",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "APH"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

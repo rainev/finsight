@@ -1,0 +1,124 @@
+{
+  "batch": 17,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "health_care",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001551152",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "issuer_name": "AbbVie",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "ABBV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001555280",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "issuer_name": "Zoetis",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "ZTS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001613103",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Medtronic",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "MDT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001682852",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "issuer_name": "Moderna",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "MRNA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001739940",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "issuer_name": "Cigna",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "CI"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001757898",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Steris",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "STE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001792044",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "issuer_name": "Viatris",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "VTRS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001932393",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "GE HealthCare",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "GEHC"
+    },
+    {
+      "boundary_reason": "consumer_health_product_boundary",
+      "cik": "0001944048",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Personal Care Products",
+      "issuer_name": "Kenvue",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "boundary",
+      "ticker": "KVUE"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001964738",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Technology",
+      "issuer_name": "Solventum",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "SOLV"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

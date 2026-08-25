@@ -164,6 +164,55 @@
     }
   ],
   "issuer_overrides": {
+    "0001335258": {
+      "ticker": "LYV",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.75,
+      "reason": "Live Nation is a live-events, venue, sponsorship, and ticketing issuer. Consolidated operating FCFF is the provisional route, but event-related cash, deferred revenue, NCI, leases, and convertible dilution require specialist review."
+    },
+    "0001564708": {
+      "ticker": "NWSA",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.8,
+      "reason": "News Corp is a publishing and diversified media issuer. Mature consolidated operating FCFF is appropriate when Class A/Class B economics and nonoperating holdings are reconciled."
+    },
+    "0001744489": {
+      "ticker": "DIS",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.75,
+      "reason": "Disney combines content, streaming, parks, experiences, and licensing. Consolidated operating FCFF is a provisional Low route that must retain content and parks reinvestment and mixed-segment warnings."
+    },
+    "0001754301": {
+      "ticker": "FOXA",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.8,
+      "reason": "Fox is a broadcasting, cable-network, and media-rights issuer rather than a telecom carrier. Mature consolidated operating FCFF is the provisional route with Class A/Class B and NCI controls."
+    },
+    "0001973266": {
+      "ticker": "TKO",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.7,
+      "reason": "TKO is a sports and live-entertainment rights issuer. Consolidated operating FCFF requires direct capex, rights-commitment, NCI, and share-context controls before publication."
+    },
+    "0002041610": {
+      "ticker": "PSKY",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.65,
+      "reason": "Paramount Skydance is a successor media issuer. Consolidated operating FCFF is the target route only after predecessor-to-successor history, share conversion, debt, and ownership allocation are reconciled."
+    },
+    "0000029989": {
+      "ticker": "OMC",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.85,
+      "reason": "Omnicom is an asset-light advertising and marketing-services issuer. Consolidated FCFF is economically suitable only after the closed IPG merger produces a comparable source history; the override enables normalization but does not clear that event gate."
+    },
     "0000320193": {
       "ticker": "AAPL",
       "sector": "Technology",
@@ -215,6 +264,13 @@
           "verification_version": "US-BRIDGE-ZERO-1.0"
         }
       }
+    },
+    "0001065280": {
+      "ticker": "NFLX",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.9,
+      "reason": "Netflix is a subscription streaming and content issuer. A content-aware cash-FCFF route is required because generic PP&E reinvestment does not represent cash content spending; the override enables normalization without authorizing the generic model."
     },
     "0000789019": {
       "requires_segment_forecast": true,
@@ -2556,26 +2612,11 @@
       }
     },
     "0001652044": {
-      "ticker": "",
-      "reason": " routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
-      "verified_zero_bridge_fields": {
-        "noncontrolling_interests": {
-          "rationale": "'s controlling filing tags no noncontrolling interests concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
-          "source_accession": "0001652044-26-000071",
-          "controlled_period_end": "2026-06-30",
-          "reviewer": "FinSight automated bridge-absence check",
-          "reviewed_on": "2026-08-01",
-          "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
-        },
-        "preferred_equity": {
-          "rationale": "'s controlling filing tags no preferred equity concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
-          "source_accession": "0001652044-26-000071",
-          "controlled_period_end": "2026-06-30",
-          "reviewer": "FinSight automated bridge-absence check",
-          "reviewed_on": "2026-08-01",
-          "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
-        }
-      }
+      "ticker": "GOOGL",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.95,
+      "reason": "Alphabet is an internet, advertising, cloud, and AI-infrastructure issuer. Current preferred equity and VIE noncontrolling interests are reported claims and must never inherit the obsolete zero-bridge override."
     },
     "0001674101": {
       "ticker": "",
@@ -2714,26 +2755,11 @@
       }
     },
     "0001751008": {
-      "ticker": "",
-      "reason": " routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
-      "verified_zero_bridge_fields": {
-        "commercial_paper": {
-          "rationale": "'s controlling filing tags no commercial paper concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
-          "source_accession": "0001751008-26-000044",
-          "controlled_period_end": "2026-03-31",
-          "reviewer": "FinSight automated bridge-absence check",
-          "reviewed_on": "2026-08-01",
-          "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
-        },
-        "noncontrolling_interests": {
-          "rationale": "'s controlling filing tags no noncontrolling interests concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
-          "source_accession": "0001751008-26-000044",
-          "controlled_period_end": "2026-03-31",
-          "reviewer": "FinSight automated bridge-absence check",
-          "reviewed_on": "2026-08-01",
-          "verification_version": "US-BRIDGE-ZERO-AUTO-1.0"
-        }
-      }
+      "ticker": "APP",
+      "sector": "Communication Services",
+      "archetype": "internet_digital_services",
+      "confidence": 0.9,
+      "reason": "AppLovin is an advertising-technology issuer. Post-disposal operating FCFF is appropriate only with current bridge evidence and a wide company-history cash-conversion range."
     },
     "0001769628": {
       "ticker": "",

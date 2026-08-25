@@ -22,6 +22,8 @@ from .bridge_policy import (
 )
 from .eligibility import model_eligibility
 from .equity_models import build_equity_level_result
+from .field_availability import FieldAvailability
+from .evidence_policy import EvidenceAvailability
 from .models import (
     earnings_power_value,
     fcff_dcf,
@@ -178,6 +180,14 @@ def _forecast_quality_review(
         "errors": errors,
         "warnings": warnings,
         "checks": checks,
+    }
+
+
+def _segment_detail_can_fallback(error: ValueError) -> bool:
+    return str(error) in {
+        "Segment revenue does not reconcile to consolidated TTM revenue",
+        "Segment gross profit and operating expense do not reconcile to TTM operating income",
+        "Segment operating income does not reconcile to consolidated TTM operating income",
     }
 
 
@@ -516,6 +526,127 @@ def _withheld_eligibility_result(
     }
 
 
+def _withheld_source_data_result(
+    *,
+    classification: dict[str, Any],
+    model_name: str,
+    valuation_date: str | None,
+    source_manifest: dict[str, Any] | None,
+    error: ValueError,
+) -> dict[str, Any]:
+    message = f"Source normalization unavailable: {error}"
+    policy = classification.get("valuation_policy")
+    policy = policy if isinstance(policy, dict) else {}
+    withheld_model = {
+        "model": model_name,
+        "output_type": "intrinsic_value_per_share",
+        "currency": "USD",
+        "intrinsic_value_per_share": None,
+        "publication_state": "withheld",
+        "errors": [message],
+        "warnings": [],
+    }
+    return {
+        "schema_version": "US-VALUATION-RESULT-1.0",
+        "valuation_date": valuation_date or date.today().isoformat(),
+        "market": "US",
+        "currency": "USD",
+        "issuer": {
+            key: classification.get(key)
+            for key in (
+                "cik", "ticker", "issuer_name", "filing_regime",
+                "accounting_standard", "sec_sic_code", "sec_sic_label",
+                "finsight_sector", "primary_archetype", "secondary_archetypes",
+                "classification_confidence", "mapping_version", "override_applied",
+                "classification_reason", "source_accessions",
+            )
+        },
+        "financial_period_end": None,
+        "source_manifest": source_manifest or {"status": "not_supplied"},
+        "model_policy": {
+            "primary": model_name,
+            "supporting": policy.get("supporting_models", []),
+            "blend_models": False,
+            "reason": message,
+        },
+        "models": {model_name: withheld_model},
+        "scenarios": {},
+        "scenario_range": {
+            "low": None,
+            "base": None,
+            "high": None,
+            "label": "assumption range, not a statistical confidence interval",
+        },
+        "review": {
+            "publication_state": "withheld",
+            "confidence_grade": "insufficient",
+            "errors": [message],
+            "warnings": [],
+            "price_dependent_inputs_used": False,
+            "prohibited_output_check": {
+                "current_price": False,
+                "upside_downside": False,
+                "buy_hold_sell": False,
+                "trading_multiples": False,
+            },
+        },
+    }
+
+
+def _attach_official_evidence_trace(
+    result: dict[str, Any],
+    official_evidence: tuple[EvidenceAvailability, ...],
+    diagnostics: Mapping[str, Any] | None,
+) -> dict[str, Any]:
+    if official_evidence:
+        normalized_availability = (
+            result.get("financials", {}).get("balance_sheet", {}).get("availability", {})
+        )
+        consumption = []
+        for item in official_evidence:
+            projected = item.availability
+            consumed = normalized_availability.get(projected.field, {})
+            consumed_source = (
+                consumed.get("source_accession")
+                if isinstance(consumed, Mapping)
+                else getattr(consumed, "source_accession", None)
+            )
+            consumed_value = (
+                consumed.get("value")
+                if isinstance(consumed, Mapping)
+                else getattr(consumed, "value", None)
+            )
+            consumption.append(
+                {
+                    "field": projected.field,
+                    "selected_source_accession": projected.source_accession,
+                    "selected_value": projected.value,
+                    "consumed_source_accession": consumed_source,
+                    "consumed_value": consumed_value,
+                    "status": (
+                        "consumed"
+                        if consumed_source == projected.source_accession
+                        and consumed_value == projected.value
+                        else "unused_or_mismatched"
+                    ),
+                }
+            )
+        result["official_evidence"] = {
+            "availability": [item.as_dict() for item in official_evidence],
+            "consumption": consumption,
+            "diagnostics": dict(diagnostics or {}),
+            "private_only": True,
+        }
+    elif diagnostics:
+        result["official_evidence"] = {
+            "availability": [],
+            "consumption": [],
+            "diagnostics": dict(diagnostics),
+            "private_only": True,
+        }
+    return result
+
+
 def build_us_valuation(
     *,
     submissions: dict[str, Any],
@@ -524,9 +655,18 @@ def build_us_valuation(
     valuation_date: str | None = None,
     source_manifest: dict[str, Any] | None = None,
     filing_evidence: Iterable[Mapping[str, Any]] | None = None,
+    bridge_evidence: Iterable[FieldAvailability] = (),
+    official_evidence: Iterable[EvidenceAvailability] = (),
+    official_evidence_diagnostics: Mapping[str, Any] | None = None,
     sector_estimates: Mapping[str, FallbackDecision] | None = None,
     major_changes: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
+    official_evidence = tuple(official_evidence)
+    if any(not isinstance(item, EvidenceAvailability) for item in official_evidence):
+        raise ValueError("official_evidence must contain EvidenceAvailability values")
+    bridge_evidence = tuple(bridge_evidence) + tuple(
+        item.availability for item in official_evidence
+    )
     if valuation_date:
         cutoff_submissions = deepcopy(submissions)
         recent = cutoff_submissions.get("filings", {}).get("recent", {})
@@ -543,20 +683,29 @@ def build_us_valuation(
         raise ValueError("SEC submissions and Companyfacts CIK values do not match")
     eligibility = model_eligibility(classification)
     if not eligibility["eligible"]:
-        return _withheld_eligibility_result(
-            classification=classification,
-            eligibility=eligibility,
-            valuation_date=valuation_date,
-            source_manifest=source_manifest,
+        return _attach_official_evidence_trace(
+            _withheld_eligibility_result(
+                classification=classification,
+                eligibility=eligibility,
+                valuation_date=valuation_date,
+                source_manifest=source_manifest,
+            ),
+            official_evidence,
+            official_evidence_diagnostics,
         )
     # Dispatch archetypes FCFF cannot value (banks -> residual income, utilities
     # -> DDM) to the equity-level path before the enterprise FCFF normalization.
     if eligibility["model"] in ("residual_income", "ddm", "ffo"):
-        return build_equity_level_result(
-            classification=classification,
-            companyfacts=companyfacts,
-            valuation_date=valuation_date,
-            source_manifest=source_manifest,
+        return _attach_official_evidence_trace(
+            build_equity_level_result(
+                classification=classification,
+                companyfacts=companyfacts,
+                valuation_date=valuation_date,
+                source_manifest=source_manifest,
+                submissions=submissions,
+            ),
+            official_evidence,
+            official_evidence_diagnostics,
         )
     recent_filings = submissions.get("filings", {}).get("recent", {})
     filing_records = [
@@ -567,21 +716,40 @@ def build_us_valuation(
         }
         for index in range(len(recent_filings.get("accessionNumber", [])))
     ]
-    financials = CompanyFactsNormalizer(
-        companyfacts,
-        fiscal_year_end=submissions.get("fiscalYearEnd"),
-        as_of_date=valuation_date,
-        filing_records=filing_records,
-    ).normalize(
-        annual_count=5,
-        verified_zero_bridge_fields=classification[
-            "verified_zero_bridge_fields"
-        ],
-        governed_bridge_fields=classification["governed_bridge_fields"],
-        filing_evidence=filing_evidence,
-        sector_estimates=sector_estimates,
-        major_changes=major_changes,
-    )
+    try:
+        financials = CompanyFactsNormalizer(
+            companyfacts,
+            fiscal_year_end=submissions.get("fiscalYearEnd"),
+            as_of_date=valuation_date,
+            filing_records=filing_records,
+        ).normalize(
+            annual_count=5,
+            verified_zero_bridge_fields=classification[
+                "verified_zero_bridge_fields"
+            ],
+            governed_bridge_fields=classification["governed_bridge_fields"],
+            filing_evidence=filing_evidence,
+            bridge_evidence=bridge_evidence,
+            sector_estimates=sector_estimates,
+            major_changes=major_changes,
+        )
+    except ValueError as error:
+        if not str(error).startswith((
+            "TTM flow input ",
+            "Current TTM revenue is required",
+        )):
+            raise
+        return _attach_official_evidence_trace(
+            _withheld_source_data_result(
+                classification=classification,
+                model_name=str(eligibility["model"] or "unknown"),
+                valuation_date=valuation_date,
+                source_manifest=source_manifest,
+                error=error,
+            ),
+            official_evidence,
+            official_evidence_diagnostics,
+        )
     policy = classification["valuation_policy"]
     discount_rate = build_discount_rate(
         policy=policy,
@@ -603,20 +771,24 @@ def build_us_valuation(
             enterprise_value=None,
         )
         blocking = ", ".join(bridge_resolution.blocking_fields)
-        return _withheld_segment_evidence_result(
-            classification=classification,
-            financials=financials,
-            discount_rate=discount_rate,
-            valuation_date=valuation_date,
-            source_manifest=source_manifest,
-            error=ForecastEvidenceUnavailable(
-                period_end=financials["ttm"]["period_end"],
-                available_periods=[],
-                reason=(
-                    "Enterprise-to-equity bridge requires current filing evidence for "
-                    + blocking
+        return _attach_official_evidence_trace(
+            _withheld_segment_evidence_result(
+                classification=classification,
+                financials=financials,
+                discount_rate=discount_rate,
+                valuation_date=valuation_date,
+                source_manifest=source_manifest,
+                error=ForecastEvidenceUnavailable(
+                    period_end=financials["ttm"]["period_end"],
+                    available_periods=[],
+                    reason=(
+                        "Enterprise-to-equity bridge requires current filing evidence for "
+                        + blocking
+                    ),
                 ),
             ),
+            official_evidence,
+            official_evidence_diagnostics,
         )
     _store_bridge_assessment(
         balance_sheet=balance_sheet,
@@ -637,14 +809,29 @@ def build_us_valuation(
         )
     except ForecastEvidenceUnavailable as error:
         if error.reason is not None:
-            return _withheld_segment_evidence_result(
-                classification=classification,
-                financials=financials,
-                discount_rate=discount_rate,
-                valuation_date=valuation_date,
-                source_manifest=source_manifest,
-                error=error,
+            return _attach_official_evidence_trace(
+                _withheld_segment_evidence_result(
+                    classification=classification,
+                    financials=financials,
+                    discount_rate=discount_rate,
+                    valuation_date=valuation_date,
+                    source_manifest=source_manifest,
+                    error=error,
+                ),
+                official_evidence,
+                official_evidence_diagnostics,
             )
+        forecast_assumptions = derive_forecast_assumptions(
+            financials,
+            policy=policy,
+            discount_rate=discount_rate,
+            market=market_assumptions,
+            issuer_evidence=None,
+        )
+        used_consolidated_segment_fallback = True
+    except ValueError as error:
+        if not issuer_evidence or not _segment_detail_can_fallback(error):
+            raise
         forecast_assumptions = derive_forecast_assumptions(
             financials,
             policy=policy,
@@ -770,6 +957,11 @@ def build_us_valuation(
             "source_policy": "SEC Companyfacts, submissions and governed filing-specific Products/Services tables; no exchange prices",
         },
     }
+    _attach_official_evidence_trace(
+        result,
+        official_evidence,
+        official_evidence_diagnostics,
+    )
     if bridge_assessment.usable and all(
         isinstance(value, (int, float))
         for value in (

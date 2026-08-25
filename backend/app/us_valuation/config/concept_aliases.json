@@ -59,7 +59,33 @@
       "kind": "flow",
       "concepts": [
         "PaymentsToAcquirePropertyPlantAndEquipment",
-        "PaymentsToAcquireProductiveAssets"
+        "PaymentsToAcquireProductiveAssets",
+        "PaymentsToAcquireOtherProductiveAssets"
+      ]
+    },
+    "operating_cash_flow": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations",
+        "NetCashProvidedByUsedInOperatingActivities"
+      ]
+    },
+    "interest_expense": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "InterestExpenseNonoperating",
+        "InterestExpenseDebt",
+        "InterestExpense",
+        "InterestIncomeExpenseNonoperatingNet"
+      ]
+    },
+    "intangible_asset_purchases": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "PaymentsToAcquireIntangibleAssets"
       ]
     },
     "accounts_receivable": {
@@ -70,7 +96,8 @@
         "AccountsAndNotesReceivableNet",
         "AccountsAndOtherReceivablesNetCurrent",
         "ReceivablesNetCurrent",
-        "AccountsNotesAndLoansReceivableNetCurrent"
+        "AccountsNotesAndLoansReceivableNetCurrent",
+        "OtherReceivablesNetCurrent"
       ]
     },
     "inventory": {
@@ -128,6 +155,13 @@
         "AvailableForSaleSecuritiesNoncurrent",
         "LongTermInvestments",
         "AvailableForSaleSecuritiesDebtSecuritiesNoncurrent"
+      ]
+    },
+    "marketable_securities_total": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "MarketableSecurities"
       ]
     },
     "commercial_paper": {

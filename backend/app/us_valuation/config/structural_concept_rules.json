@@ -122,6 +122,69 @@
     "allowed_dimensions": {},
     "contextual_concepts": []
   },
+  "marketable_securities_total": {
+    "statement_role": "balance_sheet",
+    "unit": "USD",
+    "orientation": "none",
+    "required_statement_support_parents": [
+      "us-gaap:Assets",
+      "us-gaap:AssetsAbstract",
+      "us-gaap:InvestmentsAbstract"
+    ],
+    "statement_support_parents": [
+      "us-gaap:Assets",
+      "us-gaap:AssetsAbstract",
+      "us-gaap:InvestmentsAbstract"
+    ],
+    "direct_statement_parents": [
+      "us-gaap:Assets",
+      "us-gaap:AssetsAbstract"
+    ],
+    "structural_parents": [
+      "us-gaap:Assets",
+      "us-gaap:AssetsAbstract",
+      "us-gaap:InvestmentsAbstract",
+      "us-gaap:MarketableSecurities"
+    ],
+    "extension_terms": [
+      "total marketable securities",
+      "total marketable investments",
+      "total investment securities"
+    ],
+    "required_definition_phrases": [
+      "total marketable securities",
+      "total marketable investments",
+      "current and noncurrent marketable securities"
+    ],
+    "definition_reason_code": "DEFINITION_IDENTIFIES_TOTAL_MARKETABLE_SECURITIES",
+    "excluded_economic_phrases": [
+      "strategic",
+      "equity method",
+      "restricted",
+      "trust",
+      "collateral",
+      "receivable",
+      "trading assets",
+      "debt securities only",
+      "equity securities only"
+    ],
+    "preferred_exclusion_evidence_phrases": [],
+    "component_only_concepts": [],
+    "review_only_phrases": [
+      "available for sale debt securities",
+      "debt securities",
+      "equity securities"
+    ],
+    "direct_statement_concepts": [
+      "MarketableSecurities"
+    ],
+    "concept_reason_codes": {
+      "MarketableSecurities": "DIRECT_TOTAL_MARKETABLE_SECURITIES"
+    },
+    "allowed_extension_dimensions": [],
+    "allowed_dimensions": {},
+    "contextual_concepts": []
+  },
   "current_debt": {
     "statement_role": "balance_sheet",
     "unit": "USD",

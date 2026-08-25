@@ -1,0 +1,124 @@
+{
+  "batch": 24,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "industrials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001133421",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "Northrop Grumman",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "NOC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001260221",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "TransDigm Group",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "TDG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001316835",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "issuer_name": "Builders FirstSource",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "BLDR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001466258",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "issuer_name": "Trane Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "TT"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001474735",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Heavy Electrical Equipment",
+      "issuer_name": "Generac",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "GNRC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001501585",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "Huntington Ingalls Industries",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "HII"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001524472",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "Xylem Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "XYL"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001543151",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Passenger Ground Transportation",
+      "issuer_name": "Uber",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "UBER"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001551182",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "issuer_name": "Eaton Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "ETN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001579241",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "issuer_name": "Allegion",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "ALLE"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

@@ -145,8 +145,13 @@ def _scenario_check(artifact: dict[str, Any]) -> tuple[list[str], list[str]]:
                 _add_reason(reasons, f"invalid_model_state:{name}")
             elif state == "withheld":
                 _add_reason(reasons, f"model_not_pass:{name}")
+            value_field = (
+                "conditional_value_per_share"
+                if name == "conditional_estimate"
+                else "intrinsic_value_per_share"
+            )
             value_problem = _value_problem(
-                model.get("intrinsic_value_per_share"),
+                model.get(value_field),
                 missing=f"missing_model_value:{name}",
                 nonfinite=f"nonfinite_model_value:{name}",
             )

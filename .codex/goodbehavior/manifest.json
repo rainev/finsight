@@ -1,0 +1,48 @@
+{
+  "source": "/Users/carlosconda/Desktop/GoodBehavior-Codex",
+  "sourceCommit": "601e9740bced0282668ea16097898229ccf2f214",
+  "installedAt": "2026-08-24T02:49:56+00:00",
+  "updatedAt": null,
+  "files": {
+    ".agents/skills/audit-goodbehavior/SKILL.md": {
+      "from": ".agents/skills/audit-goodbehavior/SKILL.md",
+      "sha256": "360bc60b841634f540b0b03f492c0ec7e666278ed0f9e38025c7689e99a755dc"
+    },
+    ".agents/skills/roadmap-goodbehavior/SKILL.md": {
+      "from": ".agents/skills/roadmap-goodbehavior/SKILL.md",
+      "sha256": "89f8e5445d2a045f8228e84ad97373dd2c285ff490f5b9da2fc8d8c98f2f2eec"
+    },
+    ".agents/skills/gate-build-goodbehavior/SKILL.md": {
+      "from": ".agents/skills/gate-build-goodbehavior/SKILL.md",
+      "sha256": "b1003d263d292716f26f35c796757ceae19c24c74313a1290f389dcd5487d187"
+    },
+    ".agents/skills/verify-goodbehavior/SKILL.md": {
+      "from": ".agents/skills/verify-goodbehavior/SKILL.md",
+      "sha256": "3da54f2dc5657cf03cabf8c30a699868ea523d3ba5ef9d21c8708b1d0df8c6bf"
+    },
+    ".agents/skills/uatplan-goodbehavior/SKILL.md": {
+      "from": ".agents/skills/uatplan-goodbehavior/SKILL.md",
+      "sha256": "12c6f45c085142502f4b49a6be4e149fbdcdbee9a18b8f0073f8b57b0a29c3f4"
+    },
+    ".agents/skills/learn-goodbehavior/SKILL.md": {
+      "from": ".agents/skills/learn-goodbehavior/SKILL.md",
+      "sha256": "984a46bd8b2073261e046df884e8b01f4c8df1ff86067a59637c3970b7379d35"
+    },
+    ".agents/skills/update-goodbehavior/SKILL.md": {
+      "from": ".agents/skills/update-goodbehavior/SKILL.md",
+      "sha256": "897e7bb2a0867078f4a87908801be3ff2bd080d0613f315e8d2d95e8e01926b9"
+    },
+    ".codex/goodbehavior/profiles/development.md": {
+      "from": "templates/profiles/development.md",
+      "sha256": "128b9cae4138e369b8b03f81582c9514877588682895faa7c9bcf23ac0813f1f"
+    },
+    ".codex/goodbehavior/profiles/analysis.md": {
+      "from": "templates/profiles/analysis.md",
+      "sha256": "2a6a7dded4d3b82cca5107a6b3b41394ce7277f787bc31b10b321e0422a62897"
+    },
+    ".codex/hooks/done-gate.py": {
+      "from": ".codex/hooks/done-gate.py",
+      "sha256": "16f0121ebd8fdf0b396dc4ecaa79de2407655792139081ecce54d134802ab47b"
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "batch": 7,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "consumer_discretionary",
+  "members": [
+    {
+      "boundary_reason": "premium_consumer_brand_boundary",
+      "cik": "0001001250",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Personal Care Products",
+      "issuer_name": "Est\u00e9e Lauder Companies (The)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "boundary",
+      "ticker": "EL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001065088",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Broadline Retail",
+      "issuer_name": "eBay Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "EBAY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001075531",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "issuer_name": "Booking Holdings",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "BKNG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001116132",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel, Accessories & Luxury Goods",
+      "issuer_name": "Tapestry, Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "TPR"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001121788",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Consumer Electronics",
+      "issuer_name": "Garmin",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "boundary",
+      "ticker": "GRMN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001174922",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Casinos & Gaming",
+      "issuer_name": "Wynn Resorts",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "WYNN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001286681",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "issuer_name": "Domino's",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "DPZ"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001300514",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Casinos & Gaming",
+      "issuer_name": "Las Vegas Sands",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "LVS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001318605",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automobile Manufacturers",
+      "issuer_name": "Tesla, Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "TSLA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001324424",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "issuer_name": "Expedia Group",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "EXPE"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

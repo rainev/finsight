@@ -1,0 +1,124 @@
+{
+  "batch": 47,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "utilities",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001013871",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Independent Power Producers & Energy Traders",
+      "issuer_name": "NRG Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "boundary",
+      "ticker": "NRG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001047862",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "Consolidated Edison",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "ED"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001109357",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Exelon",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "EXC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001111711",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "NiSource",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "NI"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001130310",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "CenterPoint Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "CNP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001326160",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Duke Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "DUK"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001410636",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Water Utilities",
+      "issuer_name": "American Water Works",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "boundary",
+      "ticker": "AWK"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001692819",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Vistra Corp.",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "VST"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001711269",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Evergy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "EVRG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001868275",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Constellation Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "CEG"
+    }
+  ],
+  "partition_families": [
+    "utility_fcfe"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

@@ -2,9 +2,61 @@
 
 # Project learnings
 
+- [Launch-First confirmation scope](launch-first-confirmation-scope.md) — staged behavior is approved; Batch 04 and outward-facing actions still require separate authorization.
+- [Commitment warnings must bind cash arithmetic](commitment-warning-must-bind-cash-arithmetic.md) — source text alone does not prove a commitment affects value.
+- [Negative residuals need an explicit equity floor](negative-residual-needs-explicit-equity-floor.md) — retain raw negatives and allow a public zero only under a bear-only floor rule.
+
 - [Structural corpus inputs are symlinks](structural-corpus-inputs-are-symlinks.md) — use symlink-aware checks when validating staged XBRL corpus inputs.
 - [The public XUSSS normalizer is taxonomy-version-bound](xusss-public-normalizer-is-taxonomy-version-bound.md) — require a version-matched precision benchmark before trusting normalized facts.
 - [CompanyFacts availability provenance contract](companyfacts-availability-provenance-contract.md) — keep optional ordinary metadata optional; require stronger provenance only for replacement aggregates.
 - [Public sanitizer scrubbed replay context](public-sanitizer-scrubbed-replay-context.md) — distinguish a fully scrubbed replay from a forged initial null range.
 - [Public bridge range binds to FCFF](public-bridge-range-binds-to-fcff.md) — tie bridge absolutes to the canonical FCFF per-share output.
 - [Annual balance is not a TTM flow](annual-balance-is-not-ttm-flow.md) — carry annual snapshots forward, but scale missing current flows from history instead of copying annual amounts.
+- [Marketable-securities total needs coverage proof](marketable-securities-total-needs-coverage-proof.md) — do not let a generic total replace current/noncurrent splits without exact issuer lineage and scope.
+- [Peer ranges are diagnostic, not issuer facts](peer-ranges-are-diagnostic-not-issuer-facts.md) — keep sector estimates out of enterprise-to-equity bridge arithmetic.
+- [Specialist facts require filed lineage](specialist-facts-require-filed-lineage.md) — select by public filing date and retain the exact fact's accession, form, unit, and currency.
+- [REIT sale gains missing is not zero](reit-sale-gains-missing-is-not-zero.md) — withhold incomplete FFO reconciliation unless the adjustment is reported or source-proven zero/not disclosed.
+- [Structural schema preserves unsupported forms](structural-schema-preserves-unsupported-forms.md) — deserialize well-formed evidence first and let the eligibility policy fail closed with an explicit outcome.
+- [SEC issuer identity is not exact display name](sec-issuer-identity-is-not-exact-display-name.md) — key packets by CIK plus ticker and preserve legal/display aliases instead of falsely rejecting name variants.
+- [Structural approvals expire with controlling accession](structural-approvals-expire-with-controlling-accession.md) — rerun and re-review every structural decision when the cutoff-eligible controlling filing changes.
+- [Companyfacts cross-accession restatements are not duplicates](companyfacts-cross-accession-restatements-are-not-duplicates.md) — reject unequal values within one accession key, then choose the latest cutoff-eligible record across accessions.
+- [Current aggregate does not corroborate carried midpoints](current-aggregate-does-not-corroborate-carried-midpoints.md) — compare current point splits exactly, but treat carried-forward components as ranges rather than false point conflicts.
+- [Input-range zero endpoint is not zero substitution](input-range-zero-endpoint-is-not-zero-substitution.md) — allow zero as a bounded endpoint, never as an estimated missing-value base; keep intrinsic values strictly positive.
+- [TTM comparative YTD ends in prior period](ttm-comparative-ytd-ends-in-prior-period.md) — align current and prior YTD durations before reconstructing TTM earnings; never reuse the current end date with a prior-year start.
+- [Public assumptions must match practical base state](public-assumptions-must-match-practical-base-state.md) — update the canonical public-input fields after calibration so disclosed assumptions reproduce the actual base value.
+- [Catch policy-specific exceptions before their generic parent](exception-hierarchy-order-controls-policy-fallback.md) — preserve the distinction between a bounded missing-detail fallback and a hard source/cutoff failure.
+- [Empty current Companyfacts needs the exact filing](empty-current-companyfacts-needs-exact-filing.md) — trigger direct structural extraction when the latest eligible accession has zero facts.
+- [Captive-finance FCFE charges equity-funded growth once](captive-finance-fcfe-charges-equity-funded-growth-once.md) — use adjusted FCF less the equity share of finance-asset growth without a second debt bridge.
+- [Mixed finance business needs an honest equity baseline](mixed-finance-business-needs-honest-equity-baseline.md) — use source-traced consolidated equity earnings when finance operations cannot be separated; never relabel it FCFF.
+- [Post-spin cycle excludes discontinued cash flows](post-spin-cycle-excludes-discontinued-cash-flows.md) — remove discontinued D&A/capex and balance peer weights before cycle normalization.
+- [Equity FCFE includes all interest-bearing borrowing](equity-fcfe-includes-all-interest-bearing-borrowing.md) — reconcile commercial paper as well as long-term debt before accepting positive utility FCFE.
+- [Operating liabilities are not equity-bridge claims](operating-liabilities-are-not-equity-bridge-claims.md) — never double-count working-capital liabilities as financing claims.
+- [One recovery, then cumulative withheld register](universe-reset-one-recovery-then-register.md) — report initial withholds, recover only after a second signal, then register any company still withheld.
+- [Canonical source identity uses normalized evidence](canonical-source-identity-uses-normalized-evidence.md) — preserve raw bytes while freezing canonical identity from pinned inputs and validated economic events.
+- [Batch boundaries are economic, not leftovers](batch-boundaries-are-economic-not-leftovers.md) — require truthful lanes and predeclared economic reasons in addition to exact-cover determinism.
+- [Telecom spectrum cash is reinvestment](telecom-spectrum-cash-is-reinvestment.md) — deduct spectrum-license purchases as well as PP&E capex from telecom cash FCFF.
+- [Financing claims reconcile to statement totals](financing-claims-reconcile-to-statement-totals.md) — prove current/noncurrent/lease/special-obligation scope instead of trusting a tag name.
+- [Operating commitments need forward cash coverage](operating-commitments-need-forward-cash-coverage.md) — avoid bridge double counting while requiring commitment growth and timing to fit the cash scenarios.
+- [Public competitor methods are constraints, not formulas](public-competitor-methods-are-constraints-not-formulas.md) — borrow transparent model disciplines without importing proprietary algorithms or displayed values.
+- [Conditional deal consideration is not intrinsic value](conditional-deal-consideration-is-not-intrinsic-value.md) — keep signed merger payments on a separate event surface while closing remains conditional.
+- [Predecessor cash history needs comparable periods](predecessor-cash-history-needs-comparable-periods.md) — require aligned combined history or filed pro forma cash flow before normalizing a merger.
+- [Project profile](project-profile.md) — verify FinSight as a development-built, analysis-validated data pipeline through real staged API outputs.
+- [Definition of done](definition-of-done.md) — require real consumer-path evidence and user confirmation.
+- [Reporting honesty](reporting-honesty.md) — separate implemented, tested, live-verified, and user-confirmed claims.
+- [Build and deploy gotchas](build-deploy-gotchas.md) — pushing to main deploys staging; localhost verification does not.
+- [Immutable replays need a single-writer lock](immutable-replays-need-single-writer-lock.md) — immutability alone does not stop concurrent long replay writers.
+- [XBRL context entity outranks wrapper identity](xbrl-context-entity-outranks-wrapper-identity.md) — never inherit issuer identity from the surrounding artifact when the fact context disagrees.
+- [A dated table cell is not enough](dated-table-cell-is-not-enough.md) — require role, scale, and complete-scope proof before using table evidence.
+- [Companyfacts value change is not a proven restatement](companyfacts-value-change-is-not-proven-restatement.md) — classify dimension-unknown and ordinary comparative changes as unresolved.
+- [An empty DQC log is not execution proof](empty-dqc-log-is-not-execution-proof.md) — require canonical Xule rule statistics and report no-applicable-rules honestly.
+- [Normalized regulator rows are not source payload](normalized-regulator-rows-are-not-source-payload.md) — require separate official-payload and normalized-row hashes before promotion.
+- [REIT adjustments need raw sign and residual](reit-adjustments-need-raw-sign-and-residual.md) — preserve reported signs and reconcile issuer-defined AFFO without standardizing it.
+- [Evidence exhaustion needs declared tiers](evidence-exhaustion-needs-declared-tiers.md) — require a terminal outcome for every applicable source tier per field/model.
+- [Policy projection is not consumer integration](policy-projection-is-not-consumer-integration.md) — replay typed evidence through the real valuation builder and require a consumption ledger before claiming integration.
+- [Better extraction does not clear economic release conditions](better-extraction-does-not-clear-economic-release-conditions.md) — re-test the named economic release condition after a pipeline upgrade instead of treating more populated fields as publishability.
+- [Conditional values need economic-object identity](conditional-values-need-economic-object-identity.md) — keep standalone value, transaction residuals, and contractual consideration on honest separate surfaces even when all are labeled conditional.
+- [Not fully recovered is broader than withheld](not-fully-recovered-is-broader-than-withheld.md) — preserve conditional numeric issuers with withheld issuers on the Recovery Learning Watchlist through Batch 50.
+- [Narrative commitment tables can escape XBRL](narrative-commitment-tables-can-escape-xbrl.md) — search controlling filing tables before certifying commitment absence from structural facts.
+- [A baseline decision is not a market prediction](baseline-decision-is-not-market-prediction.md) — prefer broad transparent Low-reliability estimates over withholding for ordinary market uncertainty.
+- [Policy constants are not source provenance](policy-constants-are-not-source-provenance.md) — require filing-level bridge lineage even when hard-coded numbers reproduce exactly.
+- [SEC XBRL ZIP is a package source](sec-xbrl-zip-is-a-package-source.md) — support official ZIP-only filing directories with bounded extraction and dual source/logical provenance.

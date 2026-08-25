@@ -162,6 +162,10 @@ class StructuralFact:
     scale: str | None = None
     sign: str | None = None
     filing_form: str | None = None
+    filed_date: str | None = None
+    report_date: str | None = None
+    entity_identifier: str | None = None
+    entity_scheme: str | None = None
     filing_metadata: tuple[tuple[str, str], ...] = ()
     presentation_ancestry: tuple[str, ...] = ()
     relationships: tuple[StructuralRelationship, ...] = ()
@@ -191,6 +195,14 @@ class StructuralFact:
         if self.filing_form is not None:
             normalized_form = normalize_filing_form(self.filing_form)
             object.__setattr__(self, "filing_form", normalized_form)
+        _validate_optional_date(self.filed_date, "filed_date")
+        _validate_optional_date(self.report_date, "report_date")
+        for value, field in (
+            (self.entity_identifier, "entity_identifier"),
+            (self.entity_scheme, "entity_scheme"),
+        ):
+            if value is not None:
+                _require_text(value, field)
         for value, field in (
             (self.labels, "labels"),
             (self.dimensions, "dimensions"),
@@ -244,6 +256,10 @@ class StructuralFact:
                 "scale": self.scale,
                 "sign": self.sign,
                 "filing_form": self.filing_form,
+                "filed_date": self.filed_date,
+                "report_date": self.report_date,
+                "entity_identifier": self.entity_identifier,
+                "entity_scheme": self.entity_scheme,
                 "filing_metadata": self.filing_metadata,
                 "presentation_ancestry": self.presentation_ancestry,
                 "relationships": tuple(item.as_dict() for item in self.relationships),
@@ -277,6 +293,10 @@ class StructuralFact:
             scale=value.get("scale"),
             sign=value.get("sign"),
             filing_form=value.get("filing_form"),
+            filed_date=value.get("filed_date"),
+            report_date=value.get("report_date"),
+            entity_identifier=value.get("entity_identifier"),
+            entity_scheme=value.get("entity_scheme"),
             filing_metadata=_tuple_pairs(
                 value.get("filing_metadata", ()),
                 "filing_metadata",
@@ -306,6 +326,19 @@ class ParseDiagnostic:
             raise ValueError("context must be a tuple")
         _tuple_pairs(self.context, "context")
 
+    @classmethod
+    def from_dict(cls, value: Mapping[str, Any]) -> ParseDiagnostic:
+        if not isinstance(value, Mapping):
+            raise ValueError("diagnostic must be an object")
+        return cls(
+            code=value["code"],
+            message=value["message"],
+            severity=value["severity"],
+            context=_tuple_pairs(
+                value.get("context", ()), "context", allow_lists=True
+            ),
+        )
+
 
 @dataclass(frozen=True)
 class StructuralFiling:
@@ -314,6 +347,8 @@ class StructuralFiling:
     facts: tuple[StructuralFact, ...]
     diagnostics: tuple[ParseDiagnostic, ...]
     form: str | None = None
+    filed_date: str | None = None
+    report_date: str | None = None
     filing_metadata: tuple[tuple[str, str], ...] = ()
 
     def __post_init__(self) -> None:
@@ -331,6 +366,8 @@ class StructuralFiling:
             normalized_form = normalize_filing_form(self.form)
             _require_text(normalized_form, "form")
             object.__setattr__(self, "form", normalized_form)
+        _validate_optional_date(self.filed_date, "filed_date")
+        _validate_optional_date(self.report_date, "report_date")
         if not isinstance(self.filing_metadata, tuple):
             raise ValueError("filing_metadata must be a tuple")
         _tuple_pairs(self.filing_metadata, "filing_metadata")
@@ -351,8 +388,37 @@ class StructuralFiling:
                     for diagnostic in self.diagnostics
                 ),
                 "form": self.form,
+                "filed_date": self.filed_date,
+                "report_date": self.report_date,
                 "filing_metadata": self.filing_metadata,
             }
+        )
+
+    @classmethod
+    def from_dict(cls, value: Mapping[str, Any]) -> StructuralFiling:
+        if not isinstance(value, Mapping):
+            raise ValueError("structural filing must be an object")
+        raw_facts = value.get("facts")
+        raw_diagnostics = value.get("diagnostics")
+        if not isinstance(raw_facts, (list, tuple)):
+            raise ValueError("facts must be a list")
+        if not isinstance(raw_diagnostics, (list, tuple)):
+            raise ValueError("diagnostics must be a list")
+        return cls(
+            source_accession=value["source_accession"],
+            period_end=value["period_end"],
+            facts=tuple(StructuralFact.from_dict(item) for item in raw_facts),
+            diagnostics=tuple(
+                ParseDiagnostic.from_dict(item) for item in raw_diagnostics
+            ),
+            form=value.get("form"),
+            filed_date=value.get("filed_date"),
+            report_date=value.get("report_date"),
+            filing_metadata=_tuple_pairs(
+                value.get("filing_metadata", ()),
+                "filing_metadata",
+                allow_lists=True,
+            ),
         )
 
 
@@ -364,6 +430,7 @@ class ResolutionRequest:
     unit: str
     statement_role: str
     form: str
+    valuation_date: str | None = None
 
     def __post_init__(self) -> None:
         for value, field in (
@@ -374,6 +441,7 @@ class ResolutionRequest:
         ):
             _require_text(value, field)
         _validate_date(self.period_end, "period_end")
+        _validate_optional_date(self.valuation_date, "valuation_date")
         object.__setattr__(self, "form", normalize_filing_form(self.form))
 
 

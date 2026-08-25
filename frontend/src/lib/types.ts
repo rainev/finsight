@@ -23,7 +23,7 @@ export interface Company {
   currency: string
 }
 
-export type ModelKind = 'dcf' | 'ddm' | 'graham' | 'multiples'
+export type ModelKind = 'dcf' | 'ddm' | 'graham' | 'multiples' | string
 
 export interface ValuationResult {
   model: ModelKind
@@ -41,7 +41,17 @@ export interface SavedValuation {
   model: ModelKind
   inputs: Record<string, unknown>
   assumptions: Record<string, unknown>
-  result: ValuationResult
+  result: ValuationResult & {
+    low?: number
+    base?: number
+    high?: number
+    comparison?: { label?: string }
+    availability_type?: string
+  }
+  us_company?: boolean
+  ticker?: string | null
+  model_version?: string | null
+  user_price?: number | null
   created_at: string
 }
 
@@ -189,12 +199,14 @@ export interface SmartBrief {
 // governed assumptions, and provenance. Fields are optional/loose because the
 // artifact carries provenance the UI shows opportunistically.
 export type UsPublicationState = 'pass' | 'review_required' | 'withheld' | null
+export type UsAvailabilityType = 'available' | 'conditional_estimate' | 'relative_baseline' | 'not_available'
 
 export interface UsModelResult {
   model: string
   output_type: string
   currency: string
   intrinsic_value_per_share: number | null
+  conditional_value_per_share?: number | null
   publication_state: UsPublicationState
   errors: string[]
   warnings: string[]
@@ -248,6 +260,33 @@ export interface UsValuation {
   models: Record<string, UsModelResult>
   scenarios: Record<string, Record<string, UsModelResult>>
   scenario_range: { low: number; base: number; high: number; label?: string }
+  availability_type: UsAvailabilityType
+  primary_valuation_method: string
+  confidence: { label: 'High' | 'Medium' | 'Low' | null; reasons: string[] }
+  reliability?: {
+    label: 'High' | 'Medium' | 'Low'
+    reasons: string[]
+    scenario_movement_ratio?: number | null
+  }
+  market_comparison: {
+    status: 'available' | 'unavailable'
+    gap_pct?: number
+    label?: string
+    price_date?: string
+    denominator?: 'finsight_base_value'
+    reason?: string
+  }
+  relative_value_summary: {
+    status: 'available' | 'unavailable'
+    method?: string
+    low?: number
+    base?: number
+    high?: number
+    peer_count?: number
+    as_of_date?: string
+    label?: string
+  }
+  calculator_link: string | null
   review?: { publication_state: UsPublicationState; errors?: string[]; warnings?: string[] }
   methodology?: string
   // Machine-readable public-safety attestation baked into every artifact.
@@ -265,9 +304,45 @@ export interface UsValuationSummary {
   model: string | null
   base: number | null
   publication_state: UsPublicationState
+  availability_type: UsAvailabilityType
+  confidence: { label: 'High' | 'Medium' | 'Low' | null; reasons: string[] }
 }
 
 export interface UsValuationList {
   count: number
   items: UsValuationSummary[]
+}
+
+export interface UsCalculatorField {
+  key: string
+  label: string
+  value: number
+  min: number
+  max: number
+  step: number
+}
+
+export interface UsCalculatorView {
+  ticker: string
+  assigned_model: string
+  model_family?: string
+  model_version: string
+  availability_type: UsAvailabilityType
+  can_calculate: boolean
+  defaults: Record<string, number>
+  editable_assumptions: UsCalculatorField[]
+  locked_facts: string[]
+  baseline_result: { low: number | null; base: number | null; high: number | null }
+  market_comparison: UsValuation['market_comparison']
+  warnings: string[]
+}
+
+export interface UsCalculatorResult extends UsCalculatorView {
+  assumptions: Record<string, number>
+  result: { low: number; base: number; high: number }
+  baseline_change_pct: number
+  comparison: UsValuation['market_comparison'] & { source?: 'manual' }
+  comparison_source: 'manual' | 'automatic_eod'
+  manual_price: number | null
+  saved_id?: number
 }

@@ -7,7 +7,7 @@ pure engine.
 """
 
 from datetime import datetime
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -94,8 +94,18 @@ class MultiplesInput(SaveOptions):
 class SavedValuation(BaseModel):
     id: int
     company_id: int | None
-    model: Literal["dcf", "ddm", "graham", "multiples"]
+    model: str
     inputs: dict
     assumptions: dict
     result: dict
+    us_company: bool = False
+    ticker: str | None = None
+    model_version: str | None = None
+    user_price: float | None = None
     created_at: datetime
+
+
+class UsCalculatorInput(BaseModel):
+    overrides: dict[str, float | int] = Field(default_factory=dict)
+    manual_price: float | None = Field(default=None, gt=0)
+    save: bool = False

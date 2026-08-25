@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 from pathlib import Path
+import zipfile
 from urllib.request import HTTPRedirectHandler, Request
 
 import pytest
@@ -97,6 +99,113 @@ def test_package_cache_downloads_only_structural_resources(tmp_path: Path) -> No
         "fsi-2025_cal.xml",
         "fsi-2025_lab.xml",
     }
+
+
+def test_package_cache_uses_official_xbrl_zip_when_index_hides_individual_files(
+    tmp_path: Path,
+) -> None:
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as archive:
+        archive.writestr("filing.htm", '<link href="filing.xsd"/>')
+        archive.writestr("filing.xsd", "schema")
+        archive.writestr("filing_pre.xml", "presentation")
+    zip_name = "0000000001-26-000001-xbrl.zip"
+    client = FakeSecClient(
+        index_names=[zip_name],
+        attachments={
+            zip_name: buffer.getvalue(),
+            "filing.htm": b'<link href="filing.xsd"/>',
+        },
+    )
+
+    entrypoint = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path,
+    )
+
+    manifest = json.loads((entrypoint.parent / "package-manifest.json").read_text())
+    schema = next(item for item in manifest["files"] if item["local_path"] == "filing.xsd")
+    assert schema["source_url"].endswith(f"/{zip_name}")
+    assert schema["logical_url"].endswith("/filing.xsd")
+    assert schema["archive_member"] == "filing.xsd"
+    assert (entrypoint.parent / "filing.xsd").read_text() == "schema"
+    assert set(client.requested) == {zip_name, "filing.htm"}
+
+
+def test_package_cache_includes_only_governed_relevant_attachments_and_cutoff_metadata(
+    tmp_path: Path,
+) -> None:
+    client = FakeSecClient(
+        index_names=[
+            "filing.htm",
+            "filing.xsd",
+            "exhibit99-1.htm",
+            "unrelated-press-release.pdf",
+        ],
+        attachments={
+            "filing.htm": b'<link href="filing.xsd" />',
+            "filing.xsd": b"schema",
+            "exhibit99-1.htm": b"filed supplement",
+            "unrelated-press-release.pdf": b"not governed",
+        },
+    )
+
+    entrypoint = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        filed_date="2026-08-10",
+        report_date="2026-06-30",
+        relevant_attachments={"exhibit99-1.htm": "earnings_supplement"},
+        output_dir=tmp_path,
+    )
+
+    manifest = json.loads((entrypoint.parent / "package-manifest.json").read_text())
+    assert manifest["filed_date"] == "2026-08-10"
+    assert manifest["report_date"] == "2026-06-30"
+    assert manifest["relevant_attachments"] == [
+        {"filename": "exhibit99-1.htm", "role": "earnings_supplement"}
+    ]
+    assert set(client.requested) == {"filing.htm", "filing.xsd", "exhibit99-1.htm"}
+    assert not (entrypoint.parent / "unrelated-press-release.pdf").exists()
+
+
+def test_package_generation_changes_when_semantic_filing_metadata_changes(
+    tmp_path: Path,
+) -> None:
+    client = FakeSecClient(
+        index_names=["filing.htm", "filing.xsd"],
+        attachments={
+            "filing.htm": b'<link href="filing.xsd" />',
+            "filing.xsd": b"schema",
+        },
+    )
+    first = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        filed_date="2026-08-10",
+        report_date="2026-06-30",
+        output_dir=tmp_path,
+    )
+    second = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        filed_date="2026-08-11",
+        report_date="2026-06-30",
+        output_dir=tmp_path,
+    )
+
+    assert first.parent != second.parent
+    assert json.loads((first.parent / "package-manifest.json").read_text())["filed_date"] == "2026-08-10"
+    assert json.loads((second.parent / "package-manifest.json").read_text())["filed_date"] == "2026-08-11"
 
 
 def test_package_cache_downloads_only_the_matching_instance_xml(tmp_path: Path) -> None:

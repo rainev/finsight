@@ -1,0 +1,124 @@
+{
+  "batch": 11,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "consumer_staples",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000096021",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Food Distributors",
+      "issuer_name": "Sysco",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "boundary",
+      "ticker": "SYY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000313927",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Household Products",
+      "issuer_name": "Church & Dwight",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "CHD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000764180",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Tobacco",
+      "issuer_name": "Altria",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "MO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000865752",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Soft Drinks & Non-alcoholic Beverages",
+      "issuer_name": "Monster Beverage",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "MNST"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000909832",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Consumer Staples Merchandise Retail",
+      "issuer_name": "Costco",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "COST"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000935703",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Consumer Staples Merchandise Retail",
+      "issuer_name": "Dollar Tree",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "DLTR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001103982",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "issuer_name": "Mondelez International",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "MDLZ"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001413329",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Tobacco",
+      "issuer_name": "Philip Morris International",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "PM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001637459",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "issuer_name": "Kraft Heinz",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "KHC"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001996862",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Agricultural Products & Services",
+      "issuer_name": "Bunge Global",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "boundary",
+      "ticker": "BG"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

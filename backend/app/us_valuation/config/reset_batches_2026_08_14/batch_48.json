@@ -1,0 +1,124 @@
+{
+  "batch": 48,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "real_estate_reit",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000034903",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "issuer_name": "Federal Realty Investment Trust",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "FRT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000074208",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "issuer_name": "UDR, Inc.",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "UDR"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000106535",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Timber REITs",
+      "issuer_name": "Weyerhaeuser",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "boundary",
+      "ticker": "WY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000740260",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Health Care REITs",
+      "issuer_name": "Ventas",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "VTR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000765880",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Health Care REITs",
+      "issuer_name": "Healthpeak Properties",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "DOC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000766704",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Health Care REITs",
+      "issuer_name": "Welltower",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "WELL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000879101",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "issuer_name": "Kimco Realty",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "KIM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000906107",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "issuer_name": "Equity Residential",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "EQR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000906345",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "issuer_name": "Camden Property Trust",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "CPT"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001020569",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Other Specialized REITs",
+      "issuer_name": "Iron Mountain",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "boundary",
+      "ticker": "IRM"
+    }
+  ],
+  "partition_families": [
+    "reit_affo"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

@@ -107,6 +107,51 @@ def test_structural_fact_round_trip_preserves_provenance() -> None:
     assert StructuralFact.from_dict(fact.as_dict()) == fact
 
 
+def test_structural_filing_round_trip_preserves_facts_and_diagnostics() -> None:
+    filing = StructuralFiling(
+        source_accession="0000000000-26-000001",
+        period_end="2025-12-31",
+        facts=(_fact(),),
+        diagnostics=(
+            ParseDiagnostic(
+                code="fixture",
+                message="Round-trip fixture.",
+                severity="info",
+                context=(("primary_document", "fsi-20251231.htm"),),
+            ),
+        ),
+        form="10-K",
+        filing_metadata=(("filed", "2026-02-01"),),
+    )
+
+    assert StructuralFiling.from_dict(filing.as_dict()) == filing
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("facts", {}, "facts must be a list"),
+        ("diagnostics", {}, "diagnostics must be a list"),
+        ("form", "", "form must be nonempty"),
+        ("period_end", "not-a-date", "period_end"),
+    ],
+)
+def test_structural_filing_from_dict_rejects_malformed_payloads(
+    field: str, value: object, message: str
+) -> None:
+    payload = StructuralFiling(
+        source_accession="0000000000-26-000001",
+        period_end="2025-12-31",
+        facts=(_fact(),),
+        diagnostics=(),
+        form="10-Q",
+    ).as_dict()
+    payload[field] = value
+
+    with pytest.raises(ValueError, match=message):
+        StructuralFiling.from_dict(payload)
+
+
 def test_resolution_request_rejects_empty_accession() -> None:
     with pytest.raises(ValueError, match="accession"):
         ResolutionRequest(

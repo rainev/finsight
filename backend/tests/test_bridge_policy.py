@@ -34,6 +34,10 @@ DEBT_COMPONENTS = (
     "noncurrent_debt",
 )
 LEASE_COMPONENTS = ("finance_lease_current", "finance_lease_noncurrent")
+INVESTMENT_COMPONENTS = (
+    "marketable_securities_current",
+    "marketable_securities_noncurrent",
+)
 
 
 def load_json(name: str) -> dict[str, Any]:
@@ -90,16 +94,22 @@ def unresolved(field: str) -> FieldAvailability:
 
 
 def unavailable(field: str, state: str) -> FieldAvailability:
+    has_source = state in {"stale", "conflict", "not_disclosed"}
     return FieldAvailability(
         field=field,
         value=None,
         state=state,
         reason_code=f"TEST_{state.upper()}",
         period_end=PERIOD_END,
-        source_accession=ACCESSION if state in {"stale", "conflict"} else None,
-        source_kind="test_filing" if state in {"stale", "conflict"} else None,
-        evidence_class=state if state in {"stale", "conflict"} else None,
-        freshness="stale" if state == "stale" else "unknown",
+        source_accession=ACCESSION if has_source else None,
+        source_kind="test_filing" if has_source else None,
+        evidence_class=state if has_source else None,
+        freshness=(
+            "stale" if state == "stale" else "current"
+            if state == "not_disclosed" else "unknown"
+        ),
+        extraction_complete=state == "not_disclosed",
+        searched_concepts=(field,) if state == "not_disclosed" else (),
     )
 
 
@@ -205,6 +215,286 @@ def with_total_debt(
         covered_fields=covered_fields,
     )
     return availability
+
+
+def with_total_investments(
+    availability: dict[str, FieldAvailability],
+    value: float,
+    *,
+    covered_fields: tuple[str, ...] = INVESTMENT_COMPONENTS,
+) -> dict[str, FieldAvailability]:
+    availability["marketable_securities_total"] = replace(
+        point(
+            "marketable_securities_total",
+            value,
+            covered_fields=covered_fields,
+        ),
+        fallback_level="reported_aggregate",
+        coverage_basis="direct_issuer_total",
+        coverage_source_facts=(
+            f"{ACCESSION}|{PERIOD_END}|us-gaap:MarketableSecurities|CurrentQuarterInstant",
+        ),
+        economic_scope="marketable_securities_current_and_noncurrent",
+    )
+    return availability
+
+
+def test_total_marketable_securities_replaces_missing_split_without_double_count() -> None:
+    availability = complete_availability(
+        marketable_securities_current=None,
+        marketable_securities_noncurrent=None,
+    )
+    with_total_investments(availability, 25.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.blocking_fields == ()
+    assert resolution.cash_and_investments == BridgeRange(125.0, 125.0, 125.0)
+
+
+def test_matching_total_marketable_securities_corroborates_split_without_adding_twice() -> None:
+    availability = complete_availability()
+    with_total_investments(availability, 25.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.cash_and_investments == BridgeRange(125.0, 125.0, 125.0)
+
+
+def test_total_smaller_than_one_current_split_fails_closed() -> None:
+    availability = complete_availability(
+        marketable_securities_noncurrent=None,
+    )
+    with_total_investments(availability, 10.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "marketable_securities_total" in resolution.blocking_fields
+    assert "TOTAL_INVESTMENTS_AGGREGATE_CONFLICT" in resolution.reason_codes
+
+
+def test_one_split_comparison_uses_existing_inclusive_tolerance() -> None:
+    availability = complete_availability(
+        marketable_securities_current=10.5,
+        marketable_securities_noncurrent=None,
+    )
+    with_total_investments(availability, 10.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert "TOTAL_INVESTMENTS_AGGREGATE_CONFLICT" not in resolution.reason_codes
+    assert resolution.cash_and_investments == BridgeRange(110.0, 110.0, 110.0)
+
+
+def test_total_with_one_smaller_current_split_is_counted_once() -> None:
+    availability = complete_availability(
+        marketable_securities_noncurrent=None,
+    )
+    with_total_investments(availability, 25.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.cash_and_investments == BridgeRange(125.0, 125.0, 125.0)
+
+
+def test_current_total_is_not_compared_with_annual_carried_split() -> None:
+    availability = complete_availability(
+        marketable_securities_noncurrent=None,
+    )
+    availability["marketable_securities_current"] = replace(
+        point("marketable_securities_current", 100.0),
+        source_kind="companyfacts",
+        evidence_class="reported",
+        freshness="carried_forward",
+        fallback_level="annual_carried_forward",
+        source_age_days=180,
+    )
+    with_total_investments(availability, 25.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.cash_and_investments == BridgeRange(125.0, 125.0, 125.0)
+
+
+def test_total_marketable_securities_conflict_with_split_fails_closed() -> None:
+    availability = complete_availability()
+    with_total_investments(availability, 30.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "marketable_securities_total" in resolution.blocking_fields
+    assert "TOTAL_INVESTMENTS_AGGREGATE_CONFLICT" in resolution.reason_codes
+
+
+def test_total_marketable_securities_requires_exact_split_coverage() -> None:
+    availability = complete_availability(
+        marketable_securities_current=None,
+        marketable_securities_noncurrent=None,
+    )
+    with_total_investments(
+        availability,
+        25.0,
+        covered_fields=("marketable_securities_current",),
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "marketable_securities_total" in resolution.blocking_fields
+    assert "TOTAL_INVESTMENTS_AGGREGATE_INCOMPLETE_COVERAGE" in resolution.reason_codes
+
+
+def test_total_marketable_securities_requires_matching_economic_scope() -> None:
+    availability = complete_availability(
+        marketable_securities_current=None,
+        marketable_securities_noncurrent=None,
+    )
+    with_total_investments(availability, 25.0)
+    availability["marketable_securities_total"] = replace(
+        availability["marketable_securities_total"],
+        economic_scope="available_for_sale_debt_only",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "marketable_securities_total" in resolution.blocking_fields
+    assert "TOTAL_INVESTMENTS_AGGREGATE_SCOPE_INVALID" in resolution.reason_codes
+
+
+def test_unproven_total_candidate_does_not_replace_missing_splits() -> None:
+    availability = complete_availability(
+        marketable_securities_current=None,
+        marketable_securities_noncurrent=None,
+    )
+    availability["marketable_securities_total"] = point(
+        "marketable_securities_total", 25.0
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert set(resolution.blocking_fields) == {
+        "marketable_securities_current",
+        "marketable_securities_noncurrent",
+    }
+    assert "marketable_securities_total" not in resolution.blocking_fields
+
+
+def test_peer_sector_range_is_diagnostic_not_issuer_bridge_evidence() -> None:
+    availability = complete_availability()
+    availability["marketable_securities_noncurrent"] = replace(
+        bounded("marketable_securities_noncurrent", 0.0, 50.0),
+        reason_code="SECTOR_ESTIMATE_RANGE",
+        source_kind="sector_estimate",
+        evidence_class="estimated_range",
+        fallback_level="sector_estimate",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert resolution.blocking_fields == ("marketable_securities_noncurrent",)
+    assert "BRIDGE_EVIDENCE_NOT_ISSUER_SPECIFIC" in resolution.reason_codes
+    assert resolution.cash_and_investments == BridgeRange(120.0, 120.0, 120.0)
+
+
+def test_source_verified_sector_range_is_bounded_low_not_generic_peer_data() -> None:
+    availability = complete_availability()
+    availability["marketable_securities_noncurrent"] = replace(
+        bounded("marketable_securities_noncurrent", 0.0, 50.0),
+        reason_code="SOURCE_VERIFIED_SECTOR_RANGE",
+        source_kind="sector_range",
+        evidence_class="bounded_estimate",
+        fallback_level="sector_estimate",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.cash_and_investments == BridgeRange(120.0, 145.0, 170.0)
+    assert "marketable_securities_noncurrent" in resolution.bounded_fields
+
+
+def test_total_marketable_securities_does_not_override_component_conflict() -> None:
+    availability = complete_availability(
+        marketable_securities_current=None,
+        marketable_securities_noncurrent=None,
+    )
+    availability["marketable_securities_current"] = unavailable(
+        "marketable_securities_current", "conflict"
+    )
+    with_total_investments(availability, 25.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is False
+    assert "marketable_securities_current" in resolution.blocking_fields
+
+
+def test_company_history_total_range_can_replace_splits_with_coverage_proof() -> None:
+    availability = complete_availability(
+        marketable_securities_current=None,
+        marketable_securities_noncurrent=None,
+    )
+    availability["marketable_securities_total"] = replace(
+        bounded(
+            "marketable_securities_total",
+            20.0,
+            30.0,
+            covered_fields=INVESTMENT_COMPONENTS,
+        ),
+        reason_code="COMPANY_HISTORY_RANGE",
+        source_kind="company_history",
+        evidence_class="estimated_range",
+        fallback_level="company_history",
+        coverage_basis="direct_issuer_total",
+        coverage_source_facts=(
+            f"{ACCESSION}|2025-06-30|us-gaap:MarketableSecurities|AnnualInstant",
+        ),
+        economic_scope="marketable_securities_current_and_noncurrent",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.bounded_fields == ("marketable_securities_total",)
+    assert resolution.cash_and_investments == BridgeRange(120.0, 125.0, 130.0)
+
+
+def test_company_history_total_does_not_override_current_splits() -> None:
+    availability = complete_availability()
+    availability["marketable_securities_total"] = replace(
+        bounded(
+            "marketable_securities_total",
+            5.0,
+            10.0,
+            covered_fields=INVESTMENT_COMPONENTS,
+        ),
+        reason_code="COMPANY_HISTORY_RANGE",
+        source_kind="company_history",
+        evidence_class="estimated_range",
+        fallback_level="company_history",
+        coverage_basis="direct_issuer_total",
+        coverage_source_facts=(
+            f"{ACCESSION}|2025-06-30|us-gaap:MarketableSecurities|AnnualInstant",
+        ),
+        economic_scope="marketable_securities_current_and_noncurrent",
+    )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.bounded_fields == ()
+    assert "TOTAL_INVESTMENTS_AGGREGATE_CONFLICT" not in resolution.reason_codes
+    assert resolution.cash_and_investments == BridgeRange(125.0, 125.0, 125.0)
 
 
 def bounded_resolution(
@@ -454,6 +744,43 @@ def test_matching_lease_total_and_splits_are_counted_once() -> None:
     ).total_debt.midpoint == 60.0
 
 
+def test_current_lease_total_does_not_conflict_with_carried_split_midpoints() -> None:
+    availability = complete_availability(
+        finance_lease_current=None,
+        finance_lease_noncurrent=None,
+        finance_lease_total=10.0,
+    )
+    for field, value, low, high in (
+        ("finance_lease_current", 3.0, 1.0, 5.0),
+        ("finance_lease_noncurrent", 5.0, 3.0, 7.0),
+    ):
+        availability[field] = FieldAvailability(
+            field=field,
+            value=value,
+            state="reported",
+            reason_code="ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+            period_end=PERIOD_END,
+            source_accession=ACCESSION,
+            source_kind="companyfacts",
+            evidence_class="reported",
+            freshness="carried_forward",
+            fallback_level="annual_carried_forward",
+            source_age_days=180,
+            uncertainty=UncertaintyRange(
+                low=low,
+                high=high,
+                basis="Carried annual split range.",
+                source_accessions=(ACCESSION,),
+            ),
+        )
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.total_debt.midpoint == 60.0
+    assert "FINANCE_LEASE_AGGREGATE_CONFLICT" not in resolution.reason_codes
+
+
 def test_one_split_plus_lease_total_counts_only_the_total() -> None:
     availability = complete_availability(
         finance_lease_current=3.0,
@@ -547,6 +874,28 @@ def test_total_debt_plus_lease_total_are_not_double_counted() -> None:
 
     assert resolution.total_debt.midpoint == 60.0
     assert resolution.blocking_fields == ()
+
+
+def test_total_debt_aggregate_covers_stale_lease_total_detail() -> None:
+    availability = complete_availability(
+        commercial_paper=None,
+        current_debt=None,
+        noncurrent_debt=None,
+        finance_lease_current=None,
+        finance_lease_noncurrent=None,
+        finance_lease_total=None,
+    )
+    availability["finance_lease_total"] = unavailable(
+        "finance_lease_total",
+        "stale",
+    )
+    with_total_debt(availability, 60.0)
+
+    resolution = reconcile_bridge(availability, fully_diluted_shares=10.0)
+
+    assert resolution.can_value is True
+    assert resolution.total_debt.midpoint == 60.0
+    assert "finance_lease_total" not in resolution.blocking_fields
 
 
 def test_total_debt_aggregate_corroboration_uses_the_inclusive_tolerance() -> None:

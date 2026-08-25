@@ -1,0 +1,124 @@
+{
+  "batch": 45,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "utilities",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000004904",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "American Electric Power",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "AEP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000065984",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Entergy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "ETR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000072741",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Eversource Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "ES"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000072903",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "Xcel Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "boundary",
+      "ticker": "XEL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000092122",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Southern Company",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "SO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000352541",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Alliant Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "LNT"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000715957",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "Dominion Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "boundary",
+      "ticker": "D"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000764622",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "Pinnacle West Capital",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "PNW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000783325",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "WEC Energy Group",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "WEC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000788784",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Public Service Enterprise Group",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "PEG"
+    }
+  ],
+  "partition_families": [
+    "utility_fcfe"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

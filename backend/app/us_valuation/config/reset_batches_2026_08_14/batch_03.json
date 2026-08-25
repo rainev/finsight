@@ -1,0 +1,124 @@
+{
+  "batch": 3,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "communication_services",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001335258",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "issuer_name": "Live Nation Entertainment",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "LYV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001415404",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Wireless Telecommunication Services",
+      "issuer_name": "EchoStar",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "ECHO"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001564708",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Publishing",
+      "issuer_name": "News Corp (Class A)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "boundary",
+      "ticker": "NWSA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001652044",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Interactive Media & Services",
+      "issuer_name": "Alphabet Inc. (Class A)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "GOOGL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001671933",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Advertising",
+      "issuer_name": "Trade Desk (The)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "TTD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001744489",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "issuer_name": "Walt Disney Company (The)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "DIS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001751008",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Advertising",
+      "issuer_name": "AppLovin",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "APP"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001754301",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Broadcasting",
+      "issuer_name": "Fox Corporation (Class A)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "boundary",
+      "ticker": "FOXA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001973266",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "issuer_name": "TKO Group Holdings",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "TKO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0002041610",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "issuer_name": "Paramount Skydance Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "communication_services",
+      "role": "core",
+      "ticker": "PSKY"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

@@ -147,6 +147,10 @@ def test_cached_package_to_offline_arelle_to_shadow_report_is_hermetic(
     assert marketable_decision["evidence"]["decimals"] == "0"
     assert marketable_decision["evidence"]["relationships"]
     assert marketable_decision["evidence"]["filing_metadata"]
+    # The embedded fixture context deliberately differs from the wrapper artifact CIK;
+    # structural extraction must preserve the source identity rather than rewriting it.
+    assert marketable_decision["evidence"]["entity_identifier"] == "0000000000"
+    assert marketable_decision["evidence"]["entity_scheme"] == "http://www.sec.gov/CIK"
     assert debt_decision["status"] == "accepted"
     assert debt_decision["value"] == 125_000_000
     summary = json.loads((output_root / "summary.json").read_text())

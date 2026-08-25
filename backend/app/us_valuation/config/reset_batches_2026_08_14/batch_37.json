@@ -1,0 +1,125 @@
+{
+  "batch": 37,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "financials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000914208",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "Invesco",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "IVZ"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000922621",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "issuer_name": "Erie Indemnity",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "ERIE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000947484",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "issuer_name": "Arch Capital Group",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "ACGL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001013237",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "FactSet",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "FDS"
+    },
+    {
+      "boundary_reason": "asset_backed_capital_structure_boundary",
+      "cik": "0001039684",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Storage & Transportation",
+      "issuer_name": "Oneok",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "boundary",
+      "ticker": "OKE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001059556",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "Moody's Corporation",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "MCO"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001067983",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Multi-Sector Holdings",
+      "issuer_name": "Berkshire Hathaway",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "BRK.B"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001099219",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "issuer_name": "MetLife",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "MET"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001113169",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "T. Rowe Price",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "TROW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001120193",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "Nasdaq, Inc.",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "NDAQ"
+    }
+  ],
+  "partition_families": [
+    "financial_equity",
+    "resource_cycle_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

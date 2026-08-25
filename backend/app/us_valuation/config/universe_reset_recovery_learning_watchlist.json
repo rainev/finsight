@@ -1,0 +1,625 @@
+{
+  "version": "US-UNIVERSE-RESET-RECOVERY-LEARNING-1.0",
+  "title": "Universe Reset Recovery Learning Watchlist",
+  "call_name": "Recovery Learning Watchlist",
+  "valuation_date": "2026-08-14",
+  "review_after_batch": 50,
+  "entries": [
+    {
+      "batch": 1,
+      "ticker": "NEE",
+      "cik": "0000753308",
+      "issuer_name": "NextEra Energy, Inc.",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "withheld_after_recovery",
+      "provisional_model": "mixed_utility_fcfe",
+      "why_not_fully_recovered": "Complete borrowing reconciliation leaves bear and base parent FCFE nonpositive.",
+      "learning_themes": [
+        "mixed utility segment separation",
+        "complete interest-bearing borrowing",
+        "parent versus subsidiary cash allocation"
+      ],
+      "revisit_triggers": [
+        "current FPL and Energy Resources segment cash evidence",
+        "source-backed parent debt and capital allocation"
+      ],
+      "evidence_reports": [
+        "docs/audit/13-three-company-recovery-result.md",
+        "docs/audit/14-universe-reset-withheld-register.md"
+      ]
+    },
+    {
+      "batch": 2,
+      "ticker": "OMC",
+      "cik": "0000029989",
+      "issuer_name": "Omnicom Group",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_combination_normalized_fcff_multiple",
+      "why_not_fully_recovered": "The conditional value depends on a short post-IPG operating run-rate and governed normalization multiples rather than comparable combined history.",
+      "learning_themes": [
+        "post-merger comparability",
+        "combined owner-cash history",
+        "purchase-accounting normalization"
+      ],
+      "revisit_triggers": [
+        "full comparable combined annual cash-flow history",
+        "issuer-filed combined pro forma cash flow"
+      ],
+      "evidence_reports": [
+        "docs/audit/18-batch-02-recovery-result.md",
+        "docs/audit/33-batch-02-conditional-estimate-result.md"
+      ]
+    },
+    {
+      "batch": 2,
+      "ticker": "TTWO",
+      "cik": "0000946581",
+      "issuer_name": "Take-Two Interactive",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "major_release_outcome_equity_cash_multiple",
+      "why_not_fully_recovered": "Positive value depends on hypothetical GTA VI release margins and multiples while current reported post-capex cash is negative.",
+      "learning_themes": [
+        "major release pipeline modeling",
+        "capitalized software cash conversion",
+        "post-release evidence calibration"
+      ],
+      "revisit_triggers": [
+        "first post-GTA-VI quarterly cash results",
+        "issuer guidance covering release-period bookings and margins"
+      ],
+      "evidence_reports": [
+        "docs/audit/18-batch-02-recovery-result.md",
+        "docs/audit/33-batch-02-conditional-estimate-result.md"
+      ]
+    },
+    {
+      "batch": 2,
+      "ticker": "CHTR",
+      "cik": "0001091667",
+      "issuer_name": "Charter Communications",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "standalone_equity_at_risk_fcff",
+      "why_not_fully_recovered": "Bear and base standalone residual equity are negative, while Cox and Liberty terms lack final combined cash flow, claims, and dilution.",
+      "learning_themes": [
+        "high leverage residual equity",
+        "transaction claims and dilution",
+        "limited-liability floor semantics"
+      ],
+      "revisit_triggers": [
+        "Cox and Liberty closing or termination",
+        "filed combined pro forma cash flow and final capital structure"
+      ],
+      "evidence_reports": [
+        "docs/audit/18-batch-02-recovery-result.md",
+        "docs/audit/33-batch-02-conditional-estimate-result.md"
+      ]
+    },
+    {
+      "batch": 2,
+      "ticker": "CMCSA",
+      "cik": "0001166691",
+      "issuer_name": "Comcast",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "current_consolidated_conditional_fcff",
+      "why_not_fully_recovered": "The number values today's consolidated company and cannot allocate future debt, cash, or corporate costs between separated businesses.",
+      "learning_themes": [
+        "pre-separation consolidated valuation",
+        "standalone corporate-cost allocation",
+        "debt and cash allocation"
+      ],
+      "revisit_triggers": [
+        "filed Form 10 or separation pro forma financials",
+        "final financing and retained-stake terms"
+      ],
+      "evidence_reports": [
+        "docs/audit/18-batch-02-recovery-result.md",
+        "docs/audit/33-batch-02-conditional-estimate-result.md"
+      ]
+    },
+    {
+      "batch": 2,
+      "ticker": "META",
+      "cik": "0001326801",
+      "issuer_name": "Meta Platforms",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "ai_capex_cash_conversion_equity_multiple",
+      "why_not_fully_recovered": "The value depends on hypothetical AI cash-conversion states because commitments, leases, and future capex lack a mutually exclusive cash waterfall.",
+      "learning_themes": [
+        "AI infrastructure cash conversion",
+        "commitment and lease overlap",
+        "forward capex coverage"
+      ],
+      "revisit_triggers": [
+        "issuer-filed mutually exclusive commitment schedule",
+        "realized AI capex and incremental cash-flow history"
+      ],
+      "evidence_reports": [
+        "docs/audit/18-batch-02-recovery-result.md",
+        "docs/audit/33-batch-02-conditional-estimate-result.md"
+      ]
+    },
+    {
+      "batch": 2,
+      "ticker": "WBD",
+      "cik": "0001437107",
+      "issuer_name": "Warner Bros. Discovery",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "standalone_fcff_plus_separate_contract_event",
+      "why_not_fully_recovered": "Standalone cash normalization is weak and the separately displayed merger consideration remains conditional rather than intrinsic value.",
+      "learning_themes": [
+        "standalone versus transaction value",
+        "contractual consideration identity",
+        "weak cash normalization"
+      ],
+      "revisit_triggers": [
+        "merger close, termination, amendment, or material court order",
+        "stable standalone operating cash history"
+      ],
+      "evidence_reports": [
+        "docs/audit/18-batch-02-recovery-result.md",
+        "docs/audit/33-batch-02-conditional-estimate-result.md"
+      ]
+    },
+    {
+      "batch": 3,
+      "ticker": "LYV",
+      "cik": "0001335258",
+      "issuer_name": "Live Nation Entertainment",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "event_normalized_cash_fcff",
+      "why_not_fully_recovered": "The baseline depends on event-normalized cash, client cash, deferred revenue, leases, NCI, and convertible dilution assumptions; the bear state uses an equity floor.",
+      "learning_themes": [
+        "live-event seasonality",
+        "client cash versus available cash",
+        "redeemable NCI and convertible dilution"
+      ],
+      "revisit_triggers": [
+        "complete post-recovery fiscal year",
+        "material change in event cash, claims, or conversion shares"
+      ],
+      "evidence_reports": [
+        "docs/audit/36-controlled-batch-03-initial-result.md",
+        "docs/audit/42-launch-first-phase2-result.md"
+      ]
+    },
+    {
+      "batch": 3,
+      "ticker": "ECHO",
+      "cik": "0001415404",
+      "issuer_name": "EchoStar",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "withheld_after_recovery",
+      "provisional_model": "deconsolidation_adjusted_telecom_fcff",
+      "why_not_fully_recovered": "The continuing-company object cannot yet separate negative owner cash, deconsolidation, spectrum economics, debt, disposal assets, and conversion shares.",
+      "learning_themes": [
+        "deconsolidation accounting",
+        "spectrum and disposal economics",
+        "continuing-company share and debt identity"
+      ],
+      "revisit_triggers": [
+        "completed deconsolidation and disposal accounting",
+        "positive comparable continuing-company cash history"
+      ],
+      "evidence_reports": [
+        "docs/audit/36-controlled-batch-03-initial-result.md",
+        "docs/audit/42-launch-first-phase2-result.md"
+      ]
+    },
+    {
+      "batch": 3,
+      "ticker": "GOOGL",
+      "cik": "0001652044",
+      "issuer_name": "Alphabet Inc. (Class A)",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "ai_commitment_adjusted_cash_fcff",
+      "why_not_fully_recovered": "The value uses broad cash-conversion states to absorb the $707bn purchase-commitment burden and current AI infrastructure uncertainty.",
+      "learning_themes": [
+        "AI infrastructure commitments",
+        "commitment timing inside cash conversion",
+        "preferred and VIE claim reconciliation"
+      ],
+      "revisit_triggers": [
+        "filed commitment timing and capex schedule",
+        "realized AI and cloud cash conversion"
+      ],
+      "evidence_reports": [
+        "docs/audit/36-controlled-batch-03-initial-result.md",
+        "docs/audit/42-launch-first-phase2-result.md"
+      ]
+    },
+    {
+      "batch": 3,
+      "ticker": "APP",
+      "cik": "0001751008",
+      "issuer_name": "AppLovin",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "normalized_cash_fcff",
+      "why_not_fully_recovered": "Current capex is unreported, so reinvestment uses company-history assumptions and an unresolved-claims reserve after the business disposal.",
+      "learning_themes": [
+        "missing current capex",
+        "post-disposal cash comparability",
+        "asset-based unresolved-claims reserves"
+      ],
+      "revisit_triggers": [
+        "current capex disclosure",
+        "complete comparable post-disposal fiscal year"
+      ],
+      "evidence_reports": [
+        "docs/audit/36-controlled-batch-03-initial-result.md",
+        "docs/audit/42-launch-first-phase2-result.md"
+      ]
+    },
+    {
+      "batch": 3,
+      "ticker": "FOXA",
+      "cik": "0001754301",
+      "issuer_name": "Fox Corporation (Class A)",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "rights_adjusted_broadcast_cash_fcff",
+      "why_not_fully_recovered": "Programming, sports-rights, and near-term contractual obligations are absorbed through stressed cash margins rather than a complete specialist rights schedule.",
+      "learning_themes": [
+        "media-rights obligation schedules",
+        "restricted cash availability",
+        "Class A and Class B denominator treatment"
+      ],
+      "revisit_triggers": [
+        "complete rights cash schedule",
+        "reported cash conversion outside the governed range"
+      ],
+      "evidence_reports": [
+        "docs/audit/36-controlled-batch-03-initial-result.md",
+        "docs/audit/42-launch-first-phase2-result.md"
+      ]
+    },
+    {
+      "batch": 3,
+      "ticker": "TKO",
+      "cik": "0001973266",
+      "issuer_name": "TKO Group Holdings",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "sports_rights_normalized_cash_fcff",
+      "why_not_fully_recovered": "Capex and rights cash are normalized through assumptions, while Class B conversion and NCI require a specialized reconciliation; the bear state uses an equity floor.",
+      "learning_themes": [
+        "sports-rights cash normalization",
+        "Class B conversion shares",
+        "NCI ownership reconciliation"
+      ],
+      "revisit_triggers": [
+        "complete capex and rights-commitment cash series",
+        "stable post-transaction diluted-share history"
+      ],
+      "evidence_reports": [
+        "docs/audit/36-controlled-batch-03-initial-result.md",
+        "docs/audit/42-launch-first-phase2-result.md"
+      ]
+    },
+    {
+      "batch": 3,
+      "ticker": "PSKY",
+      "cik": "0002041610",
+      "issuer_name": "Paramount Skydance Corporation",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "withheld_after_recovery",
+      "provisional_model": "successor_media_fcff",
+      "why_not_fully_recovered": "The successor-only bear and base residual equity are nonpositive, and a positive value requires an unproven recovery before a comparable fiscal year exists.",
+      "learning_themes": [
+        "successor and predecessor comparability",
+        "share conversion and debt allocation",
+        "nonpositive base residual equity"
+      ],
+      "revisit_triggers": [
+        "complete comparable successor fiscal year",
+        "positive source-backed successor cash baseline"
+      ],
+      "evidence_reports": [
+        "docs/audit/36-controlled-batch-03-initial-result.md",
+        "docs/audit/42-launch-first-phase2-result.md"
+      ]
+    },
+    {
+      "batch": 4,
+      "ticker": "F",
+      "cik": "0000037996",
+      "issuer_name": "Ford Motor Company",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "ford_normalized_equity_earnings_baseline",
+      "why_not_fully_recovered": "The baseline normalizes consolidated equity earnings and does not claim a full Ford Credit sum-of-parts.",
+      "learning_themes": ["captive-finance separation", "normalized auto-cycle earnings"],
+      "revisit_triggers": ["complete Ford Credit equity/funding allocation", "stable warranty, pension, and EV-transition earnings"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "GPC",
+      "cik": "0000040987",
+      "issuer_name": "Genuine Parts Company",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "working_capital_normalized_cash_fcff",
+      "why_not_fully_recovered": "Acquisition and working-capital normalization remain assumption-driven and the bear residual uses an equity floor.",
+      "learning_themes": ["supplier finance and working capital", "acquisition normalization"],
+      "revisit_triggers": ["stable post-acquisition cash conversion", "fully reconciled supplier-finance claims"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "HAS",
+      "cik": "0000046080",
+      "issuer_name": "Hasbro",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_impairment_normalized_cash_fcff",
+      "why_not_fully_recovered": "Entertainment changes, impairments, restructuring, and licensing economics require normalized scenarios.",
+      "learning_themes": ["post-impairment normalization", "licensing and entertainment transition"],
+      "revisit_triggers": ["stable post-divestiture cash history", "resolved restructuring and impairment effects"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "LOW",
+      "cik": "0000060667",
+      "issuer_name": "Lowe's",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "home_retail_normalized_cash_fcff",
+      "why_not_fully_recovered": "Housing-cycle cash conversion and unresolved ownership claims remain ranged assumptions.",
+      "learning_themes": ["housing-cycle normalization", "unresolved claim reserves"],
+      "revisit_triggers": ["complete current claims disclosure", "stable through-cycle cash conversion"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "MCD",
+      "cik": "0000063908",
+      "issuer_name": "McDonald's",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "franchise_lease_normalized_cash_fcff",
+      "why_not_fully_recovered": "Franchise and lease economics are normalized through broad cash scenarios with unresolved NCI reserves.",
+      "learning_themes": ["franchise and lessor economics", "lease double-count prevention"],
+      "revisit_triggers": ["complete franchise/lease cash reconciliation", "current reported NCI evidence"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "TJX",
+      "cik": "0000109198",
+      "issuer_name": "TJX Companies",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "off_price_normalized_cash_fcff",
+      "why_not_fully_recovered": "Alternate revenue mapping and off-price inventory normalization remain assumption-driven.",
+      "learning_themes": ["alternate revenue concepts", "off-price inventory cash conversion"],
+      "revisit_triggers": ["stable validated TTM revenue mapping", "complete claim and lease evidence"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "NKE",
+      "cik": "0000320187",
+      "issuer_name": "Nike, Inc.",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "transition_normalized_cash_fcff",
+      "why_not_fully_recovered": "Wholesale/DTC mix, China, inventory, FX, and turnaround margins require transition assumptions.",
+      "learning_themes": ["brand turnaround margins", "wholesale versus DTC inventory"],
+      "revisit_triggers": ["realized turnaround cash conversion", "normalized inventory and channel mix"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "HD",
+      "cik": "0000354950",
+      "issuer_name": "Home Depot (The)",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "housing_cycle_integration_cash_fcff",
+      "why_not_fully_recovered": "SRS integration and the housing/repair cycle remain broad scenario assumptions.",
+      "learning_themes": ["acquisition integration", "housing-cycle cash normalization"],
+      "revisit_triggers": ["complete SRS integration history", "stable through-cycle cash conversion"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "ROST",
+      "cik": "0000745732",
+      "issuer_name": "Ross Stores",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "off_price_normalized_cash_fcff",
+      "why_not_fully_recovered": "Inventory, leases, investments, and unresolved ownership claims remain governed ranges.",
+      "learning_themes": ["off-price inventory normalization", "lease and investment claims"],
+      "revisit_triggers": ["complete current claim evidence", "stable inventory cash conversion"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 4,
+      "ticker": "MGM",
+      "cik": "0000789570",
+      "issuer_name": "MGM Resorts",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "casino_cycle_jv_normalized_cash_fcff",
+      "why_not_fully_recovered": "Casino-cycle, property capex, MGM China/JV/NCI, leases, and digital economics remain scenario-driven.",
+      "learning_themes": ["casino-cycle normalization", "JV/NCI and lease treatment"],
+      "revisit_triggers": ["stable casino and digital cash history", "complete JV/NCI allocation"],
+      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "WSM",
+      "cik": "0000719955",
+      "issuer_name": "Williams-Sonoma, Inc.",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "home_furnishing_normalized_cash_fcff",
+      "why_not_fully_recovered": "Inventory, leases, working capital, and unreported financing claims remain broadly ranged.",
+      "learning_themes": ["home-furnishing cycle", "inventory and lease normalization"],
+      "revisit_triggers": ["stable inventory cash conversion", "complete financing-claim evidence"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "CASY",
+      "cik": "0000726958",
+      "issuer_name": "Casey's",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "food_fuel_retail_normalized_cash_fcff",
+      "why_not_fully_recovered": "Fuel mix, acquisitions, LIFO, land, and working-capital normalization remain material assumptions.",
+      "learning_themes": ["fuel and merchandise mix", "acquisition and LIFO normalization"],
+      "revisit_triggers": ["stable fuel-margin history", "post-acquisition cash reconciliation"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "CCL",
+      "cik": "0000815097",
+      "issuer_name": "Carnival Corporation",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "cruise_cycle_normalized_cash_fcff",
+      "why_not_fully_recovered": "Cruise recovery, ship capex, debt, and lease assumptions produce a zero bear equity floor.",
+      "learning_themes": ["cruise-cycle normalization", "ship capex and leverage"],
+      "revisit_triggers": ["normalized cruise cash history", "lower and fully reconciled leverage"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "PHM",
+      "cik": "0000822416",
+      "issuer_name": "PulteGroup",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "homebuilder_normalized_equity_earnings_baseline",
+      "why_not_fully_recovered": "Mortgage operations, land options, inventory, and debt remain inside a consolidated equity-earnings range.",
+      "learning_themes": ["homebuilder mortgage operations", "land and inventory accounting"],
+      "revisit_triggers": ["mortgage/homebuilding earnings separation", "source-bounded land and inventory cycle"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "SBUX",
+      "cik": "0000829224",
+      "issuer_name": "Starbucks",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "restaurant_lease_turnaround_cash_fcff",
+      "why_not_fully_recovered": "Store turnaround, leases, inventory, and negative book equity make normalized cash provisional.",
+      "learning_themes": ["restaurant turnaround", "store leases and negative equity"],
+      "revisit_triggers": ["realized store-level cash recovery", "stable post-turnaround margins"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "AZO",
+      "cik": "0000866787",
+      "issuer_name": "AutoZone",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "auto_parts_working_capital_cash_fcff",
+      "why_not_fully_recovered": "Inventory/AP financing, leases, repurchases, and negative equity require broad cash and claim ranges.",
+      "learning_themes": ["supplier-financed inventory", "buybacks and negative equity"],
+      "revisit_triggers": ["complete finance-lease liability evidence", "stable working-capital conversion"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "DHI",
+      "cik": "0000882184",
+      "issuer_name": "D. R. Horton",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "homebuilder_normalized_equity_earnings_baseline",
+      "why_not_fully_recovered": "Mortgage banking, land inventory, notes payable, and NCI remain consolidated in an equity-earnings range.",
+      "learning_themes": ["homebuilder mortgage banking", "land inventory and financing"],
+      "revisit_triggers": ["mortgage/homebuilding earnings separation", "through-cycle land and inventory history"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "RCL",
+      "cik": "0000884887",
+      "issuer_name": "Royal Caribbean Group",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "cruise_cycle_normalized_cash_fcff",
+      "why_not_fully_recovered": "Ship capex, leverage, leases, NCI, and cruise-cycle assumptions create a zero bear equity floor.",
+      "learning_themes": ["cruise-cycle normalization", "ship capex and leverage"],
+      "revisit_triggers": ["normalized cruise cash history", "complete debt/lease/NCI reconciliation"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "ORLY",
+      "cik": "0000898173",
+      "issuer_name": "O'Reilly Automotive",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "auto_parts_working_capital_cash_fcff",
+      "why_not_fully_recovered": "Inventory/AP financing, leases, buybacks, and negative equity remain normalized assumptions.",
+      "learning_themes": ["supplier-financed inventory", "buybacks and negative equity"],
+      "revisit_triggers": ["stable working-capital conversion", "complete lease and debt evidence"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    },
+    {
+      "batch": 5,
+      "ticker": "NVR",
+      "cik": "0000906163",
+      "issuer_name": "NVR, Inc.",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "homebuilder_normalized_equity_earnings_baseline",
+      "why_not_fully_recovered": "Lot options, land deposits, mortgage earnings, and the housing cycle remain inside consolidated assumptions.",
+      "learning_themes": ["lot-option accounting", "homebuilder mortgage operations"],
+      "revisit_triggers": ["mortgage/homebuilding earnings separation", "source-bounded lot and land cycle"],
+      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+    }
+  ]
+}

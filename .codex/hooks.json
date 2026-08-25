@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh -c 'root=$(git rev-parse --show-toplevel 2>/dev/null || pwd); python3 \"$root/.codex/hooks/done-gate.py\"'"
+          }
+        ]
+      }
+    ]
+  }
+}

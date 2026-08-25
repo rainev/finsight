@@ -1,0 +1,145 @@
+{
+  "version": "US-UNIVERSE-RESET-WITHHELD-1.0",
+  "valuation_date": "2026-08-14",
+  "entries": [
+    {
+      "batch": 1,
+      "ticker": "NEE",
+      "cik": "0000753308",
+      "issuer_name": "NextEra Energy, Inc.",
+      "model_version": "PRACTICAL-MIXED-UTILITY-FCFE-1.1",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MIXED_UTILITY_FALLBACK",
+        "CAPEX_CASH_CONVERSION_SENSITIVITY",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/13-three-company-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "OMC",
+      "cik": "0000029989",
+      "issuer_name": "Omnicom Group",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "TTWO",
+      "cik": "0000946581",
+      "issuer_name": "Take-Two Interactive",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CAPEX_CASH_CONVERSION_SENSITIVITY",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "MODEL_UNSUPPORTED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "CHTR",
+      "cik": "0001091667",
+      "issuer_name": "Charter Communications",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "CMCSA",
+      "cik": "0001166691",
+      "issuer_name": "Comcast",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "META",
+      "cik": "0001326801",
+      "issuer_name": "Meta Platforms",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CAPEX_CASH_CONVERSION_SENSITIVITY",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "WBD",
+      "cik": "0001437107",
+      "issuer_name": "Warner Bros. Discovery",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    }
+  ]
+}

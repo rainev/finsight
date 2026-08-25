@@ -8,3 +8,5 @@ FinSight uses annual reports as the normal baseline for balance-sheet stock item
 **Why:** Annual balance-sheet values are measurements at a point in time and can remain meaningful until a newer snapshot exists. Annual operating flows cover a different time interval, so copying them into a newer TTM period silently mixes periods and can distort valuation.
 
 **How to detect / apply:** Check private normalized output for explicit `operating_ttm` and `balance_sheet_snapshot` roles. Any TTM source with `latest_annual_proxy_for_lagging_flow` is a regression; a company-history-scaled estimate must retain its range and source periods.
+
+When building audit registers, do not classify a field from `availability.state` alone. An annual-carried balance can retain the legacy state `reported` while `fallback_level="annual_carried_forward"` and `freshness="carried_forward"` correctly show that it is a bounded estimate rather than a current reported value. Apply fallback level and freshness before the legacy state, and preserve the low/base/high range and source age.

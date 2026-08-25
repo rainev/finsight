@@ -1,0 +1,124 @@
+{
+  "batch": 23,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "industrials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001037868",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "issuer_name": "Ametek",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "AME"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001043277",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Air Freight & Logistics",
+      "issuer_name": "C.H. Robinson",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "CHRW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001048911",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Air Freight & Logistics",
+      "issuer_name": "FedEx",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "FDX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001050915",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction & Engineering",
+      "issuer_name": "Quanta Services",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "PWR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001060391",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Environmental & Facilities Services",
+      "issuer_name": "Republic Services",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "RSG"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001067701",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Trading Companies & Distributors",
+      "issuer_name": "United Rentals",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "URI"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001069183",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "Axon Enterprise",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "AXON"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001069202",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "issuer_name": "Lennox International",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "LII"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001090727",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Air Freight & Logistics",
+      "issuer_name": "United Parcel Service",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "UPS"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001336920",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Diversified Support Services",
+      "issuer_name": "Leidos",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "LDOS"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

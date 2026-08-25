@@ -1,0 +1,24 @@
+{
+  "schema_version": "BATCH-01-STRUCTURAL-PROMOTION-2.0",
+  "mapping_version": "US-XBRL-RESOLVER-1.1",
+  "promotions": [
+    {
+      "ticker": "CRM",
+      "cik": "0001108524",
+      "field": "finance_lease_total",
+      "value": 664000000,
+      "unit": "USD",
+      "period": "2026-04-30",
+      "accession": "0001108524-26-000127",
+      "form": "10-Q",
+      "filing_date": "2026-05-28",
+      "source_concept": "us-gaap:FinanceLeaseLiability",
+      "mapping_method": "exact_configured_concept",
+      "confidence": 1.0,
+      "reason_codes": [
+        "EXACT_CONFIGURED_CONCEPT",
+        "STRUCTURAL_STATEMENT_SUPPORT"
+      ]
+    }
+  ]
+}

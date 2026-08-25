@@ -27,10 +27,45 @@ def save(
     )
 
 
+def save_us(
+    *,
+    user_id: int,
+    ticker: str,
+    model: str,
+    model_version: str,
+    assumptions: dict,
+    user_price: float | None,
+    result: dict,
+) -> dict[str, Any]:
+    """Persist only user-entered U.S. assumptions/price and the derived result."""
+    return query_one(
+        """
+        INSERT INTO valuations (
+          user_id, company_id, model, inputs, assumptions, result,
+          us_company, ticker, model_version, user_price
+        )
+        VALUES (%s, NULL, %s, %s, %s, %s, TRUE, %s, %s, %s)
+        RETURNING id, company_id, model, inputs, assumptions, result,
+                  us_company, ticker, model_version, user_price, created_at
+        """,
+        (
+            user_id,
+            model,
+            Json({"ticker": ticker}),
+            Json(assumptions),
+            Json(result),
+            ticker,
+            model_version,
+            user_price,
+        ),
+    )
+
+
 def list_for_user(user_id: int) -> list[dict[str, Any]]:
     return query(
         """
-        SELECT id, company_id, model, inputs, assumptions, result, created_at
+        SELECT id, company_id, model, inputs, assumptions, result,
+               us_company, ticker, model_version, user_price, created_at
         FROM valuations WHERE user_id = %s ORDER BY created_at DESC
         """,
         (user_id,),
@@ -40,7 +75,8 @@ def list_for_user(user_id: int) -> list[dict[str, Any]]:
 def get(user_id: int, valuation_id: int) -> dict[str, Any] | None:
     return query_one(
         """
-        SELECT id, company_id, model, inputs, assumptions, result, created_at
+        SELECT id, company_id, model, inputs, assumptions, result,
+               us_company, ticker, model_version, user_price, created_at
         FROM valuations WHERE id = %s AND user_id = %s
         """,
         (valuation_id, user_id),

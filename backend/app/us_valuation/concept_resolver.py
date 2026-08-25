@@ -28,6 +28,8 @@ _GATE_PRIORITY = {
     "INELIGIBLE_FILING_FORM": 5,
     "FILING_FORM_MISMATCH": 6,
     "ACCESSION_MISMATCH": 10,
+    "MISSING_FILED_DATE": 11,
+    "FILED_AFTER_VALUATION_DATE": 12,
     "PERIOD_MISMATCH": 20,
     "UNIT_MISMATCH": 30,
     "EXCLUDED_ECONOMIC_CLASS": 35,
@@ -368,6 +370,11 @@ def _hard_gate_reason(
         return "FILING_FORM_MISMATCH"
     if fact.source_accession != request.source_accession:
         return "ACCESSION_MISMATCH"
+    if request.valuation_date is not None:
+        if fact.filed_date is None:
+            return "MISSING_FILED_DATE"
+        if fact.filed_date > request.valuation_date:
+            return "FILED_AFTER_VALUATION_DATE"
     if fact.period_end != request.period_end:
         return "PERIOD_MISMATCH"
     if fact.unit != request.unit or fact.unit != metric_rules.get("unit"):

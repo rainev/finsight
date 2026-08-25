@@ -14,6 +14,7 @@ SUPPORTED_STRUCTURAL_FIELDS = frozenset(
     {
         "marketable_securities_current",
         "marketable_securities_noncurrent",
+        "marketable_securities_total",
         "commercial_paper",
         "current_debt",
         "noncurrent_debt",

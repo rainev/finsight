@@ -1,0 +1,124 @@
+{
+  "batch": 10,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "consumer_staples",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000047111",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "issuer_name": "Hershey Company (The)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "HSY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000048465",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "issuer_name": "Hormel Foods",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "HRL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000055785",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Household Products",
+      "issuer_name": "Kimberly-Clark",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "KMB"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000056873",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Food Retail",
+      "issuer_name": "Kroger",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "boundary",
+      "ticker": "KR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000063754",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "issuer_name": "McCormick & Company",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "MKC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000077476",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Soft Drinks & Non-alcoholic Beverages",
+      "issuer_name": "PepsiCo",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "PEP"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000080424",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Personal Care Products",
+      "issuer_name": "Procter & Gamble",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "boundary",
+      "ticker": "PG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000091419",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "issuer_name": "J.M. Smucker Company (The)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "SJM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000100493",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "issuer_name": "Tyson Foods",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "TSN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000104169",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Consumer Staples Merchandise Retail",
+      "issuer_name": "Walmart",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_staples",
+      "role": "core",
+      "ticker": "WMT"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

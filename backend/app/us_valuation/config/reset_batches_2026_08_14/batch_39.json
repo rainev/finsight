@@ -1,0 +1,125 @@
+{
+  "batch": 39,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "financials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001176948",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "Ares Management",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "ARES"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001281761",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "issuer_name": "Regions Financial Corporation",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "RF"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001374310",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "Cboe Global Markets",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "CBOE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001381197",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "issuer_name": "Interactive Brokers",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "IBKR"
+    },
+    {
+      "boundary_reason": "asset_backed_capital_structure_boundary",
+      "cik": "0001389170",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Storage & Transportation",
+      "issuer_name": "Targa Resources",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "boundary",
+      "ticker": "TRGP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001390777",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "BNY Mellon",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "BNY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001393818",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "Blackstone Inc.",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "BX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001403161",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "Visa Inc.",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "V"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001404912",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "KKR & Co.",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "KKR"
+    },
+    {
+      "boundary_reason": "asset_backed_capital_structure_boundary",
+      "cik": "0001506307",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Storage & Transportation",
+      "issuer_name": "Kinder Morgan",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "boundary",
+      "ticker": "KMI"
+    }
+  ],
+  "partition_families": [
+    "financial_equity",
+    "resource_cycle_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}
