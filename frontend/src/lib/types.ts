@@ -246,6 +246,10 @@ export interface UsValuation {
   model_policy: { primary: string; supporting: string[]; blend_models: boolean; reason?: string }
   public_assumptions: {
     forecast_years: number
+    history_policy_version?: string
+    history_years_used?: number
+    normalization_basis?: string
+    assumption_source_mix?: string
     forecast_mode?: string
     initial_revenue_growth?: number | null
     target_operating_margin?: number | null

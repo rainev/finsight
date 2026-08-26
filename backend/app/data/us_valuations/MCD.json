@@ -1,119 +1,167 @@
 {
-  "schema_version": "US-VALUATION-RESULT-1.0",
-  "valuation_date": "2026-08-01",
-  "market": "US",
-  "currency": "USD",
-  "issuer": {
-    "cik": "0000063908",
-    "ticker": "MCD",
-    "issuer_name": "MCDONALDS CORP",
-    "filing_regime": "10-K_10-Q",
-    "accounting_standard": "US-GAAP",
-    "sec_sic_code": "5812",
-    "sec_sic_label": "Retail-Eating  Places",
-    "finsight_sector": "Consumer Discretionary",
-    "primary_archetype": "retail",
-    "secondary_archetypes": [],
-    "classification_confidence": 0.55,
-    "mapping_version": "US-ARCHETYPE-1.0",
-    "override_applied": false,
-    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
-    "source_accessions": [
-      "0000063908-26-000051",
-      "0000063908-26-000035",
-      "0000063908-25-000059",
-      "0000063908-25-000039",
-      "0000063908-25-000025",
-      "0000063908-25-000012",
-      "0000063908-24-000156",
-      "0000063908-24-000123"
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Low-reliability source-bounded estimate. Ordinary business and scenario uncertainty may materially affect the range.",
+      "Model 'fcff_dcf': Low-reliability source-bounded estimate; ordinary scenario uncertainty remains.",
+      "Primary model 'fcff_dcf' is review_required."
     ]
   },
-  "source_financial_statement": {
-    "form": "10-Q",
-    "period_end": "2026-03-31",
-    "filed_date": "2026-05-07",
-    "accession": "0000063908-26-000051",
-    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000051/mcd-20260331.htm",
-    "note": "Equity-level model (residual income / DDM); no enterprise-to-equity bridge."
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 142.95270796206904,
+      "low": 142.95270796206904,
+      "midpoint": 142.95270796206904,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [],
+    "usable": true
   },
-  "model_policy": {
-    "primary": "ddm",
-    "supporting": [],
-    "blend_models": false,
-    "reason": "Fallback (DDM): FCFF enterprise bridge incomplete.",
-    "fallback_from": "fcff_dcf"
+  "calculator_link": "/api/us-valuations/MCD/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": []
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, confidence reasons, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-04-HISTORY-SHADOW-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Source-bounded normalized cash-FCFF; scenario assumptions require review."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000063908",
+    "classification_confidence": 0.75,
+    "classification_reason": "Frozen Batch 04 lane with launch-first issuer review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Discretionary",
+    "issuer_name": "McDonald's",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_discretionary",
+    "sec_sic_code": null,
+    "sec_sic_label": "Restaurants",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000063908-26-000073"
+    ],
+    "ticker": "MCD"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
   },
   "methodology": {
-    "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
-    "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
-    "source_policy": "SEC Companyfacts and submissions; no exchange prices"
+    "forecast_policy": "BATCH-04-HISTORY-SHADOW-1.0",
+    "sector_framework": "franchise_lease_normalized_cash_fcff",
+    "source_policy": "Reported facts remain private and separate from governed assumptions."
   },
-  "public_assumptions": {
-    "cost_of_equity": 0.0873,
-    "risk_free_rate": 0.0468,
-    "equity_risk_premium": 0.045,
-    "policy_beta": 0.9,
-    "last_dividend": 7.17,
-    "high_dividend_growth": 0.03,
-    "terminal_growth": 0.025,
-    "high_growth_years": 5
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "Source-bounded normalized cash-FCFF with a completed current claims bridge.",
+    "supporting": []
   },
   "models": {
-    "ddm": {
-      "model": "ddm",
-      "output_type": "intrinsic_value_per_share",
+    "fcff_dcf": {
       "currency": "USD",
-      "intrinsic_value_per_share": null,
-      "publication_state": "withheld",
       "errors": [],
+      "intrinsic_value_per_share": 142.95270796206904,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
       "warnings": [
-        "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent, noncontrolling_interests); valued via ddm equity-level fallback.",
-        "Dividend growth is a governed policy assumption, not a per-issuer forecast."
+        "Low-reliability source-bounded estimate; ordinary scenario uncertainty remains."
       ]
     }
   },
-  "scenarios": {
-    "bear": {
-      "ddm": {
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld"
-      }
-    },
-    "base": {
-      "ddm": {
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld"
-      }
-    },
-    "bull": {
-      "ddm": {
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld"
-      }
-    }
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_and_company_history",
+    "cash_conversion_margin": 0.3201593054292218,
+    "cash_conversion_margin_high": 0.32735729699196925,
+    "cash_conversion_margin_low": 0.30607834665356154,
+    "diluted_shares": 730107500.0,
+    "diluted_shares_high": 747915000.0,
+    "diluted_shares_low": 712300000.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "not applied",
+    "forecast_mode": "normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-04-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 5,
+    "normalization_basis": "company_history_median_and_percentiles"
   },
-  "scenario_range": {
-    "low": null,
-    "base": null,
-    "high": null,
-    "label": "assumption range, not a statistical confidence interval"
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "High",
+    "reasons": [],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.6798945472891356,
+    "source_cap": "High"
   },
   "review": {
-    "publication_state": "withheld",
-    "confidence_grade": "medium",
-    "errors": [
-      "Legacy FCFF fallback artifact is not publishable; repair the current enterprise-to-equity bridge or regenerate through the governed model route."
-    ],
-    "warnings": [
-      "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent, noncontrolling_interests); valued via ddm equity-level fallback.",
-      "Dividend growth is a governed policy assumption, not a per-issuer forecast."
-    ],
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
     "prohibited_output_check": {
-      "current_price": false,
-      "upside_downside": false,
       "buy_hold_sell": false,
-      "trading_multiples": false
-    }
-  }
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Low-reliability source-bounded estimate. Ordinary business and scenario uncertainty may materially affect the range."
+    ]
+  },
+  "scenario_range": {
+    "base": 142.95270796206904,
+    "high": 240.14547462569598,
+    "label": "assumption range, not a statistical confidence interval",
+    "low": 83.66438377743367
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0000063908-26-000073",
+    "filed_date": "2026-08-07",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible filing anchors reported inputs; forecast states are FinSight assumptions.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000073/mcd-20260630.htm"
+  },
+  "ticker": "MCD",
+  "valuation_date": "2026-08-14"
 }

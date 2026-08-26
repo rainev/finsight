@@ -10,6 +10,8 @@ from importlib.resources import files
 from statistics import median
 from typing import Any
 
+from .history import build_operating_history_profile
+
 
 @dataclass(frozen=True)
 class USMarketAssumptions:
@@ -332,6 +334,31 @@ def derive_forecast_assumptions(
         )
 
     annual = financials["annual"]
+    history_cutoff = financials["ttm"].get("source_cutoff_date")
+    if (
+        not isinstance(history_cutoff, str)
+        or history_cutoff <= financials["ttm"]["period_end"]
+    ):
+        filed_dates = [
+            source.get("filed")
+            for row in annual
+            for source in row.get("sources", {}).values()
+            if isinstance(source, dict) and isinstance(source.get("filed"), str)
+        ]
+        filed_dates.extend(
+            source.get("filed")
+            for value in financials["ttm"].get("sources", {}).values()
+            if isinstance(value, dict)
+            for source in value.get("sources", [])
+            if isinstance(source, dict) and isinstance(source.get("filed"), str)
+        )
+        history_cutoff = max(
+            [financials["ttm"]["period_end"], *filed_dates]
+        )
+    history_profile = build_operating_history_profile(
+        financials,
+        valuation_date=history_cutoff,
+    )
     latest_three = annual[-3:]
     revenues = [float(row["values"]["revenue"]) for row in latest_three]
     annual_cagr = _cagr(revenues)
@@ -358,19 +385,26 @@ def derive_forecast_assumptions(
     if ttm_yoy_growth is None:
         ttm_yoy_growth = annual_cagr
 
-    # When issuer history exists, the generic archetype anchor is capped at
-    # 25%; the remaining weight stays with observed company history.
-    generic_growth_weights = {
-        "ttm_history": 0.375,
-        "annual_history": 0.375,
-        "archetype_anchor": 0.25,
-    }
-    initial_growth = (
-        generic_growth_weights["ttm_history"] * ttm_yoy_growth
-        + generic_growth_weights["annual_history"] * annual_cagr
-        + generic_growth_weights["archetype_anchor"]
-        * float(policy["archetype_median_growth"])
-    )
+    history_growth = history_profile.metric("revenue_growth")
+    if history_profile.full_history and history_growth is not None:
+        generic_growth_weights = {
+            "company_history": 1.0,
+            "archetype_anchor": 0.0,
+        }
+        initial_growth = history_growth.base
+    else:
+        # Insufficient company history remains an explicit governed fallback.
+        generic_growth_weights = {
+            "ttm_history": 0.375,
+            "annual_history": 0.375,
+            "archetype_anchor": 0.25,
+        }
+        initial_growth = (
+            generic_growth_weights["ttm_history"] * ttm_yoy_growth
+            + generic_growth_weights["annual_history"] * annual_cagr
+            + generic_growth_weights["archetype_anchor"]
+            * float(policy["archetype_median_growth"])
+        )
     initial_growth = min(max(initial_growth, -0.10), 0.20)
 
     margins = [
@@ -383,13 +417,19 @@ def derive_forecast_assumptions(
         financials["ttm"]["values"]["operating_income"]
         / financials["ttm"]["values"]["revenue"]
     )
-    normalized_company_margin = median([ttm_margin, *margins])
-    company_weight = 0.70 if len(margins) >= 5 else 0.50
-    target_margin = (
-        company_weight * normalized_company_margin
-        + (1 - company_weight)
-        * float(policy["archetype_target_operating_margin"])
-    )
+    history_margin = history_profile.metric("operating_margin")
+    if history_profile.full_history and history_margin is not None:
+        normalized_company_margin = history_margin.base
+        company_weight = 1.0
+        target_margin = normalized_company_margin
+    else:
+        normalized_company_margin = median([ttm_margin, *margins])
+        company_weight = 0.70 if len(margins) >= 5 else 0.50
+        target_margin = (
+            company_weight * normalized_company_margin
+            + (1 - company_weight)
+            * float(policy["archetype_target_operating_margin"])
+        )
     normalized_operating_margin = normalized_company_margin
 
     wacc = float(discount_rate["wacc"])
@@ -700,6 +740,8 @@ def derive_forecast_assumptions(
 
     return {
         "forecast_policy_version": forecast_policy_version,
+        **history_profile.public_metadata(),
+        "company_history_profile": history_profile.as_private_dict(),
         "forecast_registry_version": (
             issuer_evidence.get("registry_version")
             if issuer_evidence
@@ -735,8 +777,19 @@ def derive_forecast_assumptions(
         "evidence": {
             "ttm_yoy_growth": ttm_yoy_growth,
             "available_history_cagr": annual_cagr,
-            "available_history_observations": len(latest_three),
-            "available_history_intervals": len(latest_three) - 1,
+            "available_history_observations": history_profile.history_years_used,
+            "available_history_intervals": max(
+                0, history_profile.history_years_used - 1
+            ),
+            "history_metric_ranges": {
+                metric.name: {
+                    "low": metric.low,
+                    "base": metric.base,
+                    "high": metric.high,
+                    "normalization_basis": metric.normalization_basis,
+                }
+                for metric in history_profile.metrics
+            },
             "archetype_median_growth": float(policy["archetype_median_growth"]),
             "normalized_company_margin": normalized_company_margin,
             "archetype_target_margin": float(

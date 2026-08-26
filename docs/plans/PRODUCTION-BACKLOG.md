@@ -103,11 +103,12 @@ If a defect is discovered while executing a phase and it does not block that pha
   *Unblocks when:* approved records include canonical security/listing, USD currency,
   split-adjusted close, price date, provider, and payload hash under the private contract.
 
-- **B22 · Batch 04, serving promotion, merge, push, and deployment.**
-  *Current state:* the user confirmed LF4 on 2026-08-25. Main pushes auto-deploy staging.
-  *Why still blocked:* confirmation approved the staged behavior only; it did not name or authorize
-  Batch 04, promotion, merge, push, or deployment.
-  *Unblocks when:* the user separately authorizes the specific next-batch or outward-facing action.
+- **B22 · Batch 04 promotion resolved; merge, push, and deployment remain separate.**
+  *Current state:* the user explicitly confirmed and promoted the exact Batch 04 history-backed
+  candidate on 2026-08-26. Ten default backend serving artifacts and the real API are verified.
+  *Why still blocked:* promotion did not authorize merge, push, staging deployment, production
+  deployment, Batch 05/06 retry, or Batch 07 processing. Main pushes auto-deploy staging.
+  *Unblocks when:* the user separately authorizes the specific outward-facing or next-batch action.
 
 - **B23 · Real Postgres U.S. saved-run migration and persistence acceptance.**
   *Why blocked:* this machine has no Docker command or reachable local Postgres. Nullable U.S.

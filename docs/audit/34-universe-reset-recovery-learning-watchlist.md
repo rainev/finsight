@@ -8,12 +8,14 @@ these companies as one learning corpus and turn repeated failure patterns into p
 
 ## Inclusion rule
 
-Add a company only when it **failed the initial batch pass**, received its recovery attempt, and
-then either condition is true:
+Add a company when it **failed the initial batch Pass** and either condition is true:
 
-1. it was not recovered and remains withheld; or
-2. it was recovered only conditionally through a material event assumption, equity-floor
+1. it was withheld, received its one recovery attempt, and remains withheld; or
+2. it is numeric only conditionally through a material event assumption, equity-floor
    convention, provisional claims allocation, or another unresolved economic-model dependency.
+
+Direct Conditional results do not consume a withheld-company recovery attempt; record their
+recovery outcome as `not_applicable` and preserve them for the post-Batch-50 learning review.
 
 Do not add companies that passed the initial batch. Do not keep companies that later achieve a
 fully source-bounded recovery.
@@ -44,22 +46,43 @@ independent challenge. A short disclaimer does not make a conditional estimate f
 | 04 | GPC | Withheld | Conditional Low | Conditional numeric Low; equity at risk | Working-capital/acquisition normalization; bear equity floor |
 | 04 | HAS | Withheld | Conditional Low | Conditional numeric Low | Post-impairment and licensing transition assumptions |
 | 04 | LOW | Withheld | Conditional Low | Conditional numeric Low | Housing-cycle and unresolved-claims ranges |
-| 04 | MCD | Withheld | Conditional Low | Conditional numeric Low | Franchise/lease normalization and unresolved NCI |
-| 04 | TJX | Withheld | Conditional Low | Conditional numeric Low | Alternate revenue mapping and inventory normalization |
 | 04 | NKE | Withheld | Conditional Low | Conditional numeric Low | Turnaround, channel, inventory, China, and FX assumptions |
-| 04 | HD | Withheld | Conditional Low | Conditional numeric Low | SRS integration and housing-cycle assumptions |
-| 04 | ROST | Withheld | Conditional Low | Conditional numeric Low | Inventory, leases, investments, and claims ranges |
 | 04 | MGM | Withheld | Conditional Low | Conditional numeric Low | Casino-cycle, JV/NCI, lease, and digital assumptions |
-| 05 | WSM | Withheld | Conditional Low | Conditional numeric Low | Home-furnishing cycle, inventory, leases, and financing claims |
-| 05 | CASY | Withheld | Conditional Low | Conditional numeric Low | Fuel mix, acquisitions, LIFO, land, and working-capital assumptions |
 | 05 | CCL | Withheld | Conditional Low | Conditional numeric Low; equity at risk | Cruise cycle, ship capex, leverage, and a zero bear equity floor |
 | 05 | PHM | Withheld | Conditional Low | Conditional numeric Low | Mortgage and land economics remain consolidated in an equity-earnings range |
 | 05 | SBUX | Withheld | Conditional Low | Conditional numeric Low | Store turnaround, leases, inventory, and negative book equity |
-| 05 | AZO | Withheld | Conditional Low | Conditional numeric Low | Supplier-financed inventory, leases, buybacks, and negative equity |
 | 05 | DHI | Withheld | Conditional Low | Conditional numeric Low | Mortgage banking, land inventory, financing, and NCI remain consolidated |
 | 05 | RCL | Withheld | Conditional Low | Conditional numeric Low; equity at risk | Cruise cycle, ship capex, leverage, and a zero bear equity floor |
-| 05 | ORLY | Withheld | Conditional Low | Conditional numeric Low | Supplier-financed inventory, leases, buybacks, and negative equity |
 | 05 | NVR | Withheld | Conditional Low | Conditional numeric Low | Lot options, land deposits, mortgage earnings, and housing-cycle assumptions |
+| 06 | LEN | Withheld | Conditional Low | Conditional numeric Low | Mortgage and land activity remains consolidated in common earnings |
+| 06 | AMZN | Withheld | Conditional Low | Conditional numeric Low; equity at risk | Negative current post-capex cash and a zero bear equity floor |
+| 06 | YUM | Withheld | Conditional Low | Conditional numeric Low | Franchise/disposal scope, leases, negative equity, and carried annual interest |
+| 07 | EL | Conditional Low | Not applicable | Conditional numeric Low | Brand turnaround, restructuring, and margin recovery remain material |
+| 07 | BKNG | Conditional Low | Not applicable | Conditional numeric Low | Merchant bookings mix supplier funds and future company margin |
+| 07 | WYNN | Conditional Low | Not applicable | Conditional numeric Low; equity at risk | Casino-cycle downside, development capex, and NCI attribution |
+| 07 | LVS | Conditional Low | Not applicable | Conditional numeric Low; equity at risk | Casino-cycle downside and Macao/Singapore development commitments |
+| 07 | TSLA | Conditional Low | Not applicable | Conditional numeric Low | Regulatory-credit dependence, AI/factory capex, and recent share issuance |
+| 07 | EXPE | Conditional Low | Not applicable | Conditional numeric Low | Merchant cash classification and nonredeemable NCI |
+| 08 | LULU | Conditional Low | Not applicable | Conditional numeric Low | Tariffs/refunds, China demand, supplier finance, and exchangeable shares |
+| 08 | KDP | Conditional Low | Not applicable | Conditional numeric Low; equity at risk | JDE acquisition, planned separation, debt, temporary equity, NCI, and integration |
+| 08 | GM | Conditional Low | Not applicable | Conditional numeric Low | Captive finance and automotive/JV/pension/warranty economics remain consolidated |
+| 08 | NCLH | Withheld | Withheld | Withheld | Negative cash conversion; newbuild funding, debt service, and dilution remain unbounded |
+| 08 | APTV | Withheld | Conditional Low | Conditional numeric Low | Post-spin value uses only current/comparative continuing H1 equity earnings |
+| 08 | ABNB | Conditional Low | Not applicable | Conditional numeric Low | Customer funds reconcile, but capex relies on a filing-table range |
+| 08 | CVNA | Conditional Low | Not applicable | Conditional numeric Low; equity at risk | Inventory finance, securitization, NCI, TRA, and turnaround earnings |
+| 08 | DASH | Conditional Low | Not applicable | Conditional numeric Low | Acquisitions, software capex, convertibles, SBC, and marketplace cash |
+| 09 | ADM | Conditional Low | Not applicable | Conditional numeric Low | Commodity cycle, derivatives, working capital, temporary equity, and NCI |
+| 09 | STZ | Conditional Low | Not applicable | Conditional numeric Low | Alcohol portfolio, equity-method interests, impairments, leverage, and NCI |
+| 09 | CLX | Withheld | Conditional Low | Conditional numeric Low; equity at risk | Split filing recovered; GOJO integration, acquisition debt, supplier finance, and a zero bear floor remain material |
+| 09 | KO | Conditional Low | Not applicable | Conditional numeric Low | Bottling/affiliate scope, current TTM reconstruction, investments, debt, and NCI |
+| 09 | TAP | Conditional Low | Not applicable | Conditional numeric Low | Brewer cycle, impairment/restructuring, capex, leverage, leases, and NCI |
+| 09 | TGT | Conditional Low | Not applicable | Conditional numeric Low | Shrink, inventory, supplier finance, store capex, leases, and debt |
+| 09 | DG | Conditional Low | Not applicable | Conditional numeric Low | Store optimization, shrink, inventory, supplier finance, leases, and refinancing |
+| 09 | GIS | Conditional Low | Not applicable | Conditional numeric Low | Divestiture scope, impairment/restructuring, supplier finance, debt, and leases |
+| 10 | KMB | Withheld | Conditional Low | Conditional numeric Low | Post-IFP/pre-Kenvue current-state proxy; working-capital cash and transaction adjustments remain provisional |
+| 10 | MKC | Conditional Low | Not applicable | Conditional numeric Low | Mexico consolidation, purchase accounting, NCI, and a carried finance lease |
+| 10 | SJM | Conditional Low | Not applicable | Conditional numeric Low | Hostess impairment, divestitures, restructuring, leverage, and loss-year tax policy |
+| 10 | TSN | Conditional Low | Not applicable | Conditional numeric Low | Protein cycle, network optimization, impairments, and dual-class economics |
 
 ## End-of-reset review
 

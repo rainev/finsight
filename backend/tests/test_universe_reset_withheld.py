@@ -7,9 +7,9 @@ from app.us_valuation.universe_reset_withheld import (
 import pytest
 
 
-def test_register_contains_nee_then_exact_batch_02_post_recovery_set() -> None:
+def test_register_contains_prior_set_and_batch_08_nclh() -> None:
     entries = load_universe_reset_withheld()
-    assert len(entries) == 7
+    assert len(entries) == 8
     entry = entries[0]
     assert (entry.batch, entry.ticker, entry.cik) == (1, "NEE", "0000753308")
     assert entry.recovery_attempts == 1
@@ -17,7 +17,7 @@ def test_register_contains_nee_then_exact_batch_02_post_recovery_set() -> None:
     assert entry.revision_retry_report is None
     assert entry.final_outcome == "withheld"
     assert entry.hard_blockers == ("NONFINITE_OR_NONPOSITIVE_VALUE",)
-    batch_02 = entries[1:]
+    batch_02 = entries[1:7]
     assert tuple(row.ticker for row in batch_02) == (
         "OMC",
         "TTWO",
@@ -39,6 +39,11 @@ def test_register_contains_nee_then_exact_batch_02_post_recovery_set() -> None:
         row.evidence_report == "docs/audit/18-batch-02-recovery-result.md"
         for row in batch_02
     )
+    nclh=entries[7]
+    assert (nclh.batch,nclh.ticker,nclh.cik)==(8,"NCLH","0001513761")
+    assert nclh.recovery_attempts==1
+    assert nclh.hard_blockers==("CLAIMS_UNBOUNDED","MODEL_UNSUPPORTED")
+    assert nclh.evidence_report=="docs/audit/57-batch-08-recovery-result.md"
 
 
 def test_register_contract_rejects_more_than_one_recovery() -> None:

@@ -421,6 +421,10 @@ _PUBLIC_PROHIBITED_OUTPUT_FIELDS = (
 )
 _PUBLIC_ASSUMPTION_FIELDS = (
     "forecast_policy_version",
+    "history_policy_version",
+    "history_years_used",
+    "normalization_basis",
+    "assumption_source_mix",
     "forecast_years",
     "forecast_mode",
     "initial_revenue_growth",
@@ -1861,6 +1865,10 @@ def _public_fcff_result(
         "model_policy": public_policy,
         "public_assumptions": {
             "forecast_policy_version": assumptions.get("forecast_policy_version"),
+            "history_policy_version": assumptions.get("history_policy_version"),
+            "history_years_used": assumptions.get("history_years_used"),
+            "normalization_basis": assumptions.get("normalization_basis"),
+            "assumption_source_mix": assumptions.get("assumption_source_mix"),
             "forecast_years": assumptions.get("forecast_years"),
             "forecast_mode": forecast_mode,
             "initial_revenue_growth": assumptions.get("initial_revenue_growth"),

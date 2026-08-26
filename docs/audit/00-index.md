@@ -40,7 +40,7 @@ Target: one numeric intrinsic-value estimate for each of 500 companies, with one
 | [31](31-batch-02-revised-pipeline-retry-result.md) | Batch 02 six-company retry after official-evidence pipeline revision | Firsthand verified; 0/6 recovered, six remain registered |
 | [32](32-batch-02-conditional-estimate-gap.md) | User-authorized conditional-value policy for the six Batch 02 holdouts | Firsthand audited; implementation gate open |
 | [33](33-batch-02-conditional-estimate-result.md) | Six Low-reliability conditional values, separate event surfaces, challenge, determinism, and API proof | Firsthand verified; user confirmation required |
-| [34](34-universe-reset-recovery-learning-watchlist.md) | Cumulative bookmark for withheld and material conditional issuers to revisit after Batch 50 | Active Recovery Learning Watchlist; 7 current entries |
+| [34](34-universe-reset-recovery-learning-watchlist.md) | Cumulative bookmark for withheld and material conditional issuers to revisit after Batch 50 | Active Recovery Learning Watchlist; 50 current entries |
 | [35](35-controlled-batch-03-starting-gate.md) | Frozen Batch 03 denominator, protected baseline, and source-readiness audit | Firsthand audited; initial pass in progress |
 | [36](36-controlled-batch-03-initial-result.md) | Batch 03 sources, source-bounded values, withholding decisions, challenge, determinism, and real API | Firsthand verified initial pass; recovery not started |
 | [37](37-finsight-baseline-decision-policy.md) | User-approved baseline decision-support policy under unavoidable market uncertainty | Governing policy for Batch 03 recovery and Batch 04+ |
@@ -53,5 +53,21 @@ Target: one numeric intrinsic-value estimate for each of 500 companies, with one
 | [44](44-launch-first-staged-confirmation.md) | Final before/after evidence and user confirmation stop | Verified; user confirmed LF1–LF4 on 2026-08-25 |
 | [45](45-controlled-batch-04-starting-gate.md) | User-authorized Batch 04 denominator, launch-first behavior, source readiness, and protected baseline | Firsthand audited; Batch 04 in progress |
 | [46](46-controlled-batch-04-result.md) | Ten Batch 04 Conditional Low baselines, challenge, determinism, full suite/build, and real calculator API | Firsthand verified; user confirmation required |
+| [47](47-controlled-batch-05-result.md) | Ten Batch 05 Conditional Low baselines, source/model challenge, determinism, and real calculator API | Firsthand verified; user confirmed |
+| [48](48-controlled-batch-06-result.md) | Ten Batch 06 Conditional Low baselines, debt-scope correction, determinism, and real calculator API | Firsthand verified; user confirmed |
+| [49](49-batch-04-pass-reclassification-audit.md) | Batch 04 Pass/Conditional/Withheld reclassification under the corrected outcome policy | Firsthand audit; four bounded Pass candidates identified |
+| [50](50-batch-04-pass-repair-result.md) | Implemented and verified MCD/TJX/HD/ROST repairs and Batch 04 reclassification | Firsthand verified; Pass 4 / Conditional 6 / Withheld 0 |
+| [51](51-batch-05-pass-reclassification-audit.md) | Batch 05 Pass/Conditional/Withheld reclassification under the corrected outcome policy | Firsthand audit; four bounded Pass candidates identified |
+| [53](53-batch-05-history-repair-result.md) | History-backed WSM/CASY/AZO/ORLY repairs and Batch 05 reclassification | Firsthand verified; Pass 4 / Conditional 6 / Withheld 0 |
+| [54](54-batch-06-history-repair-result.md) | History-backed seven-company Batch 06 Pass repair and reclassification | Firsthand verified; Pass 7 / Conditional 3 / Withheld 0 |
+| [55](55-controlled-batch-07-result.md) | History-backed Batch 07 valuation, customer-funds repair, independent challenge, determinism, and real API | User confirmed; Pass 4 / Conditional 6 / Withheld 0; six bookmarked |
+| [56](56-controlled-batch-08-result.md) | History-backed Batch 08 valuation, specialist fallbacks, two honest withholds, challenge, determinism, and real API | User confirmed; Pass 2 / Conditional 6 / Withheld 2; six bookmarked |
+| [57](57-batch-08-recovery-result.md) | One recovery attempt for NCLH/APTV, corrected post-spin equity earnings, final register, determinism, and API | Verified; APTV Conditional recovery; NCLH withheld after recovery |
+| [59](59-controlled-batch-09-result.md) | History-backed Batch 09, explicit BF.B class identity, current KO reconstruction, one withheld source gap, challenge, determinism, and API | User confirmed; Pass 2 / Conditional 7 / Withheld 1; seven bookmarked |
+| [60](60-batch-09-recovery-result.md) | CLX split-IXDS extraction repair, conservative post-acquisition cash valuation, challenge, replay, API, and watchlist | User confirmed; CLX Conditional Low; final Batch 09 Pass 2 / Conditional 8 / Withheld 0 |
+| [61](61-controlled-batch-10-result.md) | History-backed Consumer Staples Batch 10, transaction-state hard stop, bridge corrections, determinism, and API | User confirmed; Pass 6 / Conditional 3 / Withheld 1; three bookmarked |
+| [62](62-batch-10-kmb-recovery-result.md) | KMB post-IFP/pre-Kenvue current-state recovery, continuing-cash proxy, challenge, determinism, API, and watchlist | User confirmed; final Batch 10 Pass 6 / Conditional 4 / Withheld 0 |
+| [52](52-history-backed-pipeline-batch04-shadow.md) | Shared company-history layer and the authorized Batch 04-only shadow replay | Pipeline/API verified; 4 Pass / 6 Conditional / 0 Withheld; user confirmation needed |
+| [53](53-batch04-history-promotion.md) | Official promotion of the confirmed Batch 04 history-backed public artifacts | User-confirmed and default-serving API verified; 10/10 promoted |
 
 Official-data completion is audited in batches 19–23 and implemented through the difficult-106 general SEC gate in batches 24–29. Audits 30–34 govern Batch 02's revision retry, conditional estimates, and Recovery Learning Watchlist. The replacement canonical 500-issuer manifest is frozen; Batch 03's initial pass is verified in Audits 35–36. Audits 38–40 supersede the recovery pause after the user's launch-first implementation authorization.

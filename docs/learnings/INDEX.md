@@ -58,5 +58,12 @@
 - [Not fully recovered is broader than withheld](not-fully-recovered-is-broader-than-withheld.md) — preserve conditional numeric issuers with withheld issuers on the Recovery Learning Watchlist through Batch 50.
 - [Narrative commitment tables can escape XBRL](narrative-commitment-tables-can-escape-xbrl.md) — search controlling filing tables before certifying commitment absence from structural facts.
 - [A baseline decision is not a market prediction](baseline-decision-is-not-market-prediction.md) — prefer broad transparent Low-reliability estimates over withholding for ordinary market uncertainty.
+- [Batch reports separate Pass, Conditional, and Withheld](batch-reports-separate-pass-conditional-withheld.md) — attempt a normal source-bounded pass first and report all three exact outcome counts every batch.
 - [Policy constants are not source provenance](policy-constants-are-not-source-provenance.md) — require filing-level bridge lineage even when hard-coded numbers reproduce exactly.
-- [SEC XBRL ZIP is a package source](sec-xbrl-zip-is-a-package-source.md) — support official ZIP-only filing directories with bounded extraction and dual source/logical provenance.
+- [SEC XBRL ZIP is a package source](sec-xbrl-zip-is-a-package-source.md) — support ZIP-only and split-page Inline XBRL filings before declaring current financial facts absent.
+- [History needs current concept lineage](history-needs-current-concept-lineage.md) — reject stale alias series and align every historical cash-flow component to the same recent annual periods.
+- [Customer-held cash needs an operating reserve](customer-held-cash-needs-an-operating-reserve.md) — reserve customer and merchant money from excess cash without bridge-debiting the matching operating liability twice.
+- [Share facts must preserve share units](share-facts-must-preserve-share-units.md) — require unit-aware share provenance instead of USD-hardcoded point helpers.
+- [Single positive cycle year does not set the base](single-positive-cycle-year-does-not-set-the-base.md) — do not manufacture a positive normalized midpoint from one outlier when current and median cash remain negative.
+- [Parent-attributable earnings already exclude NCI](parent-attributable-earnings-already-exclude-nci.md) — reconcile NCI as a diagnostic instead of deducting it twice from parent earnings.
+- [Reused SEC packets preserve fetch metadata](reused-sec-packets-preserve-fetch-metadata.md) — unwrap cached `fetch_metadata` so deterministic packet replay does not silently weaken provenance.

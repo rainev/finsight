@@ -412,10 +412,10 @@ def test_governed_equity_routes_derive_reliability_from_scenario_range(
     assert reliability["scenario_movement_ratio"] == pytest.approx(
         expected_movement
     )
-    assert reliability["label"] == reliability["scenario_label"]
-    assert reliability["model_cap"] == "High"
+    assert reliability["label"] == "Low"
+    assert reliability["model_cap"] == "Low"
+    assert "INSUFFICIENT_COMPANY_HISTORY" in reliability["reasons"]
     assert reliability["source_cap"] == "High"
-    assert reliability["reasons"] == []
     assert result["review"]["publication_state"] == "review_required"
 
 
@@ -445,7 +445,10 @@ def test_interim_ffo_route_has_low_model_cap_without_switching_lanes() -> None:
     assert "reliability" in result
     assert result["reliability"]["label"] == "Low"
     assert result["reliability"]["model_cap"] == "Low"
-    assert result["reliability"]["reasons"] == ["INTERIM_FFO_ROUTE"]
+    assert result["reliability"]["reasons"] == [
+        "INTERIM_FFO_ROUTE",
+        "INSUFFICIENT_COMPANY_HISTORY",
+    ]
     assert result["models"]["ffo"]["intrinsic_value_per_share"] is not None
     assert result["review"]["publication_state"] == "review_required"
 

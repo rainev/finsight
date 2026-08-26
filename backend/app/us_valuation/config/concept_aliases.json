@@ -6,6 +6,7 @@
       "kind": "flow",
       "concepts": [
         "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "RevenueFromContractWithCustomerIncludingAssessedTax",
         "SalesRevenueNet",
         "Revenues"
       ]
@@ -61,6 +62,14 @@
         "PaymentsToAcquirePropertyPlantAndEquipment",
         "PaymentsToAcquireProductiveAssets",
         "PaymentsToAcquireOtherProductiveAssets"
+      ]
+    },
+    "software_development": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "PaymentsToDevelopSoftware",
+        "CapitalizedComputerSoftwareAdditions"
       ]
     },
     "operating_cash_flow": {

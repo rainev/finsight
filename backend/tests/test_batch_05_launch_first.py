@@ -1,9 +1,11 @@
 from pathlib import Path
+import pytest
 from app.us_valuation.batch_05 import BATCH_05_MANIFEST,BATCH_05_TICKERS
 from app.us_valuation.batch_05_launch_first import build_batch_05_launch_first_result
 from app.us_valuation.calculator import calculate,calculator_view
 from app.us_valuation.reliability import accounting_label
 from run_batch_05_launch_first import _public
+from run_batch_05_history_repair import _history_public
 S=Path('output/batch-05-sec-source-packets-20260825');X=Path('output/batch-05-structural-sources-20260825')
 def test_all_batch05_baselines_are_conditional_low_ordered():
  for t in BATCH_05_TICKERS:
@@ -49,3 +51,25 @@ def test_public_accounting_reliability_reflects_bounded_uncertainty():
   if issuer.ticker in {'PHM','DHI','NVR'}:
    assert reliability['accounting_impact_ratio']==r['source_ledger']['accounting_uncertainty']['impact_ratio']
    assert reliability['accounting_label']==accounting_label(reliability['accounting_impact_ratio'])
+
+def test_history_backed_batch05_has_four_pass_and_six_conditional():
+ for issuer in BATCH_05_MANIFEST:
+  r=build_batch_05_launch_first_result(ticker=issuer.ticker,source_root=S,structural_root=X,history_backed=True);expected='available' if issuer.ticker in {'WSM','CASY','AZO','ORLY'} else 'conditional_estimate'
+  assert r['availability_type']==expected
+  assert r['governed_assumptions']['history_years_used']>=3
+  assert r['source_ledger']['company_history_profile']['full_history'] is True
+  public=_history_public(issuer,r)
+  assert public['availability_type']==expected
+  assert public['public_assumptions']['history_policy_version']=='US-COMPANY-HISTORY-1.0'
+  assert 'company_history_profile' not in public
+
+def test_history_backed_pass_ranges_match_source_history():
+ expected={'WSM':121.4264,'CASY':325.7112,'AZO':2172.8944,'ORLY':45.4334}
+ for ticker,base in expected.items():
+  r=build_batch_05_launch_first_result(ticker=ticker,source_root=S,structural_root=X,history_backed=True)
+  assert r['scenario_range']['base']==pytest.approx(base,abs=0.0001)
+  assert r['governed_assumptions']['assumption_source_mix']=='reported_and_company_history'
+ azo=build_batch_05_launch_first_result(ticker='AZO',source_root=S,structural_root=X,history_backed=True)
+ public=_history_public(next(row for row in BATCH_05_MANIFEST if row.ticker=='AZO'),azo)
+ assert public['bridge_quality']['decision']=='bounded_review'
+ assert public['bridge_quality']['bounded_fields']==['finance_lease_total']

@@ -995,6 +995,12 @@ def build_us_valuation(
         if used_consolidated_segment_fallback:
             model_caps.append("Low")
             model_reasons.append("CONSOLIDATED_SEGMENT_FALLBACK")
+        if (
+            forecast_assumptions.get("assumption_source_mix")
+            == "reported_history_and_finsight_policy"
+        ):
+            model_caps.append("Low")
+            model_reasons.append("INSUFFICIENT_COMPANY_HISTORY")
         result["reliability"] = assess_reliability(
             accounting_low=bridge_low,
             accounting_base=bridge_midpoint,

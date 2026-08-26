@@ -19,7 +19,8 @@ _STATUSES = {
     "conditional_numeric_low",
     "conditional_numeric_low_equity_at_risk",
 }
-_RECOVERY_OUTCOMES = {"withheld", "conditional_numeric_low"}
+_INITIAL_OUTCOMES = {"withheld", "conditional_numeric_low"}
+_RECOVERY_OUTCOMES = {"withheld", "conditional_numeric_low", "not_applicable"}
 
 
 def _strings(value: object, field: str) -> tuple[str, ...]:
@@ -66,10 +67,14 @@ class RecoveryLearningEntry:
             raise ValueError("watchlist CIK is invalid")
         if status not in _STATUSES:
             raise ValueError("watchlist status is invalid")
-        if initial_outcome != "withheld":
+        if initial_outcome not in _INITIAL_OUTCOMES:
             raise ValueError("watchlist companies must have failed the initial pass")
         if recovery_outcome not in _RECOVERY_OUTCOMES:
             raise ValueError("watchlist recovery outcome is invalid")
+        if initial_outcome == "conditional_numeric_low" and recovery_outcome != "not_applicable":
+            raise ValueError("direct conditional entries do not receive a withheld recovery attempt")
+        if initial_outcome == "withheld" and recovery_outcome == "not_applicable":
+            raise ValueError("withheld entries require a recovery outcome")
         text = {
             field: value.get(field)
             for field in (

@@ -1,0 +1,161 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Conditional Low estimate. Casino-cycle, property capex, MGM China/JV/NCI, leases, and digital economics can move value materially.",
+      "Invalidate when casino/JV cash, debt, lease, or NCI evidence leaves the governed range.",
+      "Calculator is calibrated to the published baseline and does not rerun this issuer-specific source model.",
+      "Model 'conditional_estimate': Conditional Low estimate. Casino-cycle, property capex, MGM China/JV/NCI, leases, and digital economics can move value materially.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/MGM/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, confidence reasons, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-04-HISTORY-SHADOW-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low estimate. Casino-cycle, property capex, MGM China/JV/NCI, leases, and digital economics can move value materially."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000789570",
+    "classification_confidence": 0.75,
+    "classification_reason": "Frozen Batch 04 lane with launch-first issuer review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Discretionary",
+    "issuer_name": "MGM Resorts",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_discretionary",
+    "sec_sic_code": null,
+    "sec_sic_label": "Casinos & Gaming",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000789570-26-000076"
+    ],
+    "ticker": "MGM"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-04-HISTORY-SHADOW-1.0",
+    "sector_framework": "casino_cycle_jv_normalized_cash_fcff",
+    "source_policy": "Reported facts remain private and separate from governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "Launch-first Conditional Low baseline after the primary source-bounded route required refinements.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 60.707106895696555,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low estimate. Casino-cycle, property capex, MGM China/JV/NCI, leases, and digital economics can move value materially."
+      ]
+    }
+  },
+  "primary_valuation_method": "casino_cycle_jv_normalized_cash_fcff",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_history_and_finsight_policy",
+    "cash_conversion_margin": 0.1072071319155908,
+    "cash_conversion_margin_high": 0.12749310626593152,
+    "cash_conversion_margin_low": 0.10532130020139059,
+    "diluted_shares": 264785175.0,
+    "diluted_shares_high": 271243350.0,
+    "diluted_shares_low": 258327000.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "not applied",
+    "forecast_mode": "normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-04-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 5,
+    "normalization_basis": "company_history_with_material_event_override"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 1.0297176267264734,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low estimate. Casino-cycle, property capex, MGM China/JV/NCI, leases, and digital economics can move value materially.",
+      "Invalidate when casino/JV cash, debt, lease, or NCI evidence leaves the governed range.",
+      "Calculator is calibrated to the published baseline and does not rerun this issuer-specific source model."
+    ]
+  },
+  "scenario_range": {
+    "base": 60.707106895696555,
+    "high": 123.21828493376354,
+    "label": "conditional decision range; not a probability-weighted forecast or recommendation",
+    "low": 28.814372193311105
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0000789570-26-000076",
+    "filed_date": "2026-07-29",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible filing anchors reported inputs; forecast states are FinSight assumptions.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/789570/000078957026000076/mgm-20260630.htm"
+  },
+  "ticker": "MGM",
+  "valuation_date": "2026-08-14"
+}

@@ -21,6 +21,7 @@ from app.valuation.ddm import two_stage_ddm
 
 from .reliability import ReliabilityLabel, assess_reliability
 from .equity_fact_selection import annual_facts, latest_instant, source_statement
+from .history import CompanyHistoryProfile, build_equity_history_profile
 
 _ISSUER_KEYS = (
     "cik", "ticker", "issuer_name", "filing_regime", "accounting_standard",
@@ -314,7 +315,8 @@ def _withheld(classification, valuation_date, source_manifest, model_name, messa
 
 def _finalize(classification, valuation_date, source_manifest, period_end, model_name,
               scenarios: dict[str, float], public_assumptions: dict, warnings: list[str],
-              *, model_cap: ReliabilityLabel = "High", reasons: tuple[str, ...] = (), source=None, input_provenance=None):
+              *, model_cap: ReliabilityLabel = "High", reasons: tuple[str, ...] = (), source=None,
+              input_provenance=None, history_profile: CompanyHistoryProfile | None = None):
     base = scenarios["base"]
     if base is None:
         return _withheld(classification, valuation_date, source_manifest, model_name,
@@ -385,6 +387,8 @@ def _finalize(classification, valuation_date, source_manifest, period_end, model
     })
     if input_provenance is not None:
         result["input_provenance"] = input_provenance
+    if history_profile is not None:
+        result["company_history_profile"] = history_profile.as_private_dict()
     return result
 
 
@@ -392,6 +396,12 @@ def build_equity_level_result(*, classification, companyfacts, valuation_date, s
     """Dispatch a bank (residual income) or utility (DDM) valuation, price-free."""
     policy = classification["valuation_policy"]
     model_name = policy["primary_model"]
+    cutoff = valuation_date or date.today().isoformat()
+    history_profile = build_equity_history_profile(
+        companyfacts,
+        model_name=model_name,
+        valuation_date=cutoff,
+    )
     gaap = companyfacts.get("facts", {}).get("us-gaap", {})
     ce = _cost_of_equity(policy)
     strict = _strict_specialist_facts(gaap, model_name, valuation_date) if submissions is not None else {}
@@ -427,9 +437,19 @@ def build_equity_level_result(*, classification, companyfacts, valuation_date, s
                 })
         except EquityInputsUnavailable as exc:
             return _withheld(classification, valuation_date, source_manifest, model_name, str(exc))
-        payout = inp["current_payout_ratio"]
+        payout_metric = history_profile.metric("payout_ratio")
+        payout = (
+            payout_metric.base
+            if history_profile.full_history and payout_metric is not None
+            else inp["current_payout_ratio"]
+        )
         payout = policy["default_payout_ratio"] if payout is None else payout
-        roe = inp["current_roe"]
+        roe_metric = history_profile.metric("common_roe")
+        roe = (
+            roe_metric.base
+            if history_profile.full_history and roe_metric is not None
+            else inp["current_roe"]
+        )
 
         def val(mult, terminal_roe):
             return residual_income_valuation(
@@ -439,21 +459,48 @@ def build_equity_level_result(*, classification, companyfacts, valuation_date, s
                 current_price=None,
             )["intrinsic_value"]
         try:
-            scenarios = {
-                "bear": val(0.85, max(policy["terminal_roe"] - 0.02, ce + 0.01)),
-                "base": val(1.00, policy["terminal_roe"]),
-                "bull": val(1.15, policy["terminal_roe"] + 0.02),
-            }
+            if history_profile.full_history and roe_metric is not None:
+                roe_states = (roe_metric.low, roe_metric.base, roe_metric.high)
+                scenarios = {
+                    "bear": residual_income_valuation(
+                        book_value_per_share=inp["book_value_per_share"], current_roe=roe_states[0],
+                        cost_of_equity=ce, current_payout_ratio=payout,
+                        terminal_roe=max(policy["terminal_roe"] - 0.02, ce + 0.01),
+                        terminal_growth=policy["terminal_growth"], years=policy["forecast_years"],
+                        current_price=None,
+                    )["intrinsic_value"],
+                    "base": val(1.00, policy["terminal_roe"]),
+                    "bull": residual_income_valuation(
+                        book_value_per_share=inp["book_value_per_share"], current_roe=roe_states[2],
+                        cost_of_equity=ce, current_payout_ratio=payout,
+                        terminal_roe=policy["terminal_roe"] + 0.02,
+                        terminal_growth=policy["terminal_growth"], years=policy["forecast_years"],
+                        current_price=None,
+                    )["intrinsic_value"],
+                }
+            else:
+                scenarios = {
+                    "bear": val(0.85, max(policy["terminal_roe"] - 0.02, ce + 0.01)),
+                    "base": val(1.00, policy["terminal_roe"]),
+                    "bull": val(1.15, policy["terminal_roe"] + 0.02),
+                }
         except ValueError as exc:
             return _withheld(classification, valuation_date, source_manifest, model_name, str(exc))
-        pa = {"cost_of_equity": ce, "risk_free_rate": policy["risk_free_rate"],
+        pa = {**history_profile.public_metadata(), "cost_of_equity": ce, "risk_free_rate": policy["risk_free_rate"],
               "equity_risk_premium": policy["equity_risk_premium"], "policy_beta": policy["policy_beta"],
               "book_value_per_share": inp["book_value_per_share"], "current_roe": roe,
               "current_payout_ratio": payout, "terminal_roe": policy["terminal_roe"],
               "terminal_growth": policy["terminal_growth"]}
-        warnings = ["Single-period book/ROE snapshot; average-equity and preferred-stock refinements pending."]
+        warnings = (
+            ["ROE and payout are normalized from source-linked company history; preferred-stock and regulatory-capital refinements remain model considerations."]
+            if history_profile.full_history
+            else ["Insufficient source-linked company history; current ROE/payout and governed policy fallbacks are used."]
+        )
+        model_cap: ReliabilityLabel = "High" if history_profile.full_history else "Low"
+        reasons = () if history_profile.full_history else ("INSUFFICIENT_COMPANY_HISTORY",)
         return _finalize(classification, valuation_date, source_manifest, inp["period_end"],
-                         model_name, scenarios, pa, warnings, source=source, input_provenance=provenance)
+                         model_name, scenarios, pa, warnings, model_cap=model_cap, reasons=reasons,
+                         source=source, input_provenance=provenance, history_profile=history_profile)
 
     if model_name == "ddm":
         try:
@@ -469,18 +516,39 @@ def build_equity_level_result(*, classification, companyfacts, valuation_date, s
                 discount_rate=ce, current_price=None,
             )["intrinsic_value"]
         try:
-            scenarios = {"bear": val(policy["high_dividend_growth"] - 0.02),
-                         "base": val(policy["high_dividend_growth"]),
-                         "bull": val(policy["high_dividend_growth"] + 0.02)}
+            growth_metric = history_profile.metric("dividend_growth")
+            growth_states = (
+                (
+                    max(-0.10, min(0.20, growth_metric.low)),
+                    max(-0.10, min(0.20, growth_metric.base)),
+                    max(-0.10, min(0.20, growth_metric.high)),
+                )
+                if history_profile.full_history and growth_metric is not None
+                else (
+                    policy["high_dividend_growth"] - 0.02,
+                    policy["high_dividend_growth"],
+                    policy["high_dividend_growth"] + 0.02,
+                )
+            )
+            scenarios = {"bear": val(growth_states[0]),
+                         "base": val(growth_states[1]),
+                         "bull": val(growth_states[2])}
         except ValueError as exc:
             return _withheld(classification, valuation_date, source_manifest, model_name, str(exc))
-        pa = {"cost_of_equity": ce, "risk_free_rate": policy["risk_free_rate"],
+        pa = {**history_profile.public_metadata(), "cost_of_equity": ce, "risk_free_rate": policy["risk_free_rate"],
               "equity_risk_premium": policy["equity_risk_premium"], "policy_beta": policy["policy_beta"],
-              "last_dividend": inp["last_dividend"], "high_dividend_growth": policy["high_dividend_growth"],
+              "last_dividend": inp["last_dividend"], "high_dividend_growth": growth_states[1],
               "terminal_growth": policy["terminal_growth"], "high_growth_years": policy["high_growth_years"]}
-        warnings = ["Dividend growth is a governed policy assumption, not a per-issuer forecast."]
+        warnings = (
+            ["Dividend growth is normalized from source-linked company history."]
+            if history_profile.full_history
+            else ["Insufficient source-linked dividend history; governed dividend-growth policy is used."]
+        )
+        model_cap = "High" if history_profile.full_history else "Low"
+        reasons = () if history_profile.full_history else ("INSUFFICIENT_COMPANY_HISTORY",)
         return _finalize(classification, valuation_date, source_manifest, inp["period_end"],
-                         model_name, scenarios, pa, warnings, source=source, input_provenance=provenance)
+                         model_name, scenarios, pa, warnings, model_cap=model_cap, reasons=reasons,
+                         source=source, input_provenance=provenance, history_profile=history_profile)
 
     if model_name == "ffo":
         try:
@@ -489,15 +557,30 @@ def build_equity_level_result(*, classification, companyfacts, valuation_date, s
                 inp.update({"ffo_per_share": (strict["net_income"].value + strict["depreciation"].value - strict["property_sale_gain"].value) / strict["shares"].value, "period_end": strict["shares"].period_end})
         except EquityInputsUnavailable as exc:
             return _withheld(classification, valuation_date, source_manifest, model_name, str(exc))
-        ffo = inp["ffo_per_share"]
-        scenarios = {"bear": ffo * policy["pffo_bear"], "base": ffo * policy["pffo_base"],
-                     "bull": ffo * policy["pffo_bull"]}
-        pa = {"ffo_per_share": ffo, "pffo_multiple": policy["pffo_base"],
+        ffo_metric = history_profile.metric("ffo_per_share")
+        ffo_states = (
+            (ffo_metric.low, ffo_metric.base, ffo_metric.high)
+            if history_profile.full_history and ffo_metric is not None
+            else (inp["ffo_per_share"], inp["ffo_per_share"], inp["ffo_per_share"])
+        )
+        ffo = ffo_states[1]
+        scenarios = {"bear": ffo_states[0] * policy["pffo_bear"], "base": ffo * policy["pffo_base"],
+                     "bull": ffo_states[2] * policy["pffo_bull"]}
+        pa = {**history_profile.public_metadata(), "ffo_per_share": ffo, "pffo_multiple": policy["pffo_base"],
               "risk_free_rate": policy["risk_free_rate"], "equity_risk_premium": policy["equity_risk_premium"]}
-        warnings = ["FFO is a filing-derived approximation (non-GAAP); valued at a governed P/FFO multiple."]
+        warnings = [
+            "FFO is normalized from source-linked company history when available and valued at a governed P/FFO multiple."
+        ]
+        ffo_reasons = (
+            ("INTERIM_FFO_ROUTE", "INSUFFICIENT_COMPANY_HISTORY")
+            if not history_profile.full_history
+            else ("INTERIM_FFO_ROUTE",)
+        )
         return _finalize(classification, valuation_date, source_manifest, inp["period_end"],
                          model_name, scenarios, pa, warnings,
-                         model_cap="Low", reasons=("INTERIM_FFO_ROUTE",), source=source, input_provenance=provenance)
+                         model_cap="Low", reasons=ffo_reasons,
+                         source=source, input_provenance=provenance,
+                         history_profile=history_profile)
 
     raise ValueError(f"build_equity_level_result cannot handle primary_model={model_name!r}")
 
@@ -505,7 +588,12 @@ def build_equity_level_result(*, classification, companyfacts, valuation_date, s
 # Fields carried for internal/harvest use but stripped from the SERVED public
 # artifact (the FCFF path strips the same via public_result). Equity results hold
 # no raw financials, so stripping these two makes them public-safe.
-_PUBLIC_STRIP = ("financial_period_end", "source_manifest", "input_provenance")
+_PUBLIC_STRIP = (
+    "financial_period_end",
+    "source_manifest",
+    "input_provenance",
+    "company_history_profile",
+)
 
 
 def public_equity_artifact(result: dict) -> dict:

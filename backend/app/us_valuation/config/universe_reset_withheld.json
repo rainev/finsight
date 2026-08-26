@@ -140,6 +140,24 @@
         "MODEL_UNSUPPORTED"
       ],
       "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 8,
+      "ticker": "NCLH",
+      "cik": "0001513761",
+      "issuer_name": "Norwegian Cruise Line Holdings",
+      "model_version": "BATCH-08-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CAPEX_CASH_CONVERSION_SENSITIVITY",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/57-batch-08-recovery-result.md"
     }
   ]
 }

@@ -576,8 +576,16 @@ def test_api_loader_fails_closed_for_legacy_publication_state(
 
 
 def test_legacy_fcff_fallback_artifact_is_withheld_and_scrubbed() -> None:
-    artifact = json.loads(
-        Path("backend/app/data/us_valuations/LOW.json").read_text(encoding="utf-8")
+    artifact = next(
+        json.loads(path.read_text(encoding="utf-8"))
+        for path in sorted(Path("backend/app/data/us_valuations").glob("*.json"))
+        if (
+            (candidate := json.loads(path.read_text(encoding="utf-8")))
+            .get("model_policy", {})
+            .get("fallback_from")
+            == "fcff_dcf"
+            and candidate.get("model_policy", {}).get("primary") == "ddm"
+        )
     )
 
     sanitized = sanitize_public_artifact(artifact)
@@ -732,12 +740,11 @@ def test_us_publication_state_uses_only_binding_vocabulary(result: dict) -> None
     )
 
 
-def test_generic_growth_anchor_is_capped_when_company_history_exists(result: dict) -> None:
+def test_source_verified_company_history_precedes_archetype_anchor(result: dict) -> None:
     evidence = result["forecast_assumptions"]["evidence"]
     assert evidence["generic_growth_weights"] == {
-        "ttm_history": 0.375,
-        "annual_history": 0.375,
-        "archetype_anchor": 0.25,
+        "company_history": 1.0,
+        "archetype_anchor": 0.0,
     }
 
 

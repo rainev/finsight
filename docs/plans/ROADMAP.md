@@ -464,6 +464,185 @@ Gate: **passed — user confirmed 2026-08-25.** Batch 05 is 10/10 Conditional Lo
 bookmarked for the post-Batch-50 learning review. Batch 06 and all rollout actions require a new
 user signal.
 
+### Phase B06 — NOW: launch-first controlled batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B06.1 | Freeze and validate the exact ten-company contract | P0 | Manifest hash and exact identities | ✔ VERIFIED |
+| B06.2 | Capture/reuse ten cutoff-safe SEC packets and structural filings | P0 | Identity/date/package hashes and protected roots | ✔ VERIFIED — 10/10 |
+| B06.3 | Produce honest conditional baselines with period and lease safeguards | P0 | Ordered finite ranges, source lineage, model identity | ✔ VERIFIED — 10/10 Conditional Low |
+| B06.4 | Independently challenge source, model, arithmetic, debt scope, and calculator semantics | P0 | Luna-XHigh; resolve all Critical/Important | ✔ PASS |
+| B06.5 | Regenerate twice and verify backend, frontend, and real API/calculator | P0 | Byte equality, full suites, 10/10 HTTP parity | ✔ VERIFIED — `fd618685…`; 1,255 backend; frontend/API pass |
+| B06.6 | Report, confirm, and bookmark conditional issuers | P0 | Exact result and 44-entry watchlist | ✔ USER CONFIRMED 2026-08-26 |
+
+Gate: **passed — user confirmed 2026-08-26.** Batch 06 is 10/10 Conditional Low; all ten are
+bookmarked for the post-Batch-50 learning review. Batch 07 and all rollout actions require a new
+user signal.
+
+### Standing outcome-reporting contract for Batch 07 onward
+
+Every controlled batch must attempt the source-bounded normal route first and report three exact,
+mutually exclusive counts: **Pass / Conditional / Withheld**. Conditional is reserved for a named,
+material provisional dependency; it is not the default launch-first result. The three counts must
+sum to ten, and cumulative reporting must show the same categories across all processed issuers.
+
+### Phase B07 — history-backed controlled batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B07.1 | Freeze and validate the exact ten-company contract | P0 | Manifest hash and exact identities | ✔ VERIFIED |
+| B07.2 | Capture/reuse ten cutoff-safe SEC packets and structural filings | P0 | Identity/date/package hashes and protected roots | ✔ VERIFIED — 10/10 |
+| B07.3 | Apply three-to-five-year company history and produce exact Pass/Conditional/Withheld outcomes | P0 | Source-linked history, ordered ranges, completed bridges | ✔ VERIFIED — Pass 4 / Conditional 6 / Withheld 0 |
+| B07.4 | Challenge customer funds, debt/NCI, casino commitments, regulatory credits, and provenance | P0 | Independent XHigh review; resolve all Critical/Important | ✔ PASS |
+| B07.5 | Regenerate twice and verify backend, frontend, and real API/calculator | P0 | Byte equality, full suites, 10/10 HTTP parity | ✔ VERIFIED — 1,285 backend; frontend/API pass |
+| B07.6 | Present Batch 07, confirm, and bookmark Conditional issuers | P0 | Exact report and confirmation gate | ✔ USER CONFIRMED 2026-08-26 |
+
+Gate: **passed — user confirmed 2026-08-26.** The result is Pass 4 / Conditional 6 / Withheld 0.
+The six Conditional issuers are bookmarked. Serving artifacts remain unchanged. Batch 08,
+promotion, merge, push, and deployment require separate authorization.
+
+### Phase B08 — history-backed controlled batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B08.1 | Freeze and validate the exact ten-company contract | P0 | Manifest hash and exact identities | ✔ VERIFIED |
+| B08.2 | Capture/reuse ten cutoff-safe SEC packets and structural filings | P0 | Identity/date/package hashes and protected roots | ✔ VERIFIED — 10/10 |
+| B08.3 | Apply history and specialist fallbacks with exact Pass/Conditional/Withheld outcomes | P0 | Source-linked history, ordered ranges, fail-closed object identity | ✔ VERIFIED — Pass 2 / Conditional 6 / Withheld 2 |
+| B08.4 | Challenge acquisitions, captive finance, customer funds, commitments, software capex, and share/claim scope | P0 | Luna XHigh; resolve all Critical/Important | ✔ PASS |
+| B08.5 | Regenerate twice and verify backend, frontend, and real API/calculator | P0 | Byte equality, full suites, 10/10 HTTP parity | ✔ VERIFIED — 1,292 backend; frontend/API pass |
+| B08.6 | Present Batch 08, confirm, and bookmark Conditional issuers | P0 | Exact report and confirmation gate | ✔ USER CONFIRMED 2026-08-26 |
+
+Gate: **passed — user confirmed 2026-08-26.** The six Conditional issuers are bookmarked. NCLH
+and APTV remain outside the post-recovery register/watchlist until their one recovery attempt.
+Serving artifacts remain unchanged. Recovery, Batch 09, promotion, merge, push, and deployment
+require separate authorization.
+
+### Phase B08-R — one-attempt withheld recovery
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B08-R.1 | Audit APTV post-spin and NCLH cruise funding alternatives | P0 | Exact continuing earnings, debt, commitments, shares, and source lineage | ✔ VERIFIED |
+| B08-R.2 | Recover APTV without pre-spin history and challenge NCLH funding | P0 | Conditional equity earnings / explicit hard stop | ✔ VERIFIED — APTV recovered; NCLH withheld |
+| B08-R.3 | Recalculate, deterministic replay, full suite, and real API | P0 | Luna XHigh; byte equality; 10/10 API parity | ✔ PASS |
+| B08-R.4 | Record final watchlist and cumulative withheld register | P0 | Exact counts/hashes and one-attempt invariant | ✔ VERIFIED |
+
+Gate: **passed.** Final Batch 08 is Pass 2 / Conditional 7 / Withheld 1. APTV and NCLH are
+bookmarked; NCLH is in the cumulative withheld register. Batch 09 and all rollout actions require
+a separate user signal.
+
+### Phase B09 — history-backed controlled batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B09.1 | Freeze and validate the exact ten-company contract | P0 | Manifest hash, class identity, exact denominator | ✔ VERIFIED |
+| B09.2 | Capture/reuse ten cutoff-safe SEC packets and structural filings | P0 | Identity/date/package hashes and protected roots | ✔ VERIFIED — 10/10 |
+| B09.3 | Apply history and explicit current bridge fallbacks | P0 | 3–5 years, KO structural TTM, ordered outcomes | ✔ VERIFIED — Pass 2 / Conditional 7 / Withheld 1 |
+| B09.4 | Challenge class shares, securities, debt/lease scope, negative history, and current bridge completeness | P0 | Luna XHigh; resolve all Critical/Important | ✔ PASS |
+| B09.5 | Regenerate twice and verify backend, frontend, and real API/calculator | P0 | Byte equality, full suites, 10/10 HTTP parity | ✔ VERIFIED — 1,302 backend; frontend/API pass |
+| B09.6 | Present Batch 09, confirm, and bookmark Conditional issuers | P0 | Exact report and confirmation gate | ✔ USER CONFIRMED 2026-08-26 |
+
+Gate: **passed — user confirmed 2026-08-26.** The seven Conditional issuers are bookmarked. CLX
+received its one authorized recovery attempt in Phase B09-R below. Serving artifacts remain
+unchanged. Batch 10, promotion, merge, push, and deployment require separate authorization.
+
+### Phase B09-R — one-attempt CLX recovery
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B09-R.1 | Recover the linked CLX financial-statements IXBRL document | P0 | Official ZIP/member hashes; 1,675 parsed facts | ✔ VERIFIED |
+| B09-R.2 | Build and independently challenge a conservative post-acquisition range | P0 | Commercial paper/debt/lease bridge; event cash treatment | ✔ PASS — Conditional Low |
+| B09-R.3 | Replay twice, run full backend suite, and exercise real API | P0 | Byte equality; 1,305 tests; 10/10 HTTP parity | ✔ VERIFIED |
+| B09-R.4 | Add CLX to the Recovery Learning Watchlist | P0 | Exact watchlist/register counts | ✔ VERIFIED |
+
+Gate: **passed — user confirmed 2026-08-26.** Final Batch 09 is Pass 2 / Conditional 8 / Withheld 0.
+CLX is bookmarked as Conditional, not added to the cumulative withheld register. Batch 10 remains
+outside scope.
+
+### Phase B10 — history-backed Consumer Staples batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B10.1 | Freeze and validate the exact ten-company contract | P0 | Manifest identity/hash and exact denominator | ✔ VERIFIED |
+| B10.2 | Capture/reuse ten cutoff-safe SEC packets and structural filings | P0 | Identity/date/package hashes and protected roots | ✔ VERIFIED — 10/10 |
+| B10.3 | Build history-backed Pass/Conditional/Withheld baselines | P0 | Exact bridges, 3–5 years, ordered values | ✔ VERIFIED — Pass 6 / Conditional 3 / Withheld 1 |
+| B10.4 | Challenge transactions, class shares, debt/lease scope, NCI, and supplier finance | P0 | Luna XHigh; resolve all Critical/Important | ✔ PASS |
+| B10.5 | Replay twice and verify backend, frontend, and real API/calculator | P0 | Byte equality, full suites, 10/10 HTTP parity | ✔ VERIFIED |
+| B10.6 | Present Batch 10 and stop for confirmation | P0 | Exact report and confirmation gate | ✔ USER CONFIRMED 2026-08-26 |
+
+Gate: **passed — user confirmed 2026-08-26.** Batch 10 is Pass 6 / Conditional 3 / Withheld 1.
+The three Conditional issuers are bookmarked. KMB requires its separately authorized recovery
+attempt. Serving artifacts remain unchanged. Recovery, Batch 11, promotion, merge, push, and
+deployment require separate authorization.
+
+### Phase B10-R — one-attempt KMB recovery
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B10-R.1 | Reconcile the completed IFP sale and pending Kenvue state | P0 | Current filing/event facts and non-overlapping bridge | ✔ VERIFIED |
+| B10-R.2 | Build and challenge a post-IFP/pre-Kenvue current-state baseline | P0 | Continuing EBIT/D&A/capex proxy; Luna XHigh | ✔ PASS — Conditional Low |
+| B10-R.3 | Replay twice, run full backend suite, and exercise real API | P0 | Byte equality; 1,313 tests; 10/10 HTTP parity | ✔ VERIFIED |
+| B10-R.4 | Add KMB to the Recovery Learning Watchlist | P0 | Exact watchlist/register counts | ✔ VERIFIED |
+
+Gate: **passed — user confirmed 2026-08-26.** Final Batch 10 is Pass 6 / Conditional 4 /
+Withheld 0. KMB is bookmarked as Conditional and is not added to the cumulative withheld register.
+Batch 11 remains outside scope.
+
+### Phase B04-PR — verified Pass repairs
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B04-PR.1 | Repair TJX revenue and ROST interest provenance | P0 | Exact FY + current YTD − prior YTD replay | ✔ VERIFIED |
+| B04-PR.2 | Close MCD/HD preferred/NCI bridge treatment | P0 | Controlling filing structure and zero reserve | ✔ VERIFIED |
+| B04-PR.3 | Reclassify, challenge, replay, and exercise real API | P0 | Pass 4 / Conditional 6 / Withheld 0; deterministic/API proof | ✔ PASS |
+
+Gate: **passed under the user's explicit repair approval.** MCD, TJX, HD, and ROST are source-bounded
+Pass results and were removed from the Recovery Learning Watchlist. Batch 05 reclassification and
+Batch 07 remain outside scope.
+
+### Phase B05-HR — history-backed Pass repairs
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B05-HR.1 | Confirm core historical-data layer and wire Batch 05 | P0 | Source-linked private profiles and safe public metadata | ✔ VERIFIED |
+| B05-HR.2 | Reclassify WSM/CASY/AZO/ORLY using five-year history | P0 | Pass 4 / Conditional 6 / Withheld 0 | ✔ VERIFIED |
+| B05-HR.3 | Challenge, deterministic replay, full suites, and real API | P0 | Independent challenge; byte equality; 10/10 API parity | ✔ PASS |
+
+Gate: **passed under the user's Batch 05 repair authorization.** Four source-bounded Pass results
+were removed from the Recovery Learning Watchlist. Batch 06 reclassification and Batch 07 remain
+outside scope.
+
+### Phase B06-HR — history-backed Pass repairs
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B06-HR.1 | Wire unique-period company history into Batch 06 | P0 | Private profiles, safe public metadata, BBY/CMG special paths | ✔ VERIFIED |
+| B06-HR.2 | Reclassify seven ordinary history-backed issuers | P0 | Pass 7 / Conditional 3 / Withheld 0 | ✔ VERIFIED |
+| B06-HR.3 | Challenge, deterministic replay, full suites, and real API | P0 | Independent challenge; byte equality; 10/10 API parity | ✔ PASS |
+
+Gate: **passed under the user's Batch 06 repair authorization.** Seven source-bounded Pass results
+were removed from the Recovery Learning Watchlist. Batch 07 remains outside scope until the user's
+explicit start signal.
+
+### Phase H01 — company-history valuation layer
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| H01.1 | Add shared three-to-five-year source-linked history profiles for operating, bank, utility, and REIT lanes | P0 | Focused/full tests and private lineage inspection | ✔ VERIFIED |
+| H01.2 | Expose only safe history metadata and keep raw observations private | P0 | Sanitizer tests, leakage scan, real staged API | ✔ VERIFIED |
+| H01.3 | Shadow only Batch 04 under the user's narrowed scope | P0 | Two byte-identical runs; exact Pass/Conditional/Withheld counts | ✔ VERIFIED |
+| H01.4 | Independently challenge the final source/model candidate | P0 | Luna source and economic review | ⚠ REVIEWERS UNAVAILABLE — no findings returned |
+| H01.5 | Exercise the visual browser flow | P1 | Real U.S. list/detail assumption display | ⚠ BROWSER CONTROL UNAVAILABLE |
+| H01.6 | Promote the exact user-confirmed Batch 04 candidate with rollback evidence | P0 | Byte parity, full suite/build, real default-serving API | ✔ USER-CONFIRMED AND VERIFIED |
+
+Shadow gate history: the Batch 04 shadow was **verified with stated review limitations** at
+4 Pass / 6 Conditional / 0 Withheld; all 10 remained Low under unchanged scenario-width rules.
+At that checkpoint Batches 05/06 were not replayed and no serving promotion had occurred.
+
+Promotion update: **the user explicitly confirmed and promoted the exact Batch 04 history-backed
+candidate on 2026-08-26.** The default backend serving directory now contains all ten artifacts;
+real list/detail/calculator API verification passed. Browser review, merge, push, deployment,
+Batches 05/06, and Batch 07 remain separate gates.
+
 ## Final 500-company gate
 
 Confirm exactly 500 unique processed issuers and no denominator loss; replay all frozen inputs
