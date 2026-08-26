@@ -1,0 +1,174 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "DFS asset growth and funding are bounded at the equity level; no cash/debt bridge is applied. Reliability capped at Low.",
+      "Model 'fcfe_dcf': DFS asset growth and funding are bounded at the equity level; no cash/debt bridge is applied. Reliability capped at Low.",
+      "Primary model 'fcfe_dcf' is review_required.",
+      "Scenario 'base' model 'fcfe_dcf' is review_required.",
+      "Scenario 'bear' model 'fcfe_dcf' is review_required.",
+      "Scenario 'bull' model 'fcfe_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "calculator_link": "/api/us-valuations/DELL/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "forecast_quality": {
+    "checks": {
+      "captive_finance_fcfe_reconciliation": {
+        "status": "review_required"
+      }
+    },
+    "errors": [],
+    "policy_version": "US-FORECAST-QUALITY-1.0",
+    "status": "review_required",
+    "warnings": [
+      "DFS asset growth and funding are bounded at the equity level; no cash/debt bridge is applied. Reliability capped at Low."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001571996",
+    "classification_confidence": 0.8,
+    "classification_reason": "DELL routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Technology",
+    "issuer_name": "Dell Technologies Inc.",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "override_applied": true,
+    "primary_archetype": "hardware_electronic_equipment",
+    "sec_sic_code": "3571",
+    "sec_sic_label": "Electronic Computers",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001571996-26-000030",
+      "0001571996-26-000008",
+      "0001571996-25-000127",
+      "0001571996-25-000102",
+      "0001571996-25-000063",
+      "0001571996-25-000034",
+      "0001571996-24-000143",
+      "0001571996-24-000090"
+    ],
+    "ticker": "DELL"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
+    "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
+    "source_policy": "SEC Companyfacts, submissions and governed filing-specific reportable-segment tables; no exchange prices"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcfe_dcf",
+    "reason": "Provisional consolidated FCFE with explicit captive-finance equity funding; reliability capped at Low.",
+    "supporting": []
+  },
+  "models": {
+    "fcfe_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 105.9701357469003,
+      "model": "fcfe_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "DFS asset growth and funding are bounded at the equity level; no cash/debt bridge is applied. Reliability capped at Low."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcfe_dcf",
+  "public_assumptions": {
+    "adjusted_fcf_base": 5607000000.0,
+    "adjusted_fcf_high": 11508000000.0,
+    "adjusted_fcf_low": 3097000000.0,
+    "cost_of_equity": 0.105,
+    "dfs_debt_to_equity": 7.0
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 1.7084383345575416,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "insufficient",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "DFS asset growth and funding are bounded at the equity level; no cash/debt bridge is applied. Reliability capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 105.9701357469003,
+    "high": 287.01357797517124,
+    "label": "provisional captive-finance FCFE range",
+    "low": 37.53383106984477
+  },
+  "scenarios": {
+    "base": {
+      "fcfe_dcf": {
+        "intrinsic_value_per_share": 105.9701357469003,
+        "publication_state": "review_required"
+      }
+    },
+    "bear": {
+      "fcfe_dcf": {
+        "intrinsic_value_per_share": 37.53383106984477,
+        "publication_state": "review_required"
+      }
+    },
+    "bull": {
+      "fcfe_dcf": {
+        "intrinsic_value_per_share": 287.01357797517124,
+        "publication_state": "review_required"
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001571996-26-000030",
+    "filed_date": "2026-06-09",
+    "form": "10-Q",
+    "period_end": "2026-05-01",
+    "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000030/dell-20260501.htm"
+  },
+  "ticker": "DELL",
+  "valuation_date": "2026-08-14"
+}

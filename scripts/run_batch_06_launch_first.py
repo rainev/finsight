@@ -8,7 +8,7 @@ from app.us_valuation.artifacts import PUBLIC_SCHEMA_VERSION,sanitize_public_art
 from app.us_valuation.batch_06 import BATCH_06_MANIFEST,BATCH_06_TICKERS,BATCH_06_VALUATION_DATE
 from app.us_valuation.batch_06_launch_first import BATCH_06_LAUNCH_FIRST_VERSION,build_batch_06_launch_first_result
 from app.us_valuation.reliability import accounting_label,relative_movement
-PROTECTED=(ROOT/'backend/app/data/us_valuations',ROOT/'frontend/public/data',ROOT/'frontend/src/research/generated');WATCHLIST=ROOT/'backend/app/us_valuation/config/universe_reset_recovery_learning_watchlist.json'
+PROTECTED=(ROOT/'backend/app/data/us_valuation_catalogs',ROOT/'frontend/public/data',ROOT/'frontend/src/research/generated');WATCHLIST=ROOT/'backend/app/us_valuation/config/universe_reset_recovery_learning_watchlist.json'
 def _json(value):return (json.dumps(value,indent=2,sort_keys=True,ensure_ascii=False,allow_nan=False)+'\n').encode()
 def _tree(root):
  h=hashlib.sha256()

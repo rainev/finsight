@@ -65,8 +65,13 @@ def test_lagging_ttm_flow_is_scaled_from_company_history_not_copied() -> None:
 
 
 FIXTURES = Path(__file__).parent / "fixtures" / "us"
+ACTIVE_DATA_ROOT = us_valuations_router.CATALOG.artifacts_root
+LEGACY_DATA_ROOT = (
+    Path(__file__).resolve().parents[2]
+    / "backend/app/data/us_valuation_catalogs/archive/legacy-206-2026-08-26/artifacts"
+)
 MICROSOFT_PUBLIC_ARTIFACTS = (
-    Path("backend/app/data/us_valuations/MSFT.json"),
+    ACTIVE_DATA_ROOT / "MSFT.json",
     Path("frontend/public/data/microsoft-valuation-pipeline.json"),
 )
 
@@ -419,7 +424,7 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
 def test_microsoft_artifact_preserves_provenance_and_no_price_input() -> None:
     """Keep the checked-in MSFT artifact attributable and price-free."""
     artifact = json.loads(
-        Path("backend/app/data/us_valuations/MSFT.json").read_text(encoding="utf-8")
+        (ACTIVE_DATA_ROOT / "MSFT.json").read_text(encoding="utf-8")
     )
     assert artifact["source_financial_statement"]["accession"]
     assert artifact["data_boundary"]["stock_prices_used"] is False
@@ -462,7 +467,7 @@ def test_api_loader_scrubs_adversarial_withheld_stored_artifact(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     artifact = json.loads(
-        Path("backend/app/data/us_valuations/AAPL.json").read_text(encoding="utf-8")
+        (ACTIVE_DATA_ROOT / "AAPL.json").read_text(encoding="utf-8")
     )
     artifact["review"]["publication_state"] = "withheld"
     artifact["models"]["fcff_dcf"]["intrinsic_value_per_share"] = 999.0
@@ -502,7 +507,7 @@ def test_list_endpoint_sanitizes_before_reading_state_or_base(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     artifact = json.loads(
-        Path("backend/app/data/us_valuations/AAPL.json").read_text(
+        (ACTIVE_DATA_ROOT / "AAPL.json").read_text(
             encoding="utf-8"
         )
     )
@@ -522,11 +527,11 @@ def test_configured_data_root_drives_both_read_only_endpoints(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     artifact = json.loads(
-        Path("backend/app/data/us_valuations/WFC.json").read_text(
+        (ACTIVE_DATA_ROOT / "BAC.json").read_text(
             encoding="utf-8"
         )
     )
-    (tmp_path / "WFC.json").write_text(json.dumps(artifact), encoding="utf-8")
+    (tmp_path / "BAC.json").write_text(json.dumps(artifact), encoding="utf-8")
 
     try:
         with monkeypatch.context() as scoped:
@@ -534,12 +539,12 @@ def test_configured_data_root_drives_both_read_only_endpoints(
             configured = importlib.reload(us_valuations_router)
 
             listed = configured.list_us_valuations()
-            detailed = configured.get_us_valuation("WFC")
+            detailed = configured.get_us_valuation("BAC")
 
             assert configured.DATA_ROOT == tmp_path
             assert listed["count"] == 1
-            assert listed["items"][0]["ticker"] == "WFC"
-            assert detailed["issuer"]["ticker"] == "WFC"
+            assert listed["items"][0]["ticker"] == "BAC"
+            assert detailed["issuer"]["ticker"] == "BAC"
     finally:
         importlib.reload(us_valuations_router)
 
@@ -551,13 +556,12 @@ def test_unset_data_root_uses_package_relative_default(
         with monkeypatch.context() as scoped:
             scoped.delenv("FINSIGHT_US_VALUATION_DATA_ROOT", raising=False)
             configured = importlib.reload(us_valuations_router)
-            expected = (
-                Path(configured.__file__).resolve().parents[1]
-                / "data"
-                / "us_valuations"
-            )
+            expected = configured.CATALOG.artifacts_root
 
             assert configured.DATA_ROOT == expected
+            assert configured.CATALOG.catalog_version == (
+                "US-RESET-2026-08-14-B01-B10-1.0"
+            )
     finally:
         importlib.reload(us_valuations_router)
 
@@ -566,7 +570,7 @@ def test_api_loader_fails_closed_for_legacy_publication_state(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     artifact = json.loads(
-        Path("backend/app/data/us_valuations/AAPL.json").read_text(encoding="utf-8")
+        (ACTIVE_DATA_ROOT / "AAPL.json").read_text(encoding="utf-8")
     )
     artifact["review"]["publication_state"] = "review"
     (tmp_path / "AAPL.json").write_text(json.dumps(artifact), encoding="utf-8")
@@ -578,7 +582,7 @@ def test_api_loader_fails_closed_for_legacy_publication_state(
 def test_legacy_fcff_fallback_artifact_is_withheld_and_scrubbed() -> None:
     artifact = next(
         json.loads(path.read_text(encoding="utf-8"))
-        for path in sorted(Path("backend/app/data/us_valuations").glob("*.json"))
+        for path in sorted(LEGACY_DATA_ROOT.glob("*.json"))
         if (
             (candidate := json.loads(path.read_text(encoding="utf-8")))
             .get("model_policy", {})
@@ -599,10 +603,10 @@ def test_legacy_fcff_fallback_artifact_is_withheld_and_scrubbed() -> None:
     )
 
 
-@pytest.mark.parametrize("ticker", ["WFC", "SO"])
+@pytest.mark.parametrize("ticker", ["BAC", "JPM"])
 def test_intentional_equity_level_artifacts_remain_eligible(ticker: str) -> None:
     artifact = json.loads(
-        Path(f"backend/app/data/us_valuations/{ticker}.json").read_text(
+        (ACTIVE_DATA_ROOT / f"{ticker}.json").read_text(
             encoding="utf-8"
         )
     )
@@ -1731,12 +1735,14 @@ def test_public_api_artifact_excludes_raw_financials():
     assert "financials" not in public
     assert "discount_rate" not in public
     assert "forecast_assumptions" not in public
-    assert public["review"]["publication_state"] == "withheld"
-    assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
-    assert public["scenario_range"]["base"] is None
-    assert public["bridge_quality"]["reason_codes"] == [
-        "BRIDGE_QUALITY_INVALID_OR_MISSING"
+    assert public["review"]["publication_state"] == "review_required"
+    assert public["availability_type"] == "available"
+    assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] > 0
+    assert public["scenario_range"]["base"] == public["models"]["fcff_dcf"][
+        "intrinsic_value_per_share"
     ]
+    assert public["bridge_quality"]["decision"] == "bounded_review"
+    assert public["bridge_quality"]["usable"] is True
 
 
 def test_apple_uses_segment_aware_ten_year_forecast(result: dict):

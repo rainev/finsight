@@ -3,7 +3,6 @@ import {
   BarChart3,
   Bookmark,
   BriefcaseBusiness,
-  Globe,
   HeartPulse,
   LogOut,
   Newspaper,
@@ -20,8 +19,7 @@ const NAV = [
   { to: '/news', label: 'News', icon: Rss, end: false },
   { to: '/rankings', label: 'Rankings', icon: BarChart3, end: false },
   { to: '/health', label: 'Financial Health', icon: HeartPulse, end: false },
-  { to: '/valuation', label: 'Valuation', icon: Scale, end: false },
-  { to: '/us-valuations', label: 'US Valuations', icon: Globe, end: false },
+  { to: '/valuations', label: 'Valuations', icon: Scale, end: false },
   { to: '/brief', label: 'Smart Brief', icon: Sparkles, end: false },
   { to: '/portfolio', label: 'Portfolio', icon: BriefcaseBusiness, end: false },
   { to: '/saved', label: 'Saved', icon: Bookmark, end: false },
@@ -111,7 +109,7 @@ export function Layout() {
 
       {/* Mobile bottom nav */}
       <nav
-        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-9 border-t border-[var(--app-border)] bg-[var(--app-surface)]/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-8 border-t border-[var(--app-border)] bg-[var(--app-surface)]/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
         aria-label="Mobile navigation"
       >
         {NAV.map(({ to, label, icon: Icon, end }) => (

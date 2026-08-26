@@ -30,7 +30,7 @@ from app.us_valuation.reliability import relative_movement
 
 
 PROTECTED_ROOTS = (
-    ROOT / "backend/app/data/us_valuations",
+    ROOT / "backend/app/data/us_valuation_catalogs",
     ROOT / "frontend/public/data",
     ROOT / "frontend/src/research/generated",
 )

@@ -23,7 +23,7 @@ from app.us_valuation.sec_client import normalize_cik
 
 ELIGIBLE_FORMS = frozenset({"10-K", "10-K/A", "10-Q", "10-Q/A"})
 PROTECTED_ROOTS = tuple(ROOT / path for path in (
-    "backend/app/data/us_valuations", "frontend/public/data", "frontend/src/research/generated",
+    "backend/app/data/us_valuation_catalogs", "frontend/public/data", "frontend/src/research/generated",
 ))
 
 

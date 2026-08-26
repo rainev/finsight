@@ -1,0 +1,162 @@
+{
+  "automated_review": {
+    "blocking_reasons": [
+      "review_state_withheld",
+      "review_errors_present",
+      "model_errors:conditional_estimate",
+      "model_not_pass:conditional_estimate",
+      "missing_model_value:conditional_estimate"
+    ],
+    "decision": "blocked",
+    "evidence_status": "complete",
+    "publication_state": "withheld",
+    "repair_actions": [
+      "rebuild_valuation_models"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Current TTM and median historical cash FCFF are negative. One positive recovery year cannot bound a positive normalized base while $18.648B of newbuild contracts and $15.035B carrying debt remain load-bearing.",
+      "Revalue after a source-backed positive through-cycle cash range and explicit newbuild funding schedule are available.",
+      "Calculator unavailable.",
+      "Model 'conditional_estimate': Current TTM and median historical cash FCFF are negative. One positive recovery year cannot bound a positive normalized base while $18.648B of newbuild contracts and $15.035B carrying debt remain load-bearing."
+    ]
+  },
+  "availability_type": "not_available",
+  "calculator_link": "/api/us-valuations/NCLH/calculator",
+  "confidence": {
+    "label": null,
+    "reasons": [
+      "VALUATION_WITHHELD"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "value range, reliability, warnings, historical-policy summary, assumptions and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "status": "withheld",
+    "warnings": [
+      "Current TTM and median historical cash FCFF are negative. One positive recovery year cannot bound a positive normalized base while $18.648B of newbuild contracts and $15.035B carrying debt remain load-bearing."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001513761",
+    "classification_confidence": 0.8,
+    "classification_reason": "Frozen Batch 08 lane plus issuer-specific history review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Discretionary",
+    "issuer_name": "Norwegian Cruise Line Holdings",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_discretionary",
+    "sec_sic_code": null,
+    "sec_sic_label": "Hotels, Resorts & Cruise Lines",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001104659-26-089657"
+    ],
+    "ticker": "NCLH"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "sector_framework": "unavailable_cruise_cycle_history",
+    "source_policy": "Reported facts remain private and separate from historical summaries and governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "History-backed Conditional Low baseline with a named material dependency.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": null,
+      "currency": "USD",
+      "errors": [
+        "Current TTM and median historical cash FCFF are negative. One positive recovery year cannot bound a positive normalized base while $18.648B of newbuild contracts and $15.035B carrying debt remain load-bearing."
+      ],
+      "intrinsic_value_per_share": null,
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "withheld",
+      "warnings": [
+        "Current TTM and median historical cash FCFF are negative. One positive recovery year cannot bound a positive normalized base while $18.648B of newbuild contracts and $15.035B carrying debt remain load-bearing."
+      ]
+    }
+  },
+  "primary_valuation_method": "unavailable_cruise_cycle_history",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_and_company_history",
+    "forecast_mode": "unavailable_post_spin_history",
+    "forecast_policy_version": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 0,
+    "normalization_basis": "negative_cycle_history_no_positive_base"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": null,
+    "accounting_label": "Low",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "VALUATION_WITHHELD"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": null,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [
+      "Current TTM and median historical cash FCFF are negative. One positive recovery year cannot bound a positive normalized base while $18.648B of newbuild contracts and $15.035B carrying debt remain load-bearing."
+    ],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "withheld",
+    "warnings": [
+      "Current TTM and median historical cash FCFF are negative. One positive recovery year cannot bound a positive normalized base while $18.648B of newbuild contracts and $15.035B carrying debt remain load-bearing.",
+      "Revalue after a source-backed positive through-cycle cash range and explicit newbuild funding schedule are available.",
+      "Calculator unavailable."
+    ]
+  },
+  "scenario_range": {
+    "base": null,
+    "high": null,
+    "label": "assumption range, not a statistical confidence interval or recommendation",
+    "low": null
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001104659-26-089657",
+    "filed_date": "2026-08-03",
+    "form": "10-Q",
+    "note": "Controlling filing anchors current inputs; company history or explicit comparative evidence anchors normalized assumptions.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1513761/000110465926089657/nclh-20260630x10q.htm"
+  },
+  "ticker": "NCLH",
+  "valuation_date": "2026-08-14"
+}

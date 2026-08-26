@@ -32,7 +32,7 @@ _OPERATING_LANES = frozenset(
     }
 )
 _DEFAULT_PROTECTED = (
-    _ROOT / "backend/app/data/us_valuations",
+    _ROOT / "backend/app/data/us_valuation_catalogs",
     _ROOT / "frontend/public/data",
     _ROOT / "frontend/src/research/generated",
 )

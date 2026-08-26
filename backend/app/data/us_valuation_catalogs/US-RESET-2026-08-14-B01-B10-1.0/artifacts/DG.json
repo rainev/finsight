@@ -1,0 +1,160 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Conditional Low estimate. Store closures/remodels, shrink, inventory, supplier finance, leases, and refinancing remain material.",
+      "Invalidate if store program cash, inventory/shrink, debt/leases, supplier finance, or shares changes.",
+      "Calculator is calibrated to the published base; private history and bridge remain fixed.",
+      "Model 'conditional_estimate': Conditional Low estimate. Store closures/remodels, shrink, inventory, supplier finance, leases, and refinancing remain material.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/DG/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "value range, reliability, warnings, historical-policy summary, assumptions and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-09-HISTORY-LAUNCH-FIRST-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low estimate. Store closures/remodels, shrink, inventory, supplier finance, leases, and refinancing remain material."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000029534",
+    "classification_confidence": 0.8,
+    "classification_reason": "Frozen Batch 08 lane plus issuer-specific history review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Staples",
+    "issuer_name": "Dollar General",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_staples",
+    "sec_sic_code": null,
+    "sec_sic_label": "Consumer Staples Merchandise Retail",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001104659-26-069205"
+    ],
+    "ticker": "DG"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-09-HISTORY-LAUNCH-FIRST-1.0",
+    "sector_framework": "discount_retail_reinvestment_cash_fcff",
+    "source_policy": "Reported facts remain private and separate from historical summaries and governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "History-backed Conditional Low baseline with a named material dependency.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 117.00359433568842,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low estimate. Store closures/remodels, shrink, inventory, supplier finance, leases, and refinancing remain material."
+      ]
+    }
+  },
+  "primary_valuation_method": "discount_retail_reinvestment_cash_fcff",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_history_and_finsight_policy",
+    "cash_conversion_margin": 0.05088944841597093,
+    "cash_conversion_margin_high": 0.05579759561640224,
+    "cash_conversion_margin_low": 0.03006987286729105,
+    "diluted_shares": 221559000.0,
+    "diluted_shares_high": 227097974.99999997,
+    "diluted_shares_low": 216020025.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "not applied",
+    "forecast_mode": "history_backed_normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-09-HISTORY-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 5,
+    "normalization_basis": "company_history_with_material_event_override"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.6176709647078809,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low estimate. Store closures/remodels, shrink, inventory, supplier finance, leases, and refinancing remain material.",
+      "Invalidate if store program cash, inventory/shrink, debt/leases, supplier finance, or shares changes.",
+      "Calculator is calibrated to the published base; private history and bridge remain fixed."
+    ]
+  },
+  "scenario_range": {
+    "base": 117.00359433568842,
+    "high": 181.76125173604834,
+    "label": "assumption range, not a statistical confidence interval or recommendation",
+    "low": 44.733871348074196
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001104659-26-069205",
+    "filed_date": "2026-06-02",
+    "form": "10-Q",
+    "note": "Controlling filing anchors current inputs; company history or explicit comparative evidence anchors normalized assumptions.",
+    "period_end": "2026-05-01",
+    "url": "https://www.sec.gov/Archives/edgar/data/29534/000110465926069205/dg-20260501x10q.htm"
+  },
+  "ticker": "DG",
+  "valuation_date": "2026-08-14"
+}

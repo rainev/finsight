@@ -815,7 +815,7 @@ def test_cli_resolves_aliases_before_rejecting_unsafe_output_roots(
     with pytest.raises(ValueError, match="input root"):
         module.validate_paths(input_root, input_alias)
 
-    serving_root = REPO_ROOT / "backend" / "app" / "data" / "us_valuations"
+    serving_root = REPO_ROOT / "backend" / "app" / "data" / "us_valuation_catalogs"
     with pytest.raises(ValueError, match="serving root"):
         module.validate_paths(input_root, serving_root / "task-8-shadow")
     serving_alias = tmp_path / "serving-alias"
@@ -838,7 +838,7 @@ def test_cli_rejects_case_variant_aliases_on_case_insensitive_filesystem(
         module.validate_paths(input_root, input_variant / "nested-output")
 
     for component, serving_root in (
-        ("backend", REPO_ROOT / "backend" / "app" / "data" / "us_valuations"),
+        ("backend", REPO_ROOT / "backend" / "app" / "data" / "us_valuation_catalogs"),
         ("frontend", REPO_ROOT / "frontend" / "public" / "data"),
     ):
         variant = Path(

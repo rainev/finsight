@@ -243,7 +243,7 @@ export interface UsValuation {
     url: string
     note?: string
   }
-  model_policy: { primary: string; supporting: string[]; blend_models: boolean; reason?: string }
+  model_policy: { primary: string; supporting: string[]; blend_models: boolean; fallback_from?: string | null; reason?: string }
   public_assumptions: {
     forecast_years: number
     history_policy_version?: string
@@ -263,7 +263,7 @@ export interface UsValuation {
   }
   models: Record<string, UsModelResult>
   scenarios: Record<string, Record<string, UsModelResult>>
-  scenario_range: { low: number; base: number; high: number; label?: string }
+  scenario_range: { low: number | null; base: number | null; high: number | null; label?: string }
   availability_type: UsAvailabilityType
   primary_valuation_method: string
   confidence: { label: 'High' | 'Medium' | 'Low' | null; reasons: string[] }
@@ -315,6 +315,11 @@ export interface UsValuationSummary {
 export interface UsValuationList {
   count: number
   items: UsValuationSummary[]
+  catalog_version: string
+  universe_version: string
+  valuation_date: string
+  included_batches: number[]
+  artifact_count: number
 }
 
 export interface UsCalculatorField {

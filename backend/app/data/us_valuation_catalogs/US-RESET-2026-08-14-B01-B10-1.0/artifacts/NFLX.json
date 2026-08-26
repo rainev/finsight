@@ -1,0 +1,290 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Practical source-linked cash-FCFF valuation; reliability is capped at Low.",
+      "Model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Primary model 'fcff_dcf' is review_required.",
+      "Scenario 'base' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'base' model 'fcff_dcf' is review_required.",
+      "Scenario 'bear' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'bear' model 'fcff_dcf' is review_required.",
+      "Scenario 'bull' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'bull' model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 41.21046420385364,
+      "low": 41.21046420385364,
+      "midpoint": 41.21046420385364,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/NFLX/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "derived range, governed assumptions, warnings, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {
+      "normalized_period": {
+        "normalized_period_end": "2026-06-30",
+        "status": "pass"
+      }
+    },
+    "errors": [],
+    "policy_version": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Cash conversion and company-history scenarios are provisional; reliability is capped at Low."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001065280",
+    "classification_confidence": 0.9,
+    "classification_reason": "Netflix is a subscription streaming and content issuer. A content-aware cash-FCFF route is required because generic PP&E reinvestment does not represent cash content spending; the override enables normalization without authorizing the generic model.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "NETFLIX INC",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "override_applied": true,
+    "primary_archetype": "internet_digital_services",
+    "sec_sic_code": "7841",
+    "sec_sic_label": "Services-Video Tape Rental",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001065280-26-000212",
+      "0001065280-26-000138",
+      "0001065280-26-000034",
+      "0001065280-25-000406",
+      "0001065280-25-000323",
+      "0001065280-25-000176",
+      "0001065280-25-000044",
+      "0001065280-24-000287"
+    ],
+    "ticker": "NFLX"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "sector_framework": "source-linked economic archetype with company-history scenarios",
+    "source_policy": "SEC filings filed on or before 2026-08-14; no stock price or analyst target"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "Content-aware enterprise cash FCFF uses operating cash flow after content cash spending and removes the reported one-time WBD termination fee.",
+    "supporting": []
+  },
+  "models": {
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 41.21046420385364,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "adjusted_fcf_base": 9090555752.688986,
+    "adjusted_fcf_high": 11650973313.304665,
+    "adjusted_fcf_low": 6417599798.109071,
+    "bridge_claims_basis": "Current reported cash/investments less interest-bearing debt, preferred equity, and NCI exactly once.",
+    "diluted_shares": 4279776000.0,
+    "diluted_shares_high": 4493764800.0,
+    "diluted_shares_low": 4194180480.0,
+    "discount_calibration_type": "policy_calibrated",
+    "discount_policy_version": "US-RATES-1.0",
+    "equity_risk_premium": 0.045,
+    "forecast_mode": "consolidated_cash_fcff",
+    "forecast_policy_version": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "forecast_years": 8,
+    "initial_revenue_growth": 0.12,
+    "normalized_tax_rate": 0.12850329672277636,
+    "policy_wacc": 0.09149183643936214,
+    "risk_free_effective_date": "2026-07-30",
+    "risk_free_rate": 0.0468,
+    "risk_free_source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value_month=202607&type=daily_treasury_yield_curve",
+    "terminal_growth": 0.02
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.7517621347326795,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Practical source-linked cash-FCFF valuation; reliability is capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 41.21046420385364,
+    "high": 72.19093074706733,
+    "label": "practical source-linked cash-FCFF range",
+    "low": 21.055571508451013
+  },
+  "scenarios": {
+    "base": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 41.21046420385364,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    },
+    "bear": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 21.055571508451013,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    },
+    "bull": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 72.19093074706733,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [
+    {
+      "delta": -0.01,
+      "field": "wacc",
+      "intrinsic_value_per_share": 48.37256550398211,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "wacc",
+      "intrinsic_value_per_share": 41.21046420385364,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.01,
+      "field": "wacc",
+      "intrinsic_value_per_share": 35.81408755037817,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": -2672955954.579915,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 28.737098867453167,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 41.21046420385364,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 2560417560.615679,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 53.15866843541714,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": -85595520.0,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 42.05149408556493,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 41.21046420385364,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 213988800.0,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 39.24806114652727,
+      "publication_state": "review_required"
+    }
+  ],
+  "source_financial_statement": {
+    "accession": "0001065280-26-000212",
+    "filed_date": "2026-07-17",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing used for the cash-FCFF result.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000212/nflx-20260630.htm"
+  },
+  "ticker": "NFLX",
+  "valuation_date": "2026-08-14"
+}

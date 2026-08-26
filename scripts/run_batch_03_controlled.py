@@ -30,7 +30,7 @@ from app.us_valuation.pipeline import build_us_valuation
 
 
 PROTECTED_ROOTS = (
-    ROOT / "backend/app/data/us_valuations",
+    ROOT / "backend/app/data/us_valuation_catalogs",
     ROOT / "frontend/public/data",
     ROOT / "frontend/src/research/generated",
 )
@@ -385,4 +385,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -55,7 +55,7 @@ TARGET_FILINGS = (
 )
 PEER = {"ticker": "STX", "cik": "0001137789", "issuer_name": "Seagate Technology Holdings plc"}
 PROTECTED_ROOTS = (
-    ROOT / "backend/app/data/us_valuations",
+    ROOT / "backend/app/data/us_valuation_catalogs",
     ROOT / "frontend/public/data",
     ROOT / "frontend/src/research/generated",
 )

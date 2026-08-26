@@ -1,0 +1,219 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low.",
+      "Model 'fcff_dcf': Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low.",
+      "Primary model 'fcff_dcf' is review_required.",
+      "Scenario 'base' model 'fcff_dcf': Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low.",
+      "Scenario 'base' model 'fcff_dcf' is review_required.",
+      "Scenario 'bear' model 'fcff_dcf': Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low.",
+      "Scenario 'bear' model 'fcff_dcf' is review_required.",
+      "Scenario 'bull' model 'fcff_dcf': Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low.",
+      "Scenario 'bull' model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 42.19082579678608,
+      "low": 42.19082579678608,
+      "midpoint": 42.19082579678608,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [
+      "NOT_DISCLOSED_COMPLETE_EXTRACTION",
+      "REPORTED_AGGREGATE_REPLACEMENT"
+    ],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/WDC/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "NORMALIZED_CYCLICAL_RANGE",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {
+      "normalized_cycle_evidence": {
+        "status": "review_required"
+      }
+    },
+    "errors": [],
+    "policy_version": "US-FORECAST-QUALITY-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low."
+    ]
+  },
+  "issuer": {
+    "cik": "0000106040",
+    "classification_confidence": 0.8,
+    "classification_reason": "WDC routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
+    "finsight_sector": "Technology",
+    "issuer_name": "WESTERN DIGITAL CORP",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "primary_archetype": "hardware_electronic_equipment",
+    "secondary_archetypes": [],
+    "ticker": "WDC"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
+    "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
+    "source_policy": "SEC Companyfacts, submissions and governed filing-specific reportable-segment tables; no exchange prices"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "Provisional issuer-balanced normalized-cycle FCFF; reliability capped at Low.",
+    "supporting": []
+  },
+  "models": {
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 42.19082579678608,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "bridge_claims_basis": "reported total debt; complete filing extraction found zero current investments, preferred/temporary equity, finance-lease debt, and NCI",
+    "cycle_stx_weight": 0.5,
+    "cycle_wdc_weight": 0.5,
+    "diluted_shares": 383000000.0,
+    "diluted_shares_high": 398540944.0,
+    "diluted_shares_low": 367140944.0,
+    "discount_calibration_type": "policy_calibrated",
+    "discount_policy_version": "US-RATES-1.0",
+    "equity_risk_premium": 0.045,
+    "forecast_mode": "normalized_cycle",
+    "forecast_policy_version": "BATCH-01-PRACTICAL-1.1",
+    "forecast_years": 10,
+    "normalized_tax_rate": 0.21,
+    "operating_nwc_ratio": 0.019506153727068657,
+    "policy_wacc": 0.09230564563351842,
+    "risk_free_effective_date": "2026-07-30",
+    "risk_free_rate": 0.0468,
+    "risk_free_source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value_month=202607&type=daily_treasury_yield_curve",
+    "segment_assumptions": {},
+    "terminal_growth": 0.0
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "NORMALIZED_CYCLICAL_RANGE",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Medium",
+    "scenario_movement_ratio": 0.3179821441904045,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "insufficient",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 42.19082579678608,
+    "high": 52.780703706522566,
+    "label": "issuer-balanced normalized storage-cycle range",
+    "low": 28.77489654476021
+  },
+  "scenarios": {
+    "base": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 42.19082579678608,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low."
+        ]
+      }
+    },
+    "bear": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 28.77489654476021,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low."
+        ]
+      }
+    },
+    "bull": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 52.780703706522566,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Post-spin continuing operations are normalized through issuer-balanced WDC/Seagate paired states; reliability capped at Low."
+        ]
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "source_financial_statement": {
+    "accession": "0001628280-26-057139",
+    "filed_date": "2026-08-14",
+    "form": "10-K",
+    "note": "Latest financial statement used; this does not claim to be the issuer's latest disclosure of every type.",
+    "period_end": "2026-07-03",
+    "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm"
+  },
+  "ticker": "WDC",
+  "valuation_date": "2026-08-14"
+}

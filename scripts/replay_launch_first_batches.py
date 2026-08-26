@@ -22,7 +22,7 @@ from app.us_valuation.artifacts import PUBLIC_SCHEMA_VERSION, sanitize_public_ar
 
 
 PROTECTED_ROOTS = (
-    ROOT / "backend/app/data/us_valuations",
+    ROOT / "backend/app/data/us_valuation_catalogs",
     ROOT / "frontend/public/data",
     ROOT / "frontend/src/research/generated",
 )

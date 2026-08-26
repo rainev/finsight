@@ -30,7 +30,7 @@ class _SecClient(Protocol):
 
 _ELIGIBLE_FORMS = frozenset({"10-K", "10-K/A", "10-Q", "10-Q/A"})
 _DEFAULT_PROTECTED_ROOTS = (
-    _PROJECT_ROOT / "backend/app/data/us_valuations",
+    _PROJECT_ROOT / "backend/app/data/us_valuation_catalogs",
     _PROJECT_ROOT / "frontend/public/data",
     _PROJECT_ROOT / "frontend/src/research/generated",
 )

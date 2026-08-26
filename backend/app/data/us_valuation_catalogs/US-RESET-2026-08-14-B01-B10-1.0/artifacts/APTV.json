@@ -1,0 +1,159 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Conditional Low post-spin continuing-equity-earnings estimate. It uses only current and comparative continuing H1 evidence; no pre-spin annual cash history is reused.",
+      "Invalidate if continuing-operations scope, debt retained after the spin, NCI, diluted shares, or post-spin earnings leaves the recorded evidence.",
+      "Calculator directly varies normalized earnings and the earnings multiple around the published base.",
+      "Model 'conditional_estimate': Conditional Low post-spin continuing-equity-earnings estimate. It uses only current and comparative continuing H1 evidence; no pre-spin annual cash history is reused.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/APTV/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "value range, reliability, warnings, historical-policy summary, assumptions and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low post-spin continuing-equity-earnings estimate. It uses only current and comparative continuing H1 evidence; no pre-spin annual cash history is reused."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001521332",
+    "classification_confidence": 0.8,
+    "classification_reason": "Frozen Batch 08 lane plus issuer-specific history review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Discretionary",
+    "issuer_name": "Aptiv",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_discretionary",
+    "sec_sic_code": null,
+    "sec_sic_label": "Automotive Parts & Equipment",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001521332-26-000061"
+    ],
+    "ticker": "APTV"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "sector_framework": "post_spin_continuing_equity_earnings",
+    "source_policy": "Reported facts remain private and separate from historical summaries and governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "History-backed Conditional Low baseline with a named material dependency.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 32.14604996941608,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low post-spin continuing-equity-earnings estimate. It uses only current and comparative continuing H1 evidence; no pre-spin annual cash history is reused."
+      ]
+    }
+  },
+  "primary_valuation_method": "post_spin_continuing_equity_earnings",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_current_comparative_and_finsight_policy",
+    "diluted_shares": 212530000.0,
+    "diluted_shares_high": 223560000.0,
+    "diluted_shares_low": 201000000.0,
+    "earnings_multiple": 8.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "not applied",
+    "forecast_mode": "normalized_equity_earnings",
+    "forecast_policy_version": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 2,
+    "normalization_basis": "post_spin_current_and_comparative_h1_equity_earnings",
+    "normalized_earnings_factor": 1.0
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.6521299751243781,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low post-spin continuing-equity-earnings estimate. It uses only current and comparative continuing H1 evidence; no pre-spin annual cash history is reused.",
+      "Invalidate if continuing-operations scope, debt retained after the spin, NCI, diluted shares, or post-spin earnings leaves the recorded evidence.",
+      "Calculator directly varies normalized earnings and the earnings multiple around the published base."
+    ]
+  },
+  "scenario_range": {
+    "base": 32.14604996941608,
+    "high": 53.10945273631841,
+    "label": "assumption range, not a statistical confidence interval or recommendation",
+    "low": 17.19001610305958
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001521332-26-000061",
+    "filed_date": "2026-08-04",
+    "form": "10-Q",
+    "note": "Controlling filing anchors current inputs; company history or explicit comparative evidence anchors normalized assumptions.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000061/aptv-20260630.htm"
+  },
+  "ticker": "APTV",
+  "valuation_date": "2026-08-14"
+}

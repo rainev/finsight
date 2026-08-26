@@ -23,7 +23,7 @@ from app.us_valuation.reit_supplement import parse_reit_reconciliation
 
 VALUATION_DATE = "2026-08-14"
 SERVING_ROOTS = (
-    ROOT / "backend/app/data/us_valuations",
+    ROOT / "backend/app/data/us_valuation_catalogs",
     ROOT / "frontend/public/data",
     ROOT / "frontend/src/research/generated",
 )

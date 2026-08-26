@@ -1,0 +1,293 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Practical source-linked cash-FCFF valuation; reliability is capped at Low.",
+      "Model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Primary model 'fcff_dcf' is review_required.",
+      "Scenario 'base' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'base' model 'fcff_dcf' is review_required.",
+      "Scenario 'bear' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'bear' model 'fcff_dcf' is review_required.",
+      "Scenario 'bull' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'bull' model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 58.64541858829586,
+      "low": 58.64541858829586,
+      "midpoint": 58.64541858829586,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/VZ/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "derived range, governed assumptions, warnings, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {
+      "normalized_period": {
+        "normalized_period_end": "2026-06-30",
+        "status": "pass"
+      }
+    },
+    "errors": [],
+    "policy_version": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Cash conversion and company-history scenarios are provisional; reliability is capped at Low."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000732712",
+    "classification_confidence": 0.55,
+    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "VERIZON COMMUNICATIONS INC",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "override_applied": false,
+    "primary_archetype": "telecom",
+    "sec_sic_code": "4813",
+    "sec_sic_label": "Telephone Communications (No Radiotelephone)",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000732712-26-000046",
+      "0000732712-26-000023",
+      "0000732712-26-000007",
+      "0000732712-25-000116",
+      "0000732712-25-000086",
+      "0000732712-25-000024",
+      "0000732712-25-000006",
+      "0000732712-24-000069"
+    ],
+    "ticker": "VZ"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "sector_framework": "source-linked economic archetype with company-history scenarios",
+    "source_policy": "SEC filings filed on or before 2026-08-14; no stock price or analyst target"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "Telecom enterprise cash FCFF captures network and spectrum cash conversion; the completed Frontier acquisition was described by the issuer as immaterial to consolidated revenue and earnings, while all current financing claims are reconciled.",
+    "supporting": []
+  },
+  "models": {
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 58.64541858829586,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "adjusted_fcf_base": 24874833450.952717,
+    "adjusted_fcf_high": 29684475738.389164,
+    "adjusted_fcf_low": 20498229172.287743,
+    "bridge_claims_basis": "Current reported cash/investments less interest-bearing debt, preferred equity, and NCI exactly once.",
+    "diluted_shares": 4190000000.0,
+    "diluted_shares_high": 4399500000.0,
+    "diluted_shares_low": 4106200000.0,
+    "discount_calibration_type": "policy_calibrated",
+    "discount_policy_version": "US-RATES-1.0",
+    "equity_risk_premium": 0.045,
+    "forecast_mode": "consolidated_cash_fcff",
+    "forecast_policy_version": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "forecast_years": 8,
+    "initial_revenue_growth": 0.01561619551240856,
+    "normalized_tax_rate": 0.2307311379151781,
+    "policy_wacc": 0.08106573635527572,
+    "risk_free_effective_date": "2026-07-30",
+    "risk_free_rate": 0.0468,
+    "risk_free_source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value_month=202607&type=daily_treasury_yield_curve",
+    "terminal_growth": 0.02
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 1.1199042356346145,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Practical source-linked cash-FCFF valuation; reliability is capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 58.64541858829586,
+    "high": 124.32267126589336,
+    "label": "practical source-linked cash-FCFF range",
+    "low": 21.00097854990645
+  },
+  "scenarios": {
+    "base": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 58.64541858829586,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    },
+    "bear": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 21.00097854990645,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    },
+    "bull": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 124.32267126589336,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [
+    {
+      "delta": -0.01,
+      "field": "wacc",
+      "intrinsic_value_per_share": 77.73618720620446,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "wacc",
+      "intrinsic_value_per_share": 58.64541858829586,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.01,
+      "field": "wacc",
+      "intrinsic_value_per_share": 44.926470841620265,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": -4376604278.664974,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 41.464810788493836,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 58.64541858829586,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 4809642287.436447,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 77.52594160030422,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": -83800000.0,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 59.84226386560802,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 58.64541858829586,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 209500000.0,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 55.85277960790082,
+      "publication_state": "review_required"
+    }
+  ],
+  "source_financial_statement": {
+    "accession": "0000732712-26-000046",
+    "filed_date": "2026-07-31",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing used for the cash-FCFF result.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/732712/000073271226000046/vz-20260630.htm"
+  },
+  "ticker": "VZ",
+  "valuation_date": "2026-08-14"
+}

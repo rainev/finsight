@@ -643,6 +643,34 @@ candidate on 2026-08-26.** The default backend serving directory now contains al
 real list/detail/calculator API verification passed. Browser review, merge, push, deployment,
 Batches 05/06, and Batch 07 remain separate gates.
 
+### Phase C10 — versioned catalog cutover through Batch 10
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| C10.1 | Preserve the exact pre-promotion 206-company catalog as an immutable tracked archive | P0 | Commit/tree identity, 206 byte comparisons, manifest hash, isolated rollback | ✔ VERIFIED |
+| C10.2 | Assemble the exact final Batch 01–10 public artifacts into one versioned catalog | P0 | Two builds, 100 source comparisons, unique ticker/CIK and 45/51/4 counts | ✔ VERIFIED |
+| C10.3 | Serve only the active manifest and support one-batch-at-a-time immutable successors | P0 | Hash-drift/extra-file tests, metadata API, atomic activation | ✔ VERIFIED |
+| C10.4 | Present numeric Pass/Conditional results identically and unavailable results as a dash | P0 | Production build plus real PG/KMB/NEE browser flow | ✔ VERIFIED |
+| C10.5 | Exercise all public boundaries and preserve rollback | P0 | 1,321 backend tests; 100/100 HTTP detail/calculator; browser console clean | ✔ VERIFIED |
+
+Gate: **passed — user confirmed 2026-08-27.** The active local catalog contains exactly
+100 Batch 01–10 companies: 45 available, 51 internally conditional but presented normally, and
+four unavailable. The old 206 are archived and the former mixed loose directory is retired.
+Evidence: Audit 63. Merge, push, deployment, and Batch 11 remain outside scope.
+
+### Phase C11 — valuation UX and calculator correction
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| C11.1 | Remove user-facing Confidence and empty Relative cross-check surfaces while preserving audit data | P0 | 100-artifact reconciliation, production build, browser absence checks | ✔ VERIFIED |
+| C11.2 | Display rate assumptions as two-decimal percentages without changing model precision | P0 | JPM field-value inspection and calculator API trace | ✔ VERIFIED |
+| C11.3 | Make edited assumptions update headline/model values and clarify market price/save behavior | P0 | JPM $190.14→$308.62, manual comparison, save, and reset browser flow | ✔ VERIFIED |
+| C11.4 | Consolidate valuation navigation and preserve old route compatibility | P0 | One nav item; `/valuation` and `/us-valuations` redirects | ✔ VERIFIED |
+
+Gate: **verified locally — user confirmation needed.** Evidence: Audit 64. Reliability remains in
+the artifact/API for governance but is no longer a headline UI verdict. Merge, push, and deployment
+remain outside scope.
+
 ## Final 500-company gate
 
 Confirm exactly 500 unique processed issuers and no denominator loss; replay all frozen inputs

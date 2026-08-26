@@ -96,7 +96,7 @@ cd backend
 python3 -m pip install -r requirements-xbrl.txt
 cd ..
 python3 scripts/run_structural_xbrl_shadow.py \
-  --data-root backend/app/data/us_valuations \
+  --data-root backend/app/data/us_valuation_catalogs/US-RESET-2026-08-14-B01-B10-1.0/artifacts \
   --cache-dir /path/to/sec-cache \
   --output-root output/structural-xbrl-shadow \
   --user-agent "FinSight monitored-contact@example.com"
@@ -104,6 +104,15 @@ python3 scripts/run_structural_xbrl_shadow.py \
 
 Shadow results are diagnostics only: they cannot clear publication gates or
 change published valuation data.
+
+## U.S. valuation catalog
+
+The API serves only the immutable catalog selected by
+`backend/app/data/us_valuation_catalogs/active.json`. Each version has a manifest that binds the
+exact ticker/CIK set and every artifact hash. Build a future version with
+`scripts/build_us_valuation_catalog.py`; activate it separately with
+`scripts/activate_us_valuation_catalog.py` after verification. The pre-reset 206-company serving
+set is retained under the catalog archive for audit and isolated rollback only.
 
 ## Notes / v1 scope
 

@@ -29,7 +29,7 @@ from app.us_valuation.batch_02_revision_retry import (
 
 
 PROTECTED_ROOTS = (
-    ROOT / "backend/app/data/us_valuations",
+    ROOT / "backend/app/data/us_valuation_catalogs",
     ROOT / "frontend/public/data",
     ROOT / "frontend/src/research/generated",
 )
@@ -286,4 +286,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

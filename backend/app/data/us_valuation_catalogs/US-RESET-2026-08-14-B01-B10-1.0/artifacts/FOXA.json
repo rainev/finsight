@@ -1,0 +1,168 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Conditional Low-reliability estimate. Programming and sports-rights obligations are captured through stressed cash margins and are not deducted twice as bridge debt.",
+      "Invalidate when the rights schedule, near-term obligations, or reported cash conversion leaves the governed range.",
+      "Model 'conditional_estimate': Conditional Low-reliability estimate. Programming and sports-rights obligations are captured through stressed cash margins and are not deducted twice as bridge debt.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/FOXA/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, confidence reasons, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-03-LAUNCH-FIRST-1.1",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low-reliability estimate. Programming and sports-rights obligations are captured through stressed cash margins and are not deducted twice as bridge debt."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001754301",
+    "classification_confidence": 0.65,
+    "classification_reason": "Frozen Batch 03 economic lane with issuer-specific source/model review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "Fox Corporation (Class A)",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "communication_services",
+    "sec_sic_code": null,
+    "sec_sic_label": "Broadcasting",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001628280-26-053960"
+    ],
+    "ticker": "FOXA"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-03-LAUNCH-FIRST-1.1",
+    "sector_framework": "rights_adjusted_broadcast_cash_fcff",
+    "source_policy": "Reported SEC facts remain private and separate from governed FinSight assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "Launch-first current-legal-state conditional baseline after the source-bounded primary route failed.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 29.601984699427682,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low-reliability estimate. Programming and sports-rights obligations are captured through stressed cash margins and are not deducted twice as bridge debt."
+      ]
+    }
+  },
+  "primary_valuation_method": "rights_adjusted_broadcast_cash_fcff",
+  "public_assumptions": {
+    "bridge_claims_basis": "Restricted-cash availability is ranged at 0%/50%/100%; rights and obligations reduce scenario cash and are not bridge debt.",
+    "cash_conversion_margin": 0.09238437325495669,
+    "cash_conversion_margin_high": 0.20188055471319602,
+    "cash_conversion_margin_low": 0.056433250935029086,
+    "commitment_reserve_base": 398850000.0,
+    "commitment_reserve_bear": 797700000.0,
+    "commitment_reserve_bull": 0.0,
+    "diluted_shares": 439000000.0,
+    "diluted_shares_high": 461000000.0,
+    "diluted_shares_low": 420000000.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "The bear scenario reaches a limited-liability common-equity floor of zero; its negative raw residual is retained privately and is not used as an ordinary value.",
+    "forecast_mode": "normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-03-LAUNCH-FIRST-1.1",
+    "forecast_years": 5,
+    "initial_revenue_growth": 0.0,
+    "policy_wacc": 0.1,
+    "policy_wacc_high": 0.115,
+    "policy_wacc_low": 0.09,
+    "terminal_growth": 0.015,
+    "terminal_growth_high": 0.02,
+    "terminal_growth_low": 0.0
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 3.018440717531158,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low-reliability estimate. Programming and sports-rights obligations are captured through stressed cash margins and are not deducted twice as bridge debt.",
+      "Invalidate when the rights schedule, near-term obligations, or reported cash conversion leaves the governed range."
+    ]
+  },
+  "scenario_range": {
+    "base": 29.601984699427682,
+    "high": 118.95382063591454,
+    "label": "conditional current-state range; not a probability-weighted forecast or recommendation",
+    "low": 1.9697351025431793
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001628280-26-053960",
+    "filed_date": "2026-08-06",
+    "form": "10-K",
+    "note": "Controlling cutoff-eligible SEC filing used for the Batch 03 initial decision.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm"
+  },
+  "ticker": "FOXA",
+  "valuation_date": "2026-08-14"
+}

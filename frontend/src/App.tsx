@@ -14,7 +14,6 @@ import Insights from './pages/Insights'
 import News from './pages/News'
 import Rankings from './pages/Rankings'
 import FinancialHealth from './pages/FinancialHealth'
-import ValuationLab from './pages/ValuationLab'
 import UsValuations from './pages/UsValuations'
 import SmartBrief from './pages/SmartBrief'
 
@@ -38,8 +37,9 @@ export default function App() {
                 <Route path="/news" element={<News />} />
                 <Route path="/rankings" element={<Rankings />} />
                 <Route path="/health" element={<FinancialHealth />} />
-                <Route path="/valuation" element={<ValuationLab />} />
-                <Route path="/us-valuations" element={<UsValuations />} />
+                <Route path="/valuations" element={<UsValuations />} />
+                <Route path="/valuation" element={<Navigate to="/valuations" replace />} />
+                <Route path="/us-valuations" element={<Navigate to="/valuations" replace />} />
                 <Route path="/brief" element={<SmartBrief />} />
                 <Route path="/portfolio" element={<Portfolio />} />
                 <Route path="/companies" element={<Companies />} />

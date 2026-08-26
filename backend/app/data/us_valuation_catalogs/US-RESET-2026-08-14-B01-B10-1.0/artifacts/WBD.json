@@ -1,0 +1,139 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Conditional estimate. WBD's standalone normalization is uncertain; the $31-plus ticking merger cash is a separate contractual event amount, not probability-weighted intrinsic value.",
+      "Conditional Low-reliability estimate. Uses reported facts plus hypothetical future-event assumptions; actual value may fall materially outside this range. Not a reported fact or recommendation.",
+      "Model 'conditional_estimate': Conditional estimate. WBD's standalone normalization is uncertain; the $31-plus ticking merger cash is a separate contractual event amount, not probability-weighted intrinsic value.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/WBD/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, Low reliability, short warning, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-02-CONDITIONAL-ESTIMATE-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional estimate. WBD's standalone normalization is uncertain; the $31-plus ticking merger cash is a separate contractual event amount, not probability-weighted intrinsic value."
+    ]
+  },
+  "issuer": {
+    "cik": "0001437107",
+    "classification_confidence": 0.55,
+    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "Warner Bros. Discovery, Inc.",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "primary_archetype": "telecom",
+    "secondary_archetypes": [],
+    "ticker": "WBD"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-02-CONDITIONAL-ESTIMATE-1.0",
+    "sector_framework": "issuer-specific conditional decision states",
+    "source_policy": "Reported SEC facts remain separate from governed hypothetical assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "conditional_estimate",
+    "reason": "Conditional decision-support estimate; not an ordinary source-bounded intrinsic value.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 0.3187229936930318,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional estimate. WBD's standalone normalization is uncertain; the $31-plus ticking merger cash is a separate contractual event amount, not probability-weighted intrinsic value."
+      ]
+    }
+  },
+  "primary_valuation_method": "conditional_estimate",
+  "public_assumptions": {
+    "forecast_mode": "conditional_scenarios",
+    "forecast_policy_version": "BATCH-02-CONDITIONAL-ESTIMATE-1.0"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 98.41583220229633,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional estimate. WBD's standalone normalization is uncertain; the $31-plus ticking merger cash is a separate contractual event amount, not probability-weighted intrinsic value.",
+      "Conditional Low-reliability estimate. Uses reported facts plus hypothetical future-event assumptions; actual value may fall materially outside this range. Not a reported fact or recommendation."
+    ]
+  },
+  "scenario_range": {
+    "base": 0.3187229936930318,
+    "high": 31.68611166,
+    "label": "conditional event envelope, not a statistical confidence interval or expected value",
+    "low": 0.0
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001437107-26-000075",
+    "filed_date": "2026-08-06",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing anchors reported facts; forward states are governed assumptions.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1437107/000143710726000075/wbd-20260630.htm"
+  },
+  "ticker": "WBD",
+  "valuation_date": "2026-08-14"
+}

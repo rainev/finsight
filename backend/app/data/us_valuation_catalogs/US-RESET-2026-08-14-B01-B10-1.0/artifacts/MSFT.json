@@ -1,0 +1,295 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
+      "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented.",
+      "Practical consolidated model uses material bounded assumptions and is capped at Low.",
+      "Model 'epv': EPV is a no-growth support value, not an independent growth forecast.",
+      "Model 'epv': It assumes normalized D&A approximates maintenance CapEx and normalized working capital is stable.",
+      "Supporting model 'epv' is review_required.",
+      "Model 'fcff_dcf': Practical bounded-uncertainty scenario; reliability capped at Low.",
+      "Primary model 'fcff_dcf' is review_required.",
+      "Scenario 'base' model 'fcff_dcf': Practical bounded-uncertainty scenario; reliability capped at Low.",
+      "Scenario 'base' model 'fcff_dcf' is review_required.",
+      "Scenario 'bear' model 'fcff_dcf': Practical bounded-uncertainty scenario; reliability capped at Low.",
+      "Scenario 'bear' model 'fcff_dcf' is review_required.",
+      "Scenario 'bull' model 'fcff_dcf': Practical bounded-uncertainty scenario; reliability capped at Low.",
+      "Scenario 'bull' model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 284.0253133752333,
+      "low": 284.0253133752333,
+      "midpoint": 284.0253133752333,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/MSFT/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "RD_LIFE_SENSITIVITY",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {
+      "archetype_growth_weight": {
+        "limit": 0.25,
+        "status": "pass",
+        "value": 0.2
+      },
+      "dcf_epv_dispersion": {
+        "review_threshold": 0.4,
+        "status": "pass",
+        "value": 0.36000147230182405
+      },
+      "forecast_horizon": {
+        "status": "pass",
+        "value": 8
+      },
+      "revenue_fcff_consistency": {
+        "fcff_cagr": 0.042338884529020904,
+        "revenue_cagr": 0.06905982242132058,
+        "status": "pass"
+      },
+      "segment_evidence_automation": {
+        "status": "review_required",
+        "value": "governed_filing_table_transcription"
+      },
+      "segment_forecast_required": {
+        "status": "pass",
+        "value": true
+      },
+      "segment_reconciliation": {
+        "status": "pass",
+        "value": {
+          "segment_operating_income_to_consolidated": "pass",
+          "segment_revenue_to_consolidated": "pass"
+        }
+      },
+      "terminal_growth_continuity": {
+        "status": "pass",
+        "target": 0.02,
+        "value": 0.020000000000000018
+      }
+    },
+    "errors": [],
+    "policy_version": "US-FORECAST-QUALITY-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
+    ]
+  },
+  "issuer": {
+    "cik": "0000789019",
+    "classification_confidence": 0.9,
+    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
+    "finsight_sector": "Technology",
+    "issuer_name": "MICROSOFT CORP",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "primary_archetype": "enterprise_software_cloud",
+    "secondary_archetypes": [],
+    "ticker": "MSFT"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
+    "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
+    "source_policy": "SEC Companyfacts, submissions and governed filing-specific Products/Services tables; no exchange prices"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "FCFF is the primary governed model for the enterprise software and cloud archetype; EPV is a separate no-growth support value.",
+    "supporting": [
+      "epv"
+    ]
+  },
+  "models": {
+    "epv": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 189.16625031588194,
+      "model": "epv",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "EPV is a no-growth support value, not an independent growth forecast.",
+        "It assumes normalized D&A approximates maintenance CapEx and normalized working capital is stable."
+      ]
+    },
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 284.0253133752333,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Practical bounded-uncertainty scenario; reliability capped at Low."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "discount_calibration_type": "policy_calibrated",
+    "discount_policy_version": "US-RATES-1.0",
+    "equity_risk_premium": 0.045,
+    "forecast_mode": "segment_operating_income",
+    "forecast_policy_version": "MSFT-ENTERPRISE-CLOUD-1.0",
+    "forecast_years": 8,
+    "initial_revenue_growth": 0.1424825323679032,
+    "policy_wacc": 0.08689486792122063,
+    "risk_free_effective_date": "2026-07-30",
+    "risk_free_rate": 0.0468,
+    "risk_free_source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value_month=202607&type=daily_treasury_yield_curve",
+    "sales_to_capital": 1.557896542659304,
+    "segment_assumptions": {
+      "intelligent_cloud": {
+        "initial_revenue_growth": 0.2,
+        "label": "Intelligent Cloud",
+        "target_gross_margin": null,
+        "target_operating_margin": 0.41653435534513367
+      },
+      "more_personal_computing": {
+        "initial_revenue_growth": 0.01408061714257895,
+        "label": "More Personal Computing",
+        "target_gross_margin": null,
+        "target_operating_margin": 0.2626845158640063
+      },
+      "productivity_and_business_processes": {
+        "initial_revenue_growth": 0.13544655233465205,
+        "label": "Productivity and Business Processes",
+        "target_gross_margin": null,
+        "target_operating_margin": 0.5883480413345332
+      }
+    },
+    "target_operating_margin": 0.46978250383294146,
+    "terminal_growth": 0.02
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "RD_LIFE_SENSITIVITY",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Medium",
+    "scenario_movement_ratio": 0.21173849096922417,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "medium",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
+      "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented.",
+      "Practical consolidated model uses material bounded assumptions and is capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 284.0253133752333,
+    "high": 330.86773012478096,
+    "label": "coupled practical bear/base/bull range",
+    "low": 223.88622212410039
+  },
+  "scenarios": {
+    "base": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 284.0253133752333,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical bounded-uncertainty scenario; reliability capped at Low."
+        ]
+      }
+    },
+    "bear": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 223.88622212410039,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical bounded-uncertainty scenario; reliability capped at Low."
+        ]
+      }
+    },
+    "bull": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 330.86773012478096,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical bounded-uncertainty scenario; reliability capped at Low."
+        ]
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "source_financial_statement": {
+    "accession": "0001193125-26-323660",
+    "filed_date": "2026-07-29",
+    "form": "10-K",
+    "note": "Latest financial statement used; this does not claim to be the issuer's latest disclosure of every type.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+  },
+  "ticker": "MSFT",
+  "valuation_date": "2026-08-14"
+}

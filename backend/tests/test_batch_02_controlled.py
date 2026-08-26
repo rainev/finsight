@@ -239,5 +239,5 @@ def test_runner_rejects_serving_output_root(tmp_path: Path) -> None:
         _validate_roots(
             source,
             structural,
-            Path("backend/app/data/us_valuations"),
+            Path("backend/app/data/us_valuation_catalogs"),
         )

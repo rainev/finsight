@@ -59,7 +59,7 @@ def test_runner_keeps_denominator_and_forces_unvalidated_route_withheld(
     legacy = json.loads(
         (
             Path(__file__).resolve().parents[1]
-            / "app/data/us_valuations/AAPL.json"
+            / "app/data/us_valuation_catalogs/US-RESET-2026-08-14-B01-B10-1.0/artifacts/AAPL.json"
         ).read_text()
     )
 

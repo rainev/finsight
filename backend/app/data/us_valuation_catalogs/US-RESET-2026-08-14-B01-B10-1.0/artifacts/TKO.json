@@ -1,0 +1,167 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Conditional Low-reliability estimate. Capex and rights reinvestment are explicit FinSight assumptions; the bear case reaches the limited-liability equity floor. The bear scenario reaches a limited-liability common-equity floor of zero; its negative raw residual is retained privately and is not used as an ordinary value.",
+      "Invalidate when filed capex/rights cash, OpCo conversion, NCI, or the diluted share denominator leaves the governed range.",
+      "Model 'conditional_estimate': Conditional Low-reliability estimate. Capex and rights reinvestment are explicit FinSight assumptions; the bear case reaches the limited-liability equity floor. The bear scenario reaches a limited-liability common-equity floor of zero; its negative raw residual is retained privately and is not used as an ordinary value.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/TKO/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, confidence reasons, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-03-LAUNCH-FIRST-1.1",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low-reliability estimate. Capex and rights reinvestment are explicit FinSight assumptions; the bear case reaches the limited-liability equity floor. The bear scenario reaches a limited-liability common-equity floor of zero; its negative raw residual is retained privately and is not used as an ordinary value."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001973266",
+    "classification_confidence": 0.65,
+    "classification_reason": "Frozen Batch 03 economic lane with issuer-specific source/model review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "TKO Group Holdings",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "communication_services",
+    "sec_sic_code": null,
+    "sec_sic_label": "Movies & Entertainment",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001193125-26-330592"
+    ],
+    "ticker": "TKO"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-03-LAUNCH-FIRST-1.1",
+    "sector_framework": "sports_rights_normalized_cash_fcff",
+    "source_policy": "Reported SEC facts remain private and separate from governed FinSight assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "Launch-first current-legal-state conditional baseline after the source-bounded primary route failed.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 32.935503855547,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low-reliability estimate. Capex and rights reinvestment are explicit FinSight assumptions; the bear case reaches the limited-liability equity floor. The bear scenario reaches a limited-liability common-equity floor of zero; its negative raw residual is retained privately and is not used as an ordinary value."
+      ]
+    }
+  },
+  "primary_valuation_method": "sports_rights_normalized_cash_fcff",
+  "public_assumptions": {
+    "bridge_claims_basis": "Nonredeemable OpCo NCI is represented by convertible Class B units in diluted shares; customer performance obligations are revenue, not cash debt.",
+    "cash_conversion_margin": 0.17721299098071752,
+    "cash_conversion_margin_high": 0.22721299098071754,
+    "cash_conversion_margin_low": 0.07721299098071754,
+    "diluted_shares": 193323374.0,
+    "diluted_shares_high": 203000000.0,
+    "diluted_shares_low": 189269713.0,
+    "equity_floor_applied": true,
+    "equity_floor_basis": "The bear scenario reaches a limited-liability common-equity floor of zero; its negative raw residual is retained privately and is not used as an ordinary value.",
+    "forecast_mode": "normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-03-LAUNCH-FIRST-1.1",
+    "forecast_years": 5,
+    "initial_revenue_growth": 0.04,
+    "nci_share_reconciled": true,
+    "nci_share_reconciliation_difference": 0.0,
+    "policy_wacc": 0.11,
+    "policy_wacc_high": 0.13,
+    "policy_wacc_low": 0.1,
+    "terminal_growth": 0.01,
+    "terminal_growth_high": 0.02,
+    "terminal_growth_low": 0.0
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 1.3355737587113503,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low-reliability estimate. Capex and rights reinvestment are explicit FinSight assumptions; the bear case reaches the limited-liability equity floor. The bear scenario reaches a limited-liability common-equity floor of zero; its negative raw residual is retained privately and is not used as an ordinary value.",
+      "Invalidate when filed capex/rights cash, OpCo conversion, NCI, or the diluted share denominator leaves the governed range."
+    ]
+  },
+  "scenario_range": {
+    "base": 32.935503855547,
+    "high": 76.92329853495207,
+    "label": "conditional current-state range; not a probability-weighted forecast or recommendation",
+    "low": 0.0
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001193125-26-330592",
+    "filed_date": "2026-08-03",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing used for the Batch 03 initial decision.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1973266/000119312526330592/tko-20260630.htm"
+  },
+  "ticker": "TKO",
+  "valuation_date": "2026-08-14"
+}

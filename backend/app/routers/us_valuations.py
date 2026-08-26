@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 from pathlib import Path
 
 from fastapi import APIRouter
@@ -16,6 +15,11 @@ from ..services import valuation_service
 from ..us_valuation.artifacts import sanitize_public_artifact
 from ..us_valuation.baseline import apply_public_baseline_contract
 from ..us_valuation.calculator import calculate, calculator_view
+from ..us_valuation.catalog import (
+    CatalogIntegrityError,
+    TICKER,
+    load_active_catalog,
+)
 from ..us_valuation.market_comparison import (
     load_private_eod_record,
     load_private_security_record,
@@ -25,7 +29,14 @@ from ..us_valuation.market_comparison import (
 
 
 router = APIRouter(prefix="/us-valuations", tags=["us-valuations"])
-DEFAULT_DATA_ROOT = Path(__file__).resolve().parents[1] / "data" / "us_valuations"
+DEFAULT_CATALOGS_ROOT = (
+    Path(__file__).resolve().parents[1] / "data" / "us_valuation_catalogs"
+)
+CATALOGS_ROOT = Path(
+    os.environ.get("FINSIGHT_US_VALUATION_CATALOG_ROOT") or DEFAULT_CATALOGS_ROOT
+)
+CATALOG = load_active_catalog(CATALOGS_ROOT)
+DEFAULT_DATA_ROOT = CATALOG.artifacts_root
 DATA_ROOT = Path(
     os.environ.get("FINSIGHT_US_VALUATION_DATA_ROOT") or DEFAULT_DATA_ROOT
 )
@@ -39,7 +50,25 @@ SECURITY_MASTER_ROOT = (
     if os.environ.get("FINSIGHT_US_SECURITY_MASTER_ROOT")
     else None
 )
-TICKER = re.compile(r"^[A-Z][A-Z0-9.-]{0,9}$")
+
+
+def _uses_active_catalog() -> bool:
+    return DATA_ROOT.resolve() == CATALOG.artifacts_root.resolve()
+
+
+def _artifact_path(ticker: str) -> Path:
+    if not _uses_active_catalog():
+        # Hermetic tests may still inject a one-off loose root. Production uses
+        # only the manifest-controlled active catalog.
+        if os.environ.get("APP_ENV") != "test":
+            raise AppError("U.S. valuation catalog is invalid", 500)
+        return DATA_ROOT / f"{ticker}.json"
+    try:
+        return CATALOG.verify_artifact(ticker)
+    except KeyError as exc:
+        raise AppError("U.S. valuation not available", 404) from exc
+    except CatalogIntegrityError as exc:
+        raise AppError("U.S. valuation catalog is invalid", 500) from exc
 
 
 def _read_artifact_object(path: Path) -> dict:
@@ -70,7 +99,7 @@ def load_generated_result(ticker: str) -> dict:
     normalized = ticker.upper()
     if not TICKER.fullmatch(normalized):
         raise AppError("Invalid ticker", 400)
-    path = DATA_ROOT / f"{normalized}.json"
+    path = _artifact_path(normalized)
     if not path.exists():
         raise AppError("U.S. valuation not available", 404)
     result = sanitize_public_artifact(_read_artifact_object(path))
@@ -113,10 +142,23 @@ def load_generated_result(ticker: str) -> dict:
 def list_us_valuations() -> dict:
     """Public-safe summary of every available valuation (no raw financials)."""
     items = []
-    for path in sorted(DATA_ROOT.glob("*.json")):
+    if _uses_active_catalog():
+        paths = []
+        for entry in CATALOG.entries:
+            try:
+                paths.append(CATALOG.verify_artifact(entry.ticker))
+            except CatalogIntegrityError as exc:
+                raise AppError("U.S. valuation catalog is invalid", 500) from exc
+    else:
+        if os.environ.get("APP_ENV") != "test":
+            raise AppError("U.S. valuation catalog is invalid", 500)
+        paths = sorted(DATA_ROOT.glob("*.json"))
+    for path in paths:
         try:
             data = _read_artifact_object(path)
         except AppError:
+            if _uses_active_catalog():
+                raise
             continue
         data = sanitize_public_artifact(data)
         issuer = data.get("issuer", {})
@@ -131,7 +173,10 @@ def list_us_valuations() -> dict:
             "availability_type": data["availability_type"],
             "confidence": data["confidence"],
         })
-    return {"count": len(items), "items": items}
+    result = {"count": len(items), "items": items}
+    if _uses_active_catalog():
+        result.update(CATALOG.public_metadata())
+    return result
 
 
 @router.get("/{ticker}/calculator")

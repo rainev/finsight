@@ -1,0 +1,161 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Conditional Low estimate. Cruise recovery, heavy ship capex, debt maturities, leases, and NCI make the range unusually wide.",
+      "Invalidate when debt, leases, NCI, ship capex, or normalized cruise cash leave the range.",
+      "Calculator is calibrated to the baseline and does not rerun the private issuer model.",
+      "Model 'conditional_estimate': Conditional Low estimate. Cruise recovery, heavy ship capex, debt maturities, leases, and NCI make the range unusually wide.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/CCL/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, confidence reasons, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-05-HISTORY-REPAIR-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low estimate. Cruise recovery, heavy ship capex, debt maturities, leases, and NCI make the range unusually wide."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000815097",
+    "classification_confidence": 0.75,
+    "classification_reason": "Frozen Batch 05 lane with launch-first issuer review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Discretionary",
+    "issuer_name": "Carnival Corporation",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_discretionary",
+    "sec_sic_code": null,
+    "sec_sic_label": "Hotels, Resorts & Cruise Lines",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000815097-26-000096"
+    ],
+    "ticker": "CCL"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-05-HISTORY-REPAIR-1.0",
+    "sector_framework": "cruise_cycle_normalized_cash_fcff",
+    "source_policy": "Reported facts remain private and separate from governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "Launch-first Conditional Low baseline after primary route required refinements.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 11.67658183274274,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low estimate. Cruise recovery, heavy ship capex, debt maturities, leases, and NCI make the range unusually wide."
+      ]
+    }
+  },
+  "primary_valuation_method": "cruise_cycle_normalized_cash_fcff",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_history_and_finsight_policy",
+    "cash_conversion_margin": 0.13517854054704387,
+    "cash_conversion_margin_high": 0.14931255751586525,
+    "cash_conversion_margin_low": 0.1219228799875904,
+    "diluted_shares": 1424750000.0,
+    "diluted_shares_high": 1459500000.0,
+    "diluted_shares_low": 1390000000.0,
+    "equity_floor_applied": true,
+    "equity_floor_basis": "limited-liability floor after negative residual",
+    "forecast_mode": "normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-05-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 3,
+    "normalization_basis": "company_history_with_material_event_override"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 1.9576381297601049,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low estimate. Cruise recovery, heavy ship capex, debt maturities, leases, and NCI make the range unusually wide.",
+      "Invalidate when debt, leases, NCI, ship capex, or normalized cruise cash leave the range.",
+      "Calculator is calibrated to the baseline and does not rerun the private issuer model."
+    ]
+  },
+  "scenario_range": {
+    "base": 11.67658183274274,
+    "high": 34.535103653784056,
+    "label": "conditional decision range; not a probability-weighted forecast or recommendation",
+    "low": 0
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0000815097-26-000096",
+    "filed_date": "2026-06-26",
+    "form": "10-Q",
+    "note": "Controlling filing anchors reported inputs; forecast states are FinSight assumptions.",
+    "period_end": "2026-05-31",
+    "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000096/ccl-20260531.htm"
+  },
+  "ticker": "CCL",
+  "valuation_date": "2026-08-14"
+}

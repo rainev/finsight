@@ -1,0 +1,164 @@
+{
+  "automated_review": {
+    "blocking_reasons": [
+      "review_state_withheld",
+      "review_errors_present",
+      "model_errors:fcff_dcf",
+      "model_not_pass:fcff_dcf",
+      "missing_model_value:fcff_dcf"
+    ],
+    "decision": "blocked",
+    "evidence_status": "complete",
+    "publication_state": "withheld",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model",
+      "rebuild_valuation_models"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold."
+    ]
+  },
+  "availability_type": "not_available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": false,
+    "decision": "withheld",
+    "intrinsic_value_range": {
+      "high": null,
+      "low": null,
+      "midpoint": null,
+      "spread_limit": 0.01,
+      "spread_ratio": null
+    },
+    "reason_codes": [
+      "BRIDGE_QUALITY_INVALID_OR_MISSING"
+    ],
+    "usable": false
+  },
+  "calculator_link": "/api/us-valuations/ECHO/calculator",
+  "confidence": {
+    "label": null,
+    "reasons": [
+      "VALUATION_WITHHELD"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "withheld state, blockers, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [
+      "MAJOR_EVENT_UNBOUNDED",
+      "CLAIMS_UNBOUNDED"
+    ],
+    "policy_version": "BATCH-03-PRACTICAL-CASH-FCFF-1.0",
+    "status": "withheld",
+    "warnings": []
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001415404",
+    "classification_confidence": 0.65,
+    "classification_reason": "Frozen Batch 03 economic lane with issuer-specific source/model review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "EchoStar",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "communication_services",
+    "sec_sic_code": null,
+    "sec_sic_label": "Wireless Telecommunication Services",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001104659-26-089370"
+    ],
+    "ticker": "ECHO"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-03-PRACTICAL-CASH-FCFF-1.0",
+    "sector_framework": "telecom_spectrum_transition",
+    "source_policy": "SEC facts filed on or before 2026-08-14."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "Target economic model: deconsolidation_adjusted_telecom_fcff.",
+    "supporting": []
+  },
+  "models": {
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "CLAIMS_UNBOUNDED"
+      ],
+      "intrinsic_value_per_share": null,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "withheld",
+      "warnings": []
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {},
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": null,
+    "accounting_label": "Low",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "VALUATION_WITHHELD"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": null,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "insufficient",
+    "errors": [
+      "MAJOR_EVENT_UNBOUNDED",
+      "CLAIMS_UNBOUNDED"
+    ],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "withheld",
+    "warnings": []
+  },
+  "scenario_range": {
+    "base": null,
+    "high": null,
+    "label": "assumption range, not a statistical confidence interval",
+    "low": null
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001104659-26-089370",
+    "filed_date": "2026-08-03",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing used for the Batch 03 initial decision.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1415404/000110465926089370/sats-20260630x10q.htm"
+  },
+  "ticker": "ECHO",
+  "valuation_date": "2026-08-14"
+}

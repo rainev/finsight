@@ -16,6 +16,9 @@ import app.routers.us_valuations as us_valuations_router
 from app.services import market_service
 from app.valuation.assumptions import PH
 
+
+ACTIVE_DATA_ROOT = us_valuations_router.CATALOG.artifacts_root
+
 # Any authenticated user.
 main_module.app.dependency_overrides[deps.current_user] = lambda: {
     "sub": 1,
@@ -125,9 +128,9 @@ def test_us_valuation_list_and_detail_share_safe_reliability(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    for ticker in ("AAPL", "WFC"):
+    for ticker in ("AAPL", "BAC"):
         artifact = json.loads(
-            Path(f"backend/app/data/us_valuations/{ticker}.json").read_text(
+            (ACTIVE_DATA_ROOT / f"{ticker}.json").read_text(
                 encoding="utf-8"
             )
         )
@@ -161,11 +164,8 @@ def test_us_valuation_list_and_detail_share_safe_reliability(
             "reasons",
         }
 
-    assert details["WFC"]["scenario_range"]["base"] is not None
-    assert details["WFC"]["reliability"]["label"] == "Low"
-    assert details["WFC"]["reliability"]["reasons"] == [
-        "LEGACY_ARTIFACT_NOT_REGENERATED"
-    ]
+    assert details["BAC"]["scenario_range"]["base"] is not None
+    assert details["BAC"]["reliability"]["label"] in {"High", "Medium", "Low"}
 
 
 def test_us_valuation_endpoints_share_object_and_filename_identity_validation(
@@ -174,11 +174,11 @@ def test_us_valuation_endpoints_share_object_and_filename_identity_validation(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     valid = json.loads(
-        Path("backend/app/data/us_valuations/WFC.json").read_text(
+        (ACTIVE_DATA_ROOT / "BAC.json").read_text(
             encoding="utf-8"
         )
     )
-    (tmp_path / "WFC.json").write_text(json.dumps(valid), encoding="utf-8")
+    (tmp_path / "BAC.json").write_text(json.dumps(valid), encoding="utf-8")
     (tmp_path / "BROKEN.json").write_text("{", encoding="utf-8")
     (tmp_path / "ARRAY.json").write_text("[]", encoding="utf-8")
 
@@ -198,9 +198,9 @@ def test_us_valuation_endpoints_share_object_and_filename_identity_validation(
     assert listed_response.status_code == 200
     listed = listed_response.json()
     assert listed["count"] == 1
-    assert [item["ticker"] for item in listed["items"]] == ["WFC"]
+    assert [item["ticker"] for item in listed["items"]] == ["BAC"]
 
-    detail_response = client.get("/api/us-valuations/WFC")
+    detail_response = client.get("/api/us-valuations/BAC")
     assert detail_response.status_code == 200
     detail = detail_response.json()
     item = listed["items"][0]
@@ -239,7 +239,7 @@ def test_us_valuation_detail_returns_controlled_artifact_errors(
 ) -> None:
     if payload is None:
         mismatched = json.loads(
-            Path("backend/app/data/us_valuations/WFC.json").read_text(
+            (ACTIVE_DATA_ROOT / "BAC.json").read_text(
                 encoding="utf-8"
             )
         )

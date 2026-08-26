@@ -19,11 +19,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import time
 import urllib.request
 from pathlib import Path
 
-DATA_ROOT = Path(__file__).resolve().parent.parent / "data" / "us_valuations"
+from .catalog import load_active_catalog
+
+
+CATALOGS_ROOT = Path(
+    os.environ.get("FINSIGHT_US_VALUATION_CATALOG_ROOT")
+    or Path(__file__).resolve().parent.parent / "data" / "us_valuation_catalogs"
+)
+DATA_ROOT = load_active_catalog(CATALOGS_ROOT).artifacts_root
 CACHE = Path("/private/tmp/claude-501/-Users-rainevillaver-Documents-Startups-GoodBehavior/36172e98-51fc-45f1-9418-abda7a769aba/scratchpad/sec_submissions")
 UA = "FinSight Research provenance-backfill r.villaver@gmail.com"
 THROTTLE_S = 0.15  # < 10 req/s per SEC fair-use
@@ -103,12 +111,18 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--tickers", help="comma-separated; default = all")
+    ap.add_argument("--data-root", type=Path, default=DATA_ROOT)
     args = ap.parse_args()
+    data_root = args.data_root.resolve()
+    if not args.dry_run and data_root == DATA_ROOT.resolve():
+        raise SystemExit(
+            "The active catalog is immutable. Repair a staged artifact root, build a new catalog version, and activate it separately."
+        )
 
     if args.tickers:
-        files = [DATA_ROOT / f"{t.strip()}.json" for t in args.tickers.split(",")]
+        files = [data_root / f"{t.strip()}.json" for t in args.tickers.split(",")]
     else:
-        files = sorted(DATA_ROOT.glob("*.json"))
+        files = sorted(data_root.glob("*.json"))
 
     counts = {"changed": 0, "same": 0, "not_found": 0, "skip": 0}
     for f in files:

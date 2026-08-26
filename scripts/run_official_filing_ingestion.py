@@ -322,7 +322,7 @@ def main() -> int:
             else parse_structural_filing
         ),
         "protected_serving_roots": (
-            ROOT / "backend/app/data/us_valuations",
+            ROOT / "backend/app/data/us_valuation_catalogs",
             ROOT / "frontend/public/data",
             ROOT / "frontend/src/research/generated",
         ),

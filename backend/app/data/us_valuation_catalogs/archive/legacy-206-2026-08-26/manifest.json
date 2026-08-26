@@ -1,0 +1,1675 @@
+{
+  "artifact_count": 206,
+  "artifact_tree_sha256": "18a83b729429a74125b0d45ed89f2ff3baddc35cec2b6534d58de6ac7a4e4948",
+  "availability_counts": {
+    "available": 85,
+    "conditional_estimate": 0,
+    "not_available": 121
+  },
+  "catalog_kind": "legacy_archive",
+  "catalog_version": "US-LEGACY-206-2026-08-26-1.0",
+  "created_at": "2026-08-26",
+  "entries": [
+    {
+      "artifact_sha256": "5a3e3a890a1a2560bec1db427f425932645524f7d1c474a9226c90322944c614",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001090872",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "A"
+    },
+    {
+      "artifact_sha256": "cd312ce5a8e2342b7acb567e779a5176f35c8a3c91c958f88224638d03ef4838",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000320193",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AAPL"
+    },
+    {
+      "artifact_sha256": "e32bc145988eb0b562f917355f4c286b1682f767cb4b2ce37980decb1feecbe3",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001551152",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ABBV"
+    },
+    {
+      "artifact_sha256": "5d83942ea7177554e25d866dbb3ee55d943df7cfebbdf1ec176c97972ce97fc8",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000947484",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ACGL"
+    },
+    {
+      "artifact_sha256": "3ea3a44b1fe8786e882a88dbd10c1f0366c614fd952611b25837f015868c9782",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000796343",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ADBE"
+    },
+    {
+      "artifact_sha256": "e43a73dcc5104bd4980ccd84bdd9273e7e42469cc1ca23d86529294cc1a408bd",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000769397",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ADSK"
+    },
+    {
+      "artifact_sha256": "1615e528560e426149aeffdf083ca73c0dd63601f72f316595007b7bf76c5012",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001002910",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AEE"
+    },
+    {
+      "artifact_sha256": "ed0a7e50206814d35a22b837b4ad2c14ba67cd37376bef43581c9c6a600e6583",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000004904",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AEP"
+    },
+    {
+      "artifact_sha256": "bf7e6b7d5e2d17777b323e304884198dbf6c85b0ca3c13b4c2ccaae423ea7ba9",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000004977",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AFL"
+    },
+    {
+      "artifact_sha256": "60d9adea6bb12e3937c1b1803f5154ab40bba8538ef30991fc137d51804b39f0",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000005272",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AIG"
+    },
+    {
+      "artifact_sha256": "a1915378016e6ca5fe7dc189e2659f4141d051c36494910387f907f098468d16",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000354190",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AJG"
+    },
+    {
+      "artifact_sha256": "af5900ef16cdbdb5cb31d65e47bdeeafa0dc352ae4e610154dc7f6fdc7ee2d9f",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001736297",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ALAB"
+    },
+    {
+      "artifact_sha256": "a9de87925203c13d06e2fd14c443d34a70c0601b5a719197a9dde0f5baf34a43",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000899051",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ALL"
+    },
+    {
+      "artifact_sha256": "905a87e9fca50e3d8fa10ed6642792e362d1b620efcccaa310167d832d508885",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001178670",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ALNY"
+    },
+    {
+      "artifact_sha256": "afd4ef4160a24af27207a7aa6420ce8e69e8d8c9db4bfa216102c3a0321c2cc2",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000002488",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AMD"
+    },
+    {
+      "artifact_sha256": "0aefaa9fd03bb9a90f3f74287e898c3237358d7444f06febd97bc3ee69d4ce91",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000318154",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AMGN"
+    },
+    {
+      "artifact_sha256": "78fde91f53c091dfd9bd1723fb7b0d8154f3194a96d3efcbd5f6000a6d554150",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000820027",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AMP"
+    },
+    {
+      "artifact_sha256": "fa29450229df5e721a0c1d1a7503bac32f18fbcf589e35b588de4f01fc72e8a0",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001053507",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AMT"
+    },
+    {
+      "artifact_sha256": "502da16aba72e44b6b14cd0b5c3b294207de2d27b580f79fb0ee7f5f33a28376",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001018724",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AMZN"
+    },
+    {
+      "artifact_sha256": "11c0523d9e60fef965c881307d20a1dc5b3e69e562b436d64ac62d280cfeb0a7",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001596532",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ANET"
+    },
+    {
+      "artifact_sha256": "a9bce947a4227974c588984828353aa5869bc43fac75ba28cacdccb514ab295e",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000315293",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AON"
+    },
+    {
+      "artifact_sha256": "ed8d87ef85fcc161b9068430caaf1055ee6b3fd928aad508ed7d35b172690a16",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000002969",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "APD"
+    },
+    {
+      "artifact_sha256": "35248af37d7d7449ae2f1b490fed09a238de11f6ebe5e9249c5ea037d636bb0d",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000820313",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "APH"
+    },
+    {
+      "artifact_sha256": "380a178cf8dc7aaec4a3e814024df53c6641918f262bc6ef572ff388f248a714",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001858681",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "APO"
+    },
+    {
+      "artifact_sha256": "fba04ef050cc3942f5c4c8dd2c4bcd78d9aff1b9f8ab0539333bc909f1500d7b",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001751008",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "APP"
+    },
+    {
+      "artifact_sha256": "0c5d3250dcbb0f17d92ae34462f6ec54ce96cdd2d4575212453c534519b0f75c",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001176948",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ARES"
+    },
+    {
+      "artifact_sha256": "f1daf300f27f50f438a3e5988f2cc71f220cbe6ab22aaa7f0fdd9ca0f75f6a13",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000731802",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ATO"
+    },
+    {
+      "artifact_sha256": "a122f3902efd0043b6ffe6032428a42cca66f150bbdb6e3e783358284b3b8f38",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001730168",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AVGO"
+    },
+    {
+      "artifact_sha256": "5c49a181958e9df0e0e6c2de4af219b44737948b94848bc427c880e4d79e5eea",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001069183",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AXON"
+    },
+    {
+      "artifact_sha256": "be9d933dbc9780397730915982dee398ffbe4cdab429d63e3821f5af21835ef9",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000004962",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "AXP"
+    },
+    {
+      "artifact_sha256": "1f2866614881e3aa8e92b952cd8cb59484e6bbbed3675c1461e3e14dc307d91e",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000012927",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "BA"
+    },
+    {
+      "artifact_sha256": "c38ed972a9ce5f6595b4c2fbe051eab20dc28ac87d665c46c09bd581c4969cf7",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000070858",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "BAC"
+    },
+    {
+      "artifact_sha256": "7d916712f93b011653d59a97a8c8ffafd2a78bc2d4854cee801659da96fada3a",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000010795",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "BDX"
+    },
+    {
+      "artifact_sha256": "961781a6d6ed3334f1e59406546cc682e59c7662f454cf5c32b7feabf912f3d1",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000875045",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "BIIB"
+    },
+    {
+      "artifact_sha256": "501c6cfcf3f6535433aaf6f26ddde2c2df0b1f05f3957afd57aba9ea0fa0aec5",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001075531",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "BKNG"
+    },
+    {
+      "artifact_sha256": "59fba3f1f55f06bac081e882cafaf95a08fa2e670bdc27a966dcb0f9973f19ff",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0002012383",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "BLK"
+    },
+    {
+      "artifact_sha256": "596fdd9cd6b31d8b771b8d671bd085de2cfa48a5a8e72ab8a4ea40b6e5855921",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001390777",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "BNY"
+    },
+    {
+      "artifact_sha256": "24bed382ab7e69ad7bba851ed4df71df4a90fb9f2da10e1ca89df7bc185eb243",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001393818",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "BX"
+    },
+    {
+      "artifact_sha256": "5d94aee3633d03ee08371510887aa3da248d88f896774a4b58c8c842a61add4e",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000831001",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "C"
+    },
+    {
+      "artifact_sha256": "c8c4ca98f98e618ff5ff2be0bdd9765feb97b006192a2f1486c614114927b5ac",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001783180",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CARR"
+    },
+    {
+      "artifact_sha256": "c091c069a60116e760594abd9d3e2b7cebac0eba459a25b739baf80ff8daa0bb",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000018230",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CAT"
+    },
+    {
+      "artifact_sha256": "ec65e5fa1094fd1ce8afa5f249589e7290b23b504b3516f6a2087ed02edff943",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000896159",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CB"
+    },
+    {
+      "artifact_sha256": "02966a578ec5c3ed164e9e306d763d748469cf6fbcae534306d2ef39dde4e4f1",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001374310",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CBOE"
+    },
+    {
+      "artifact_sha256": "ba4aacd11b673540feb0583c1177c0e26e9eef4ff470c7cfc8991f4b9addf5e2",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001138118",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CBRE"
+    },
+    {
+      "artifact_sha256": "3aa3658c544e8aa164e612e07958042bb054feaded485a6f7acf9a2760fbdf18",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001051470",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CCI"
+    },
+    {
+      "artifact_sha256": "4233a651dc2ffb4c2020b8594d31c565d9d8c7c25a8cc6cf3ccd6671ab2356be",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000815097",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CCL"
+    },
+    {
+      "artifact_sha256": "7da469b95d4ecbade0aef3bcead203460281b2c2b7c832111eca07403001acf6",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000813672",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CDNS"
+    },
+    {
+      "artifact_sha256": "535857a7fa1b26d82d40f180a38df8ea9393a7db8a02d501eb47bb0dcd9c5b87",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001868275",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CEG"
+    },
+    {
+      "artifact_sha256": "7131295a818848097899fb0c938b4c36e1bccd11142f005f731470b777a9086e",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000759944",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CFG"
+    },
+    {
+      "artifact_sha256": "f7baf1ab35983be3ae136fecb2fba76eb69570ed7fd5138200306c49a7a354b0",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001739940",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CI"
+    },
+    {
+      "artifact_sha256": "be121094688ab1be39c1f3606d14e875ea763f9c0aca565c77fb1b1e946c4a74",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000021665",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CL"
+    },
+    {
+      "artifact_sha256": "d7831a3cc6e14eec877a80f2cdd5c18579a46b1603edae3955819c6c2e9946e4",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001030894",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CLS"
+    },
+    {
+      "artifact_sha256": "6873506aac7f20140e9ab54ee97430900a88dfde35fbebe86194bd6ef4bfe48f",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001166691",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CMCSA"
+    },
+    {
+      "artifact_sha256": "8c0b09991b4e97f84b475f1bb059ef4f55a2c90c8c6e12d9dc932f518ee704ec",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001058090",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CMG"
+    },
+    {
+      "artifact_sha256": "2028b45c2fa338cec4335ed382c488c83f0b157762385f339afe9f35bc768c8e",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000026172",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CMI"
+    },
+    {
+      "artifact_sha256": "c04e73cc1e44bdad76ee8bf16b80a4cdde62bac602de863bcf571cf272c5a677",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001130310",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CNP"
+    },
+    {
+      "artifact_sha256": "57d4035e5d455663b3989ac5952fca51c6050d2bbbbcaa899f280a304f5b409e",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000927628",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "COF"
+    },
+    {
+      "artifact_sha256": "4b74a8af41271150e6f2990a98f59f03aa8805dd338f39e055449ced1682acbb",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000820318",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "COHR"
+    },
+    {
+      "artifact_sha256": "351f406d150f28acd3d95a98b78b53dd463a14b0b6c43c6a28c9a399cb9a0fd7",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001679788",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "COIN"
+    },
+    {
+      "artifact_sha256": "af8f23b44f49286594b8ac80556dc199ae108790f64549669ab025e9642e6a7e",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000909832",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "COST"
+    },
+    {
+      "artifact_sha256": "ab14433aeadb31d212294fda56c517a3d8294ebdbc68e40cf3f1a81289677ecb",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001807794",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CRDO"
+    },
+    {
+      "artifact_sha256": "8b670bf70e3e32abbca45d4aae574750063e8406d6f4512b792a5cb2489dd7c9",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001108524",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CRM"
+    },
+    {
+      "artifact_sha256": "2e8362f2c20acbdec989fd94e38581daa2dfddf66c61b90c06913fa02334ea4d",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000858877",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CSCO"
+    },
+    {
+      "artifact_sha256": "57328e507eb6f07c7a9668f2a8d2fffe0d32bff7759ffc27ab99057ebe13adfb",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000277948",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "CSX"
+    },
+    {
+      "artifact_sha256": "71a12db9b6e858e153d236b2c6631313b627abdef9db9ac4aca7b17cd09d6143",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000715957",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "D"
+    },
+    {
+      "artifact_sha256": "539ac7e8368adfdc4da149042142d55423a879b703e1fcddf92d21a2d0e6e117",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000027904",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "DAL"
+    },
+    {
+      "artifact_sha256": "20898965e7a0742012a93b8a84f7974a0bdae3cb66e4287cbfcb70b8b3b4740d",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000315189",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "DE"
+    },
+    {
+      "artifact_sha256": "0251820027f48fd8ea97271f98ed42342db62557a82d4a9b87d8b0ed55d658f9",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001571996",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "DELL"
+    },
+    {
+      "artifact_sha256": "7b13c4539a1bee6be6ef07d872b336b7be4f0741af032257fd91ff87c014fa11",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001297996",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "DLR"
+    },
+    {
+      "artifact_sha256": "6848df2d6986d8f281b1522ac8074aad856a86e86b747698fcc12afec32e59e2",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000936340",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "DTE"
+    },
+    {
+      "artifact_sha256": "4674d84b152d1189541691f6f7c410e02e98f77f03737d6eef67b36001e4eb5e",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001326160",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "DUK"
+    },
+    {
+      "artifact_sha256": "405805e7af7ac101cd34fa21ddfbea2b3c557ca7b2be2159a764d0f12944be7b",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001093557",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "DXCM"
+    },
+    {
+      "artifact_sha256": "c4a0b769b432e3eead3722824f3268887dfdcba1e7218d66c356f2c905293618",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000031462",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ECL"
+    },
+    {
+      "artifact_sha256": "84ba87f70492dd084e81a9e79913550de98f4c0ff8719a452e105390d52a4bf8",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001047862",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ED"
+    },
+    {
+      "artifact_sha256": "481e28caa7e29dffcee0199e185f2b515bb1b206db4af9929efc22a0c2106101",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000827052",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "EIX"
+    },
+    {
+      "artifact_sha256": "794cb63ab50adbc09e186bebf487dc4d199d50d7440dc252b4fee24db88c9745",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001156039",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ELV"
+    },
+    {
+      "artifact_sha256": "456a8dc141fce3a6fd156108938cc80d41d174753f2140433423238cc29c29ce",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001101239",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "EQIX"
+    },
+    {
+      "artifact_sha256": "bd59f6f210ace714e141303c26df568924126b9bd6e7bd01dd4f7eb85632d56f",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001551182",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ETN"
+    },
+    {
+      "artifact_sha256": "a6fc07753da5b5b88687e376344e791d89b1e45e8e5df91693e4819a0b4ba26f",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000065984",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ETR"
+    },
+    {
+      "artifact_sha256": "9e9a8043f693768191573bb2deac5a622f30006d0487cb27ac93334d28fb9332",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001109357",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "EXC"
+    },
+    {
+      "artifact_sha256": "cdbad09daad39afc51a4c72f2221edf0b62f672ee53e3af959f9d7a0d870e330",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001324424",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "EXPE"
+    },
+    {
+      "artifact_sha256": "112bc213404a6e27bf919ec7fcca92eca8777a4ebd6725b0ac8babafd94e0c24",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001289490",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "EXR"
+    },
+    {
+      "artifact_sha256": "a0659ce4e3aff0376922f6034a4c7f2113f915a79671f01df0545e959e53df77",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000815556",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "FAST"
+    },
+    {
+      "artifact_sha256": "17cdba9775d7d7ef03d677ff4854a3582f6e06a129e05d8280a191b4a8a2b7a3",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001048911",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "FDX"
+    },
+    {
+      "artifact_sha256": "40f4161d91ce41dfd7cb3feb284b7762faa2391193fa5260f05c66a673f1fa32",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000035527",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "FITB"
+    },
+    {
+      "artifact_sha256": "f67fe45d3cf1a19a112d46388f22a22731300519635f3b6930697c8a7f94f1e1",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000866374",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "FLEX"
+    },
+    {
+      "artifact_sha256": "734d0cbae83cb11f075551a3b2aac0596996c7a875c996c541621381e50d5a01",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001262039",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "FTNT"
+    },
+    {
+      "artifact_sha256": "84df8cddcf3939a5802eff39f280506a0f6fff6a9f5085072593610e836d54ae",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000040533",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "GD"
+    },
+    {
+      "artifact_sha256": "c1fedce5f6ec6bec51cb5a8e5ec69c238ce4ad11d83ab6a85649a1554af4f0ac",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000886982",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "GS"
+    },
+    {
+      "artifact_sha256": "21a1a115e2ffd6df293ccfa3258dd186561a3a5f204dc74394bcc75547db60fc",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000049196",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "HBAN"
+    },
+    {
+      "artifact_sha256": "aaf3f879f49586b73e179e165b2dfc80f60a82fe18e4e7d818046084d05ca965",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000354950",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "HD"
+    },
+    {
+      "artifact_sha256": "d2cd6191c39082a889b7e72b592629ad800d3c06c7e3031930c62578a7c51788",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000046619",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "HEI"
+    },
+    {
+      "artifact_sha256": "769393f58b2918f5c73951d8148fb59968aa2a221ea6405b9020c9b6b8cfc3cd",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000874766",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "HIG"
+    },
+    {
+      "artifact_sha256": "4886184484f399b34eb634442515660b9e9778ce5e33f31e9289bd5661c6069f",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001645590",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "HPE"
+    },
+    {
+      "artifact_sha256": "cd037fac8692ab6eed2348bbb7b2bc410685243652e152c322757a534b411803",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000047111",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "HSY"
+    },
+    {
+      "artifact_sha256": "19f4fee6121040e47baf39add822df5f908f78bb4cf3987bc23f032092aad71b",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000049071",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "HUM"
+    },
+    {
+      "artifact_sha256": "7ae538652796671a7bf51d9ea575af733c7922bacf073f6f305a7b9c90d476d0",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001381197",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "IBKR"
+    },
+    {
+      "artifact_sha256": "35d214612da645c09b74d4d55893f235c0d2017d5d6994cb8d71edb640ca449f",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001571949",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ICE"
+    },
+    {
+      "artifact_sha256": "3857564cf6fb0094fef4e4275bb078385c2a8a1cd8462622a9b4c34ba2789c58",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000874716",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "IDXX"
+    },
+    {
+      "artifact_sha256": "4b5077669a4129edc6c8e8b939ea537fdb1b7d9d0fbeceea6754cd6d658a3047",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001110803",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ILMN"
+    },
+    {
+      "artifact_sha256": "d76768559d3b829b8b99e2c38134e5f95ddde32b2374782a61cee4c889125dbc",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000896878",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "INTU"
+    },
+    {
+      "artifact_sha256": "98ae40af7862021598404597e413dac10ef3db076506885b0ed2d991520c6fe5",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001699150",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "IR"
+    },
+    {
+      "artifact_sha256": "9150421b02180d0ae6092f51619d98f449bb14b74cfdff5fc298b9d4b9647c56",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001020569",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "IRM"
+    },
+    {
+      "artifact_sha256": "774a19371a1fb02ab686e0d2cffa8f4b622c35fee01ce6c19e675275493b4eb6",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001035267",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ISRG"
+    },
+    {
+      "artifact_sha256": "385ce287a65cdb7fe48187bcd89eddc76e813cfafd06f71a4c3cbf9b4c034b56",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000049826",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ITW"
+    },
+    {
+      "artifact_sha256": "4c9bd3346518b7f712788c6fb3bca49b9ad6583cc91287afca9800687a452432",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000898293",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "JBL"
+    },
+    {
+      "artifact_sha256": "32ca9d4bfafabe952bb524273a0d48fa6d7bcb54a8f386859999f1b015850cea",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000833444",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "JCI"
+    },
+    {
+      "artifact_sha256": "429b18dcfb502c2c1ef6749afbece0b8f0309f3113a7b2d9348adf869f774824",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000019617",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "JPM"
+    },
+    {
+      "artifact_sha256": "e909d84223d25bd5695bc95fb1fb6a7091f488704916f338e168386436dbc25c",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001418135",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "KDP"
+    },
+    {
+      "artifact_sha256": "96daf5d6f00abab7c77bb138bad05281fd4c3931e412a9a3fa356e8c1dd7e2e8",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001404912",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "KKR"
+    },
+    {
+      "artifact_sha256": "97e0bab253cd682f03338d6c939736ab2653c48de7dc1689baee20be8960a543",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001506307",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "KMI"
+    },
+    {
+      "artifact_sha256": "ab9a5d38a1df80a9e0d0e7bc273483cf8babfb160ef5b04fa1dec460553ff7ec",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000021344",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "KO"
+    },
+    {
+      "artifact_sha256": "25a700e8236ac23084d685a4e716d135fbf5b5ef3defe7288506fa6dd8c6b07b",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000056873",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "KR"
+    },
+    {
+      "artifact_sha256": "ffdf41f91a83ca5af61cfc06c2d0bc5754ac9eaf771af545f3b188c423a20902",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001944048",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "KVUE"
+    },
+    {
+      "artifact_sha256": "ef9a580c213cd5699625ec4381d2ce96747fb01e1d3df11d2c72a936e1f1934f",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001707925",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "LIN"
+    },
+    {
+      "artifact_sha256": "b123748b1a21efa146bc680da0290f8de58f274b5480dfee5c2c590660340b79",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000936468",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "LMT"
+    },
+    {
+      "artifact_sha256": "8eb6d3145e7aec2fee2546fdfe509b894d7ea633875c710a185d75efd9563780",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000003570",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "LNG"
+    },
+    {
+      "artifact_sha256": "e640f9909f03f04e02f9e7389ddb8747b175822f8609a7b8e9263b91421c5820",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000060667",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "LOW"
+    },
+    {
+      "artifact_sha256": "c18fd2f683b73e6ecfb78ede60b4bf86b1e80529d5421f2e987cb2f7871f008f",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000707549",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "LRCX"
+    },
+    {
+      "artifact_sha256": "a7175bcbdd5e7acbe6f3f445e45f1db23bbfdac19730d43686b16abf46481ec4",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000063908",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MCD"
+    },
+    {
+      "artifact_sha256": "5547057051a5d16b8df6c3a96d4526cc770c778531c5fabfe1c7c8e3cfa65e99",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000827054",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MCHP"
+    },
+    {
+      "artifact_sha256": "a73a4f620390fb427c2ac2c12b57b1fd60f669f7dac9a7fa90cce834275f008e",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001103982",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MDLZ"
+    },
+    {
+      "artifact_sha256": "5351a9a894987eef8e030c8e56521c86df482ea96cddff694495ec9f044630f3",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001099219",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MET"
+    },
+    {
+      "artifact_sha256": "81a13de15a4f2194fe0fb138a10b468b85b0320200fe7fdd04808d5b66bf1d5c",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001326801",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "META"
+    },
+    {
+      "artifact_sha256": "1066f2d7fbb7a01a2b9d991350515f4cf4aab8cff893ad35fdffd608b2d2c0c3",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000764180",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MO"
+    },
+    {
+      "artifact_sha256": "3859de03df77aff7f3878d889005636c1eb3e1b05d6253aaac58372f82146780",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001280452",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MPWR"
+    },
+    {
+      "artifact_sha256": "1926654d67f830e05b5086062f2e4f020d049d90396c2bb2a6e2f1906034f942",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001835632",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MRVL"
+    },
+    {
+      "artifact_sha256": "e42c397d8d70cf4c25fe399db2d24fe625565b2f7d83211b5f959a2ef043462b",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000895421",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MS"
+    },
+    {
+      "artifact_sha256": "0f4af6fd9bc2c7e81f22c81f1ffb4236d9415c0bca752af3000ebeff980d8040",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000789019",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MSFT"
+    },
+    {
+      "artifact_sha256": "1a048d1efaca175eb02d8c3301bd6e97823a8b03001fa950a91dd96ccfb46319",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000036270",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "MTB"
+    },
+    {
+      "artifact_sha256": "56c5807d8c148904d7bc3d51ed84a1ae96c6dd50a98e7f606a2d84e25b981b83",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001120193",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "NDAQ"
+    },
+    {
+      "artifact_sha256": "097bd38a971f359014977776b031ac927e56d92f83d26890f24791e7e17626ba",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000753308",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "NEE"
+    },
+    {
+      "artifact_sha256": "bc48688a4078788ba1fad7eb70e5fcd042eaadea9b781105c3078a2a5cd5ceab",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001477333",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "NET"
+    },
+    {
+      "artifact_sha256": "a4e7f03a141456a9df65abdea510d97808cc32a9cc1f6e78ac3a906370715937",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001373715",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "NOW"
+    },
+    {
+      "artifact_sha256": "3659bac2740c39347a20c5b6738bc2f1a04d08b8b6caeefb10643056ccaf0f97",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000702165",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "NSC"
+    },
+    {
+      "artifact_sha256": "18a2a3f556ddb8dbd8c43454da9d622323aeaa49690bdb5b71b78f1b6f2506e1",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001002047",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "NTAP"
+    },
+    {
+      "artifact_sha256": "33e52f596f11152eceb297caab8e30428f026f535f4d1d6796d13bc0358bd95c",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001045810",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "NVDA"
+    },
+    {
+      "artifact_sha256": "9cae1a8576fdaeb8d90b58caaa28749c32a3dfa11d1da681a326d6bb6ff91cef",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001413447",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "NXPI"
+    },
+    {
+      "artifact_sha256": "d1b029eabd46ec8714c75a11bdc0d1cf4720fbd4aada1716101ea5a01d3bca7d",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000726728",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "O"
+    },
+    {
+      "artifact_sha256": "aae503be4b7dc6d6e2868e1ccb2a6afcbbb960f23a543bd8a6ba0bfb6fe77621",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001039684",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "OKE"
+    },
+    {
+      "artifact_sha256": "f3304b4914d048fd8f70ec3c54f35aa28965bc1b4c9fa47f5cb235ca509d5934",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001097864",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ON"
+    },
+    {
+      "artifact_sha256": "514bb4069c158309535d3e438ef95bdd237c7a97fc54b75a7172c01ae5288e4a",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001341439",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ORCL"
+    },
+    {
+      "artifact_sha256": "142698d639f23d9503fe2bb6fcbe6b5b3b6c330b4360746fa028ba6a8b315b90",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001327567",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PANW"
+    },
+    {
+      "artifact_sha256": "8f131798211fe03cd028e07529d3b960918f6d3d38010ee864983dae23039a35",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001004980",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PCG"
+    },
+    {
+      "artifact_sha256": "698d23a38389fb79c7f8cced3f9b51064b8a805123e0abb909ec6c783da83828",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000788784",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PEG"
+    },
+    {
+      "artifact_sha256": "302177792532dde4b81f9f97733701b9c20792ee31d853609c04239dd5425d25",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000077476",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PEP"
+    },
+    {
+      "artifact_sha256": "53ddd3d431e34826edd2910b397115571f3f98c7b1591fc4a7fbe4e24dff9bf5",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000080424",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PG"
+    },
+    {
+      "artifact_sha256": "3fcdf56bb28f6116e385f94477615ea2b896a166d0e51d098ac821430df62b7c",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000080661",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PGR"
+    },
+    {
+      "artifact_sha256": "be33a100dfccbda4110d19dbdd2e7ca0b5d286c187577d19e0894f4e3136022a",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000076334",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PH"
+    },
+    {
+      "artifact_sha256": "acbc2cc87db4fa540958a2c9b1e8233f90f529d49a507efa8ea9d50241696734",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001045609",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PLD"
+    },
+    {
+      "artifact_sha256": "237af6f69c4b9e97dd7b914870032f7cdbf1b5cb47988d1a4ef561b4e539ca10",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001321655",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PLTR"
+    },
+    {
+      "artifact_sha256": "335e1982fbfc56a2a6ad1eb5badb3481e67a2a6c59f49c71d89056d889391086",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001413329",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PM"
+    },
+    {
+      "artifact_sha256": "f96a60dc96b7f4d8cfe3396aee47dffa50485fb0a4d4cbebe0c378429a989337",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001137774",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PRU"
+    },
+    {
+      "artifact_sha256": "90e23367554e28c18398ef38133c4876bbf6a9c716d7b14d34e86f4b77c23946",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001393311",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "PSA"
+    },
+    {
+      "artifact_sha256": "a5728756f93a92ca07c7d970dc10a8872772222b983ec6017cca72450bf0ce00",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001618756",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "QSR"
+    },
+    {
+      "artifact_sha256": "9dceffc36624fc9546c69f006cb7209fa98018271ddcfc38e072c013d85d942d",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000884887",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "RCL"
+    },
+    {
+      "artifact_sha256": "9490e4be4abcf2792ff3df2dd662f38e12c4ae8322331733563e2e0dafaee46b",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000720005",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "RJF"
+    },
+    {
+      "artifact_sha256": "e2b91ea7c49cc6197b01d311b47efc479ceb4364a604b452930cec652d599051",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000943819",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "RMD"
+    },
+    {
+      "artifact_sha256": "0c060ec2abec5535df920490c9d22932cda536572b15a32fb09fb426d550058c",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001024478",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ROK"
+    },
+    {
+      "artifact_sha256": "2483d24e6140319c95897fcb23471d13833097b27d635cc52f62f36601b311b5",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000745732",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "ROST"
+    },
+    {
+      "artifact_sha256": "e68d8d24556f3af3e0d163a9f2f78b06848d01e0eaeedffe49f630eda9f9ab5b",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001060391",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "RSG"
+    },
+    {
+      "artifact_sha256": "6d207e9da161d27523342abf245faac712c98e0c4af7293c44e287e9fdb0c66d",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000101829",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "RTX"
+    },
+    {
+      "artifact_sha256": "62289faa0befd43958e5833edf8780f0d54df6e63fd144eb8d351847e1ce5f3b",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000829224",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "SBUX"
+    },
+    {
+      "artifact_sha256": "5cc58d4782dfbf3c9f98e1be916247a2baf6ce0e3e5cfb9d1dc7b11999b8cc39",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000316709",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "SCHW"
+    },
+    {
+      "artifact_sha256": "247a6fa8c3ddc95c6a8a4e9b6a9694a1d7bccd400796908de7a2c53ec41f452f",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000089800",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "SHW"
+    },
+    {
+      "artifact_sha256": "b273318fb148d47d1fc2cb9dec5267eda4dc143b76c8ec164cd7a89eaeae7e37",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000883241",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "SNPS"
+    },
+    {
+      "artifact_sha256": "6370b2bd20621388c84928e826c31096eb3b117baed1baf6b5093453961b301c",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000092122",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "SO"
+    },
+    {
+      "artifact_sha256": "909c9c1c85e8a5665e98744a86569d16d6fde4278e89c65c5b45d2c83336005a",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001032208",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "SRE"
+    },
+    {
+      "artifact_sha256": "23126b4297752b2f3278374eac6ec0262b7d14224ab08a266c60eb060d7574ba",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000093751",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "STT"
+    },
+    {
+      "artifact_sha256": "03221e6d512c9ac745c75934b77403c1c0030946feaafa6378bb5ca2b4387b0c",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001137789",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "STX"
+    },
+    {
+      "artifact_sha256": "07b9808712ab01bc21439fec2ec906c7b18ce85880a267c190acb5c06b91dbfb",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000310764",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "SYK"
+    },
+    {
+      "artifact_sha256": "07da0ccaf091592c1e5eee78ffdd180179aa0ea087d106b7b254e5efde5228ea",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000732717",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "T"
+    },
+    {
+      "artifact_sha256": "074f3695e4004bc18f52f4873124d58b5075097f6a302aaf7e01ae2449d98263",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001260221",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TDG"
+    },
+    {
+      "artifact_sha256": "93f2101185d17856462d654b829390425e1da90310d4862ab996542cbb2218e2",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000818686",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TEVA"
+    },
+    {
+      "artifact_sha256": "e40a255fbed2594e92b18aeea2ebefddad1bccb23cc95ebb61a769811d0e0f64",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000027419",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TGT"
+    },
+    {
+      "artifact_sha256": "954c5b0cabfd21555b5a2ae628803229261b2be15c1fdee89aef0d1baa8aabbd",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000109198",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TJX"
+    },
+    {
+      "artifact_sha256": "3d5ef9b3ca1e9a95d873e17b7008b0186c57f624601bcc8586a12176d4272269",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000097745",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TMO"
+    },
+    {
+      "artifact_sha256": "63ce6430b17ec8faa2ed5dc4e670bbe7ea6e689e6a19d711c0e909f765257790",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001283699",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TMUS"
+    },
+    {
+      "artifact_sha256": "79cf69234af9bbc10154919c9a3db54476864d88aa7a0c439c44ed088aa0344b",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001389170",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TRGP"
+    },
+    {
+      "artifact_sha256": "20a4196944315f6cab3a23bfe74ac6016327bf732f50a7879eea044e53e533ce",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000086312",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TRV"
+    },
+    {
+      "artifact_sha256": "7bb07b4309cb35e5f310e744d37a3d0814884daa97bbb7461ab471eaa7ea5449",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001447669",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "TWLO"
+    },
+    {
+      "artifact_sha256": "cc73c98fa5cf7c9ded2ee7545a366bf338706d01d3b58cdc10804c3879a8d8ab",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000100517",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "UAL"
+    },
+    {
+      "artifact_sha256": "00fb6d2040f35b84a6a56abeb40a654d8f3a9f28c0e5dc8b34ff51080d796d58",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000731766",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "UNH"
+    },
+    {
+      "artifact_sha256": "8c23eb275778f562678aa705587f9c97b2aae9126f6b7674ceb2985b9738a45e",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000100885",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "UNP"
+    },
+    {
+      "artifact_sha256": "da84f0b883b068171b5992d63d8a17f93d744bad90242a0970021858b438f3b0",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001090727",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "UPS"
+    },
+    {
+      "artifact_sha256": "70b1795acc06b23f042ea395930634ebabcc025a103cf78726f451240a9950bd",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000036104",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "USB"
+    },
+    {
+      "artifact_sha256": "cab512d1d2973dfd3501ecd1d3458c47109c8696912b3c777f59682eb94d5515",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001393052",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "VEEV"
+    },
+    {
+      "artifact_sha256": "2ec1f856e13d0fd1c399019ca5d652aa0adf54eaa3586ad7f3a1ba53a9e7a86f",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0002007855",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "VG"
+    },
+    {
+      "artifact_sha256": "f539959afb2503ed1ecf221790dc7833d1ecbab215373f97f2a6a74616ad9299",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001674101",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "VRT"
+    },
+    {
+      "artifact_sha256": "ee7d54d12154b7e82a76222880a096845ab7699dcbb0c4af0dc6d60624bc9ccd",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000875320",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "VRTX"
+    },
+    {
+      "artifact_sha256": "2a675d75e7c3478dda9ee08d290fd1a786f5fd54a32c3cb5d93a903afa612cd4",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001692819",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "VST"
+    },
+    {
+      "artifact_sha256": "e6f5a7fbf34638f5e791ed1689900a764cd370bb0dbe48fc53b52d9d4c1e7ecc",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000740260",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "VTR"
+    },
+    {
+      "artifact_sha256": "73398382177fdc5290bb02a09b2bf0624245a460a2c69ebf91a45ccafc97158c",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000943452",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WAB"
+    },
+    {
+      "artifact_sha256": "149d4b1445b4a450ae5b849819d104e20f6e01d47aa0c8ec0da0305c9eb140cd",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001437107",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WBD"
+    },
+    {
+      "artifact_sha256": "52d1de749958b0a79e506b3bae6473126e3cfaa02b70fbf893edc49f7afe41bb",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0001318220",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WCN"
+    },
+    {
+      "artifact_sha256": "c303f1d4bd86ab4998128e5c902e525f88a5845e5526efff1ad669f58529c641",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000106040",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WDC"
+    },
+    {
+      "artifact_sha256": "285800248834b555669d9cdc2b0cb03ace32526dbf07bc58be5d2ed262aed82a",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000783325",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WEC"
+    },
+    {
+      "artifact_sha256": "e8b0f0d2a3eb8d65949c27d72da7a5c6653d71f395604aff2d80e9f4d557b0d5",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000766704",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WELL"
+    },
+    {
+      "artifact_sha256": "063914d7a9cfcac2dc098095def5ad9c08567940916e369b1a8e2c4afdfbdaaf",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000072971",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WFC"
+    },
+    {
+      "artifact_sha256": "a31360d970fbab789ccf1774bf980dfe977ac124bb7ea0e8e9932a657c35feef",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000823768",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WM"
+    },
+    {
+      "artifact_sha256": "b37ef19ab955fed65b7272bb931ff85a474d28dbae1ae397c1892cad09285473",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000107263",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WMB"
+    },
+    {
+      "artifact_sha256": "707ff44af2278220074671365a86076054d1184650e6f5e37ed5382243000aa4",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0000104169",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "WMT"
+    },
+    {
+      "artifact_sha256": "f3dba5f3034b0adf4b1dfb96954058aeba973e609add5382bd97a8ea9fb552d8",
+      "availability_type": "available",
+      "batch": null,
+      "cik": "0000072903",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "XEL"
+    },
+    {
+      "artifact_sha256": "1b8d861170e764e3746aca452e2ef15ac68cbf03b78b6f013f2fc59963dbf020",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001524472",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "XYL"
+    },
+    {
+      "artifact_sha256": "99fcba002380971072c65e7d391f07beeffb64fd0382f2fc6bf4276c9decd32d",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001512673",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "XYZ"
+    },
+    {
+      "artifact_sha256": "d594a757208d1e627bc6fbd8231479bb7afe258fc399fbca5614d061f2ac6ef1",
+      "availability_type": "not_available",
+      "batch": null,
+      "cik": "0001041061",
+      "source_audit": "Legacy serving snapshot from 670f7cfe07f82a5bc6b3ae56477407131f425b39",
+      "ticker": "YUM"
+    }
+  ],
+  "included_batches": [],
+  "legacy_source": {
+    "commit": "670f7cfe07f82a5bc6b3ae56477407131f425b39",
+    "git_tree": "81fcc404ef9b25001565f7232324dbefa0b56afa",
+    "rollback": "Activate this catalog only in an isolated rollback configuration, then verify every public boundary before serving it."
+  },
+  "publication_counts": {
+    "review_required": 88,
+    "withheld": 118
+  },
+  "schema_version": "FINSIGHT-US-VALUATION-CATALOG-1.0",
+  "universe_version": "LEGACY-US-206-PRE-RESET",
+  "valuation_date": "2026-08-14"
+}

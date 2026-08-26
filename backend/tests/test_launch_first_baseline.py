@@ -19,6 +19,7 @@ from app.us_valuation.market_comparison import (
     public_market_comparison,
     validate_eod_for_valuation,
 )
+from app.routers.us_valuations import CATALOG
 
 
 def _baseline(
@@ -84,7 +85,7 @@ def test_conditional_stage_requires_conditional_availability() -> None:
 
 def test_v12_projection_keeps_only_derived_market_comparison() -> None:
     artifact = json.loads(
-        Path("backend/app/data/us_valuations/WFC.json").read_text(encoding="utf-8")
+        (CATALOG.artifacts_root / "BAC.json").read_text(encoding="utf-8")
     )
     artifact["market_comparison"] = {
         "status": "available",
@@ -101,7 +102,7 @@ def test_v12_projection_keeps_only_derived_market_comparison() -> None:
 
     assert public["schema_version"] == PUBLIC_SCHEMA_VERSION == "US-PUBLIC-VALUATION-1.2"
     assert public["availability_type"] == "available"
-    assert public["calculator_link"] == "/api/us-valuations/WFC/calculator"
+    assert public["calculator_link"] == "/api/us-valuations/BAC/calculator"
     assert public["market_comparison"] == {
         "status": "available",
         "gap_pct": 0.20,

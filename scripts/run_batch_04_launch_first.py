@@ -14,7 +14,7 @@ from app.us_valuation.batch_04 import BATCH_04_MANIFEST,BATCH_04_TICKERS,BATCH_0
 from app.us_valuation.batch_04_launch_first import BATCH_04_LAUNCH_FIRST_VERSION,build_batch_04_launch_first_result
 from app.us_valuation.reliability import relative_movement
 
-PROTECTED=(ROOT/"backend/app/data/us_valuations",ROOT/"frontend/public/data",ROOT/"frontend/src/research/generated")
+PROTECTED=(ROOT/"backend/app/data/us_valuation_catalogs",ROOT/"frontend/public/data",ROOT/"frontend/src/research/generated")
 WATCHLIST=ROOT/"backend/app/us_valuation/config/universe_reset_recovery_learning_watchlist.json"
 def _json(v):return (json.dumps(v,indent=2,sort_keys=True,ensure_ascii=False,allow_nan=False)+"\n").encode()
 def _tree(root):

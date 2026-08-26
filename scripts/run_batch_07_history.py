@@ -20,7 +20,7 @@ from app.us_valuation.batch_07 import BATCH_07_MANIFEST, BATCH_07_TICKERS, BATCH
 from app.us_valuation.batch_07_history import BATCH_07_HISTORY_VERSION, PASS_TICKERS, build_batch_07_history_result
 
 
-PROTECTED = (ROOT / "backend/app/data/us_valuations", ROOT / "frontend/public/data", ROOT / "frontend/src/research/generated")
+PROTECTED = (ROOT / "backend/app/data/us_valuation_catalogs", ROOT / "frontend/public/data", ROOT / "frontend/src/research/generated")
 WATCHLIST = ROOT / "backend/app/us_valuation/config/universe_reset_recovery_learning_watchlist.json"
 
 

@@ -67,3 +67,6 @@
 - [Single positive cycle year does not set the base](single-positive-cycle-year-does-not-set-the-base.md) — do not manufacture a positive normalized midpoint from one outlier when current and median cash remain negative.
 - [Parent-attributable earnings already exclude NCI](parent-attributable-earnings-already-exclude-nci.md) — reconcile NCI as a diagnostic instead of deducting it twice from parent earnings.
 - [Reused SEC packets preserve fetch metadata](reused-sec-packets-preserve-fetch-metadata.md) — unwrap cached `fetch_metadata` so deterministic packet replay does not silently weaken provenance.
+- [Serving-root guards follow the active catalog](serving-root-guards-follow-active-catalog.md) — update every replay/capture guard when a versioned catalog replaces a loose serving directory.
+- [Reliability is internal governance](reliability-is-internal-governance.md) — show ranges and assumptions to users; keep High/Medium/Low as audit data rather than a headline verdict.
+- [Local preview auth overrides the dependency](local-preview-auth-overrides-dependency.md) — a fake refresh token alone cannot exercise authenticated calculator POSTs.

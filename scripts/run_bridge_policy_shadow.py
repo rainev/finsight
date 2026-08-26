@@ -15,7 +15,7 @@ from typing import Any, Mapping
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 _BACKEND_DIR = _REPO_ROOT / "backend"
 _SERVING_ROOTS = (
-    _BACKEND_DIR / "app" / "data" / "us_valuations",
+    _BACKEND_DIR / "app" / "data" / "us_valuation_catalogs",
     _REPO_ROOT / "frontend" / "public" / "data",
 )
 _JSON_NAME = "bridge-policy-shadow.json"

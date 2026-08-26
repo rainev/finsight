@@ -67,6 +67,8 @@ Target: one numeric intrinsic-value estimate for each of 500 companies, with one
 | [60](60-batch-09-recovery-result.md) | CLX split-IXDS extraction repair, conservative post-acquisition cash valuation, challenge, replay, API, and watchlist | User confirmed; CLX Conditional Low; final Batch 09 Pass 2 / Conditional 8 / Withheld 0 |
 | [61](61-controlled-batch-10-result.md) | History-backed Consumer Staples Batch 10, transaction-state hard stop, bridge corrections, determinism, and API | User confirmed; Pass 6 / Conditional 3 / Withheld 1; three bookmarked |
 | [62](62-batch-10-kmb-recovery-result.md) | KMB post-IFP/pre-Kenvue current-state recovery, continuing-cash proxy, challenge, determinism, API, and watchlist | User confirmed; final Batch 10 Pass 6 / Conditional 4 / Withheld 0 |
+| [63](63-universe-reset-catalog-cutover.md) | Versioned Batch 01–10 catalog, tracked legacy archive, manifest API cutover, and unified valued/unavailable UI | User confirmed 2026-08-27; 100 exact artifacts, 96 numeric / 4 unavailable |
+| [64](64-valuation-ux-and-calculator-correction.md) | Remove dead/confusing valuation UI, repair local calculator flow, clarify comparison/save, and consolidate navigation | Verified locally; JPM $190.14→$308.62 browser proof; user confirmation needed |
 | [52](52-history-backed-pipeline-batch04-shadow.md) | Shared company-history layer and the authorized Batch 04-only shadow replay | Pipeline/API verified; 4 Pass / 6 Conditional / 0 Withheld; user confirmation needed |
 | [53](53-batch04-history-promotion.md) | Official promotion of the confirmed Batch 04 history-backed public artifacts | User-confirmed and default-serving API verified; 10/10 promoted |
 
