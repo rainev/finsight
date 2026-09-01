@@ -200,6 +200,10 @@ def build_catalog(
             for entry in base.entries:
                 raw = base.artifact_path(entry.ticker).read_bytes()
                 (artifacts_root / f"{entry.ticker}.json").write_bytes(raw)
+                base_value = json.loads(raw)
+                publication_counts[
+                    str(base_value.get("review", {}).get("publication_state", "missing"))
+                ] += 1
                 entries[entry.ticker] = {
                     "ticker": entry.ticker,
                     "cik": entry.cik,

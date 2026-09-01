@@ -7,9 +7,9 @@ from app.us_valuation.universe_reset_withheld import (
 import pytest
 
 
-def test_register_contains_prior_set_and_batch_08_nclh() -> None:
+def test_register_contains_exact_post_batch_16_recovery_set() -> None:
     entries = load_universe_reset_withheld()
-    assert len(entries) == 8
+    assert len(entries) == 19
     entry = entries[0]
     assert (entry.batch, entry.ticker, entry.cik) == (1, "NEE", "0000753308")
     assert entry.recovery_attempts == 1
@@ -44,6 +44,41 @@ def test_register_contains_prior_set_and_batch_08_nclh() -> None:
     assert nclh.recovery_attempts==1
     assert nclh.hard_blockers==("CLAIMS_UNBOUNDED","MODEL_UNSUPPORTED")
     assert nclh.evidence_report=="docs/audit/57-batch-08-recovery-result.md"
+    bg=entries[8]
+    assert (bg.batch,bg.ticker,bg.cik)==(11,"BG","0001996862")
+    assert bg.recovery_attempts==1
+    assert bg.model_version=="BATCH-11-SYY-BG-RECOVERY-1.0"
+    assert bg.hard_blockers==(
+        "PREDECESSOR_HISTORY_NOT_COMPARABLE",
+        "PRO_FORMA_CASH_FLOW_NOT_DISCLOSED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE",
+    )
+    assert bg.evidence_report=="docs/audit/66-batch-11-recovery-result.md"
+    uhs=entries[9]
+    assert (uhs.batch,uhs.ticker,uhs.cik)==(12,"UHS","0000352915")
+    assert uhs.recovery_attempts==1
+    assert uhs.model_version=="BATCH-12-WHOLE-RECOVERY-1.0"
+    assert uhs.hard_blockers==(
+        "POST_PERIOD_CASH_DEBT_STATE_UNAVAILABLE",
+        "POST_PERIOD_OPERATING_STATE_CHANGED",
+        "PENDING_TRANSACTION_FINANCING_UNRESOLVED",
+    )
+    assert uhs.evidence_report=="docs/audit/69-batch-12-whole-recovery-result.md"
+    batch_15=entries[10:13]
+    assert tuple(row.ticker for row in batch_15)==("LH","ISRG","ALGN")
+    assert all(row.batch==15 for row in batch_15)
+    assert all(row.recovery_attempts==1 for row in batch_15)
+    assert all(row.model_version=="BATCH-15-WITHHELD-RECOVERY-1.0" for row in batch_15)
+    assert all(row.hard_blockers==("CLAIMS_UNBOUNDED",) for row in batch_15)
+    assert all(row.evidence_report=="docs/audit/76-batch-15-recovery-result.md" for row in batch_15)
+    batch_16=entries[13:]
+    assert tuple(row.ticker for row in batch_16)==("DXCM","EW","CRL","ZBH","COR","ELV")
+    assert all(row.batch==16 for row in batch_16)
+    assert all(row.recovery_attempts==1 for row in batch_16)
+    assert all(row.model_version=="BATCH-16-WITHHELD-RECOVERY-1.0" for row in batch_16)
+    assert all(row.reason_codes==("SPECIALIST_MODEL_UNCERTAINTY",) for row in batch_16)
+    assert all(row.hard_blockers==("CLAIMS_UNBOUNDED",) for row in batch_16)
+    assert all(row.evidence_report=="docs/audit/80-batch-16-recovery-result.md" for row in batch_16)
 
 
 def test_register_contract_rejects_more_than_one_recovery() -> None:

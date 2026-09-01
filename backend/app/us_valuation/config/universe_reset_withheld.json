@@ -158,6 +158,189 @@
         "MODEL_UNSUPPORTED"
       ],
       "evidence_report": "docs/audit/57-batch-08-recovery-result.md"
+    },
+    {
+      "batch": 11,
+      "ticker": "BG",
+      "cik": "0001996862",
+      "issuer_name": "Bunge Global",
+      "model_version": "BATCH-11-SYY-BG-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONDITIONAL_EVENT_MODEL",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "PREDECESSOR_HISTORY_NOT_COMPARABLE",
+        "PRO_FORMA_CASH_FLOW_NOT_DISCLOSED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/66-batch-11-recovery-result.md"
+    },
+    {
+      "batch": 12,
+      "ticker": "UHS",
+      "cik": "0000352915",
+      "issuer_name": "Universal Health Services",
+      "model_version": "BATCH-12-WHOLE-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONDITIONAL_EVENT_MODEL",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "POST_PERIOD_CASH_DEBT_STATE_UNAVAILABLE",
+        "POST_PERIOD_OPERATING_STATE_CHANGED",
+        "PENDING_TRANSACTION_FINANCING_UNRESOLVED"
+      ],
+      "evidence_report": "docs/audit/69-batch-12-whole-recovery-result.md"
+    },
+    {
+      "batch": 15,
+      "ticker": "LH",
+      "cik": "0000920148",
+      "issuer_name": "Labcorp",
+      "model_version": "BATCH-15-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/76-batch-15-recovery-result.md"
+    },
+    {
+      "batch": 15,
+      "ticker": "ISRG",
+      "cik": "0001035267",
+      "issuer_name": "Intuitive Surgical",
+      "model_version": "BATCH-15-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/76-batch-15-recovery-result.md"
+    },
+    {
+      "batch": 15,
+      "ticker": "ALGN",
+      "cik": "0001097149",
+      "issuer_name": "Align Technology",
+      "model_version": "BATCH-15-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/76-batch-15-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "DXCM",
+      "cik": "0001093557",
+      "issuer_name": "Dexcom",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "EW",
+      "cik": "0001099800",
+      "issuer_name": "Edwards Lifesciences",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "CRL",
+      "cik": "0001100682",
+      "issuer_name": "Charles River Laboratories",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "ZBH",
+      "cik": "0001136869",
+      "issuer_name": "Zimmer Biomet",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "COR",
+      "cik": "0001140859",
+      "issuer_name": "Cencora",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "ELV",
+      "cik": "0001156039",
+      "issuer_name": "Elevance Health",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
     }
   ]
 }

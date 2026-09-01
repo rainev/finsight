@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+"""Stage initial Batch 13 historical/practical outcomes without protected-state writes."""
+from __future__ import annotations
+import argparse,hashlib,json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1];BACKEND=ROOT/'backend';sys.path.insert(0,str(BACKEND)) if str(BACKEND) not in sys.path else None
+from app.us_valuation.artifacts import sanitize_public_artifact
+from app.us_valuation.batch_13 import BATCH_13_MANIFEST,BATCH_13_TICKERS,BATCH_13_VALUATION_DATE
+from app.us_valuation.batch_13_history import BATCH_13_HISTORY_VERSION,build_batch_13_history_result
+from run_batch_07_history import PROTECTED,WATCHLIST,_immutable,_json,_tree
+from run_batch_08_history import _public as _prior_public
+WITHHELD_REGISTER=ROOT/'backend/app/us_valuation/config/universe_reset_withheld.json'
+def _public(issuer,result):
+ value=_prior_public(issuer,result);value['issuer']['classification_reason']='Frozen Batch 13 Health Care lane plus issuer-specific source, history, claim, and event review.';value['public_assumptions']['forecast_policy_version']=BATCH_13_HISTORY_VERSION;value['forecast_quality']['policy_version']=BATCH_13_HISTORY_VERSION;value['methodology']['forecast_policy']=BATCH_13_HISTORY_VERSION
+ if issuer.ticker=='UNH':value['public_assumptions']['forecast_mode']='normalized_equity_earnings';value['public_assumptions']['valuation_basis']='managed_care_parent_common_equity_residual_income';value['model_policy']['reason']=result['warning']
+ else:value['public_assumptions']['forecast_mode']='faded_cash_fcff';value['public_assumptions']['forecast_years']=result['governed_assumptions']['forecast_years'];value['public_assumptions']['initial_revenue_growth']=result['governed_assumptions']['growth'][1];value['public_assumptions']['policy_wacc']=result['governed_assumptions']['wacc'][1];value['public_assumptions']['terminal_growth']=result['governed_assumptions']['terminal_growth'][1]
+ value=sanitize_public_artifact(value)
+ if value['availability_type']!=result['availability_type'] or value['scenario_range']['base']!=result['scenario_range']['base']:raise RuntimeError(f'{issuer.ticker}: public mismatch')
+ return value
+def run(*,source_root:Path,structural_root:Path,output_root:Path):
+ source_root,structural_root,output_root=map(Path,(source_root,structural_root,output_root));before={str(r):_tree(r) for r in PROTECTED};watch=hashlib.sha256(WATCHLIST.read_bytes()).hexdigest();withheld=hashlib.sha256(WITHHELD_REGISTER.read_bytes()).hexdigest();cases=[];reliability={'High':0,'Medium':0,'Low':0}
+ for issuer in BATCH_13_MANIFEST:
+  result=build_batch_13_history_result(ticker=issuer.ticker,source_root=source_root,structural_root=structural_root);public=_public(issuer,result);availability=result['availability_type'];outcome='pass' if availability=='available' else 'conditional' if availability=='conditional_estimate' else 'withheld';label=None if result['history_reliability'] is None else result['history_reliability']['label'];
+  if label:reliability[label]+=1
+  case={'ticker':issuer.ticker,'outcome':outcome,'availability_type':availability,'reliability':label,'method':result['method'],**result['scenario_range'],'history_years_used':result['governed_assumptions']['history_years_used'],'warning':result['warning']};private={'schema_version':'FINSIGHT-BATCH-13-HISTORY-1','batch':13,'valuation_date':BATCH_13_VALUATION_DATE,'issuer':{'ticker':issuer.ticker,'cik':issuer.cik,'issuer_name':issuer.issuer_name},'history_backed':result,'controlled_outcome':case};_immutable(output_root/'generated'/issuer.ticker/'valuation-private.json',_json(private));_immutable(output_root/'staged-public'/f'{issuer.ticker}.json',_json(public));cases.append(case)
+ after={str(r):_tree(r) for r in PROTECTED};watch_after=hashlib.sha256(WATCHLIST.read_bytes()).hexdigest();withheld_after=hashlib.sha256(WITHHELD_REGISTER.read_bytes()).hexdigest()
+ if before!=after or watch!=watch_after or withheld!=withheld_after:raise RuntimeError('Batch 13 changed protected or cumulative state')
+ report={'schema_version':'FINSIGHT-BATCH-13-HISTORY-REPORT-1','batch':13,'valuation_date':BATCH_13_VALUATION_DATE,'policy_version':BATCH_13_HISTORY_VERSION,'denominator_tickers':list(BATCH_13_TICKERS),'attempted_count':10,'pass_count':sum(r['outcome']=='pass' for r in cases),'conditional_count':sum(r['outcome']=='conditional' for r in cases),'withheld_count':sum(r['outcome']=='withheld' for r in cases),'numeric_count':sum(r['outcome']!='withheld' for r in cases),'pass_tickers':[r['ticker'] for r in cases if r['outcome']=='pass'],'conditional_tickers':[r['ticker'] for r in cases if r['outcome']=='conditional'],'withheld_tickers':[r['ticker'] for r in cases if r['outcome']=='withheld'],'reliability_counts':reliability,'serving_artifacts_changed':False,'serving_hash_before':before,'serving_hash_after':after,'watchlist_changed':False,'watchlist_sha256':watch,'withheld_register_changed':False,'withheld_register_sha256':withheld,'cases':cases};_immutable(output_root/'batch-13-report.json',_json(report));return report
+def main():
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source-root',required=True,type=Path);p.add_argument('--structural-root',required=True,type=Path);p.add_argument('--output-root',required=True,type=Path);r=run(**vars(p.parse_args()));print(json.dumps({k:r[k] for k in ('attempted_count','pass_count','conditional_count','withheld_count','numeric_count','reliability_counts','serving_artifacts_changed','watchlist_changed','withheld_register_changed')},sort_keys=True));return 0
+if __name__=='__main__':raise SystemExit(main())

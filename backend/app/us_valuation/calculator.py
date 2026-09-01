@@ -34,7 +34,10 @@ def _projection_factor(*, growth: float, discount: float, terminal: float, years
 
 
 def _lane(artifact: Mapping[str, Any]) -> str:
-    if artifact.get("public_assumptions", {}).get("forecast_mode") == "normalized_equity_earnings":
+    forecast_mode = artifact.get("public_assumptions", {}).get("forecast_mode")
+    if forecast_mode == "asset_runway_equity":
+        return "asset_runway"
+    if forecast_mode == "normalized_equity_earnings":
         return "equity_earnings"
     primary = artifact.get("model_policy", {}).get("primary")
     if primary == "residual_income":
@@ -82,7 +85,13 @@ def _defaults_and_fields(artifact: Mapping[str, Any]) -> tuple[str, dict[str, fl
     assumptions = assumptions if isinstance(assumptions, Mapping) else {}
     lane = _lane(artifact)
     growth, discount, years, terminal = _safe_rates(assumptions)
-    if lane == "equity_earnings":
+    if lane == "asset_runway":
+        runway_factor = _number(assumptions.get("runway_value_factor"), 1.0)
+        defaults = {"runway_value_factor": runway_factor}
+        fields = [
+            _field("runway_value_factor", "Cash-runway value factor", runway_factor, 0.25, 2.0, 0.025),
+        ]
+    elif lane == "equity_earnings":
         earnings_factor = _number(assumptions.get("normalized_earnings_factor"), 1.0)
         multiple = _number(assumptions.get("earnings_multiple"), 8.0)
         defaults = {
@@ -217,6 +226,8 @@ def _validate_overrides(view: Mapping[str, Any], overrides: Mapping[str, Any]) -
 
 
 def _factor(lane: str, values: Mapping[str, float | int]) -> float:
+    if lane == "asset_runway":
+        return float(values["runway_value_factor"])
     if lane == "equity_earnings":
         return float(values["normalized_earnings_factor"]) * float(values["earnings_multiple"])
     if lane == "bank":

@@ -339,6 +339,7 @@ def enterprise_cash_flow_dcf(
     state: EnterpriseCashFlowState,
     *,
     forecast_years: int = 8,
+    allow_nonpositive_equity_trace: bool = False,
 ) -> dict[str, Any]:
     """Discount a source-normalized cash FCFF with a linear growth fade."""
 
@@ -395,7 +396,9 @@ def enterprise_cash_flow_dcf(
         - nci
     )
     per_share = equity_value / shares
-    if not math.isfinite(per_share) or per_share <= 0:
+    if not math.isfinite(per_share):
+        raise ValueError("enterprise cash-FCFF state produces nonfinite equity value")
+    if per_share <= 0 and not allow_nonpositive_equity_trace:
         raise ValueError("enterprise cash-FCFF state produces nonpositive equity value")
     return {
         "model": "fcff_dcf",
@@ -404,10 +407,15 @@ def enterprise_cash_flow_dcf(
         "intrinsic_value_per_share": per_share,
         "enterprise_value": enterprise_value,
         "equity_value": equity_value,
-        "publication_state": "review_required",
+        "publication_state": "withheld" if per_share <= 0 else "review_required",
         "errors": [],
         "warnings": [
-            "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+            "Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+            *(
+                ["Raw residual equity is nonpositive and may be retained only as a private limited-liability-floor trace."]
+                if per_share <= 0
+                else []
+            ),
         ],
         "detail": {
             "forecast_schedule": schedule,

@@ -87,3 +87,13 @@ def test_cash_fcff_rejects_missing_or_nonpositive_value_instead_of_using_zero() 
         enterprise_cash_flow_dcf(
             replace(BASE, interest_bearing_debt=1_000_000.0)
         )
+
+
+def test_cash_fcff_can_retain_an_explicit_private_nonpositive_trace() -> None:
+    result = enterprise_cash_flow_dcf(
+        replace(BASE, interest_bearing_debt=1_000_000.0),
+        allow_nonpositive_equity_trace=True,
+    )
+    assert result["intrinsic_value_per_share"] < 0
+    assert result["publication_state"] == "withheld"
+    assert "limited-liability-floor trace" in result["warnings"][-1]

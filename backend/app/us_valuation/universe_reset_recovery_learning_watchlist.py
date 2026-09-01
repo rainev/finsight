@@ -71,8 +71,11 @@ class RecoveryLearningEntry:
             raise ValueError("watchlist companies must have failed the initial pass")
         if recovery_outcome not in _RECOVERY_OUTCOMES:
             raise ValueError("watchlist recovery outcome is invalid")
-        if initial_outcome == "conditional_numeric_low" and recovery_outcome != "not_applicable":
-            raise ValueError("direct conditional entries do not receive a withheld recovery attempt")
+        if initial_outcome == "conditional_numeric_low" and not (
+            recovery_outcome == "not_applicable"
+            or (batch in {12, 23, 24} and recovery_outcome == "conditional_numeric_low")
+        ):
+            raise ValueError("direct conditional recovery outcome is invalid")
         if initial_outcome == "withheld" and recovery_outcome == "not_applicable":
             raise ValueError("withheld entries require a recovery outcome")
         text = {

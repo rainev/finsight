@@ -587,6 +587,515 @@ Gate: **passed — user confirmed 2026-08-26.** Final Batch 10 is Pass 6 / Condi
 Withheld 0. KMB is bookmarked as Conditional and is not added to the cumulative withheld register.
 Batch 11 remains outside scope.
 
+### Phase B11 — NOW: history-backed Consumer Staples batch
+
+The user explicitly authorized the frozen Batch 11 initial pass on 2026-08-28. Recovery,
+Recovery Learning Watchlist changes, cumulative-withheld-register changes, serving promotion,
+Batch 12, merge, push, and deployment remain unauthorized.
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B11.1 | Freeze and validate the exact ten-company contract and protected baseline | P0 | Manifest identity/hash, exact denominator, Git and protected-root hashes | ✔ VERIFIED |
+| B11.2 | Reuse cached packets before capturing missing cutoff-safe SEC and structural sources | P0 | Identity/date/package hashes, cache receipt, protected roots | ✔ VERIFIED — 4 reused / 6 fetched; 10/10 parsed |
+| B11.3 | Apply the historical-data layer and practical baseline policy | P0 | Source-linked history, exact bridges, ordered Pass/Conditional/Withheld outcomes | ✔ VERIFIED — Pass 2 / Conditional 6 / Withheld 2 |
+| B11.4 | Independently challenge sources, periods, units, shares, bridges, models, arithmetic, and sensitivities | P0 | Luna XHigh; resolve all Critical/Important findings | ✔ PASS — no Critical/Important open |
+| B11.5 | Regenerate twice and verify focused/full backend, frontend, and real API/calculator | P0 | Byte equality, test/build output, 10/10 HTTP parity | ✔ VERIFIED — 1,330 backend; frontend/API pass |
+| B11.6 | Present the initial Batch 11 result and stop before recovery | P0 | Exact values/counts and explicit confirmation gate | ✔ USER CONFIRMED 2026-08-28 |
+
+Gate: **passed — user confirmed 2026-08-28.** The user subsequently authorized the one-attempt
+SYY/BG recovery recorded below. Do not start Batch 12, promote, merge, push, or deploy without a
+separate signal.
+
+### Phase B11-R — one-attempt SYY and BG recovery
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B11-R.1 | Re-audit the exact SYY transaction-state and BG comparable-history release conditions | P0 | Cached filing text, structural facts, periods, units, event and source-tier receipts | ✔ VERIFIED |
+| B11-R.2 | Attempt SYY once as a pre-Jetro standalone current-state baseline | P0 | Transaction isolation, corrected cash/debt, three-year history, DCF and directions | ✔ VERIFIED — Conditional Low |
+| B11-R.3 | Attempt BG once without manufacturing a positive cycle midpoint | P0 | Current combined H1 cash, pro-forma search, predecessor/successor comparability | ✔ VERIFIED — remains Withheld |
+| B11-R.4 | Independently challenge sources, model choice, bridges, arithmetic, and public warnings | P0 | Luna XHigh; resolve all Critical/Important findings | ✔ PASS — no Critical/Important open |
+| B11-R.5 | Regenerate twice and verify focused/full backend, frontend, and cumulative real API | P0 | Byte equality, 1,335 backend tests, build, 110/110 HTTP parity | ✔ VERIFIED |
+| B11-R.6 | Bookmark every non-Pass Batch 11 issuer and register only still-Withheld BG | P0 | 63-entry watchlist, 9-entry withheld register, loader and hash checks | ✔ VERIFIED |
+
+Gate: **passed — user confirmed 2026-08-28.** Final Batch 11 is Pass 2 / Conditional 7 /
+Withheld 1. SYY and BG have each consumed one recovery attempt. Do not start Batch 12, promote,
+merge, push, or deploy without a separate signal.
+
+### Phase B12 — history-backed Health Care batch
+
+The user explicitly authorized the frozen Batch 12 initial pass on 2026-08-28. Recovery,
+Recovery Learning Watchlist or cumulative-withheld-register mutation, serving promotion, Batch 13,
+merge, push, and deployment remain unauthorized.
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B12.1 | Freeze and validate the exact ten-company contract and protected baseline | P0 | Manifest identity/hash, exact denominator, Git and protected-root hashes | ✔ VERIFIED |
+| B12.2 | Reuse cached packets before capturing missing cutoff-safe SEC and structural sources | P0 | Identity/date/package hashes, cache receipt, protected roots | ✔ VERIFIED — BDX reused; 10/10 parsed and offline replayed |
+| B12.3 | Apply historical/practical Health Care baselines with exact Pass/Conditional/Withheld outcomes | P0 | Source-linked history, exact bridges, governed model choice, ordered values | ✔ VERIFIED — Pass 0 / Conditional 9 / Withheld 1 |
+| B12.4 | Independently challenge sources, periods, units, shares, claims, models, arithmetic, and sensitivities | P0 | Luna XHigh; resolve all Critical/Important findings | ✔ PASS — no Critical/Important open |
+| B12.5 | Regenerate twice and verify focused/full backend, frontend, and real API/calculator | P0 | Byte equality, test/build output, 10/10 HTTP parity | ✔ VERIFIED — 1,344 backend; frontend; 120/120 cumulative API |
+| B12.6 | Present the initial Batch 12 result and stop before recovery | P0 | Exact values/counts and explicit confirmation gate | ✔ PRESENTED — user authorized whole-batch recovery 2026-08-28 |
+
+Gate: **initial evidence preserved; recovery separately authorized.** Candidate-i remains the
+immutable comparison surface. The user's recovery signal moves work to Phase B12-R; it does not
+authorize Batch 13, serving promotion, merge, push, or deployment.
+
+### Phase B12-R — NOW: one whole-batch Health Care recovery attempt
+
+Source gap register: Audit 68. The attempt covers all ten issuers once and may retain an initial
+value where the recovery cross-check does not support a better result.
+
+| ID | Work | Source gaps | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B12-R.1 | Audit initial values and choose honest issuer-specific recovery lanes | B12R-01–B12R-08 | P0 | Source/event/model cross-check with exact alternative calculations | ✔ VERIFIED — Audit 68 |
+| B12-R.2 | Add the shared faded cash-FCFF and insurer residual-income recovery layer | B12R-01, B12R-03, B12R-04 | P0 | Exact schedules, terminal bounds, book/ROE/payout traces, monotonicity | ✔ VERIFIED |
+| B12-R.3 | Bind issuer-specific scale, claims, and event states for all ten | B12R-02, B12R-05–B12R-08 | P0 | ABT/BDX legal claims, BAX claims, BMY/LLY events, UHS blockers, WST limitation | ✔ VERIFIED |
+| B12-R.4 | Stage one immutable recovery attempt and complete post-attempt bookkeeping | B12R-09 | P0 | 10 receipts; every remaining non-Pass on watchlist; only still-Withheld registered | ✔ VERIFIED — watchlist 73; UHS-only register addition |
+| B12-R.5 | Independently challenge, replay twice, run full backend/frontend, and exercise the cumulative real API | B12R-01–B12R-09 | P0 | Exact hashes, source/value replay, test/build output, 120/120 HTTP parity | ✔ PASS — no Critical/Important open |
+| B12-R.6 | Present the final Batch 12 recovery result and stop | B12R-09 | P0 | Exact initial-to-final values/counts, evidence report, user confirmation gate | ✔ USER CONFIRMED 2026-08-28 |
+
+Gate: **passed — user confirmed 2026-08-28.** The one whole-batch recovery attempt is consumed.
+Do not start Batch 13, fetch new sources, use market-price anchors, modify tracked serving
+artifacts, promote, merge, push, or deploy without a separate signal.
+
+### Phase B13 — NOW: history-backed Health Care batch
+
+The user explicitly authorized the frozen Batch 13 initial pass on 2026-08-29. Recovery,
+Recovery Learning Watchlist or cumulative-withheld-register mutation, tracked serving promotion,
+Batch 14, merge, push, and deployment remain unauthorized.
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B13.1 | Freeze and validate the exact ten-company contract and protected baseline | P0 | Manifest identity/hash, exact denominator, Git and protected-root hashes | ✔ VERIFIED |
+| B13.2 | Reuse cached packets before capturing missing cutoff-safe SEC and structural sources | P0 | Identity/date/package hashes, cache receipts, protected roots | ✔ VERIFIED — 3 reused / 7 fetched; 10/10 parsed; offline replayed |
+| B13.3 | Apply historical/practical Health Care baselines and economically suitable issuer models | P0 | Five-year source history, exact bridges, faded cash FCFF or managed-care residual income | ✔ VERIFIED — Pass 0 / Conditional 10 / Withheld 0 |
+| B13.4 | Challenge acquisition accounting, claims, shares, model routing, arithmetic, and sensitivities | P0 | Luna XHigh; repair every Critical/Important finding | ✔ PASS — no Critical/Important open |
+| B13.5 | Regenerate twice and verify focused/full backend, frontend, and cumulative real API | P0 | Byte equality, test/build output, 130/130 HTTP parity | ✔ VERIFIED — 1,502 backend; frontend; 130/130 API |
+| B13.6 | Present the initial Batch 13 result and stop before bookkeeping or Batch 14 | P0 | Exact values/counts and explicit confirmation gate | ✔ USER CONFIRMED 2026-08-29 |
+
+Gate: **passed — user confirmed 2026-08-29.** No Batch 13 issuer is Withheld, so there is no
+recovery target. All ten direct Conditional outcomes are bookmarked with `not_applicable` recovery
+status; the watchlist now has 83 entries and the ten-entry cumulative withheld register is
+unchanged. Do not start Batch 14, promote, merge, push, or deploy without a separate signal.
+
+### Phase B14 — NOW: history-backed Health Care batch
+
+The user explicitly authorized the frozen Batch 14 initial pass on 2026-08-29. Recovery,
+Recovery Learning Watchlist or cumulative-withheld-register mutation, tracked serving promotion,
+Batch 15, merge, push, and deployment remain unauthorized.
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B14.1 | Freeze and validate the exact ten-company contract and protected baseline | P0 | Manifest identity/hash, exact denominator, Git and protected-root hashes | ✔ VERIFIED |
+| B14.2 | Reuse cached packets and capture missing cutoff-safe SEC, structural, and event sources | P0 | Identity/date/package hashes, cache receipts, protected roots | ✔ VERIFIED — 3 packets reused / 7 fetched; 10/10 structural; TECH proxy captured |
+| B14.3 | Apply historical/practical Health Care baselines with ordinary Pass attempted first | P0 | Five-year history, exact bridges, pending-event surfaces, ordered values | ✔ VERIFIED — Pass 1 / Conditional 9 / Withheld 0 |
+| B14.4 | Challenge claims, acquisition accounting, revenue adjustments, NCI, model routing, arithmetic, and classification | P0 | Luna xhigh; repair every Critical/Important finding | ✔ PASS — no Critical/Important open |
+| B14.5 | Regenerate twice and verify focused/full backend, frontend, and cumulative real API | P0 | Byte equality, test/build output, 140/140 HTTP parity | ✔ VERIFIED — 1,506 backend; frontend; 140/140 API |
+| B14.6 | Present the initial Batch 14 result and stop before bookkeeping or Batch 15 | P0 | Exact values/counts and explicit confirmation gate | ✔ USER CONFIRMED 2026-08-29 |
+
+Gate: **passed — user confirmed 2026-08-29.** No Batch 14 issuer is Withheld, so there is no
+recovery target. The nine Conditional outcomes are bookmarked with `not_applicable` recovery
+status; IDXX remains a normal Pass. The watchlist now has 92 entries and the ten-entry cumulative
+withheld register is unchanged. Do not start Batch 15, promote, merge, push, or deploy without a
+separate signal.
+
+### Phase B14-PR — one source-only Pass-repair audit
+
+The user explicitly authorized a review of whether any confirmed Batch 14 Conditional company
+could become a normal Pass. The repair bar remains unchanged: a finite value is insufficient when
+a named material dependency is still load-bearing.
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B14-PR.1 | Recheck all nine Conditional release conditions against exact filing/event evidence and the 5% materiality rule | P0 | Source/payment/event/period/claim audit | ✔ VERIFIED — HCA/REGN candidates |
+| B14-PR.2 | Implement HCA/REGN classification and private materiality evidence without changing values | P0 | Exact scenario equality and source rows | ✔ VERIFIED — Pass repairs staged |
+| B14-PR.3 | Independently challenge source facts, arithmetic, classification, reliability, and calculator behavior | P0 | Luna High source lens + Luna xhigh economic lens | ✔ PASS — reliability finding repaired; no open Critical/Important |
+| B14-PR.4 | Replay twice, run full backend/frontend, and exercise cumulative real API | P0 | Byte equality, 1,509 tests, build, 140/140 API | ✔ VERIFIED |
+| B14-PR.5 | Present initial-versus-repaired result and stop before bookkeeping | P0 | Exact counts/values and confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **passed — user confirmed 2026-08-30.** Final Batch 14 is Pass 3 / Conditional 7 /
+Withheld 0 with HCA and REGN newly Pass and every value unchanged. HCA/REGN were removed from the
+watchlist, which now has 90 entries; the ten-entry cumulative withheld register is unchanged. Do
+not start Batch 15, promote, merge, push, or deploy without a separate signal.
+
+### Phase B15 — NOW: history-backed Health Care batch
+
+The user explicitly authorized the frozen Batch 15 initial pass on 2026-08-30. Recovery,
+bookkeeping mutation, tracked serving promotion, Batch 16, merge, push, and deployment remain
+unauthorized.
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B15.1 | Freeze and validate the exact ten-company contract and protected baseline | P0 | Manifest identity/hash, exact denominator, Git and protected-root hashes | ✔ VERIFIED |
+| B15.2 | Reuse cached packets and capture missing cutoff-safe SEC/structural sources | P0 | Identity/date/package hashes, cache receipts, protected roots | ✔ VERIFIED — 2 reused / 8 fetched; 10/10 structural |
+| B15.3 | Apply history-backed operating, owner-cash, and managed-care models with ordinary Pass first | P0 | Exact bridges, history, finite ranges, hard unbounded-claim gates | ✔ VERIFIED — Pass 4 / Conditional 3 / Withheld 3 |
+| B15.4 | Challenge claims, share scale, acquisition cash, normalization, arithmetic, and classifications | P0 | Luna xhigh; repair every Critical/Important finding | ✔ PASS — no Critical/Important open |
+| B15.5 | Regenerate twice and verify focused/full backend, frontend, and cumulative real API | P0 | Byte equality, tests/build, 150/150 HTTP parity | ✔ VERIFIED — 1,514 backend; frontend; 150/150 API |
+| B15.6 | Present the initial Batch 15 result and stop before recovery/bookkeeping or Batch 16 | P0 | Exact values/counts and explicit confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **initial result passed and user-confirmed.** RMD, WAT, and CNC were added to the Recovery
+Learning Watchlist, which now has 93 entries. LH, ISRG, and ALGN remain outside the watchlist and
+withheld register until the separate recovery attempt. Exact next signal:
+`Attempt recovery for Batch 15 withheld companies.` Do not start Batch 16, promote, merge, push,
+or deploy.
+
+### Phase B15-R — NOW: one withheld-company recovery attempt
+
+The user explicitly authorized one recovery attempt for LH, ISRG, and ALGN. Audit 75 proves that
+LH's DOJ subclaim is bounded but its total described legal exposure is not; ISRG and ALGN likewise
+retain separate current claims that cannot be ranged.
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B15-R.1 | Capture and hash the official $14.5M DOJ settlement source | B15R-01, B15R-02 | P0 | DOJ identity/date/amount + immutable replay receipt | ✔ VERIFIED |
+| B15-R.2 | Record why the bounded DOJ amount does not bound LH's Ravgen/class-settlement exposure | B15R-01, B15R-02 | P0 | Exact subclaim arithmetic plus complete current-claim inventory | ✔ VERIFIED |
+| B15-R.3 | Preserve all three hard withholds with explicit source-tier exhaustion | B15R-01–B15R-04 | P0 | Current SEC/DOJ/EU evidence and no invented bound | ✔ VERIFIED |
+| B15-R.4 | Independently challenge, replay twice, run focused/full/backend/frontend, and cumulative API | B15R-05 | P0 | No Critical/Important; byte equality; 150/150 HTTP parity | ✔ PASS |
+| B15-R.5 | Record the consumed attempt, watchlist, still-withheld register, evidence report, and stop before Batch 16 | B15R-05 | P0 | Exact counts/hashes and user confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **passed — user confirmed 2026-08-30.** All three remain Withheld; watchlist 96 and withheld
+register 13. Batch 16 requires the separate signal `Start Universe Reset Batch 16`. No tracked
+serving promotion, merge, push, or deployment.
+
+### Phase B16 — NOW: history-backed Health Care batch
+
+The user explicitly authorized and confirmed the frozen Batch 16 initial pass. Audit 77 fixes the
+exact ten and the source/protected starting state; Audit 78 records the confirmed initial result.
+Recovery is recorded separately in Audit 80. Tracked serving promotion, Batch 17, merge, push, and
+deployment remain unauthorized.
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B16.1 | Bind and test the exact frozen ten-company contract | B16-01 | P0 | Manifest identity/hash, order, roles, CIK uniqueness | ✔ VERIFIED |
+| B16.2 | Reuse three complete packets/packages and capture seven missing cutoff-safe sources | B16-02 | P0 | 10 packets, 10 structural wrappers, zero denominator loss, protected hashes | ✔ VERIFIED — 3 packet reuse / 7 fetch; 10 current structural captures |
+| B16.3 | Apply historical/practical operating or managed-care models with ordinary Pass first | B16-03, B16-04 | P0 | Exact history, bridges, claims/events, finite ordered values | ✔ VERIFIED — Pass 2 / Conditional 2 / Withheld 6 |
+| B16.4 | Independently challenge source facts, model routing, arithmetic, sensitivity, and classification | B16-05 | P0 | Luna High/xhigh; repair every Critical/Important finding | ✔ PASS — no Critical/Important open |
+| B16.5 | Replay twice, run focused/full backend and frontend, and exercise cumulative real API | B16-06 | P0 | Byte equality, tests/build, 160/160 HTTP parity | ✔ VERIFIED — 1,525 backend; frontend; 160/160 API |
+| B16.6 | Write the exact initial result and stop before recovery/bookkeeping or Batch 17 | B16-07 | P0 | Pass/Conditional/Withheld counts, values, hashes, confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **initial result passed and user-confirmed.** A and PODD were added to the Recovery Learning
+Watchlist. The separately authorized strict recovery is preserved in Audit 80 and was superseded
+before confirmation by the whole-batch repair in Audit 82. No tracked serving promotion, Batch 17,
+merge, push, or deployment.
+
+### Phase B16-R — NOW: one withheld-company recovery attempt
+
+The user explicitly authorized one recovery attempt for DXCM, EW, CRL, ZBH, COR, and ELV. Audit 79
+finds finite subcomponents for several issuers, but no complete material claim set is bounded.
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B16-R.1 | Record complete source-tier exhaustion for all six claim sets | B16R-01–B16R-06 | P0 | Current SEC/court/DOJ evidence, no guessed ranges | ✔ VERIFIED |
+| B16-R.2 | Stage six safe Withheld recovery artifacts and an exact ten-company final package | B16R-07 | P0 | `None` values, safe public warnings, protected roots | ✔ VERIFIED |
+| B16-R.3 | Independently challenge every still-Withheld decision and repair evidence omissions | B16R-01–B16R-07 | P0 | Luna High/xhigh; no Critical/Important open | ✔ PASS |
+| B16-R.4 | Replay twice, run focused/full/backend/frontend, and cumulative real API | B16R-07 | P0 | Byte equality, tests/build, 160/160 HTTP parity | ✔ VERIFIED |
+| B16-R.5 | Record consumed attempts, watchlist, withheld register, evidence report, and stop before Batch 17 | B16R-07 | P0 | Exact counts/hashes and user confirmation gate | ↪ SUPERSEDED BEFORE CONFIRMATION BY B16-W |
+
+Gate: **verified strict attempt preserved as history.** Result was 0/6 under the total-claims rule;
+the user then authorized B16-W. No tracked serving promotion, Batch 17, merge, push, or deployment.
+
+### Phase B16-W — NOW: exceptional whole-batch baseline repair
+
+The user explicitly authorized one whole-Batch-16 repair after the source-exhaustive recovery.
+Audit 81 preserves the prior attempt history but changes the product question from “is every legal
+tail bounded?” to “is a transparent reported-operations baseline coherent?”
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B16-W.1 | Add the shared reported-claims/unquantified-tail Conditional policy | B16W-01 | P0 | No zero substitution; unknown amount remains `None`; Low cap and public warning | ✔ VERIFIED |
+| B16-W.2 | Wire DXCM/EW/CRL/ZBH/COR/ELV practical history/equity routes | B16W-02, B16W-03 | P0 | Source periods, history, bridges, recorded claims, finite ordered ranges | ✔ VERIFIED — six newly numeric |
+| B16-W.3 | Reassess A/PODD/VEEV/IQV and implement only evidence-supported classification changes | B16W-04 | P1 | Exact unchanged values except justified classification/policy metadata | ✔ VERIFIED — PODD Pass; A/VEEV/IQV values unchanged |
+| B16-W.4 | Independently challenge, replay twice, run full suites/build, and cumulative real API | B16W-05 | P0 | No Critical/Important open; byte equality; 160/160 HTTP parity | ✔ PASS |
+| B16-W.5 | Supersede bookkeeping without erasing prior recovery evidence and stop before Batch 17 | B16W-06 | P0 | Exact register/watchlist transitions and user confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **passed and user-confirmed.** Final Batch 16 is Pass 3 / Conditional 7 / Withheld 0;
+numeric 10/10. Watchlist 103 (94 Conditional / 9 Withheld); cumulative automatic-withheld history
+remains 19. Evidence: Audit 82. The next valid signal is `Start Universe Reset Batch 17`. No tracked
+serving promotion, Batch 17, merge, push, or deployment occurred.
+
+### Phase B17 — NOW: history-backed Health Care batch
+
+The user explicitly authorized the exact frozen Batch 17 initial pass. Audit 83 fixes the ten-
+company denominator, predecessor state, source-cache preflight, and specialist-model requirements.
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B17.1 | Bind and test the exact ten-company manifest | B17-01 | P0 | Manifest hash/order, roles, CIK uniqueness, partition identity | ✔ VERIFIED |
+| B17.2 | Reuse two packets/two wrappers and capture only missing cutoff-safe evidence | B17-02 | P0 | 10 packets, 10 current structural wrappers, cache replay, protected hashes | ✔ VERIFIED — 2 reused / 8 captured in each layer |
+| B17.3 | Build source-linked practical histories, bridges, events, and suitable model routes | B17-03, B17-04 | P0 | Facts/periods/units/shares, cash or equity model, finite ranges or explicit hard stop | ✔ VERIFIED — Pass 2 / Conditional 8 / Withheld 0 |
+| B17.4 | Challenge source mechanics and economic usefulness in separate passes | B17-03–B17-05 | P0 | Recompute load-bearing facts/arithmetic/sensitivity; no Critical/Important open | ✔ PASS — VTRS/ABBV repaired; 0 open |
+| B17.5 | Replay twice, run focused/full tests/build, and exercise the isolated 170-company API | B17-05 | P0 | Byte equality, full suite, HTTP list/detail/calculator parity, zero leaks | ✔ VERIFIED — 1,546 backend; frontend; 170/170 API |
+| B17.6 | Record the exact initial result and stop before confirmation/recovery/Batch 18 | B17-06 | P0 | Pass/Conditional/Withheld table, hashes, confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **passed and user-confirmed.** Batch 17 is Pass 2 / Conditional 8 / Withheld 0; numeric 10/10.
+Watchlist 111 (102 Conditional / 9 Withheld); cumulative automatic-withheld history remains 19.
+No recovery is needed. Evidence: Audit 84. The next valid signal is
+`Start Universe Reset Batch 18`. No tracked serving promotion, Batch 18, merge, push, or deployment.
+
+### Phase B18 — NOW: history-backed Industrials batch
+
+The user explicitly authorized the exact frozen Batch 18 initial pass. Audit 85 fixes the ten-
+company denominator, predecessor state, cache preflight, and client-funds/mixed-finance controls.
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B18.1 | Bind and test the exact ten-company manifest | B18-01 | P0 | Manifest hash/order, roles, CIK uniqueness, partition identity | ✔ VERIFIED |
+| B18.2 | Reuse five packets/wrappers and capture only missing cutoff-safe evidence | B18-02 | P0 | 10 packets, 10 current wrappers, cache replay, protected hashes | ✔ VERIFIED — 5 reused / 5 captured |
+| B18.3 | Build practical histories, bridges, events, and suitable industrial/specialist routes | B18-03, B18-04 | P0 | Facts/periods/units/shares, client-fund and finance treatment, finite range or hard stop | ✔ VERIFIED — Pass 5 / Conditional 5 / Withheld 0 |
+| B18.4 | Challenge source mechanics and economic usefulness in separate passes | B18-03–B18-05 | P0 | Recompute facts/arithmetic/sensitivity/classification; no Critical/Important open | ✔ PASS — GD cash repaired; 0 open |
+| B18.5 | Replay twice, run focused/full tests/build, and exercise the isolated 180-company API | B18-05 | P0 | Byte equality, full suite, HTTP parity, zero leaks | ✔ VERIFIED — 1,555 backend; frontend; 180/180 API |
+| B18.6 | Record the exact initial result and stop before confirmation/recovery/Batch 19 | B18-06 | P0 | Pass/Conditional/Withheld table, hashes, confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **passed and user-confirmed.** Batch 18 is Pass 5 / Conditional 5 / Withheld 0; numeric 10/10.
+BA, CAT, CMI, DAL, and EMR were added to the Recovery Learning Watchlist, now 116 (107 Conditional /
+9 Withheld); the cumulative automatic-withheld history remains 19. No recovery is needed. Evidence:
+Audit 86. The next valid signal is `Start Universe Reset Batch 19`. No tracked serving promotion,
+Batch 19, merge, push, or deployment occurred.
+
+### Phase B19 — NOW: history-backed Industrials batch
+
+The user explicitly authorized the exact frozen Batch 19 initial pass. Audit 87 fixes the ten-
+company denominator, predecessor state, cache preflight, and continuing-company/mixed-finance
+controls.
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B19.1 | Bind and test the exact ten-company manifest | B19-01 | P0 | Manifest hash/order, roles, CIK uniqueness, partition identity | ✔ VERIFIED |
+| B19.2 | Reuse three packets/wrappers and capture only missing cutoff-safe evidence | B19-02 | P0 | 10 packets, 10 current wrappers, cache replay, protected hashes | ✔ VERIFIED — 3 reused / 7 captured |
+| B19.3 | Build practical histories, bridges, events, and suitable industrial/equity routes | B19-03, B19-04 | P0 | Facts/periods/units/shares, continuing-company and finance treatment, finite range or hard stop | ✔ VERIFIED — Pass 4 / Conditional 6 / Withheld 0 |
+| B19.4 | Challenge source mechanics and economic usefulness in separate passes | B19-03–B19-05 | P0 | Recompute facts/arithmetic/sensitivity/classification; no Critical/Important open | ✔ PASS — HUBB pro-forma scale repaired; 0 open |
+| B19.5 | Replay twice, run focused/full tests/build, and exercise the isolated 190-company API | B19-05 | P0 | Byte equality, full suite, HTTP parity, zero leaks | ✔ VERIFIED — 1,564 backend; frontend; 190/190 API |
+| B19.6 | Record the exact initial result and stop before confirmation/recovery/Batch 20 | B19-06 | P0 | Pass/Conditional/Withheld table, hashes, confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **passed and user-confirmed.** Batch 19 is Pass 4 / Conditional 6 / Withheld 0; numeric 10/10.
+GE, HUBB, MMM, PCAR, PH, and DE were added to the Recovery Learning Watchlist, now 122
+(113 Conditional / 9 Withheld); the cumulative automatic-withheld history remains 19. No recovery
+is needed. Evidence: Audit 88. The next valid signal is `Start Universe Reset Batch 20`. No tracked
+serving promotion, Batch 20, merge, push, or deployment occurred.
+
+### Phase B20 — NOW: history-backed Industrials batch
+
+The user explicitly authorized the exact frozen Batch 20 initial pass. Audit 89 fixes the ten-
+company denominator, predecessor state, cache preflight, and client-funds/finance/airline controls.
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B20.1 | Bind and test the exact ten-company manifest | B20-01 | P0 | Manifest hash/order, roles, CIK uniqueness, partition identity | ✔ VERIFIED |
+| B20.2 | Reuse two packets/wrappers and capture only missing cutoff-safe evidence | B20-02 | P0 | 10 packets, 10 current wrappers, cache replay, protected hashes | ✔ VERIFIED — 2 reused / 8 captured |
+| B20.3 | Build practical histories, bridges, events, and suitable operating/equity routes | B20-03, B20-04 | P0 | Facts/periods/units/shares, client-funds/finance/fleet/transaction treatment, finite range or hard stop | ✔ VERIFIED — Pass 3 / Conditional 7 / Withheld 0 |
+| B20.4 | Challenge source mechanics and economic usefulness in separate passes | B20-03–B20-05 | P0 | Recompute facts/arithmetic/sensitivity/classification; no Critical/Important open | ✔ PASS — 0 open |
+| B20.5 | Replay twice, run focused/full tests/build, and exercise the isolated 200-company API | B20-05 | P0 | Byte equality, full suite, HTTP parity, zero leaks | ✔ VERIFIED — 1,573 backend; frontend; 200/200 API |
+| B20.6 | Record the exact initial result and stop before confirmation/recovery/Batch 21 | B20-06 | P0 | Pass/Conditional/Withheld table, hashes, confirmation gate | ✔ USER CONFIRMED 2026-08-30 |
+
+Gate: **passed and user-confirmed.** Batch 20 is Pass 3 / Conditional 7 / Withheld 0; numeric 10/10.
+PNR, AOS, SNA, LUV, UAL, UNP, and CTAS were added to the Recovery Learning Watchlist, now 129
+(120 Conditional / 9 Withheld); the cumulative automatic-withheld history remains 19. No recovery
+is needed. Evidence: Audit 90. The next valid signal is `Start Universe Reset Batch 21`. No tracked
+serving promotion, Batch 21, merge, push, or deployment occurred.
+
+### Phase B21 — NOW: history-backed Industrials batch
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B21.1 | Bind/test exact manifest | B21-01 | P0 | Hash/order/roles/CIKs | ✔ VERIFIED |
+| B21.2 | Reuse four packets/wrappers; capture six | B21-02 | P0 | 10/10 sources, cache replay, protected hashes | ✔ VERIFIED |
+| B21.3 | Build histories, bridges, events, suitable routes | B21-03, B21-04 | P0 | Facts/periods/units/shares/model suitability | ✔ VERIFIED — 5/5/0 |
+| B21.4 | Independent source/economic challenge | B21-03–B21-05 | P0 | No Critical/Important open | ✔ PASS |
+| B21.5 | Replay, full tests/build, isolated 210-company API | B21-05 | P0 | Byte equality, HTTP parity, zero leaks | ✔ VERIFIED — 1,580; 210/210 |
+| B21.6 | Record exact result and stop before Batch 22 | B21-06 | P0 | Three-way counts and confirmation gate | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Batch 21 is Pass 5 / Conditional 5 / Withheld 0; numeric 10/10.
+Watchlist 134 (125 Conditional / 9 Withheld); automatic-withheld history 19. No recovery is needed.
+Next signal: `Start Universe Reset Batch 22`. Promotion, Batch 22, merge, push, deployment untouched.
+
+### Phase B22 — NOW: history-backed Industrials batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B22.1 | Bind/test exact manifest | ✔ VERIFIED |
+| B22.2 | Reuse/capture cutoff-safe packets and wrappers; correct narrow HON amendment control | ✔ VERIFIED — 10/10 |
+| B22.3 | Build histories, bridges, events, classifications | ✔ VERIFIED — 7/3/0 |
+| B22.4 | Independent challenge and deterministic replay | ✔ PASS — 0 Critical/Important; byte equal |
+| B22.5 | Full tests/build and isolated 220-company API | ✔ VERIFIED — 1,445 backend; frontend; 220/220 API |
+| B22.6 | Record result and stop before Batch 23 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Batch 22 is Pass 7 / Conditional 3 / Withheld 0; numeric 10/10.
+Watchlist 137 (128 Conditional / 9 Withheld); automatic-withheld history 19. No recovery is needed.
+Next signal: `Start Universe Reset Batch 23`. Promotion, Batch 23, merge, push, deployment untouched.
+
+### Phase B23 — NOW: history-backed Industrials batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B23.1 | Bind/test exact manifest | ✔ VERIFIED |
+| B23.2 | Reuse three cutoff packets; capture seven packets and current wrappers | ✔ VERIFIED — 10/10 |
+| B23.3 | Build histories, bridges, events, classifications | ✔ VERIFIED — 2/8/0 after corrections |
+| B23.4 | Independent challenge and deterministic replay | ✔ PASS — 2 Important/1 Minor resolved; 0 open; byte equal |
+| B23.5 | Full tests/build and isolated 230-company API | ✔ VERIFIED — 1,454 backend; frontend; 230/230 API |
+| B23.6 | Record result and stop before Batch 24 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Batch 23 is Pass 2 / Conditional 8 / Withheld 0; numeric 10/10.
+Watchlist 145 (136 Conditional / 9 Withheld); automatic-withheld history 19. No recovery is needed.
+Next signal: `Start Universe Reset Batch 24`. Promotion, Batch 24, merge, push, deployment untouched.
+
+### Phase B23-R — NOW: one whole-Conditional repair attempt
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B23-R.1 | Pin the confirmed candidate and audit eight release conditions | ✔ VERIFIED |
+| B23-R.2 | Capture URI's exact FY2025 fleet/other capex | ✔ VERIFIED |
+| B23-R.3 | Stage a successor and attempt all eight Conditional issuers | ✔ VERIFIED — URI upgraded; seven remain Conditional |
+| B23-R.4 | Independent challenge and deterministic replay | ✔ PASS — 0 Critical/Important; byte equal |
+| B23-R.5 | Full suites/build and isolated 230-company API | ✔ VERIFIED — 1,460 backend; frontend; 230/230 API |
+| B23-R.6 | Present result and stop before Batch 24 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Final Batch 23 is Pass 3 / Conditional 7 / Withheld 0.
+Watchlist 144 (135 Conditional / 9 Withheld); automatic-withheld history 19. URI is fully repaired;
+the other seven consumed their repair attempt. Next signal: `Start Universe Reset Batch 24`.
+
+### Phase B24 — NOW: history-backed Industrials batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B24.1 | Bind/test exact manifest | ✔ VERIFIED |
+| B24.2 | Reuse three cutoff packets; capture seven packets and current wrappers | ✔ VERIFIED — 10/10 |
+| B24.3 | Build histories, bridges, events, classifications | ✔ VERIFIED — 4/6/0 after corrections |
+| B24.4 | Independent challenge and deterministic replay | ✔ PASS — 2 Important resolved; 0 open; byte equal |
+| B24.5 | Full tests/build and isolated 240-company API | ✔ VERIFIED — 1,468 backend; frontend; 240/240 API |
+| B24.6 | Record result and stop before Batch 25 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Batch 24 is Pass 4 / Conditional 6 / Withheld 0; numeric 10/10.
+Watchlist 150 (141 Conditional / 9 Withheld); automatic-withheld history 19. No recovery is needed.
+Next signal: `Start Universe Reset Batch 25`. Promotion, Batch 25, merge, push, deployment untouched.
+
+### Phase B24-R — NOW: one whole-Conditional repair attempt
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B24-R.1 | Pin the confirmed candidate and audit six release conditions | ✔ VERIFIED |
+| B24-R.2 | Stage a successor and attempt all six Conditional issuers | ✔ VERIFIED — 0 upgraded; six remain Conditional |
+| B24-R.3 | Independent challenge and deterministic replay | ✔ PASS — 0 Critical/Important; byte equal |
+| B24-R.4 | Full suites/build and isolated 240-company API | ✔ VERIFIED — 1,473 backend; frontend; 240/240 API |
+| B24-R.5 | Present result and stop before Batch 25 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Final Batch 24 remains Pass 4 / Conditional 6 / Withheld 0.
+Watchlist 150 (141 Conditional / 9 Withheld); all six consumed the repair attempt. Next signal:
+`Start Universe Reset Batch 25`. Serving state, Batch 25, merge, push, deployment remain untouched.
+
+### Phase B25 — NOW: ordinary Industrials plus successor-company gates
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B25.1 | Bind/test exact manifest and predecessor state | ✔ VERIFIED |
+| B25.2 | Reuse/capture packets and prove eligible source forms | ✔ VERIFIED — 10/10 |
+| B25.3 | Build ordinary and successor histories/bridges/classifications | ✔ VERIFIED — 2/7/1 |
+| B25.4 | Independent challenge and deterministic replay | ✔ PASS — 2 Important resolved; byte equal |
+| B25.5 | Full tests/build and isolated 250-company API | ✔ VERIFIED — 1,479 backend; frontend; 250/250 API |
+| B25.6 | Record result and stop before Batch 26 | ✔ USER CONFIRMED 2026-08-31; HONA RECOVERY NEXT |
+
+Gate: **initial result confirmed.** HONA is withheld and must receive one recovery attempt before
+still-Withheld bookkeeping. Batch 26, serving promotion, merge, push, and deployment remain
+untouched. Evidence: Audit 104.
+
+### Phase B25-R — HONA recovery
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B25-R.1 | Build one bounded HONA equity-earnings fallback | P0 | Parent-attributable arithmetic and conservative multiples | ✔ VERIFIED |
+| B25-R.2 | Correct independent-review findings and replay twice | P0 | 0 Critical/Important; 21 files byte-identical | ✔ PASS |
+| B25-R.3 | Exercise focused/full tests, frontend build, and cumulative API | P0 | 1,625 backend; frontend; 250/250 API | ✔ VERIFIED |
+| B25-R.4 | Present result and stop before bookkeeping/Batch 26 | P0 | Pass 2 / Conditional 8 / Withheld 0 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **user confirmed.** HONA is recorded as a Conditional Low recovery, not a Pass. The Recovery
+Learning Watchlist is 158 companies (149 Conditional / 9 Withheld); the still-Withheld register is
+unchanged. Batch 26, serving promotion, merge, push, and deployment remain untouched. Evidence:
+Audit 105.
+
+### Phase B26 — NOW: history-backed Information Technology batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B26.1 | Bind/test the exact frozen ten-company manifest and predecessor state | ✔ VERIFIED |
+| B26.2 | Reuse two cutoff packets/parses; capture eight missing packets and current wrappers | ✔ VERIFIED — 10/10 |
+| B26.3 | Build histories, bridges, events, suitable technology/cycle models, and classifications | ✔ VERIFIED — 6/4/0 |
+| B26.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ PASS — 1 Important resolved; 0 open |
+| B26.5 | Replay twice, run full suites/build, and exercise the isolated 260-company API | ✔ VERIFIED — 1,635 backend; frontend; 260/260 API |
+| B26.6 | Record the exact result and stop before confirmation/recovery/Batch 27 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Final Batch 26 is Pass 6 / Conditional 4 / Withheld 0,
+numeric 10/10. Watchlist 162 (153 Conditional / 9 Withheld); automatic-withheld history remains
+19. No recovery is needed. Evidence: Audit 107. Next signal: `Start Universe Reset Batch 27`.
+Tracked serving promotion, Batch 27, merge, push, and deployment remain untouched.
+
+### Phase B27 — NOW: history-backed Information Technology batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B27.1 | Bind/test the exact frozen ten-company manifest and predecessor state | ✔ VERIFIED |
+| B27.2 | Reuse four cutoff packets/parses; capture six missing packets and current wrappers | ✔ VERIFIED — 10/10 |
+| B27.3 | Build histories, bridges, events, suitable technology/cycle models, and classifications | ✔ VERIFIED — 6/4/0 |
+| B27.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ PASS — 4 Important corrections; 0 open |
+| B27.5 | Replay twice, run full suites/build, and exercise the isolated 270-company API | ✔ VERIFIED — 1,645 backend; frontend; 270/270 API |
+| B27.6 | Record the exact result and stop before confirmation/recovery/Batch 28 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Final Batch 27 is Pass 6 / Conditional 4 / Withheld 0,
+numeric 10/10. Watchlist 166 (157 Conditional / 9 Withheld); automatic-withheld history remains
+19. No recovery is needed. Evidence: Audit 109. Next signal: `Start Universe Reset Batch 28`.
+Tracked serving promotion, Batch 28, merge, push, and deployment remain untouched.
+
+### Phase B28 — NOW: history-backed Information Technology batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B28.1 | Bind/test the exact frozen ten-company manifest and predecessor state | ✔ VERIFIED |
+| B28.2 | Reuse four cutoff packets/parses; capture six missing packets and current wrappers | ✔ VERIFIED — 10/10 |
+| B28.3 | Build histories, bridges, events, suitable technology/cycle models, and classifications | ✔ VERIFIED — 2/8/0 |
+| B28.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ PASS — 0 open |
+| B28.5 | Replay twice, run full suites/build, and exercise the isolated 280-company API | ✔ VERIFIED — 1,510 backend; frontend; 280/280 API |
+| B28.6 | Record the exact result and stop before confirmation/recovery/Batch 29 | ✔ USER CONFIRMED 2026-08-31 |
+
+Gate: **passed and user-confirmed.** Final Batch 28 is Pass 2 / Conditional 8 / Withheld 0,
+numeric 10/10. Watchlist 174 (165 Conditional / 9 Withheld); automatic-withheld history remains
+19. No recovery is needed. Evidence: Audit 111. Tracked serving promotion, Batch 29, merge, push,
+and deployment remain untouched.
+
+### Phase B29 — NOW: history-backed Information Technology batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B29.1 | Bind/test the exact frozen ten-company manifest and predecessor state | ✔ VERIFIED |
+| B29.2 | Reuse three cutoff packets/parses; capture seven missing packets and current wrappers | ✔ VERIFIED — 10/10 |
+| B29.3 | Build histories, bridges, events, suitable technology/cycle models, and classifications | ✔ VERIFIED — 3/7/0 |
+| B29.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ PASS — 0 open |
+| B29.5 | Replay twice, run full suites/build, and exercise the isolated 290-company API | ✔ VERIFIED — 1,519 backend; frontend; 290/290 API |
+| B29.6 | Record the exact result and stop before confirmation/recovery/Batch 30 | ✔ USER CONFIRMED 2026-09-01 |
+
+Gate: **passed and user-confirmed.** Final Batch 29 is Pass 3 / Conditional 7 / Withheld 0,
+numeric 10/10. Watchlist 181 (172 Conditional / 9 Withheld); automatic-withheld history remains
+19. No recovery is needed. Evidence: Audit 113. Tracked serving promotion, Batch 30, merge, push,
+and deployment remain untouched.
+
+### Phase B30 — user-confirmed
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B30.1 | Bind/test the exact frozen ten-company manifest and predecessor state | ✔ VERIFIED |
+| B30.2 | Reuse three cutoff packets/parses; capture seven missing packets and current wrappers | ✔ VERIFIED — 10/10 |
+| B30.3 | Build histories, bridges, events, suitable technology/cycle models, and classifications | ✔ VERIFIED — 2/8/0 |
+| B30.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ PASS — 0 open |
+| B30.5 | Replay twice, run full suites/build, and exercise the isolated 300-company API | ✔ VERIFIED |
+| B30.6 | Record the exact result and stop before confirmation/recovery/Batch 31 | ✔ USER-CONFIRMED |
+
+Gate: **user-confirmed on 2026-09-01.** Batch 30 is Pass 2 / Conditional 8 / Withheld 0, and all
+ten have numeric Low-reliability baselines. Final H/I artifacts are byte-identical, the complete
+backend suite and production frontend build passed, and the isolated 300-company real API matched
+every list/detail/calculator artifact with zero leaks. The eight Conditional companies are now on
+the Recovery Learning Watchlist. Serving promotion, Batch 31, merge, push, and deployment remain
+outside scope.
+
+Gate: **initial processing authorized.** Evidence starts in Audit 114. Recovery, bookkeeping,
+tracked serving promotion, Batch 31, merge, push, and deployment remain untouched.
+
 ### Phase B04-PR — verified Pass repairs
 
 | ID | Work | Severity | Verify method | Status |

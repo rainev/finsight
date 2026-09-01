@@ -124,13 +124,17 @@ def _controlling_filing(
 
 
 def _normalizer(
-    submissions: Mapping[str, Any], companyfacts: Mapping[str, Any]
+    submissions: Mapping[str, Any],
+    companyfacts: Mapping[str, Any],
+    *,
+    concept_config: Mapping[str, Any] | None = None,
 ) -> CompanyFactsNormalizer:
     return CompanyFactsNormalizer(
         dict(companyfacts),
         fiscal_year_end=submissions.get("fiscalYearEnd"),
         as_of_date=BATCH_02_VALUATION_DATE,
         filing_records=_filing_records(submissions),
+        concept_config=dict(concept_config) if concept_config is not None else None,
     )
 
 

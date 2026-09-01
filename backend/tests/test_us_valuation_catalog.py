@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from scripts.activate_us_valuation_catalog import activate
+from scripts.build_us_valuation_catalog import build_catalog
 from app.routers import us_valuations as router
 from app.us_valuation.calculator import calculator_view
 from app.us_valuation.catalog import (
@@ -131,6 +132,32 @@ def test_active_pointer_binds_manifest_hash(tmp_path: Path) -> None:
 
     with pytest.raises(CatalogIntegrityError, match="manifest hash mismatch"):
         load_active_catalog(tmp_path)
+
+
+def test_extending_catalog_accumulates_base_publication_counts(tmp_path: Path) -> None:
+    batch_11 = ROOT / "output/batch-11-recovery/candidate-k/staged-public"
+    target = tmp_path / "extended"
+    manifest = build_catalog(
+        catalog_kind="reset",
+        target_root=target,
+        catalog_version="TEST-B01-B11",
+        universe_version="US-SP500-ISSUERS-2026-08-14-1.0",
+        valuation_date="2026-08-14",
+        created_at="2026-08-28",
+        batch_sources=((11, batch_11, "docs/audit/66-batch-11-recovery-result.md"),),
+        base_catalog=RESET,
+        expected_count=110,
+        expected_availability={
+            "available": 47,
+            "conditional_estimate": 58,
+            "not_available": 5,
+        },
+        expected_publication={"review_required": 105, "withheld": 5},
+    )
+    assert manifest["publication_counts"] == {
+        "review_required": 105,
+        "withheld": 5,
+    }
 
 
 def test_legacy_archive_can_be_selected_in_isolated_rollback(tmp_path: Path) -> None:

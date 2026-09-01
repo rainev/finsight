@@ -17,3 +17,10 @@ selected fact's lineage, and reject conflicts rather than relying on list order.
 the selected accession and a fact whose period ends before but is filed after the valuation date.
 
 The parser must receive the valuation cutoff separately; setting `valuation_date=filed_date` makes every source self-eligible and silently reintroduces look-ahead. Same-period candidates are ordered by period end, filed date, amendment precedence, and accession—not by numeric value or input order.
+
+Batch 29 exposed the same requirement for filing-note narrative. An accession and filed date alone
+do not let a later reviewer prove that a hand-entered commitment, subsequent event, legal state, or
+transaction term came from the cited document. Every private narrative row must also retain the
+primary document name, SEC source URL, primary-document SHA-256, and package-manifest SHA-256.
+Structural facts keep their concept/unit/dimensions; narrative facts keep document-byte lineage.
+Test that every non-structural event row has these fields before accepting the candidate.

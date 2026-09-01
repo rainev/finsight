@@ -351,9 +351,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "ford_normalized_equity_earnings_baseline",
       "why_not_fully_recovered": "The baseline normalizes consolidated equity earnings and does not claim a full Ford Credit sum-of-parts.",
-      "learning_themes": ["captive-finance separation", "normalized auto-cycle earnings"],
-      "revisit_triggers": ["complete Ford Credit equity/funding allocation", "stable warranty, pension, and EV-transition earnings"],
-      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+      "learning_themes": [
+        "captive-finance separation",
+        "normalized auto-cycle earnings"
+      ],
+      "revisit_triggers": [
+        "complete Ford Credit equity/funding allocation",
+        "stable warranty, pension, and EV-transition earnings"
+      ],
+      "evidence_reports": [
+        "docs/audit/46-controlled-batch-04-result.md"
+      ]
     },
     {
       "batch": 4,
@@ -365,9 +373,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "working_capital_normalized_cash_fcff",
       "why_not_fully_recovered": "Acquisition and working-capital normalization remain assumption-driven and the bear residual uses an equity floor.",
-      "learning_themes": ["supplier finance and working capital", "acquisition normalization"],
-      "revisit_triggers": ["stable post-acquisition cash conversion", "fully reconciled supplier-finance claims"],
-      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+      "learning_themes": [
+        "supplier finance and working capital",
+        "acquisition normalization"
+      ],
+      "revisit_triggers": [
+        "stable post-acquisition cash conversion",
+        "fully reconciled supplier-finance claims"
+      ],
+      "evidence_reports": [
+        "docs/audit/46-controlled-batch-04-result.md"
+      ]
     },
     {
       "batch": 4,
@@ -379,9 +395,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "post_impairment_normalized_cash_fcff",
       "why_not_fully_recovered": "Entertainment changes, impairments, restructuring, and licensing economics require normalized scenarios.",
-      "learning_themes": ["post-impairment normalization", "licensing and entertainment transition"],
-      "revisit_triggers": ["stable post-divestiture cash history", "resolved restructuring and impairment effects"],
-      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+      "learning_themes": [
+        "post-impairment normalization",
+        "licensing and entertainment transition"
+      ],
+      "revisit_triggers": [
+        "stable post-divestiture cash history",
+        "resolved restructuring and impairment effects"
+      ],
+      "evidence_reports": [
+        "docs/audit/46-controlled-batch-04-result.md"
+      ]
     },
     {
       "batch": 4,
@@ -393,9 +417,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "home_retail_normalized_cash_fcff",
       "why_not_fully_recovered": "Housing-cycle cash conversion and unresolved ownership claims remain ranged assumptions.",
-      "learning_themes": ["housing-cycle normalization", "unresolved claim reserves"],
-      "revisit_triggers": ["complete current claims disclosure", "stable through-cycle cash conversion"],
-      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+      "learning_themes": [
+        "housing-cycle normalization",
+        "unresolved claim reserves"
+      ],
+      "revisit_triggers": [
+        "complete current claims disclosure",
+        "stable through-cycle cash conversion"
+      ],
+      "evidence_reports": [
+        "docs/audit/46-controlled-batch-04-result.md"
+      ]
     },
     {
       "batch": 4,
@@ -407,9 +439,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "transition_normalized_cash_fcff",
       "why_not_fully_recovered": "Wholesale/DTC mix, China, inventory, FX, and turnaround margins require transition assumptions.",
-      "learning_themes": ["brand turnaround margins", "wholesale versus DTC inventory"],
-      "revisit_triggers": ["realized turnaround cash conversion", "normalized inventory and channel mix"],
-      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+      "learning_themes": [
+        "brand turnaround margins",
+        "wholesale versus DTC inventory"
+      ],
+      "revisit_triggers": [
+        "realized turnaround cash conversion",
+        "normalized inventory and channel mix"
+      ],
+      "evidence_reports": [
+        "docs/audit/46-controlled-batch-04-result.md"
+      ]
     },
     {
       "batch": 4,
@@ -421,9 +461,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "casino_cycle_jv_normalized_cash_fcff",
       "why_not_fully_recovered": "Casino-cycle, property capex, MGM China/JV/NCI, leases, and digital economics remain scenario-driven.",
-      "learning_themes": ["casino-cycle normalization", "JV/NCI and lease treatment"],
-      "revisit_triggers": ["stable casino and digital cash history", "complete JV/NCI allocation"],
-      "evidence_reports": ["docs/audit/46-controlled-batch-04-result.md"]
+      "learning_themes": [
+        "casino-cycle normalization",
+        "JV/NCI and lease treatment"
+      ],
+      "revisit_triggers": [
+        "stable casino and digital cash history",
+        "complete JV/NCI allocation"
+      ],
+      "evidence_reports": [
+        "docs/audit/46-controlled-batch-04-result.md"
+      ]
     },
     {
       "batch": 5,
@@ -435,9 +483,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "cruise_cycle_normalized_cash_fcff",
       "why_not_fully_recovered": "Cruise recovery, ship capex, debt, and lease assumptions produce a zero bear equity floor.",
-      "learning_themes": ["cruise-cycle normalization", "ship capex and leverage"],
-      "revisit_triggers": ["normalized cruise cash history", "lower and fully reconciled leverage"],
-      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+      "learning_themes": [
+        "cruise-cycle normalization",
+        "ship capex and leverage"
+      ],
+      "revisit_triggers": [
+        "normalized cruise cash history",
+        "lower and fully reconciled leverage"
+      ],
+      "evidence_reports": [
+        "docs/audit/47-controlled-batch-05-result.md"
+      ]
     },
     {
       "batch": 5,
@@ -449,9 +505,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "homebuilder_normalized_equity_earnings_baseline",
       "why_not_fully_recovered": "Mortgage operations, land options, inventory, and debt remain inside a consolidated equity-earnings range.",
-      "learning_themes": ["homebuilder mortgage operations", "land and inventory accounting"],
-      "revisit_triggers": ["mortgage/homebuilding earnings separation", "source-bounded land and inventory cycle"],
-      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+      "learning_themes": [
+        "homebuilder mortgage operations",
+        "land and inventory accounting"
+      ],
+      "revisit_triggers": [
+        "mortgage/homebuilding earnings separation",
+        "source-bounded land and inventory cycle"
+      ],
+      "evidence_reports": [
+        "docs/audit/47-controlled-batch-05-result.md"
+      ]
     },
     {
       "batch": 5,
@@ -463,9 +527,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "restaurant_lease_turnaround_cash_fcff",
       "why_not_fully_recovered": "Store turnaround, leases, inventory, and negative book equity make normalized cash provisional.",
-      "learning_themes": ["restaurant turnaround", "store leases and negative equity"],
-      "revisit_triggers": ["realized store-level cash recovery", "stable post-turnaround margins"],
-      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+      "learning_themes": [
+        "restaurant turnaround",
+        "store leases and negative equity"
+      ],
+      "revisit_triggers": [
+        "realized store-level cash recovery",
+        "stable post-turnaround margins"
+      ],
+      "evidence_reports": [
+        "docs/audit/47-controlled-batch-05-result.md"
+      ]
     },
     {
       "batch": 5,
@@ -477,9 +549,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "homebuilder_normalized_equity_earnings_baseline",
       "why_not_fully_recovered": "Mortgage banking, land inventory, notes payable, and NCI remain consolidated in an equity-earnings range.",
-      "learning_themes": ["homebuilder mortgage banking", "land inventory and financing"],
-      "revisit_triggers": ["mortgage/homebuilding earnings separation", "through-cycle land and inventory history"],
-      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+      "learning_themes": [
+        "homebuilder mortgage banking",
+        "land inventory and financing"
+      ],
+      "revisit_triggers": [
+        "mortgage/homebuilding earnings separation",
+        "through-cycle land and inventory history"
+      ],
+      "evidence_reports": [
+        "docs/audit/47-controlled-batch-05-result.md"
+      ]
     },
     {
       "batch": 5,
@@ -491,9 +571,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "cruise_cycle_normalized_cash_fcff",
       "why_not_fully_recovered": "Ship capex, leverage, leases, NCI, and cruise-cycle assumptions create a zero bear equity floor.",
-      "learning_themes": ["cruise-cycle normalization", "ship capex and leverage"],
-      "revisit_triggers": ["normalized cruise cash history", "complete debt/lease/NCI reconciliation"],
-      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+      "learning_themes": [
+        "cruise-cycle normalization",
+        "ship capex and leverage"
+      ],
+      "revisit_triggers": [
+        "normalized cruise cash history",
+        "complete debt/lease/NCI reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/47-controlled-batch-05-result.md"
+      ]
     },
     {
       "batch": 5,
@@ -505,9 +593,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "homebuilder_normalized_equity_earnings_baseline",
       "why_not_fully_recovered": "Lot options, land deposits, mortgage earnings, and the housing cycle remain inside consolidated assumptions.",
-      "learning_themes": ["lot-option accounting", "homebuilder mortgage operations"],
-      "revisit_triggers": ["mortgage/homebuilding earnings separation", "source-bounded lot and land cycle"],
-      "evidence_reports": ["docs/audit/47-controlled-batch-05-result.md"]
+      "learning_themes": [
+        "lot-option accounting",
+        "homebuilder mortgage operations"
+      ],
+      "revisit_triggers": [
+        "mortgage/homebuilding earnings separation",
+        "source-bounded lot and land cycle"
+      ],
+      "evidence_reports": [
+        "docs/audit/47-controlled-batch-05-result.md"
+      ]
     },
     {
       "batch": 6,
@@ -519,9 +615,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "homebuilder_normalized_equity_earnings_baseline",
       "why_not_fully_recovered": "Mortgage activity, land deposits, inventory, and financing remain inside consolidated common earnings.",
-      "learning_themes": ["homebuilder mortgage operations", "land and inventory period gaps"],
-      "revisit_triggers": ["current mortgage/land point facts", "mortgage and homebuilding earnings separation"],
-      "evidence_reports": ["docs/audit/48-controlled-batch-06-result.md"]
+      "learning_themes": [
+        "homebuilder mortgage operations",
+        "land and inventory period gaps"
+      ],
+      "revisit_triggers": [
+        "current mortgage/land point facts",
+        "mortgage and homebuilding earnings separation"
+      ],
+      "evidence_reports": [
+        "docs/audit/48-controlled-batch-06-result.md"
+      ]
     },
     {
       "batch": 6,
@@ -533,9 +637,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "capex_lease_normalized_cash_fcff",
       "why_not_fully_recovered": "Current post-capex cash is negative and AI/data-center spending, leases, and cash conversion create a zero bear equity floor.",
-      "learning_themes": ["AI and data-center capex", "capex-to-cash conversion"],
-      "revisit_triggers": ["reported capex normalization", "incremental AI cash-flow evidence"],
-      "evidence_reports": ["docs/audit/48-controlled-batch-06-result.md"]
+      "learning_themes": [
+        "AI and data-center capex",
+        "capex-to-cash conversion"
+      ],
+      "revisit_triggers": [
+        "reported capex normalization",
+        "incremental AI cash-flow evidence"
+      ],
+      "evidence_reports": [
+        "docs/audit/48-controlled-batch-06-result.md"
+      ]
     },
     {
       "batch": 6,
@@ -547,23 +659,39 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "franchise_disposal_lease_cash_fcff",
       "why_not_fully_recovered": "Franchise economics, disposal scope, leases, negative equity, and carried annual interest remain provisional.",
-      "learning_themes": ["franchise and disposal-group cash", "aggregate debt scope"],
-      "revisit_triggers": ["aligned continuing-operations cash", "complete disposal and lease reconciliation"],
-      "evidence_reports": ["docs/audit/48-controlled-batch-06-result.md"]
+      "learning_themes": [
+        "franchise and disposal-group cash",
+        "aggregate debt scope"
+      ],
+      "revisit_triggers": [
+        "aligned continuing-operations cash",
+        "complete disposal and lease reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/48-controlled-batch-06-result.md"
+      ]
     },
     {
       "batch": 7,
       "ticker": "EL",
       "cik": "0001001250",
-      "issuer_name": "Estée Lauder Companies (The)",
+      "issuer_name": "Est\u00e9e Lauder Companies (The)",
       "initial_outcome": "conditional_numeric_low",
       "recovery_outcome": "not_applicable",
       "current_status": "conditional_numeric_low",
       "provisional_model": "brand_turnaround_normalized_cash_fcff",
       "why_not_fully_recovered": "Brand turnaround, restructuring, and margin recovery remain material despite five-year normalization.",
-      "learning_themes": ["brand turnaround normalization", "restructuring and margin recovery"],
-      "revisit_triggers": ["stable post-turnaround margins", "completed restructuring cash evidence"],
-      "evidence_reports": ["docs/audit/55-controlled-batch-07-result.md"]
+      "learning_themes": [
+        "brand turnaround normalization",
+        "restructuring and margin recovery"
+      ],
+      "revisit_triggers": [
+        "stable post-turnaround margins",
+        "completed restructuring cash evidence"
+      ],
+      "evidence_reports": [
+        "docs/audit/55-controlled-batch-07-result.md"
+      ]
     },
     {
       "batch": 7,
@@ -575,9 +703,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "travel_marketplace_normalized_cash_fcff",
       "why_not_fully_recovered": "Deferred merchant bookings combine supplier funds and future company margin, requiring a broad excess-cash range.",
-      "learning_themes": ["merchant booking cash classification", "travel marketplace working capital"],
-      "revisit_triggers": ["supplier-versus-margin booking split", "stable merchant working-capital conversion"],
-      "evidence_reports": ["docs/audit/55-controlled-batch-07-result.md"]
+      "learning_themes": [
+        "merchant booking cash classification",
+        "travel marketplace working capital"
+      ],
+      "revisit_triggers": [
+        "supplier-versus-margin booking split",
+        "stable merchant working-capital conversion"
+      ],
+      "evidence_reports": [
+        "docs/audit/55-controlled-batch-07-result.md"
+      ]
     },
     {
       "batch": 7,
@@ -589,9 +725,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "casino_cycle_normalized_cash_fcff",
       "why_not_fully_recovered": "Casino-cycle downside, development spending, and negative book NCI attribution create a zero bear equity floor.",
-      "learning_themes": ["casino-cycle normalization", "development capex and NCI attribution"],
-      "revisit_triggers": ["full post-pandemic casino cycle", "source-bounded development and NCI schedule"],
-      "evidence_reports": ["docs/audit/55-controlled-batch-07-result.md"]
+      "learning_themes": [
+        "casino-cycle normalization",
+        "development capex and NCI attribution"
+      ],
+      "revisit_triggers": [
+        "full post-pandemic casino cycle",
+        "source-bounded development and NCI schedule"
+      ],
+      "evidence_reports": [
+        "docs/audit/55-controlled-batch-07-result.md"
+      ]
     },
     {
       "batch": 7,
@@ -603,9 +747,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "casino_cycle_normalized_cash_fcff",
       "why_not_fully_recovered": "Casino-cycle downside and Macao/Singapore development commitments create a zero bear equity floor.",
-      "learning_themes": ["casino-cycle normalization", "concession and expansion reinvestment"],
-      "revisit_triggers": ["full post-pandemic casino cycle", "issuer-reported development cash schedule"],
-      "evidence_reports": ["docs/audit/55-controlled-batch-07-result.md"]
+      "learning_themes": [
+        "casino-cycle normalization",
+        "concession and expansion reinvestment"
+      ],
+      "revisit_triggers": [
+        "full post-pandemic casino cycle",
+        "issuer-reported development cash schedule"
+      ],
+      "evidence_reports": [
+        "docs/audit/55-controlled-batch-07-result.md"
+      ]
     },
     {
       "batch": 7,
@@ -617,9 +769,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "auto_energy_capex_normalized_cash_fcff",
       "why_not_fully_recovered": "Regulatory-credit dependence, AI/factory capex, product mix, and recent share issuance remain material.",
-      "learning_themes": ["regulatory-credit cash dependence", "AI and factory capex"],
-      "revisit_triggers": ["credit-independent cash conversion", "mature factory and AI capex history"],
-      "evidence_reports": ["docs/audit/55-controlled-batch-07-result.md"]
+      "learning_themes": [
+        "regulatory-credit cash dependence",
+        "AI and factory capex"
+      ],
+      "revisit_triggers": [
+        "credit-independent cash conversion",
+        "mature factory and AI capex history"
+      ],
+      "evidence_reports": [
+        "docs/audit/55-controlled-batch-07-result.md"
+      ]
     },
     {
       "batch": 7,
@@ -631,9 +791,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "travel_marketplace_normalized_cash_fcff",
       "why_not_fully_recovered": "Merchant booking balances require a broad excess-cash range, while nonredeemable NCI remains a separate claim.",
-      "learning_themes": ["merchant booking cash classification", "travel marketplace NCI and working capital"],
-      "revisit_triggers": ["supplier-versus-margin booking split", "stable merchant cash and NCI reconciliation"],
-      "evidence_reports": ["docs/audit/55-controlled-batch-07-result.md"]
+      "learning_themes": [
+        "merchant booking cash classification",
+        "travel marketplace NCI and working capital"
+      ],
+      "revisit_triggers": [
+        "supplier-versus-margin booking split",
+        "stable merchant cash and NCI reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/55-controlled-batch-07-result.md"
+      ]
     },
     {
       "batch": 8,
@@ -645,9 +813,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "apparel_owner_cash_fcff",
       "why_not_fully_recovered": "Tariff pressure and uncertain refunds, China demand, supplier finance, and exchangeable-share dilution remain material.",
-      "learning_themes": ["tariff cash-flow sensitivity", "supplier finance and exchangeable shares"],
-      "revisit_triggers": ["resolved tariff/refund treatment", "stable post-tariff regional margins"],
-      "evidence_reports": ["docs/audit/56-controlled-batch-08-result.md"]
+      "learning_themes": [
+        "tariff cash-flow sensitivity",
+        "supplier finance and exchangeable shares"
+      ],
+      "revisit_triggers": [
+        "resolved tariff/refund treatment",
+        "stable post-tariff regional margins"
+      ],
+      "evidence_reports": [
+        "docs/audit/56-controlled-batch-08-result.md"
+      ]
     },
     {
       "batch": 8,
@@ -659,9 +835,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "post_acquisition_beverage_cash_fcff",
       "why_not_fully_recovered": "The JDE Peet's acquisition, planned separation, acquisition debt, temporary equity, NCI, and integration costs create a zero bear equity floor.",
-      "learning_themes": ["post-acquisition cash normalization", "temporary equity and separation claims"],
-      "revisit_triggers": ["full combined annual cash history", "completed beverage/coffee separation allocations"],
-      "evidence_reports": ["docs/audit/56-controlled-batch-08-result.md"]
+      "learning_themes": [
+        "post-acquisition cash normalization",
+        "temporary equity and separation claims"
+      ],
+      "revisit_triggers": [
+        "full combined annual cash history",
+        "completed beverage/coffee separation allocations"
+      ],
+      "evidence_reports": [
+        "docs/audit/56-controlled-batch-08-result.md"
+      ]
     },
     {
       "batch": 8,
@@ -673,9 +857,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "captive_finance_consolidated_equity_earnings",
       "why_not_fully_recovered": "GM Financial, automotive operations, pension/warranty exposures, Cruise, and JV claims remain consolidated in equity earnings.",
-      "learning_themes": ["automotive captive finance", "consolidated automotive equity earnings"],
-      "revisit_triggers": ["GM Automotive and GM Financial reconciliation", "source-bounded pension, warranty, and JV claims"],
-      "evidence_reports": ["docs/audit/56-controlled-batch-08-result.md"]
+      "learning_themes": [
+        "automotive captive finance",
+        "consolidated automotive equity earnings"
+      ],
+      "revisit_triggers": [
+        "GM Automotive and GM Financial reconciliation",
+        "source-bounded pension, warranty, and JV claims"
+      ],
+      "evidence_reports": [
+        "docs/audit/56-controlled-batch-08-result.md"
+      ]
     },
     {
       "batch": 8,
@@ -687,9 +879,17 @@
       "current_status": "withheld_after_recovery",
       "provisional_model": "unavailable_cruise_cycle_history",
       "why_not_fully_recovered": "Current and median historical cash FCFF are negative, while newbuild funding, debt service, and exchangeable-note dilution remain materially unbounded.",
-      "learning_themes": ["cruise newbuild funding", "negative cash conversion and refinancing"],
-      "revisit_triggers": ["mutually exclusive newbuild and export-credit schedule", "positive post-obligation FCFE and dilution reconciliation"],
-      "evidence_reports": ["docs/audit/57-batch-08-recovery-result.md"]
+      "learning_themes": [
+        "cruise newbuild funding",
+        "negative cash conversion and refinancing"
+      ],
+      "revisit_triggers": [
+        "mutually exclusive newbuild and export-credit schedule",
+        "positive post-obligation FCFE and dilution reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/57-batch-08-recovery-result.md"
+      ]
     },
     {
       "batch": 8,
@@ -701,9 +901,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "post_spin_continuing_equity_earnings",
       "why_not_fully_recovered": "The value uses current and comparative continuing H1 earnings because comparable post-spin annual cash history does not yet exist.",
-      "learning_themes": ["post-spin continuing earnings", "cash-history object identity"],
-      "revisit_triggers": ["three comparable post-spin annual periods", "post-spin continuing cash and retained-debt reconciliation"],
-      "evidence_reports": ["docs/audit/57-batch-08-recovery-result.md"]
+      "learning_themes": [
+        "post-spin continuing earnings",
+        "cash-history object identity"
+      ],
+      "revisit_triggers": [
+        "three comparable post-spin annual periods",
+        "post-spin continuing cash and retained-debt reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/57-batch-08-recovery-result.md"
+      ]
     },
     {
       "batch": 8,
@@ -715,9 +923,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "travel_marketplace_bounded_capex_fcff",
       "why_not_fully_recovered": "Customer funds are matched, but current capex relies on an annualized filing-table range rather than a standard cash-flow fact.",
-      "learning_themes": ["customer-fund matching", "asset-light capex evidence"],
-      "revisit_triggers": ["current standard capex lineage", "stable customer-fund and cash conversion"],
-      "evidence_reports": ["docs/audit/56-controlled-batch-08-result.md"]
+      "learning_themes": [
+        "customer-fund matching",
+        "asset-light capex evidence"
+      ],
+      "revisit_triggers": [
+        "current standard capex lineage",
+        "stable customer-fund and cash conversion"
+      ],
+      "evidence_reports": [
+        "docs/audit/56-controlled-batch-08-result.md"
+      ]
     },
     {
       "batch": 8,
@@ -729,9 +945,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "inventory_finance_consolidated_equity_earnings",
       "why_not_fully_recovered": "Inventory, floorplan and securitization financing, NCI, the TRA liability, and turnaround earnings create a zero bear equity floor.",
-      "learning_themes": ["automotive inventory finance", "securitization, NCI, and TRA economics"],
-      "revisit_triggers": ["stable post-turnaround earnings history", "source-bounded financing and TRA separation"],
-      "evidence_reports": ["docs/audit/56-controlled-batch-08-result.md"]
+      "learning_themes": [
+        "automotive inventory finance",
+        "securitization, NCI, and TRA economics"
+      ],
+      "revisit_triggers": [
+        "stable post-turnaround earnings history",
+        "source-bounded financing and TRA separation"
+      ],
+      "evidence_reports": [
+        "docs/audit/56-controlled-batch-08-result.md"
+      ]
     },
     {
       "batch": 8,
@@ -743,9 +967,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "marketplace_acquisition_cash_fcff",
       "why_not_fully_recovered": "Deliveroo/SevenRooms integration, capitalized software, convertible dilution, SBC, and marketplace cash balances remain material.",
-      "learning_themes": ["marketplace acquisition integration", "software capex, convertibles, and SBC"],
-      "revisit_triggers": ["post-acquisition comparable cash history", "fully diluted convertible and SBC reconciliation"],
-      "evidence_reports": ["docs/audit/56-controlled-batch-08-result.md"]
+      "learning_themes": [
+        "marketplace acquisition integration",
+        "software capex, convertibles, and SBC"
+      ],
+      "revisit_triggers": [
+        "post-acquisition comparable cash history",
+        "fully diluted convertible and SBC reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/56-controlled-batch-08-result.md"
+      ]
     },
     {
       "batch": 9,
@@ -757,9 +989,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "commodity_cycle_normalized_cash_fcff",
       "why_not_fully_recovered": "Commodity margins, derivative collateral, working capital, supplier finance, temporary equity, and NCI remain material.",
-      "learning_themes": ["commodity-cycle cash normalization", "derivative collateral and temporary equity"],
-      "revisit_triggers": ["stable through-cycle commodity cash", "complete derivative and margin-cash reconciliation"],
-      "evidence_reports": ["docs/audit/59-controlled-batch-09-result.md"]
+      "learning_themes": [
+        "commodity-cycle cash normalization",
+        "derivative collateral and temporary equity"
+      ],
+      "revisit_triggers": [
+        "stable through-cycle commodity cash",
+        "complete derivative and margin-cash reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/59-controlled-batch-09-result.md"
+      ]
     },
     {
       "batch": 9,
@@ -771,9 +1011,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "alcohol_brand_portfolio_cash_fcff",
       "why_not_fully_recovered": "Beer/wine/spirits scope, Canopy and equity-method interests, impairments, leverage, and NCI remain material.",
-      "learning_themes": ["alcohol portfolio normalization", "equity-method investment and impairment scope"],
-      "revisit_triggers": ["stable portfolio cash conversion", "source-bounded investment and impairment reconciliation"],
-      "evidence_reports": ["docs/audit/59-controlled-batch-09-result.md"]
+      "learning_themes": [
+        "alcohol portfolio normalization",
+        "equity-method investment and impairment scope"
+      ],
+      "revisit_triggers": [
+        "stable portfolio cash conversion",
+        "source-bounded investment and impairment reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/59-controlled-batch-09-result.md"
+      ]
     },
     {
       "batch": 9,
@@ -785,9 +1033,17 @@
       "current_status": "conditional_numeric_low_equity_at_risk",
       "provisional_model": "post_acquisition_history_cash_fcff",
       "why_not_fully_recovered": "The split filing is recovered, but GOJO integration, acquisition borrowing, supplier finance, weaker pro-forma sales, and a zero bear equity floor remain material.",
-      "learning_themes": ["split Inline XBRL document sets", "post-acquisition debt and cash normalization"],
-      "revisit_triggers": ["full post-GOJO annual cash history", "stable integration cash and debt reduction"],
-      "evidence_reports": ["docs/audit/60-batch-09-recovery-result.md"]
+      "learning_themes": [
+        "split Inline XBRL document sets",
+        "post-acquisition debt and cash normalization"
+      ],
+      "revisit_triggers": [
+        "full post-GOJO annual cash history",
+        "stable integration cash and debt reduction"
+      ],
+      "evidence_reports": [
+        "docs/audit/60-batch-09-recovery-result.md"
+      ]
     },
     {
       "batch": 9,
@@ -799,9 +1055,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "bottling_affiliate_normalized_cash_fcff",
       "why_not_fully_recovered": "Bottling and equity affiliates, working-capital reversal, investments, debt, NCI, and current structural replacement facts remain material.",
-      "learning_themes": ["bottling and affiliate cash scope", "current structural TTM reconstruction"],
-      "revisit_triggers": ["current Companyfacts accession coverage", "stable bottling and affiliate cash conversion"],
-      "evidence_reports": ["docs/audit/59-controlled-batch-09-result.md"]
+      "learning_themes": [
+        "bottling and affiliate cash scope",
+        "current structural TTM reconstruction"
+      ],
+      "revisit_triggers": [
+        "current Companyfacts accession coverage",
+        "stable bottling and affiliate cash conversion"
+      ],
+      "evidence_reports": [
+        "docs/audit/59-controlled-batch-09-result.md"
+      ]
     },
     {
       "batch": 9,
@@ -813,9 +1077,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "brewer_cycle_normalized_cash_fcff",
       "why_not_fully_recovered": "Beer volume/pricing, brand impairment, restructuring, brewery capex, leverage, leases, and NCI remain material.",
-      "learning_themes": ["brewer-cycle normalization", "brand impairment and restructuring"],
-      "revisit_triggers": ["stable brewer volumes and margins", "completed impairment and restructuring cycle"],
-      "evidence_reports": ["docs/audit/59-controlled-batch-09-result.md"]
+      "learning_themes": [
+        "brewer-cycle normalization",
+        "brand impairment and restructuring"
+      ],
+      "revisit_triggers": [
+        "stable brewer volumes and margins",
+        "completed impairment and restructuring cycle"
+      ],
+      "evidence_reports": [
+        "docs/audit/59-controlled-batch-09-result.md"
+      ]
     },
     {
       "batch": 9,
@@ -827,9 +1099,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "retail_supplier_finance_cash_fcff",
       "why_not_fully_recovered": "Inventory and shrink, supplier finance, store reinvestment, leases, debt, and retail working-capital cycles remain material.",
-      "learning_themes": ["retail shrink and inventory", "supplier finance and store reinvestment"],
-      "revisit_triggers": ["normalized shrink and inventory conversion", "stable store capex and supplier-finance cycle"],
-      "evidence_reports": ["docs/audit/59-controlled-batch-09-result.md"]
+      "learning_themes": [
+        "retail shrink and inventory",
+        "supplier finance and store reinvestment"
+      ],
+      "revisit_triggers": [
+        "normalized shrink and inventory conversion",
+        "stable store capex and supplier-finance cycle"
+      ],
+      "evidence_reports": [
+        "docs/audit/59-controlled-batch-09-result.md"
+      ]
     },
     {
       "batch": 9,
@@ -841,9 +1121,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "discount_retail_reinvestment_cash_fcff",
       "why_not_fully_recovered": "Store closures and remodels, shrink, inventory, supplier finance, leases, and refinancing remain material.",
-      "learning_themes": ["discount-retail store program", "lease-inclusive debt and supplier finance"],
-      "revisit_triggers": ["completed store optimization program", "stable shrink, inventory, and lease cash"],
-      "evidence_reports": ["docs/audit/59-controlled-batch-09-result.md"]
+      "learning_themes": [
+        "discount-retail store program",
+        "lease-inclusive debt and supplier finance"
+      ],
+      "revisit_triggers": [
+        "completed store optimization program",
+        "stable shrink, inventory, and lease cash"
+      ],
+      "evidence_reports": [
+        "docs/audit/59-controlled-batch-09-result.md"
+      ]
     },
     {
       "batch": 9,
@@ -855,9 +1143,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "packaged_food_portfolio_cash_fcff",
       "why_not_fully_recovered": "Divestiture scope, impairment and restructuring, supplier finance, inventory, debt, and leases remain material.",
-      "learning_themes": ["packaged-food portfolio scope", "divestiture cash and supplier finance"],
-      "revisit_triggers": ["completed continuing-portfolio history", "source-bounded divestiture and restructuring cash"],
-      "evidence_reports": ["docs/audit/59-controlled-batch-09-result.md"]
+      "learning_themes": [
+        "packaged-food portfolio scope",
+        "divestiture cash and supplier finance"
+      ],
+      "revisit_triggers": [
+        "completed continuing-portfolio history",
+        "source-bounded divestiture and restructuring cash"
+      ],
+      "evidence_reports": [
+        "docs/audit/59-controlled-batch-09-result.md"
+      ]
     },
     {
       "batch": 10,
@@ -869,9 +1165,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "post_ifp_pre_kenvue_cash_fcff",
       "why_not_fully_recovered": "The current-state value uses an annualized continuing EBIT/D&A/capex proxy after the IFP closing, while standalone working-capital cash, post-closing adjustments, and the pending Kenvue transaction remain material.",
-      "learning_themes": ["post-closing current-state valuation", "completed disposal plus pending acquisition"],
-      "revisit_triggers": ["Kenvue closing or termination", "reported post-IFP continuing cash and final transaction adjustments"],
-      "evidence_reports": ["docs/audit/62-batch-10-kmb-recovery-result.md"]
+      "learning_themes": [
+        "post-closing current-state valuation",
+        "completed disposal plus pending acquisition"
+      ],
+      "revisit_triggers": [
+        "Kenvue closing or termination",
+        "reported post-IFP continuing cash and final transaction adjustments"
+      ],
+      "evidence_reports": [
+        "docs/audit/62-batch-10-kmb-recovery-result.md"
+      ]
     },
     {
       "batch": 10,
@@ -883,9 +1187,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "post_mexico_consolidation_cash_fcff",
       "why_not_fully_recovered": "McCormick de Mexico became consolidated during 2026, so the earlier equity-method history is only a broad guide; purchase accounting, NCI, and a carried finance lease remain material.",
-      "learning_themes": ["equity-method to consolidation transition", "purchase accounting and NCI"],
-      "revisit_triggers": ["full comparable post-consolidation annual history", "current direct finance-lease and NCI reconciliation"],
-      "evidence_reports": ["docs/audit/61-controlled-batch-10-result.md"]
+      "learning_themes": [
+        "equity-method to consolidation transition",
+        "purchase accounting and NCI"
+      ],
+      "revisit_triggers": [
+        "full comparable post-consolidation annual history",
+        "current direct finance-lease and NCI reconciliation"
+      ],
+      "evidence_reports": [
+        "docs/audit/61-controlled-batch-10-result.md"
+      ]
     },
     {
       "batch": 10,
@@ -897,9 +1209,17 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "post_impairment_packaged_food_cash_fcff",
       "why_not_fully_recovered": "Hostess and Sweet Baked Snacks impairments, divestitures, restructuring, leverage, and the loss-year tax policy make historical profitability less comparable.",
-      "learning_themes": ["post-impairment cash normalization", "divestiture and restructuring scope"],
-      "revisit_triggers": ["stable post-impairment segment cash history", "completed divestiture and restructuring cycle"],
-      "evidence_reports": ["docs/audit/61-controlled-batch-10-result.md"]
+      "learning_themes": [
+        "post-impairment cash normalization",
+        "divestiture and restructuring scope"
+      ],
+      "revisit_triggers": [
+        "stable post-impairment segment cash history",
+        "completed divestiture and restructuring cycle"
+      ],
+      "evidence_reports": [
+        "docs/audit/61-controlled-batch-10-result.md"
+      ]
     },
     {
       "batch": 10,
@@ -911,9 +1231,2504 @@
       "current_status": "conditional_numeric_low",
       "provisional_model": "protein_cycle_normalized_cash_fcff",
       "why_not_fully_recovered": "Beef, pork, and chicken cycles, network optimization, impairments, and dual-class economics make one current cash period an unreliable normal state.",
-      "learning_themes": ["protein-cycle cash normalization", "network optimization and dual-class shares"],
-      "revisit_triggers": ["full normalized protein cycle", "completed network optimization with stable cash conversion"],
-      "evidence_reports": ["docs/audit/61-controlled-batch-10-result.md"]
+      "learning_themes": [
+        "protein-cycle cash normalization",
+        "network optimization and dual-class shares"
+      ],
+      "revisit_triggers": [
+        "full normalized protein cycle",
+        "completed network optimization with stable cash conversion"
+      ],
+      "evidence_reports": [
+        "docs/audit/61-controlled-batch-10-result.md"
+      ]
+    },
+    {
+      "batch": 11,
+      "ticker": "SYY",
+      "cik": "0000096021",
+      "issuer_name": "Sysco",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_jetro_current_state_cash_fcff",
+      "why_not_fully_recovered": "The standalone value uses three source-linked annual periods at the 2026-03-28 pre-Jetro balance-sheet date; the signed $29.1B transaction, financing commitments, fees, rate locks, and expected shares remain separate invalidation events.",
+      "learning_themes": [
+        "pre-transaction current-state valuation",
+        "transaction financing and dilution isolation"
+      ],
+      "revisit_triggers": [
+        "Jetro closing or termination",
+        "financing draw or issuance, material term change, or newer standalone filing"
+      ],
+      "evidence_reports": [
+        "docs/audit/65-controlled-batch-11-result.md",
+        "docs/audit/66-batch-11-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 11,
+      "ticker": "CHD",
+      "cik": "0000313927",
+      "issuer_name": "Church & Dwight",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "consumer_products_cash_fcff",
+      "why_not_fully_recovered": "Touchland and current brand acquisitions, acquisition-liability cash, contingent consideration, and supply-chain finance are material relative to current cash and lack a full comparable acquired-business history.",
+      "learning_themes": [
+        "consumer-brand acquisition integration",
+        "contingent consideration and supply-chain finance"
+      ],
+      "revisit_triggers": [
+        "full comparable post-acquisition cash history",
+        "stable acquired-brand cash conversion and final consideration"
+      ],
+      "evidence_reports": [
+        "docs/audit/65-controlled-batch-11-result.md"
+      ]
+    },
+    {
+      "batch": 11,
+      "ticker": "COST",
+      "cik": "0000909832",
+      "issuer_name": "Costco",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "membership_retail_cash_fcff",
+      "why_not_fully_recovered": "Finance-lease principal payments and new right-of-use assets prove an unreported liability, so the value retains a governed lease reserve rather than a reported current balance.",
+      "learning_themes": [
+        "membership-retail cash conversion",
+        "unreported finance-lease liability"
+      ],
+      "revisit_triggers": [
+        "reported current finance-lease liability",
+        "stable membership, working-capital, and lease cash history"
+      ],
+      "evidence_reports": [
+        "docs/audit/65-controlled-batch-11-result.md"
+      ]
+    },
+    {
+      "batch": 11,
+      "ticker": "DLTR",
+      "cik": "0000935703",
+      "issuer_name": "Dollar Tree",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_family_dollar_cash_fcff",
+      "why_not_fully_recovered": "The current filing separates continuing cash, but Family Dollar transition services, guarantees, disposal adjustments, supplier finance, leases, and the shorter comparable history remain material.",
+      "learning_themes": [
+        "post-disposal continuing cash",
+        "transition services and retained guarantees"
+      ],
+      "revisit_triggers": [
+        "completed Family Dollar transition and guarantee runoff",
+        "five comparable standalone Dollar Tree cash periods"
+      ],
+      "evidence_reports": [
+        "docs/audit/65-controlled-batch-11-result.md"
+      ]
+    },
+    {
+      "batch": 11,
+      "ticker": "MDLZ",
+      "cik": "0001103982",
+      "issuer_name": "Mondelez International",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "global_snacks_cycle_cash_fcff",
+      "why_not_fully_recovered": "Current H1 cash is reconstructed directly, while cocoa and commodity cash conversion, debt, NCI, restricted cash, and supplier finance remain load-bearing.",
+      "learning_themes": [
+        "current structural TTM reconstruction",
+        "cocoa and commodity-cycle cash conversion"
+      ],
+      "revisit_triggers": [
+        "current Companyfacts coverage for the controlling accession",
+        "normalized cocoa and commodity cash cycle"
+      ],
+      "evidence_reports": [
+        "docs/audit/65-controlled-batch-11-result.md"
+      ]
+    },
+    {
+      "batch": 11,
+      "ticker": "PM",
+      "cik": "0001413329",
+      "issuer_name": "Philip Morris International",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "smoke_free_tobacco_cash_fcff",
+      "why_not_fully_recovered": "Debt, leases, NCI, and supplier finance reconcile, but the equity-method stake and its investing-cash distributions are not fully integrated into consolidated FCFF.",
+      "learning_themes": [
+        "smoke-free product cash conversion",
+        "equity-method stake and distribution classification"
+      ],
+      "revisit_triggers": [
+        "source-bounded affiliate valuation and distribution integration",
+        "stable smoke-free cash and leverage history"
+      ],
+      "evidence_reports": [
+        "docs/audit/65-controlled-batch-11-result.md"
+      ]
+    },
+    {
+      "batch": 11,
+      "ticker": "KHC",
+      "cik": "0001637459",
+      "issuer_name": "Kraft Heinz",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_impairment_packaged_food_cash_fcff",
+      "why_not_fully_recovered": "Repeated brand and reporting-unit impairments, restructuring, portfolio actions, leverage, and supplier-finance cash make historical conversion only a broad guide.",
+      "learning_themes": [
+        "post-impairment packaged-food cash",
+        "restructuring and portfolio-scope normalization"
+      ],
+      "revisit_triggers": [
+        "stable post-impairment cash history",
+        "completed restructuring and portfolio actions"
+      ],
+      "evidence_reports": [
+        "docs/audit/65-controlled-batch-11-result.md"
+      ]
+    },
+    {
+      "batch": 11,
+      "ticker": "BG",
+      "cik": "0001996862",
+      "issuer_name": "Bunge Global",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "withheld_after_recovery",
+      "provisional_model": "post_viterra_cycle_cash_fcff",
+      "why_not_fully_recovered": "Viterra closed mid-2025, comparative H1 excludes Viterra, no filed pro-forma cash flow exists, no comparable combined annual history exists, and current combined H1 cash FCFF is negative.",
+      "learning_themes": [
+        "predecessor and successor cash comparability",
+        "post-merger commodity-cycle cash normalization"
+      ],
+      "revisit_triggers": [
+        "three comparable combined annual cash periods",
+        "complete filed pro-forma cash-flow bridge with positive source-bounded cash"
+      ],
+      "evidence_reports": [
+        "docs/audit/65-controlled-batch-11-result.md",
+        "docs/audit/66-batch-11-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "ABT",
+      "cik": "0000001800",
+      "issuer_name": "Abbott Laboratories",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_exact_pro_forma_faded_cash_fcff",
+      "why_not_fully_recovered": "Pro-forma combined scale repairs the partial-Exact mismatch, but post-acquisition cash conversion, integration, legal accruals, debt, claims, R&D, and dilution remain load-bearing.",
+      "learning_themes": [
+        "post-acquisition pro-forma cash scale",
+        "recorded legal claims and diagnostics integration"
+      ],
+      "revisit_triggers": [
+        "three comparable post-Exact annual cash periods",
+        "stable acquisition debt, legal claims, and cancer-diagnostics cash conversion"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "BAX",
+      "cik": "0000010456",
+      "issuer_name": "Baxter International",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_disposition_claim_adjusted_faded_cash_fcff",
+      "why_not_fully_recovered": "Continuing cash is usable, but retained separation claims, the governed tax policy, debt, and uneven post-disposition history keep the result conditional.",
+      "learning_themes": [
+        "post-disposition continuing cash",
+        "retained separation liabilities and tax normalization"
+      ],
+      "revisit_triggers": [
+        "three stable continuing post-Vantive cash periods",
+        "retained indemnification and capex-reimbursement runoff"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "BDX",
+      "cik": "0000010795",
+      "issuer_name": "Becton Dickinson",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_spin_continuing_faded_cash_fcff",
+      "why_not_fully_recovered": "Continuing cash and spin proceeds reconcile, but post-spin history, product-liability accruals, impairment, separation costs, and R&D remain material.",
+      "learning_themes": [
+        "post-spin continuing cash",
+        "product-liability settlement and separation history"
+      ],
+      "revisit_triggers": [
+        "three comparable post-spin annual cash periods",
+        "material product-liability settlement runoff and stable continuing R&D cash"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "BMY",
+      "cik": "0000014272",
+      "issuer_name": "Bristol Myers Squibb",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "patent_pipeline_faded_cash_fcff",
+      "why_not_fully_recovered": "The fixed Hengrui payments and CVR are reserved, while patent loss and contingent pipeline/milestone outcomes remain unmodeled event dependencies.",
+      "learning_themes": [
+        "patent and pipeline cash fade",
+        "fixed versus contingent licensing payments"
+      ],
+      "revisit_triggers": [
+        "patent-loss and launch cash evidence",
+        "Hengrui fixed-payment funding and milestone outcomes"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "RVTY",
+      "cik": "0000031791",
+      "issuer_name": "Revvity",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "acquisition_restructuring_faded_cash_fcff",
+      "why_not_fully_recovered": "ACD consideration, restructuring, gross debt, and contingent claims reconcile, but integration and the shorter life-sciences cash history remain material.",
+      "learning_themes": [
+        "life-sciences acquisition integration",
+        "restructuring and gross-principal debt"
+      ],
+      "revisit_triggers": [
+        "stable ACD integration and restructuring runoff",
+        "five comparable life-sciences cash periods"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "HUM",
+      "cik": "0000049071",
+      "issuer_name": "Humana",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "managed_care_residual_income_normalized_equity_earnings",
+      "why_not_fully_recovered": "Residual income anchors value to common equity and ROE, while medical claims, regulated capital, member funds, and underwriting normalization remain material.",
+      "learning_themes": [
+        "managed-care residual income",
+        "claims, capital, and underwriting normalization"
+      ],
+      "revisit_triggers": [
+        "stable medical-cost trend and regulated capital",
+        "source-bounded normalized ROE after current underwriting pressure"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "LLY",
+      "cik": "0000059478",
+      "issuer_name": "Lilly (Eli)",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pipeline_high_growth_faded_cash_fcff",
+      "why_not_fully_recovered": "A source-haircut high-growth fade repairs the generic cap, but pipeline probability, July acquisitions, pending AtaiBeckley, patent/pricing, and manufacturing capex remain load-bearing.",
+      "learning_themes": [
+        "high-growth pharma fade",
+        "pipeline, acquisition, and manufacturing-capex cash"
+      ],
+      "revisit_triggers": [
+        "reported post-July acquisition cash/debt",
+        "durable product growth with normalized manufacturing capex"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "CVS",
+      "cik": "0000064803",
+      "issuer_name": "CVS Health",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_health_services_residual_income_normalized_equity_earnings",
+      "why_not_fully_recovered": "Residual income anchors the mixed-health equity object, while claims, PBM/retail mix, reimbursement, capital, debt, and normalized ROE remain material.",
+      "learning_themes": [
+        "mixed-health residual income",
+        "insurance/PBM/retail ROE normalization"
+      ],
+      "revisit_triggers": [
+        "stable insurance/PBM/retail segment economics",
+        "source-bounded common ROE and capital requirements"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "WST",
+      "cik": "0000105770",
+      "issuer_name": "West Pharmaceutical Services",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_smartdose_faded_cash_fcff",
+      "why_not_fully_recovered": "Sale cash is included once, but the available history still contains SmartDose and no filed post-sale continuing cash series exists.",
+      "learning_themes": [
+        "post-divestiture continuing cash",
+        "quality risk and capacity reinvestment"
+      ],
+      "revisit_triggers": [
+        "three comparable post-SmartDose annual cash periods",
+        "stable quality/regulatory and capacity-capex cash"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 12,
+      "ticker": "UHS",
+      "cik": "0000352915",
+      "issuer_name": "Universal Health Services",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "withheld_after_recovery",
+      "provisional_model": "unavailable_post_period_multi_event_state",
+      "why_not_fully_recovered": "Ireland funding, Provo Canyon license revocations, CMG operating responsibility, and pending Talkspace leave no single post-period operating and cash/debt object after one attempt.",
+      "learning_themes": [
+        "post-period hospital operating state",
+        "acquisition funding and licensing disruption"
+      ],
+      "revisit_triggers": [
+        "filed post-Ireland/Provo/CMG operating and cash-debt state",
+        "Talkspace closing or termination with final financing"
+      ],
+      "evidence_reports": [
+        "docs/audit/67-controlled-batch-12-result.md",
+        "docs/audit/69-batch-12-whole-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "PFE",
+      "cik": "0000078003",
+      "issuer_name": "Pfizer",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "metsera_patent_pharma_faded_fcff",
+      "why_not_fully_recovered": "Metsera contingent consideration, patent and pricing exposure, pipeline productivity, and the disposed ViiV dividend stream remain material.",
+      "learning_themes": [
+        "post-acquisition pharmaceutical cash normalization",
+        "disposed investment income and patent fade"
+      ],
+      "revisit_triggers": [
+        "stable post-Metsera cash and contingent-payment evidence",
+        "source-bounded patent and post-ViiV cash history"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "TMO",
+      "cik": "0000097745",
+      "issuer_name": "Thermo Fisher Scientific",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "clario_solventum_life_sciences_faded_fcff",
+      "why_not_fully_recovered": "Clario and Solventum integration, acquired-business cash history, contingent consideration, and debt/lease scope remain material.",
+      "learning_themes": [
+        "life-sciences acquisition integration",
+        "debt, lease, and purchase-payable reconciliation"
+      ],
+      "revisit_triggers": [
+        "three comparable post-Clario annual cash periods",
+        "settled acquisition obligations and stable integration margins"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "JNJ",
+      "cik": "0000200406",
+      "issuer_name": "Johnson & Johnson",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "talc_acquisition_health_care_faded_fcff",
+      "why_not_fully_recovered": "The talc accrual, acquisition pipeline, contingent consideration, product exposure, and patent erosion remain material.",
+      "learning_themes": [
+        "mass-tort claim runoff",
+        "health-care pipeline and patent normalization"
+      ],
+      "revisit_triggers": [
+        "material talc settlement resolution and cash runoff",
+        "stable acquired-pipeline and post-patent cash evidence"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "MRK",
+      "cik": "0000310158",
+      "issuer_name": "Merck & Co.",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "keytruda_acquisition_pharma_faded_fcff",
+      "why_not_fully_recovered": "Keytruda concentration, acquisition IPR&D accounting, pipeline spending, legal reserves, and post-period acquisition cash remain material.",
+      "learning_themes": [
+        "acquisition IPR&D versus recurring operating cash",
+        "patent concentration and pipeline reinvestment"
+      ],
+      "revisit_triggers": [
+        "comparable post-acquisition cash periods without IPR&D distortion",
+        "source-bounded Keytruda erosion and pipeline cash"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "SYK",
+      "cik": "0000310764",
+      "issuer_name": "Stryker Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "inari_amplitude_medtech_faded_fcff",
+      "why_not_fully_recovered": "Inari and AVS integration, contingent consideration, acquired intangibles, recalls, and high current growth remain material.",
+      "learning_themes": [
+        "medical-technology acquisition integration",
+        "recall risk and growth fade"
+      ],
+      "revisit_triggers": [
+        "stable post-Inari and AVS cash conversion",
+        "resolved material recalls and contingent consideration"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "DHR",
+      "cik": "0000313616",
+      "issuer_name": "Danaher Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "masimo_life_sciences_faded_fcff",
+      "why_not_fully_recovered": "Masimo closed late in the period, so pro-forma scale, integration, acquisition financing, and litigation remain material despite avoiding a double count.",
+      "learning_themes": [
+        "late-period acquisition pro-forma scale",
+        "life-sciences integration and litigation"
+      ],
+      "revisit_triggers": [
+        "three comparable post-Masimo annual cash periods",
+        "resolved material Masimo litigation and integration costs"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "AMGN",
+      "cik": "0000318154",
+      "issuer_name": "Amgen",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "horizon_tax_pharma_faded_fcff",
+      "why_not_fully_recovered": "Patent erosion, Horizon integration, BeOne exposure, pipeline cash, and the material IRS dispute remain scenario-dependent.",
+      "learning_themes": [
+        "source-bounded tax-dispute scenarios",
+        "biotechnology patent and acquisition fade"
+      ],
+      "revisit_triggers": [
+        "IRS dispute settlement or adjudication",
+        "stable post-Horizon cash and product-erosion evidence"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "COO",
+      "cik": "0000711404",
+      "issuer_name": "Cooper Companies (The)",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "litigation_medical_supplies_faded_fcff",
+      "why_not_fully_recovered": "The net litigation reserve is source-reconciled, while insurance recovery, tax litigation, leverage, and acquisition payments remain material.",
+      "learning_themes": [
+        "gross legal reserve versus insurance receivable",
+        "medical-supplies litigation and leverage"
+      ],
+      "revisit_triggers": [
+        "material litigation settlement and insurance recovery",
+        "resolved HMRC exposure and stable leveraged cash conversion"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "CAH",
+      "cik": "0000721371",
+      "issuer_name": "Cardinal Health",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "opioid_health_distributor_faded_fcff",
+      "why_not_fully_recovered": "The current opioid and IVC liabilities reconcile, while long-dated settlement cash, acquisitions, supplier economics, and negative book equity remain material.",
+      "learning_themes": [
+        "current versus historical legal settlement claims",
+        "health-care distributor settlement cash"
+      ],
+      "revisit_triggers": [
+        "material opioid-payment runoff and current IVC resolution",
+        "stable post-acquisition distributor cash margins"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 13,
+      "ticker": "UNH",
+      "cik": "0000731766",
+      "issuer_name": "UnitedHealth Group",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "managed_care_residual_income_normalized_equity_earnings",
+      "why_not_fully_recovered": "Residual income anchors value to parent common equity, but medical claims, regulated capital, investigations, cyberattack recovery, acquisitions, and share normalization remain material.",
+      "learning_themes": [
+        "managed-care residual income",
+        "medical claims, capital, and post-repurchase shares"
+      ],
+      "revisit_triggers": [
+        "stable medical-cost and regulated-capital evidence",
+        "resolved investigations and post-acquisition share/equity history"
+      ],
+      "evidence_reports": [
+        "docs/audit/70-controlled-batch-13-result.md"
+      ]
+    },
+    {
+      "batch": 14,
+      "ticker": "TECH",
+      "cik": "0000842023",
+      "issuer_name": "Bio-Techne",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "wilson_wolf_life_sciences_faded_fcff",
+      "why_not_fully_recovered": "Standalone value is source-bounded, but the pending cash merger, Wilson Wolf forward investment, restructuring, and post-cutoff fiscal-year evidence remain material.",
+      "learning_themes": [
+        "standalone intrinsic value versus pending merger consideration",
+        "milestone-triggered life-sciences investment"
+      ],
+      "revisit_triggers": [
+        "merger closing or termination with final share treatment",
+        "Wilson Wolf milestone outcome and filed fiscal-year cash"
+      ],
+      "evidence_reports": [
+        "docs/audit/71-controlled-batch-14-result.md"
+      ]
+    },
+    {
+      "batch": 14,
+      "ticker": "BIIB",
+      "cik": "0000875045",
+      "issuer_name": "Biogen",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_apellis_biopharma_faded_fcff",
+      "why_not_fully_recovered": "Apellis closed late in the period with new financing, acquired products, integration costs, contingent consideration, and no filed combined pro-forma cash history.",
+      "learning_themes": [
+        "partial-period biopharma acquisition history",
+        "acquisition financing and royalty claims"
+      ],
+      "revisit_triggers": [
+        "three comparable post-Apellis annual cash periods",
+        "resolved Genentech judgment and contingent consideration"
+      ],
+      "evidence_reports": [
+        "docs/audit/71-controlled-batch-14-result.md"
+      ]
+    },
+    {
+      "batch": 14,
+      "ticker": "VRTX",
+      "cik": "0000875320",
+      "issuer_name": "Vertex Pharmaceuticals",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_crinetics_biopharma_faded_fcff",
+      "why_not_fully_recovered": "The current standalone range is finite, but the signed Crinetics transaction and term-loan commitment leave the post-close cash, debt, and acquired-cash object unresolved.",
+      "learning_themes": [
+        "pre-close standalone biotechnology value",
+        "pending acquisition financing"
+      ],
+      "revisit_triggers": [
+        "Crinetics closing or termination with final financing",
+        "filed post-close acquired revenue and cash history"
+      ],
+      "evidence_reports": [
+        "docs/audit/71-controlled-batch-14-result.md"
+      ]
+    },
+    {
+      "batch": 14,
+      "ticker": "INCY",
+      "cik": "0000879169",
+      "issuer_name": "Incyte",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_vega_biopharma_faded_fcff",
+      "why_not_fully_recovered": "Vega acquisition cash and contingent consideration are bounded, while the CMS resolution, product concentration, royalty/milestone mix, and acquired pipeline remain material.",
+      "learning_themes": [
+        "legal-resolution versus revenue classification",
+        "post-period asset acquisition and milestones"
+      ],
+      "revisit_triggers": [
+        "stable post-Vega product and royalty cash",
+        "resolved CMS treatment and contingent milestones"
+      ],
+      "evidence_reports": [
+        "docs/audit/71-controlled-batch-14-result.md"
+      ]
+    },
+    {
+      "batch": 14,
+      "ticker": "GILD",
+      "cik": "0000882095",
+      "issuer_name": "Gilead Sciences",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_pipeline_acquisition_pharma_faded_fcff",
+      "why_not_fully_recovered": "Large Arcellx, Tubulis, and Ouro acquisition cash and IPR&D distort current cash, while contingent pipeline outcomes and product erosion remain material.",
+      "learning_themes": [
+        "acquired IPR&D versus recurring pharmaceutical cash",
+        "pipeline acquisition contingent claims"
+      ],
+      "revisit_triggers": [
+        "comparable post-acquisition annual cash history",
+        "Arcellx, Tubulis, and Ouro milestone outcomes"
+      ],
+      "evidence_reports": [
+        "docs/audit/71-controlled-batch-14-result.md"
+      ]
+    },
+    {
+      "batch": 14,
+      "ticker": "BSX",
+      "cik": "0000885725",
+      "issuer_name": "Boston Scientific",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_penumbra_medtech_faded_fcff",
+      "why_not_fully_recovered": "Penumbra and other acquisitions, contingent consideration, NCI, litigation reserve, and July restructuring cash remain material to combined medical-technology cash.",
+      "learning_themes": [
+        "medical-technology acquisition integration",
+        "litigation and restructuring claim bridge"
+      ],
+      "revisit_triggers": [
+        "three comparable post-Penumbra annual cash periods",
+        "settled contingent consideration, litigation, and restructuring cash"
+      ],
+      "evidence_reports": [
+        "docs/audit/71-controlled-batch-14-result.md"
+      ]
+    },
+    {
+      "batch": 14,
+      "ticker": "MCK",
+      "cik": "0000927653",
+      "issuer_name": "McKesson Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "opioid_distribution_acquisition_faded_fcff",
+      "why_not_fully_recovered": "Opioid settlement cash, redeemable and nonredeemable NCI, acquisitions, restructuring, supplier economics, and working-capital conversion remain material.",
+      "learning_themes": [
+        "opioid reserve versus settlement-award reconciliation",
+        "health-care distributor NCI and working capital"
+      ],
+      "revisit_triggers": [
+        "material opioid-payment runoff and reserve reconciliation",
+        "stable post-Core-Ventures distributor cash and NCI"
+      ],
+      "evidence_reports": [
+        "docs/audit/71-controlled-batch-14-result.md"
+      ]
+    },
+    {
+      "batch": 15,
+      "ticker": "LH",
+      "cik": "0000920148",
+      "issuer_name": "Labcorp",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "withheld_after_recovery",
+      "provisional_model": "unavailable_unbounded_total_legal_claims",
+      "why_not_fully_recovered": "The DOJ subclaim is bounded, but Ravgen royalties/interest and the AMCA, Meta Pixel, Davis/Vargas, and Raymond Eugenio matters lack one finite total claim range.",
+      "learning_themes": [
+        "partial claim resolution versus total legal exposure",
+        "patent royalties, class settlements, and aggregate legal reserves"
+      ],
+      "revisit_triggers": [
+        "filed Ravgen royalty/test-volume and interest balance",
+        "approved AMCA/Meta settlements and bounded ADA/derivative claims"
+      ],
+      "evidence_reports": [
+        "docs/audit/76-batch-15-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 15,
+      "ticker": "RMD",
+      "cik": "0000943819",
+      "issuer_name": "ResMed|",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_matrixcare_sleep_health_faded_fcff",
+      "why_not_fully_recovered": "MatrixCare remains held for sale, expected proceeds are not realized, and current acquisition/disposal accounting makes the standalone cash history materially provisional.",
+      "learning_themes": [
+        "held-for-sale business versus standalone intrinsic value",
+        "medical-technology acquisition and disposal comparability"
+      ],
+      "revisit_triggers": [
+        "MatrixCare closing or termination with final cash treatment",
+        "stable post-disposal annual cash history"
+      ],
+      "evidence_reports": [
+        "docs/audit/74-controlled-batch-15-result.md"
+      ]
+    },
+    {
+      "batch": 15,
+      "ticker": "WAT",
+      "cik": "0001000697",
+      "issuer_name": "Waters Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "post_bds_life_sciences_faded_fcff",
+      "why_not_fully_recovered": "The $13B BDS combination has only a partial combined cash period, reported pro-forma losses, acquisition accounting, and a zero bear equity floor despite a source-bounded share repair.",
+      "learning_themes": [
+        "post-acquisition combined cash normalization",
+        "share-scale extraction and equity-at-risk"
+      ],
+      "revisit_triggers": [
+        "three comparable post-BDS annual cash periods",
+        "stable combined margins and acquisition-accounting runoff"
+      ],
+      "evidence_reports": [
+        "docs/audit/74-controlled-batch-15-result.md"
+      ]
+    },
+    {
+      "batch": 15,
+      "ticker": "ISRG",
+      "cik": "0001035267",
+      "issuer_name": "Intuitive Surgical",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "withheld_after_recovery",
+      "provisional_model": "unavailable_unbounded_product_liability_claims",
+      "why_not_fully_recovered": "Product-liability excess, the SIS appeal, certified antitrust class action, and Restore appeal have no allocated reserve, current insurance ceiling, or estimable loss range.",
+      "learning_themes": [
+        "product-liability reserve and insurance coverage",
+        "medical-device antitrust class exposure"
+      ],
+      "revisit_triggers": [
+        "current allocated product-liability reserve and insurance ceiling",
+        "bounded or resolved antitrust appeals and class damages"
+      ],
+      "evidence_reports": [
+        "docs/audit/76-batch-15-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 15,
+      "ticker": "CNC",
+      "cik": "0001071739",
+      "issuer_name": "Centene Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "managed_care_residual_income_normalized_equity_earnings",
+      "why_not_fully_recovered": "Goodwill-impairment and risk-adjustment normalization is source-linked, but medical claims, regulated capital, PDR exposure, and Magellan disposal economics remain material.",
+      "learning_themes": [
+        "managed-care residual income and common equity",
+        "impairment, risk adjustment, and PDR normalization"
+      ],
+      "revisit_triggers": [
+        "stable medical-cost and regulated-capital evidence",
+        "resolved Magellan disposal and comparable normalized earnings"
+      ],
+      "evidence_reports": [
+        "docs/audit/74-controlled-batch-15-result.md"
+      ]
+    },
+    {
+      "batch": 15,
+      "ticker": "ALGN",
+      "cik": "0001097149",
+      "issuer_name": "Align Technology",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "withheld_after_recovery",
+      "provisional_model": "unavailable_unbounded_legal_competition_claims",
+      "why_not_fully_recovered": "The EU fine has an indicative turnover cap, but US antitrust appeals, Straumann damages, follow-on litigation, patent remedies, and indemnification have no total filed range.",
+      "learning_themes": [
+        "regulatory fine cap versus private legal exposure",
+        "dental-technology antitrust and patent claims"
+      ],
+      "revisit_triggers": [
+        "resolved City Smiles, Misty Snow, and Straumann claims",
+        "bounded EU follow-on, patent, and indemnification exposure"
+      ],
+      "evidence_reports": [
+        "docs/audit/76-batch-15-recovery-result.md"
+      ]
+    },
+    {
+      "batch": 16,
+      "ticker": "A",
+      "cik": "0001090872",
+      "issuer_name": "Agilent Technologies",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_biocare_life_sciences_faded_fcff",
+      "why_not_fully_recovered": "Current standalone cash value is source bounded, but the pending $950M Biocare acquisition lacks filed acquired cash history and can materially change the post-close state.",
+      "learning_themes": [
+        "pre-close standalone life-sciences value",
+        "post-balance financing and pending acquisition cash"
+      ],
+      "revisit_triggers": [
+        "Biocare closing or termination with final purchase accounting",
+        "comparable post-Biocare annual cash history"
+      ],
+      "evidence_reports": [
+        "docs/audit/78-controlled-batch-16-result.md",
+        "docs/audit/82-batch-16-whole-repair-result.md"
+      ]
+    },
+    {
+      "batch": 16,
+      "ticker": "DXCM",
+      "cik": "0001093557",
+      "issuer_name": "Dexcom",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "diabetes_device_reported_operations_faded_fcff",
+      "why_not_fully_recovered": "The repaired operating baseline is numeric, but securities, derivative, and six overlapping G6/G7 consumer class actions remain outside its range without a disclosed total loss or insurance ceiling.",
+      "learning_themes": [
+        "medical-device securities and consumer class exposure",
+        "damages reserves and applicable insurance ceilings"
+      ],
+      "revisit_triggers": [
+        "source-bounded or resolved securities and derivative claims",
+        "allocated G6/G7 claim reserve and applicable insurance ceiling"
+      ],
+      "evidence_reports": [
+        "docs/audit/80-batch-16-recovery-result.md",
+        "docs/audit/82-batch-16-whole-repair-result.md"
+      ]
+    },
+    {
+      "batch": 16,
+      "ticker": "EW",
+      "cik": "0001099800",
+      "issuer_name": "Edwards Lifesciences",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_autus_medtech_faded_fcff",
+      "why_not_fully_recovered": "The repaired operating baseline includes recorded reserves and governed contingent consideration, but PASCAL, remaining Valtech, appeal, and tax exposure remain outside its range.",
+      "learning_themes": [
+        "patent injunction and damages exposure",
+        "historical milestone cap versus current remaining obligation"
+      ],
+      "revisit_triggers": [
+        "bounded or resolved PASCAL and Valtech claims",
+        "finite appeal and tax exposure beyond recorded reserves"
+      ],
+      "evidence_reports": [
+        "docs/audit/80-batch-16-recovery-result.md",
+        "docs/audit/82-batch-16-whole-repair-result.md"
+      ]
+    },
+    {
+      "batch": 16,
+      "ticker": "CRL",
+      "cik": "0001100682",
+      "issuer_name": "Charles River Laboratories",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "life_sciences_services_reported_operations_faded_fcff",
+      "why_not_fully_recovered": "The repaired operating baseline is numeric, but revived securities-fraud claims and two derivative actions remain outside its range without a disclosed reserve, settlement, or D&O ceiling.",
+      "learning_themes": [
+        "revived securities-fraud class exposure",
+        "D&O insurance and derivative-action claim coverage"
+      ],
+      "revisit_triggers": [
+        "source-bounded or resolved securities and derivative claims",
+        "current damages reserve or applicable D&O insurance ceiling"
+      ],
+      "evidence_reports": [
+        "docs/audit/80-batch-16-recovery-result.md",
+        "docs/audit/82-batch-16-whole-repair-result.md"
+      ]
+    },
+    {
+      "batch": 16,
+      "ticker": "ZBH",
+      "cik": "0001136869",
+      "issuer_name": "Zimmer Biomet",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "orthopedic_medtech_reported_operations_faded_fcff",
+      "why_not_fully_recovered": "The repaired baseline includes the $137.9M reserve and contingent consideration, but China distributor excess claims and IRS or foreign-tax adjustments remain outside its range.",
+      "learning_themes": [
+        "China distributor excess claims",
+        "tax-audit exposure beyond recorded accruals"
+      ],
+      "revisit_triggers": [
+        "finite China distributor excess-loss range",
+        "bounded IRS and foreign-tax adjustments"
+      ],
+      "evidence_reports": [
+        "docs/audit/80-batch-16-recovery-result.md",
+        "docs/audit/82-batch-16-whole-repair-result.md"
+      ]
+    },
+    {
+      "batch": 16,
+      "ticker": "COR",
+      "cik": "0001140859",
+      "issuer_name": "Cencora",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "health_distributor_reported_operations_faded_fcff",
+      "why_not_fully_recovered": "The repaired baseline deducts the full $4.2B opioid accrual, but claims, penalties, verdicts, and injunctions outside that schedule remain outside its range.",
+      "learning_themes": [
+        "settled opioid schedule versus unsettled claims",
+        "controlled-substance penalties and injunctions"
+      ],
+      "revisit_triggers": [
+        "finite range for all material claims outside the opioid accrual",
+        "resolved DOJ penalties, private verdicts, and injunction exposure"
+      ],
+      "evidence_reports": [
+        "docs/audit/80-batch-16-recovery-result.md",
+        "docs/audit/82-batch-16-whole-repair-result.md"
+      ]
+    },
+    {
+      "batch": 16,
+      "ticker": "ELV",
+      "cik": "0001156039",
+      "issuer_name": "Elevance Health",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "withheld",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "managed_care_residual_income_normalized_equity_earnings",
+      "why_not_fully_recovered": "The repaired residual-income baseline reflects the bounded CMS matter, but the separate DOJ False Claims Act suit and provider follow-on cases remain outside its range.",
+      "learning_themes": [
+        "bounded CMS administration versus separate DOJ litigation",
+        "managed-care False Claims Act exposure"
+      ],
+      "revisit_triggers": [
+        "finite DOJ Medicare risk-adjustment loss range",
+        "bounded or resolved material provider follow-on claims"
+      ],
+      "evidence_reports": [
+        "docs/audit/80-batch-16-recovery-result.md",
+        "docs/audit/82-batch-16-whole-repair-result.md"
+      ]
+    },
+    {
+      "batch": 17,
+      "ticker": "ABBV",
+      "cik": "0001551152",
+      "issuer_name": "AbbVie",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "biopharma_reported_operations_faded_fcff",
+      "why_not_fully_recovered": "The current standalone value is source bounded, but the pending Apogee acquisition, signed unclosed financing, patent mix, and large contingent-consideration cash obligations remain material.",
+      "learning_themes": [
+        "pre-close acquisition financing and standalone value",
+        "biopharma patent and contingent-consideration cash"
+      ],
+      "revisit_triggers": [
+        "Apogee acquisition and financing closing or termination",
+        "stable post-Apogee cash and contingent-payment history"
+      ],
+      "evidence_reports": [
+        "docs/audit/84-controlled-batch-17-result.md"
+      ]
+    },
+    {
+      "batch": 17,
+      "ticker": "MDT",
+      "cik": "0001613103",
+      "issuer_name": "Medtronic",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "current_consolidated_medtech_faded_fcff",
+      "why_not_fully_recovered": "MiniMed completed its IPO but remains approximately 90.03%-owned and consolidated, so future separation and noncontrolling-interest economics can materially change the current object.",
+      "learning_themes": [
+        "controlled-subsidiary IPO and consolidated cash",
+        "MiniMed separation and NCI valuation"
+      ],
+      "revisit_triggers": [
+        "MiniMed distribution or ownership change",
+        "source-bounded standalone Medtronic and MiniMed cash history"
+      ],
+      "evidence_reports": [
+        "docs/audit/84-controlled-batch-17-result.md"
+      ]
+    },
+    {
+      "batch": 17,
+      "ticker": "MRNA",
+      "cik": "0001682852",
+      "issuer_name": "Moderna",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "pipeline_cash_runway_equity_baseline",
+      "why_not_fully_recovered": "The conservative value is liquid assets less debt and governed cash-burn reserves, with a zero bear floor and no invented pipeline terminal value; product and pipeline outcomes remain decisive.",
+      "learning_themes": [
+        "loss-making biotech cash-runway valuation",
+        "pipeline value exclusion and equity-at-risk floor"
+      ],
+      "revisit_triggers": [
+        "sustained positive commercial cash conversion",
+        "source-bounded approved-product or pipeline cash evidence"
+      ],
+      "evidence_reports": [
+        "docs/audit/84-controlled-batch-17-result.md"
+      ]
+    },
+    {
+      "batch": 17,
+      "ticker": "CI",
+      "cik": "0001739940",
+      "issuer_name": "The Cigna Group",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "managed_care_pharmacy_residual_income_equity_earnings",
+      "why_not_fully_recovered": "Common equity and normalized earnings support residual income, but medical claims, regulated capital, Evernorth mix, and the planned Individual and Family Plans exit remain material.",
+      "learning_themes": [
+        "managed-care and pharmacy-services residual income",
+        "medical claims, regulated capital, and business exit"
+      ],
+      "revisit_triggers": [
+        "completed IFP exit with stable continuing earnings",
+        "stable medical-cost, capital, and Evernorth evidence"
+      ],
+      "evidence_reports": [
+        "docs/audit/84-controlled-batch-17-result.md"
+      ]
+    },
+    {
+      "batch": 17,
+      "ticker": "VTRS",
+      "cik": "0001792044",
+      "issuer_name": "Viatris",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "declining_portfolio_pharma_faded_fcff",
+      "why_not_fully_recovered": "The source-bounded range reflects declining cash economics, while divestitures, restructuring, patent outcomes, contingent consideration, and the Pfizer opioid dispute remain material.",
+      "learning_themes": [
+        "declining pharmaceutical portfolio normalization",
+        "restructuring, divestitures, and opioid indemnification"
+      ],
+      "revisit_triggers": [
+        "stable post-divestiture portfolio and cash conversion",
+        "resolved restructuring, patent, and opioid payment state"
+      ],
+      "evidence_reports": [
+        "docs/audit/84-controlled-batch-17-result.md"
+      ]
+    },
+    {
+      "batch": 17,
+      "ticker": "GEHC",
+      "cik": "0001932393",
+      "issuer_name": "GE HealthCare Technologies",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_spin_health_equipment_faded_fcff",
+      "why_not_fully_recovered": "A scoped interest repair supports the cash model, but short independent history, acquisitions, tariffs, and a significant unquantified legal matter remain material.",
+      "learning_themes": [
+        "post-spin health-equipment cash history",
+        "scoped interest extraction, tariffs, and legal exposure"
+      ],
+      "revisit_triggers": [
+        "longer stable independent-company cash history",
+        "bounded legal outcome and normalized tariff impact"
+      ],
+      "evidence_reports": [
+        "docs/audit/84-controlled-batch-17-result.md"
+      ]
+    },
+    {
+      "batch": 17,
+      "ticker": "KVUE",
+      "cik": "0001944048",
+      "issuer_name": "Kenvue",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_kimberly_clark_consumer_health_faded_fcff",
+      "why_not_fully_recovered": "The range values current standalone consumer health, while the pending Kimberly-Clark merger, separation indemnities, and acetaminophen/talc litigation remain material.",
+      "learning_themes": [
+        "pre-merger consumer-health standalone value",
+        "legacy product litigation and separation indemnities"
+      ],
+      "revisit_triggers": [
+        "Kimberly-Clark transaction closing or termination",
+        "bounded legacy litigation and final indemnity treatment"
+      ],
+      "evidence_reports": [
+        "docs/audit/84-controlled-batch-17-result.md"
+      ]
+    },
+    {
+      "batch": 17,
+      "ticker": "SOLV",
+      "cik": "0001964738",
+      "issuer_name": "Solventum",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "post_spin_health_technology_faded_fcff",
+      "why_not_fully_recovered": "The range has a zero bear floor because current cash conversion is stressed after the spin and Acera integration; Bair Hugger indemnification and short independent history remain material.",
+      "learning_themes": [
+        "post-spin cash normalization and acquisition integration",
+        "indemnified product liability and equity-at-risk floor"
+      ],
+      "revisit_triggers": [
+        "stable post-spin and post-Acera annual cash conversion",
+        "bounded Bair Hugger and related indemnification exposure"
+      ],
+      "evidence_reports": [
+        "docs/audit/84-controlled-batch-17-result.md"
+      ]
+    },
+    {
+      "batch": 18,
+      "ticker": "BA",
+      "cik": "0000012927",
+      "issuer_name": "Boeing",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "post_spirit_aerospace_cycle_faded_fcff",
+      "why_not_fully_recovered": "The post-Spirit value depends on production recovery, a source-governed through-cycle margin, program-charge and debt treatment, and a zero bear equity floor.",
+      "learning_themes": [
+        "post-acquisition aerospace cycle normalization",
+        "production, certification, and equity-at-risk"
+      ],
+      "revisit_triggers": [
+        "stable post-Spirit production and cash conversion",
+        "source-bounded program charges and debt state"
+      ],
+      "evidence_reports": [
+        "docs/audit/86-controlled-batch-18-result.md"
+      ]
+    },
+    {
+      "batch": 18,
+      "ticker": "CAT",
+      "cik": "0000018230",
+      "issuer_name": "Caterpillar Inc.",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_industrial_captive_finance_residual_income_equity_earnings",
+      "why_not_fully_recovered": "The residual-income range remains sensitive to machinery-cycle earnings and Financial Products receivables, credit losses, funding, and capital allocation.",
+      "learning_themes": [
+        "mixed industrial and captive-finance valuation",
+        "machinery-cycle earnings and finance receivables"
+      ],
+      "revisit_triggers": [
+        "stable through-cycle industrial and finance earnings",
+        "source-bounded captive-finance credit and capital allocation"
+      ],
+      "evidence_reports": [
+        "docs/audit/86-controlled-batch-18-result.md"
+      ]
+    },
+    {
+      "batch": 18,
+      "ticker": "CMI",
+      "cik": "0000026172",
+      "issuer_name": "Cummins",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "powertrain_cycle_faded_fcff",
+      "why_not_fully_recovered": "The range remains sensitive to the powertrain cycle, Accelera execution, environmental-settlement cash, guarantees, and noncontrolling interests.",
+      "learning_themes": [
+        "powertrain cycle and zero-emissions transition",
+        "settlement, guarantee, and NCI treatment"
+      ],
+      "revisit_triggers": [
+        "stable Accelera and powertrain cash conversion",
+        "source-bounded settlement, guarantee, and NCI cash effects"
+      ],
+      "evidence_reports": [
+        "docs/audit/86-controlled-batch-18-result.md"
+      ]
+    },
+    {
+      "batch": 18,
+      "ticker": "DAL",
+      "cik": "0000027904",
+      "issuer_name": "Delta Air Lines",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "airline_cycle_faded_fcff",
+      "why_not_fully_recovered": "The range remains materially sensitive to the airline cycle, fleet spending, fuel prices, pension obligations, and debt.",
+      "learning_themes": [
+        "airline cycle and fleet reinvestment",
+        "fuel, pension, and debt sensitivity"
+      ],
+      "revisit_triggers": [
+        "stable through-cycle airline cash conversion",
+        "source-bounded fleet, pension, and debt cash requirements"
+      ],
+      "evidence_reports": [
+        "docs/audit/86-controlled-batch-18-result.md"
+      ]
+    },
+    {
+      "batch": 18,
+      "ticker": "EMR",
+      "cik": "0000032604",
+      "issuer_name": "Emerson Electric",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_aspentech_automation_faded_fcff",
+      "why_not_fully_recovered": "The current automation range depends on post-AspenTech integration, acquisition-funded debt, software cash conversion, and portfolio normalization.",
+      "learning_themes": [
+        "post-AspenTech automation integration",
+        "acquisition debt, software cash, and portfolio normalization"
+      ],
+      "revisit_triggers": [
+        "stable post-AspenTech combined cash conversion",
+        "normalized acquisition debt and portfolio evidence"
+      ],
+      "evidence_reports": [
+        "docs/audit/86-controlled-batch-18-result.md"
+      ]
+    },
+    {
+      "batch": 19,
+      "ticker": "GE",
+      "cik": "0000040545",
+      "issuer_name": "GE Aerospace",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_aerospace_runoff_insurance_residual_income_equity_earnings",
+      "why_not_fully_recovered": "Continuing parent equity and earnings support a finite range, but run-off insurance capital, legacy liabilities, and short post-separation history remain material.",
+      "learning_themes": [
+        "mixed aerospace and run-off-insurance equity valuation",
+        "post-separation continuing earnings and insurance capital"
+      ],
+      "revisit_triggers": [
+        "longer stable post-separation aerospace earnings history",
+        "source-bounded run-off-insurance capital and liability runoff"
+      ],
+      "evidence_reports": [
+        "docs/audit/88-controlled-batch-19-result.md"
+      ]
+    },
+    {
+      "batch": 19,
+      "ticker": "HUBB",
+      "cik": "0000048898",
+      "issuer_name": "Hubbell Incorporated",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_nsi_electrical_products_faded_fcff",
+      "why_not_fully_recovered": "The filed pro-forma revenue bounds NSI scale, but the June acquisition has only a short reported operating period and incomplete acquired cash-conversion history.",
+      "learning_themes": [
+        "post-acquisition pro-forma operating scale",
+        "acquired cash conversion and acquisition-funded debt"
+      ],
+      "revisit_triggers": [
+        "a complete comparable post-NSI annual cash period",
+        "stable acquired margins, cash conversion, and debt reduction"
+      ],
+      "evidence_reports": [
+        "docs/audit/88-controlled-batch-19-result.md"
+      ]
+    },
+    {
+      "batch": 19,
+      "ticker": "MMM",
+      "cik": "0000066740",
+      "issuer_name": "3M",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "reported_operations_legal_settlement_adjusted_faded_fcff",
+      "why_not_fully_recovered": "The range deducts $9.756B of recorded legal liabilities and has a zero bear floor, while unquantified PFAS, personal-injury, and insurance-recovery outcomes remain outside it.",
+      "learning_themes": [
+        "recorded settlement schedules versus unquantified legal tails",
+        "PFAS, product liability, insurance recovery, and equity-at-risk"
+      ],
+      "revisit_triggers": [
+        "bounded remaining PFAS and personal-injury exposure",
+        "source-bounded insurance recoveries and settlement cash schedule"
+      ],
+      "evidence_reports": [
+        "docs/audit/88-controlled-batch-19-result.md"
+      ]
+    },
+    {
+      "batch": 19,
+      "ticker": "PCAR",
+      "cik": "0000075362",
+      "issuer_name": "Paccar",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_truck_captive_finance_residual_income_equity_earnings",
+      "why_not_fully_recovered": "Common equity and earnings avoid double-counting Financial Services funding, but the truck cycle, finance receivables, credit losses, and capital allocation remain material.",
+      "learning_themes": [
+        "mixed truck manufacturing and captive-finance valuation",
+        "finance receivables, credit losses, and through-cycle earnings"
+      ],
+      "revisit_triggers": [
+        "stable through-cycle truck and finance earnings",
+        "source-bounded Financial Services credit and capital allocation"
+      ],
+      "evidence_reports": [
+        "docs/audit/88-controlled-batch-19-result.md"
+      ]
+    },
+    {
+      "batch": 19,
+      "ticker": "PH",
+      "cik": "0000076334",
+      "issuer_name": "Parker Hannifin",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_filtration_group_cost_overlay_faded_fcff",
+      "why_not_fully_recovered": "The acquisition closed at cutoff and the reported cost and term-loan funding are bounded, but final purchase accounting, residual funding, acquired cash flow, and integration costs are not yet filed.",
+      "learning_themes": [
+        "cutoff-day acquisition cost and funding overlay",
+        "acquired cash flow, purchase accounting, and integration"
+      ],
+      "revisit_triggers": [
+        "filed Filtration Group purchase accounting and final funding",
+        "a comparable combined annual cash-flow period"
+      ],
+      "evidence_reports": [
+        "docs/audit/88-controlled-batch-19-result.md"
+      ]
+    },
+    {
+      "batch": 19,
+      "ticker": "DE",
+      "cik": "0000315189",
+      "issuer_name": "Deere & Company",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_agriculture_captive_finance_residual_income_equity_earnings",
+      "why_not_fully_recovered": "Common equity and earnings avoid double-counting John Deere Financial funding, but the equipment cycle, finance receivables, credit losses, capital allocation, and cutoff financing remain material.",
+      "learning_themes": [
+        "mixed equipment and captive-finance valuation",
+        "agriculture cycle, finance credit, and cutoff funding"
+      ],
+      "revisit_triggers": [
+        "stable through-cycle equipment and finance earnings",
+        "source-bounded John Deere Financial credit and capital allocation"
+      ],
+      "evidence_reports": [
+        "docs/audit/88-controlled-batch-19-result.md"
+      ]
+    },
+    {
+      "batch": 20,
+      "ticker": "PNR",
+      "cik": "0000077360",
+      "issuer_name": "Pentair",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_taco_water_solutions_faded_fcff",
+      "why_not_fully_recovered": "The current standalone range is source bounded, but the signed $1.425B Taco acquisition and $1.4B bridge commitment remain outside the operating history.",
+      "learning_themes": [
+        "pre-close water-solutions standalone value",
+        "pending acquisition funding and stale annual interest lineage"
+      ],
+      "revisit_triggers": [
+        "Taco closing or termination with final funding",
+        "comparable post-Taco cash history and current annual interest lineage"
+      ],
+      "evidence_reports": [
+        "docs/audit/90-controlled-batch-20-result.md"
+      ]
+    },
+    {
+      "batch": 20,
+      "ticker": "AOS",
+      "cik": "0000091142",
+      "issuer_name": "A. O. Smith",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_leonard_valve_building_products_faded_fcff",
+      "why_not_fully_recovered": "The debt-funded acquisition is included through current balances and annualized filed revenue, but Leonard Valve purchase accounting and acquired cash conversion remain preliminary.",
+      "learning_themes": [
+        "partial-period acquired revenue annualization",
+        "building-products acquisition debt and purchase accounting"
+      ],
+      "revisit_triggers": [
+        "final Leonard Valve purchase accounting",
+        "a complete comparable post-acquisition cash period"
+      ],
+      "evidence_reports": [
+        "docs/audit/90-controlled-batch-20-result.md"
+      ]
+    },
+    {
+      "batch": 20,
+      "ticker": "SNA",
+      "cik": "0000091440",
+      "issuer_name": "Snap-on",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_tools_finance_residual_income_equity_earnings",
+      "why_not_fully_recovered": "Common equity and earnings avoid double-counting Financial Services funding, but finance receivables, credit losses, customer financing, and capital allocation remain material.",
+      "learning_themes": [
+        "mixed tools and captive-finance valuation",
+        "finance receivables, credit losses, and capital allocation"
+      ],
+      "revisit_triggers": [
+        "stable through-cycle tools and finance earnings",
+        "source-bounded Financial Services credit and capital allocation"
+      ],
+      "evidence_reports": [
+        "docs/audit/90-controlled-batch-20-result.md"
+      ]
+    },
+    {
+      "batch": 20,
+      "ticker": "LUV",
+      "cik": "0000092380",
+      "issuer_name": "Southwest Airlines",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "airline_cycle_residual_income_equity_earnings",
+      "why_not_fully_recovered": "A finite equity-earnings range is available despite negative current post-capex cash, but Boeing delivery timing, $14.8B aircraft commitments, fleet reinvestment, fuel, and turnaround execution remain material.",
+      "learning_themes": [
+        "airline equity earnings under negative post-capex cash",
+        "Boeing deliveries, fleet commitments, and turnaround execution"
+      ],
+      "revisit_triggers": [
+        "stable positive post-capex airline cash conversion",
+        "source-bounded fleet delivery and commitment funding"
+      ],
+      "evidence_reports": [
+        "docs/audit/90-controlled-batch-20-result.md"
+      ]
+    },
+    {
+      "batch": 20,
+      "ticker": "UAL",
+      "cik": "0000100517",
+      "issuer_name": "United Airlines Holdings",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "airline_cycle_faded_fcff",
+      "why_not_fully_recovered": "Current cash history and claims reconcile, but aircraft deliveries, $19B of capacity-purchase commitments, fuel, pensions, and airline-cycle sensitivity remain material.",
+      "learning_themes": [
+        "airline cycle and aircraft reinvestment",
+        "capacity-purchase commitments, fuel, and pensions"
+      ],
+      "revisit_triggers": [
+        "stable through-cycle airline cash conversion",
+        "source-bounded aircraft and capacity-commitment funding"
+      ],
+      "evidence_reports": [
+        "docs/audit/90-controlled-batch-20-result.md"
+      ]
+    },
+    {
+      "batch": 20,
+      "ticker": "UNP",
+      "cik": "0000100885",
+      "issuer_name": "Union Pacific Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_norfolk_southern_rail_faded_fcff",
+      "why_not_fully_recovered": "The current standalone railroad is source bounded, but the signed Norfolk Southern transaction could add approximately 225M shares and $20B cash consideration.",
+      "learning_themes": [
+        "standalone railroad value versus pending combination",
+        "transaction cash, debt, dilution, and regulatory approval"
+      ],
+      "revisit_triggers": [
+        "Norfolk Southern closing, termination, or changed terms",
+        "filed combined cash flow and final capital structure"
+      ],
+      "evidence_reports": [
+        "docs/audit/90-controlled-batch-20-result.md"
+      ]
+    },
+    {
+      "batch": 20,
+      "ticker": "CTAS",
+      "cik": "0000723254",
+      "issuer_name": "Cintas",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_unifirst_uniform_services_faded_fcff",
+      "why_not_fully_recovered": "The current standalone route-services value is source bounded, but the approximately $5.5B UniFirst cash-and-stock transaction remains under FTC review.",
+      "learning_themes": [
+        "standalone route-services value versus pending acquisition",
+        "FTC review, cash consideration, and share dilution"
+      ],
+      "revisit_triggers": [
+        "UniFirst closing, termination, or changed regulatory terms",
+        "filed combined cash flow and final funding/dilution"
+      ],
+      "evidence_reports": [
+        "docs/audit/90-controlled-batch-20-result.md"
+      ]
+    },
+    {
+      "batch": 21,
+      "ticker": "RTX",
+      "cik": "0000101829",
+      "issuer_name": "RTX Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "aerospace_engine_claim_adjusted_faded_fcff",
+      "why_not_fully_recovered": "Engine inspection, customer-compensation, powder-metal litigation, and claim-tail outcomes remain material despite a source-bounded operating bridge.",
+      "learning_themes": ["aerospace engine inspection and compensation", "recorded claims versus unquantified litigation tail"],
+      "revisit_triggers": ["bounded powder-metal compensation and litigation", "stable post-inspection engine cash conversion"],
+      "evidence_reports": ["docs/audit/92-controlled-batch-21-result.md"]
+    },
+    {
+      "batch": 21,
+      "ticker": "LHX",
+      "cik": "0000202058",
+      "issuer_name": "L3Harris",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_aerojet_defense_faded_fcff",
+      "why_not_fully_recovered": "Aerojet integration, short comparable history, environmental exposure, and redeemable preferred NCI remain material.",
+      "learning_themes": ["post-Aerojet defense cash normalization", "redeemable preferred NCI and environmental claims"],
+      "revisit_triggers": ["longer stable post-Aerojet cash history", "resolved preferred redemption and bounded environmental exposure"],
+      "evidence_reports": ["docs/audit/92-controlled-batch-21-result.md"]
+    },
+    {
+      "batch": 21,
+      "ticker": "TXT",
+      "cik": "0000217346",
+      "issuer_name": "Textron",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_aerospace_captive_finance_residual_income_equity_earnings",
+      "why_not_fully_recovered": "Common equity and earnings avoid double-counting Textron Finance, but aviation cyclicality, finance receivables, credit, and capital allocation remain material.",
+      "learning_themes": ["mixed aerospace and captive-finance valuation", "finance receivables, credit, and capital allocation"],
+      "revisit_triggers": ["stable through-cycle aviation and finance earnings", "source-bounded Textron Finance capital allocation"],
+      "evidence_reports": ["docs/audit/92-controlled-batch-21-result.md"]
+    },
+    {
+      "batch": 21,
+      "ticker": "NSC",
+      "cik": "0000702165",
+      "issuer_name": "Norfolk Southern",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "transaction_separate_rail_faded_fcff",
+      "why_not_fully_recovered": "The standalone railroad is source bounded, but Union Pacific cash-and-stock consideration and regulatory approval remain conditional.",
+      "learning_themes": ["standalone railroad versus merger consideration", "rail transaction approval and combined capital structure"],
+      "revisit_triggers": ["Union Pacific transaction closing, termination, or changed terms", "filed combined cash flow and capital structure"],
+      "evidence_reports": ["docs/audit/92-controlled-batch-21-result.md"]
+    },
+    {
+      "batch": 21,
+      "ticker": "JBHT",
+      "cik": "0000728535",
+      "issuer_name": "J.B. Hunt",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "trucking_cycle_faded_fcff",
+      "why_not_fully_recovered": "The loss-preserving cash range is finite, but intermodal/truckload pricing, freight demand, and equipment reinvestment remain load-bearing.",
+      "learning_themes": ["trucking and intermodal cycle normalization", "equipment reinvestment and freight pricing"],
+      "revisit_triggers": ["stable through-cycle freight pricing and cash conversion", "source-bounded equipment replacement requirements"],
+      "evidence_reports": ["docs/audit/92-controlled-batch-21-result.md"]
+    },
+    {
+      "batch": 22,
+      "ticker": "HON",
+      "cik": "0000773840",
+      "issuer_name": "Honeywell Technologies",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_separation_conglomerate_faded_fcff",
+      "why_not_fully_recovered": "The full current filing supports a finite value, but the separation perimeter and $15.835B of pre-separation funding can materially change continuing-company cash and capital structure.",
+      "learning_themes": ["conglomerate separation and continuing-company perimeter", "pre-separation funding and capital structure"],
+      "revisit_triggers": ["completed separations with filed continuing-company statements", "stable continuing-company cash conversion and final debt allocation"],
+      "evidence_reports": ["docs/audit/94-controlled-batch-22-result.md"]
+    },
+    {
+      "batch": 22,
+      "ticker": "JCI",
+      "cik": "0000833444",
+      "issuer_name": "Johnson Controls",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "building_systems_transition_faded_fcff",
+      "why_not_fully_recovered": "Only two comparable annual cash periods are available, while current restructuring and impairment activity makes the historical normalization provisional.",
+      "learning_themes": ["short comparable building-systems cash history", "restructuring, impairment, and portfolio normalization"],
+      "revisit_triggers": ["at least three comparable post-transition annual cash periods", "completed restructuring with a stable portfolio perimeter"],
+      "evidence_reports": ["docs/audit/94-controlled-batch-22-result.md"]
+    },
+    {
+      "batch": 22,
+      "ticker": "WAB",
+      "cik": "0000943452",
+      "issuer_name": "Wabtec",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_rail_equipment_faded_fcff",
+      "why_not_fully_recovered": "$1.062B of first-half business acquisitions and partial-period acquired operations make historical cash conversion only a broad guide despite a complete current bridge.",
+      "learning_themes": ["partial-period rail-equipment acquisition history", "acquisition funding and acquired cash conversion"],
+      "revisit_triggers": ["a complete fiscal year of acquired operating cash", "final purchase accounting and stable post-acquisition debt"],
+      "evidence_reports": ["docs/audit/94-controlled-batch-22-result.md"]
+    },
+    {
+      "batch": 23,
+      "ticker": "AME",
+      "cik": "0001037868",
+      "issuer_name": "Ametek",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_indicor_instrumentation_faded_fcff",
+      "why_not_fully_recovered": "The $5.0B Indicor acquisition closed before the valuation cutoff, but final funding, purchase accounting, and acquired cash conversion remain provisional despite reported $1.1B annual sales.",
+      "learning_themes": ["post-balance acquisition bridge", "acquired operating scale and financing claims"],
+      "revisit_triggers": ["filed post-Indicor balance sheet and final financing", "a complete period of acquired operating cash conversion"],
+      "evidence_reports": ["docs/audit/96-controlled-batch-23-result.md"]
+    },
+    {
+      "batch": 23,
+      "ticker": "CHRW",
+      "cik": "0001043277",
+      "issuer_name": "C.H. Robinson",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "freight_brokerage_cycle_claim_adjusted_faded_fcff",
+      "why_not_fully_recovered": "A $604M subsequent possible loss and only $155M maximum insurance recovery create a material unresolved claim range alongside freight-cycle cash volatility.",
+      "learning_themes": ["freight-brokerage cycle normalization", "subsequent loss contingency and insurance recovery"],
+      "revisit_triggers": ["resolved appeal or source-bounded loss outcome", "confirmed insurance recovery and stable freight cash conversion"],
+      "evidence_reports": ["docs/audit/96-controlled-batch-23-result.md"]
+    },
+    {
+      "batch": 23,
+      "ticker": "FDX",
+      "cik": "0001048911",
+      "issuer_name": "FedEx",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_freight_separation_faded_fcff",
+      "why_not_fully_recovered": "FedEx Freight separation costs, post-spin cash allocation, tariffs, leases, and pensions remain material to the continuing-company baseline.",
+      "learning_themes": ["post-Freight continuing-company normalization", "separation cash, tariffs, leases, and pensions"],
+      "revisit_triggers": ["filed post-spin continuing-company fiscal history", "final separation cash, tariff, lease, and pension state"],
+      "evidence_reports": ["docs/audit/96-controlled-batch-23-result.md"]
+    },
+    {
+      "batch": 23,
+      "ticker": "PWR",
+      "cik": "0001050915",
+      "issuer_name": "Quanta Services",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_infrastructure_backlog_faded_fcff",
+      "why_not_fully_recovered": "$930.311M of first-half acquisition cash and pro-forma scale leave acquired backlog conversion, purchase accounting, and cash generation provisional.",
+      "learning_themes": ["infrastructure backlog and acquisition integration", "pro-forma scale versus acquired cash conversion"],
+      "revisit_triggers": ["complete post-acquisition operating cash history", "final purchase accounting and stable backlog conversion"],
+      "evidence_reports": ["docs/audit/96-controlled-batch-23-result.md"]
+    },
+    {
+      "batch": 23,
+      "ticker": "AXON",
+      "cik": "0001069183",
+      "issuer_name": "Axon Enterprise",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_public_safety_technology_faded_fcff",
+      "why_not_fully_recovered": "Current-year acquisitions, warrants and convertibles, strategic investments, and unresolved claim exposure remain material despite a corrected cash bridge.",
+      "learning_themes": ["public-safety technology acquisition integration", "warrants, convertibles, strategic securities, and claims"],
+      "revisit_triggers": ["stable acquired cash conversion and final purchase accounting", "source-bounded warrant, convertible, investment, and claim state"],
+      "evidence_reports": ["docs/audit/96-controlled-batch-23-result.md"]
+    },
+    {
+      "batch": 23,
+      "ticker": "UPS",
+      "cik": "0001090727",
+      "issuer_name": "United Parcel Service",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "transformation_parcel_network_faded_fcff",
+      "why_not_fully_recovered": "$933M of first-half transformation costs, tariff-refund claims, pensions, network closures, and volume reset remain material.",
+      "learning_themes": ["parcel-network transformation and volume reset", "tariff claims, pensions, closures, and leases"],
+      "revisit_triggers": ["realized transformation savings and stable network volumes", "resolved tariff recoveries and source-bounded pension/lease cash"],
+      "evidence_reports": ["docs/audit/96-controlled-batch-23-result.md"]
+    },
+    {
+      "batch": 23,
+      "ticker": "LDOS",
+      "cik": "0001336920",
+      "issuer_name": "Leidos",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_government_services_faded_fcff",
+      "why_not_fully_recovered": "$2.338B of first-half acquisition cash, $1.652B of acquired goodwill, higher debt, and integration costs make legacy contract cash history provisional.",
+      "learning_themes": ["government-services acquisition integration", "contract cash, goodwill, debt, and fixed-price execution"],
+      "revisit_triggers": ["complete post-acquisition contract cash history", "final integration, debt, and acquired backlog conversion"],
+      "evidence_reports": ["docs/audit/96-controlled-batch-23-result.md"]
+    },
+    {
+      "batch": 24,
+      "ticker": "NOC",
+      "cik": "0001133421",
+      "issuer_name": "Northrop Grumman",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "defense_program_claim_adjusted_faded_fcff",
+      "why_not_fully_recovered": "B-21 and other program cash, planned capacity investment, contract working capital, and the environmental possible-loss tail remain material.",
+      "learning_themes": ["defense program and contract-cash normalization", "environmental accruals, recoveries, and possible loss"],
+      "revisit_triggers": ["stable B-21 and other program cash performance", "resolved environmental loss and recovery state"],
+      "evidence_reports": ["docs/audit/100-controlled-batch-24-result.md"]
+    },
+    {
+      "batch": 24,
+      "ticker": "TDG",
+      "cik": "0001260221",
+      "issuer_name": "TransDigm Group",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "post_acquisition_leveraged_aerospace_parts_faded_fcff",
+      "why_not_fully_recovered": "Current and subsequent acquisitions, roughly $33B of debt, redeemable NCI, negative book equity, and acquired cash conversion remain material; the bear residual is negative.",
+      "learning_themes": ["leveraged aerospace-parts acquisition model", "debt, redeemable NCI, interest cash, and equity floor"],
+      "revisit_triggers": ["stable post-acquisition cash conversion", "material leverage reduction and final subsequent-acquisition state"],
+      "evidence_reports": ["docs/audit/100-controlled-batch-24-result.md"]
+    },
+    {
+      "batch": 24,
+      "ticker": "GNRC",
+      "cik": "0001474735",
+      "issuer_name": "Generac",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "standby_power_cycle_faded_fcff",
+      "why_not_fully_recovered": "Standby-power cycle volatility, acquisition integration, tariff refunds, goodwill impairment, warranty cash, and channel inventory remain material.",
+      "learning_themes": ["standby-power demand and channel cycle", "tariffs, warranties, acquisition integration, and impairment"],
+      "revisit_triggers": ["stable through-cycle standby-power cash conversion", "resolved tariffs and normalized warranty/channel inventory cash"],
+      "evidence_reports": ["docs/audit/100-controlled-batch-24-result.md"]
+    },
+    {
+      "batch": 24,
+      "ticker": "HII",
+      "cik": "0001501585",
+      "issuer_name": "Huntington Ingalls Industries",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "shipbuilding_program_normalized_faded_fcff",
+      "why_not_fully_recovered": "Current post-capex cash is negative, cash is only $12M, and long-cycle shipbuilding program, contract-asset, pension, and delivery timing remain material.",
+      "learning_themes": ["shipbuilding program and contract-cash timing", "negative current cash, low liquidity, pensions, and equity floor"],
+      "revisit_triggers": ["positive stable shipbuilding post-capex cash", "source-bounded program delivery and contract-asset conversion"],
+      "evidence_reports": ["docs/audit/100-controlled-batch-24-result.md"]
+    },
+    {
+      "batch": 24,
+      "ticker": "UBER",
+      "cik": "0001543151",
+      "issuer_name": "Uber",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "marketplace_restricted_funds_faded_fcff",
+      "why_not_fully_recovered": "Restricted investments, driver/merchant balances, acquisitions, strategic investments, legal and non-income-tax reserves, NCI, and rapid cash-conversion change remain material.",
+      "learning_themes": ["marketplace restricted-funds ownership", "driver/merchant balances, acquisitions, investments, claims, and NCI"],
+      "revisit_triggers": ["source-bounded restricted/customer-fund ownership", "stable marketplace cash conversion and resolved acquisition/claim state"],
+      "evidence_reports": ["docs/audit/100-controlled-batch-24-result.md"]
+    },
+    {
+      "batch": 24,
+      "ticker": "ETN",
+      "cik": "0001551182",
+      "issuer_name": "Eaton Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_electrical_systems_faded_fcff",
+      "why_not_fully_recovered": "$11.079B of first-half acquisition cash, new debt and short-term borrowing, acquired goodwill, supplier finance, restructuring, pensions, and integration remain material.",
+      "learning_themes": ["large electrical-systems acquisition integration", "acquisition debt, supplier finance, restructuring, and pensions"],
+      "revisit_triggers": ["complete post-acquisition operating cash history", "final purchase accounting and normalized acquisition funding/integration"],
+      "evidence_reports": ["docs/audit/100-controlled-batch-24-result.md"]
+    },
+    {
+      "batch": 25,
+      "ticker": "FTV",
+      "cik": "0001659166",
+      "issuer_name": "Fortive",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_separation_instrumentation_faded_fcff",
+      "why_not_fully_recovered": "Post-separation comparability, debt allocation, residual separation balances, acquisition cash, and current conversion remain material.",
+      "learning_themes": ["post-separation instrumentation cash history", "separation debt, cash, tax, and acquisition allocation"],
+      "revisit_triggers": ["complete post-separation annual cash history", "final separation and acquisition allocation"],
+      "evidence_reports": ["docs/audit/104-controlled-batch-25-result.md"]
+    },
+    {
+      "batch": 25,
+      "ticker": "DD",
+      "cik": "0001666700",
+      "issuer_name": "DuPont",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_divestiture_materials_faded_fcff",
+      "why_not_fully_recovered": "Electronics separation, Aramids divestiture, restructuring, pensions, supplier finance, and continuing-history comparability remain material.",
+      "learning_themes": ["specialty-materials separation and divestiture", "restructuring, pensions, supplier finance, and continuing scope"],
+      "revisit_triggers": ["stable post-portfolio annual cash history", "completed restructuring and final separation/divestiture state"],
+      "evidence_reports": ["docs/audit/104-controlled-batch-25-result.md"]
+    },
+    {
+      "batch": 25,
+      "ticker": "CARR",
+      "cik": "0001783180",
+      "issuer_name": "Carrier Global",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "portfolio_transition_hvac_faded_fcff",
+      "why_not_fully_recovered": "Portfolio divestitures, restructuring, warranty cash, debt, and transition cash conversion remain material.",
+      "learning_themes": ["HVAC portfolio-transition cash normalization", "divestitures, restructuring, warranties, and debt"],
+      "revisit_triggers": ["stable post-transition annual cash history", "completed divestitures and normalized warranty/restructuring cash"],
+      "evidence_reports": ["docs/audit/104-controlled-batch-25-result.md"]
+    },
+    {
+      "batch": 25,
+      "ticker": "VLTO",
+      "cik": "0001967680",
+      "issuer_name": "Veralto",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_water_quality_faded_fcff",
+      "why_not_fully_recovered": "$620M of acquisition cash, acquired goodwill, debt, and acquired operating cash conversion remain material.",
+      "learning_themes": ["water-quality acquisition integration", "acquired cash conversion, goodwill, debt, and warranty state"],
+      "revisit_triggers": ["complete post-acquisition operating cash history", "final purchase accounting and stable acquired conversion"],
+      "evidence_reports": ["docs/audit/104-controlled-batch-25-result.md"]
+    },
+    {
+      "batch": 25,
+      "ticker": "GEV",
+      "cik": "0001996810",
+      "issuer_name": "GE Vernova",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_spin_energy_equipment_faded_fcff",
+      "why_not_fully_recovered": "Post-spin warranties, supplier finance, pension income, separation cash, restructuring, and segment-cycle cash remain material.",
+      "learning_themes": ["post-spin energy-equipment cash history", "warranties, supplier finance, pensions, restricted cash, and restructuring"],
+      "revisit_triggers": ["longer stable post-spin annual cash history", "normalized warranty, supplier-finance, pension, and restructuring cash"],
+      "evidence_reports": ["docs/audit/104-controlled-batch-25-result.md"]
+    },
+    {
+      "batch": 25,
+      "ticker": "FERG",
+      "cik": "0002011641",
+      "issuer_name": "Ferguson Enterprises",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_fwi_distribution_faded_fcff",
+      "why_not_fully_recovered": "The subsequent $1.6B FWI acquisition with committed financing, current acquisitions, working capital, debt, and supplier finance remain material.",
+      "learning_themes": ["pre-FWI distribution baseline", "pending acquisition financing, acquired conversion, and working capital"],
+      "revisit_triggers": ["FWI closing, termination, or changed terms", "filed combined cash flow and final financing"],
+      "evidence_reports": ["docs/audit/104-controlled-batch-25-result.md"]
+    },
+    {
+      "batch": 25,
+      "ticker": "FDXF",
+      "cik": "0002082247",
+      "issuer_name": "FedEx Freight",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "post_separation_freight_cycle_faded_fcff",
+      "why_not_fully_recovered": "Only three carve-out annual periods are available, current cash FCFF is negative, and separation costs, opening debt and leases, and independent cash conversion remain material.",
+      "learning_themes": ["standalone LTL carve-out history", "negative current cash, separation costs, opening debt/leases, and equity floor"],
+      "revisit_triggers": ["positive stable standalone post-separation cash", "complete post-spin annual history and final debt/lease allocation"],
+      "evidence_reports": ["docs/audit/104-controlled-batch-25-result.md"]
+    },
+    {
+      "batch": 25,
+      "ticker": "HONA",
+      "cik": "0002089271",
+      "issuer_name": "Honeywell Aerospace Inc.",
+      "initial_outcome": "withheld",
+      "recovery_outcome": "conditional_numeric_low",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "newly_separated_aerospace_normalized_equity_earnings",
+      "why_not_fully_recovered": "Only two comparative H1 periods exist, the prior period did not bear HONA's new standalone debt interest, and $16.006B of opening debt, negative equity, parent allocations, supplier finance, and warranties remain material.",
+      "learning_themes": ["newly separated aerospace common-equity baseline", "pre-separation earnings and standalone debt burden"],
+      "revisit_triggers": ["complete standalone annual earnings and cash history", "filed pro-forma or reported debt-interest and parent-allocation bridge"],
+      "evidence_reports": ["docs/audit/104-controlled-batch-25-result.md", "docs/audit/105-batch-25-recovery-result.md"]
+    },
+    {
+      "batch": 26,
+      "ticker": "AMD",
+      "cik": "0000002488",
+      "issuer_name": "Advanced Micro Devices",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_zt_ai_semiconductor_faded_fcff",
+      "why_not_fully_recovered": "ZT integration, the manufacturing divestiture, acquired AI-system cash conversion, and R&D intensity make pre/post-event history materially provisional.",
+      "learning_themes": ["AI-systems acquisition and manufacturing divestiture", "R&D, acquired cash conversion, and operating-object comparability"],
+      "revisit_triggers": ["stable post-ZT and post-divestiture annual cash history", "final integration, disposal adjustments, and acquired AI-system conversion"],
+      "evidence_reports": ["docs/audit/107-controlled-batch-26-result.md"]
+    },
+    {
+      "batch": 26,
+      "ticker": "INTC",
+      "cik": "0000050863",
+      "issuer_name": "Intel",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "foundry_transformation_cash_conversion_faded_fcff",
+      "why_not_fully_recovered": "Four prior annual cash periods were negative, while foundry/fab capex, transformation execution, impairments, government support, debt, and large NCI remain load-bearing.",
+      "learning_themes": ["foundry transformation and fab reinvestment", "negative historical cash, government support, debt, NCI, and equity floor"],
+      "revisit_triggers": ["sustained positive post-capex foundry cash conversion", "stable fab commitments, government support, debt, and NCI allocation"],
+      "evidence_reports": ["docs/audit/107-controlled-batch-26-result.md"]
+    },
+    {
+      "batch": 26,
+      "ticker": "IBM",
+      "cik": "0000051143",
+      "issuer_name": "IBM",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_technology_finance_residual_income_equity_earnings",
+      "why_not_fully_recovered": "$10.48B of first-half acquisition cash, acquired conversion, Global Financing credit/funding, integration, and capital allocation remain material.",
+      "learning_themes": ["technology operations plus captive-finance equity model", "large acquisition integration and financing receivable/funding scope"],
+      "revisit_triggers": ["complete post-acquisition earnings and cash history", "stable Global Financing receivables, credit losses, funding, and capital allocation"],
+      "evidence_reports": ["docs/audit/107-controlled-batch-26-result.md"]
+    },
+    {
+      "batch": 26,
+      "ticker": "APH",
+      "cik": "0000820313",
+      "issuer_name": "Amphenol",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_ccs_acquisition_components_faded_fcff",
+      "why_not_fully_recovered": "$10.684B of first-half acquisition cash, $7.008B of acquired goodwill, debt funding, integration, acquired conversion, NCI, and dilution remain material.",
+      "learning_themes": ["large electronic-components acquisition integration", "acquired conversion, goodwill, debt, NCI, and dilution"],
+      "revisit_triggers": ["complete post-CCS annual operating cash history", "final purchase accounting and stable acquisition funding/integration"],
+      "evidence_reports": ["docs/audit/107-controlled-batch-26-result.md"]
+    },
+    {
+      "batch": 27,
+      "ticker": "KLAC",
+      "cik": "0000319201",
+      "issuer_name": "KLA Corporation",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "purchase_commitment_process_control_faded_fcff",
+      "why_not_fully_recovered": "The $5.970B purchase commitment, up from $2.420B, requires material three/five/eight-year payment-timing assumptions despite a complete operating history and bridge.",
+      "learning_themes": ["semiconductor-equipment purchase commitments", "finite commitment timing and present-value cash reserves"],
+      "revisit_triggers": ["filed commitment payment schedule or material scope reduction", "stable purchase obligations and operating cash conversion"],
+      "evidence_reports": ["docs/audit/109-controlled-batch-27-result.md"]
+    },
+    {
+      "batch": 27,
+      "ticker": "ADBE",
+      "cik": "0000796343",
+      "issuer_name": "Adobe Inc.",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_creative_software_faded_fcff",
+      "why_not_fully_recovered": "$1.560B of first-half acquisition cash, acquired conversion, goodwill, integration, SBC, debt, and dilution remain material.",
+      "learning_themes": ["creative-software acquisition integration", "acquired cash conversion, goodwill, SBC, and dilution"],
+      "revisit_triggers": ["complete post-acquisition annual cash history", "final purchase accounting and stable acquired conversion/dilution"],
+      "evidence_reports": ["docs/audit/109-controlled-batch-27-result.md"]
+    },
+    {
+      "batch": 27,
+      "ticker": "COHR",
+      "cik": "0000820318",
+      "issuer_name": "Coherent Corp.",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low_equity_at_risk",
+      "provisional_model": "post_acquisition_optical_cycle_faded_fcff",
+      "why_not_fully_recovered": "Current post-capex cash is negative, while acquisition stock, converted preferred dilution, integration, restructuring, NCI, and optical-cycle normalization remain material.",
+      "learning_themes": ["post-acquisition optical-components cash normalization", "negative current cash, preferred conversion, NCI, and equity floor"],
+      "revisit_triggers": ["sustained positive post-capex operating cash", "completed integration and stable converted-share/NCI state"],
+      "evidence_reports": ["docs/audit/109-controlled-batch-27-result.md"]
+    },
+    {
+      "batch": 27,
+      "ticker": "FLEX",
+      "cik": "0000866374",
+      "issuer_name": "Flex Ltd.",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_ems_working_capital_faded_fcff",
+      "why_not_fully_recovered": "$1.134B acquisition cash, $473M acquired goodwill, debt issuance/maturities, acquired conversion, and EMS working capital remain material.",
+      "learning_themes": ["EMS acquisition and working-capital normalization", "acquisition funding, near-term debt maturities, goodwill, and supplier finance"],
+      "revisit_triggers": ["complete post-acquisition operating cash history", "stable working capital, acquired conversion, and refinancing state"],
+      "evidence_reports": ["docs/audit/109-controlled-batch-27-result.md"]
+    },
+    {
+      "batch": 28,
+      "ticker": "QCOM",
+      "cik": "0000804328",
+      "issuer_name": "Qualcomm",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_alphawave_post_modular_semiconductor_faded_fcff",
+      "why_not_fully_recovered": "Modular closed before the valuation date, but no preliminary acquired allocation was practicable; Alphawave/Modular conversion, licensing mix, and capital allocation remain material.",
+      "learning_themes": ["post-acquisition semiconductor and licensing cash conversion", "event-date share dilution and unavailable acquired allocation"],
+      "revisit_triggers": ["filed Modular purchase accounting and acquired cash bridge", "stable post-Alphawave/post-Modular operating cash history"],
+      "evidence_reports": ["docs/audit/111-controlled-batch-28-result.md"]
+    },
+    {
+      "batch": 28,
+      "ticker": "CDNS",
+      "cik": "0000813672",
+      "issuer_name": "Cadence Design Systems",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_eda_software_faded_fcff",
+      "why_not_fully_recovered": "$2.100B acquisition cash, $902M acquisition stock, acquired conversion, goodwill, integration, SBC, and debt remain material.",
+      "learning_themes": ["EDA-software acquisition integration", "cash-and-stock consideration, acquired conversion, SBC, and debt"],
+      "revisit_triggers": ["complete post-acquisition annual cash history", "final purchase accounting and stable acquired conversion/dilution"],
+      "evidence_reports": ["docs/audit/111-controlled-batch-28-result.md"]
+    },
+    {
+      "batch": 28,
+      "ticker": "MCHP",
+      "cik": "0000827054",
+      "issuer_name": "Microchip Technology",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mandatory_convertible_preferred_analog_semiconductor_recovery_faded_fcff",
+      "why_not_fully_recovered": "Semiconductor-cycle recovery plus seven preferred-dividend payments, March 2028 mandatory conversion dilution, and uncertain capped-call benefit remain material.",
+      "learning_themes": ["analog-semiconductor cycle recovery", "mandatory-convertible dividends, conversion dilution, capped calls, and share units"],
+      "revisit_triggers": ["stable post-downturn annual cash conversion", "completed preferred conversion and realized capped-call offset"],
+      "evidence_reports": ["docs/audit/111-controlled-batch-28-result.md"]
+    },
+    {
+      "batch": 28,
+      "ticker": "GEN",
+      "cik": "0000849399",
+      "issuer_name": "Gen Digital",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "mixed_cybersecurity_instacash_faded_fcff",
+      "why_not_fully_recovered": "Instacash originations, loan sales, and held-for-sale advances enter consolidated operating cash alongside subscription economics; MoneyLion conversion, leverage, and restructuring remain material.",
+      "learning_themes": ["cybersecurity plus consumer-finance mixed business", "Instacash asset funding, loan sales, leverage, and restructuring"],
+      "revisit_triggers": ["source-bounded segment cash and financial-asset funding", "stable post-MoneyLion subscription and Instacash cash conversion"],
+      "evidence_reports": ["docs/audit/111-controlled-batch-28-result.md"]
+    },
+    {
+      "batch": 28,
+      "ticker": "PTC",
+      "cik": "0000857005",
+      "issuer_name": "PTC Inc.",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_kepware_thingworx_divestiture_faded_fcff",
+      "why_not_fully_recovered": "Historical consolidated cash includes the sold Kepware/ThingWorx operations, while sale proceeds, expected cash, gain, and contingent consideration make continuing-company comparability provisional.",
+      "learning_themes": ["industrial-software divestiture and continuing scope", "sale proceeds, contingent consideration, and historical cash comparability"],
+      "revisit_triggers": ["complete post-divestiture annual cash history", "resolved contingent consideration and stable continuing operations"],
+      "evidence_reports": ["docs/audit/111-controlled-batch-28-result.md"]
+    },
+    {
+      "batch": 28,
+      "ticker": "CSCO",
+      "cik": "0000858877",
+      "issuer_name": "Cisco",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_splunk_networking_software_faded_fcff",
+      "why_not_fully_recovered": "Splunk integration, recurring-software conversion, $31.303B debt, restructuring, SBC, and networking/software portfolio mix remain material.",
+      "learning_themes": ["networking plus acquired software integration", "recurring-revenue conversion, debt, restructuring, SBC, and investments"],
+      "revisit_triggers": ["complete post-Splunk annual operating cash history", "stable software conversion, debt, restructuring, and portfolio allocation"],
+      "evidence_reports": ["docs/audit/111-controlled-batch-28-result.md"]
+    },
+    {
+      "batch": 28,
+      "ticker": "TYL",
+      "cik": "0000860731",
+      "issuer_name": "Tyler Technologies",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_bftr_government_software_faded_fcff",
+      "why_not_fully_recovered": "BFTR conversion, convertible debt/dilution, SBC, integration, and the $537.4M through-2031 purchase obligation require material timing assumptions.",
+      "learning_themes": ["government-software acquisition integration", "finite purchase-obligation timing, convertible debt, SBC, and dilution"],
+      "revisit_triggers": ["filed purchase-obligation payment schedule", "complete post-BFTR annual cash history and stable conversion/dilution"],
+      "evidence_reports": ["docs/audit/111-controlled-batch-28-result.md"]
+    },
+    {
+      "batch": 28,
+      "ticker": "JBL",
+      "cik": "0000898293",
+      "issuer_name": "Jabil",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_ems_working_capital_faded_fcff",
+      "why_not_fully_recovered": "$852M acquisition cash, $384M acquired goodwill, acquired conversion, restructuring, NCI, finance-lease obligations, and EMS working-capital volatility remain material.",
+      "learning_themes": ["EMS acquisition and working-capital normalization", "acquired conversion, restructuring, NCI, finance leases, and net-interest lineage"],
+      "revisit_triggers": ["complete post-acquisition annual operating cash history", "stable working capital, restructuring, lease, and acquired-conversion state"],
+      "evidence_reports": ["docs/audit/111-controlled-batch-28-result.md"]
+    },
+    {
+      "batch": 29,
+      "ticker": "TRMB",
+      "cik": "0000864749",
+      "issuer_name": "Trimble Inc.",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_geospatial_software_faded_fcff",
+      "why_not_fully_recovered": "Document Crunch integration, the $562M goodwill impairment, equity-method/nonmarketable investments, and $625.8M of non-cancellable operating commitments keep cash normalization provisional.",
+      "learning_themes": ["geospatial-software acquisition and impairment normalization", "nonoperating investment overlays and purchase commitments"],
+      "revisit_triggers": ["complete post-Document-Crunch annual cash history", "stable impaired-business economics and source-bounded investment/commitment state"],
+      "evidence_reports": ["docs/audit/113-controlled-batch-29-result.md"]
+    },
+    {
+      "batch": 29,
+      "ticker": "ROP",
+      "cik": "0000882835",
+      "issuer_name": "Roper Technologies",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_indicor_divestiture_vertical_software_faded_fcff",
+      "why_not_fully_recovered": "The announced approximately $5B Indicor sale has not closed, while the current stake and expected pre-tax proceeds require a governed nonoperating-asset range with unresolved tax and purchase-price adjustments.",
+      "learning_themes": ["vertical-software divestiture and equity-method investment scope", "expected proceeds versus current carrying value and capitalized-software reinvestment"],
+      "revisit_triggers": ["Indicor closing, termination, or changed consideration", "final tax, purchase-price adjustments, proceeds, and post-sale operating history"],
+      "evidence_reports": ["docs/audit/113-controlled-batch-29-result.md"]
+    },
+    {
+      "batch": 29,
+      "ticker": "SNPS",
+      "cik": "0000883241",
+      "issuer_name": "Synopsys",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_ansys_eda_simulation_faded_fcff",
+      "why_not_fully_recovered": "The $34.9B Ansys acquisition, partial-period acquired history, restructuring, acquired amortization, debt, Processor IP event state, and new share base remain material.",
+      "learning_themes": ["EDA/simulation acquisition integration", "partial-period acquired cash, restructuring, divestiture, debt, and dilution"],
+      "revisit_triggers": ["complete post-Ansys annual operating cash history", "final Processor IP state, restructuring, purchase accounting, and debt repayment"],
+      "evidence_reports": ["docs/audit/113-controlled-batch-29-result.md"]
+    },
+    {
+      "batch": 29,
+      "ticker": "INTU",
+      "cik": "0000896878",
+      "issuer_name": "Intuit",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "customer_funds_segregated_financial_software_faded_fcff",
+      "why_not_fully_recovered": "Business-loan portfolio reinvestment, the $300M-$340M restructuring plan, and free-tax-preparation/Ontario legal proceedings remain material even though customer funds reconcile exactly.",
+      "learning_themes": ["financial-software customer-fund segregation", "business-loan reinvestment, restructuring, and unquantified legal tail"],
+      "revisit_triggers": ["stable business-loan growth and credit-loss history", "completed restructuring and source-bounded legal/regulatory resolution"],
+      "evidence_reports": ["docs/audit/113-controlled-batch-29-result.md"]
+    },
+    {
+      "batch": 29,
+      "ticker": "NVDA",
+      "cik": "0001045810",
+      "issuer_name": "Nvidia",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "ai_semiconductor_investment_adjusted_faded_fcff",
+      "why_not_fully_recovered": "$119B supply/capacity, $30B cloud, $27B investment, $32.4B future lease, and other commitments plus volatile investments, tax/guarantee exposure, export controls, and litigation remain load-bearing.",
+      "learning_themes": ["AI-semiconductor through-cycle growth and cash conversion", "investment overlays, supply/cloud/lease commitments, guarantees, tax, and export controls"],
+      "revisit_triggers": ["stable through-cycle AI cash conversion and commitment fulfillment", "reduced investment/lease/guarantee uncertainty and source-bounded legal/export state"],
+      "evidence_reports": ["docs/audit/113-controlled-batch-29-result.md"]
+    },
+    {
+      "batch": 29,
+      "ticker": "FFIV",
+      "cik": "0001048695",
+      "issuer_name": "F5, Inc.",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "cyber_incident_application_security_owner_cash_faded_fcff",
+      "why_not_fully_recovered": "The October 2025 cyber incident has possible customer, third-party, and government claims with no filed total loss range despite reported response costs and insurance recoveries.",
+      "learning_themes": ["application-security cyber-incident legal tail", "reported-operations baseline with unknown claims and insurance recovery"],
+      "revisit_triggers": ["filed cyber-claim and insurance-loss range", "resolved investigations and stable post-incident operating cash"],
+      "evidence_reports": ["docs/audit/113-controlled-batch-29-result.md"]
+    },
+    {
+      "batch": 29,
+      "ticker": "AKAM",
+      "cik": "0001086222",
+      "issuer_name": "Akamai Technologies",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_layerx_cloud_security_faded_fcff",
+      "why_not_fully_recovered": "LayerX closed after quarter-end with purchase-price adjustments outstanding, while $3.5B of new convertibles, accelerated cloud capex, and note/hedge/warrant dilution remain material.",
+      "learning_themes": ["post-LayerX cloud/security integration", "convertible funding, hedge/warrant dilution, and accelerated infrastructure capex"],
+      "revisit_triggers": ["final LayerX allocation and complete acquired cash history", "stable cloud capex plus resolved note, hedge, warrant, and dilution state"],
+      "evidence_reports": ["docs/audit/113-controlled-batch-29-result.md"]
+    },
+    {
+      "batch": 30,
+      "ticker": "CTSH",
+      "cik": "0001058290",
+      "issuer_name": "Cognizant",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "post_acquisition_it_services_faded_fcff",
+      "why_not_fully_recovered": "The $1.334B acquisition, acquired goodwill/intangibles, contingent consideration, restructuring, and the new debt/share state keep cash conversion provisional.",
+      "learning_themes": ["IT-services acquisition integration", "acquired cash conversion, restructuring, contingent consideration, debt, and shares"],
+      "revisit_triggers": ["complete post-acquisition annual operating cash history", "stable acquired conversion, restructuring, contingent consideration, and debt state"],
+      "evidence_reports": ["docs/audit/115-controlled-batch-30-result.md"]
+    },
+    {
+      "batch": 30,
+      "ticker": "ON",
+      "cik": "0001097864",
+      "issuer_name": "ON Semiconductor",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_synaptics_semiconductor_cycle_faded_fcff",
+      "why_not_fully_recovered": "The signed Synaptics transaction has not closed, while cycle recovery, restructuring, impairment, NCI, contingent consideration, debt, and future transaction shares remain material.",
+      "learning_themes": ["pre-merger semiconductor cycle baseline", "transaction-state separation, restructuring, claims, debt, and dilution"],
+      "revisit_triggers": ["Synaptics closing, termination, or changed consideration", "post-transaction capital structure and complete combined cash history"],
+      "evidence_reports": ["docs/audit/115-controlled-batch-30-result.md"]
+    },
+    {
+      "batch": 30,
+      "ticker": "STX",
+      "cik": "0001137789",
+      "issuer_name": "Seagate Technology",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "storage_hardware_cycle_faded_fcff",
+      "why_not_fully_recovered": "The $45M and $75M typed legal-claim contexts are conservatively summed but cannot yet be proven non-overlapping; storage-cycle normalization also remains material.",
+      "learning_themes": ["storage-cycle cash normalization", "opaque typed claim contexts and conservative non-overlap treatment"],
+      "revisit_triggers": ["filing evidence that resolves the two legal-claim contexts", "stable through-cycle storage demand, pricing, and cash conversion"],
+      "evidence_reports": ["docs/audit/115-controlled-batch-30-result.md"]
+    },
+    {
+      "batch": 30,
+      "ticker": "FTNT",
+      "cik": "0001262039",
+      "issuer_name": "Fortinet",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "network_security_growth_faded_fcff",
+      "why_not_fully_recovered": "$1.6671B of inventory commitments, real-estate expansion, high growth, deferred-revenue conversion, and review-grade investment classification remain material.",
+      "learning_themes": ["network-security growth and deferred-revenue conversion", "investment-caption overlap, inventory commitments, and expansion capex"],
+      "revisit_triggers": ["stable normalized security cash conversion and growth fade", "complete investment classification and commitment/expansion realization"],
+      "evidence_reports": ["docs/audit/115-controlled-batch-30-result.md"]
+    },
+    {
+      "batch": 30,
+      "ticker": "FSLR",
+      "cik": "0001274494",
+      "issuer_name": "First Solar",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "governed_solar_manufacturing_cash_range",
+      "why_not_fully_recovered": "Four of five historical cash years were negative, so the finite cash-conversion range remains a FinSight assumption while tax-credit economics, capacity expansion, unpaid capex, litigation, and policy remain material.",
+      "learning_themes": ["solar-manufacturing cash normalization", "capacity, tax credits, capex, litigation, and government-policy sensitivity"],
+      "revisit_triggers": ["source-backed capacity, backlog, module-price, tax-credit, and capex schedules", "stable positive manufacturing cash conversion across the expansion cycle"],
+      "evidence_reports": ["docs/audit/115-controlled-batch-30-result.md"]
+    },
+    {
+      "batch": 30,
+      "ticker": "MPWR",
+      "cik": "0001280452",
+      "issuer_name": "Monolithic Power Systems",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "debt_free_power_semiconductor_faded_fcff",
+      "why_not_fully_recovered": "$94.282M of H1 stock compensation remains in operating cash flow while forward net dilution or the cash cost of offsetting buybacks is not normalized.",
+      "learning_themes": ["power-semiconductor growth and owner-cash normalization", "stock-compensation add-back, net dilution, and buyback burden"],
+      "revisit_triggers": ["source-bounded forward net issuance and buyback policy", "stable SBC-adjusted owner cash and semiconductor-cycle growth"],
+      "evidence_reports": ["docs/audit/115-controlled-batch-30-result.md"]
+    },
+    {
+      "batch": 30,
+      "ticker": "PLTR",
+      "cik": "0001321655",
+      "issuer_name": "Palantir Technologies",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "high_growth_software_commitment_adjusted_faded_fcff",
+      "why_not_fully_recovered": "$5.6B of long-term commitments, $466.801M of H1 stock compensation, future dilution, customer concentration, high growth fade, NCI, and investment scope remain load-bearing.",
+      "learning_themes": ["high-growth software cash and growth-fade normalization", "commitments, SBC/net dilution, NCI, customer concentration, and investment overlap"],
+      "revisit_triggers": ["source-bounded forward net issuance and buyback policy", "stable cash conversion, growth fade, commitment fulfillment, and customer concentration"],
+      "evidence_reports": ["docs/audit/115-controlled-batch-30-result.md"]
+    },
+    {
+      "batch": 30,
+      "ticker": "TEL",
+      "cik": "0001385157",
+      "issuer_name": "TE Connectivity",
+      "initial_outcome": "conditional_numeric_low",
+      "recovery_outcome": "not_applicable",
+      "current_status": "conditional_numeric_low",
+      "provisional_model": "pre_astrodyne_connectivity_cycle_faded_fcff",
+      "why_not_fully_recovered": "The pending approximately $1.4B Astrodyne acquisition remains separate, while current acquisitions, restructuring, contingent consideration, debt, redeemable NCI, environmental exposure, and cycle mix remain material.",
+      "learning_themes": ["pre-acquisition connectivity-cycle baseline", "transaction-state separation, restructuring, claims, debt, NCI, and dilution"],
+      "revisit_triggers": ["Astrodyne closing, termination, or changed consideration", "post-transaction capital structure and complete combined cash history"],
+      "evidence_reports": ["docs/audit/115-controlled-batch-30-result.md"]
     }
   ]
 }

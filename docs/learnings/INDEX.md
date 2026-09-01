@@ -2,6 +2,17 @@
 
 # Project learnings
 
+- [Cover-only amendments do not control financial statements](cover-only-amendments-do-not-control-financial-statements.md) — use the underlying full filing for financial statements and a narrow amendment only for the facts it actually changes.
+- [Correct arithmetic does not validate model calibration](correct-arithmetic-does-not-validate-model-calibration.md) — challenge generic caps and model levels against issuer evidence after source mechanics pass.
+- [Whole-batch recovery needs explicit attempt semantics](whole-batch-recovery-needs-explicit-attempt-semantics.md) — record authorized Conditional recoveries without changing older direct-Conditional history.
+- [Structural wrapper output is a reusable cache](structural-wrapper-output-is-a-reusable-cache.md) — accept completed batch wrappers as offline structural replay inputs after identity validation.
+- [Tree hashes need algorithm provenance](tree-hashes-need-algorithm-provenance.md) — compare protected-tree hashes only when they were produced by the same hashing contract.
+- [XBRL alias additions can change selection precedence](xbrl-alias-additions-can-change-selection-precedence.md) — a valid new concept may change unrelated issuers; run historical regressions or scope the alias.
+- [Offline Arelle uses Python 3.11](offline-arelle-uses-python311.md) — use the pinned ingestion runtime and reuse complete package caches after wrong-interpreter failures.
+- [Mixed interest concepts need magnitude alignment](mixed-interest-concepts-need-magnitude-alignment.md) — align expense signs before FY-plus-YTD-minus-prior-YTD reconstruction.
+- [Catalog successors carry base publication counts](catalog-successors-carry-base-publication-counts.md) — accumulate base review states before appending the next batch.
+- [SEC Inline HTML validation needs semantic tokens](sec-inline-html-validation-needs-semantic-tokens.md) — visible currency strings can be split by table markup; validate number plus issuer/date/purpose context.
+
 - [Launch-First confirmation scope](launch-first-confirmation-scope.md) — staged behavior is approved; Batch 04 and outward-facing actions still require separate authorization.
 - [Commitment warnings must bind cash arithmetic](commitment-warning-must-bind-cash-arithmetic.md) — source text alone does not prove a commitment affects value.
 - [Negative residuals need an explicit equity floor](negative-residual-needs-explicit-equity-floor.md) — retain raw negatives and allow a public zero only under a bear-only floor rule.
@@ -14,7 +25,7 @@
 - [Annual balance is not a TTM flow](annual-balance-is-not-ttm-flow.md) — carry annual snapshots forward, but scale missing current flows from history instead of copying annual amounts.
 - [Marketable-securities total needs coverage proof](marketable-securities-total-needs-coverage-proof.md) — do not let a generic total replace current/noncurrent splits without exact issuer lineage and scope.
 - [Peer ranges are diagnostic, not issuer facts](peer-ranges-are-diagnostic-not-issuer-facts.md) — keep sector estimates out of enterprise-to-equity bridge arithmetic.
-- [Specialist facts require filed lineage](specialist-facts-require-filed-lineage.md) — select by public filing date and retain the exact fact's accession, form, unit, and currency.
+- [Specialist facts require filed lineage](specialist-facts-require-filed-lineage.md) — retain cutoff-safe fact lineage and document-hash provenance for filing-note narrative.
 - [REIT sale gains missing is not zero](reit-sale-gains-missing-is-not-zero.md) — withhold incomplete FFO reconciliation unless the adjustment is reported or source-proven zero/not disclosed.
 - [Structural schema preserves unsupported forms](structural-schema-preserves-unsupported-forms.md) — deserialize well-formed evidence first and let the eligibility policy fail closed with an explicit outcome.
 - [SEC issuer identity is not exact display name](sec-issuer-identity-is-not-exact-display-name.md) — key packets by CIK plus ticker and preserve legal/display aliases instead of falsely rejecting name variants.
@@ -23,7 +34,7 @@
 - [Current aggregate does not corroborate carried midpoints](current-aggregate-does-not-corroborate-carried-midpoints.md) — compare current point splits exactly, but treat carried-forward components as ranges rather than false point conflicts.
 - [Input-range zero endpoint is not zero substitution](input-range-zero-endpoint-is-not-zero-substitution.md) — allow zero as a bounded endpoint, never as an estimated missing-value base; keep intrinsic values strictly positive.
 - [TTM comparative YTD ends in prior period](ttm-comparative-ytd-ends-in-prior-period.md) — align current and prior YTD durations before reconstructing TTM earnings; never reuse the current end date with a prior-year start.
-- [Public assumptions must match practical base state](public-assumptions-must-match-practical-base-state.md) — update the canonical public-input fields after calibration so disclosed assumptions reproduce the actual base value.
+- [Public assumptions must match practical base state](public-assumptions-must-match-practical-base-state.md) — require public assumptions and calculator controls to reproduce the exact private base model and family.
 - [Catch policy-specific exceptions before their generic parent](exception-hierarchy-order-controls-policy-fallback.md) — preserve the distinction between a bounded missing-detail fallback and a hard source/cutoff failure.
 - [Empty current Companyfacts needs the exact filing](empty-current-companyfacts-needs-exact-filing.md) — trigger direct structural extraction when the latest eligible accession has zero facts.
 - [Captive-finance FCFE charges equity-funded growth once](captive-finance-fcfe-charges-equity-funded-growth-once.md) — use adjusted FCF less the equity share of finance-asset growth without a second debt bridge.
@@ -61,7 +72,7 @@
 - [Batch reports separate Pass, Conditional, and Withheld](batch-reports-separate-pass-conditional-withheld.md) — attempt a normal source-bounded pass first and report all three exact outcome counts every batch.
 - [Policy constants are not source provenance](policy-constants-are-not-source-provenance.md) — require filing-level bridge lineage even when hard-coded numbers reproduce exactly.
 - [SEC XBRL ZIP is a package source](sec-xbrl-zip-is-a-package-source.md) — support ZIP-only and split-page Inline XBRL filings before declaring current financial facts absent.
-- [History needs current concept lineage](history-needs-current-concept-lineage.md) — reject stale alias series and align every historical cash-flow component to the same recent annual periods.
+- [History needs current concept lineage](history-needs-current-concept-lineage.md) — reject stale aliases and recover current issuer-extension components from the matching structural filing.
 - [Customer-held cash needs an operating reserve](customer-held-cash-needs-an-operating-reserve.md) — reserve customer and merchant money from excess cash without bridge-debiting the matching operating liability twice.
 - [Share facts must preserve share units](share-facts-must-preserve-share-units.md) — require unit-aware share provenance instead of USD-hardcoded point helpers.
 - [Single positive cycle year does not set the base](single-positive-cycle-year-does-not-set-the-base.md) — do not manufacture a positive normalized midpoint from one outlier when current and median cash remain negative.
@@ -70,3 +81,9 @@
 - [Serving-root guards follow the active catalog](serving-root-guards-follow-active-catalog.md) — update every replay/capture guard when a versioned catalog replaces a loose serving directory.
 - [Reliability is internal governance](reliability-is-internal-governance.md) — show ranges and assumptions to users; keep High/Medium/Low as audit data rather than a headline verdict.
 - [Local preview auth overrides the dependency](local-preview-auth-overrides-dependency.md) — a fake refresh token alone cannot exercise authenticated calculator POSTs.
+- [Cutoff bridge includes post-balance financing](cutoff-bridge-includes-post-balance-financing.md) — reconcile cutoff-eligible acquisitions, financing, and material claims even when they postdate the controlling balance sheet.
+- [Pre-separation earnings need the standalone capital burden](pre-separation-earnings-need-standalone-capital-burden.md) — cap newly separated issuers at Conditional Low when comparative earnings did not bear the new standalone debt and no filed pro-forma bridge exists.
+- [Settled contingent consideration is not a current claim](settled-contingent-consideration-is-not-a-current-claim.md) — preserve historical acquisition consideration while using a zero current claim only when settlement is source-proven.
+- [Fixed commitments need a timed cash schedule](fixed-commitments-need-a-timed-cash-schedule.md) — represent finite commitments as exact yearly payments or an equivalent present-value reserve, never a perpetual margin reduction.
+- [Opaque typed claim contexts force Conditional](opaque-typed-claim-contexts-force-conditional.md) — a conservative sum bounds value but does not prove that typed XBRL claims do not overlap.
+- [Cash-flow SBC needs a forward dilution release condition](cash-flow-sbc-needs-forward-dilution-release-condition.md) — keep SBC in reported OCF but require explicit net-dilution or buyback treatment before Pass when material.

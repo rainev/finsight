@@ -116,3 +116,20 @@ If a defect is discovered while executing a phase and it does not block that pha
   pass, but no real row was inserted/read back.
   *Unblocks when:* a staging/local database is available; run migrations, save a custom U.S. result,
   read it through `/api/valuations`, verify user scoping and fields, then delete the test row.
+
+- **B24 · Normalize `filed_date` into inherited structural flow rows.**
+  *Why deferred:* Batch 12 recovery retains the controlling accession and receipt-level filed date,
+  so `filed: null` on selected structural rows is a display/provenance-shape issue rather than a
+  valuation or cutoff failure. Changing the shared Batch 07 helper would alter many historical
+  private traces during a value-recovery phase.
+  *Unblocks when:* a cross-batch provenance-schema migration can regenerate and compare every
+  affected private artifact without changing public values.
+
+- **B25 · Make calculator controls display each artifact's actual base assumptions.**
+  *Why deferred:* cumulative default POSTs reproduce every published range, but the shared
+  calculator view still displays generic cash-conversion, growth, discount-rate, and terminal-growth
+  defaults. Correcting this safely changes the public contract across all confirmed historical
+  catalogs, not only Batch 27.
+  *Unblocks when:* a dedicated cross-batch migration can map each operating/equity model's exact
+  base assumptions into calculator controls, rebuild every catalog, and reverify saved-run and API
+  compatibility without changing confirmed values.
