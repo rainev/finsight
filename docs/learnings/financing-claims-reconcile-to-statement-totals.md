@@ -12,6 +12,15 @@ The opposite trap appeared in Batch 06: YUM's `LongTermDebtAndCapitalLeaseObliga
 filed aggregate total, so adding `LongTermDebtCurrent` again overstated claims by $2.823 billion.
 The tag name alone could not distinguish that aggregate from the noncurrent-only cases.
 
+Batch 35 repeated the first form for WMB: `$28.121B` of
+`LongTermDebtAndCapitalLeaseObligations` was the noncurrent face-statement line, while `$2.197B`
+of current maturities and `$475M` of commercial paper were separately reported. The complete claim
+was `$30.793B`, not `$28.121B`.
+
+Batch 43 repeated it for MOS: the `$4.7677B` `LongTermDebtAndCapitalLeaseObligations` fact was
+explicitly labeled "Long-term debt, less current maturities." The complete cutoff bridge therefore
+also required `$66.7M` current maturities and `$1.0213B` short-term borrowings, for `$5.8557B` total.
+
 **Why:** A plausible aggregate tag can still cover only the noncurrent line, while a separately
 named obligation can still be financing. Either error overstates common equity.
 

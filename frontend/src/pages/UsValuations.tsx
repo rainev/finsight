@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AlertTriangle, ExternalLink, RotateCcw, Save, SlidersHorizontal } from 'lucide-react'
-import { calculateUsValuation, getUsValuation, getUsValuationCalculator, listUsValuations } from '@/lib/api'
-import type { UsCalculatorResult, UsCalculatorView, UsModelResult, UsValuation, UsValuationSummary } from '@/lib/types'
+import { calculateUsValuation, getUsValuation, getUsValuationCalculator, getUsValuationHistory, listUsValuations } from '@/lib/api'
+import type { UsCalculatorResult, UsCalculatorView, UsModelResult, UsValuation, UsValuationSummary, UsValuationHistory } from '@/lib/types'
 import { PageHeading, panel, percent } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
@@ -20,6 +20,10 @@ const percentAssumptionKeys = new Set([
   'cash_conversion_margin',
   'cash_conversion_margin_low',
   'cash_conversion_margin_high',
+  'terminal_roe',
+  'current_roe',
+  'current_payout_ratio',
+  'cost_of_equity',
 ])
 const percentCalculatorKeys = new Set([
   'sustainable_roe',
@@ -30,6 +34,7 @@ const percentCalculatorKeys = new Set([
   'recurring_cost_ratio',
   'dividend_growth',
   'initial_growth',
+  'terminal_roe',
 ])
 const calculatorDisplayValue = (key: string, value: number) => percentCalculatorKeys.has(key)
   ? (value * 100).toFixed(2)
@@ -58,14 +63,17 @@ const cleanExplanation = (value: string | undefined) => (value ?? '')
   .replace(/[^.]*\bis capped at Low\.?/gi, '')
   .trim()
 const methodLabel = (data: UsValuation) => {
-  const method = data.availability_type === 'conditional_estimate'
+  const primary = data.model_policy.primary
+  const method = primary === 'conditional_estimate'
     ? data.model_policy.fallback_from ?? 'intrinsic_valuation'
-    : data.primary_valuation_method
+    : primary ?? data.primary_valuation_method
   const labels: Record<string, string> = {
     fcff_dcf: 'Cash flow valuation',
     ddm: 'Dividend valuation',
+    total_payout_ddm: 'Owner cash-return valuation',
     residual_income: 'Residual income valuation',
     ffo: 'Funds-from-operations valuation',
+    affo_dcf: 'Adjusted-funds-from-operations valuation',
     intrinsic_valuation: 'Intrinsic valuation',
   }
   return labels[method] ?? humanize(method)
@@ -100,6 +108,8 @@ export default function UsValuations() {
   const [calculatorError, setCalculatorError] = useState<string | null>(null)
   const [savedMessage, setSavedMessage] = useState<string | null>(null)
   const [assumptionsDirty, setAssumptionsDirty] = useState(false)
+  const [history, setHistory] = useState<UsValuationHistory | null>(null)
+  const [historyError, setHistoryError] = useState<string | null>(null)
 
   useEffect(() => { listUsValuations().then((response) => { setList(response.items); if (response.items.length && !response.items.some((item) => item.ticker === 'AAPL')) setTicker(response.items[0].ticker) }).catch(() => {}) }, [])
   useEffect(() => {
@@ -111,21 +121,42 @@ export default function UsValuations() {
     return () => { live = false }
   }, [ticker])
 
-  const overrides = useMemo(() => Object.fromEntries(Object.entries(calculatorValues).map(([key, value]) => [key, calculatorModelValue(key, value)]).filter(([, value]) => Number.isFinite(value))), [calculatorValues])
+  useEffect(() => {
+    let live = true
+    setHistory(null); setHistoryError(null)
+    getUsValuationHistory(ticker).then((value) => { if (live) setHistory(value) })
+      .catch((caught: Error) => { if (live) setHistoryError(caught.message) })
+    return () => { live = false }
+  }, [ticker])
+
+  const overrides = useMemo(() => Object.fromEntries(Object.entries(calculatorValues)
+    .filter(([key, value]) => !calculator || value !== calculatorDisplayValue(key, Number(calculator.defaults[key])))
+    .map(([key, value]) => [key, calculatorModelValue(key, value)]).filter(([, value]) => Number.isFinite(value))), [calculatorValues, calculator])
   useEffect(() => {
     if (!calculatorOpen || !calculator?.can_calculate) return
+    let live = true
+    setCalculated(null)
     const timer = window.setTimeout(() => {
-      calculateUsValuation(ticker, { overrides, ...(manualPrice && Number(manualPrice) > 0 ? { manual_price: Number(manualPrice) } : {}) })
-        .then((result) => { setCalculated(result); setCalculatorError(null) }).catch((caught: Error) => setCalculatorError(caught.message))
+      calculateUsValuation(ticker, { overrides, baseline_version: calculator.baseline_version, recipe_version: calculator.recipe_version, ...(manualPrice && Number(manualPrice) > 0 ? { manual_price: Number(manualPrice) } : {}) })
+        .then((result) => { if (live) { setCalculated(result); setCalculatorError(null) } }).catch((caught: Error) => { if (live) setCalculatorError(caught.message) })
     }, 250)
-    return () => window.clearTimeout(timer)
+    return () => { live = false; window.clearTimeout(timer) }
   }, [calculatorOpen, calculator, ticker, overrides, manualPrice])
 
   const range = calculated?.result ?? data?.scenario_range
   const selectedValue = range?.[scenario]
   const pa = data?.public_assumptions
   const segments = pa?.segment_assumptions ? Object.values(pa.segment_assumptions) : []
-  const comparison = calculated?.comparison ?? data?.market_comparison
+  const scenarioComparison = calculated?.scenario_comparisons?.[scenario]
+  const officialComparison = useMemo(() => {
+    const original = data?.market_comparison
+    if (original?.status !== 'available' || original.gap_pct == null || !data?.scenario_range.base) return original
+    const value = data.scenario_range[scenario]
+    if (!value || value <= 0) return { ...original, status: 'unavailable', label: 'Comparison unavailable for a zero scenario value', gap_pct: null }
+    const gap = 1 - data.scenario_range.base * (1 - original.gap_pct) / value
+    return { ...original, gap_pct: gap, label: Math.abs(gap) <= .05 ? "Near FinSight's scenario value" : `${gap > 0 ? 'Undervalued' : 'Overvalued'} by ${(Math.abs(gap) * 100).toFixed(1)}% versus FinSight value` }
+  }, [data, scenario])
+  const comparison = scenarioComparison ? { ...scenarioComparison, price_date: calculated?.scenario_comparisons?.price_date ?? undefined } : (calculated?.comparison ?? officialComparison)
   const unavailable = data?.availability_type === 'not_available'
   const supportingExplanations = data
     ? [data.model_policy.reason, ...(data.review?.warnings ?? [])]
@@ -145,7 +176,7 @@ export default function UsValuations() {
   }
   async function saveCalculator() {
     try {
-      const result = await calculateUsValuation(ticker, { overrides, ...(manualPrice && Number(manualPrice) > 0 ? { manual_price: Number(manualPrice) } : {}), save: true })
+      const result = await calculateUsValuation(ticker, { overrides, baseline_version: calculator?.baseline_version, recipe_version: calculator?.recipe_version, ...(manualPrice && Number(manualPrice) > 0 ? { manual_price: Number(manualPrice) } : {}), save: true })
       setCalculated(result); setSavedMessage(`Saved custom valuation #${result.saved_id}`); setCalculatorError(null)
     } catch (caught) {
       setCalculatorError(caught instanceof Error ? caught.message : 'Could not save this valuation')
@@ -159,6 +190,8 @@ export default function UsValuations() {
     {loading && <p className="text-sm text-[var(--app-muted)]">Loading {ticker}…</p>}
     {error && !loading && <div className={cn(panel, 'flex items-center gap-2 p-5 text-sm text-red-500')}><AlertTriangle className="h-4 w-4" /> Could not load {ticker}: {error}</div>}
     {data && !loading && !error && <div className="space-y-6">
+      {data.freshness?.outcome === 'acquisition_failed' && <p role="status" className="text-sm text-amber-600">The latest source refresh failed. The previous dated estimate is shown; it has not been refreshed.</p>}
+      <details className={cn(panel, 'p-5')}><summary className="cursor-pointer text-sm font-semibold">Dated valuation history</summary><p className="mt-2 text-xs text-[var(--app-muted)]">Earlier estimates stay unchanged when new evidence arrives.</p>{historyError ? <p className="mt-3 text-sm text-red-500">History could not be loaded: {historyError}</p> : history ? <ul className="mt-3 space-y-2 text-sm">{history.items.map((item) => <li key={item.catalog_version}>{item.valuation_date} · {item.availability_type === 'not_available' ? 'Not available' : `${usd(item.scenario_range.low)} / ${usd(item.scenario_range.base)} / ${usd(item.scenario_range.high)}`} · filing period {item.source_financial_statement.period_end}</li>)}</ul> : <p className="mt-3 text-sm">Loading history…</p>}</details>
       <div className={cn(panel, 'p-6')}><div className="flex flex-wrap items-start justify-between gap-5"><div><div className="flex items-center gap-3"><h2 className="text-2xl font-semibold tracking-[-.02em]">{data.issuer.issuer_name}</h2>{unavailable && <span className="rounded-full border border-[var(--app-border)] bg-[var(--app-bg)] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[.12em] text-[var(--app-muted)]">Valuation unavailable</span>}</div><p className="mt-1 text-sm text-[var(--app-muted)]">{data.ticker} · {data.issuer.finsight_sector} · {unavailable ? 'No reliable valuation' : methodLabel(data)}</p></div><div className="text-right"><p className="text-[10px] font-semibold uppercase tracking-[.14em] text-[var(--app-muted)]">{unavailable ? 'Intrinsic value per share' : `${assumptionsDirty ? 'Your' : 'FinSight'} ${scenario} case`}</p><p className="font-serif text-4xl font-semibold tracking-[-.03em]">{unavailable ? '—' : usd(selectedValue)}</p>{!unavailable && <div className="mt-3 flex rounded-lg border border-[var(--app-border)] p-1">{(['low', 'base', 'high'] as const).map((key) => <button key={key} onClick={() => setScenario(key)} className={cn('rounded-md px-3 py-1 text-xs font-semibold', scenario === key && 'bg-[var(--app-text)] text-[var(--app-bg)]')}>{key === 'low' ? 'Bear' : key === 'high' ? 'Bull' : 'Base'}</button>)}</div>}</div></div></div>
       {!unavailable && <div className={cn(panel, 'p-5')}><p className="text-[10px] font-semibold uppercase tracking-[.14em] text-[var(--app-muted)]">Market comparison</p><p className="mt-2 text-lg font-semibold">{comparison?.status === 'available' ? comparison.label : 'Add a market price to compare'}</p><p className="mt-2 text-xs text-[var(--app-muted)]">{comparison?.price_date ? `EOD date ${comparison.price_date}; raw price stays private.` : comparison?.status === 'available' && manualPrice ? 'Compared with the market price you entered.' : 'Open Your assumptions and enter a market price. It will not change intrinsic value.'}</p></div>}
       {!unavailable && <div className={cn(panel, 'p-6')}><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-[.16em] text-[var(--app-muted)]">Your assumptions</p><p className="mt-1 text-sm text-[var(--app-muted)]">Source facts, identity, shares, and history stay locked.</p></div><button disabled={!calculator?.can_calculate} onClick={() => setCalculatorOpen((open) => !open)} className="inline-flex items-center gap-2 rounded-lg bg-[var(--app-text)] px-4 py-2 text-xs font-semibold text-[var(--app-bg)] disabled:opacity-40"><SlidersHorizontal className="h-4 w-4" /> Edit assumptions</button></div>

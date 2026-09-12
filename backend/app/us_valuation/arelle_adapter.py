@@ -128,6 +128,7 @@ def parse_structural_filing(
     accession: str,
     form: str = "10-K",
     timeout_seconds: int = 120,
+    cpu_limit_seconds: int | None = None,
 ) -> StructuralFiling:
     """Parse a local filing through a JSON-only child-process boundary."""
 
@@ -138,6 +139,11 @@ def parse_structural_filing(
         raise ValueError("accession must be nonempty")
     if timeout_seconds <= 0:
         raise ValueError("timeout_seconds must be positive")
+    if cpu_limit_seconds is not None and (isinstance(cpu_limit_seconds,bool) or not isinstance(cpu_limit_seconds,int) or not 1 <= cpu_limit_seconds <= 600):
+        raise ValueError('CPU limit must be an integer from 1 to 600 seconds')
+    worker_environment = _worker_environment()
+    if cpu_limit_seconds is not None:
+        worker_environment['FINSIGHT_ARELLE_CPU_LIMIT_SECONDS'] = str(cpu_limit_seconds)
     normalized_form = normalize_filing_form(form)
 
     with tempfile.TemporaryDirectory(prefix="arelle-output-") as temp_dir:
@@ -164,7 +170,7 @@ def parse_structural_filing(
                     text=True,
                     timeout=timeout_seconds,
                     cwd=os.fspath(_BACKEND_DIR),
-                    env=_worker_environment(),
+                    env=worker_environment,
                 )
             except subprocess.TimeoutExpired as error:
                 raise ArelleParseTimeout(

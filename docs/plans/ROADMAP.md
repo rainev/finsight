@@ -1,5 +1,7 @@
 # FinSight controlled 500-company reset roadmap
 
+Active initiative: [Automated U.S. valuation](AUTOMATED-US-VALUATION.md), executed through [verified working groups](US-REFRESH-WORKING-GROUPS.md) — implementation authorized; current group, evidence and honest work-state counts tracked separately.
+
 Date adopted: 2026-08-20
 
 Common valuation date: 2026-08-14
@@ -1093,8 +1095,344 @@ every list/detail/calculator artifact with zero leaks. The eight Conditional com
 the Recovery Learning Watchlist. Serving promotion, Batch 31, merge, push, and deployment remain
 outside scope.
 
-Gate: **initial processing authorized.** Evidence starts in Audit 114. Recovery, bookkeeping,
-tracked serving promotion, Batch 31, merge, push, and deployment remain untouched.
+### Phase B31 — user-confirmed; recovery complete
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B31.1 | Bind/test the exact frozen ten-company manifest and predecessor state | ✔ VERIFIED |
+| B31.2 | Reuse two cutoff packets/parses; capture eight missing packets and current wrappers | ✔ VERIFIED — 10/10 |
+| B31.3 | Build histories, bridges, events, suitable technology/analytics models, and classifications | ✔ VERIFIED — 2/7/1 |
+| B31.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ PASS — 0 open |
+| B31.5 | Replay twice, run full suites/build, and exercise the isolated 310-company API | ✔ VERIFIED |
+| B31.6 | Record the exact result and stop before confirmation/recovery/Batch 32 | ✔ USER-CONFIRMED |
+
+Gate: **user-confirmed on 2026-09-02.** Batch 31 is Pass 2 / Conditional 7 / Withheld 1; numeric
+9/10. The seven Conditional companies are now on the Recovery Learning Watchlist. ORCL remains an
+initial Withheld result and has not consumed its one recovery attempt or entered the cumulative
+withheld register. Tracked serving promotion, Batch 32, merge, push, and deployment remain untouched.
+
+### Phase B31-R — user-confirmed
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B31-R.1 | Extract exact RPO, capex, lease, purchase, debt, and preferred schedules | ✔ VERIFIED |
+| B31-R.2 | Run one history-bounded infrastructure recovery without price fitting | ✔ VERIFIED — base remains negative |
+| B31-R.3 | Independently challenge source labels, arithmetic, overlaps, and release decision | ✔ PASS — 0 open |
+| B31-R.4 | Replay twice, run full suites/build, and exercise the isolated 310-company API | ✔ VERIFIED |
+| B31-R.5 | Record the still-Withheld outcome and stop before bookkeeping/Batch 32 | ✔ USER-CONFIRMED |
+
+Gate: **user-confirmed on 2026-09-02.** ORCL remains Withheld after one attempted recovery because
+an optimistic history-bounded replay still produces a negative base common-equity value. ORCL is
+recorded in the Recovery Learning Watchlist and cumulative withheld register; the automatic attempt
+is consumed. Tracked serving promotion, Batch 32, merge, push, and deployment remain untouched.
+Evidence: Audit 118.
+
+### Phase B32 — NOW: history-backed Information Technology batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B32.1 | Bind/test the exact frozen ten-company manifest and predecessor state | ✔ VERIFIED |
+| B32.2 | Reuse four cutoff packets/parses; capture six missing packets and current wrappers | ✔ VERIFIED |
+| B32.3 | Build histories, bridges, events, successor/cycle models, and classifications | ✔ VERIFIED |
+| B32.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ VERIFIED |
+| B32.5 | Replay twice, run full suites/build, and exercise the isolated 320-company API | ✔ VERIFIED |
+| B32.6 | Record the exact result and stop before confirmation/recovery/Batch 33 | ✔ USER-CONFIRMED |
+
+Gate: **user-confirmed on 2026-09-03.** Pass 1 / Conditional 9 / Withheld 0 / Numeric 10. The nine
+Conditional issuers are recorded in the Recovery Learning Watchlist; GDDY is excluded because it
+passed. Recovery and withheld-register changes are unnecessary. Evidence: Audits 119–120. Tracked
+serving promotion, Batch 33, merge, push, and deployment remain untouched.
+
+### Phase B33 — NOW: history-backed Financials batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B33.1 | Bind/test the exact frozen ten-company manifest and Batch 32 predecessor state | ✔ VERIFIED |
+| B33.2 | Capture ten cutoff-safe packets, current wrappers, and later material 8-K events | ✔ VERIFIED |
+| B33.3 | Build common-equity histories, residual-income/equity models, capital/claim bridges, and classifications | ✔ VERIFIED |
+| B33.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ VERIFIED |
+| B33.5 | Replay twice, run full suites/build, and exercise the isolated 330-company API | ✔ VERIFIED |
+| B33.6 | Record the exact result and stop before confirmation/recovery/Batch 34 | ✔ USER-CONFIRMED |
+
+Gate: **user-confirmed on 2026-09-03.** Pass 1 / Conditional 9 / Withheld 0 / Numeric 10.
+The nine Conditional issuers were added to the Recovery Learning Watchlist, bringing it to 215
+companies; no withheld-register change was needed. Evidence: Audits 121–122. Recovery, tracked
+serving promotion, Batch 34, merge, push, and deployment remain untouched.
+
+### Phase B34 — NOW: history-backed Financials batch
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B34.1 | Bind/test the exact frozen ten-company manifest and Batch 33 predecessor state | ✔ VERIFIED |
+| B34.2 | Capture ten cutoff-safe packets, structural filings, and material preferred/debt events | ✔ VERIFIED |
+| B34.3 | Build financial-equity histories, residual-income models, capital/claim bridges, and classifications | ✔ VERIFIED |
+| B34.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ VERIFIED |
+| B34.5 | Replay twice, run full suites/build, and exercise the isolated 340-company API | ✔ VERIFIED |
+| B34.6 | Record the exact result and stop before confirmation/recovery/Batch 35 | ✔ USER-CONFIRMED |
+
+Gate: **user-confirmed on 2026-09-03.** Pass 0 / Conditional 10 / Withheld 0 / Numeric 10.
+The ten Conditional issuers were added to the Recovery Learning Watchlist, bringing it to 225
+companies; no withheld-register change was needed. Evidence: Audits 123–124. Recovery, tracked
+serving promotion, Batch 35, merge, push, and deployment remain untouched.
+
+### Phase B34-R — Batch 34 one-time recovery
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B34-R.1 | Audit ten Conditional issuers and test practical Pass release conditions | ✔ VERIFIED |
+| B34-R.2 | Implement source-bounded USB/BRO Pass repairs and exact NTRS/STT claim schedules | ✔ VERIFIED |
+| B34-R.3 | Challenge, replay, full suite, and exercise isolated recovery API | ✔ VERIFIED |
+| B34-R.4 | Record recovery result and stop before bookkeeping/Batch 35 | ✔ USER-CONFIRMED |
+
+Gate: **user-confirmed on 2026-09-03.** Recovery result is Pass 2 / Conditional 8 / Withheld 0 /
+Numeric 10. USB and BRO were removed from the watchlist, which now contains 223 companies; the
+withheld register was unchanged. Evidence: Audit 126. Batch 35, serving promotion, merge, push,
+and deployment remain untouched.
+
+### Phase B34-SR — Sol re-audit repair
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B34-SR.1 | Repair public model identity, reliability, and coherent Pass metadata | ✔ VERIFIED |
+| B34-SR.2 | Bind confirmed/source inputs and correct period-specific preferred-equity/ROE lineage | ✔ VERIFIED |
+| B34-SR.3 | Complete recovery semantics, provenance, source audit, index, and semantic tests | ✔ VERIFIED |
+| B34-SR.4 | Resolve BRO model suitability and apply evidence-backed classification | ✔ VERIFIED |
+| B34-SR.5 | Replay twice, challenge independently, run full suite/build, and exercise exact 340-company API | ✔ VERIFIED |
+| B34-SR.6 | Present repaired result and stop before bookkeeping/Batch 35 | ✔ USER-CONFIRMED |
+
+Gate: **user-confirmed on 2026-09-03.** Repaired result is Pass 1 (USB) / Conditional 9 (including
+BRO) / Withheld 0 / Numeric 10. BRO was returned to the watchlist, which now contains 224 companies;
+the withheld register is unchanged. Evidence: Audits 127–128. Batch 35, tracked serving promotion,
+merge, push, and deployment remain untouched.
+
+### Phase B35 — history-backed Financials plus energy boundary
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B35.1 | Bind/test the exact frozen ten-company manifest and Batch 34 predecessor state | ✔ VERIFIED |
+| B35.2 | Capture ten cutoff-safe packets, structural filings, and material cutoff events | ✔ VERIFIED |
+| B35.3 | Build issuer-suitable financial-equity/resource-cycle histories and classifications | ✔ VERIFIED |
+| B35.4 | Independently challenge source mechanics and model suitability; repair all Critical/Important findings | ✔ VERIFIED |
+| B35.5 | Replay twice, run full suites/build, and exercise the isolated 350-company API | ✔ VERIFIED |
+| B35.6 | Record the exact result and stop before confirmation/recovery/Batch 36 | ✔ USER-CONFIRMED — WATCHLIST BOOKKEPT |
+
+Gate: **initial processing verified and user-confirmed.** Evidence is in Audits 129–130. Batch 35's
+ten Conditional issuers are now on the Recovery Learning Watchlist. Recovery, tracked serving
+promotion, Batch 36, merge, push, and deployment remain untouched.
+
+### Phase B35-SRA — NOW: Batch 35 Sol re-audit repairs
+
+| ID | Work | Source gap | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- | --- |
+| B35-SRA.1 | Complete WMB current-debt/commercial-paper bridge and correct AON/AJG adverse claim mapping | Audit 131 gaps 1–2 | P1 | Source total plus independent three-scenario replay | ✔ VERIFIED |
+| B35-SRA.2 | Preserve actual residual-income/FCFF identity through public artifacts and calculators | Audit 131 gap 3 | P1 | Private/public/model-family equality and exact override replay | ✔ VERIFIED |
+| B35-SRA.3 | Complete ten-company cutoff-event ledger; consume JKHY's August earnings release and bound PNC/SCHW note interest | Audit 131 gap 4 | P1 | Every cutoff filing scanned/accepted/rejected; source-linked arithmetic | ✔ VERIFIED |
+| B35-SRA.4 | Enforce source/structural receipt hashes at valuation runtime | Audit 131 gap 5 | P1 | Tamper tests fail closed; exact source bytes pass | ✔ VERIFIED |
+| B35-SRA.5 | Add semantic bridge/direction/event/model tests and correct audit/public disclosure details | Audit 131 gaps 6–9 | P1/P2 | Focused tests fail on G/H and pass on successor | ✔ VERIFIED |
+| B35-SRA.6 | Rechallenge, replay twice, run full suite/build, and exercise the corrected 350-company API | Audit 131 disposition | P1 | 0 Critical/Important; byte equality; real list/detail/calculator evidence; user confirmation | ✔ USER-CONFIRMED |
+
+Gate: **repairs verified and user-confirmed on 2026-09-04.** Evidence: Audits 131–132. Do not start
+Batch 36, promotion, merge, push, or deployment as part of this repair phase.
+
+### Phase B36 — NOW: Financials, payments, and refining boundary
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B36.1 | Bind/test the exact frozen ten-company manifest and confirmed Batch 35 predecessor | ✔ VERIFIED |
+| B36.2 | Capture ten cutoff-safe packets, structural filings, and complete event screens | ✔ VERIFIED |
+| B36.3 | Build issuer-suitable financial-equity/payments/refining histories and classifications | ✔ VERIFIED |
+| B36.4 | Independently challenge source mechanics, events, model suitability, and public semantics | ✔ VERIFIED |
+| B36.5 | Replay twice, run full suites/build, and exercise the isolated 360-company API | ✔ VERIFIED |
+| B36.6 | Record the exact result and stop before confirmation/recovery/Batch 37 | ✔ USER-CONFIRMED |
+
+Gate: **initial processing verified and user-confirmed on 2026-09-05.** Evidence: Audits 133–134. Recovery, bookkeeping,
+tracked serving promotion, Batch 37, merge, push, and deployment remain untouched.
+
+### Phase B36-R — one VLO recovery attempt
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B36-R.1 | Recover exact current custom-capex history and reject stale standard lineage | ✔ VERIFIED |
+| B36-R.2 | Build a private pre-claim refining-cycle FCFF diagnostic and reconcile the July repayment | ✔ VERIFIED |
+| B36-R.3 | Exhaust the Port Arthur claim gate without substituting zero or property costs | ✔ VERIFIED — CLAIM UNBOUNDED |
+| B36-R.4 | Independently challenge, replay twice, run full suites/build, and exercise the 360-company API | ✔ VERIFIED |
+| B36-R.5 | Present the final result before watchlist/withheld bookkeeping and Batch 37 | ✔ USER-CONFIRMED AND RECORDED |
+
+Gate: **recovery verified and user-confirmed; VLO remains Withheld.** Evidence: Audit 135. Watchlist
+and cumulative withheld bookkeeping are complete. Tracked serving promotion, Batch 37, merge,
+push, and deployment remain untouched.
+
+### Phase B37 — Financials, holding-company, and energy boundary
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B37.1 | Bind/test the exact frozen ten-company manifest and confirmed Batch 36 predecessor | ✔ VERIFIED |
+| B37.2 | Capture ten cutoff-safe packets, structural filings, and complete event screens | ✔ VERIFIED |
+| B37.3 | Build issuer-suitable financial-equity/holding-company/resource histories and classifications | ✔ VERIFIED |
+| B37.4 | Independently challenge source mechanics, events, model suitability, and public semantics | ✔ VERIFIED |
+| B37.5 | Replay twice, run full suites/build, and exercise the isolated 370-company API | ✔ VERIFIED |
+| B37.6 | Record the exact result and stop before confirmation/recovery/Batch 38 | ✔ USER-CONFIRMED AND RECORDED |
+
+Gate: **initial processing verified, user-confirmed, and recorded.** Evidence: Audits 136–137. No
+withheld recovery is needed. Tracked serving promotion, Batch 38, merge, push, and deployment remain
+untouched.
+
+### Phase B38 — Insurance, payments, and exchange models
+
+| ID | Work | Status |
+| --- | --- | --- |
+| B38.1 | Bind/test the exact frozen ten-company manifest and confirmed Batch 37 predecessor | ✔ VERIFIED |
+| B38.2 | Capture ten cutoff-safe packets, structural filings, and complete event screens | ✔ VERIFIED |
+| B38.3 | Build issuer-suitable insurance/payments/exchange histories and classifications | ✔ VERIFIED |
+| B38.4 | Independently challenge source mechanics, events, model suitability, and public semantics | ✔ VERIFIED WITH DISCLOSED MODEL LIMITS |
+| B38.5 | Replay twice, run full suites/build, and exercise the isolated 380-company API | ✔ VERIFIED |
+| B38.6 | Record the exact result and stop before confirmation/recovery/Batch 39 | ✔ USER-CONFIRMED AND RECORDED |
+
+### Phase B38R — GPN/CPAY one-attempt recovery
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B38R.1 | Pin the confirmed Batch 38 result and replay exactly GPN/CPAY | ✔ VERIFIED |
+| B38R.2 | Challenge GPN post-close cash and permissive Q2 proxy routes | ✔ VERIFIED; WITHHELD REMAINS |
+| B38R.3 | Build and challenge CPAY customer-funds-reserved equity fallback | ✔ VERIFIED; CONDITIONAL LOW |
+| B38R.4 | Replay twice, run full suites/build, and exercise isolated 380-company API | ✔ VERIFIED |
+| B38R.5 | Record result, update watchlist/withheld register after confirmation, and stop before Batch 39 | ✔ USER-CONFIRMED AND RECORDED |
+
+Gate: **initial processing verified; user confirmation required.** Evidence: Audits 138–139. Recovery, bookkeeping,
+tracked serving promotion, Batch 39, merge, push, and deployment remain untouched.
+
+### Phase B39 — Financial-equity and midstream boundary models
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B39.1 | Bind/test the exact frozen ten-company manifest and confirmed Batch 38 recovery predecessor | ✔ VERIFIED |
+| B39.2 | Capture ten cutoff-safe packets, structural filings, and complete event screens | ✔ VERIFIED |
+| B39.3 | Build issuer-suitable financial-equity/payments/midstream histories and classifications | ✔ VERIFIED |
+| B39.4 | Independently challenge source mechanics, events, model suitability, and public semantics | ✔ VERIFIED WITH ONE DISCLOSED MINOR LIMITATION |
+| B39.5 | Replay twice, run full suites/build, and exercise the isolated 390-company API | ✔ VERIFIED |
+| B39.6 | Record the exact result and stop before confirmation/recovery/Batch 40 | ✔ USER-CONFIRMED AND RECORDED |
+
+### Phase B40 — Data, fintech, crypto, asset-manager, and royalty models
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B40.1 | Bind/test the exact frozen ten-company manifest and confirmed Batch 39 predecessor | ✔ VERIFIED |
+| B40.2 | Capture ten cutoff-safe packets, structural filings, and complete event screens | ✔ VERIFIED |
+| B40.3 | Build issuer-suitable data/payments/consumer-finance/crypto/asset-manager/resource histories | ✔ VERIFIED |
+| B40.4 | Independently challenge source mechanics, events, model suitability, and public semantics | ✔ VERIFIED WITH ONE DISCLOSED MINOR NOTE |
+| B40.5 | Replay twice, run full suites/build, and exercise isolated 400-company API | ✔ VERIFIED |
+| B40.6 | Record the exact result and stop before confirmation/recovery/Batch 41 | ✔ USER-CONFIRMED AND RECORDED |
+
+### Phase B40-R — COIN recovery
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B40R.1 | Recover and hash-pin the missing Q2 earnings exhibit; fix event attachment discovery | ✔ VERIFIED |
+| B40R.2 | Rebuild loss-preserving through-cycle history and reconcile customer/crypto funding boundaries | ✔ VERIFIED |
+| B40R.3 | Challenge a practical residual-income fallback and reject unsupported floors or claim reserves | ✔ VERIFIED — REMAINS WITHHELD |
+| B40R.4 | Pin nine non-COIN issuers, replay twice, run full suites/build, and exercise the isolated 400-company API | ✔ VERIFIED |
+| B40R.5 | Record the recovery outcome and update watchlist/withheld bookkeeping only after confirmation | ✔ USER-CONFIRMED AND RECORDED |
+
+### Phase B41 — Materials and energy resource-cycle models — NOW
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B41.1 | Bind/test the exact frozen ten-company manifest and confirmed Batch 40 predecessor | ✔ VERIFIED |
+| B41.2 | Capture ten cutoff-safe packets, structural filings, and complete event screens | ✔ VERIFIED |
+| B41.3 | Build issuer-suitable industrial-gas/packaging/chemical/energy/steel histories and classifications | ✔ VERIFIED |
+| B41.4 | Independently challenge source mechanics, events, cycle normalization, model suitability, and public semantics | ✔ VERIFIED |
+| B41.5 | Replay twice, run full suites/build, and exercise isolated 410-company API | ✔ VERIFIED |
+| B41.6 | Record the exact result and stop before confirmation/recovery/Batch 42 | ✔ USER-CONFIRMED AND RECORDED |
+
+Gate: **initial processing verified, user-confirmed, and recorded.** Evidence: Audits 145 and 147. APD, IFF and IP are
+Withheld and require a separate recovery signal. The Recovery Learning Watchlist now contains 291 entries; the cumulative
+withheld register remains 23 entries. Tracked serving promotion, Batch 42, merge, push, and deployment remain untouched.
+
+### Phase B41R — APD/IFF/IP one-attempt recovery — NOW
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B41R.1 | Pin the confirmed Batch 41 report and preserve all seven numeric artifacts | ✔ VERIFIED |
+| B41R.2 | Challenge APD parent-equity recovery and scoped project-exit reserve treatment | ✔ VERIFIED — CONDITIONAL LOW |
+| B41R.3 | Retest IFF continuing/discontinued cash perimeter and correct private disposal scopes | ✔ VERIFIED — REMAINS WITHHELD |
+| B41R.4 | Retest IP FCFF/residual-income release conditions and current-company perimeter | ✔ VERIFIED — REMAINS WITHHELD |
+| B41R.5 | Replay twice, run full suites/build, and exercise the isolated 410-company recovery API | ✔ VERIFIED |
+| B41R.6 | Record recovery result and stop before bookkeeping/Batch 42 | ✔ USER-CONFIRMED AND RECORDED |
+
+Gate: **recovery verified, user-confirmed, and recorded.** Evidence: Audit 148. APD is a recovered Conditional Low;
+IFF and IP consumed their one automatic recovery attempt and remain Withheld. Serving promotion, Batch 42, merge, push,
+and deployment remain untouched.
+
+### Phase B42 — Materials and energy resource-cycle models — NOW
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B42.1 | Bind/test the exact frozen ten-company manifest and confirmed Batch 41 recovery predecessor | ✔ VERIFIED |
+| B42.2 | Capture ten cutoff-safe packets, structural filings, and complete event screens | ✔ VERIFIED |
+| B42.3 | Build issuer-suitable coatings/oilfield/integrated-energy/E&P/mining/construction-material histories | ✔ VERIFIED |
+| B42.4 | Independently challenge source mechanics, events, cycle normalization, model suitability, and public semantics | ✔ VERIFIED WITH ONE DISCLOSED MINOR NOTE |
+| B42.5 | Replay twice and exercise the standalone Batch 42 API | ✔ VERIFIED |
+| B42.6 | Build the cumulative 420-company catalog, run full verification, and stop for confirmation | ✔ INITIAL RESULT ACCEPTED; RECOVERY AUTHORIZED |
+
+### Phase B42R — EXE/ALB one-attempt recovery — NOW
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B42R.1 | Pin the accepted Batch 42 report and preserve all eight numeric artifacts | ✔ VERIFIED |
+| B42R.2 | Reconstruct and challenge three non-overlapping EXE post-combination cash windows | ✔ VERIFIED — REMAINS WITHHELD |
+| B42R.3 | Reconcile ALB mandatory conversion, preferred dividends and current cash-history quality | ✔ VERIFIED — REMAINS WITHHELD |
+| B42R.4 | Replay twice, run full suites/build, and exercise the cumulative 420-company recovery API | ✔ VERIFIED |
+| B42R.5 | Present recovery result and update watchlist/withheld bookkeeping only after confirmation | ✔ USER-CONFIRMED AND RECORDED |
+
+### Phase B43 — controlled resource-cycle batch
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B43.1 | Freeze the exact ten-company denominator and bind the confirmed Batch 42 recovery predecessor | ✔ VERIFIED |
+| B43.2 | Capture cutoff-safe filings, structural facts, annual COP capex lineage and event documents | ✔ VERIFIED |
+| B43.3 | Build and challenge source-backed resource-cycle baselines and explicit current-scope withholding gates | ✔ VERIFIED |
+| B43.4 | Replay twice, run full suites/build, and exercise the cumulative 430-company API | ✔ VERIFIED |
+| B43.5 | Present exact result and stop for confirmation before recovery or Batch 44 | ✔ USER-CONFIRMED; RECOVERY PENDING |
+
+### Phase B43R — one-attempt withheld recovery
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B43R.1 | Pin the exact confirmed Batch 43 result and preserve seven numeric artifacts | ✔ VERIFIED |
+| B43R.2 | Exhaust DVN pro-forma cash evidence, NEM transaction claims and LYB continuing-company cash evidence | ✔ VERIFIED — ALL THREE REMAIN WITHHELD |
+| B43R.3 | Replay twice, run complete verification and exercise the cumulative recovery API | ✔ VERIFIED |
+| B43R.4 | Present final recovery result and update bookkeeping only after confirmation | ✔ USER-CONFIRMED AND RECORDED |
+
+### Phase B44 — controlled resource-cycle batch
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B44.1 | Freeze the exact ten-company denominator and bind the confirmed Batch 43 recovery predecessor | ✔ VERIFIED |
+| B44.2 | Capture cutoff-safe filings, structural facts, event documents and PSX/APA/XOM annual-source repairs | ✔ VERIFIED |
+| B44.3 | Build and independently challenge resource-cycle baselines and current-company hard gates | ✔ VERIFIED |
+| B44.4 | Replay twice, run full suites/build, and exercise the cumulative 440-company API | ✔ VERIFIED |
+| B44.5 | Present exact result and stop for confirmation before recovery or Batch 45 | ✔ USER-CONFIRMED; RECOVERY PENDING |
+
+### Phase B44R — withheld recovery and whole-batch range calibration
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B44R.1 | Pin the confirmed initial result and audit why bear/base/bull ranges are far apart | ✔ VERIFIED |
+| B44R.2 | Replace full stacked tails with moderated multi-factor ranges while preserving every base and bridge | ✔ VERIFIED |
+| B44R.3 | Attempt BKR/AMCR/SW recovery under transparent practical Low fallbacks | ✔ VERIFIED — AMCR/SW RECOVERED; BKR WITHHELD |
+| B44R.4 | Independently challenge, replay twice, run full verification and exercise cumulative API | ✔ VERIFIED |
+| B44R.5 | Present final result and update bookkeeping only after confirmation | ✔ USER-CONFIRMED AND RECORDED |
+
+### Phase B45 — controlled utility-equity batch
+
+| Gate | Deliverable | Status |
+| --- | --- | --- |
+| B45.1 | Freeze the exact ten-company denominator and bind confirmed Batch 44 recovery/bookkeeping | ✔ VERIFIED |
+| B45.2 | Capture/parse utility filings, events and special LNT/WEC annual capex evidence | ✔ VERIFIED |
+| B45.3 | Build dynamic FCFE-first and regulated residual-income fallbacks with non-stacked ranges | ✔ VERIFIED |
+| B45.4 | Independently challenge parent allocation, event boundaries, calculators and source lineage | ✔ VERIFIED |
+| B45.5 | Replay twice, run complete suites/build and exercise cumulative 450-company API | ✔ VERIFIED |
+| B45.6 | Present exact result and stop for user confirmation before bookkeeping or Batch 46 | ✔ USER-CONFIRMED; BOOKKEEPING VERIFIED |
 
 ### Phase B04-PR — verified Pass repairs
 
@@ -1180,6 +1518,65 @@ Gate: **verified locally — user confirmation needed.** Evidence: Audit 64. Rel
 the artifact/API for governance but is no longer a headline UI verdict. Merge, push, and deployment
 remain outside scope.
 
+### Phase B46 — controlled utility-equity batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B46.1 | Freeze the exact ten-company denominator and bind confirmed Batch 45 bookkeeping | P0 | Manifest identity/order/count plus predecessor hashes | ✔ VERIFIED |
+| B46.2 | Capture and verify cutoff-safe filing, structural and event evidence | P0 | Packet/receipt/primary-document hashes and exact periods | ✔ VERIFIED |
+| B46.3 | Build practical utility FCFE/residual-income or specialist fallbacks | P0 | Source-linked arithmetic and finite ordered scenarios | ✔ VERIFIED |
+| B46.4 | Independently challenge model suitability, claims, events and range calibration | P0 | Luna High source/model/range reviews | ✔ VERIFIED |
+| B46.5 | Regenerate twice, run suites/build and exercise cumulative 460-company API | P0 | Byte equality, tests, production build, real HTTP | ✔ VERIFIED |
+| B46.6 | Present exact result and stop for user confirmation before recovery or Batch 47 | P0 | Explicit confirmation boundary | ✔ USER-CONFIRMED |
+| B46.7 | Attempt one recovery for EIX/AES/PCG/SRE, then finalize bookkeeping | P0 | Separate user signal, source-bounded replay and confirmation | ✔ USER-CONFIRMED; 4 CONDITIONAL; BOOKKEEPING VERIFIED |
+
+### Phase B47 — controlled regulated/merchant utility batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B47.1 | Freeze exact denominator and bind confirmed Batch 46 recovery/bookkeeping | P0 | Manifest order/count plus predecessor hashes | ✔ VERIFIED |
+| B47.2 | Capture and verify cutoff-safe filing, structural and event evidence | P0 | Packet/receipt/document hashes and exact periods | ✔ VERIFIED |
+| B47.3 | Build regulated and merchant-utility history-backed baselines | P0 | Source-linked arithmetic and model suitability | ✔ VERIFIED |
+| B47.4 | Independently challenge sources, normalization, events and ranges | P0 | Three Luna High reviews | ✔ VERIFIED |
+| B47.5 | Replay twice, run suites/build and exercise cumulative 470-company API | P0 | Byte equality, tests, build and real HTTP | ✔ VERIFIED |
+| B47.6 | Present exact results and stop before recovery or Batch 48 | P0 | Explicit user confirmation | ✔ USER-CONFIRMED |
+| B47.7 | Attempt one recovery for NRG/VST/CEG, then finalize bookkeeping | P0 | Separate user signal, merchant normalization and confirmation | ✔ USER-CONFIRMED; BOOKKEEPING VERIFIED |
+
+### Phase B48 — controlled REIT batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B48.1 | Freeze exact denominator and bind confirmed Batch 47 recovery/bookkeeping | P0 | Manifest order/count plus predecessor hashes | ✔ VERIFIED |
+| B48.2 | Capture and verify cutoff-safe filing, structural, earnings-supplement and event evidence | P0 | Packet/receipt/document hashes and exact periods | ✔ VERIFIED |
+| B48.3 | Build practical AFFO, timber-cycle and specialist REIT baselines | P0 | Source-linked arithmetic and model suitability | ✔ VERIFIED |
+| B48.4 | Independently challenge sources, recurring-capital treatment, events and ranges | P0 | Three Luna High reviews | ✔ VERIFIED |
+| B48.5 | Replay twice, run suites/build and exercise cumulative 480-company API | P0 | Byte equality, tests, build and real HTTP | ✔ VERIFIED |
+| B48.6 | Present exact results and stop before recovery or Batch 49 | P0 | Explicit user confirmation | ✔ USER-CONFIRMED |
+| B48.7 | Attempt one WY/EQR recovery and finalize only after confirmation | P0 | Source-bounded alternate routes, challenge, replay and real API | ✔ USER-CONFIRMED; BOOKKEEPING VERIFIED |
+
+### Phase B49 — controlled REIT batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B49.1 | Freeze exact denominator and bind confirmed Batch 48 recovery/bookkeeping | P0 | Manifest order/count plus predecessor hashes | ✔ VERIFIED |
+| B49.2 | Capture and verify cutoff-safe filings, earnings supplements and events | P0 | Packet/receipt/document hashes and exact periods | ✔ VERIFIED |
+| B49.3 | Build practical AFFO, office, tower and data-center baselines | P0 | Source-linked arithmetic and model suitability | ✔ VERIFIED |
+| B49.4 | Independently challenge sources, events, capex scope and ranges | P0 | Three Luna High reviews | ✔ VERIFIED |
+| B49.5 | Replay twice, run suites/build and exercise cumulative 490-company API | P0 | Byte equality, tests, build and real HTTP | ✔ VERIFIED |
+| B49.6 | Present exact results and stop before recovery or Batch 50 | P0 | Explicit user confirmation | ✔ USER-CONFIRMED |
+| B49.7 | Attempt one AVB recovery and finalize only after confirmation | P0 | Standalone/combined AFFO exhaustion, challenge, replay and real API | ✔ USER-CONFIRMED; BOOKKEEPING VERIFIED |
+
+### Phase B50 — final controlled real-estate batch
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| B50.1 | Freeze exact denominator and bind confirmed Batch 49 recovery/bookkeeping | P0 | Manifest order/count plus predecessor hashes | ✔ VERIFIED |
+| B50.2 | Capture and verify cutoff-safe filings, supplements and events | P0 | Packet/receipt/document hashes and exact periods | ✔ VERIFIED |
+| B50.3 | Build practical REIT, operating-services and specialist baselines | P0 | Source-linked arithmetic and model suitability | ✔ VERIFIED |
+| B50.4 | Independently challenge sources, events, capital scope and ranges | P0 | Three Luna High reviews | ✔ VERIFIED |
+| B50.5 | Replay twice, run suites/build and exercise cumulative 500-company API | P0 | Byte equality, tests, build and real HTTP | ✔ VERIFIED |
+| B50.6 | Present exact results and stop before recovery or release work | P0 | Explicit user confirmation | ✔ USER-CONFIRMED; BOOKKEEPING VERIFIED |
+
 ## Final 500-company gate
 
 Confirm exactly 500 unique processed issuers and no denominator loss; replay all frozen inputs
@@ -1187,3 +1584,15 @@ twice; run the complete backend/API/browser acceptance path and point-in-time ba
 reliability-label discrimination; reconcile all serving hashes; separately report processing
 completion and publishable numeric completion; obtain explicit user confirmation before any
 merge or production release.
+
+Light baseline audit: `docs/audit/168-500-company-light-baseline-audit.md`.
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| F500.1 | Freeze and validate the confirmed 500-company staged baseline | P0 | Manifest/artifact hashes, exact 50x10 denominator, ranges, calculators and watchlist coverage | ✔ VERIFIED |
+| F500.2 | Make public sanitization idempotent and compare raw stored labels to live API labels | P0 | Exact 500-row stored-vs-served availability parity | ✔ USER-CONFIRMED; 0 mismatches |
+| F500.3 | Replace availability-named `conditional_estimate` model identities with actual formulas | P1 | Private/public/calculator model identity parity across all 500 | ○ OPEN — 221 artifacts |
+| F500.4 | Review broad ranges, zero floors and Pass/reliability semantics | P1 | Post-WG calibration and disclosure matrix | ○ DEFERRED TO DEEP AUDIT |
+| F500.5 | Rebind the refresh/WG register from 440 to the confirmed 500-company catalog | P1 | Exact registry coverage and version/hash receipts | ○ REQUIRED BEFORE WGs RESUME |
+| F500.6 | Review and separate source changes from generated evidence before a branch push | Release | Scoped diff, branch/remote check and repeatable build receipts | ○ OPEN |
+| F500.7 | Run the full issuer-level, backtest and browser audit after the WGs | P0 | Source challenge, point-in-time evaluation and end-to-end UAT | ○ DEFERRED UNTIL WGs COMPLETE |

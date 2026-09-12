@@ -28,3 +28,15 @@ impact/cap fields when it reads that projection or historical artifacts.
 stored bridge projection caused otherwise-valid complete and bounded artifacts
 to fail closed as `BRIDGE_QUALITY_INVALID_OR_MISSING`, even though the private
 valuation itself was correct.
+
+Explicit availability is also part of the already-scrubbed public contract. A
+second sanitizer pass must preserve it for every exact forecast mode, including
+`reit_affo_exact` and `timber_distribution_exact`. Omitting those modes caused 26
+stored Conditional REIT/timber artifacts to become `available` when FastAPI
+sanitized them again.
+
+**How to detect / apply:** Assert `sanitize_public_artifact(public) == public`
+for every generated public artifact family, and run one raw stored-versus-live
+availability comparison across the active catalog. Do not infer availability
+from model identity when an allowlisted exact mode already carries an explicit
+validated availability classification.

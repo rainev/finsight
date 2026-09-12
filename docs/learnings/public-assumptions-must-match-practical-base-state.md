@@ -35,3 +35,10 @@ acquisition debt. The statements were true, but the pro-forma scale had no effec
 that the cited source value flows into the exact forecast input. Reconcile reported scale to
 valuation scale explicitly, and challenge the asymmetric case where a full transaction claim is
 bridged against only partial acquired operations.
+
+WG15 reproduced this trap in ABT's first refresh candidate: its claim bridge was correct, but the
+calculation initially multiplied historical cash margins by ordinary TTM revenue instead of the
+current filing's Exact Sciences pro-forma revenue. The corrected rule selects the exact acquisition
+member and derives the annualization factor from the source period. Keep pro-forma operating scale,
+historical cash-conversion margins, current claims, and current shares as separate source-bound
+inputs; a correct claim total does not validate the forecast denominator.

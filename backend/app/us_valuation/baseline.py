@@ -228,10 +228,25 @@ def baseline_from_public_artifact(artifact: Mapping[str, Any]) -> BaselineValuat
     scenario = scenario if isinstance(scenario, Mapping) else {}
     reliability = artifact.get("reliability")
     reliability = reliability if isinstance(reliability, Mapping) else {}
+    explicit_availability = artifact.get("availability_type")
+    raw_assumptions = artifact.get("public_assumptions")
+    explicit_mode = raw_assumptions.get("forecast_mode") if isinstance(raw_assumptions, Mapping) else None
     if state == "withheld":
         availability = AvailabilityType.NOT_AVAILABLE
         low = base = high = None
         confidence = None
+    elif explicit_availability in {item.value for item in AvailabilityType} and explicit_mode in {
+        "residual_income_exact",
+        "enterprise_cash_fcff_exact",
+        "utility_fcfe_exact",
+        "reit_affo_exact",
+        "timber_distribution_exact",
+    }:
+        # Availability is an explicit publication classification; it must not
+        # be inferred from the economic model identity.
+        availability = AvailabilityType(str(explicit_availability))
+        low, base, high = (scenario.get(key) for key in ("low", "base", "high"))
+        confidence = reliability.get("label")
     else:
         availability = (
             AvailabilityType.CONDITIONAL

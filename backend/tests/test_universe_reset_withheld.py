@@ -7,9 +7,9 @@ from app.us_valuation.universe_reset_withheld import (
 import pytest
 
 
-def test_register_contains_exact_post_batch_16_recovery_set() -> None:
+def test_register_contains_exact_post_batch_49_confirmation_set() -> None:
     entries = load_universe_reset_withheld()
-    assert len(entries) == 19
+    assert len(entries) == 36
     entry = entries[0]
     assert (entry.batch, entry.ticker, entry.cik) == (1, "NEE", "0000753308")
     assert entry.recovery_attempts == 1
@@ -71,7 +71,7 @@ def test_register_contains_exact_post_batch_16_recovery_set() -> None:
     assert all(row.model_version=="BATCH-15-WITHHELD-RECOVERY-1.0" for row in batch_15)
     assert all(row.hard_blockers==("CLAIMS_UNBOUNDED",) for row in batch_15)
     assert all(row.evidence_report=="docs/audit/76-batch-15-recovery-result.md" for row in batch_15)
-    batch_16=entries[13:]
+    batch_16=entries[13:19]
     assert tuple(row.ticker for row in batch_16)==("DXCM","EW","CRL","ZBH","COR","ELV")
     assert all(row.batch==16 for row in batch_16)
     assert all(row.recovery_attempts==1 for row in batch_16)
@@ -79,6 +79,97 @@ def test_register_contains_exact_post_batch_16_recovery_set() -> None:
     assert all(row.reason_codes==("SPECIALIST_MODEL_UNCERTAINTY",) for row in batch_16)
     assert all(row.hard_blockers==("CLAIMS_UNBOUNDED",) for row in batch_16)
     assert all(row.evidence_report=="docs/audit/80-batch-16-recovery-result.md" for row in batch_16)
+    orcl=entries[19]
+    assert (orcl.batch,orcl.ticker,orcl.cik)==(31,"ORCL","0001341439")
+    assert orcl.recovery_attempts==1
+    assert orcl.model_version=="BATCH-31-ORCL-INFRASTRUCTURE-RECOVERY-1.0"
+    assert orcl.reason_codes==("SPECIALIST_MODEL_UNCERTAINTY","CAPEX_CASH_CONVERSION_SENSITIVITY")
+    assert orcl.hard_blockers==("MODEL_UNSUPPORTED","NONFINITE_OR_NONPOSITIVE_VALUE")
+    assert orcl.evidence_report=="docs/audit/118-batch-31-orcl-recovery-result.md"
+    vlo=entries[20]
+    assert (vlo.batch,vlo.ticker,vlo.cik)==(36,"VLO","0001035002")
+    assert vlo.recovery_attempts==1
+    assert vlo.model_version=="BATCH-36-VLO-RECOVERY-1.0"
+    assert vlo.reason_codes==("NORMALIZED_CYCLICAL_RANGE","SPECIALIST_MODEL_UNCERTAINTY")
+    assert vlo.hard_blockers==("CLAIMS_UNBOUNDED",)
+    assert vlo.evidence_report=="docs/audit/135-batch-36-vlo-recovery-result.md"
+    gpn=entries[21]
+    assert (gpn.batch,gpn.ticker,gpn.cik)==(38,"GPN","0001123360")
+    assert gpn.recovery_attempts==1
+    assert gpn.model_version=="BATCH-38-GPN-CPAY-RECOVERY-1.0"
+    assert gpn.reason_codes==("POST_COMBINATION_HISTORY_INCOMPLETE","NONFINITE_OR_NONPOSITIVE_VALUE")
+    assert gpn.hard_blockers==("MODEL_UNSUPPORTED","NONFINITE_OR_NONPOSITIVE_VALUE")
+    assert gpn.evidence_report=="docs/audit/140-batch-38-gpn-cpay-recovery-result.md"
+    coin=entries[22]
+    assert (coin.batch,coin.ticker,coin.cik)==(40,"COIN","0001679788")
+    assert coin.recovery_attempts==1
+    assert coin.model_version=="BATCH-40-COIN-RECOVERY-1.0"
+    assert coin.reason_codes==("NEGATIVE_THROUGH_CYCLE_BEAR","UNBOUNDED_TAX_REGULATORY_CLAIMS","SPECIALIST_MODEL_REQUIRED","VALUATION_WITHHELD")
+    assert coin.hard_blockers==("CLAIMS_UNBOUNDED","NONFINITE_OR_NONPOSITIVE_VALUE")
+    assert coin.evidence_report=="docs/audit/146-batch-40-coin-recovery-result.md"
+    iff,ip=entries[23:25]
+    assert (iff.batch,iff.ticker,iff.cik)==(41,"IFF","0000051253")
+    assert iff.recovery_attempts==1
+    assert iff.model_version=="BATCH-41-RECOVERY-1.0"
+    assert iff.reason_codes==("CONTINUING_DISCONTINUED_CASH_PERIMETER_UNRESOLVED","NEGATIVE_PARENT_EARNINGS_HISTORY")
+    assert iff.hard_blockers==("MODEL_UNSUPPORTED",)
+    assert iff.evidence_report=="docs/audit/148-batch-41-recovery-result.md"
+    assert (ip.batch,ip.ticker,ip.cik)==(41,"IP","0000051434")
+    assert ip.recovery_attempts==1
+    assert ip.model_version=="BATCH-41-RECOVERY-1.0"
+    assert ip.reason_codes==("POST_COMBINATION_HISTORY_INCOMPLETE","CONTINUING_DISCONTINUED_CAPEX_PERIMETER_UNRESOLVED")
+    assert ip.hard_blockers==("MODEL_UNSUPPORTED","NONFINITE_OR_NONPOSITIVE_VALUE")
+    assert ip.evidence_report=="docs/audit/148-batch-41-recovery-result.md"
+    exe,alb=entries[25:27]
+    assert (exe.batch,exe.ticker,exe.cik)==(42,"EXE","0000895126")
+    assert exe.recovery_attempts==1 and exe.model_version=="BATCH-42-EXE-ALB-RECOVERY-1.0"
+    assert exe.reason_codes==("POST_COMBINATION_HISTORY_INCOMPLETE","SPECIALIST_MODEL_REQUIRED","VALUATION_WITHHELD")
+    assert exe.hard_blockers==("MODEL_UNSUPPORTED",)
+    assert exe.evidence_report=="docs/audit/150-batch-42-exe-alb-recovery-result.md"
+    assert (alb.batch,alb.ticker,alb.cik)==(42,"ALB","0000915913")
+    assert alb.recovery_attempts==1 and alb.model_version=="BATCH-42-EXE-ALB-RECOVERY-1.0"
+    assert alb.reason_codes==("NEGATIVE_THROUGH_CYCLE_BASE","CURRENT_OBJECT_HISTORY_INCOMPLETE","PREFERRED_CONVERSION_SCOPE_UNRESOLVED","VALUATION_WITHHELD")
+    assert alb.hard_blockers==("MODEL_UNSUPPORTED","NONFINITE_OR_NONPOSITIVE_VALUE")
+    assert alb.evidence_report=="docs/audit/150-batch-42-exe-alb-recovery-result.md"
+    dvn,nem,lyb=entries[27:30]
+    assert (dvn.batch,dvn.ticker,dvn.cik)==(43,"DVN","0001090012")
+    assert dvn.recovery_attempts==1 and dvn.model_version=="BATCH-43-DVN-NEM-LYB-RECOVERY-1.0"
+    assert dvn.reason_codes==("POST_COMBINATION_CASH_HISTORY_INCOMPLETE","PRO_FORMA_EARNINGS_NOT_CASH_FLOW","VALUATION_WITHHELD")
+    assert dvn.hard_blockers==("MODEL_UNSUPPORTED",)
+    assert dvn.evidence_report=="docs/audit/152-batch-43-recovery-result.md"
+    assert (nem.batch,nem.ticker,nem.cik)==(43,"NEM","0001164727")
+    assert nem.recovery_attempts==1 and nem.model_version=="BATCH-43-DVN-NEM-LYB-RECOVERY-1.0"
+    assert nem.hard_blockers==("CLAIMS_UNBOUNDED","MODEL_UNSUPPORTED")
+    assert nem.evidence_report=="docs/audit/152-batch-43-recovery-result.md"
+    assert (lyb.batch,lyb.ticker,lyb.cik)==(43,"LYB","0001489393")
+    assert lyb.recovery_attempts==1 and lyb.model_version=="BATCH-43-DVN-NEM-LYB-RECOVERY-1.0"
+    assert lyb.hard_blockers==("MODEL_UNSUPPORTED",)
+    assert lyb.evidence_report=="docs/audit/152-batch-43-recovery-result.md"
+    bkr=entries[30]
+    assert (bkr.batch,bkr.ticker,bkr.cik)==(44,"BKR","0001701605")
+    assert bkr.recovery_attempts==1 and bkr.model_version=="BATCH-44-RECOVERY-RECALIBRATION-1.0"
+    assert bkr.reason_codes==("POST_ACQUISITION_CASH_STATE_UNAVAILABLE","ASSUMED_CLAIMS_UNBOUNDED","PRO_FORMA_CASH_FLOW_NOT_DISCLOSED","VALUATION_WITHHELD")
+    assert bkr.hard_blockers==("CLAIMS_UNBOUNDED","MODEL_UNSUPPORTED")
+    assert bkr.evidence_report=="docs/audit/154-batch-44-recovery-and-range-recalibration-result.md"
+    nrg,vst,ceg=entries[31:34]
+    assert (nrg.batch,nrg.ticker,nrg.cik)==(47,"NRG","0001013871")
+    assert (vst.batch,vst.ticker,vst.cik)==(47,"VST","0001692819")
+    assert (ceg.batch,ceg.ticker,ceg.cik)==(47,"CEG","0001868275")
+    assert all(row.recovery_attempts==1 and row.model_version=="BATCH-47-MERCHANT-RECOVERY-1.0" for row in (nrg,vst,ceg))
+    assert all(row.hard_blockers==("MODEL_UNSUPPORTED",) for row in (nrg,vst,ceg))
+    assert all(row.evidence_report=="docs/audit/159-batch-47-recovery-result.md" for row in (nrg,vst,ceg))
+    eqr=entries[34]
+    assert (eqr.batch,eqr.ticker,eqr.cik)==(48,"EQR","0000906107")
+    assert eqr.recovery_attempts==1 and eqr.model_version=="BATCH-48-REIT-RECOVERY-1.0"
+    assert eqr.reason_codes==("MAJOR_EVENT_UNBOUNDED","POST_COMBINATION_HISTORY_INCOMPLETE","VALUATION_WITHHELD")
+    assert eqr.hard_blockers==("MAJOR_EVENT_UNBOUNDED","MODEL_UNSUPPORTED")
+    assert eqr.evidence_report=="docs/audit/162-batch-48-recovery-result.md"
+    avb=entries[35]
+    assert (avb.batch,avb.ticker,avb.cik)==(49,"AVB","0000915912")
+    assert avb.recovery_attempts==1 and avb.model_version=="BATCH-49-AVB-RECOVERY-1.0"
+    assert avb.reason_codes==("MAJOR_EVENT_UNBOUNDED","AFFO_RECONCILIATION_UNAVAILABLE","POST_COMBINATION_HISTORY_INCOMPLETE","VALUATION_WITHHELD")
+    assert avb.hard_blockers==("MAJOR_EVENT_UNBOUNDED","MODEL_UNSUPPORTED")
+    assert avb.evidence_report=="docs/audit/165-batch-49-avb-recovery-result.md"
 
 
 def test_register_contract_rejects_more_than_one_recovery() -> None:

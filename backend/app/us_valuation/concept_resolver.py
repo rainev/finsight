@@ -20,7 +20,7 @@ from .structural_xbrl import (
 _CONFIG_DIR = Path(__file__).with_name("config")
 _RULES_PATH = _CONFIG_DIR / "structural_concept_rules.json"
 _ALIASES_PATH = _CONFIG_DIR / "concept_aliases.json"
-_RESOLVER_VERSION = "US-XBRL-RESOLVER-1.1"
+_RESOLVER_VERSION = "US-XBRL-RESOLVER-1.2"
 _CAMEL_BOUNDARY = re.compile(
     r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])"
 )

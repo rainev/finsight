@@ -17,9 +17,6 @@ BACKEND = ROOT / "backend"
 if str(BACKEND) not in sys.path:
     sys.path.insert(0, str(BACKEND))
 
-from app.us_valuation.artifacts import sanitize_public_artifact
-
-
 FORBIDDEN_IMPORT_PARTS = (
     "arelle", "arelle_adapter", "arelle_worker", "bank_regulatory",
     "ferc_regulatory", "reit_supplement", "official_filing_ingestion",
@@ -58,10 +55,58 @@ def _contains_private_key(value: object) -> bool:
 
 
 def run(*, base_url: str, stage_root: Path) -> dict[str, Any]:
+    stage_root = Path(stage_root)
+    manifest_path = stage_root.parent / "manifest.json"
+    manifest = (
+        json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest_path.exists()
+        else {}
+    )
+    entry_by_ticker = {
+        entry.get("ticker"): entry
+        for entry in manifest.get("entries", [])
+        if isinstance(entry, dict) and isinstance(entry.get("ticker"), str)
+    }
     expected = {}
     for path in sorted(stage_root.glob("*.json")):
         raw = json.loads(path.read_text(encoding="utf-8"))
-        expected[path.stem] = sanitize_public_artifact(raw)
+        # Manifest-controlled catalog artifacts are already public and
+        # canonical. Comparing the API to a second sanitized copy can conceal
+        # non-idempotent serving changes such as Conditional -> available.
+        artifact = raw
+        if manifest:
+            artifact["catalog_version"] = manifest.get("catalog_version")
+            entry = entry_by_ticker.get(path.stem, {})
+            artifact["catalog"] = {
+                "catalog_version": manifest.get("catalog_version"),
+                "batch": entry.get("batch"),
+                "universe_version": manifest.get("universe_version"),
+                "valuation_date": manifest.get("valuation_date"),
+            }
+            artifact["freshness"] = manifest.get("refresh_status", {}).get(
+                path.stem,
+                {
+                    "outcome": "historical_snapshot",
+                    "checked_as_of": artifact.get("valuation_date"),
+                    "reason": None,
+                },
+            )
+        artifact["dates"] = {
+            "filing_period": artifact.get("source_financial_statement", {}).get("period_end"),
+            "evidence_cutoff": artifact.get("valuation_date"),
+            "assumption_date": None,
+            "market_comparison_date": (artifact.get("market_comparison") or {}).get("price_date"),
+        }
+        comparison = artifact.get("market_comparison")
+        if isinstance(comparison, dict) and "verdict" not in comparison:
+            gap = comparison.get("gap_pct")
+            comparison["verdict"] = (
+                "Undervalued" if isinstance(gap, (int, float)) and gap > 0.05
+                else "Overvalued" if isinstance(gap, (int, float)) and gap < -0.05
+                else "Fairly valued" if isinstance(gap, (int, float))
+                else None
+            )
+        expected[path.stem] = artifact
     list_status, list_payload = _get(f"{base_url.rstrip('/')}/api/us-valuations")
     expected_list = {
         "count": len(expected),
@@ -74,10 +119,22 @@ def run(*, base_url: str, stage_root: Path) -> dict[str, Any]:
                 "base": value.get("scenario_range", {}).get("base"),
                 "publication_state": value.get("review", {}).get("publication_state"),
                 "reliability": value["reliability"]["label"],
+                "availability_type": value.get("availability_type"),
+                "confidence": value.get("confidence"),
             }
             for ticker, value in sorted(expected.items())
         ],
     }
+    if manifest:
+        expected_list.update(
+            {
+                "catalog_version": manifest.get("catalog_version"),
+                "universe_version": manifest.get("universe_version"),
+                "valuation_date": manifest.get("valuation_date"),
+                "included_batches": manifest.get("included_batches"),
+                "artifact_count": manifest.get("artifact_count"),
+            }
+        )
     details = []
     for ticker, expected_detail in sorted(expected.items()):
         status, payload = _get(f"{base_url.rstrip('/')}/api/us-valuations/{ticker}")
@@ -129,6 +186,7 @@ def main() -> int:
     print(json.dumps({
         "list_status": result["list_http_status"],
         "list_count": result["list_count"],
+        "list_parity": result["list_exact_stage_parity"],
         "detail_parity": result["detail_exact_stage_parity_count"],
         "private_leaks": result["private_leak_count"],
         "forbidden_imports": result["forbidden_serving_import_count"],

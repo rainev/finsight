@@ -180,6 +180,8 @@ _PUBLIC_MODEL_NAMES = {
     "residual_income",
     "ddm",
     "ffo",
+    "affo_dcf",
+    "total_payout_ddm",
     "conditional_estimate",
     "relative_value",
 }
@@ -216,6 +218,7 @@ _BRIDGE_FIELDS = (
     "marketable_securities_total",
     "noncontrolling_interests",
     "noncurrent_debt",
+    "other_equity_claims",
     "preferred_equity",
     "total_interest_bearing_debt",
 )
@@ -336,6 +339,9 @@ _AUTOMATED_DECISION_STATES = {
 _PUBLIC_TOP_LEVEL_FIELDS = (
     "schema_version",
     "valuation_date",
+    "assumption_date",
+    "normalization_explanation",
+    "model_version",
     "market",
     "currency",
     "ticker",
@@ -449,6 +455,9 @@ _PUBLIC_ASSUMPTION_FIELDS = (
     "high_dividend_growth",
     "high_growth_years",
     "ffo_per_share",
+    "normalized_affo_per_share",
+    "nonrecurring_value_adjustment_per_share",
+    "owner_distribution_per_share",
     "pffo_multiple",
     "adjusted_fcf_low",
     "adjusted_fcf_base",
@@ -461,12 +470,22 @@ _PUBLIC_ASSUMPTION_FIELDS = (
     "diluted_shares",
     "diluted_shares_low",
     "diluted_shares_high",
+    "share_count_basis",
     "bridge_claims_basis",
     "cash_conversion_margin",
     "cash_conversion_margin_low",
     "cash_conversion_margin_high",
     "normalized_earnings_factor",
     "earnings_multiple",
+    "starting_cash_fcff_per_share",
+    "bridge_adjustment_per_share",
+    "operating_cash_flow_per_share",
+    "capital_expenditures_per_share",
+    "model_income_before_parent_allocation_per_share",
+    "parent_cash_flow_share",
+    "debt_funding_share",
+    "debt_funding_share_low",
+    "debt_funding_share_high",
     "policy_wacc_low",
     "policy_wacc_high",
     "terminal_growth_low",
@@ -638,6 +657,9 @@ def _canonical_public_artifact(value: object) -> dict[str, Any]:
     public["public_assumptions"] = _canonical_public_assumptions(
         public.get("public_assumptions")
     )
+    for field in ('assumption_date', 'normalization_explanation', 'model_version'):
+        if field in public and not isinstance(public[field], str):
+            public.pop(field)
     public["models"] = _canonical_models(public.get("models"))
     public["scenarios"] = _canonical_scenarios(public.get("scenarios"))
     if "scenario_range" in public:
@@ -860,7 +882,7 @@ def _reliability_matches_artifact(
             # overall Low cap are internally consistent.
             return True
         return (
-            primary in {"fcfe_dcf", "residual_income", "ddm", "ffo"}
+            primary in {"fcfe_dcf", "residual_income", "ddm", "total_payout_ddm", "ffo", "affo_dcf"}
             and reliability["accounting_impact_ratio"] == 0.0
             and reliability["accounting_label"] == "High"
         )
@@ -1936,7 +1958,7 @@ def public_result(
         if not isinstance(submissions, dict):
             raise ValueError("submissions are required for FCFF publication")
         public = _public_fcff_result(result, submissions)
-    elif primary in {"residual_income", "ddm", "ffo", "fcfe_dcf"}:
+    elif primary in {"residual_income", "ddm", "total_payout_ddm", "ffo", "affo_dcf", "fcfe_dcf"}:
         public = public_equity_artifact(result)
     else:
         raise ValueError("unsupported primary model for public serialization")

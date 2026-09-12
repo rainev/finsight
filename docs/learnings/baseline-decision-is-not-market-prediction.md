@@ -24,3 +24,10 @@ economically coherent model, or no finite/nonnegative decision range. Related:
 [[public-competitor-methods-are-constraints-not-formulas]],
 [[conditional-values-need-economic-object-identity]], and
 [[not-fully-recovered-is-broader-than-withheld]].
+
+Batch 46 clarified the explicit-approval path: after the user reviews the unresolved facts and
+directly authorizes Conditional publication, replace an over-strict hard gate with a moderated,
+economically coherent range when reported common equity/earnings and finite scenario anchors
+exist. Keep the unresolved exposure in private traces and a prominent public warning, cap the
+result at Low, keep it off Pass, and never interpret an event-specific maximum as a complete claim
+ceiling or substitute zero for the unknown tail.

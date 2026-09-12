@@ -4,6 +4,8 @@ Target: one numeric intrinsic-value estimate for each of 500 companies, with one
 
 ## Audited surface
 
+Automated U.S. refresh initiative (2026-09-08, 440-company frozen migration; implementation gates remain open): [ingestion](automated-ingestion-refresh.md), [normalization](automated-normalization.md), [calculator/comparison](automated-calculator-comparison.md), [forecast evaluation](automated-forecast-evaluation.md).
+
 | Batch | Surface | Status |
 | --- | --- | --- |
 | [01](01-publication-strictness.md) | Structural-XBRL decision gate and enterprise-to-equity bridge publication policy | Firsthand verified; incorporated into approved design |
@@ -120,7 +122,76 @@ Target: one numeric intrinsic-value estimate for each of 500 companies, with one
 | [113](113-controlled-batch-29-result.md) | Batch 29 technology histories, investment/commitment/legal-tail repairs, determinism, full suite, and cumulative API | User confirmed; Pass 3 / Conditional 7 / Withheld 0 |
 | [114](114-controlled-batch-30-starting-gate.md) | Frozen Batch 30 denominator, predecessor/protected state, cache readiness, and technology-model gaps | Firsthand audited; implementation completed in Audit 115 |
 | [115](115-controlled-batch-30-result.md) | Batch 30 technology histories, investment/commitment/claim/SBC repairs, determinism, full suite, and cumulative API | User confirmed; Pass 2 / Conditional 8 / Withheld 0; eight bookmarked |
+| [116](116-controlled-batch-31-starting-gate.md) | Frozen Batch 31 denominator, predecessor/protected state, cache readiness, and technology-model gaps | Firsthand audited; implementation completed in Audit 117 |
+| [117](117-controlled-batch-31-result.md) | Batch 31 technology histories, period/interest/commitment repairs, determinism, full suite, and cumulative API | User confirmed; Pass 2 / Conditional 7 / Withheld 1; seven bookmarked; ORCL recovery pending |
+| [118](118-batch-31-orcl-recovery-result.md) | One Oracle infrastructure recovery attempt, exact lease/purchase/preferred schedules, failed positive-base replay, determinism, and cumulative API | User confirmed; ORCL still Withheld; attempt recorded |
+| [119](119-controlled-batch-32-starting-gate.md) | Frozen Batch 32 denominator, predecessor/protected state, cache readiness, and successor/technology-model gaps | Firsthand audited; implementation in progress |
+| [120](120-controlled-batch-32-result.md) | Batch 32 cutoff-event refresh, successor/cycle/preferred repairs, determinism, full suite, and cumulative API | User confirmed; Pass 1 / Conditional 9 / Withheld 0; nine bookmarked |
+| [121](121-controlled-batch-33-starting-gate.md) | Frozen Batch 33 denominator, predecessor/protected state, financial-equity routing, and source gaps | Firsthand audited; implementation in progress |
+| [122](122-controlled-batch-33-result.md) | Batch 33 financial-equity histories, preferred/event/combination treatments, determinism, full suite, and cumulative API | User confirmed; Pass 1 / Conditional 9 / Withheld 0 |
+| [123](123-controlled-batch-34-starting-gate.md) | Frozen Batch 34 denominator, predecessor/protected state, financial-equity gates, and cutoff-event controls | Firsthand audited; implementation in progress |
+| [124](124-controlled-batch-34-result.md) | Batch 34 financial-equity histories, parent/NCI/preferred/event repairs, determinism, full suite, and cumulative API | User confirmed; Pass 0 / Conditional 10 / Withheld 0 |
+| [126](126-batch-34-recovery-result.md) | One Batch 34 recovery attempt, USB/BRO Pass repairs, exact preferred claim schedules, challenge, determinism, and cumulative API | User confirmed; superseded by Sol repair after audit findings |
+| [127](127-batch-34-sol-reaudit.md) | Sol-led read-only re-audit of Batch 34 source, model, recovery, API, and bookkeeping integrity | Audit complete; 7 verified Important gaps, 1 Important lead, 4 Minor gaps; no repairs made |
+| [128](128-batch-34-sol-repair-result.md) | Repairs for all Batch 34 Sol-audit findings, BRO model challenge, deterministic replay, and exact cumulative API | User confirmed; Pass 1 / Conditional 9 / Withheld 0; watchlist 224 |
+| [129](129-controlled-batch-35-starting-gate.md) | Frozen Batch 35 denominator, confirmed predecessor/protected state, financial-equity and energy-boundary gates | Firsthand audited; implementation in progress |
+| [130](130-controlled-batch-35-result.md) | Batch 35 financial-equity/resource-cycle histories, preferred and fiscal-period repairs, determinism, full suite, cumulative API, and watchlist bookkeeping | User confirmed; Pass 0 / Conditional 10 / Withheld 0; 10 added to watchlist |
+| [131](131-batch-35-sol-reaudit.md) | Sol-led read-only re-audit of Batch 35 sources, bridge arithmetic, events, model/calculator semantics, API, and bookkeeping | Audit complete; 6 verified Important and 3 Minor gaps; no repairs made |
+| [132](132-batch-35-sol-repair-result.md) | Repairs for every Batch 35 Sol-audit finding, complete event/source contracts, exact calculators, deterministic replay, real API, and browser flow | User confirmed; Pass 0 / Conditional 10 / Withheld 0 |
+| [133](133-controlled-batch-36-starting-gate.md) | Frozen Batch 36 denominator, confirmed Batch 35 predecessor, financial-equity/payments/refining gates | Firsthand audited; implementation in progress |
+| [134](134-controlled-batch-36-result.md) | Batch 36 financial-equity/payments/refining histories, event/model repairs, determinism, full suite, and cumulative API | User confirmed; Pass 0 / Conditional 9 / Withheld 1; VLO recovery pending |
+| [135](135-batch-36-vlo-recovery-result.md) | One VLO recovery attempt, custom-capex repair, private pre-claim refining replay, claim exhaustion, determinism, and cumulative API | User confirmed; VLO still Withheld; bookkeeping complete |
+| [136](136-controlled-batch-37-starting-gate.md) | Frozen Batch 37 denominator, confirmed Batch 36 predecessor, financial-equity/holding-company/energy gates | Firsthand audited; implementation in progress |
+| [137](137-controlled-batch-37-result.md) | Batch 37 asset-manager/insurance/data/holding-company/energy models, event and bridge repairs, determinism, full suite, and cumulative API | User confirmed; Pass 0 / Conditional 10 / Withheld 0; bookkeeping complete |
+| [138](138-controlled-batch-38-starting-gate.md) | Frozen Batch 38 denominator, confirmed Batch 37 predecessor, insurance/payments/exchange gates | Firsthand audited; implementation in progress |
+| [139](139-controlled-batch-38-result.md) | Batch 38 insurer and operating models, software/customer-funds treatment, deterministic replay and 380-company API | Verified and user-confirmed; 0 Pass / 8 Conditional / 2 Withheld; recovery pending |
+| [140](140-batch-38-gpn-cpay-recovery-result.md) | GPN/CPAY recovery: post-Worldpay cash challenge and customer-funds-reserved parent-equity fallback | Verified and user-confirmed; GPN withheld / CPAY Conditional Low; Batch 39 pending |
+| [141](141-controlled-batch-39-starting-gate.md) | Frozen Batch 39 denominator, confirmed Batch 38 recovery predecessor, financial-equity and energy-boundary gates | Verified; implementation authorized |
+| [142](142-controlled-batch-39-result.md) | Batch 39 financial-equity, exchange, payments and midstream models with deterministic replay and source challenges | Verified and user-confirmed; 0 Pass / 10 Conditional / 0 Withheld; Batch 40 pending |
+| [143](143-controlled-batch-40-starting-gate.md) | Frozen Batch 40 denominator, confirmed Batch 39 predecessor, fintech/crypto/asset-manager/resource gates | Verified; implementation authorized |
+| [144](144-controlled-batch-40-result.md) | Batch 40 data, fintech, crypto, asset-manager and royalty models with source challenges | Verified and user-confirmed; 0 Pass / 9 Conditional / 1 Withheld; recovery pending |
+| [145](145-controlled-batch-41-starting-gate.md) | Frozen Batch 41 denominator, confirmed Batch 40 predecessor, materials/energy resource-cycle gates | Verified; implementation authorized |
+| [146](146-batch-40-coin-recovery-result.md) | One COIN recovery attempt, missing earnings-exhibit repair, crypto/customer-funding reconciliation, and unbounded-claim gate | User confirmed; COIN remains Withheld; watchlist/register recorded |
+| [147](147-controlled-batch-41-result.md) | Batch 41 materials/energy resource-cycle models, event/source repairs, deterministic replay, full suite, and 410-company API | User confirmed; 0 Pass / 7 Conditional / 3 Withheld; watchlist recorded |
+| [148](148-batch-41-recovery-result.md) | APD/IFF/IP one-attempt recovery, APD parent-equity range, scoped reserve repair, and 410-company API | User confirmed; APD Conditional / IFF and IP Withheld; bookkeeping recorded |
+| [149](149-controlled-batch-42-result.md) | Batch 42 materials/energy resource-cycle models, source/event repairs, deterministic replay, and cumulative API | Initial result accepted; 0 Pass / 8 Conditional / 2 Withheld; recovery authorized |
+| [150](150-batch-42-exe-alb-recovery-result.md) | EXE/ALB one-attempt recovery, non-overlapping gas windows and mandatory-convertible diagnostics | User confirmed; both remain Withheld; bookkeeping recorded |
+| [151](151-controlled-batch-43-result.md) | Batch 43 resource-cycle models, cutoff events, exact bridge/source repairs, deterministic replay, and cumulative API | User confirmed; Pass 0 / Conditional 7 / Withheld 3; recovery completed in Audit 152 |
+| [152](152-batch-43-recovery-result.md) | DVN/NEM/LYB one-attempt recovery, pro-forma and transaction/continuing-scope source exhaustion | User confirmed; 0/3 recovered; bookkeeping recorded |
+| [153](153-controlled-batch-44-result.md) | Batch 44 resource-cycle models, successor/special annual-source repairs, event/bridge challenge, determinism and cumulative API | User confirmed; Pass 0 / Conditional 7 / Withheld 3; superseded by Audit 154 |
+| [154](154-batch-44-recovery-and-range-recalibration-result.md) | BKR/AMCR/SW recovery plus moderated whole-Batch-44 scenario recalibration | User confirmed; Pass 0 / Conditional 9 / Withheld 1; bookkeeping recorded |
+| [155](155-controlled-batch-45-result.md) | Batch 45 utility FCFE/residual-income models, multi-registrant and capex repairs, dynamic fallback, determinism and cumulative API | User confirmed; Pass 0 / Conditional 10 / Withheld 0; bookkeeping complete |
+| [156](156-controlled-batch-46-result.md) | Batch 46 utility FCFE/residual-income and specialist withholding gates, exact fiscal history, event challenges and cumulative API | User-confirmed initial result; superseded by Audit 157 |
+| [157](157-batch-46-recovery-result.md) | EIX/AES/PCG/SRE Conditional recovery, moderated wildfire/project/transaction baselines, confirmation and bookkeeping | User-confirmed; 4/4 Conditional Low; final Batch 46 is 0 Pass / 10 Conditional / 0 Withheld |
+| [158](158-controlled-batch-47-result.md) | Batch 47 regulated/merchant utility split, history-backed residual income, parser retry, merchant hard gates and cumulative API | User-confirmed initial result; superseded by Audit 159 |
+| [159](159-batch-47-recovery-result.md) | NRG/VST/CEG one-attempt merchant recovery, acquisition/hedge/project normalization and private diagnostics | User-confirmed; 0/3 recovered; bookkeeping complete |
+| [160](160-controlled-batch-48-starting-gate.md) | Frozen Batch 48 REIT denominator, confirmed Batch 47 predecessor, source capture, AFFO/timber/specialized and pending-merger gates | Verified; implementation authorized |
+| [161](161-controlled-batch-48-result.md) | Batch 48 AFFO DCF, timber and merger gates, event/claim repairs, determinism and cumulative API | User-confirmed initial result; superseded by Audit 162 |
+| [162](162-batch-48-recovery-result.md) | WY total-payout recovery and EQR standalone/combined merger-route exhaustion | User-confirmed; bookkeeping complete |
+| [163](163-controlled-batch-49-starting-gate.md) | Frozen Batch 49 REIT denominator, confirmed Batch 48 recovery predecessor, AFFO/tower/office/data-center and AVB event gates | Verified; implementation authorized |
+| [164](164-controlled-batch-49-result.md) | Batch 49 REIT AFFO models, AVB merger gate, BXP extraction/arithmetic repairs, determinism and cumulative API | User-confirmed initial result; superseded by Audit 165 |
+| [165](165-batch-49-avb-recovery-result.md) | AVB standalone/combined merger recovery exhaustion, private diagnostic, deterministic replay and cumulative API | User-confirmed; bookkeeping complete |
+| [166](166-controlled-batch-50-starting-gate.md) | Frozen Batch 50 denominator, confirmed Batch 49 predecessor, REIT/operating-services routing and specialist evidence gates | Verified; implementation authorized |
+| [167](167-controlled-batch-50-result.md) | Batch 50 REIT/operating-services routes, recurring-capital and promote repairs, deterministic replay and cumulative API | User-confirmed; bookkeeping complete |
+| [168](168-500-company-light-baseline-audit.md) | Mechanical integrity, live stored-vs-served parity, obvious calibration diagnostics, WG baseline and release boundaries for all 500 | Light audit complete; P0 resolved in Audit 169, five P1 and two release gates remain |
+| [169](169-light-audit-p0-api-label-repair.md) | Idempotent REIT/timber availability, raw stored-vs-live verifier parity and 500-company API regression | User-confirmed; P0 closed |
+| [Efficiency working groups](automated-efficiency-working-groups.md) | Unified 440-company register, compact filing index, frozen two-worker verification and first NCI tranche | Open; infrastructure verified, NCI tranche remains in bridge review |
 | [52](52-history-backed-pipeline-batch04-shadow.md) | Shared company-history layer and the authorized Batch 04-only shadow replay | Pipeline/API verified; 4 Pass / 6 Conditional / 0 Withheld; user confirmation needed |
 | [53](53-batch04-history-promotion.md) | Official promotion of the confirmed Batch 04 history-backed public artifacts | User-confirmed and default-serving API verified; 10/10 promoted |
 
 Official-data completion is audited in batches 19–23 and implemented through the difficult-106 general SEC gate in batches 24–29. Audits 30–34 govern Batch 02's revision retry, conditional estimates, and Recovery Learning Watchlist. The replacement canonical 500-issuer manifest is frozen; Batch 03's initial pass is verified in Audits 35–36. Audits 38–40 supersede the recovery pause after the user's launch-first implementation authorization.
+# WG11 narrative transaction terms and fixed-payment schedules
+
+- [WG11 evidence](wg11-narrative-transaction-terms.md) — deterministic hashed-filing narrative extraction for MCHP and BMY, with one source-bound candidate and one explicit timing blocker.
+
+# WG12 preferred and temporary-equity claims
+
+- [WG12 evidence](wg12-preferred-temporary-equity.md) — settled-conversion and current-carrying preferred scopes for COHR and WMB, with classifications for HPE, LITE and PODD.
+
+# WG13 minority-interest ownership claims
+
+- [WG13 evidence](wg13-minority-interest-ownership.md) — source-proven zero NCI for AOS and exclusion of Agilent's unconsolidated VIE investment exposure, with ABT, BA and CAT preserved as distinct mechanisms.
+
+# WG14 ordinary and redeemable NCI carrying claims
+
+- [WG14 evidence](wg14-ordinary-redeemable-nci.md) — APD parent-equity NCI/VIE-subset reconciliation and CMI enterprise-NCI separation from guarantee and JV surfaces.

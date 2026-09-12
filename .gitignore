@@ -48,6 +48,10 @@ Refinitiv Interface/
 ~$*
 github-deployer-key.json
 
+# Local valuation runtime configuration, source snapshots and activation state
+output/us-refresh-runtime/
+output/us-refresh-operational-uat-*/
+
 # Local reference material (spreadsheets, source PDFs, data dumps)
 reference/
 

@@ -42,3 +42,19 @@ tags prove a changed presentation, capture the matching annual filing structural
 the value is absent. Sum mutually exclusive issuer-tagged components, retain every accession,
 period, unit, and component, and rerun the complete valuation because a repaired input can move the
 range substantially even when the classification improves.
+
+Batch 31 exposed the same failure at the TTM boundary for Verisk. The controlling filing reported
+2026 H1 through June 30, but Companyfacts stopped the automatic TTM selection at March 31. A Pass
+candidate therefore used stale revenue, OCF, capex, and interest despite having a current filing.
+Rebuilding each flow as FY2025 + current H1 − prior H1 moved TTM cash-FCFF from about $1.265B to
+$1.387B and changed the valuation range.
+
+**How to detect / apply:** Assert that every TTM flow ends on the controlling report date, not merely
+that all selected flows share some date. When Companyfacts lags the controlling filing, reconstruct
+all affected fields from the same structural current/prior comparative periods and test the exact
+period end before permitting Pass.
+
+For payments/data businesses, a current PP&E tag alone may still omit recurring investment.
+Read the investing cash-flow statement for separately capitalized software. Apply the same
+mutually exclusive PP&E/software treatment to annual history and current TTM; a correct date does
+not prove complete reinvestment scope. FIS and MA in Batch 38 report separate software payments.

@@ -33,7 +33,7 @@ except ImportError:  # pragma: no cover - POSIX is the supported bounded-runtime
     resource = None  # type: ignore[assignment]
 
 
-CPU_LIMIT_SECONDS = 120
+CPU_LIMIT_SECONDS = int(os.environ.get("FINSIGHT_ARELLE_CPU_LIMIT_SECONDS", "120"))
 ADDRESS_SPACE_LIMIT_BYTES = 2 * 1024 * 1024 * 1024
 MAX_PRESENTATION_ANCESTORS = 128
 MAX_PRESENTATION_DEPTH = 32
@@ -334,6 +334,53 @@ def _dimensions(context: Any, qnames: _QNameCanonicalizer) -> tuple[tuple[str, s
         else:
             dimensions.append((qnames.qname(dimension), "typed"))
     return tuple(dimensions)
+
+
+def _typed_dimensions(context: Any, qnames: _QNameCanonicalizer) -> tuple[tuple[str, str, str], ...]:
+    """Preserve typed-domain identity and canonical typed member values.
+
+    ``dimensions`` keeps its legacy ``axis -> typed`` marker so existing rules
+    remain compatible.  This companion evidence is what lets later policies
+    distinguish, for example, accounts payable from structured financing
+    without matching amounts or context ids.
+    """
+    typed: list[tuple[str, str, str]] = []
+    for dimension, value in sorted(
+        (getattr(context, "qnameDims", {}) or {}).items(),
+        key=lambda item: qnames.qname(item[0]),
+    ):
+        if getattr(value, "memberQname", None) is not None:
+            continue
+        node = getattr(value, "typedMember", None)
+        if node is None:
+            raise RuntimeError("typed dimension has no typed member node")
+        domain = qnames.qname(getattr(node, "qname", node))
+        raw = getattr(node, "xValue", None)
+        if raw is None:
+            raw = getattr(node, "stringValue", None)
+        if raw is None:
+            raw = getattr(node, "textValue", None)
+        if raw is None:
+            raw = getattr(node, "text", None)
+        namespace = getattr(raw, "namespaceURI", None)
+        local_name = getattr(raw, "localName", None)
+        member_value = qnames.qname(raw) if namespace is not None and local_name is not None else str(raw or "").strip()
+        if not domain:
+            raise RuntimeError("typed dimension domain identity is missing")
+        if not member_value:
+            # An explicitly present typed-member element may legally carry an
+            # empty lexical value. Axis + domain + this marker remains distinct
+            # from an absent typed dimension, while the fact's context_id keeps
+            # separate source contexts auditable.
+            member_value = "empty"
+        if len(member_value) > 4096:
+            # Some valid filings serialize a typed member as a large XML
+            # fragment rather than a compact QName/text value. Preserve a
+            # stable, non-lossy identity token without carrying attacker-sized
+            # content across the worker boundary.
+            member_value = "sha256:" + hashlib.sha256(member_value.encode("utf-8")).hexdigest()
+        typed.append((qnames.qname(dimension), domain, member_value))
+    return tuple(typed)
 
 
 def _entity(context: Any) -> tuple[str | None, str | None]:
@@ -693,6 +740,7 @@ def _extract_payload(entrypoint: Path, accession: str, form: str = "10-K") -> di
                     period_end=period_end,
                     context_id=context_id,
                     dimensions=_dimensions(context, qnames),
+                    typed_dimensions=_typed_dimensions(context, qnames),
                     statement_roles=links["statement_roles"],
                     presentation_parents=links["presentation_parents"],
                     calculation_parents=links["calculation_parents"],

@@ -74,6 +74,7 @@ def run(*, base_url: str, stage_root: Path) -> dict[str, Any]:
         raise ValueError("launch-first list response does not match the staged denominator")
     details = []
     calculators = []
+    batch35_semantics = []
     for ticker in tickers:
         detail_status, detail = _call(base_url, f"/api/us-valuations/{ticker}")
         view_status, view = _call(base_url, f"/api/us-valuations/{ticker}/calculator")
@@ -114,6 +115,20 @@ def run(*, base_url: str, stage_root: Path) -> dict[str, Any]:
                 "default_base_parity": parity,
             }
         )
+        if detail.get("public_assumptions", {}).get("forecast_policy_version") == "BATCH-35-SOL-AUDIT-REPAIR-1.2":
+            expected_model = "fcff_dcf" if ticker == "WMB" else "residual_income"
+            expected_family = "enterprise_fcff" if ticker == "WMB" else "residual_income"
+            batch35_semantics.append({
+                "ticker": ticker,
+                "model_identity_parity": (
+                    detail.get("model_policy", {}).get("primary") == expected_model
+                    and set(detail.get("models", {})) == {expected_model}
+                    and view.get("model_family") == expected_family
+                    and view.get("assigned_model") == detail.get("primary_valuation_method")
+                ),
+                "exact_default_parity": parity,
+                "wmb_base_discount_parity": ticker != "WMB" or view.get("defaults", {}).get("discount_rate") == 0.095,
+            })
     representative = "NWSA" if "NWSA" in tickers else tickers[0]
     nws_status, nws = _call(base_url, f"/api/us-valuations/{representative}")
     manual_status, manual = _call(
@@ -148,7 +163,7 @@ def run(*, base_url: str, stage_root: Path) -> dict[str, Any]:
         raise ValueError("launch-first manual/automatic/monotonic calculator flow failed")
     model_family_counts = {
         family: sum(row["model_family"] == family for row in calculators)
-        for family in ("operating", "bank", "reit", "utility_or_equity", "equity_earnings")
+        for family in ("operating", "bank", "reit", "utility_or_equity", "equity_earnings", "residual_income", "enterprise_fcff")
     }
     equity_rows = [row for row in calculators if row["model_family"] == "equity_earnings"]
     equity_earnings_override_increases_value = True
@@ -185,6 +200,11 @@ def run(*, base_url: str, stage_root: Path) -> dict[str, Any]:
         "higher_discount_lowers_value": higher["result"]["base"] < default["result"]["base"],
         "better_cash_conversion_increases_value": cash["result"]["base"] > default["result"]["base"],
         "equity_earnings_override_increases_value": equity_earnings_override_increases_value,
+        "batch35_semantic_count": len(batch35_semantics),
+        "batch35_model_identity_parity_count": sum(row["model_identity_parity"] for row in batch35_semantics),
+        "batch35_exact_default_parity_count": sum(row["exact_default_parity"] for row in batch35_semantics),
+        "batch35_wmb_base_discount_parity": all(row["wmb_base_discount_parity"] for row in batch35_semantics),
+        "batch35_semantics": batch35_semantics,
         "details": details,
         "calculators": calculators,
     }
@@ -208,6 +228,8 @@ def main() -> int:
         "automatic_eod_fixture_derived_only", "manual_price_flow",
         "higher_discount_lowers_value", "better_cash_conversion_increases_value",
         "equity_earnings_override_increases_value",
+        "batch35_semantic_count", "batch35_model_identity_parity_count",
+        "batch35_exact_default_parity_count", "batch35_wmb_base_discount_parity",
     )}, sort_keys=True))
     return 0
 

@@ -942,6 +942,150 @@ class CompanyFactsNormalizer:
             if controlling_filing
             else None
         )
+        prior_end = ttm_fields["revenue"].get("prior_ytd", {}).get("end")
+        if not prior_end:
+            prior_end = annual_periods[-2]["period_end"]
+        nwc_current = self.operating_nwc(ttm_end)
+        nwc_prior = self.operating_nwc(prior_end)
+        change_nwc = nwc_current["value"] - nwc_prior["value"]
+        pretax = ttm_fields["pretax_income"]["value"]
+        tax = ttm_fields["income_tax"]["value"]
+        effective_tax = tax / pretax if pretax > 0 else None
+        # A loss-making TTM yields no meaningful effective rate (negative or zero
+        # pretax). Tax a negative operating base at zero for the reported-FCFF
+        # diagnostic so growth issuers normalize instead of raising; the forecast
+        # model applies its own governed tax rate downstream.
+        fcff_tax_rate = effective_tax if effective_tax is not None else 0.0
+        reported_fcff = (
+            ttm_fields["operating_income"]["value"] * (1 - fcff_tax_rate)
+            + ttm_fields["depreciation_amortization"]["value"]
+            - ttm_fields["capital_expenditures"]["value"]
+            - change_nwc
+        )
+
+        balance_result = self._normalize_balance_sheet(
+            period_end=ttm_end, latest_annual_end=annual_periods[-1]["period_end"],
+            governed_bridge_evidence=governed_bridge_evidence,
+            verified_zero_evidence=verified_zero_evidence,
+            bridge_evidence=bridge_evidence, sector_estimates=sector_estimates,
+            major_changes=major_changes,
+        )
+
+        tax_rates = [
+            row["values"]["effective_tax_rate"]
+            for row in annual_periods
+            if row["values"]["effective_tax_rate"] is not None
+            and 0 <= row["values"]["effective_tax_rate"] <= 0.4
+        ]
+        if effective_tax is not None and 0 <= effective_tax <= 0.4:
+            tax_rates.append(effective_tax)
+        # Persistently loss-making issuers report no year in the normal 0-40%
+        # band. Fall back to the US statutory rate and label the method so the
+        # forecast layer and reviewers see the estimate, rather than raising.
+        if tax_rates:
+            tax_rate = median(tax_rates)
+            tax_rate_method = "median of valid annual and TTM effective tax rates"
+        else:
+            tax_rate = _STATUTORY_TAX_FALLBACK
+            tax_rate_method = (
+                "US statutory fallback; no annual or TTM effective rate fell in "
+                "the 0-40% band (persistent pretax loss)"
+            )
+
+        return {
+            "mapping_version": self.config["version"],
+            "entity_name": self.companyfacts.get("entityName"),
+            "cik": str(self.companyfacts.get("cik", "")).zfill(10),
+            "currency": "USD",
+            "annual": annual_periods,
+            "ttm": {
+                "period_role": "operating_ttm",
+                "period_end": ttm_end,
+                "method": ttm_fields["revenue"]["method"],
+                "source_cutoff_date": self.as_of_date,
+                "controlling_filing": (
+                    {
+                        "accession": controlling_filing.get("accessionNumber"),
+                        "form": controlling_filing.get("form"),
+                        "report_date": controlling_filing.get("reportDate"),
+                        "filing_date": controlling_filing.get("filingDate"),
+                        "primary_document": controlling_filing.get(
+                            "primaryDocument"
+                        ),
+                    }
+                    if controlling_filing
+                    else None
+                ),
+                "values": {
+                    **{field: fact["value"] for field, fact in ttm_fields.items()},
+                    "effective_tax_rate": effective_tax,
+                    "operating_nwc": nwc_current["value"],
+                    "change_in_operating_nwc": change_nwc,
+                    "reported_fcff": reported_fcff,
+                },
+                "sources": ttm_fields,
+                "nwc_sources": {
+                    "current": nwc_current,
+                    "prior": nwc_prior,
+                },
+            },
+            "balance_sheet": balance_result["balance_sheet"],
+            "normalized": {
+                "tax_rate": tax_rate,
+                "tax_rate_method": tax_rate_method,
+                "revenue_ttm_history": self.ttm_history("revenue", 4),
+            },
+            "quarterly": {
+                "revenue": self.standalone_quarters("revenue", 8),
+                "operating_income": self.standalone_quarters(
+                    "operating_income",
+                    8,
+                ),
+            },
+            "warnings": [
+                *balance_result["warnings"],
+                *(
+                    [
+                        "TTM inputs "
+                        + ", ".join(lagging_ttm_fields)
+                        + f" were unavailable at {ttm_end} and estimated from company-history ratios to current TTM revenue; review the trailing-twelve-month range."
+                    ]
+                    if lagging_ttm_fields
+                    else []
+                ),
+                "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+                "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+            ],
+        }
+
+    def normalize_balance_sheet(
+        self, *, period_end: str,
+        filing_evidence: Iterable[Mapping[str, Any]] = (),
+        bridge_evidence: Iterable[FieldAvailability] = (),
+    ) -> dict[str, Any]:
+        """Resolve current cash, claims and shares without unrelated EBIT flows."""
+        date.fromisoformat(period_end)
+        if self.as_of_date and period_end > self.as_of_date:
+            raise ValueError("Balance sheet period is after source cutoff")
+        annual = self.annual_series("revenue", 1)
+        if not annual or annual[-1].end > period_end:
+            raise ValueError("Eligible annual anchor required for share selection")
+        return self._normalize_balance_sheet(
+            period_end=period_end, latest_annual_end=annual[-1].end,
+            governed_bridge_evidence=governed_bridge_fields_from_evidence(
+                filing_evidence, as_of_date=self.as_of_date,
+            ),
+            verified_zero_evidence={}, bridge_evidence=bridge_evidence,
+            sector_estimates=None, major_changes=None,
+        )
+
+    def _normalize_balance_sheet(
+        self, *, period_end, latest_annual_end, governed_bridge_evidence,
+        verified_zero_evidence, bridge_evidence, sector_estimates, major_changes,
+    ) -> dict[str, Any]:
+        ttm_end = period_end
+        controlling_filing = self._controlling_filing(ttm_end)
+        controlling_accession = controlling_filing.get("accessionNumber") if controlling_filing else None
         current_governed_bridge_fields = {
             field
             for field, evidence in governed_bridge_evidence.items()
@@ -967,27 +1111,6 @@ class CompanyFactsNormalizer:
                 self._evidence_available_as_of(evidence, self.as_of_date)
             )
         }
-        prior_end = ttm_fields["revenue"].get("prior_ytd", {}).get("end")
-        if not prior_end:
-            prior_end = annual_periods[-2]["period_end"]
-        nwc_current = self.operating_nwc(ttm_end)
-        nwc_prior = self.operating_nwc(prior_end)
-        change_nwc = nwc_current["value"] - nwc_prior["value"]
-        pretax = ttm_fields["pretax_income"]["value"]
-        tax = ttm_fields["income_tax"]["value"]
-        effective_tax = tax / pretax if pretax > 0 else None
-        # A loss-making TTM yields no meaningful effective rate (negative or zero
-        # pretax). Tax a negative operating base at zero for the reported-FCFF
-        # diagnostic so growth issuers normalize instead of raising; the forecast
-        # model applies its own governed tax rate downstream.
-        fcff_tax_rate = effective_tax if effective_tax is not None else 0.0
-        reported_fcff = (
-            ttm_fields["operating_income"]["value"] * (1 - fcff_tax_rate)
-            + ttm_fields["depreciation_amortization"]["value"]
-            - ttm_fields["capital_expenditures"]["value"]
-            - change_nwc
-        )
-
         controlling_bridge_filing = self._controlling_filing(ttm_end)
         controlling_bridge_accession = (
             controlling_bridge_filing.get("accessionNumber")
@@ -1025,11 +1148,11 @@ class CompanyFactsNormalizer:
             }:
                 latest_diluted = self.latest_ytd_pair(
                     field,
-                    after_end=annual_periods[-1]["period_end"],
+                    after_end=latest_annual_end,
                 )
                 fact = latest_diluted[0] if latest_diluted else self.annual_at_end(
                     field,
-                    annual_periods[-1]["period_end"],
+                    latest_annual_end,
                 )
             elif field == "common_shares_outstanding":
                 fact = self._bridge_instant(
@@ -1334,64 +1457,7 @@ class CompanyFactsNormalizer:
             fully_diluted_shares=diluted_proxy,
         )
 
-        tax_rates = [
-            row["values"]["effective_tax_rate"]
-            for row in annual_periods
-            if row["values"]["effective_tax_rate"] is not None
-            and 0 <= row["values"]["effective_tax_rate"] <= 0.4
-        ]
-        if effective_tax is not None and 0 <= effective_tax <= 0.4:
-            tax_rates.append(effective_tax)
-        # Persistently loss-making issuers report no year in the normal 0-40%
-        # band. Fall back to the US statutory rate and label the method so the
-        # forecast layer and reviewers see the estimate, rather than raising.
-        if tax_rates:
-            tax_rate = median(tax_rates)
-            tax_rate_method = "median of valid annual and TTM effective tax rates"
-        else:
-            tax_rate = _STATUTORY_TAX_FALLBACK
-            tax_rate_method = (
-                "US statutory fallback; no annual or TTM effective rate fell in "
-                "the 0-40% band (persistent pretax loss)"
-            )
-
         return {
-            "mapping_version": self.config["version"],
-            "entity_name": self.companyfacts.get("entityName"),
-            "cik": str(self.companyfacts.get("cik", "")).zfill(10),
-            "currency": "USD",
-            "annual": annual_periods,
-            "ttm": {
-                "period_role": "operating_ttm",
-                "period_end": ttm_end,
-                "method": ttm_fields["revenue"]["method"],
-                "source_cutoff_date": self.as_of_date,
-                "controlling_filing": (
-                    {
-                        "accession": controlling_filing.get("accessionNumber"),
-                        "form": controlling_filing.get("form"),
-                        "report_date": controlling_filing.get("reportDate"),
-                        "filing_date": controlling_filing.get("filingDate"),
-                        "primary_document": controlling_filing.get(
-                            "primaryDocument"
-                        ),
-                    }
-                    if controlling_filing
-                    else None
-                ),
-                "values": {
-                    **{field: fact["value"] for field, fact in ttm_fields.items()},
-                    "effective_tax_rate": effective_tax,
-                    "operating_nwc": nwc_current["value"],
-                    "change_in_operating_nwc": change_nwc,
-                    "reported_fcff": reported_fcff,
-                },
-                "sources": ttm_fields,
-                "nwc_sources": {
-                    "current": nwc_current,
-                    "prior": nwc_prior,
-                },
-            },
             "balance_sheet": {
                 "period_role": "balance_sheet_snapshot",
                 "period_end": ttm_end,
@@ -1424,18 +1490,6 @@ class CompanyFactsNormalizer:
                     "operating_nwc",
                 ],
             },
-            "normalized": {
-                "tax_rate": tax_rate,
-                "tax_rate_method": tax_rate_method,
-                "revenue_ttm_history": self.ttm_history("revenue", 4),
-            },
-            "quarterly": {
-                "revenue": self.standalone_quarters("revenue", 8),
-                "operating_income": self.standalone_quarters(
-                    "operating_income",
-                    8,
-                ),
-            },
             "warnings": [
                 "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
                 *(
@@ -1452,16 +1506,5 @@ class CompanyFactsNormalizer:
                     if shares_from_weighted_average
                     else []
                 ),
-                *(
-                    [
-                        "TTM inputs "
-                        + ", ".join(lagging_ttm_fields)
-                        + f" were unavailable at {ttm_end} and estimated from company-history ratios to current TTM revenue; review the trailing-twelve-month range."
-                    ]
-                    if lagging_ttm_fields
-                    else []
-                ),
-                "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
-                "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
             ],
         }

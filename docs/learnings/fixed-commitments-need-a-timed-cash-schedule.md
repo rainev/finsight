@@ -19,3 +19,12 @@ a perpetual margin reduction.
 discount rate, and PV in each scenario. The PV reserve is mathematically equivalent to an explicit
 year-by-year schedule when the commitment does not continue into terminal cash flow. See also
 [[commitment-warnings-must-bind-cash-arithmetic]].
+
+Equal annual payments must themselves be evidenced or an explicitly approved
+scenario assumption. CAH's FY2026 filing discloses additional governmental opioid
+payments up to $3.7B through 2038 and says annual payments may differ; this is not
+an annual schedule. `check_timed_commitment_overlap().total_by_year` distributes
+interval amounts for diagnostics, not as independent payment-timing evidence.
+The PV evaluator instead takes explicit `TimedPayment` rows. Do not turn the
+diagnostic allocation into a forecast or double-deduct settlement payments that
+already appear in reported OCF.

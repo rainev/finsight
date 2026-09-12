@@ -205,6 +205,201 @@ def test_recovery_learning_watchlist_has_a_stable_name_and_exact_current_set() -
         "MPWR",
         "PLTR",
         "TEL",
+        "PANW",
+        "WDAY",
+        "ORCL",
+        "NOW",
+        "SMCI",
+        "NXPI",
+        "ACN",
+        "CRWD",
+        "DDOG",
+        "KEYS",
+        "LITE",
+        "HPE",
+        "VRT",
+        "AVGO",
+        "MRVL",
+        "SNDK",
+        "Q",
+        "AXP",
+        "AFL",
+        "AIG",
+        "WRB",
+        "CINF",
+        "FITB",
+        "MTB",
+        "BEN",
+        "HBAN",
+        "L",
+        "SPGI",
+        "NTRS",
+        "BRO",
+        "PGR",
+        "TRV",
+        "KEY",
+        "TFC",
+        "STT",
+        "WFC",
+        "WMB",
+        "AON",
+        "SCHW",
+        "GL",
+        "AJG",
+        "PNC",
+        "RJF",
+        "CFG",
+        "JKHY",
+        "FISV",
+        "AMP",
+        "C",
+        "HIG",
+        "GS",
+        "MS",
+        "CB",
+        "ALL",
+        "COF",
+        "VLO",
+        "IVZ",
+        "ERIE",
+        "ACGL",
+        "FDS",
+        "OKE",
+        "MCO",
+        "BRK.B",
+        "MET",
+        "TROW",
+        "NDAQ",
+        "EG",
+        "GPN",
+        "PFG",
+        "FIS",
+        "PRU",
+        "WTW",
+        "MA",
+        "CME",
+        "CPAY",
+        "AIZ",
+        "ARES",
+        "RF",
+        "CBOE",
+        "IBKR",
+        "TRGP",
+        "BNY",
+        "BX",
+        "V",
+        "KKR",
+        "KMI",
+        "MSCI",
+        "XYZ",
+        "ICE",
+        "SYF",
+        "PYPL",
+        "COIN",
+        "HOOD",
+        "TPL",
+        "APO",
+        "BLK",
+        "APD",
+        "AVY",
+        "BALL",
+        "ECL",
+        "EQT",
+        "HAL",
+        "IFF",
+        "IP",
+        "NUE",
+        "PKG",
+        "PPG",
+        "SLB",
+        "SHW",
+        "CVX",
+        "OXY",
+        "EOG",
+        "FCX",
+        "CRH",
+        "EXE",
+        "ALB",
+        "MLM",
+        "STLD",
+        "DVN",
+        "COP",
+        "NEM",
+        "MOS",
+        "CF",
+        "VMC",
+        "LYB",
+        "LIN",
+        "MPC",
+        "PSX",
+        "FANG",
+        "BKR",
+        "AMCR",
+        "DOW",
+        "CTVA",
+        "APA",
+        "SW",
+        "XOM",
+        "AEP",
+        "ETR",
+        "ES",
+        "XEL",
+        "SO",
+        "LNT",
+        "D",
+        "PNW",
+        "WEC",
+        "PEG",
+        "ATO",
+        "CMS",
+        "EIX",
+        "AES",
+        "PPL",
+        "DTE",
+        "AEE",
+        "PCG",
+        "FE",
+        "SRE",
+        "NRG",
+        "ED",
+        "EXC",
+        "NI",
+        "CNP",
+        "DUK",
+        "AWK",
+        "VST",
+        "EVRG",
+        "CEG",
+        "FRT",
+        "UDR",
+        "WY",
+        "VTR",
+        "DOC",
+        "WELL",
+        "KIM",
+        "EQR",
+        "CPT",
+        "IRM",
+        "REG",
+        "MAA",
+        "AVB",
+        "ESS",
+        "SBAC",
+        "ARE",
+        "BXP",
+        "PLD",
+        "CCI",
+        "EQIX",
+        "AMT",
+        "CSGP",
+        "SPG",
+        "HST",
+        "CBRE",
+        "EXR",
+        "DLR",
+        "PSA",
+        "INVH",
+        "VICI",
     )
     assert entries[0].current_status == "withheld_after_recovery"
     assert all(row.initial_outcome == "withheld" for row in entries if row.batch <= 6)
@@ -350,6 +545,108 @@ def test_recovery_learning_watchlist_has_a_stable_name_and_exact_current_set() -
     assert tuple(row.ticker for row in batch_30)==("CTSH","ON","STX","FTNT","FSLR","MPWR","PLTR","TEL")
     assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_30)
     assert {"TDY","BR"}.isdisjoint({row.ticker for row in entries})
+    batch_31=[row for row in entries if row.batch==31]
+    assert tuple(row.ticker for row in batch_31)==("PANW","WDAY","ORCL","NOW","SMCI","NXPI","ACN","CRWD")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" for row in batch_31 if row.ticker!="ORCL")
+    assert next(row for row in batch_31 if row.ticker=="SMCI").current_status=="conditional_numeric_low_equity_at_risk"
+    assert all(row.current_status=="conditional_numeric_low" for row in batch_31 if row.ticker not in {"SMCI","ORCL"})
+    orcl=next(row for row in batch_31 if row.ticker=="ORCL")
+    assert orcl.initial_outcome=="withheld" and orcl.recovery_outcome=="withheld" and orcl.current_status=="withheld_after_recovery"
+    assert {"CDW","VRSK"}.isdisjoint({row.ticker for row in entries})
+    batch_32=[row for row in entries if row.batch==32]
+    assert tuple(row.ticker for row in batch_32)==("DDOG","KEYS","LITE","HPE","VRT","AVGO","MRVL","SNDK","Q")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_32)
+    assert "GDDY" not in {row.ticker for row in entries}
+    batch_33=[row for row in entries if row.batch==33]
+    assert tuple(row.ticker for row in batch_33)==("AXP","AFL","AIG","WRB","CINF","FITB","MTB","BEN","HBAN")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_33)
+    assert "MRSH" not in {row.ticker for row in entries}
+    batch_34=[row for row in entries if row.batch==34]
+    assert tuple(row.ticker for row in batch_34)==("L","SPGI","NTRS","BRO","PGR","TRV","KEY","TFC","STT")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.current_status=="conditional_numeric_low" for row in batch_34)
+    assert all(row.recovery_outcome=="not_applicable" for row in batch_34 if row.ticker!="BRO")
+    assert next(row for row in batch_34 if row.ticker=="BRO").recovery_outcome=="not_applicable"
+    batch_35=[row for row in entries if row.batch==35]
+    assert tuple(row.ticker for row in batch_35)==("WFC","WMB","AON","SCHW","GL","AJG","PNC","RJF","CFG","JKHY")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_35)
+    batch_36=[row for row in entries if row.batch==36]
+    assert tuple(row.ticker for row in batch_36)==("FISV","AMP","C","HIG","GS","MS","CB","ALL","COF","VLO")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_36 if row.ticker!="VLO")
+    vlo=next(row for row in batch_36 if row.ticker=="VLO")
+    assert vlo.initial_outcome=="withheld" and vlo.recovery_outcome=="withheld" and vlo.current_status=="withheld_after_recovery"
+    batch_37=[row for row in entries if row.batch==37]
+    assert tuple(row.ticker for row in batch_37)==("IVZ","ERIE","ACGL","FDS","OKE","MCO","BRK.B","MET","TROW","NDAQ")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_37)
+    batch_38=[row for row in entries if row.batch==38]
+    assert tuple(row.ticker for row in batch_38)==("EG","GPN","PFG","FIS","PRU","WTW","MA","CME","CPAY","AIZ")
+    assert next(row for row in batch_38 if row.ticker=="GPN").current_status=="withheld_after_recovery"
+    assert next(row for row in batch_38 if row.ticker=="GPN").recovery_outcome=="withheld"
+    assert next(row for row in batch_38 if row.ticker=="CPAY").recovery_outcome=="conditional_numeric_low"
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_38 if row.ticker not in {"GPN","CPAY"})
+    batch_39=[row for row in entries if row.batch==39]
+    assert tuple(row.ticker for row in batch_39)==("ARES","RF","CBOE","IBKR","TRGP","BNY","BX","V","KKR","KMI")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_39)
+    batch_40=[row for row in entries if row.batch==40]
+    assert tuple(row.ticker for row in batch_40)==("MSCI","XYZ","ICE","SYF","PYPL","COIN","HOOD","TPL","APO","BLK")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_40 if row.ticker!="COIN")
+    coin=next(row for row in batch_40 if row.ticker=="COIN")
+    assert coin.initial_outcome=="withheld" and coin.recovery_outcome=="withheld" and coin.current_status=="withheld_after_recovery"
+    batch_41=[row for row in entries if row.batch==41]
+    assert tuple(row.ticker for row in batch_41)==("APD","AVY","BALL","ECL","EQT","HAL","IFF","IP","NUE","PKG")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_41 if row.ticker not in {"APD","IFF","IP"})
+    apd=next(row for row in batch_41 if row.ticker=="APD")
+    assert apd.initial_outcome=="withheld" and apd.recovery_outcome=="conditional_numeric_low" and apd.current_status=="conditional_numeric_low"
+    for ticker in ("IFF","IP"):
+        row=next(row for row in batch_41 if row.ticker==ticker)
+        assert row.initial_outcome=="withheld" and row.recovery_outcome=="withheld" and row.current_status=="withheld_after_recovery"
+    batch_42=[row for row in entries if row.batch==42]
+    assert tuple(row.ticker for row in batch_42)==("PPG","SLB","SHW","CVX","OXY","EOG","FCX","CRH","EXE","ALB")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status.startswith("conditional_numeric_low") for row in batch_42 if row.ticker not in {"EXE","ALB"})
+    for ticker in ("EXE","ALB"):
+        row=next(row for row in batch_42 if row.ticker==ticker)
+        assert row.initial_outcome=="withheld" and row.recovery_outcome=="withheld" and row.current_status=="withheld_after_recovery"
+    batch_43=[row for row in entries if row.batch==43]
+    assert tuple(row.ticker for row in batch_43)==("MLM","STLD","DVN","COP","NEM","MOS","CF","VMC","LYB","LIN")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status.startswith("conditional_numeric_low") for row in batch_43 if row.ticker not in {"DVN","NEM","LYB"})
+    for ticker in ("DVN","NEM","LYB"):
+        row=next(row for row in batch_43 if row.ticker==ticker)
+        assert row.initial_outcome=="withheld" and row.recovery_outcome=="withheld" and row.current_status=="withheld_after_recovery"
+    batch_44=[row for row in entries if row.batch==44]
+    assert tuple(row.ticker for row in batch_44)==("MPC","PSX","FANG","BKR","AMCR","DOW","CTVA","APA","SW","XOM")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status.startswith("conditional_numeric_low") for row in batch_44 if row.ticker not in {"BKR","AMCR","SW"})
+    bkr=next(row for row in batch_44 if row.ticker=="BKR")
+    assert bkr.initial_outcome=="withheld" and bkr.recovery_outcome=="withheld" and bkr.current_status=="withheld_after_recovery"
+    for ticker in ("AMCR","SW"):
+        row=next(row for row in batch_44 if row.ticker==ticker)
+        assert row.initial_outcome=="withheld" and row.recovery_outcome=="conditional_numeric_low" and row.current_status.startswith("conditional_numeric_low")
+    batch_45=[row for row in entries if row.batch==45]
+    assert tuple(row.ticker for row in batch_45)==("AEP","ETR","ES","XEL","SO","LNT","D","PNW","WEC","PEG")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_45)
+    batch_46=[row for row in entries if row.batch==46]
+    assert tuple(row.ticker for row in batch_46)==("ATO","CMS","EIX","AES","PPL","DTE","AEE","PCG","FE","SRE")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_46 if row.ticker not in {"EIX","AES","PCG","SRE"})
+    assert all(row.initial_outcome=="withheld" and row.recovery_outcome=="conditional_numeric_low" and row.current_status=="conditional_numeric_low" for row in batch_46 if row.ticker in {"EIX","AES","PCG","SRE"})
+    batch_47=[row for row in entries if row.batch==47]
+    assert tuple(row.ticker for row in batch_47)==("NRG","ED","EXC","NI","CNP","DUK","AWK","VST","EVRG","CEG")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_47 if row.ticker not in {"NRG","VST","CEG"})
+    assert all(row.initial_outcome=="withheld" and row.recovery_outcome=="withheld" and row.current_status=="withheld_after_recovery" for row in batch_47 if row.ticker in {"NRG","VST","CEG"})
+    batch_48=[row for row in entries if row.batch==48]
+    assert tuple(row.ticker for row in batch_48)==("FRT","UDR","WY","VTR","DOC","WELL","KIM","EQR","CPT","IRM")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_48 if row.ticker not in {"WY","EQR"})
+    wy=next(row for row in batch_48 if row.ticker=="WY")
+    assert wy.initial_outcome=="withheld" and wy.recovery_outcome=="conditional_numeric_low" and wy.current_status=="conditional_numeric_low"
+    eqr=next(row for row in batch_48 if row.ticker=="EQR")
+    assert eqr.initial_outcome=="withheld" and eqr.recovery_outcome=="withheld" and eqr.current_status=="withheld_after_recovery"
+    batch_49=[row for row in entries if row.batch==49]
+    assert tuple(row.ticker for row in batch_49)==("REG","MAA","AVB","ESS","SBAC","ARE","BXP","PLD","CCI","EQIX")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_49 if row.ticker!="AVB")
+    avb=next(row for row in batch_49 if row.ticker=="AVB")
+    assert avb.initial_outcome=="withheld" and avb.recovery_outcome=="withheld" and avb.current_status=="withheld_after_recovery"
+    batch_50=[row for row in entries if row.batch==50]
+    assert tuple(row.ticker for row in batch_50)==("AMT","CSGP","SPG","HST","CBRE","EXR","DLR","PSA","INVH","VICI")
+    assert all(row.initial_outcome=="conditional_numeric_low" and row.recovery_outcome=="not_applicable" and row.current_status=="conditional_numeric_low" for row in batch_50)
+    assert next(row for row in batch_50 if row.ticker=="CSGP").provisional_model=="operating_enterprise_fcff"
+    assert next(row for row in batch_50 if row.ticker=="CBRE").provisional_model=="operating_enterprise_fcff"
     assert all(row.learning_themes for row in entries)
     assert all(row.revisit_triggers for row in entries)
     assert all(row.evidence_reports for row in entries)
@@ -359,8 +656,8 @@ def test_current_withheld_register_is_fully_bookmarked_without_changing_semantic
     withheld = load_universe_reset_withheld()
     watchlist = load_recovery_learning_watchlist()
     assert {(row.ticker,row.cik) for row in withheld}.issubset({(row.ticker,row.cik) for row in watchlist})
-    assert sum(row.current_status == "withheld_after_recovery" for row in watchlist) == 9
-    assert sum(row.current_status.startswith("conditional_numeric_low") for row in watchlist) == 180
+    assert sum(row.current_status.startswith("conditional_numeric_low") for row in watchlist) == 358
+    assert sum(row.current_status == "withheld_after_recovery" for row in watchlist) == 26
 
 
 def test_watchlist_rejects_a_fully_recovered_or_unclassified_status() -> None:

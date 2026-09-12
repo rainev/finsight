@@ -81,6 +81,21 @@ def _tuple_pairs(
     return tuple(pairs)
 
 
+def _tuple_triples(value: Any, field: str, *, allow_lists: bool = False) -> tuple[tuple[str, str, str], ...]:
+    sequence_type = (list, tuple) if allow_lists else tuple
+    if not isinstance(value, sequence_type):
+        raise ValueError(f"{field} must be a sequence of triples")
+    triples: list[tuple[str, str, str]] = []
+    for item in value:
+        if not isinstance(item, sequence_type) or len(item) != 3:
+            raise ValueError(f"{field} must be a sequence of triples")
+        axis, domain, member_value = item
+        for part in (axis, domain, member_value):
+            _require_text(part, field)
+        triples.append((axis, domain, member_value))
+    return tuple(triples)
+
+
 @dataclass(frozen=True)
 class StructuralRelationship:
     arcrole: str
@@ -158,6 +173,7 @@ class StructuralFact:
     definition_parents: tuple[str, ...]
     definition_children: tuple[str, ...]
     source_accession: str
+    typed_dimensions: tuple[tuple[str, str, str], ...] = ()
     decimals: str | None = None
     scale: str | None = None
     sign: str | None = None
@@ -225,6 +241,10 @@ class StructuralFact:
                 raise ValueError(f"{field} must be a tuple of nonempty strings")
         _tuple_pairs(self.labels, "labels")
         _tuple_pairs(self.dimensions, "dimensions")
+        _tuple_triples(self.typed_dimensions, "typed_dimensions")
+        typed_axes = {axis for axis, _domain, _value in self.typed_dimensions}
+        if any((axis, "typed") not in self.dimensions for axis in typed_axes):
+            raise ValueError("typed_dimensions axes must be marked typed in dimensions")
         _tuple_pairs(self.filing_metadata, "filing_metadata")
         if not isinstance(self.relationships, tuple) or not all(
             isinstance(item, StructuralRelationship) for item in self.relationships
@@ -245,6 +265,7 @@ class StructuralFact:
                 "period_end": self.period_end,
                 "context_id": self.context_id,
                 "dimensions": self.dimensions,
+                "typed_dimensions": self.typed_dimensions,
                 "statement_roles": self.statement_roles,
                 "presentation_parents": self.presentation_parents,
                 "calculation_parents": self.calculation_parents,
@@ -281,6 +302,9 @@ class StructuralFact:
             context_id=value["context_id"],
             dimensions=_tuple_pairs(
                 value.get("dimensions", ()), "dimensions", allow_lists=True
+            ),
+            typed_dimensions=_tuple_triples(
+                value.get("typed_dimensions", ()), "typed_dimensions", allow_lists=True
             ),
             statement_roles=tuple(value.get("statement_roles", ())),
             presentation_parents=tuple(value.get("presentation_parents", ())),

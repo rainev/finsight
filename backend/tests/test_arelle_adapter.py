@@ -27,7 +27,53 @@ from app.us_valuation.arelle_worker import (
     _relationship_set_role,
     _role_token,
     _structural_links,
+    _typed_dimensions,
 )
+
+
+def test_typed_dimension_preserves_domain_and_qname_value_without_changing_legacy_marker():
+    class QName:
+        def __init__(self,namespaceURI,localName):
+            self.namespaceURI,self.localName=namespaceURI,localName
+    qnames=_QNameCanonicalizer()
+    axis=QName("http://fasb.org/us-gaap/2026","StatementOfFinancialPositionLocationBalanceAxis")
+    domain=QName("http://fasb.org/us-gaap/2026","QName.domain")
+    member=QName("http://fasb.org/us-gaap/2026","AccountsPayableCurrent")
+    value=SimpleNamespace(memberQname=None,typedMember=SimpleNamespace(qname=domain,xValue=member))
+    context=SimpleNamespace(qnameDims={axis:value})
+    assert arelle_worker_module._dimensions(context,qnames)==(
+        ("us-gaap:StatementOfFinancialPositionLocationBalanceAxis","typed"),)
+    assert _typed_dimensions(context,qnames)==(
+        ("us-gaap:StatementOfFinancialPositionLocationBalanceAxis","us-gaap:QName.domain","us-gaap:AccountsPayableCurrent"),)
+
+
+def test_oversized_typed_member_is_preserved_as_a_bounded_deterministic_identity():
+    class QName:
+        def __init__(self, namespaceURI, localName):
+            self.namespaceURI, self.localName = namespaceURI, localName
+
+    qnames = _QNameCanonicalizer()
+    axis = QName("http://fasb.org/us-gaap/2026", "LargeTypedAxis")
+    domain = QName("http://example.com/bxp/2026", "LargeTypedDomain")
+    raw = "x" * 5000
+    value = SimpleNamespace(memberQname=None, typedMember=SimpleNamespace(qname=domain, xValue=raw))
+    context = SimpleNamespace(qnameDims={axis: value})
+    observed = _typed_dimensions(context, qnames)
+    assert observed[0][0:2] == ("us-gaap:LargeTypedAxis", "ns_" + __import__("hashlib").sha1(b"http://example.com/bxp/2026").hexdigest()[:10] + ":LargeTypedDomain")
+    assert observed[0][2] == "sha256:" + __import__("hashlib").sha256(raw.encode()).hexdigest()
+    assert len(observed[0][2]) == 71
+
+
+def test_explicit_empty_typed_member_is_not_confused_with_an_absent_dimension():
+    class QName:
+        def __init__(self, namespaceURI, localName):
+            self.namespaceURI, self.localName = namespaceURI, localName
+
+    qnames = _QNameCanonicalizer()
+    axis = QName("http://fasb.org/us-gaap/2026", "EmptyTypedAxis")
+    domain = QName("http://example.com/bxp/2026", "EmptyTypedDomain")
+    value = SimpleNamespace(memberQname=None, typedMember=SimpleNamespace(qname=domain, xValue=""))
+    assert _typed_dimensions(SimpleNamespace(qnameDims={axis: value}), qnames)[0][2] == "empty"
 
 
 FIXTURE_ROOT = Path(__file__).parent / "fixtures" / "us" / "structural-xbrl"

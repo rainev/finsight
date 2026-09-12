@@ -29,6 +29,20 @@ def filing_records(submission: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def test_balance_only_path_reuses_full_normalizer_without_operating_income_dependency():
+    submission = load_json('msft-submissions.json')
+    facts = load_json('msft-companyfacts.json')
+    kwargs = {'fiscal_year_end':submission.get('fiscalYearEnd'), 'filing_records':filing_records(submission)}
+    normalizer = CompanyFactsNormalizer(facts, **kwargs)
+    full = normalizer.normalize()
+    period = full['balance_sheet']['period_end']
+    assert normalizer.normalize_balance_sheet(period_end=period)['balance_sheet'] == full['balance_sheet']
+    for namespace in facts['facts'].values():
+        namespace.pop('OperatingIncomeLoss', None)
+    without_ebit = CompanyFactsNormalizer(facts, **kwargs)
+    assert without_ebit.normalize_balance_sheet(period_end=period)['balance_sheet'] == full['balance_sheet']
+
+
 def test_reported_fact_maps_to_current_reported_availability() -> None:
     item = availability_from_normalized_field(
         field="cash",

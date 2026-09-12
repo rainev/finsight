@@ -1910,7 +1910,7 @@ def test_non_finance_lease_economics_are_rejected_from_carrying_value(
 def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() -> None:
     rules = load_structural_rules()
 
-    assert rules["version"] == "US-XBRL-RESOLVER-1.1"
+    assert rules["version"] == "US-XBRL-RESOLVER-1.2"
     assert set(rules) >= {
         "version",
         "marketable_securities_current",
@@ -1923,6 +1923,7 @@ def test_load_structural_rules_is_versioned_and_has_both_marketable_metrics() ->
         if isinstance(value, dict) and "statement_role" in value
     }
     assert set(metric_rules) == {
+        "cash",
         "marketable_securities_current",
         "marketable_securities_noncurrent",
         "marketable_securities_total",
@@ -2032,7 +2033,7 @@ def test_preferred_zero_conflict_reason_must_be_nonempty_string(
 
     with pytest.raises(ValueError, match="preferred_zero_value_conflict_reason"):
         concept_resolver_module.load_structural_rules()
-    assert {rules["version"]} == {"US-XBRL-RESOLVER-1.1"}
+    assert {rules["version"]} == {"US-XBRL-RESOLVER-1.2"}
     assert "excluded_economic_phrases" not in rules
     assert tuple(rules["official_us_gaap_namespaces"]) == OFFICIAL_NAMESPACES
 

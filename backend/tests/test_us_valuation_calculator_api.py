@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -28,6 +29,7 @@ def client():
 
 @pytest.fixture
 def staged(monkeypatch: pytest.MonkeyPatch) -> Path:
+    monkeypatch.setattr(router, '_comparison_now', lambda: datetime(2026, 8, 14, tzinfo=timezone.utc))
     root = Path("output/launch-first/batch-03-run-g/staged-public")
     monkeypatch.setattr(router, "DATA_ROOT", root)
     monkeypatch.setattr(router, "EOD_DATA_ROOT", None)
@@ -61,12 +63,34 @@ def test_calculator_manual_price_and_validation(client: TestClient, staged: Path
     assert manual.status_code == 200
     assert manual.json()["comparison_source"] == "manual"
     assert manual.json()["manual_price"] == 10
+    assert manual.json()["comparison"]["verdict"] in {"undervalued", "overvalued", "fair_value"}
+    assert manual.json()["comparison"]["price"] == 10
 
     invalid = client.post(
         "/api/us-valuations/NWSA/calculator",
         json={"overrides": {"shares": 1}},
     )
     assert invalid.status_code == 400
+
+
+def test_legacy_catalog_does_not_invent_verified_case_presets(
+    client: TestClient, staged: Path
+) -> None:
+    view = client.get("/api/us-valuations/NWSA/calculator").json()
+    assert set(view["scenario_presets"]) == {"base"}
+    assert view["selected_scenario"] == "base"
+    assert all("unit" in field for field in view["editable_assumptions"])
+    response = client.post(
+        "/api/us-valuations/NWSA/calculator",
+        json={
+            "selected_scenario": "low",
+            "overrides": {"cash_conversion": 1.1},
+            "baseline_version": view["baseline_version"],
+            "recipe_version": view["recipe_version"],
+        },
+    )
+    assert response.status_code == 400
+    assert 'exact recipe' in response.json()['error']
 
 
 def test_calculator_save_persists_only_user_inputs(

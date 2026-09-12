@@ -1,36 +1,36 @@
 {
   "source": "/Users/carlosconda/Desktop/GoodBehavior-Codex",
-  "sourceCommit": "601e9740bced0282668ea16097898229ccf2f214",
+  "sourceCommit": "75b3697f10cc5af7991bb7e42eb60f471da06e82",
   "installedAt": "2026-08-24T02:49:56+00:00",
-  "updatedAt": null,
+  "updatedAt": "2026-09-07T16:41:55+00:00",
   "files": {
     ".agents/skills/audit-goodbehavior/SKILL.md": {
       "from": ".agents/skills/audit-goodbehavior/SKILL.md",
-      "sha256": "360bc60b841634f540b0b03f492c0ec7e666278ed0f9e38025c7689e99a755dc"
+      "sha256": "1ed2a7d31db981bdffc3b6bca76c65798c7bda5cbe98f6caded1fe71f2f55546"
     },
     ".agents/skills/roadmap-goodbehavior/SKILL.md": {
       "from": ".agents/skills/roadmap-goodbehavior/SKILL.md",
-      "sha256": "89f8e5445d2a045f8228e84ad97373dd2c285ff490f5b9da2fc8d8c98f2f2eec"
+      "sha256": "037f807f597390b049b3e07653c7f92d575af6167e70597793d49e79b55d42ba"
     },
     ".agents/skills/gate-build-goodbehavior/SKILL.md": {
       "from": ".agents/skills/gate-build-goodbehavior/SKILL.md",
-      "sha256": "b1003d263d292716f26f35c796757ceae19c24c74313a1290f389dcd5487d187"
+      "sha256": "38a73b0f6a6a16e67235e2d6d4125c656cebcb0bd175b5a4ca861fd7dbb393c1"
     },
     ".agents/skills/verify-goodbehavior/SKILL.md": {
       "from": ".agents/skills/verify-goodbehavior/SKILL.md",
-      "sha256": "3da54f2dc5657cf03cabf8c30a699868ea523d3ba5ef9d21c8708b1d0df8c6bf"
+      "sha256": "7c5e7df7842a1c57a4e980c1842628d9173e35f54f78b426dce2e9b9293bd572"
     },
     ".agents/skills/uatplan-goodbehavior/SKILL.md": {
       "from": ".agents/skills/uatplan-goodbehavior/SKILL.md",
-      "sha256": "12c6f45c085142502f4b49a6be4e149fbdcdbee9a18b8f0073f8b57b0a29c3f4"
+      "sha256": "02de23cd5ca25d3473db80745e2e28043e6073560a52a845621d146a001ba5e7"
     },
     ".agents/skills/learn-goodbehavior/SKILL.md": {
       "from": ".agents/skills/learn-goodbehavior/SKILL.md",
-      "sha256": "984a46bd8b2073261e046df884e8b01f4c8df1ff86067a59637c3970b7379d35"
+      "sha256": "3ed3566e8fc9ef40d5afa0ea6eb1ea0cb8edc8f919f0720499297d981151a740"
     },
     ".agents/skills/update-goodbehavior/SKILL.md": {
       "from": ".agents/skills/update-goodbehavior/SKILL.md",
-      "sha256": "897e7bb2a0867078f4a87908801be3ff2bd080d0613f315e8d2d95e8e01926b9"
+      "sha256": "c54676025edae824f8b7b030226f42cb712e15adecc8e3822bd920baf6de623a"
     },
     ".codex/goodbehavior/profiles/development.md": {
       "from": "templates/profiles/development.md",

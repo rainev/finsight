@@ -220,6 +220,9 @@ export interface UsSegmentAssumption {
 }
 
 export interface UsValuation {
+  catalog_version?: string
+  freshness?: { outcome: string; checked_as_of?: string; reason?: string | null }
+  dates?: { filing_period: string; evidence_cutoff: string; assumption_date: string | null; market_comparison_date: string | null }
   schema_version: string
   valuation_date: string
   market: string
@@ -322,6 +325,11 @@ export interface UsValuationList {
   artifact_count: number
 }
 
+export interface UsValuationHistory {
+  ticker: string
+  items: { catalog_version: string; valuation_date: string; availability_type: UsAvailabilityType; scenario_range: UsValuation['scenario_range']; source_financial_statement: UsValuation['source_financial_statement'] }[]
+}
+
 export interface UsCalculatorField {
   key: string
   label: string
@@ -332,6 +340,10 @@ export interface UsCalculatorField {
 }
 
 export interface UsCalculatorView {
+  baseline_version?: string
+  recipe_version?: string | null
+  recipe_hash?: string | null
+  calculation_mode?: 'exact_recipe' | 'legacy_sensitivity'
   ticker: string
   assigned_model: string
   model_family?: string
@@ -347,6 +359,7 @@ export interface UsCalculatorView {
 }
 
 export interface UsCalculatorResult extends UsCalculatorView {
+  scenario_comparisons?: { low: UsValuation['market_comparison']; base: UsValuation['market_comparison']; high: UsValuation['market_comparison']; price_date?: string | null } | null
   assumptions: Record<string, number>
   result: { low: number; base: number; high: number }
   baseline_change_pct: number

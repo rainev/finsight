@@ -2,6 +2,34 @@
 
 # Project learnings
 
+- [Source index is not source selection](source-index-is-not-source-selection.md) — accelerate candidate discovery while preserving cutoff selection, identity and byte revalidation.
+
+- [Scenario margin stress is not reported cash](scenario-margin-stress-is-not-reported-cash.md) — preserve the post-history haircuts without relabelling assumptions as filing facts.
+
+- [Share precision duplicates need an exact anchor](share-precision-duplicates-need-an-exact-anchor.md) — reconcile declared rounded siblings without discarding true source conflicts.
+
+- [Unavailable is not a stale numeric template](unavailable-is-not-a-stale-numeric-template.md) — clear old assumptions and label historical references while preserving private recovery state.
+
+- [Cash receipt date is not gain date](cash-receipt-date-is-not-gain-date.md) — CF's March gain and April receipt belong in different cash windows; retain stable event identity.
+- [Prior estimate is not current claim ceiling](prior-estimate-is-not-current-claim-ceiling.md) — IDXX's old estimate is neither a current liability nor a disclosed maximum.
+- [Preferred conversion is not absence](preferred-conversion-is-not-absence.md) — PG's source-proven converted shares remove only the additional preferred deduction.
+- [Legacy report date needs validated envelope](legacy-report-date-needs-validated-envelope.md) — preserve cover-date diagnostics while supplying the verified SEC reporting period and correct payload hash.
+
+- [Claim sign and source precision](claim-sign-and-source-precision.md) — an additive adjustment must permit negative claims; source rounding is not a license to invent missing liabilities.
+
+- [Preferred par is not economic claim](preferred-par-is-not-economic-claim.md) — validate preferred-series continuity before carrying a liquidation claim; zero par is not zero liability.
+
+- [Preferred investment is not issuer claim](preferred-investment-is-not-issuer-claim.md) — prove investment versus financing scope and preserve class-equivalent share sensitivities.
+
+- [Event discovery must preserve primary document](event-discovery-must-preserve-primary-document.md) — test SEC event discovery through primary-body capture, not only a constructed downloader input.
+
+- [Verify the current UI, not the worktree default](verify-current-ui-not-worktree-default.md) — validate the current redesign's actual calculator contract against the staged API.
+
+- [Matching public ranges do not identify private recipes](matching-public-range-does-not-identify-private-recipe.md) — inspect retained input variants before declaring a historical event model unrecoverable.
+
+- [Recipe migration is not refresh readiness](recipe-migration-is-not-refresh-readiness.md) — require both executable scenarios and verified next-filing bindings before automated publication.
+- [Reported shares are not additive TTM flows](reported-shares-are-not-additive-ttm-flows.md) — select current YTD/FY and cover counts directly; resolve DEI namespaces independently of generated prefixes.
+
 - [Cover-only amendments do not control financial statements](cover-only-amendments-do-not-control-financial-statements.md) — use the underlying full filing for financial statements and a narrow amendment only for the facts it actually changes.
 - [Correct arithmetic does not validate model calibration](correct-arithmetic-does-not-validate-model-calibration.md) — challenge generic caps and model levels against issuer evidence after source mechanics pass.
 - [Whole-batch recovery needs explicit attempt semantics](whole-batch-recovery-needs-explicit-attempt-semantics.md) — record authorized Conditional recoveries without changing older direct-Conditional history.
@@ -9,7 +37,8 @@
 - [Tree hashes need algorithm provenance](tree-hashes-need-algorithm-provenance.md) — compare protected-tree hashes only when they were produced by the same hashing contract.
 - [XBRL alias additions can change selection precedence](xbrl-alias-additions-can-change-selection-precedence.md) — a valid new concept may change unrelated issuers; run historical regressions or scope the alias.
 - [Offline Arelle uses Python 3.11](offline-arelle-uses-python311.md) — use the pinned ingestion runtime and reuse complete package caches after wrong-interpreter failures.
-- [Mixed interest concepts need magnitude alignment](mixed-interest-concepts-need-magnitude-alignment.md) — align expense signs before FY-plus-YTD-minus-prior-YTD reconstruction.
+- [Mixed interest concepts need magnitude alignment](mixed-interest-concepts-need-magnitude-alignment.md) — preserve income signs and require a consistent gross/net basis across contiguous TTM periods.
+- [Source-derived ratios are not fixed policy](source-derived-ratios-are-not-fixed-policy.md) — compile Microsoft's investment rule, not its prior adjusted output; matching medians do not prove a policy window.
 - [Catalog successors carry base publication counts](catalog-successors-carry-base-publication-counts.md) — accumulate base review states before appending the next batch.
 - [SEC Inline HTML validation needs semantic tokens](sec-inline-html-validation-needs-semantic-tokens.md) — visible currency strings can be split by table markup; validate number plus issuer/date/purpose context.
 
@@ -87,3 +116,38 @@
 - [Fixed commitments need a timed cash schedule](fixed-commitments-need-a-timed-cash-schedule.md) — represent finite commitments as exact yearly payments or an equivalent present-value reserve, never a perpetual margin reduction.
 - [Opaque typed claim contexts force Conditional](opaque-typed-claim-contexts-force-conditional.md) — a conservative sum bounds value but does not prove that typed XBRL claims do not overlap.
 - [Cash-flow SBC needs a forward dilution release condition](cash-flow-sbc-needs-forward-dilution-release-condition.md) — keep SBC in reported OCF but require explicit net-dilution or buyback treatment before Pass when material.
+- [Cutoff freshness includes earnings releases](cutoff-freshness-includes-earnings-releases.md) — scan cutoff-safe 8-K releases and follow exhibit relationships even when attachment filenames are generic.
+- [History observations require one period](history-observations-require-one-period.md) — never combine a newer revenue denominator with older cash-flow inputs under one TTM date.
+- [Exact period ends outrank fiscal-year labels](exact-period-ends-outrank-fiscal-year-labels.md) — select annual SEC history by accession, exact dates, and duration when issuer fiscal-year labels are unreliable.
+- [Consolidated earnings need a parent bridge](consolidated-earnings-need-parent-bridge.md) — align earnings attribution with the parent/common-equity anchor before residual-income valuation.
+- [Pre-cutoff preferred events need a scenario overlay](pre-cutoff-preferred-events-need-scenario-overlay.md) — include completed preferred claims and provenance in current common-equity scenarios.
+- [Public model identity follows the formula](public-model-identity-follows-the-formula.md) — availability must never select or rename the valuation method.
+- [Repricing invalidates derived metadata](repricing-invalidates-derived-metadata.md) — recompute reliability, ROE, traces, and period-specific claims after changing values.
+- [Recovery gates pin confirmed inputs and source bytes](recovery-gates-pin-confirmed-inputs-and-source-bytes.md) — fail closed on confirmed-report or cited-source drift.
+- [Preferred par zero is not claim absence](preferred-par-zero-is-not-claim-absence.md) — reconcile capital surplus, dividends, and regulatory tables before treating a zero preferred par-value line as no economic claim.
+- [Scoped cash exposure needs a scoped reserve](scoped-cash-exposure-needs-scoped-reserve.md) — compare a program-specific maximum only with the matching program/period reserve.
+- [SEC event exhibits can hide behind business filenames](sec-event-exhibits-can-hide-behind-business-filenames.md) — An Exhibit 99.1 can be linked under an earnings-deck filename that generic exhibit-token filters miss.
+- [SEC archive URL uses accession-owner CIK](sec-archive-url-uses-accession-owner-cik.md) — successor identity can differ from the legacy CIK that owns the filing archive path.
+- [Public decision ranges should not use full stacked tails](public-decision-ranges-should-not-use-full-stacked-tails.md) — preserve extreme corners privately and present moderated multi-factor ranges unless simultaneous extremes are evidenced.
+- [Runtime detail parity includes enrichment](runtime-detail-parity-includes-enrichment.md) — add catalog and freshness fields intentionally owned by the serving layer before exact staged/API comparison.
+- [Claim evidence must enter before bridge resolution](claim-evidence-must-enter-before-bridge-resolution.md) — bind validated claim scope before the bridge decision, then reconcile the resolved amount afterward.
+- [Generic long-term investments are not automatically cash-like](generic-long-term-investments-are-not-automatically-cash-like.md) — require current placement or component scope before adding a generic investment balance to excess cash.
+- [Duplicate claim presentations are not additive](duplicate-claim-presentations-are-not-additive.md) — reconcile aggregate, hierarchy and acquisition-member views by scope instead of summing every nonzero fact.
+- [Duration acquisition accrual is not an instant claim](duration-acquisition-accrual-is-not-an-instant-claim.md) — require carrying-balance and cash-overlap proof before deducting a duration accrual from equity.
+- [Settlement balances are not necessarily legal claims](settlement-balances-are-not-necessarily-legal-claims.md) — classify payment-network settlement working capital by scope, not by the word settlement.
+- [Expected insurance funding is not a receivable](expected-insurance-funding-is-not-a-receivable.md) — net litigation only against a recognized same-scope recovery asset.
+- [Commitment total, contributed and remaining are one rollforward](commitment-total-contributed-and-remaining-are-one-rollforward.md) — reconcile the three states and use only unpaid exposure.
+- [Broad time buckets are not exact payment years](broad-time-buckets-are-not-exact-payment-years.md) — do not invent equal annual timing for commitment PV.
+- [Transaction price is not a post-event cash state](transaction-price-is-not-a-post-event-cash-state.md) — require cash, debt, shares and operating-scope rollforward before changing value.
+- [Earnings-release supersession is field-specific](earnings-release-supersession-is-field-specific.md) — update only reported fields and preserve dated claim/schedule limitations.
+- [Negative NCI is not a common-equity asset](negative-nci-is-not-a-common-equity-asset.md) — keep negative NCI diagnostic and never invert it into value for common shareholders.
+- [Refresh UAT compares the whole range](refresh-uat-compares-the-whole-range.md) — allow an unchanged base when independently recalculated scenario bounds change.
+- [Operating stress is not debt or PV](operating-stress-is-not-debt-or-pv.md) — retain source-backed downside reserves without inventing debt classification or payment timing.
+- [Claim scope does not clear cash flow](claim-scope-does-not-clear-cash-flow.md) — keep a company in financial review when sustainable cash fails even if its claim bridge reconciles.
+- [Binding loop variables must not shadow output fields](binding-loop-variable-must-not-shadow-output-field.md) — keep additional source-check variables from changing the requested normalized output.
+- [Typed dimensions need their member values](typed-dimension-without-value-cannot-classify-financing.md) — never classify an operating-versus-financing component by amount when typed member meaning was lost.
+- [Hashed narrative evidence needs complete contract scope](hashed-narrative-evidence-needs-complete-contract-scope.md) — exact extraction of expected terms does not excuse an omitted fixed obligation from another related agreement.
+- [NCI-named VIE exposure is not issuer NCI](nci-named-vie-exposure-is-not-issuer-nci.md) — require consolidation and statement scope before turning a VIE investment disclosure into an ownership claim.
+- [NCI subsets and owner flows are not additive](nci-subsets-and-owner-flows-are-not-additive.md) — reconcile the current total once; VIE members and contribution/distribution flows remain subsets or roll-forward evidence.
+- [Partition family does not select the valuation formula](partition-family-does-not-select-the-valuation-formula.md) — route economic service companies independently of universe cohort metadata.
+- [Nonrecurring item exclusion must bind both sides of a conversion](nonrecurring-item-exclusion-must-bind-both-sides-of-a-conversion.md) — prevent one-time gains from leaking into normalized owner cash.

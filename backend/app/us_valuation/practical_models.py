@@ -363,7 +363,9 @@ def enterprise_cash_flow_dcf(
     nci = _finite(state.noncontrolling_interests, "noncontrolling_interests")
     shares = _finite(state.diluted_shares, "diluted_shares", positive=True)
     adjustment = _finite(state.nonoperating_adjustment, "nonoperating_adjustment")
-    if min(cash_and_investments, debt, preferred, nci, adjustment) < 0:
+    # This is an additive signed adjustment: positive nonoperating assets,
+    # negative separately source-bound claims. Gross bridge fields stay >= 0.
+    if min(cash_and_investments, debt, preferred, nci) < 0:
         raise ValueError("bridge inputs must be nonnegative")
 
     schedule = []
