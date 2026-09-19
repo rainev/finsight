@@ -15,7 +15,9 @@ from typing import Any, Mapping
 
 from .xbrl import load_concept_config
 from .refresh_financials import POLICY_VERSION as CASH_HISTORY_VERSION
+from .refresh_financials import ANNUAL_ONLY_EXCLUSION_PROVENANCE_SCHEMA
 from .refresh_growth_policies import AUDITED_GROWTH_TICKERS, compile_history_growth_policy
+from .catalog import sha256_bytes
 
 
 COMPILER_SCHEMA = "FINSIGHT-REFRESH-OPERATING-POLICIES-1"
@@ -63,6 +65,50 @@ def _concept_candidates(concept_config: Mapping[str, Any], field: str) -> tuple[
     definition = concept_config.get("fields", {}).get(field, {})
     concepts = definition.get("concepts", ()) if isinstance(definition, Mapping) else ()
     return tuple(str(item) for item in concepts if isinstance(item, str))
+
+
+def _annual_only_exclusion_lineage(recipe: Mapping[str, Any], *, cik: str) -> dict[str, Any] | None:
+    """Load the approved exclusion text from the recipe's private lineage.
+
+    This keeps issuer-specific wording and provenance data-only. The compiler
+    does not reproduce filing amounts or hard-code the exclusion prose; it
+    validates and pins the private packet that supplied it.
+    """
+    provenance = recipe.get('provenance') if isinstance(recipe, Mapping) else None
+    source_text = provenance.get('source_path') if isinstance(provenance, Mapping) else None
+    if not isinstance(source_text, str) or not source_text:
+        return None
+    project_root = Path(__file__).resolve().parents[3]
+    source = Path(source_text)
+    if not source.is_absolute():
+        source = project_root / source
+    try:
+        source = source.resolve()
+        source.relative_to(project_root)
+    except (OSError, ValueError):
+        return None
+    if not source.is_file():
+        return None
+    try:
+        payload = _json(source)
+    except (OSError, ValueError):
+        return None
+    history_backed = payload.get('history_backed')
+    governed = history_backed.get('governed_assumptions') if isinstance(history_backed, Mapping) else None
+    exclusions = governed.get('normalization_exclusions') if isinstance(governed, Mapping) else None
+    if not isinstance(exclusions, (list, tuple)) or not exclusions:
+        return None
+    exclusions = [item for item in exclusions if isinstance(item, str) and item.strip()]
+    if not exclusions or not any('current ttm cash margin excluded' in item.casefold() for item in exclusions):
+        return None
+    return {
+        'schema_version': ANNUAL_ONLY_EXCLUSION_PROVENANCE_SCHEMA,
+        'cik': str(cik).zfill(10),
+        'source_path': source.relative_to(project_root).as_posix(),
+        'source_sha256': sha256_bytes(source.read_bytes()),
+        'source_field': 'history_backed.governed_assumptions.normalization_exclusions',
+        'exclusions': exclusions,
+    }
 
 
 def _collect_concepts(value: object) -> tuple[str, ...]:
@@ -274,6 +320,71 @@ def _policy_for_entry(
         policy['version'] += '-WG2-ACQUISITION-CLAIM-1'
         policy['intentional_migration_changes'].append('Separate the current acquisition carrying liability from preferred equity and deduct it once; transaction prices, maxima, paid cash, duration accruals and post-period events remain separately classified.')
         reasons = [reason for reason in reasons if reason != 'baseline_non_debt_claim_scope_requires_source_rule']
+    if ticker in {'BIIB','GILD','INCY'} and engines == {'enterprise_cash_fcff'}:
+        from .refresh_pharma_claims import pharma_claim_policy
+        from .refresh_pharma_bridge import pharma_bridge_policy
+        claim_policy = pharma_claim_policy(ticker)
+        if str(cik).zfill(10) != claim_policy['cik']:
+            raise RuntimeError('WG38 pharmaceutical claim registry identity mismatch')
+        policy['inputs']['pharma_acquisition_claim'] = {
+            'selector':'special_claim','field':'claim_adjustment','policy':claim_policy}
+        if ticker=='BIIB':
+            from .refresh_biib_scope import biib_scope_policy
+            policy['inputs']['biib_legal_operating_scope_review']={
+                'selector':'special_claim','field':'claim_adjustment','policy':biib_scope_policy(ticker)}
+            policy['version']+='-WG40-BIIB-LEGAL-OPERATING-SCOPE-1'
+            policy['intentional_migration_changes'].append(
+                'Bind the appealed Genentech judgment and Apellis transaction, funding, observed revenue and integration evidence without probability weighting the judgment or inventing acquired FCFF; block until carrying/payment/recovery and comparable operating-cash scope are reported.'
+            )
+        for fields in policy['scenario_bindings'].values():
+            fields['nonoperating_adjustment']={'subtract':[0.,'pharma_acquisition_claim']}
+        if ticker == 'INCY':
+            policy['inputs']['pharma_post_period_cash_adjustment'] = {
+                'selector':'special_claim','field':'cash_adjustment','policy':claim_policy}
+            for case, fields in policy['scenario_bindings'].items():
+                fields['cash_and_investments']={
+                    'add':[f'{case}_cash_and_investments','pharma_post_period_cash_adjustment']}
+        policy['version'] += '-WG38-PHARMA-CLAIMS-1'
+        policy['intentional_migration_changes'].append(
+            'Deduct recognized pharmaceutical acquisition carrying liabilities once; use aggregate, Level-3 and component views only to reconcile, while CVR and milestone ceilings, legal disputes and paid acquisition cash remain separate.'
+        )
+        reasons = [reason for reason in reasons if reason != 'baseline_non_debt_claim_scope_requires_source_rule']
+        if ticker in {'BIIB','GILD','INCY'}:
+            bridge_policy=pharma_bridge_policy(ticker)
+            if str(cik).zfill(10)!=bridge_policy['cik']:
+                raise RuntimeError('WG39 pharmaceutical bridge registry identity mismatch')
+            policy['pharma_bridge_scope']=bridge_policy
+            policy['version']+='-WG39-PHARMA-BRIDGE-1'
+            policy['intentional_migration_changes'].append(
+                'Reconcile pharmaceutical cash, securities and debt from one current bridge; keep strategic equity investments outside cash, count future-royalty carrying inside debt once, and retain fair value as a diagnostic.'
+            )
+        if ticker in {'GILD','INCY'}:
+            from .refresh_financials import ANNUAL_ONLY_CASH_MARGIN_POLICY
+            exclusion_lineage = _annual_only_exclusion_lineage(recipe, cik=str(cik))
+            if exclusion_lineage is None:
+                reasons.append('approved_annual_only_exclusion_lineage_missing')
+                exclusion_lineage = {
+                    'schema_version': ANNUAL_ONLY_EXCLUSION_PROVENANCE_SCHEMA,
+                    'cik': str(cik).zfill(10),
+                    'status': 'unavailable',
+                }
+            for case in ('bear','base','bull'):
+                policy['inputs'][f'{case}_cash_margin']['cash_observation_policy']=ANNUAL_ONLY_CASH_MARGIN_POLICY
+                policy['inputs'][f'{case}_cash_margin']['cash_observation_policy_provenance']=deepcopy(exclusion_lineage)
+            policy['version']+='-ANNUAL-ONLY-CASH-MARGIN-1'
+            policy['annual_only_cash_margin_provenance']=deepcopy(exclusion_lineage)
+            policy['intentional_migration_changes'].append('Preserve the source-linked approved exclusion of current TTM from normalized cash-margin statistics; retain the actual TTM separately and require review before changing its comparability policy.')
+        if ticker=='INCY':
+            from .refresh_financials import INCY_STRUCTURAL_INTEREST_POLICY
+            policy['inputs']['ttm_revenue']['selector']='structural_ttm'
+            for case in ('bear','base','bull'):
+                policy['inputs'][f'{case}_cash_margin']['financing_policy']=INCY_STRUCTURAL_INTEREST_POLICY
+                policy['inputs'][f'{case}_cash_margin']['structural_ttm_fields']=[
+                    'revenue','operating_cash_flow','capital_expenditures']
+            policy['version']+='-STRUCTURAL-INTEREST-1'
+            policy['intentional_migration_changes'].append(
+                'Reconstruct current INCY TTM interest from the controlling structural YTD and comparative-YTD facts plus prior annual history; do not treat the absent current Companyfacts update as zero.'
+            )
     if ticker in {'ABT','BAX'} and engines == {'enterprise_cash_fcff'}:
         from .refresh_acquisition_claims import mixed_claim_policy
         mixed_policy=mixed_claim_policy(ticker)
@@ -307,6 +418,141 @@ def _policy_for_entry(
                     'multiply':['abt_pro_forma_revenue',f'{case}_cash_margin']}
         policy['version']+='-WG15-MIXED-NCI-CLAIMS-1'
         policy['intentional_migration_changes'].append('Separate current NCI from acquisition, legal, environmental, disposal and indemnification claims; count matching aggregate/Level-3 views once and keep paid cash, possible-loss ranges and historical maxima non-additive.')
+        reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
+    if ticker in {'BSX','DGX','EW'} and engines == {'enterprise_cash_fcff'}:
+        from .refresh_acquisition_claims import overlapping_claim_policy
+        from .refresh_litigation_claims import litigation_claim_policy
+        acquisition_policy=overlapping_claim_policy(ticker)
+        legal_policy=litigation_claim_policy(ticker)
+        if str(cik).zfill(10)!=acquisition_policy['cik'] or str(cik).zfill(10)!=legal_policy['cik']:
+            raise RuntimeError('WG16 overlap registry identity mismatch')
+        policy['inputs']['overlap_acquisition_claim']={
+            'selector':'special_claim','field':'claim_adjustment','policy':acquisition_policy}
+        policy['inputs']['overlap_litigation_claim']={
+            'selector':'special_claim','field':'claim_adjustment','policy':legal_policy}
+        for fields in policy['scenario_bindings'].values():
+            fields['nonoperating_adjustment']={'subtract':[0.,{
+                'add':['overlap_acquisition_claim','overlap_litigation_claim']}]}
+        policy['version']+='-WG16-NCI-ACQUISITION-LITIGATION-1'
+        policy['intentional_migration_changes'].append('Keep current NCI, acquisition carrying liabilities and legal accruals separate; duplicate presentations, operating reserves, paid cash, possible-loss ranges and maxima remain non-additive.')
+        reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
+        if ticker=='BSX':
+            reasons.append('post_period_restructuring_cash_requires_separate_timed_schedule')
+        elif ticker=='EW':
+            reasons=[reason for reason in reasons if reason!='issuer_state_scope_requires_explicit_refresh_rule']
+    if ticker in {'CRL','DVA'} and engines=={'enterprise_cash_fcff'}:
+        from .refresh_acquisition_claims import nci_contingent_claim_policy
+        acquisition_policy=nci_contingent_claim_policy(ticker)
+        if str(cik).zfill(10)!=acquisition_policy['cik']:
+            raise RuntimeError('WG17 NCI/contingent claim registry identity mismatch')
+        policy['inputs']['nci_contingent_acquisition_claim']={
+            'selector':'special_claim','field':'claim_adjustment','policy':acquisition_policy}
+        claim_expression='nci_contingent_acquisition_claim'
+        if ticker=='CRL':
+            from .refresh_litigation_claims import litigation_claim_policy
+            legal_policy=litigation_claim_policy(ticker)
+            if str(cik).zfill(10)!=legal_policy['cik']:
+                raise RuntimeError('WG17 CRL legal registry identity mismatch')
+            policy['inputs']['nci_contingent_legal_review']={
+                'selector':'special_claim','field':'claim_adjustment','policy':legal_policy}
+            claim_expression={'add':['nci_contingent_acquisition_claim','nci_contingent_legal_review']}
+        for fields in policy['scenario_bindings'].values():
+            fields['nonoperating_adjustment']={'subtract':[0.,claim_expression]}
+        policy['version']+='-WG17-NCI-CONTINGENT-CLAIM-1'
+        policy['intentional_migration_changes'].append('Separate ordinary and redeemable NCI from the current acquisition-obligation carrying value; fair-value aliases, NCI sensitivities, owner flows and acquisition cash remain non-additive.')
+        reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
+        if ticker=='CRL':
+            reasons=[reason for reason in reasons if reason!='issuer_state_scope_requires_explicit_refresh_rule']
+    if ticker in {'GLW','MDT','PFE'} and engines=={'enterprise_cash_fcff'}:
+        from .refresh_acquisition_claims import ordinary_nci_acquisition_claim_policy
+        acquisition_policy=ordinary_nci_acquisition_claim_policy(ticker)
+        if str(cik).zfill(10)!=acquisition_policy['cik']:
+            raise RuntimeError('WG18 ordinary-NCI/acquisition registry identity mismatch')
+        policy['inputs']['ordinary_nci_acquisition_claim']={
+            'selector':'special_claim','field':'claim_adjustment','policy':acquisition_policy}
+        claim_expression='ordinary_nci_acquisition_claim'
+        if ticker=='MDT':
+            from .refresh_litigation_claims import litigation_claim_policy
+            legal_policy=litigation_claim_policy(ticker)
+            if str(cik).zfill(10)!=legal_policy['cik']:
+                raise RuntimeError('WG18 MDT operating-reserve registry identity mismatch')
+            policy['inputs']['ordinary_nci_operating_reserve']={
+                'selector':'special_claim','field':'claim_adjustment','policy':legal_policy}
+            claim_expression={'add':['ordinary_nci_acquisition_claim','ordinary_nci_operating_reserve']}
+        for fields in policy['scenario_bindings'].values():
+            fields['nonoperating_adjustment']={'subtract':[0.,claim_expression]}
+        policy['version']+='-WG18-ORDINARY-NCI-ACQUISITION-1'
+        policy['intentional_migration_changes'].append('Separate current ordinary NCI from acquisition carrying liabilities; reconcile duplicate and typed current/noncurrent presentations, while paid cash, measurement changes and operating reserves remain non-additive.')
+        reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
+        if ticker=='GLW':
+            from .refresh_financials import GLW_STRUCTURAL_INTEREST_POLICY
+            policy['inputs']['ttm_revenue']['selector']='structural_ttm'
+            policy['concept_config']['fields']['capital_expenditures']={
+                'unit':'USD','kind':'flow','concepts':['us-gaap:PaymentsForCapitalImprovements']}
+            for case in ('bear','base','bull'):
+                policy['inputs'][f'{case}_cash_margin']['financing_policy']=GLW_STRUCTURAL_INTEREST_POLICY
+                policy['inputs'][f'{case}_cash_margin']['structural_ttm_fields']=[
+                    'revenue','operating_cash_flow','capital_expenditures']
+            policy['version']+='-STRUCTURAL-INTEREST-1'
+            policy['intentional_migration_changes'].append('Bind reported capital improvements as total capex and reconstruct current TTM interest from the controlling filing structural YTD and comparative YTD facts plus the prior annual fact; do not carry stale annual inputs into TTM.')
+    if ticker in {'HSIC','ON','ZBH'} and engines=={'enterprise_cash_fcff'}:
+        from .refresh_acquisition_claims import mixed_ordinary_nci_claim_policy
+        acquisition_policy=mixed_ordinary_nci_claim_policy(ticker)
+        if str(cik).zfill(10)!=acquisition_policy['cik']:
+            raise RuntimeError('WG19 mixed ordinary-NCI registry identity mismatch')
+        policy['inputs']['mixed_ordinary_nci_acquisition_claim']={
+            'selector':'special_claim','field':'claim_adjustment','policy':acquisition_policy}
+        claim_expression='mixed_ordinary_nci_acquisition_claim'
+        if ticker in {'HSIC','ON'}:
+            from .refresh_operating_claims import operating_claim_policy
+            operating_policy=operating_claim_policy(ticker)
+            if str(cik).zfill(10)!=operating_policy['cik']:
+                raise RuntimeError('WG19 operating-reserve registry identity mismatch')
+            policy['inputs']['mixed_ordinary_nci_operating_claim']={
+                'selector':'special_claim','field':'claim_adjustment','policy':operating_policy}
+            claim_expression={'add':['mixed_ordinary_nci_acquisition_claim','mixed_ordinary_nci_operating_claim']}
+        else:
+            from .refresh_litigation_claims import litigation_claim_policy
+            legal_policy=litigation_claim_policy(ticker)
+            if str(cik).zfill(10)!=legal_policy['cik']:
+                raise RuntimeError('WG19 litigation registry identity mismatch')
+            policy['inputs']['mixed_ordinary_nci_legal_review']={
+                'selector':'special_claim','field':'claim_adjustment','policy':legal_policy}
+            claim_expression={'add':['mixed_ordinary_nci_acquisition_claim','mixed_ordinary_nci_legal_review']}
+        for fields in policy['scenario_bindings'].values():
+            fields['nonoperating_adjustment']={'subtract':[0.,claim_expression]}
+        policy['version']+='-WG19-MIXED-ORDINARY-NCI-CLAIMS-1'
+        policy['intentional_migration_changes'].append('Separate current ordinary and redeemable NCI from acquisition carrying liabilities and operating claim surfaces; count duplicate presentations once while excluding paid cash, maxima, operating reserves and pending events from the equity bridge.')
+        reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
+        if ticker=='ZBH':
+            reasons=[reason for reason in reasons if reason!='issuer_state_scope_requires_explicit_refresh_rule']
+    if ticker in {'TEL','CRWD'} and engines=={'enterprise_cash_fcff'}:
+        from .refresh_acquisition_claims import nci_acquisition_special_claim_policy
+        from .refresh_operating_claims import operating_claim_policy
+        acquisition_policy=nci_acquisition_special_claim_policy(ticker)
+        operating_policy=operating_claim_policy(ticker)
+        if str(cik).zfill(10)!=acquisition_policy['cik'] or str(cik).zfill(10)!=operating_policy['cik']:
+            raise RuntimeError('WG20 NCI/acquisition/operating registry identity mismatch')
+        policy['inputs']['special_nci_acquisition_claim']={
+            'selector':'special_claim','field':'claim_adjustment','policy':acquisition_policy}
+        policy['inputs']['special_nci_operating_claim']={
+            'selector':'special_claim','field':'claim_adjustment','policy':operating_policy}
+        claim_expression={'add':['special_nci_acquisition_claim','special_nci_operating_claim']}
+        if ticker=='CRWD':
+            from .refresh_commitment_claims import commitment_claim_policy
+            from .refresh_financials import CRWD_MIXED_PROFIT_TAX_POLICY
+            commitment_policy=commitment_claim_policy(ticker)
+            if str(cik).zfill(10)!=commitment_policy['cik']:
+                raise RuntimeError('WG20 commitment registry identity mismatch')
+            policy['inputs']['special_nci_commitment_claim']={
+                'selector':'special_claim','field':'claim_adjustment','policy':commitment_policy}
+            claim_expression={'add':[claim_expression,'special_nci_commitment_claim']}
+            for case in ('bear','base','bull'):
+                policy['inputs'][f'{case}_cash_margin']['tax_history_policy']=CRWD_MIXED_PROFIT_TAX_POLICY
+        for fields in policy['scenario_bindings'].values():
+            fields['nonoperating_adjustment']={'subtract':[0.,claim_expression]}
+        policy['version']+='-WG20-NCI-ACQUISITION-SPECIAL-1'
+        policy['intentional_migration_changes'].append('Separate ordinary or redeemable NCI from current acquisition carrying liabilities, operating legal/environmental reserves, exact purchase-obligation schedules, acquisition cash and pending transactions; only the current acquisition claim enters the equity bridge.')
         reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
     if ticker in {'ABBV','STE','CAH','COO','FIS','V','DASH'} and engines in ({'enterprise_cash_fcff'},{'constant_growth_fcff'}):
         from .refresh_litigation_claims import litigation_claim_policy
@@ -441,6 +687,34 @@ def _policy_for_entry(
         policy['version']+='-WG11-TRANSACTION-NARRATIVE-1'
         policy['intentional_migration_changes'].append('Keep recognized CVR, dated Hengrui payments, paid BioNTech cash, fixed BioNTech timing envelope and both contingent maxima separate; incomplete fixed-payment timing remains review-only.')
         reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
+    if ticker in {'ECL','PH'} and engines=={'enterprise_cash_fcff'}:
+        from .refresh_acquisition_funding_overlays import acquisition_funding_overlay_policy
+        overlay_policy=acquisition_funding_overlay_policy(ticker)
+        if str(cik).zfill(10)!=overlay_policy['cik']:
+            raise RuntimeError('acquisition funding overlay registry identity mismatch')
+        policy['narrative_evidence_policy']=deepcopy(overlay_policy['narrative_evidence_policy'])
+        if ticker=='ECL':
+            policy['inputs']['acquisition_benefit_claim']={
+                'selector':'special_claim','field':'claim_adjustment','policy':overlay_policy}
+            for case in ('bear','base','bull'):
+                key=f'{case}_acquisition_cash_adjustment'
+                policy['inputs'][key]={
+                    'selector':'special_claim','field':f'{case}_cash_adjustment','policy':overlay_policy}
+                policy['scenario_bindings'][case]['cash_and_investments']={
+                    'add':[f'{case}_cash_and_investments',key]}
+                policy['scenario_bindings'][case]['nonoperating_adjustment']={
+                    'subtract':[0.,'acquisition_benefit_claim']}
+        else:
+            policy['inputs']['acquisition_funding_review']={
+                'selector':'special_claim','field':'claim_adjustment','policy':overlay_policy}
+        policy['version']+='-WG21-ACQUISITION-FUNDING-OVERLAY-1'
+        policy['intentional_migration_changes'].append(
+            'Treat a completed acquisition price only as a bounded event proxy; reconcile pre/post-close cash and debt, NCI, benefit claims, operating scope and paid or residual funding separately without inventing acquired FCFF or synergies.'
+        )
+        reasons=[reason for reason in reasons if reason not in {
+            'baseline_non_debt_claim_scope_requires_source_rule',
+            'nonzero_nonoperating_adjustment_requires_explicit_rule',
+        }]
     if ticker == 'PG' and str(cik).zfill(10) == '0000080424' and engines == {'constant_growth_fcff'}:
         from .refresh_preferred_conversion import CONVERSION_POLICY
         policy['capital_structure_policy'] = deepcopy(CONVERSION_POLICY)
@@ -449,6 +723,92 @@ def _policy_for_entry(
         policy['cash_receipt_policy'] = 'CF_ORICA_LITIGATION_SETTLEMENT'
         policy['intentional_migration_changes'].append('Remove the source-backed Orica receipt from the actual cash-date window, retaining evidence across future fiscal periods; do not use gain recognition as the cash date.')
     from .refresh_reported_claim_scope import REPORTED_NCI_SCOPE_RULES
+    if ticker=='JBL' and engines=={'enterprise_cash_fcff'}:
+        from .refresh_commitment_claims import commitment_claim_policy
+        lease_policy=commitment_claim_policy(ticker)
+        policy['inputs']['ordinary_nci_lease_scope_review']={
+            'selector':'special_claim','field':'claim_adjustment','policy':lease_policy}
+        policy['version']+='-WG23-ORDINARY-NCI-LEASE-SCOPE-1'
+        policy['intentional_migration_changes'].append('Separate reported ordinary NCI from new-lease future payment buckets; block rather than treating a partial undiscounted schedule as the full current carrying claim or dropping the legacy lease deduction.')
+        reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
+    if ticker=='INTC' and engines=={'enterprise_cash_fcff'}:
+        from .refresh_governed_margins import compile_governed_margin_policy
+        from .refresh_financials import INTC_GROSS_INTEREST_POLICY
+        try:governed=compile_governed_margin_policy(entry,recipe)
+        except (ValueError,OSError,KeyError) as exc:
+            reasons.append('approved_foundry_margin_override_requires_versioned_normalization_rule')
+            policy['governed_margin_review']=str(exc)
+        else:
+            policy['governed_margin_policy']=governed
+            for case in ('bear','base','bull'):
+                policy['inputs'][f'{case}_cash_margin'].update(
+                    field='governed_cash_conversion_margin',governed_margin_policy=deepcopy(governed),
+                    financing_policy=INTC_GROSS_INTEREST_POLICY)
+            policy['version']+='-WG24-GOVERNED-CASH-MARGINS-1'
+            policy['intentional_migration_changes'].append('Execute retained governed post-total-capex margins as versioned assumptions, separate from reported cash/tax and unchanged negative history; require complete source history and positive current cash after capex before eligibility.')
+    if ticker in {'INTC','JBL'} and engines=={'enterprise_cash_fcff'}:
+        from .refresh_lease_capital_scope import lease_capital_policy
+        from .refresh_narrative_evidence import narrative_policy
+        policy['narrative_evidence_policy']=narrative_policy(ticker)
+        policy['inputs']['lease_capital_scope_review']={
+            'selector':'lease_capital_scope','field':'claim_adjustment','policy':lease_capital_policy(ticker)}
+        policy['version']+='-WG25-LEASE-CAPITAL-SCOPE-1'
+        policy['intentional_migration_changes'].append('Bind source-classified capital financing cash and new-only lease schedules separately from current carrying debt; no numeric adjustment until complete carrying and overlap are source-proven.')
+    if ticker=='ETN' and engines=={'enterprise_cash_fcff'}:
+        from .refresh_acquisition_claims import ordinary_nci_mapping_acquisition_policy
+        acquisition_policy=ordinary_nci_mapping_acquisition_policy(ticker)
+        policy['inputs']['ordinary_nci_mapping_acquisition_claim']={
+            'selector':'special_claim','field':'claim_adjustment','policy':acquisition_policy}
+        for fields in policy['scenario_bindings'].values():
+            fields['nonoperating_adjustment']={'subtract':[0.,'ordinary_nci_mapping_acquisition_claim']}
+        policy['version']+='-WG22-ORDINARY-NCI-ACQUISITION-1'
+        policy['intentional_migration_changes'].append('Keep ETN ordinary NCI separate from the source-reported acquisition carrying liability and employment-contingent operating incentives; count aggregate, Level-3 and named acquisition views once.')
+        reasons=[reason for reason in reasons if reason!='baseline_non_debt_claim_scope_requires_source_rule']
+    if ticker=='MCK':
+        from .refresh_settlement_payment_bridge import settlement_payment_policy
+        from .refresh_narrative_evidence import narrative_policy
+        policy['settlement_payment_bridge_scope']=settlement_payment_policy(ticker)
+        policy['narrative_evidence_policy']=narrative_policy(ticker)
+        policy['version']+='-WG30-SETTLEMENT-PAYMENT-1'
+        from .refresh_subsidiary_ownership_scope import subsidiary_ownership_policy
+        policy['subsidiary_ownership_scope']=subsidiary_ownership_policy(ticker)
+        policy['version']+='-WG31-SUBSIDIARY-OWNERSHIP-1'
+        from .refresh_public_contract_evidence import VERSION as public_contract_evidence_version
+        policy['public_contract_evidence_version']=public_contract_evidence_version
+        policy['version']+='-WG32-PUBLIC-CONTRACT-EVIDENCE-1'
+        from .refresh_governed_claim_bridge import governed_claim_bridge_policy
+        policy['governed_claim_bridge_policy']=governed_claim_bridge_policy(ticker)
+        policy['version']+='-WG33-GOVERNED-CLAIM-BRIDGE-1'
+    if ticker=='LHX':
+        from .refresh_subsidiary_preferred_bridge import subsidiary_preferred_policy
+        from .refresh_narrative_evidence import narrative_policy
+        policy['subsidiary_preferred_bridge_scope']=subsidiary_preferred_policy(ticker)
+        policy['narrative_evidence_policy']=narrative_policy(ticker)
+        policy['version']+='-WG27-SUBSIDIARY-PREFERRED-BRIDGE-1'
+        from .refresh_environmental_forward_scope import environmental_forward_policy
+        policy['environmental_forward_scope']=environmental_forward_policy(ticker)
+        policy['version']+='-WG28-ENVIRONMENTAL-FORWARD-1'
+        from .refresh_environmental_annual_evidence import VERSION as annual_environmental_version
+        policy['environmental_annual_evidence_version']=annual_environmental_version
+        policy['version']+='-WG29-ANNUAL-ENVIRONMENTAL-1'
+    if ticker=='HCA':
+        reasons.append('professional_liability_forward_cash_overlap_requires_rule')
+        from .refresh_professional_liability_scope import professional_liability_policy
+        from .refresh_professional_liability_annual_evidence import VERSION as annual_professional_liability_version
+        from .refresh_narrative_evidence import narrative_policy
+        policy['professional_liability_scope']=professional_liability_policy(ticker)
+        policy['professional_liability_annual_evidence_version']=annual_professional_liability_version
+        policy['narrative_evidence_policy']=narrative_policy(ticker)
+        policy['version']+='-WG34-PROFESSIONAL-LIABILITY-SCOPE-1-WG35-ANNUAL-CASH-EVIDENCE-1'
+    if ticker=='HON':
+        reasons.append('completed_separation_split_and_subsequent_acquisition_require_scope_rollforward')
+        from .refresh_separation_scope import separation_policy
+        from .refresh_separation_event_evidence import separation_event_policy
+        from .refresh_narrative_evidence import narrative_policy
+        policy['separation_scope']=separation_policy(ticker)
+        policy['separation_event_evidence_policy']=separation_event_policy(ticker)
+        policy['narrative_evidence_policy']=narrative_policy(ticker)
+        policy['version']+='-WG36-SEPARATION-SCOPE-1-WG37-CLOSING-EVIDENCE-1'
     claim_rule = REPORTED_NCI_SCOPE_RULES.get(ticker)
     if claim_rule is not None and str(cik).zfill(10) == claim_rule.cik and engines in ({'enterprise_cash_fcff'}, {'constant_growth_fcff'}):
         # Audited historical formulas establish that these legacy preferred
@@ -524,7 +884,7 @@ def _policy_for_entry(
         policy['preferred_equity_zero_scope']=dict(preferred_zero_rule)
         policy['version']+='-PREFERRED-ZERO-SCOPE-1'
         policy['intentional_migration_changes'].append('Accept zero preferred equity only when current reported common components fully reconcile to parent equity and no nonzero preferred or temporary-equity evidence conflicts.')
-    if ticker in {'ABT','COHR','WMB'} and engines=={'enterprise_cash_fcff'}:
+    if ticker in {'ABT','BSX','COHR','CRL','DVA','EW','WMB','PH'} and engines=={'enterprise_cash_fcff'}:
         from .refresh_preferred_lifecycle import preferred_lifecycle_policy
         lifecycle=preferred_lifecycle_policy(ticker)
         if str(cik).zfill(10)!=lifecycle['cik']:
@@ -565,6 +925,33 @@ def _policy_for_entry(
                 policy['scenario_bindings'][case]['fcff_margin'] = {'max':[stress['rule']['floor'],
                     {'subtract':[f'{case}_cash_margin',stress['rule']['scenario_rates'][index]]}]}
             policy['intentional_migration_changes'].append('Preserve the source-versioned scenario margin haircuts after cash history normalization; these are governed stresses, not reported working-capital adjustments.')
+    if ticker in {'BBY','WMT'} and recipe is not None:
+        from .approved_cash_only_scope import compile_approved_cash_only_scope
+        scope=compile_approved_cash_only_scope(recipe,requested_profile='cash_only')
+        if scope['cik']!=str(cik).zfill(10):raise ValueError('cash-only scope registry mismatch')
+        if ticker=='BBY':
+            if any(spec['inputs'].get('noncontrolling_interests')!=0 for spec in recipe['scenarios'].values()):
+                raise ValueError('cash-only NCI routing requires an approved zero basepoint')
+            scope['approved_nci_basepoint']=0.0
+        elif 'reported_claim_scope' not in policy:
+            raise ValueError('WMT cash-only scope requires current reported NCI binding')
+        policy['approved_cash_only_scope']=scope
+        policy['version']+='-APPROVED-CASH-ONLY-NCI-PRECISION-1'
+        policy['intentional_migration_changes'].append('Preserve the approved cash-and-equivalents-only scope; excluded investments are not zero assertions. Rebind current total debt including leases once and retain NCI through its separately source-bound current treatment.')
+    if ticker in {'BBY','GILD','INCY'} and recipe is not None:
+        from .refresh_share_basis import compile_share_basis_profile
+        share_profile=compile_share_basis_profile(recipe)
+        if share_profile['cik']!=str(cik).zfill(10):raise ValueError('approved share basis registry mismatch')
+        share_field='shares' if policy['supported_engine']=='constant_growth_fcff' else 'diluted_shares'
+        for case in ('bear','base','bull'):
+            if policy['scenario_bindings'][case][share_field]!='source_shares':
+                raise ValueError('approved share basis conflicts with an additive or conversion policy')
+            key=f'approved_{case}_shares'
+            policy['inputs'][key]={'selector':'normalized_bridge','field':'scenario_shares','scenario':case}
+            policy['scenario_bindings'][case][share_field]=key
+        policy['approved_share_basis']=share_profile
+        policy['version']+='-APPROVED-SHARE-BASIS-1'
+        policy['intentional_migration_changes'].append('Preserve the approved denominator definition: reported YTD shares with governed sensitivities, or the separately reported YTD/cover source range; never freeze source observations as sensitivity percentages.')
     status = "compiled_with_gaps" if reasons else "compiled_source_validation_pending"
     return PolicyCompileResult(ticker, cik, status, tuple(dict.fromkeys(reasons)), policy)
 

@@ -1,5 +1,16 @@
 # FinSight controlled 500-company reset roadmap
 
+## Active execution — latest 500-company refresh, September 19, 2026
+
+The user has now authorized the complete latest-filing refresh, superseding the
+earlier audit-only and WG-by-WG stopping points. Follow
+[latest refresh execution](LATEST-500-20260919.md) and
+[live evidence](../audit/latest-universe-refresh-20260919.md).
+Original 500 identities, prior human approvals and all histories are retained.
+Use the isolated `output/latest-universe-20260919/runtime`; no production
+activation, scheduling, merge, push or deployment. Historical roadmap phases
+below are retained as provenance, not the current execution queue.
+
 Active initiative: [Automated U.S. valuation](AUTOMATED-US-VALUATION.md), executed through [verified working groups](US-REFRESH-WORKING-GROUPS.md) — implementation authorized; current group, evidence and honest work-state counts tracked separately.
 
 Date adopted: 2026-08-20
@@ -1577,6 +1588,214 @@ remain outside scope.
 | B50.5 | Replay twice, run suites/build and exercise cumulative 500-company API | P0 | Byte equality, tests, build and real HTTP | ✔ VERIFIED |
 | B50.6 | Present exact results and stop before recovery or release work | P0 | Explicit user confirmation | ✔ USER-CONFIRMED; BOOKKEEPING VERIFIED |
 
+### Phase USR-WG15 — Batches 01–44 NCI mixed with contingent and legal claims
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| USR-WG15.1 | Reconcile ABT NCI, acquisition liability, legal/environmental accrual and pro-forma operating scale | P0 | Current structural facts, exact formula replay and duplicate-scope challenge | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG15.2 | Reconcile BAX negative NCI, three current claims, maxima, reserves and paid cash | P0 | Current structural facts and fail-closed bridge calculation | ✔ CLAIM RULE VERIFIED; CASH/SECURITIES BRIDGE REMAINS REVIEW |
+| USR-WG15.3 | Inspect BA ordinary NCI without mixing mandatory-convertible economics | P0 | Current NCI balance/earnings/flow proof plus preferred/legal blocker register | ✔ NCI SEPARATED; VALUATION IMPLEMENTATION REMAINS OPEN |
+| USR-WG15.4 | Run frozen two-worker flow, focused regression and isolated API activation/reload/rollback | P0 | Real cached filings, 150-test regression and real FastAPI/database UAT | ✔ VERIFIED AND USER-CONFIRMED |
+
+Gate: **WG15 verified and user-confirmed.** Evidence: Audit
+`wg15-nci-mixed-contingent-legal-claims.md`. Scope remains the frozen 440-company
+Batches 01–44 runtime. WG15 invoked no production activation, scheduling,
+merge, push, deployment or family-adapter work. The shared branch moved
+externally to pushed Batch 50 commit `4fa0a64` during the run; see the audit for
+the exact boundary.
+
+### Phase USR-WG16 — remaining NCI, acquisition and litigation overlaps
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| USR-WG16.1 | Reconcile DGX ordinary/redeemable NCI, contingent consideration and operating legal reserves | P0 | Current structural facts, exact formula replay and complete bridge | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG16.2 | Separate BSX current claims from post-period restructuring cash | P0 | Current filing claim proof plus timed-schedule gate | ✔ CLAIMS VERIFIED; IMPLEMENTATION GAP PRESERVED |
+| USR-WG16.3 | Separate EW current claims from maxima, insurance aggregate and unbounded legal/tax tail | P0 | Current filing scope and fail-closed economic review | ✔ CURRENT CLAIMS VERIFIED; FINANCIAL REVIEW PRESERVED |
+| USR-WG16.4 | Run frozen two-worker flow, focused regression and isolated API activation/reload/rollback | P0 | Real cached filings, 163-test regression and real FastAPI/database UAT | ✔ VERIFIED AND USER-CONFIRMED |
+
+Gate: **WG16 verified and user-confirmed.** Evidence: Audit
+`wg16-nci-acquisition-litigation-overlaps.md`. Scope remains the frozen
+440-company Batches 01–44 runtime. No production activation, scheduling, merge,
+push, deployment or family-adapter work occurred.
+
+### Phase USR-WG17 — ordinary and redeemable NCI with contingent consideration
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| USR-WG17.1 | Reconcile DVA ordinary/redeemable NCI, acquisition-obligation debt overlap and Elara event | P0 | Current structural facts, debt-table reconciliation and post-event gate | ✔ SOURCE MECHANISM VERIFIED; FINANCIAL REVIEW PRESERVED |
+| USR-WG17.2 | Reconcile CRL ordinary/redeemable NCI, $45M contingent balance and separate deferred consideration | P0 | Current aggregate/Level-3 facts, cash-overlap and legal-tail gates | ✔ SOURCE MECHANISM VERIFIED; FINANCIAL REVIEW PRESERVED |
+| USR-WG17.3 | Test ZBH qualification for the shared redeemable-NCI mechanism | P0 | Current carrying-claim search and economic classification | ✔ EXCLUDED; NO REDEEMABLE NCI |
+| USR-WG17.4 | Run frozen two-worker flow, focused regression and isolated blocked-group API parity | P0 | Real cached filings, 172-test regression and real FastAPI/database UAT | ✔ VERIFIED AND USER-CONFIRMED |
+
+Gate: **WG17 verified and user-confirmed.** Evidence: Audit
+`wg17-nci-redeemable-contingent-claims.md`. No successor candidate was issued:
+the API verification proves the existing 440-company catalog remained intact.
+No production activation, scheduling, merge, push, deployment or family-adapter
+work occurred.
+
+### Phase USR-WG18 — ordinary NCI with acquisition carrying claims
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| USR-WG18.1 | Reconcile GLW ordinary NCI, noncurrent contingent consideration, rounded debt duplicate and structural TTM cash inputs | P0 | Current parser replay, source-bound calculation and exact bridge proof | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG18.2 | Reconcile MDT ordinary NCI, typed current/noncurrent claim locations, Level-3 components and operating legal accrual | P0 | Current parser replay, independent component sums and no-double-deduction test | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG18.3 | Reconcile PFE ordinary NCI and current/noncurrent Level-3 contingent-consideration duplicates | P0 | Current structural facts, exact component sum and source-bound calculation | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG18.4 | Run frozen two-worker flow, focused regression and isolated API activation/reload/rollback for all retained companies | P0 | Real cached filings, 175-test regression and three real FastAPI/database UATs | ✔ VERIFIED AND USER-CONFIRMED |
+
+Gate: **WG18 verified and user-confirmed.** Evidence: Audit
+`wg18-ordinary-nci-acquisition-claims.md`. Three successor candidates were
+tested only in isolated runtimes. No production activation, scheduling, merge,
+push, deployment or family-adapter work occurred.
+
+### Phase USR-WG19 — remaining mixed ordinary-NCI claim stacks
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| USR-WG19.1 | Reconcile HSIC ordinary/redeemable NCI, recurring contingent consideration, operating reserve, combined cash and debt | P0 | Current structural facts, exact duplicate and bridge reconciliation | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG19.2 | Reconcile ON ordinary NCI, current/noncurrent acquisition liability and operating restructuring reserve | P0 | Current structural facts, component sums and source-bound calculation | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG19.3 | Reconcile ZBH current claims while preserving its unbounded legal/tax tail | P0 | Current carrying facts, maxima/cash exclusion and fail-closed financial review | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG19.4 | Test TEL qualification for the shared ordinary-NCI mechanism | P0 | Current ordinary/redeemable NCI classification | ✔ EXCLUDED; NO ORDINARY NCI |
+| USR-WG19.5 | Run frozen two-worker flow, focused regression and isolated successful/blocked API paths | P0 | Real cached filings, 198-test regression and real FastAPI/database UAT | ✔ VERIFIED AND USER-CONFIRMED |
+
+Gate: **WG19 verified and user-confirmed.** Evidence: Audit
+`wg19-mixed-ordinary-nci-claim-stacks.md`. Two successor candidates were tested
+only in isolated runtimes; ZBH stayed blocked and TEL stayed outside this rule.
+No production activation, scheduling, merge, push, deployment or family-adapter
+work occurred.
+
+### Phase USR-WG20 — remaining NCI and acquisition special situations
+
+| ID | Work | Severity | Verify method | Status |
+| --- | --- | --- | --- | --- |
+| USR-WG20.1 | Reconcile TEL redeemable NCI, noncurrent acquisition claim, environmental reserve and pending Astrodyne cash | P0 | Current filing facts, event classification and exact bridge replay | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG20.2 | Reconcile CRWD ordinary NCI, acquisition/legal claims, exact purchase-obligation schedule and loss-year tax history | P0 | Current filing facts, schedule sum, five-year history and source-bound calculation | ✔ VERIFIED AND USER-CONFIRMED |
+| USR-WG20.3 | Test PH qualification for the shared current carrying-liability mechanism | P0 | Current claim search and post-close economic-object classification | ✔ EXCLUDED; TRANSACTION/FUNDING OVERLAY |
+| USR-WG20.4 | Run frozen two-worker flow, focused regression and isolated API activation/reload/rollback | P0 | Real cached filings, 220-test regression and real FastAPI/database UAT | ✔ VERIFIED AND USER-CONFIRMED |
+
+Gate: **WG20 verified and user-confirmed.** Evidence: Audit
+`wg20-nci-acquisition-special-situations.md`. Two successor candidates were
+tested only in isolated runtimes; PH remains a separate implementation gap. No
+production activation, scheduling, merge, push, deployment or family-adapter
+work occurred.
+
+### Closed
+
+WG21 delivered one ECL bounded-overlay candidate and explicit PH funding review; user-confirmed 2026-09-15 — [archived phase evidence](archive/2026-09-15-us-refresh-wg21.md).
+
+WG22 delivered one ETN candidate and retained HCA/HON blockers; user-confirmed 2026-09-15 — [archived phase evidence](archive/2026-09-15-us-refresh-wg22.md).
+
+WG23's narrow ordinary-NCI classification/exception gate was user-confirmed
+2026-09-15 — [archived evidence](archive/2026-09-15-us-refresh-wg23.md).
+
+WG24 narrow margin migration/blocked-update result user-confirmed 2026-09-15 —
+[archived evidence](archive/2026-09-15-us-refresh-wg24.md). INTC is not a completed valuation.
+
+WG25 narrow ledger/blocked-update result user-confirmed 2026-09-15 —
+[archived evidence](archive/2026-09-15-us-refresh-wg25.md); WG25-S1/O1 remain required work.
+
+WG26 narrow source/retention result user-confirmed 2026-09-15 —
+[archive](archive/2026-09-15-us-refresh-wg26.md); WG26-S1/H1 remain required work.
+
+WG27 narrow accounting/safety result user-confirmed 2026-09-16 —
+[archive](archive/2026-09-16-us-refresh-wg27.md); economic basis remains required.
+
+WG28 narrow related-balance/blocked-update result user-confirmed 2026-09-16 —
+[archive](archive/2026-09-16-us-refresh-wg28.md). Full forward overlap remains
+required, now investigated using explicitly authorized annual acquisition.
+
+WG29 narrow annual-capture/source-ledger and blocked-update gate user-confirmed
+2026-09-16 — [archive](archive/2026-09-16-us-refresh-wg29.md). Full LHX cash/
+preferred economics remain required, not silently closed with source capture.
+
+WG30 narrow scoped-payment/conditional diagnostic and blocked-update gate
+user-confirmed 2026-09-16 — [archive](archive/2026-09-16-us-refresh-wg30.md).
+Full MCK economic/cash overlap remains required.
+
+WG31 narrow source-rollforward/mechanism and blocked-outcome gate user-confirmed
+2026-09-16 — [archive](archive/2026-09-16-us-refresh-wg31.md). Full MCK economic
+basis remains required.
+
+WG32 narrow official-source/floor/blocked-contract gate user-confirmed
+2026-09-16 — [archive](archive/2026-09-16-us-refresh-wg32.md). Full MCK remains
+required.
+
+WG33 narrow governed ownership-carrying/value-neutral split gate user-confirmed
+2026-09-16 — [archive](archive/2026-09-16-us-refresh-wg33.md). Full MCK remains required.
+
+WG34 narrow professional-liability ledger/nonadditivity/blocked-update gate
+user-confirmed 2026-09-17 — [archive](archive/2026-09-17-us-refresh-wg34.md).
+Full HCA forward runoff and pipeline release remain required.
+
+### Phase USR-WG35 — HCA annual professional-liability cash evidence (USER-CONFIRMED)
+
+| ID | Work | Severity | Verify method | Status |
+|---|---|---|---|---|
+| USR-WG35.1 | Authorized annual capture and source integrity | P0 | 2/2 packages, identities, hashes, offline parse/replay | VERIFIED; CONFIRMATION PENDING |
+| USR-WG35.2 | Reserve/reinsurance/payment rollforward | P0 | Gross/current/noncurrent/net and annual movements close | VERIFIED; CONFIRMATION PENDING |
+| USR-WG35.3 | Historical OCF versus forward runoff | P0 | No historical double count; retain sensitivity if current schedule absent | VERIFIED; CONFIRMATION PENDING |
+| USR-WG35.4 | Runtime/history preservation | P0 | Frozen workers, independent review, focused/broad/API | VERIFIED; CONFIRMATION PENDING |
+
+Checked against current code/filings 2026-09-17:
+[WG35 audit](../audit/wg35-hca-annual-professional-liability-cash.md). Both annuals
+captured and replayed; historical cash/rollforwards proven, exact current forward
+runoff still unavailable. Values/sensitivity retained; focused22/
+broad788, frozen repeat and isolated API pass; no successor. Preserve
+MCK/LHX/leases/portability/HON/hardening. No production, family adapters,
+scheduling, merge, push or deploy. No later group starts under WG35 authorization.
+
+
+
+### Phase USR-WG36 — HON separation scope (USER-CONFIRMED)
+
+WG35 narrow result user-confirmed. Implement WG36.1–5 in
+[WG36 audit](../audit/wg36-hon-separation-scope.md), then frozen real-source,
+independent financial challenge, focused/broad regression and isolated API.
+Preserve all prior financial and operational blockers. Cached sources only.
+
+WG36 source classification and blocking safeguards verified, confirmation pending:
+25 focused,14 independent,802 broad checks; repeated frozen HON/HCA results and
+six-company isolated API parity. Continuing-company FCFF/distributed balances/
+post-acquisition funding remain required. Register440/419,282 compiled,137 coding
+gaps,434 rechecks; no numeric successor. Proposed next source work is the two
+identified HON 8-Ks with explicit acquisition authorization.
+
+### Phase USR-WG37 — HON closing agreements (USER-CONFIRMED)
+
+WG36 narrow result user-confirmed. WG37 captures exactly two authorized 8-Ks and
+selected directly linked Exhibit2/10/99 documents, then binds pro forma history,
+continuing cash guidance and agreement terms. Source classification and fail-
+closed implementation verified; focused36/independent9/broad811, frozen repeat
+and isolated API pass. Narrow result user-confirmed. See
+[WG37 audit](../audit/wg37-hon-closing-agreements.md). No current successor.
+
+### Phase USR-WG38 — pharmaceutical contingent claims (USER-CONFIRMED)
+
+WG37 narrow result user-confirmed. WG38 separates recognized acquisition
+carrying liabilities from aggregate/Level-3/component duplicates, CVR and
+milestone ceilings, paid cash, legal disputes and royalty obligations for BIIB,
+GILD and INCY. The reusable rule is source-verified; all three full refreshes
+remain blocked by legal or current bridge gaps, so values are unchanged and no
+candidate activates. See [WG38 audit](../audit/wg38-pharma-contingent-claims.md).
+
+### Phase USR-WG39 — pharmaceutical current bridge (USER-CONFIRMED)
+
+WG38 narrow result user-confirmed. WG39 reconciles GILD and INCY current cash,
+securities, debt, ownership, royalty/claim overlap and dated cash events. Both
+produce deterministic Low candidates with independent calculation and real
+isolated API/calculator activation/reload/rollback proof; production remains
+unchanged. User confirmation pending. See
+[WG39 audit](../audit/wg39-pharma-current-bridge.md).
+
+### Phase USR-WG40 — BIIB legal and post-Apellis scope (NOW)
+
+WG39 two-candidate result user-confirmed. WG40 source-binds BIIB's $273.5M
+acquisition claim once, complete $8.0903B debt bridge and Apellis transaction
+ledger while retiring the unsupported judgment sensitivity. Genentech legal
+carrying/payment/recovery, comparable acquired cash, exclusive integration cash
+and RayThera cutoff status remain explicit blockers, so no successor issues.
+GILD/INCY candidates stay exact; production unchanged. User confirmation pending.
+See [WG40 audit](../audit/wg40-biib-legal-apellis-scope.md).
+
 ## Final 500-company gate
 
 Confirm exactly 500 unique processed issuers and no denominator loss; replay all frozen inputs
@@ -1596,3 +1815,11 @@ Light baseline audit: `docs/audit/168-500-company-light-baseline-audit.md`.
 | F500.5 | Rebind the refresh/WG register from 440 to the confirmed 500-company catalog | P1 | Exact registry coverage and version/hash receipts | ○ REQUIRED BEFORE WGs RESUME |
 | F500.6 | Review and separate source changes from generated evidence before a branch push | Release | Scoped diff, branch/remote check and repeatable build receipts | ○ OPEN |
 | F500.7 | Run the full issuer-level, backtest and browser audit after the WGs | P0 | Source challenge, point-in-time evaluation and end-to-end UAT | ○ DEFERRED UNTIL WGs COMPLETE |
+## Current direction — 2026-09-19 user override
+
+Sequential WG continuation is superseded by the [WG evidence audit](../audit/wg-truth-and-launch-handoff-20260919.md).
+The next user prompt will authorize the final 500-company publication sweep.
+Accept prior human approvals; review concrete correctness exceptions without
+making full autonomous refresh a prerequisite for a dated baseline launch.
+No WG41 or 500-company sweep is started by this audit. Earlier NOW labels are
+historical checkpoints, not authorization to resume those phases.

@@ -221,7 +221,7 @@ export interface UsSegmentAssumption {
 
 export interface UsValuation {
   catalog_version?: string
-  freshness?: { outcome: string; checked_as_of?: string; reason?: string | null }
+  freshness?: { outcome: string; checked_as_of?: string; reason?: string | null; recommendation?: string | null; new_source_date?: string | null; new_source_accession?: string | null }
   dates?: { filing_period: string; evidence_cutoff: string; assumption_date: string | null; market_comparison_date: string | null }
   schema_version: string
   valuation_date: string

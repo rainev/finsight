@@ -10,3 +10,10 @@ to use March facts despite a July-filed June quarter and a closed merger. **How 
 count same-accession facts during preflight; when zero, capture and parse the exact filing package
 by CIK, accession, form, and primary document before selecting inputs. A complete structural parse
 may repair extraction, but it does not itself make post-transaction history economically comparable.
+
+WG39 adds the partial-lag form: INCY Companyfacts contained annual and Q1 2026
+interest/operating inputs but not the controlling Q2 facts. A generic TTM
+reconstruction therefore ended at the wrong period even though history was not
+empty. Rebuild current and comparative YTD revenue, OCF, capex and interest from
+the hashed controlling structural filing, then combine them with the latest
+eligible annual facts. Never convert a Companyfacts lag into a missing-flow zero.

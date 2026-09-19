@@ -9,8 +9,10 @@ an explicit monitored SEC User-Agent.
 from __future__ import annotations
 
 from datetime import date
+import gzip
 from html.parser import HTMLParser
 import hashlib
+import io
 import json
 import os
 import re
@@ -130,6 +132,53 @@ def _atomic_json(path: Path, value: Mapping[str, Any]) -> None:
         temporary.unlink(missing_ok=True)
 
 
+def _gzip_bytes(payload: bytes) -> bytes:
+    """Return deterministic gzip bytes for one canonical JSON payload."""
+
+    output = io.BytesIO()
+    with gzip.GzipFile(fileobj=output, mode="wb", mtime=0) as handle:
+        handle.write(payload)
+    return output.getvalue()
+
+
+def _atomic_gzip(path: Path, value: Mapping[str, Any]) -> None:
+    payload = _gzip_bytes(canonical_json_bytes(value))
+    if path.exists():
+        try:
+            existing = path.read_bytes()
+        except OSError as exc:
+            raise SourceCaptureError(f"parsed structural cache is invalid: {path}") from exc
+        if existing != payload:
+            raise SourceCaptureError(f"immutable parsed structural cache drift: {path}")
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, name = tempfile.mkstemp(prefix=f".{path.name}-", dir=path.parent)
+    temporary = Path(name)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def _read_structural_cache(path: Path) -> dict[str, Any]:
+    try:
+        if path.suffix == ".gz":
+            with gzip.open(path, "rb") as handle:
+                raw = handle.read()
+            value = json.loads(raw.decode("utf-8"))
+        else:
+            value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, EOFError, gzip.BadGzipFile, UnicodeDecodeError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        raise SourceCaptureError(f"parsed structural cache is invalid: {path}") from exc
+    if not isinstance(value, dict):
+        raise SourceCaptureError(f"parsed structural cache is invalid: {path}")
+    return value
+
+
 def _cache_structural_payload(
     *,
     path: Path,
@@ -141,15 +190,23 @@ def _cache_structural_payload(
     source_descriptor: Mapping[str, Any],
     parse_payload: Any,
     parsed_path: Path,
+    compress: bool = False,
 ) -> tuple[dict[str, Any], str, bool]:
     if filing["filed"] > cutoff or filing["report_date"] > cutoff:
         raise SourceCaptureError("structural filing is after requested cutoff")
     source_hash = hashlib.sha256(canonical_json_bytes(source_descriptor)).hexdigest()
     cache_key = f"{accession}-{source_hash[:16]}-{parser_hash[:16]}.json"
-    cache_path = parsed_path / cache_key
-    if cache_path.exists():
+    plain_cache_path = parsed_path / cache_key
+    compressed_cache_path = parsed_path / f"{cache_key}.gz"
+    cache_paths = (
+        (compressed_cache_path, plain_cache_path)
+        if compress
+        else (plain_cache_path, compressed_cache_path)
+    )
+    cache_path = next((candidate for candidate in cache_paths if candidate.exists()), None)
+    if cache_path is not None:
         try:
-            cached = json.loads(cache_path.read_text(encoding="utf-8"))
+            cached = _read_structural_cache(cache_path)
             payload = cached["parsed"]
             if (
                 cached.get("schema_version") != "FINSIGHT-REFRESH-PARSED-STRUCTURAL-1"
@@ -166,27 +223,30 @@ def _cache_structural_payload(
             return validated, hashlib.sha256(canonical_json_bytes(validated)).hexdigest(), True
         except SourceCaptureError:
             raise
-        except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        except (KeyError, TypeError) as exc:
             raise SourceCaptureError(f"parsed structural cache is invalid: {cache_path}") from exc
     payload = parse_payload() if callable(parse_payload) else parse_payload
-    parsed_sha = hashlib.sha256(canonical_json_bytes(payload)).hexdigest()
-    _atomic_json(
-        cache_path,
-        {
-            "schema_version": "FINSIGHT-REFRESH-PARSED-STRUCTURAL-1",
-            "cik": cik,
-            "accession": accession,
-            "form": filing["form"],
-            "report_date": filing["report_date"],
-            "validated_filed_date": filing["filed"],
-            "validated_report_date": filing["report_date"],
-            "parser_definition_sha256": parser_hash,
-            "source_package_sha256": source_hash,
-            "parsed_sha256": parsed_sha,
-            "parsed": payload,
-        },
-    )
+    # Never install an identity-incomplete legacy payload under a current
+    # parser cache key. Retain raw evidence, but validate before caching.
     validated = _validate_structural_payload(payload, cik=cik, filing=filing)
+    parsed_sha = hashlib.sha256(canonical_json_bytes(payload)).hexdigest()
+    cached_value = {
+        "schema_version": "FINSIGHT-REFRESH-PARSED-STRUCTURAL-1",
+        "cik": cik,
+        "accession": accession,
+        "form": filing["form"],
+        "report_date": filing["report_date"],
+        "validated_filed_date": filing["filed"],
+        "validated_report_date": filing["report_date"],
+        "parser_definition_sha256": parser_hash,
+        "source_package_sha256": source_hash,
+        "parsed_sha256": parsed_sha,
+        "parsed": payload,
+    }
+    if compress:
+        _atomic_gzip(compressed_cache_path, cached_value)
+    else:
+        _atomic_json(plain_cache_path, cached_value)
     return validated, hashlib.sha256(canonical_json_bytes(validated)).hexdigest(), False
 
 
@@ -476,6 +536,9 @@ def capture_company_source(
     structural_paths: Mapping[str, Path] | None = None,
     structural_output_dir: Path | None = None,
     parsed_cache_dir: Path | None = None,
+    compress_parsed_cache: bool = False,
+    acceptance_cutoff: str | None = None,
+    resource_store: Path | None = None,
     arelle_timeout_seconds: int = 120,
 ) -> dict[str, Any]:
     """Capture one dynamic-cutoff source packet for ``refresh_bindings``.
@@ -507,6 +570,9 @@ def capture_company_source(
             else:
                 raw_hashes[cache_name] = _hash_record(hashlib.sha256(canonical_json_bytes(value)).hexdigest(), basis="canonical_json_fallback_no_cache_file")
         network_mode = "network_or_sec_cache"
+    if acceptance_cutoff is not None:
+        from .refresh_snapshot_cutoff import freeze_submissions
+        submissions=freeze_submissions(submissions,acceptance_cutoff)
     records = _records(submissions)
     pair, amendment_records = _select_refresh_pair(records, cutoff=cutoff)
     events = _event_records(records, cik=cik_normalized, cutoff=cutoff, event_since=event_since, allowed_items=frozenset(allowed_event_items))
@@ -566,6 +632,7 @@ def capture_company_source(
                         filed_date=filing["filed"],
                         report_date=filing["report_date"],
                         output_dir=package_root,
+                        resource_store=resource_store,
                     )
                 except Exception as exc:
                     raise SourceCaptureError(f"structural package capture failed for {accession}: {exc}") from exc
@@ -602,6 +669,7 @@ def capture_company_source(
                     source_descriptor=source_descriptor,
                     parse_payload=parse_payload,
                     parsed_path=parsed_cache_root,
+                    compress=compress_parsed_cache,
                 )
             except Exception as exc:
                 raise SourceCaptureError(f"structural parsing failed for {accession}: {exc}") from exc

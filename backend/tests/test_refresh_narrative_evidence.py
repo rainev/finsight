@@ -50,3 +50,15 @@ def test_receipt_and_policy_tampering_fail_closed():
     changed_policy=copy.deepcopy(policy);changed_policy['version']='tampered'
     with pytest.raises(NarrativeEvidenceError,match='policy identity'):
         extract_narrative_evidence(changed_policy,MCHP,source_root=OUTPUT)
+
+
+def test_event_source_receipt_can_anchor_exact_ph_narrative_terms():
+    source=OUTPUT/'batch-19-event-sources-20260830-v2/PH/0001193125-26-349148/narrative-source-manifest.json'
+    receipt=extract_narrative_evidence(narrative_policy('PH'),source,source_root=OUTPUT)
+    terms=terms_by_name(receipt)
+    assert receipt['filing']['accession']=='0001193125-26-349148'
+    assert receipt['source']['document_sha256']=='f6016eedbb5db59e69f3b056f8d5b7173187aa19b984200993dd30851f477f61'
+    assert terms['acquisition_price']['value']==9_250_000_000
+    assert terms['short_term_loan_principal']['value']==5_250_000_000
+    assert terms['three_year_loan_principal']['value']==2_500_000_000
+    assert terms['loan_use']['value']=='portion_of_purchase_price_and_related_fees'

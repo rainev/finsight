@@ -25,7 +25,7 @@ from ..us_valuation.catalog import (
     load_catalog_version,
     sha256_bytes,
 )
-from ..us_valuation.refresh_catalog_store import RefreshCatalogStore
+from ..us_valuation.refresh_catalog_store import RefreshCatalogStore, load_runtime_registry
 from ..us_valuation.market_comparison import (
     load_private_eod_record,
     load_private_security_record,
@@ -58,7 +58,9 @@ SECURITY_MASTER_ROOT = (
 )
 RECIPE_ROOT = Path(os.environ['FINSIGHT_US_RECIPE_ROOT']) if os.environ.get('FINSIGHT_US_RECIPE_ROOT') else None
 RUNTIME_ROOT = Path(os.environ['FINSIGHT_US_REFRESH_ROOT']) if os.environ.get('FINSIGHT_US_REFRESH_ROOT') else None
-RUNTIME_STORE = RefreshCatalogStore(RUNTIME_ROOT / 'catalogs', frozen_registry=RUNTIME_ROOT / 'registry.json') if RUNTIME_ROOT else None
+RUNTIME_REGISTRY = load_runtime_registry(RUNTIME_ROOT) if RUNTIME_ROOT else None
+RUNTIME_STORE = RefreshCatalogStore(RUNTIME_ROOT / 'catalogs', frozen_registry=RUNTIME_REGISTRY,
+    expected_registry_count=len(RUNTIME_REGISTRY.entries)) if RUNTIME_REGISTRY else None
 RUNTIME_READER = RUNTIME_STORE.reader() if RUNTIME_STORE else None
 _REQUEST_CATALOG = ContextVar('us_valuation_request_catalog', default=None)
 

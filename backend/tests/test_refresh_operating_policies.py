@@ -63,7 +63,8 @@ def test_supported_policy_shape_keeps_fixed_assumptions_and_known_aliases() -> N
     assert 'baseline_non_debt_claim_scope_requires_source_rule' not in acn['reason_codes']
     assert acn['policy']['reported_claim_scope']['required_qnames'] == ('us-gaap:MinorityInterest','us-gaap:RedeemableNoncontrollingInterestEquityCarryingAmount')
     dva = next(row for row in output['results'] if row['ticker']=='DVA')
-    assert 'baseline_non_debt_claim_scope_requires_source_rule' in dva['reason_codes']
+    assert 'baseline_non_debt_claim_scope_requires_source_rule' not in dva['reason_codes']
+    assert dva['policy']['inputs']['nci_contingent_acquisition_claim']['selector']=='special_claim'
     assert 'PaymentsToAcquireOtherPropertyPlantAndEquipment' not in acn['policy']['concept_config']['fields']['capital_expenditures']['concepts']
     assert adp["policy"]["inputs"]["ttm_revenue"]["concept_candidates"]
     assert "fixed_assumptions" in adp["policy"]

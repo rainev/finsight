@@ -13,6 +13,10 @@ from typing import Any, Mapping
 SCHEMA = "FINSIGHT-LITIGATION-CLAIM-1"
 VERSION = "FINSIGHT-LITIGATION-CLAIM-WG3-1"
 WG15_VERSION = "FINSIGHT-LITIGATION-CLAIM-WG15-1"
+WG16_VERSION = "FINSIGHT-LITIGATION-CLAIM-WG16-1"
+WG17_VERSION = "FINSIGHT-LITIGATION-CLAIM-WG17-1"
+WG18_VERSION = "FINSIGHT-LITIGATION-CLAIM-WG18-1"
+WG19_VERSION = "FINSIGHT-LITIGATION-CLAIM-WG19-1"
 _GAAP = re.compile(r"^https?://(?:fasb\.org|xbrl\.us-gaap)/us-gaap/20\d{2}$")
 
 
@@ -43,6 +47,12 @@ RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
         "issuer_namespace_pattern":r"https?://(?:www\.)?abbvie\.com/\d{8}",
         "treatment":"deduct the recorded litigation reserve once; keep the noncash reserve/cash-payment flow as overlap evidence",
     }),
+    "BSX": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG16_VERSION,"ticker":"BSX","cik":"0000885725",
+        "mode":"direct_reserve","reserve_qname":"us-gaap:LossContingencyAccrualAtCarryingValue",
+        "excluded_duration_qnames":("us-gaap:LitigationSettlementExpense",),
+        "treatment":"deduct the current carrying accrual once; litigation expense flows and covenant EBITDA exclusions are not additional balance-sheet claims",
+    }),
     "STE": MappingProxyType({
         "schema_version":SCHEMA,"version":VERSION,"ticker":"STE","cik":"0001757898",
         "mode":"direct_reserve","reserve_qname":"us-gaap:LitigationReserve",
@@ -66,10 +76,40 @@ RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
         "receivable_qname":"us-gaap:LossContingencyReceivable",
         "treatment":"deduct the current litigation reserve less only the separately recognized same-matter receivable; do not assume unrecognized insurance recovery",
     }),
+    "CRL": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG17_VERSION,"ticker":"CRL","cik":"0001100682",
+        "mode":"unbounded_no_recognized_recovery",
+        "searched_current_qnames":(
+            "us-gaap:LitigationReserve","us-gaap:LitigationReserveCurrent",
+            "us-gaap:LossContingencyAccrualAtCarryingValue","us-gaap:LossContingencyReceivable",
+        ),
+        "review_reason":"securities_and_derivative_claims_have_no_finite_loss_or_insurance_range",
+        "treatment":"retain the securities and derivative tail as unbounded review; no missing accrual or insurance recovery becomes zero",
+    }),
     "DASH": MappingProxyType({
         "schema_version":SCHEMA,"version":VERSION,"ticker":"DASH","cik":"0001792789",
         "mode":"direct_reserve","reserve_qname":"us-gaap:LitigationReserveCurrent",
         "treatment":"deduct the recorded current litigation reserve once; customer, merchant, processor and contract balances remain separate operating items",
+    }),
+    "DGX": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG16_VERSION,"ticker":"DGX","cik":"0001022079",
+        "mode":"operating_reserves_only",
+        "malpractice_qname":"us-gaap:MalpracticeLossContingencyAccrualUndiscounted",
+        "litigation_qname":"us-gaap:LitigationReserve",
+        "litigation_axis":"us-gaap:FairValueByLiabilityClassAxis",
+        "litigation_member_local_name":"ExcludesgeneralandprofessionalliabilityclaimsMember",
+        "treatment":"retain malpractice and separate litigation reserves as recorded operating liabilities already represented in cash conversion; do not deduct them again",
+    }),
+    "EW": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG16_VERSION,"ticker":"EW","cik":"0001099800",
+        "mode":"reserve_with_combined_insurance_scope",
+        "reserve_qname":"us-gaap:LitigationReserve",
+        "combined_local_name":"AccruedLitigationAndInsuranceReserves",
+        "current_reserve_qname":"us-gaap:LitigationReserveCurrent",
+        "flow_local_names":("IncreaseDecreaseInLegalSettlementAccrual","LitigationSettlementExpense"),
+        "review_reason":"unaccrued_patent_milestone_appeal_and_tax_exposure_has_no_finite_range",
+        "issuer_namespace_pattern":r"https?://(?:www\.)?edwards\.com/\d{8}",
+        "treatment":"deduct the current litigation reserve once; the broader litigation-and-insurance aggregate, current subset and settlement/accrual flows remain non-additive diagnostics",
     }),
     "FIS": MappingProxyType({
         "schema_version":SCHEMA,"version":VERSION,"ticker":"FIS","cik":"0001136893",
@@ -79,6 +119,12 @@ RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
         "deposit_local_name":"SettlementDepositsCurrent","receivable_local_name":"SettlementReceivablesCurrent",
         "issuer_namespace_pattern":r"https?://(?:www\.)?fisglobal\.com/\d{8}",
         "treatment":"payment-settlement assets and liabilities remain operating; insurer-funded legal event has no recognized numeric recovery/claim scope",
+    }),
+    "MDT": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG18_VERSION,"ticker":"MDT","cik":"0001613103",
+        "mode":"single_operating_reserve_only",
+        "reserve_qname":"us-gaap:LossContingencyAccrualAtCarryingValue",
+        "treatment":"retain the current loss-contingency accrual as an operating liability already represented in cash conversion; do not deduct it again in the equity bridge",
     }),
     "V": MappingProxyType({
         "schema_version":SCHEMA,"version":VERSION,"ticker":"V","cik":"0001403161",
@@ -90,6 +136,17 @@ RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
         "customer_collateral_asset_local_name":"CustomerCollateralAssets",
         "customer_collateral_liability_local_name":"CustomerCollateralLiabilities",
         "treatment":"net escrow only against the same litigation scope; keep operating settlement balances and matched customer collateral separate",
+    }),
+    "ZBH": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG19_VERSION,"ticker":"ZBH","cik":"0001136869",
+        "mode":"operating_reserve_with_unaccrued_review",
+        "reserve_qname":"us-gaap:LitigationReserve",
+        "possible_loss_qname":"us-gaap:LossContingencyRangeOfPossibleLossPortionNotAccrued",
+        "possible_loss_axis":"us-gaap:LossContingenciesByNatureOfContingencyAxis",
+        "possible_loss_member_local_name":"OtherContingenciesMember",
+        "settlement_expense_qname":"us-gaap:LitigationSettlementExpense",
+        "review_reason":"china_distributor_and_tax_exposure_not_finitely_bounded",
+        "treatment":"retain the current legal reserve as an operating liability and the possible-loss amount as an unaccrued diagnostic; unresolved distributor and tax exposure remains review-only",
     }),
 })
 
@@ -211,6 +268,112 @@ def select_litigation_claim(policy: Mapping[str,Any],structural: Mapping[str,Any
             "damages_awarded_flow":[float(row["value"]) for row in damages]}
         claim=reserve
         formula="current scoped carrying accrual deducted once; possible-loss ranges, maxima, damages flows and case-level zero reserves excluded"
+    elif mode=="unbounded_no_recognized_recovery":
+        current=[row for row in facts if row.get("qname") in policy["searched_current_qnames"]
+                 and row.get("period_end")==period and row.get("period_start") is None]
+        for row in current:_valid(row,policy=policy,accession=accession,period=period)
+        if any(float(row["value"])!=0 for row in current):
+            raise ValueError("new current legal accrual or recovery requires a scoped rule")
+        review.append(policy["review_reason"])
+        sources=[];excluded=current;claim=None
+        components={"recognized_current_legal_claim":None,"recognized_insurance_recovery":None,
+                    "missing_values_assumed_zero":False}
+        formula="no numeric legal claim inferred; unbounded securities/derivative exposure retained for review"
+    elif mode=="operating_reserve_with_unaccrued_review":
+        reserve_rows=[row for row in facts if row.get("qname")==policy["reserve_qname"]
+                      and row.get("period_end")==period and row.get("period_start") is None
+                      and not row.get("dimensions")]
+        for row in reserve_rows:_valid(row,policy=policy,accession=accession,period=period)
+        reserve_row,reserve=_one(reserve_rows,"current operating litigation reserve")
+        possible=[row for row in facts if row.get("qname")==policy["possible_loss_qname"]
+                  and row.get("period_end")==period and row.get("period_start") is None
+                  and dict(row.get("dimensions") or {}).keys()=={policy["possible_loss_axis"]}
+                  and str(dict(row.get("dimensions") or {})[policy["possible_loss_axis"]]).rsplit(":",1)[-1]
+                      ==policy["possible_loss_member_local_name"]]
+        for row in possible:_valid(row,policy=policy,accession=accession,period=period)
+        possible_row,possible_amount=_one(possible,"current unaccrued possible-loss diagnostic")
+        expenses=[row for row in facts if row.get("qname")==policy["settlement_expense_qname"]
+                  and row.get("period_end")==period and isinstance(row.get("period_start"),str)
+                  and not row.get("dimensions")]
+        for row in expenses:_valid(row,policy=policy,accession=accession,period=period,instant=False)
+        if not expenses:
+            raise ValueError("current litigation settlement-expense diagnostic is missing")
+        if min(reserve,possible_amount)<0:
+            raise ValueError("operating reserve or possible-loss diagnostic cannot be negative")
+        claim=0.;sources=[];excluded=[reserve_row,possible_row,*expenses]
+        review.append(policy["review_reason"])
+        components={"operating_litigation_reserve":reserve,
+                    "possible_loss_portion_not_accrued":possible_amount,
+                    "additional_equity_bridge_claim":0.0,
+                    "settlement_expense_flows":sorted({float(row["value"]) for row in expenses})}
+        formula="operating litigation reserve and unaccrued possible-loss disclosure retained outside the equity bridge; unresolved exposure remains review-only"
+    elif mode=="single_operating_reserve_only":
+        rows=[row for row in facts if row.get("qname")==policy["reserve_qname"]
+              and row.get("period_end")==period and row.get("period_start") is None
+              and not row.get("dimensions")]
+        for row in rows:_valid(row,policy=policy,accession=accession,period=period)
+        reserve_row,reserve=_one(rows,"current operating legal reserve")
+        if reserve<0: raise ValueError("operating legal reserve cannot be negative")
+        unexpected=[row for row in facts if row.get("qname")==policy["reserve_qname"]
+                    and row.get("period_end")==period and row.get("period_start") is None
+                    and isinstance(row.get("value"),(int,float)) and not isinstance(row.get("value"),bool)
+                    and float(row["value"])!=0 and row is not reserve_row]
+        if unexpected:
+            raise ValueError("unexpected positive current operating legal-reserve scope requires review")
+        claim=0.;sources=[];excluded=[reserve_row]
+        components={"operating_loss_contingency_accrual":reserve,"additional_equity_bridge_claim":0.0}
+        formula="current operating loss-contingency accrual retained in operating liabilities; no second equity-bridge deduction"
+    elif mode=="operating_reserves_only":
+        malpractice_rows=[row for row in facts if row.get("qname")==policy["malpractice_qname"]
+                          and row.get("period_end")==period and row.get("period_start") is None
+                          and not row.get("dimensions")]
+        litigation_rows=[row for row in facts if row.get("qname")==policy["litigation_qname"]
+                          and row.get("period_end")==period and row.get("period_start") is None
+                          and dict(row.get("dimensions") or {}).keys()=={policy["litigation_axis"]}
+                          and str(dict(row.get("dimensions") or {})[policy["litigation_axis"]]).rsplit(":",1)[-1]
+                              ==policy["litigation_member_local_name"]]
+        for row in (*malpractice_rows,*litigation_rows):_valid(row,policy=policy,accession=accession,period=period)
+        malpractice_row,malpractice=_one(malpractice_rows,"current malpractice reserve")
+        litigation_row,litigation=_one(litigation_rows,"current separate litigation reserve")
+        if min(malpractice,litigation)<0: raise ValueError("operating legal reserves cannot be negative")
+        accepted={id(malpractice_row),id(litigation_row)}
+        unexpected=[row for row in facts if row.get("qname") in {policy["malpractice_qname"],policy["litigation_qname"]}
+                    and row.get("period_end")==period and row.get("period_start") is None
+                    and isinstance(row.get("value"),(int,float)) and not isinstance(row.get("value"),bool)
+                    and float(row["value"])!=0 and id(row) not in accepted]
+        if unexpected:
+            raise ValueError("unexpected positive current operating legal-reserve scope requires review")
+        claim=0.;sources=[];excluded=[malpractice_row,litigation_row]
+        components={"malpractice_operating_reserve":malpractice,"separate_litigation_operating_reserve":litigation,
+                    "additional_equity_bridge_claim":0.0}
+        formula="current malpractice and separate litigation reserves retained as operating liabilities; no second equity-bridge deduction"
+    elif mode=="reserve_with_combined_insurance_scope":
+        reserve_rows=[row for row in facts if row.get("qname")==policy["reserve_qname"]
+                      and row.get("period_end")==period and row.get("period_start") is None and not row.get("dimensions")]
+        combined_rows=[row for row in facts if row.get("local_name")==policy["combined_local_name"]
+                       and row.get("period_end")==period and row.get("period_start") is None and not row.get("dimensions")]
+        current_rows=[row for row in facts if row.get("qname")==policy["current_reserve_qname"]
+                      and row.get("period_end")==period and row.get("period_start") is None and not row.get("dimensions")]
+        for row in (*reserve_rows,*current_rows):_valid(row,policy=policy,accession=accession,period=period)
+        for row in combined_rows:_valid(row,policy=policy,accession=accession,period=period,issuer=True)
+        reserve_row,reserve=_one(reserve_rows,"current litigation reserve")
+        combined_row,combined=_one(combined_rows,"combined litigation and insurance reserve")
+        current_row,current=_one(current_rows,"current litigation reserve subset")
+        if min(reserve,combined,current)<0 or combined<reserve or current>reserve:
+            raise ValueError("litigation and insurance reserve scopes do not reconcile")
+        flows=[]
+        for local_name in policy["flow_local_names"]:
+            rows=[row for row in facts if row.get("local_name")==local_name and row.get("period_end")==period
+                  and isinstance(row.get("period_start"),str)]
+            for row in rows:_valid(row,policy=policy,accession=accession,period=period,instant=False,
+                                   issuer=not str(row.get("qname","")).startswith("us-gaap:"))
+            if not rows: raise ValueError(f"current legal reserve flow is missing: {local_name}")
+            flows.extend(rows)
+        claim=reserve;sources=[reserve_row];excluded=[combined_row,current_row,*flows]
+        review.append(policy["review_reason"])
+        components={"litigation_reserve":reserve,"combined_litigation_and_insurance_reserve":combined,
+                    "current_litigation_reserve_subset":current,"combined_excess_not_recovery":combined-reserve}
+        formula="current litigation reserve deducted once; broader combined reserve, current subset and duration flows excluded"
     elif mode=="direct_reserve":
         rows=[row for row in facts if row.get("qname")==policy["reserve_qname"]
               and row.get("period_end")==period and row.get("period_start") is None and not row.get("dimensions")]
@@ -226,6 +389,12 @@ def select_litigation_claim(policy: Mapping[str,Any],structural: Mapping[str,Any
         for qname in policy.get("excluded_qnames",()):
             rows=[row for row in facts if row.get("qname")==qname and row.get("period_end")==period and row.get("period_start") is None]
             for row in rows:_valid(row,policy=policy,accession=accession,period=period)
+            excluded.extend(rows)
+        for qname in policy.get("excluded_duration_qnames",()):
+            rows=[row for row in facts if row.get("qname")==qname and row.get("period_end")==period
+                  and isinstance(row.get("period_start"),str)]
+            for row in rows:_valid(row,policy=policy,accession=accession,period=period,instant=False)
+            if not rows: raise ValueError(f"litigation duration diagnostic is missing: {qname}")
             excluded.extend(rows)
         formula="current recorded litigation reserve deducted once; cash/noncash flows and unrelated insurance reserves remain diagnostics"
     elif mode=="recognized_receivable_net":

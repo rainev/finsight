@@ -268,6 +268,70 @@ def freeze_manifest(
             if not isinstance(source,Mapping):
                 raise VerificationIntegrityError(f'{ticker}: narrative evidence source is missing')
             input_paths.extend((receipt_path,source_root/str(source.get('package_manifest_path','')),source_root/str(source.get('document_path',''))))
+    annual_tickers=[ticker for ticker in closure if isinstance(policies.get(ticker),Mapping)
+        and policies[ticker].get('environmental_annual_evidence_version')]
+    for ticker in annual_tickers:
+        from .refresh_environmental_annual_evidence import validate_annual_environmental_evidence
+        source_root=Path(__file__).resolve().parents[3]/'output'
+        receipt_path=runtime_root/'environmental-annual-evidence'/f'{ticker}.json'
+        try:
+            receipt=json.loads(receipt_path.read_bytes())
+            validate_annual_environmental_evidence(receipt,source_root=source_root,cutoff=receipt['cutoff'])
+        except (OSError,ValueError,KeyError) as exc:
+            raise VerificationIntegrityError(f'{ticker}: annual environmental receipt/source invalid') from exc
+        if receipt['version']!=policies[ticker]['environmental_annual_evidence_version']:
+            raise VerificationIntegrityError(f'{ticker}: annual environmental policy/receipt mismatch')
+        input_paths.append(receipt_path)
+        for source in receipt['sources']:
+            input_paths.extend(source_root/source[key] for key in ('package_manifest_path','structural_path','document_path'))
+            input_paths.extend(source_root/row['path'] for row in source['package_files'])
+    professional_annual_tickers=[ticker for ticker in closure if isinstance(policies.get(ticker),Mapping)
+        and policies[ticker].get('professional_liability_annual_evidence_version')]
+    for ticker in professional_annual_tickers:
+        from .refresh_professional_liability_annual_evidence import validate_annual_professional_liability_evidence
+        source_root=Path(__file__).resolve().parents[3]/'output'
+        receipt_path=runtime_root/'professional-liability-annual-evidence'/f'{ticker}.json'
+        try:
+            receipt=json.loads(receipt_path.read_bytes())
+            validate_annual_professional_liability_evidence(receipt,source_root=source_root,cutoff=receipt['cutoff'])
+        except (OSError,ValueError,KeyError) as exc:
+            raise VerificationIntegrityError(f'{ticker}: annual professional-liability receipt/source invalid') from exc
+        if receipt['version']!=policies[ticker]['professional_liability_annual_evidence_version']:
+            raise VerificationIntegrityError(f'{ticker}: annual professional-liability policy/receipt mismatch')
+        input_paths.append(receipt_path)
+        for source in receipt['sources']:
+            input_paths.extend(source_root/source[key] for key in ('package_manifest_path','structural_path','document_path'))
+            input_paths.extend(source_root/row['path'] for row in source['package_files'])
+    public_tickers=[ticker for ticker in closure if isinstance(policies.get(ticker),Mapping)
+        and policies[ticker].get('public_contract_evidence_version')]
+    for ticker in public_tickers:
+        from .refresh_public_contract_evidence import validate_public_contract_evidence
+        source_root=Path(__file__).resolve().parents[3]/'output'
+        receipt_path=runtime_root/'public-contract-evidence'/f'{ticker}.json'
+        try:
+            receipt=json.loads(receipt_path.read_bytes())
+            validate_public_contract_evidence(receipt,source_root=source_root)
+        except (OSError,ValueError,KeyError) as exc:
+            raise VerificationIntegrityError(f'{ticker}: public contract receipt/source invalid') from exc
+        if receipt['version']!=policies[ticker]['public_contract_evidence_version']:
+            raise VerificationIntegrityError(f'{ticker}: public contract policy/receipt mismatch')
+        input_paths.extend((receipt_path,source_root/receipt['capture_report_path']))
+        input_paths.extend(source_root/row['document_path'] for row in receipt['sources'])
+    separation_event_tickers=[ticker for ticker in closure if isinstance(policies.get(ticker),Mapping)
+        and policies[ticker].get('separation_event_evidence_policy')]
+    for ticker in separation_event_tickers:
+        from .refresh_separation_event_evidence import validate_separation_event_evidence
+        source_root=Path(__file__).resolve().parents[3]/'output'
+        receipt_path=runtime_root/'separation-event-evidence'/f'{ticker}.json'
+        try:
+            receipt=json.loads(receipt_path.read_bytes())
+            validate_separation_event_evidence(receipt,source_root=source_root,cutoff=receipt['cutoff'])
+        except (OSError,ValueError,KeyError) as exc:
+            raise VerificationIntegrityError(f'{ticker}: separation event receipt/source invalid') from exc
+        if receipt['version']!=policies[ticker]['separation_event_evidence_policy']['version']:
+            raise VerificationIntegrityError(f'{ticker}: separation event policy/receipt mismatch')
+        input_paths.extend((receipt_path,source_root/receipt['capture_report_path']))
+        input_paths.extend(source_root/row['path'] for row in receipt['sources'])
     if source_index_path is not None:
         input_paths.append(source_index_path)
     input_files = _hash_map(input_paths, root=runtime_root, include_missing=True)

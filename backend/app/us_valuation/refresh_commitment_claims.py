@@ -7,8 +7,29 @@ from math import isfinite
 from types import MappingProxyType
 from typing import Any,Mapping
 
-SCHEMA="FINSIGHT-COMMITMENT-CLAIM-1";VERSION="FINSIGHT-COMMITMENT-CLAIM-WG4-1"
+SCHEMA="FINSIGHT-COMMITMENT-CLAIM-1";VERSION="FINSIGHT-COMMITMENT-CLAIM-WG4-1";WG20_VERSION="FINSIGHT-COMMITMENT-CLAIM-WG20-1"
 RULES: Mapping[str,Mapping[str,Any]]=MappingProxyType({
+ "JBL":MappingProxyType({"schema_version":SCHEMA,"version":"FINSIGHT-COMMITMENT-CLAIM-WG23-1",
+   "ticker":"JBL","cik":"0000898293","mode":"new_finance_lease_payment_schedule_review",
+   "total_qname":"us-gaap:FinanceLeaseLiabilityPaymentsDue",
+   "schedule_qnames":("us-gaap:FinanceLeaseLiabilityPaymentsDueInNextRollingTwelveMonths",
+     "us-gaap:FinanceLeaseLiabilityPaymentsDueInRollingAfterYearFive"),
+   "schedule_local_names":("FinanceLeaseLiabilityPaymentsDueInNextRollingYearOneThroughThree",
+     "FinanceLeaseLiabilityPaymentsDueInNextRollingYearFourThroughFive"),
+   "namespace_pattern":r"https?://(?:www\.)?jabil\.com/\d{8}",
+   "treatment":"new-lease future payment total is not a full current finance-lease carrying claim; retain legacy deduction until carrying scope, timing and debt overlap are source-bound"}),
+ "CRWD":MappingProxyType({"schema_version":SCHEMA,"version":WG20_VERSION,"ticker":"CRWD","cik":"0001535527","mode":"operating_purchase_schedule",
+   "total_qname":"us-gaap:RecordedUnconditionalPurchaseObligation",
+   "schedule_qnames":("us-gaap:RecordedUnconditionalPurchaseObligationDueInRemainderOfFiscalYear",
+     "us-gaap:RecordedUnconditionalPurchaseObligationDueWithinOneYear",
+     "us-gaap:RecordedUnconditionalPurchaseObligationDueInSecondYear",
+     "us-gaap:RecordedUnconditionalPurchaseObligationDueInThirdYear",
+     "us-gaap:RecordedUnconditionalPurchaseObligationDueInFourthYear"),
+   "after_year_four_local_name":"RecordedUnconditionalPurchaseObligationToBePaidAfterYearFour",
+   "unrecorded_qname":"us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+   "subsequent_event_axis":"us-gaap:SubsequentEventTypeAxis","subsequent_event_member":"us-gaap:SubsequentEventMember",
+   "namespace_pattern":r"https?://(?:www\.)?crowdstrike\.com/\d{8}",
+   "treatment":"reconcile the exact recorded purchase-obligation schedule to its total and retain both recorded and unrecorded purchase commitments in operating cash conversion; do not relabel them financing debt"}),
  "MU":MappingProxyType({"schema_version":SCHEMA,"version":VERSION,"ticker":"MU","cik":"0000723125","mode":"current_payable",
    "local_name":"PropertyPlantAndEquipmentPayableCurrent","namespace_pattern":r"https?://(?:www\.)?micron\.com/\d{8}",
    "paid_qname":"us-gaap:PaymentsToAcquirePropertyPlantAndEquipment","treatment":"current PP&E payable deducted once; paid capex and undated future purchase obligations remain separate"}),
@@ -80,6 +101,23 @@ def select_commitment_claim(policy:Mapping[str,Any],structural:Mapping[str,Any],
   rows=[r for r in facts if r.get("qname")==p["qname"] and r.get("period_end")==period and r.get("period_start") is None and not r.get("dimensions")]
   for r in rows:_valid(r,p,acc,period)
   row,total=_one(rows,"purchase commitment total");src=[row];components={"reported_total":total};review=["source_timing_and_economic_scope_incomplete"]
+ elif mode=="new_finance_lease_payment_schedule_review":
+  def select(name,issuer=False):
+   key='local_name' if issuer else 'qname'
+   rows=[r for r in facts if r.get(key)==name and r.get('period_end')==period
+         and r.get('period_start') is None and not r.get('dimensions')]
+   for r in rows:_valid(r,p,acc,period,issuer=issuer)
+   return _one(rows,name)
+  row,total=select(p['total_qname']);parts=[select(q) for q in p['schedule_qnames']]
+  parts.extend(select(n,True) for n in p['schedule_local_names'])
+  if total<0 or any(value<0 for _,value in parts) or sum(value for _,value in parts)!=total:
+   raise ValueError('new finance-lease payment schedule does not reconcile')
+  src=[row,*[r for r,_ in parts]]
+  components={'new_finance_lease_future_payments':total,
+    'reported_nonannual_payment_buckets':{r['local_name']:value for r,value in parts},
+    'current_total_carrying_finance_lease_claim':None}
+  review=['new_lease_payment_schedule_lacks_full_current_carrying_scope_and_debt_overlap',
+          'multiyear_payment_buckets_do_not_supply_exact_annual_timing']
  elif mode=="maximum_exposure_review":
   rows=[r for r in facts if r.get("qname")==p["qname"] and r.get("period_end","")>period and _member(r,"SubsequentEventMember")]
   for r in rows:_valid(r,p,acc,r["period_end"])
@@ -92,6 +130,35 @@ def select_commitment_claim(policy:Mapping[str,Any],structural:Mapping[str,Any],
   for r in tax:_valid(r,p,acc,period,issuer=True)
   taxrow,taxvalue=_one(tax,"tax indemnification")
   src=[row,taxrow];components={"mixed_commitment_total":total,"current_tax_indemnification":taxvalue};review=["mixed_commitment_schedules_and_post_period_payment_require_reconciliation"]
+ elif mode=="operating_purchase_schedule":
+  totals=[r for r in facts if r.get("qname")==p["total_qname"] and r.get("period_end")==period and r.get("period_start") is None and not r.get("dimensions")]
+  for r in totals:_valid(r,p,acc,period)
+  row,total=_one(totals,"recorded purchase-obligation total")
+  schedule=[]
+  for qname in p["schedule_qnames"]:
+   rows=[r for r in facts if r.get("qname")==qname and r.get("period_end")==period and r.get("period_start") is None and not r.get("dimensions")]
+   for r in rows:_valid(r,p,acc,period)
+   selected,value=_one(rows,f"purchase-obligation schedule component {qname}");schedule.append((selected,value))
+  after=[r for r in facts if r.get("local_name")==p["after_year_four_local_name"] and r.get("period_end")==period and r.get("period_start") is None and not r.get("dimensions")]
+  for r in after:_valid(r,p,acc,period,issuer=True)
+  after_row,after_value=_one(after,"purchase obligations after year four")
+  schedule_total=sum(value for _,value in schedule)+after_value
+  if schedule_total!=total:raise ValueError("purchase-obligation schedule does not reconcile to recorded total")
+  unrecorded=[r for r in facts if r.get("qname")==p["unrecorded_qname"] and r.get("period_end")==period and r.get("period_start") is None and not r.get("dimensions")]
+  for r in unrecorded:_valid(r,p,acc,period)
+  unrecorded_row,unrecorded_value=_one(unrecorded,"unrecorded purchase obligation")
+  post=[r for r in facts if r.get("qname")==p["total_qname"] and period<r.get("period_end","")<=cutoff
+        and r.get("period_start") is None and dict(r.get("dimensions") or {})=={
+         p["subsequent_event_axis"]:p["subsequent_event_member"]}]
+  for r in post:_valid(r,p,acc,r["period_end"])
+  post_row,post_value=_one(post,"post-period purchase obligation")
+  if min(total,unrecorded_value,*[value for _,value in schedule],after_value)<0:raise ValueError("purchase-obligation schedule sign requires review")
+  claim=0.;src=[];excluded=[row,*[item for item,_ in schedule],after_row,unrecorded_row,post_row]
+  components={"recorded_operating_purchase_obligations":total,
+   "recorded_payment_schedule":[value for _,value in schedule]+[after_value],
+   "unrecorded_operating_purchase_obligations":unrecorded_value,
+   "post_period_operating_purchase_obligation":post_value,
+   "additional_equity_bridge_claim":0.0}
  else:raise RuntimeError("unsupported commitment mode")
  return {"status":"review_required" if review else "source_bound","claim_adjustment":None if review else claim,"current_carrying_claim":claim,"review_reasons":review,"policy":dict(p),"source_rows":src,"excluded_rows":excluded,"components":components,"period_end":period,"treatment":p["treatment"]}
 

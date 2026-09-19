@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 from dataclasses import asdict
+import gzip
 import json
 from pathlib import Path
 
@@ -51,6 +52,39 @@ def _bind(ticker: str, structural: dict | None = None):
         ticker=ticker, policy=asdict(rule), structural_packet=structural,
         accession=structural["source_accession"], period_end=structural["report_date"],
     )
+
+
+def _latest_structural(ticker: str) -> dict:
+    path = ROOT / "output/latest-universe-20260919/final-discovery/captures" / f"{ticker}.json.gz"
+    return json.loads(gzip.decompress(path.read_bytes()))["packet"]["structural_filing"]
+
+
+def test_wmt_current_debt_investment_and_preferred_scope_is_source_bound():
+    structural = _latest_structural("WMT")
+    debt, debt_proof = _bind("WMT", structural)
+    assert debt.value == 57_243_000_000
+    assert debt_proof["total"] == 57_243_000_000
+    investments, investment_proof = nonmarketable_investment_zero_availabilities(
+        ticker="WMT",
+        policy=asdict(AGGREGATE_DEBT_SCOPE_RULES["WMT"]),
+        structural_packet=structural,
+        accession=structural["source_accession"],
+        period_end=structural["report_date"],
+    )
+    assert {row.field for row in investments} == {
+        "marketable_securities_current",
+        "marketable_securities_noncurrent",
+    }
+    assert investment_proof["marketable_securities"] == 0.0
+    preferred, preferred_proof = preferred_equity_zero_availability(
+        ticker="WMT",
+        policy=dict(PREFERRED_EQUITY_ZERO_RULES["WMT"]),
+        structural_packet=structural,
+        accession=structural["source_accession"],
+        period_end=structural["report_date"],
+    )
+    assert preferred.value == 0.0
+    assert preferred_proof["component_sum"] == preferred_proof["parent_equity"] == 98_238_000_000
 
 
 @pytest.mark.parametrize("ticker,total", [("MCO", 6_946_000_000), ("ROK", 3_258_000_000)])

@@ -14,11 +14,33 @@ from app.us_valuation.refresh_catalog_store import (
     REFRESH_REGISTRY_SCHEMA,
     RefreshCatalogStore,
     load_frozen_registry,
+    load_runtime_registry,
 )
 
 
 ROOT = Path(__file__).resolve().parents[2]
 RESET = ROOT / "backend/app/data/us_valuation_catalogs/US-RESET-2026-08-14-B01-B10-1.0"
+
+
+def test_runtime_registry_uses_exact_baseline_membership(tmp_path):
+    shutil.copytree(RESET,tmp_path/'baseline')
+    registry=_registry_for(RESET)
+    path=tmp_path/'registry.json'
+    path.write_bytes(canonical_json_bytes(registry))
+    assert len(load_runtime_registry(tmp_path).entries)==len(registry['entries'])
+    registry['entries'][0]['cik']='0000000001'
+    path.write_bytes(canonical_json_bytes(registry))
+    with pytest.raises(CatalogIntegrityError,match='membership drift'):
+        load_runtime_registry(tmp_path)
+
+
+def test_runtime_registry_rejects_baseline_hash_drift(tmp_path):
+    shutil.copytree(RESET,tmp_path/'baseline')
+    registry=_registry_for(RESET)
+    registry['baseline_manifest_sha256']='0'*64
+    (tmp_path/'registry.json').write_bytes(canonical_json_bytes(registry))
+    with pytest.raises(CatalogIntegrityError,match='manifest drift'):
+        load_runtime_registry(tmp_path)
 
 
 def _registry_for(

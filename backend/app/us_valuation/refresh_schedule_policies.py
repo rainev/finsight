@@ -22,6 +22,7 @@ from typing import Any, Mapping
 from .calculation_recipe import evaluate_recipe, number
 from .models import fcff_dcf
 from .xbrl import CompanyFactsNormalizer, load_concept_config
+from .refresh_event_review import EventReviewError, EventReviewIncomplete, review_event_records
 
 
 SCHEMA = "FINSIGHT-CASH-SCHEDULE-REFRESH-POLICY-1"
@@ -538,15 +539,23 @@ def bind_cash_schedule_sources(policy: Mapping[str, Any], recipe: Mapping[str, A
     prior_cutoff = _iso(recipe.get("evidence_cutoff"), "recipe evidence_cutoff")
     if prior_cutoff > cutoff:
         raise CashScheduleRefreshError('recipe evidence cutoff is after refresh cutoff')
-    allowed = set(policy.get("routine_8k_items", ROUTINE_EVENT_ITEMS))
-    for event in records:
-        if event.get("form") in {"8-K", "8-K/A"} and prior_cutoff < str(event.get("filingDate", "")) <= cutoff:
-            items = {item.strip() for item in str(event.get("items", "")).split(",") if item.strip()}
-            if not items or items - allowed:
-                raise CashScheduleRefreshError("new corporate-event filing requires an approved event rule")
     controlling = packet.get('_selected_controlling_filing') or _select_filing(records, cutoff)
     if controlling not in records or controlling.get('filingDate', '') > cutoff:
         raise CashScheduleRefreshError('selected controlling filing is not eligible cached evidence')
+    try:
+        event_review = review_event_records(
+            records,
+            [event for event in packet.get("events", []) if isinstance(event, Mapping)],
+            policy,
+            prior_cutoff=prior_cutoff,
+            cutoff=cutoff,
+            require_exhibits=bool(policy.get("source_requirements", {}).get("event_exhibits")),
+            controlling_filing=controlling,
+        )
+    except EventReviewIncomplete as exc:
+        raise CashScheduleRefreshError(str(exc)) from exc
+    except EventReviewError as exc:
+        raise CashScheduleRefreshError(str(exc)) from exc
     period = controlling["reportDate"]
     if policy.get("model_profile") == "segment_operating_income_intangible_investment":
         if not isinstance(structural_packet, Mapping):
@@ -610,6 +619,12 @@ def bind_cash_schedule_sources(policy: Mapping[str, Any], recipe: Mapping[str, A
             'scenario_results':forecast['scenarios'],
             'bridge_quality':{**assess_bridge_materiality(BridgeResolution.from_dict(resolution),enterprise_value=enterprise).as_dict(),'complete':resolution['complete']},
             'result':{'range':evaluated['range'],'recipe_hash':evaluated['recipe_hash'],'effective_recipe_hash':evaluated['effective_recipe_hash']}}
+        if event_review:
+            ledger = dict(ledger)
+            ledger["event_review"] = {
+                "events": event_review,
+                "limitations": sorted({item for event in event_review for item in event["limitations"]}),
+            }
         return refreshed, ledger
     normalizer = CompanyFactsNormalizer(companyfacts, fiscal_year_end=submissions.get("fiscalYearEnd"), as_of_date=cutoff, filing_records=records, concept_config=load_concept_config())
     policy_assumptions = policy["policy_assumptions"]
@@ -720,6 +735,12 @@ def bind_cash_schedule_sources(policy: Mapping[str, Any], recipe: Mapping[str, A
                                    'complete':precheck['complete']}
     refreshed['forecast_metric'] = 'cash_fcff'
     ledger_base["result"] = {"range": evaluated["range"], "recipe_hash": evaluated["recipe_hash"], "effective_recipe_hash": evaluated["effective_recipe_hash"]}
+    if event_review:
+        ledger_base = dict(ledger_base)
+        ledger_base["event_review"] = {
+            "events": event_review,
+            "limitations": sorted({item for event in event_review for item in event["limitations"]}),
+        }
     return refreshed, ledger_base
 
 

@@ -182,6 +182,12 @@ def select_current_claims(policy: Mapping[str, Any], structural: Mapping[str, An
     if policy.get('schema_version') == 'FINSIGHT-ACQUISITION-CLAIM-1':
         from .refresh_acquisition_claims import select_acquisition_claim
         return select_acquisition_claim(policy, structural, controlling, cik, cutoff)
+    if policy.get('schema_version') == 'FINSIGHT-PHARMA-ACQUISITION-CLAIM-1':
+        from .refresh_pharma_claims import select_pharma_claim
+        return select_pharma_claim(policy, structural, controlling, cik, cutoff)
+    if policy.get('schema_version') == 'FINSIGHT-BIIB-LEGAL-OPERATING-SCOPE-1':
+        from .refresh_biib_scope import assess_biib_scope
+        return assess_biib_scope(policy, structural, controlling, cik, cutoff)
     if policy.get('schema_version') == 'FINSIGHT-LITIGATION-CLAIM-1':
         from .refresh_litigation_claims import select_litigation_claim
         return select_litigation_claim(policy,structural,controlling,cik,cutoff)
@@ -209,6 +215,9 @@ def select_current_claims(policy: Mapping[str, Any], structural: Mapping[str, An
     if policy.get('schema_version') == 'FINSIGHT-NCI-OWNERSHIP-CLAIM-1':
         from .refresh_nci_ownership_claims import select_nci_ownership_claim
         return select_nci_ownership_claim(policy,structural,controlling,cik,cutoff)
+    if policy.get('schema_version') == 'FINSIGHT-ACQUISITION-FUNDING-OVERLAY-1':
+        from .refresh_acquisition_funding_overlays import select_acquisition_funding_overlay
+        return select_acquisition_funding_overlay(policy,structural,controlling,cik,cutoff)
     if policy.get("ticker") != "ADP":
         raise ValueError("ADP claim selector received a non-ADP policy")
     expected_cik = str(policy.get("cik", cik)).zfill(10)

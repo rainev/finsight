@@ -14,3 +14,12 @@ and collectability and can hide a genuine legal exposure.
 **How to detect / apply:** Net only a current recognized asset tied to the same
 matter, period and source scope. Keep narrative coverage expectations explicit
 and review-required; never substitute zero or the gross settlement amount.
+
+WG34 HCA adds dedicated insurer assets/reserves. Insurance-subsidiary investments
+held for statutory equity and claims are not unrestricted common cash or a
+same-claim receivable. Coverage limits, retentions and reinsurance contracts do
+not create recoverable assets without recognized amount/scope. Current and
+noncurrent investment presentations reconcile within the portfolio and are not
+additive. Expected next-year net payments are estimates, not a tagged current
+reserve or exact schedule. Keep recurring premiums/claims in operating cash
+history and preserve reserve sensitivity until forward overlap is reconciled.

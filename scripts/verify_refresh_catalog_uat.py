@@ -42,9 +42,10 @@ from app.us_valuation.refresh_catalog_store import (  # noqa: E402
 )
 
 
-BASELINE = ROOT / "output/us-refresh-runtime/baseline"
-REGISTRY = ROOT / "output/us-refresh-runtime/registry.json"
-RECIPES = ROOT / "output/us-refresh-runtime/recipes"
+SOURCE_RUNTIME = ROOT / "output/us-refresh-runtime"
+BASELINE = SOURCE_RUNTIME / "baseline"
+REGISTRY = SOURCE_RUNTIME / "registry.json"
+RECIPES = SOURCE_RUNTIME / "recipes"
 FORBIDDEN_ROOT_NAMES = {
     "us-refresh-runtime",
     "us-refresh-uat-catalogs",
@@ -80,7 +81,7 @@ def _prepare_candidate(root: Path, proof_path: Path) -> tuple[Path, str, float]:
     shutil.copytree(BASELINE, candidate)
     shutil.copytree(RECIPES, candidate / "recipes")
 
-    if not proof_path.resolve().is_relative_to((ROOT/'output/us-refresh-runtime/source-validation').resolve()) or proof_path.suffix != '.json':
+    if not proof_path.resolve().is_relative_to((SOURCE_RUNTIME/'source-validation').resolve()) or proof_path.suffix != '.json':
         raise ValueError('proof must be an existing source-validation receipt')
     proof_bytes = proof_path.read_bytes()
     proof_report = json.loads((proof_path.parent/'report.json').read_bytes())
@@ -155,10 +156,12 @@ def run(root: Path, proof_path: Path, *, retry_recovery: bool = False) -> dict:
     root.mkdir(parents=True)
     (root/'uat-fixture.json').write_bytes(canonical_json_bytes({'scope':'isolated operational UAT fixture only','production_approval':False}))
     shutil.copy2(REGISTRY, root / "registry.json")
+    shutil.copytree(BASELINE,root/'baseline')
     registry_value = json.loads(REGISTRY.read_text(encoding="utf-8"))
-    registry = load_frozen_registry(root / "registry.json", expected_count=FROZEN_REGISTRY_COUNT)
+    expected_count=len(load_catalog_version(BASELINE).entries)
+    registry = load_frozen_registry(root / "registry.json", expected_count=expected_count)
     candidate_source, aapl_recipe_hash, expected_base = _prepare_candidate(root,proof_path)
-    store = RefreshCatalogStore(root/'catalogs', frozen_registry=root / "registry.json", expected_registry_count=FROZEN_REGISTRY_COUNT)
+    store = RefreshCatalogStore(root/'catalogs', frozen_registry=root / "registry.json", expected_registry_count=expected_count)
     store.runtime_root.mkdir()
     approval_fingerprint = sha256_bytes(b"operational-uat-policy-v1")
     store.approved_policy_path.write_bytes(
@@ -187,7 +190,7 @@ def run(root: Path, proof_path: Path, *, retry_recovery: bool = False) -> dict:
         reservation.bind(('127.0.0.1',0))
         port = reservation.getsockname()[1]
     log = (root/'http-worker.log').open('wb')
-    worker = subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'--http-worker-root',str(root),'--port',str(port)],stdout=log,stderr=subprocess.STDOUT)
+    worker = subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'--http-worker-root',str(root),'--port',str(port),'--runtime-root',str(SOURCE_RUNTIME)],stdout=log,stderr=subprocess.STDOUT)
     try:
         deadline = time.monotonic()+30
         while True:
@@ -226,9 +229,16 @@ def _exercise_successor(root,store,reader,pinned,predecessor,candidate_source,ap
     )
     reloaded = reader.get_snapshot()
     after_http = _http(port,f'/us-valuations/{ticker}',token=token)
+    calculator_view = _http(port,f'/us-valuations/{ticker}/calculator',token=token)
+    calculator_result = _http(port,f'/us-valuations/{ticker}/calculator',{
+        'overrides':{},'baseline_version':calculator_view['baseline_version'],
+        'recipe_version':calculator_view['recipe_version']},token=token)
+    calculator_range={key:calculator_result['result'][key] for key in ('low','base','high')}
+    detail_range={key:after_http['scenario_range'][key] for key in ('low','base','high')}
     assert reloaded.catalog_version == successor.catalog_version and pinned.catalog_version == predecessor.catalog_version
     assert after_http['catalog_version'] == successor.catalog_version
     assert after_http['scenario_range']['base'] == expected_base
+    assert calculator_range == detail_range
     # A valid refresh may preserve the base case while independently changing
     # one or both scenario bounds.  Prove the successor artifact changed as a
     # whole instead of requiring a synthetic base-value movement.
@@ -265,7 +275,9 @@ def _exercise_successor(root,store,reader,pinned,predecessor,candidate_source,ap
         "activation_receipt": str(predecessor_activation["receipt_path"]),
         "successor_receipt": str(successor_activation["receipt_path"]),
         "rollback_receipt": str(rollback["receipt_path"]),
-        "http_worker": {'before':before_http['scenario_range'],'after':after_http['scenario_range'],'rollback':rollback_http['scenario_range'],
+        "http_worker": {'before':before_http['scenario_range'],'after':after_http['scenario_range'],
+                        'calculator_default':calculator_range,'calculator_parity':True,
+                        'rollback':rollback_http['scenario_range'],
                         'source':'real FastAPI process, isolated existing UAT database','stale_CAS_rejected':True},
         "production_runtime_touched": False,
     }
@@ -296,7 +308,7 @@ def _exercise_retry_recovery(root,store,numeric,approval,port,token,proof_path):
     policy_hash = report['policy_sha256']
     if len(policy_hash) != 64 or any(c not in '0123456789abcdef' for c in policy_hash):
         raise ValueError('invalid source proof policy hash')
-    runtime = ROOT/'output/us-refresh-runtime'
+    runtime = SOURCE_RUNTIME
     policy_raw = (runtime/'policy-history'/f'{policy_hash}.json').read_bytes()
     if sha256_bytes(policy_raw) != policy_hash:
         raise ValueError('source proof policy history drift')
@@ -364,6 +376,7 @@ def _exercise_retry_recovery(root,store,numeric,approval,port,token,proof_path):
 
 
 def main() -> int:
+    global SOURCE_RUNTIME, BASELINE, REGISTRY, RECIPES
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, help="new isolated directory; must contain operational-uat in its name")
     parser.add_argument("--execute", action="store_true", help="perform the isolated UAT; otherwise only print the planned scope")
@@ -371,7 +384,11 @@ def main() -> int:
     parser.add_argument('--retry-recovery',action='store_true',help='Also exercise injected unavailability and recovery from retained private state')
     parser.add_argument('--http-worker-root',type=Path,help=argparse.SUPPRESS)
     parser.add_argument('--port',type=int,help=argparse.SUPPRESS)
+    parser.add_argument('--runtime-root',type=Path,default=SOURCE_RUNTIME,help='Read-only frozen source runtime; activation stays in a fresh isolated UAT directory')
     args = parser.parse_args()
+    SOURCE_RUNTIME=args.runtime_root.resolve()
+    if not SOURCE_RUNTIME.is_relative_to((ROOT/'output').resolve()):raise ValueError('source runtime must be within project output')
+    BASELINE=SOURCE_RUNTIME/'baseline';REGISTRY=SOURCE_RUNTIME/'registry.json';RECIPES=SOURCE_RUNTIME/'recipes'
     if args.http_worker_root:
         _serve_worker(args.http_worker_root,args.port)
         return 0

@@ -1,5 +1,15 @@
 # FinSight valuation-policy audit index
 
+Active bridge audit: [latest 500 historical-estimate bridge](latest-historical-bridge-20260919.md) — separates capture gaps, false-positive disclosure flags, changed financial filings and genuine economic review before promoting any historical-only estimate.
+
+Active execution audit: [latest 500 valuation production gap register](latest-500-valuations-gap-register-20260919.md) — frozen September 19 evidence, current valuation candidates and release gaps.
+
+Latest publication screen: [500-company sweep, 2026-09-19](500-company-publication-sweep-20260919.md) — 468 numeric baselines pass screening, six targeted reviews, 26 existing unavailable; fresh all-500 HTTP/default-calculator checks pass. No activation.
+
+Current cross-cutting qualification: [WG truth and launch handoff, 2026-09-19](wg-truth-and-launch-handoff-20260919.md).
+This audit qualifies WG39 normalization and future-refresh claims; prior receipts
+remain historical evidence. Final 500-company sweep is deferred to the next prompt.
+
 Target: one numeric intrinsic-value estimate for each of 500 companies, with one consistent public experience and a simple `High` / `Medium` / `Low` reliability label.
 
 ## Audited surface
@@ -195,3 +205,47 @@ Official-data completion is audited in batches 19–23 and implemented through t
 # WG14 ordinary and redeemable NCI carrying claims
 
 - [WG14 evidence](wg14-ordinary-redeemable-nci.md) — APD parent-equity NCI/VIE-subset reconciliation and CMI enterprise-NCI separation from guarantee and JV surfaces.
+
+# WG15 NCI mixed with contingent and legal claims
+
+- [WG15 evidence](wg15-nci-mixed-contingent-legal-claims.md) — ABT current NCI/acquisition/legal claim stack, BAX negative-NCI treatment, and BA separation boundary.
+
+# WG16 remaining NCI, acquisition and litigation overlaps
+
+- [WG16 evidence](wg16-nci-acquisition-litigation-overlaps.md) — DGX ordinary/redeemable NCI and contingent claim candidate, with BSX timed-restructuring and EW unbounded-tail blockers preserved.
+
+# WG17 ordinary and redeemable NCI with contingent consideration
+
+- [WG17 evidence](wg17-nci-redeemable-contingent-claims.md) — DVA debt-overlap and post-event review, CRL deferred-consideration/legal-tail review, and ZBH redeemable-NCI exclusion.
+
+# WG18 ordinary NCI with acquisition carrying claims
+
+- [WG18 evidence](wg18-ordinary-nci-acquisition-claims.md) — source-bound GLW, MDT and PFE ordinary-NCI/acquisition claim candidates, including typed locations, duplicate presentations, operating-reserve overlap and isolated API rollback proof.
+
+# WG19 remaining mixed ordinary-NCI claim stacks
+
+- [WG19 evidence](wg19-mixed-ordinary-nci-claim-stacks.md) — source-bound HSIC/ON candidates, ZBH unbounded-tail review, and TEL ordinary-NCI exclusion with two-worker and isolated API evidence.
+
+# WG20 remaining NCI and acquisition special situations
+
+- [WG20 evidence](wg20-nci-acquisition-special-situations.md) — source-bound TEL/CRWD candidates with reserved claims, paid/pending cash and exact commitment schedules, plus PH transaction-overlay exclusion.
+- [WG21 evidence](wg21-post-close-acquisition-funding-overlays.md) — source-bound ECL bounded acquisition overlay and fail-closed PH residual-funding review with deterministic narrative provenance.
+- [WG22 evidence — user-confirmed](wg22-ordinary-nci-mappings.md) — ordinary-NCI reconciliation for ETN/HCA/HON, one ETN candidate, preserved reserve/separation blockers and EFX/GEHC exclusions; [independent challenge](wg22-independent-review.md).
+- [WG23 evidence — user-confirmed](wg23-ordinary-nci-carrying-leftovers.md) — JBL/INTC narrow ordinary-NCI proofs, lease/normalization stops and LHX/MCK exclusions; [independent challenge](wg23-independent-review.md).
+- [WG24 evidence — user-confirmed](wg24-governed-cash-margin-normalization.md) — INTC versioned explicit margin assumptions, exact historical replay and separate reinvestment/economic-validity blockers; [independent challenge](wg24-independent-review.md).
+- [WG25 evidence — narrow result user-confirmed](wg25-lease-capital-payment-overlap.md) — source-classified financing/lease ledger, required carrying/overlap gaps and exact retained history/API checks; [independent challenge](wg25-independent-review.md).
+- [WG26 evidence — narrow result user-confirmed](wg26-redeemable-ownership-stack.md) — explicit nonadditive carrying/alias scopes, retained full-stack gaps and exact replay; [independent challenge](wg26-independent-review.md).
+- [WG27 evidence — narrow gate user-confirmed](wg27-subsidiary-preferred-bridge.md) — preferred/derivative/program allocation and exclusive economic-basis guards; no numeric successor; [independent review](wg27-independent-review.md).
+- [WG28 evidence — narrow gate user-confirmed](wg28-environmental-forward-cash-overlap.md) — related balances, then-uncaptured annuals, unknown payments/timing/overlap and historical retention; [independent review](wg28-independent-review.md).
+- [WG29 evidence — narrow gate user-confirmed](wg29-annual-environmental-cash-evidence.md) — two authorized annual packages captured/parsed, scoped balances/accounting, 694 checks and retained cash-overlap gap; [independent review](wg29-independent-review.md).
+- [WG30 evidence — narrow gate user-confirmed](wg30-mck-ownership-opioid-bridge.md) — scoped payment/conditional paired diagnostic, corrected exact-quarter guard, 718 checks and retained full economic gaps; [independent review](wg30-independent-review.md).
+- [WG31 evidence — narrow gate user-confirmed](wg31-mck-subsidiary-ownership-scope.md) — scoped carrying/mechanisms, net proceeds, corrected source guards, 739 checks and retained unapproved outcomes; [independent review](wg31-independent-review.md).
+- [WG32 evidence — narrow gate user-confirmed](wg32-mck-public-contract-evidence.md) — 6/6 captures, Core525M floor/Apollo13B descriptor not promoted, 749 checks; executed contracts absent; [independent review](wg32-independent-review.md).
+- [WG33 evidence — narrow gate user-confirmed](wg33-mck-governed-rni-carrying.md) — governed carrying proxy/value-neutral split, focused70/independent17/broad766; legal/company gaps retained; [review](wg33-independent-review.md).
+- [WG34 evidence — narrow gate user-confirmed](wg34-hca-professional-liability-overlap.md) — HCA reserve/assets/payment ledger, retained value-neutral noncurrent sensitivity, focused15/independent15/broad781; overlap gaps retained; [review](wg34-independent-review.md).
+- [WG35 evidence — narrow result user-confirmed](wg35-hca-annual-professional-liability-cash.md) — two authorized annuals, exact reserve/payment/reinsurance/NCI rollforwards, focused22/broad788 and retained forward-runoff blocker; no value change or numeric successor; [review](wg35-independent-review.md).
+- [WG36 evidence — narrow result user-confirmed](wg36-hon-separation-scope.md) — actual close, adjusted shares, event terms,25 focused/802 broad checks and continuing-company blocker; [review](wg36-independent-review.md).
+- [WG37 evidence — narrow result user-confirmed](wg37-hon-closing-agreements.md) — two authorized 8-Ks, relevant direct exhibits, pro forma/guidance reconciliation, focused36/independent9/broad811 and retained current-bridge blocker; [review](wg37-independent-review.md).
+- [WG38 evidence — narrow result user-confirmed](wg38-pharma-contingent-claims.md) — BIIB/GILD/INCY carrying liabilities separated from CVR/milestone ceilings, paid cash, legal and royalty scopes; three blocked full refreshes, no value change or activation; [review](wg38-independent-review.md).
+- [WG39 evidence — two-candidate result user-confirmed](wg39-pharma-current-bridge.md) — GILD/INCY current bridge and royalty-cash overlap resolved into two Low source-bound candidates; frozen repeat, independent challenge, broad regression and isolated API/calculator activation/reload/rollback; [review](wg39-independent-review.md).
+- [WG40 evidence — verified blocked result, confirmation pending](wg40-biib-legal-apellis-scope.md) — BIIB legal/acquisition/current-bridge ledger, unsupported sensitivity retirement and exact legal/operating/event blockers; GILD/INCY preserved; [review](wg40-independent-review.md).

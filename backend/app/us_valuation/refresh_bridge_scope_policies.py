@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from math import isclose, isfinite
 from numbers import Real
+import re
 from types import MappingProxyType
 from typing import Any, Mapping
 
@@ -32,6 +33,10 @@ class AggregateDebtScopeRule:
     cik: str
     total_qname: str | None
     component_qnames: tuple[str, ...]
+    component_local_names: tuple[str, ...] = ()
+    issuer_namespace_pattern: str | None = None
+    combined_cash_qname: str | None = None
+    searched_separate_cash_qnames: tuple[str, ...] = ()
     commercial_paper_qname: str | None = None
     commercial_paper_axis: str | None = None
     commercial_paper_member: str | None = None
@@ -43,6 +48,7 @@ class AggregateDebtScopeRule:
     direct_marketable_qnames: tuple[str, ...] = ()
     zero_debt_search_qnames: tuple[str, ...] = ()
     excluded_zero_debt_qnames: tuple[str, ...] = ()
+    prefer_most_precise_components: bool = False
     marketable_zero_witness_qnames: tuple[str, ...] = (
         "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets", "us-gaap:Liabilities",
     )
@@ -50,6 +56,44 @@ class AggregateDebtScopeRule:
 
 
 AGGREGATE_DEBT_SCOPE_RULES: Mapping[str, AggregateDebtScopeRule] = MappingProxyType({
+    "BBY": AggregateDebtScopeRule(
+        ticker="BBY", cik="0000764478",
+        total_qname="us-gaap:DebtAndCapitalLeaseObligations",
+        component_qnames=("us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "us-gaap:LongTermDebtAndCapitalLeaseObligations"),
+        excluded_zero_debt_qnames=("us-gaap:CommercialPaper","us-gaap:CommercialPaperAtCarryingValue",
+            "us-gaap:ShortTermBorrowings","us-gaap:DebtCurrent"),
+        version="FINSIGHT-DEBT-SCOPE-BBY-COMPONENT-1",
+    ),
+    "WMT": AggregateDebtScopeRule(
+        ticker="WMT", cik="0000104169", total_qname=None,
+        component_qnames=(
+            "us-gaap:ShortTermBorrowings",
+            "us-gaap:LongTermDebtCurrent",
+            "us-gaap:LongTermDebtNoncurrent",
+            "us-gaap:FinanceLeaseLiabilityCurrent",
+            "us-gaap:FinanceLeaseLiabilityNoncurrent",
+        ),
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesCurrent",
+            "us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:MarketableSecurities",
+            "us-gaap:ShortTermInvestments",
+            "us-gaap:LongTermInvestments",
+            "us-gaap:AvailableForSaleSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+            "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesNoncurrent",
+        ),
+        zero_marketable_fields=("marketable_securities_current", "marketable_securities_noncurrent"),
+        marketable_zero_witness_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+            "us-gaap:Assets",
+            "us-gaap:LiabilitiesAndStockholdersEquity",
+            "us-gaap:StockholdersEquity",
+        ),
+        version="FINSIGHT-DEBT-SCOPE-WMT-COMPONENT-1",
+    ),
     "ABT": AggregateDebtScopeRule(
         ticker="ABT", cik="0000001800", total_qname=None,
         component_qnames=("us-gaap:LongTermDebtCurrent", "us-gaap:LongTermDebtNoncurrent"),
@@ -121,9 +165,117 @@ AGGREGATE_DEBT_SCOPE_RULES: Mapping[str, AggregateDebtScopeRule] = MappingProxyT
         ticker="CTSH", cik="0001058290", total_qname=None,
         component_qnames=("us-gaap:ShortTermBorrowings", "us-gaap:LongTermDebtNoncurrent"),
     ),
+    "CRWD": AggregateDebtScopeRule(
+        ticker="CRWD", cik="0001535527", total_qname="us-gaap:LongTermDebtNoncurrent",
+        component_qnames=(),
+        excluded_zero_debt_qnames=(
+            "us-gaap:CommercialPaper", "us-gaap:CommercialPaperAtCarryingValue",
+            "us-gaap:ShortTermBorrowings", "us-gaap:DebtCurrent", "us-gaap:LongTermDebtCurrent",
+            "us-gaap:FinanceLeaseLiability", "us-gaap:FinanceLeaseLiabilityCurrent",
+            "us-gaap:FinanceLeaseLiabilityNoncurrent",
+        ),
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesCurrent", "us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:MarketableSecurities", "us-gaap:ShortTermInvestments",
+            "us-gaap:LongTermInvestments", "us-gaap:AvailableForSaleSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+        ),
+        zero_marketable_fields=("marketable_securities_current", "marketable_securities_noncurrent"),
+        marketable_zero_witness_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets",
+            "us-gaap:LiabilitiesAndStockholdersEquity", "us-gaap:StockholdersEquity",
+        ),
+    ),
     "DASH": AggregateDebtScopeRule(
         ticker="DASH", cik="0001792789", total_qname="us-gaap:ConvertibleLongTermNotesPayable",
         component_qnames=(),
+    ),
+    "DGX": AggregateDebtScopeRule(
+        ticker="DGX", cik="0001022079", total_qname="us-gaap:LongTermDebt",
+        component_qnames=("us-gaap:LongTermDebtCurrent", "us-gaap:LongTermDebtNoncurrent"),
+        excluded_zero_debt_qnames=(
+            "us-gaap:CommercialPaper", "us-gaap:CommercialPaperAtCarryingValue",
+            "us-gaap:ShortTermBorrowings", "us-gaap:DebtCurrent",
+            "us-gaap:FinanceLeaseLiability", "us-gaap:FinanceLeaseLiabilityCurrent",
+            "us-gaap:FinanceLeaseLiabilityNoncurrent",
+        ),
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesCurrent", "us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:MarketableSecurities", "us-gaap:ShortTermInvestments",
+            "us-gaap:LongTermInvestments", "us-gaap:AvailableForSaleSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+            "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesNoncurrent",
+        ),
+        zero_marketable_fields=("marketable_securities_current", "marketable_securities_noncurrent"),
+        marketable_zero_witness_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets",
+            "us-gaap:LiabilitiesAndStockholdersEquity", "us-gaap:StockholdersEquity",
+        ),
+    ),
+    "ECL": AggregateDebtScopeRule(
+        ticker="ECL", cik="0000031462", total_qname="us-gaap:DebtAndCapitalLeaseObligations",
+        component_qnames=("us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+                          "us-gaap:LongTermDebtAndCapitalLeaseObligations"),
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesCurrent", "us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:MarketableSecurities", "us-gaap:ShortTermInvestments",
+            "us-gaap:LongTermInvestments", "us-gaap:AvailableForSaleSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+        ),
+        zero_marketable_fields=("marketable_securities_current", "marketable_securities_noncurrent"),
+    ),
+    "ETN": AggregateDebtScopeRule(
+        ticker="ETN",cik="0001551182",total_qname=None,
+        component_qnames=("us-gaap:ShortTermBorrowings",
+            "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "us-gaap:LongTermDebtAndCapitalLeaseObligations"),
+        searched_marketable_qnames=("us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:AvailableForSaleSecuritiesNoncurrent","us-gaap:AvailableForSaleSecuritiesDebtSecuritiesNoncurrent",
+            "us-gaap:LongTermInvestments"),
+        zero_marketable_fields=("marketable_securities_noncurrent",),
+        marketable_zero_witness_qnames=("us-gaap:Assets","us-gaap:LiabilitiesAndStockholdersEquity",
+            "us-gaap:StockholdersEquity"),
+    ),
+    "DVA": AggregateDebtScopeRule(
+        ticker="DVA", cik="0000927066",
+        total_qname="us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        component_qnames=(
+            "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+        ),
+        excluded_zero_debt_qnames=(
+            "us-gaap:CommercialPaper", "us-gaap:CommercialPaperAtCarryingValue",
+            "us-gaap:ShortTermBorrowings", "us-gaap:DebtCurrent",
+        ),
+    ),
+    "GLW": AggregateDebtScopeRule(
+        ticker="GLW", cik="0000024741", total_qname=None,
+        component_qnames=("us-gaap:DebtCurrent", "us-gaap:LongTermDebtAndCapitalLeaseObligations"),
+        prefer_most_precise_components=True,
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesCurrent", "us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:MarketableSecurities", "us-gaap:ShortTermInvestments",
+            "us-gaap:LongTermInvestments", "us-gaap:AvailableForSaleSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+        ),
+        zero_marketable_fields=("marketable_securities_current", "marketable_securities_noncurrent"),
+        marketable_zero_witness_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets",
+            "us-gaap:LiabilitiesAndStockholdersEquity", "us-gaap:StockholdersEquity",
+        ),
+    ),
+    "HSIC": AggregateDebtScopeRule(
+        ticker="HSIC", cik="0001000228", total_qname=None,
+        component_qnames=("us-gaap:ShortTermBorrowings",),
+        component_local_names=("LongTermDebtAndFinanceLeaseObligationsIncludingCurrentMaturities",),
+        issuer_namespace_pattern=r"https?://(?:www\.)?henryschein\.com/\d{8}",
+        combined_cash_qname="us-gaap:CashCashEquivalentsAndShortTermInvestments",
+        searched_separate_cash_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:ShortTermInvestments",
+            "us-gaap:MarketableSecuritiesCurrent", "us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:MarketableSecurities", "us-gaap:LongTermInvestments",
+        ),
     ),
     "MCO": AggregateDebtScopeRule(
         ticker="MCO", cik="0001059556", total_qname="us-gaap:LongTermDebt",
@@ -139,6 +291,19 @@ AGGREGATE_DEBT_SCOPE_RULES: Mapping[str, AggregateDebtScopeRule] = MappingProxyT
         ),
         zero_marketable_fields=("marketable_securities_noncurrent",),
     ),
+    "MDT": AggregateDebtScopeRule(
+        ticker="MDT", cik="0001613103", total_qname="us-gaap:DebtInstrumentCarryingAmount",
+        component_qnames=(),
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesNoncurrent", "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+            "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesNoncurrent", "us-gaap:LongTermInvestments",
+        ),
+        zero_marketable_fields=("marketable_securities_noncurrent",),
+        marketable_zero_witness_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets",
+            "us-gaap:Liabilities", "us-gaap:StockholdersEquity",
+        ),
+    ),
     "MCHP": AggregateDebtScopeRule(
         ticker="MCHP", cik="0000827054", total_qname="us-gaap:DebtInstrumentCarryingAmount",
         component_qnames=(),
@@ -152,6 +317,12 @@ AGGREGATE_DEBT_SCOPE_RULES: Mapping[str, AggregateDebtScopeRule] = MappingProxyT
             "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets",
             "us-gaap:LiabilitiesAndStockholdersEquity", "us-gaap:StockholdersEquity",
         ),
+    ),
+    "PH": AggregateDebtScopeRule(
+        ticker="PH", cik="0000076334", total_qname=None,
+        component_qnames=("us-gaap:CommercialPaper",
+                          "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+                          "us-gaap:LongTermDebtAndCapitalLeaseObligations"),
     ),
     "ICE": AggregateDebtScopeRule(
         ticker="ICE", cik="0001571949", total_qname="us-gaap:DebtLongtermAndShorttermCombinedAmount",
@@ -185,6 +356,28 @@ AGGREGATE_DEBT_SCOPE_RULES: Mapping[str, AggregateDebtScopeRule] = MappingProxyT
             "us-gaap:AvailableForSaleSecuritiesNoncurrent",
         ),
         zero_marketable_fields=("marketable_securities_current", "marketable_securities_noncurrent"),
+    ),
+    "PFE": AggregateDebtScopeRule(
+        ticker="PFE", cik="0000078003", total_qname=None,
+        component_qnames=("us-gaap:DebtCurrent", "us-gaap:LongTermDebtNoncurrent"),
+        excluded_zero_debt_qnames=(
+            "us-gaap:FinanceLeaseLiability", "us-gaap:FinanceLeaseLiabilityCurrent",
+            "us-gaap:FinanceLeaseLiabilityNoncurrent",
+        ),
+    ),
+    "ON": AggregateDebtScopeRule(
+        ticker="ON", cik="0001097864",
+        total_qname="us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        component_qnames=(),
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesNoncurrent", "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+            "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesNoncurrent", "us-gaap:LongTermInvestments",
+        ),
+        zero_marketable_fields=("marketable_securities_noncurrent",),
+        marketable_zero_witness_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets",
+            "us-gaap:LiabilitiesAndStockholdersEquity", "us-gaap:StockholdersEquity",
+        ),
     ),
     "MRK": AggregateDebtScopeRule(
         ticker="MRK",cik="0000310158",total_qname=None,
@@ -254,6 +447,22 @@ AGGREGATE_DEBT_SCOPE_RULES: Mapping[str, AggregateDebtScopeRule] = MappingProxyT
         ),
         zero_marketable_fields=("marketable_securities_noncurrent",),
     ),
+    "TEL": AggregateDebtScopeRule(
+        ticker="TEL", cik="0001385157", total_qname=None,
+        component_qnames=("us-gaap:DebtCurrent", "us-gaap:LongTermDebtNoncurrent"),
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesCurrent", "us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:MarketableSecurities", "us-gaap:ShortTermInvestments",
+            "us-gaap:LongTermInvestments", "us-gaap:AvailableForSaleSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+        ),
+        zero_marketable_fields=("marketable_securities_current", "marketable_securities_noncurrent"),
+        marketable_zero_witness_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets",
+            "us-gaap:LiabilitiesAndStockholdersEquity",
+            "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        ),
+    ),
     "VRTX": AggregateDebtScopeRule(
         ticker="VRTX", cik="0000875320", total_qname=None, component_qnames=(),
         zero_debt_search_qnames=(
@@ -277,13 +486,29 @@ AGGREGATE_DEBT_SCOPE_RULES: Mapping[str, AggregateDebtScopeRule] = MappingProxyT
         ),
         zero_marketable_fields=("marketable_securities_noncurrent",),
     ),
+    "ZBH": AggregateDebtScopeRule(
+        ticker="ZBH", cik="0001136869", total_qname=None,
+        component_qnames=("us-gaap:LongTermDebtCurrent", "us-gaap:LongTermDebtNoncurrent"),
+        searched_marketable_qnames=(
+            "us-gaap:MarketableSecuritiesCurrent", "us-gaap:MarketableSecuritiesNoncurrent",
+            "us-gaap:MarketableSecurities", "us-gaap:ShortTermInvestments",
+            "us-gaap:LongTermInvestments", "us-gaap:AvailableForSaleSecuritiesCurrent",
+            "us-gaap:AvailableForSaleSecuritiesNoncurrent",
+        ),
+        zero_marketable_fields=("marketable_securities_current", "marketable_securities_noncurrent"),
+        marketable_zero_witness_qnames=(
+            "us-gaap:CashAndCashEquivalentsAtCarryingValue", "us-gaap:Assets",
+            "us-gaap:LiabilitiesAndStockholdersEquity", "us-gaap:StockholdersEquity",
+        ),
+    ),
 })
 
 OUTSIDE_EQUITY_ZERO_RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
     **{
         ticker: MappingProxyType({"version":"FINSIGHT-OUTSIDE-EQUITY-ZERO-1","ticker":ticker,"cik":cik})
         for ticker,cik in {
-            "AOS":"0000091142", "CTSH":"0001058290", "MSCI":"0001408198", "VRTX":"0000875320", "VRT":"0001674101",
+            "AOS":"0000091142", "BIIB":"0000875045", "CTSH":"0001058290", "MSCI":"0001408198", "VRTX":"0000875320", "VRT":"0001674101",
+            "INCY":"0000879169",
         }.items()
     },
     "MCHP":MappingProxyType({
@@ -293,6 +518,31 @@ OUTSIDE_EQUITY_ZERO_RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
 })
 
 PREFERRED_EQUITY_ZERO_RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
+    "WMT":MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-WMT-1","ticker":"WMT","cik":"0000104169",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:AdditionalPaidInCapital",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),
+            ("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1)),
+    }),
+    "BIIB":MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-WG40-1","ticker":"BIIB","cik":"0000875045",
+        "parent_qname":"us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:AdditionalPaidInCapital",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),
+            ("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1),
+            ("us-gaap:TreasuryStockValue",-1)),
+    }),
+    "ETN":MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-WG22-1","ticker":"ETN","cik":"0001551182",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValueOutstanding",1),
+            ("us-gaap:AdditionalPaidInCapitalCommonStock",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),
+            ("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1)),
+        "allow_source_rounding":True,
+        "minimum_source_decimals":-6,
+    }),
     "ABBV": MappingProxyType({
         "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"ABBV","cik":"0001551152",
         "parent_qname":"us-gaap:StockholdersEquity",
@@ -315,6 +565,37 @@ PREFERRED_EQUITY_ZERO_RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType(
             ("us-gaap:AdditionalPaidInCapital",1),
             ("us-gaap:RetainedEarningsAccumulatedDeficit",1),
             ("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1)),
+        "allowed_outside_equity_qnames":(
+            "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
+        ),
+    }),
+    "ECL": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"ECL","cik":"0000031462",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValue",1),
+            ("us-gaap:AdditionalPaidInCapitalCommonStock",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),
+            ("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1),
+            ("us-gaap:TreasuryStockCommonValue",-1)),
+    }),
+    "CRWD": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"CRWD","cik":"0001535527",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:AdditionalPaidInCapital",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1)),
+    }),
+    "GLW": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"GLW","cik":"0000024741",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:AdditionalPaidInCapitalCommonStock",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1),
+            ("us-gaap:TreasuryStockCommonValue",-1)),
+    }),
+    "HSIC": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"HSIC","cik":"0001000228",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValueOutstanding",1),("us-gaap:AdditionalPaidInCapital",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1)),
         "allowed_outside_equity_qnames":(
             "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
         ),
@@ -350,6 +631,43 @@ PREFERRED_EQUITY_ZERO_RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType(
             "us-gaap:PreferredStockLiquidationPreferenceValue","us-gaap:PreferredStockLiquidationPreference",
         ),
     }),
+    "MDT": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"MDT","cik":"0001613103",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:AdditionalPaidInCapital",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1)),
+        "par_only_qnames":("us-gaap:PreferredStockParOrStatedValuePerShare",),
+        "zero_preferred_share_qnames":("us-gaap:PreferredStockSharesIssued",),
+    }),
+    "PFE": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"PFE","cik":"0000078003",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:AdditionalPaidInCapital",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1),
+            ("us-gaap:TreasuryStockCommonValue",-1)),
+    }),
+    "TEL": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"TEL","cik":"0001385157",
+        "parent_qname":"us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:RetainedEarningsAccumulatedDeficit",1),
+            ("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1),("us-gaap:TreasuryStockCommonValue",-1)),
+        "par_only_qnames":("us-gaap:PreferredStockParOrStatedValuePerShare",),
+        "zero_preferred_share_qnames":("us-gaap:PreferredStockSharesOutstanding",),
+    }),
+    "ON": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"ON","cik":"0001097864",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:AdditionalPaidInCapital",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1),
+            ("us-gaap:TreasuryStockCommonValue",-1)),
+    }),
+    "ZBH": MappingProxyType({
+        "version":"FINSIGHT-PREFERRED-EQUITY-ZERO-1","ticker":"ZBH","cik":"0001136869",
+        "parent_qname":"us-gaap:StockholdersEquity",
+        "components":(("us-gaap:CommonStockValue",1),("us-gaap:AdditionalPaidInCapitalCommonStock",1),
+            ("us-gaap:RetainedEarningsAccumulatedDeficit",1),("us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",1),
+            ("us-gaap:TreasuryStockValue",-1)),
+    }),
 })
 
 
@@ -373,7 +691,7 @@ def _validated_rule(ticker: str, policy: Mapping[str, Any]) -> AggregateDebtScop
     if rule is None:
         raise BridgeScopeReviewRequired(f"no aggregate debt scope rule for {ticker!r}")
     expected, actual = asdict(rule), dict(policy)
-    for field in ("component_qnames", "excluded_investment_component_qnames", "searched_marketable_qnames", "zero_marketable_fields", "direct_marketable_qnames", "zero_debt_search_qnames", "excluded_zero_debt_qnames", "marketable_zero_witness_qnames"):
+    for field in ("component_qnames", "component_local_names", "searched_separate_cash_qnames", "excluded_investment_component_qnames", "searched_marketable_qnames", "zero_marketable_fields", "direct_marketable_qnames", "zero_debt_search_qnames", "excluded_zero_debt_qnames", "marketable_zero_witness_qnames"):
         expected[field] = tuple(expected.get(field, ()))
         actual[field] = tuple(actual.get(field, ()))
     if actual != expected:
@@ -408,6 +726,50 @@ def _one_undimensioned(rows: list[Mapping[str, Any]], qname: str) -> Mapping[str
     if len(values) != 1:
         raise BridgeScopeReviewRequired(f"required aggregate debt fact conflicts: {qname}")
     return matches[0]
+
+
+def _one_issuer_local(rows: list[Mapping[str, Any]], local_name: str, namespace_pattern: str | None) -> Mapping[str, Any]:
+    if namespace_pattern is None:
+        raise BridgeScopeReviewRequired(f"issuer debt namespace rule is missing: {local_name}")
+    matches=[row for row in rows if row.get("local_name")==local_name
+             and row.get("dimensions") in (None,[])
+             and re.fullmatch(namespace_pattern,str(row.get("namespace","")))]
+    values={_finite(row.get("value"),local_name) for row in matches}
+    if not matches:
+        raise BridgeScopeReviewRequired(f"required issuer debt fact is missing: {local_name}")
+    if len(values)!=1:
+        raise BridgeScopeReviewRequired(f"required issuer debt fact conflicts: {local_name}")
+    return matches[0]
+
+
+def _one_most_precise_undimensioned(rows: list[Mapping[str, Any]], qname: str) -> Mapping[str, Any]:
+    """Select the most precise compatible duplicate from one source context.
+
+    Inline filings sometimes expose the same balance twice at different
+    display precision.  The coarser row may differ numerically after scaling,
+    so exact-value deduplication would incorrectly reject the filing.  This
+    selector accepts that shape only when every row shares one context and the
+    precise value falls inside each row's declared rounding interval.
+    """
+    matches=[row for row in rows if row.get("qname")==qname and row.get("dimensions") in (None,[])]
+    if not matches:
+        raise BridgeScopeReviewRequired(f"required aggregate debt fact is missing: {qname}")
+    contexts={row.get("context_id") for row in matches}
+    if len(contexts)!=1 or None in contexts:
+        raise BridgeScopeReviewRequired(f"precision-compatible debt facts have different contexts: {qname}")
+    parsed=[]
+    for row in matches:
+        value=_finite(row.get("value"),qname)
+        try: decimals=int(str(row.get("decimals")))
+        except (TypeError,ValueError) as exc:
+            raise BridgeScopeReviewRequired(f"precision-compatible debt fact has invalid decimals: {qname}") from exc
+        parsed.append((decimals,value,row))
+    precise_decimals,precise_value,precise_row=max(parsed,key=lambda item:item[0])
+    for decimals,value,_row in parsed:
+        tolerance=0.5*(10.0**(-decimals))
+        if abs(value-precise_value)>tolerance:
+            raise BridgeScopeReviewRequired(f"rounded debt presentation conflicts with precise fact: {qname}")
+    return precise_row
 
 
 def _one_undimensioned_signed(rows: list[Mapping[str,Any]],qname: str) -> Mapping[str,Any]:
@@ -457,7 +819,10 @@ def aggregate_debt_field_availability(*, ticker: str, policy: Mapping[str, Any],
             "components":[{"qname":row["qname"],"value":float(row["value"]),
                            "context_id":row.get("context_id"),"dimensions":row.get("dimensions") or []}
                           for row in debt_rows]}
-    components = [_one_undimensioned(rows, qname) for qname in rule.component_qnames]
+    component_selector=_one_most_precise_undimensioned if rule.prefer_most_precise_components else _one_undimensioned
+    components = [component_selector(rows, qname) for qname in rule.component_qnames]
+    components.extend(_one_issuer_local(rows,local_name,rule.issuer_namespace_pattern)
+                      for local_name in rule.component_local_names)
     component_total = sum(_finite(row["value"], str(row["qname"])) for row in components)
     sources = list(components)
     if rule.total_qname is not None:
@@ -512,6 +877,49 @@ def aggregate_debt_field_availability(*, ticker: str, policy: Mapping[str, Any],
                        for row in sources],
     }
     return availability, proof
+
+
+def combined_cash_scope_availabilities(*,ticker: str,policy: Mapping[str,Any],
+                                       structural_packet: Mapping[str,Any],accession: str,
+                                       period_end: str) -> tuple[tuple[FieldAvailability,...],dict[str,Any]]:
+    """Bind one reported cash-plus-short-investments total without duplication."""
+    rule=_validated_rule(ticker,policy)
+    if not rule.combined_cash_qname or not rule.searched_separate_cash_qnames:
+        raise BridgeScopeReviewRequired("combined cash scope rule is incomplete")
+    metadata=dict(structural_packet.get("filing_metadata",()))
+    if metadata.get("manifest_version")!="FINSIGHT-XBRL-PACKAGE-1" or not metadata.get("package_generation"):
+        raise BridgeScopeReviewRequired("complete structural filing package receipt is required")
+    rows=_current_rows(structural_packet,rule=rule,accession=accession,period_end=period_end)
+    total_row=_one_undimensioned(rows,rule.combined_cash_qname)
+    total=_finite(total_row["value"],rule.combined_cash_qname)
+    conflicts=[row for row in rows if row.get("qname") in set(rule.searched_separate_cash_qnames)
+               and _finite(row.get("value"),str(row.get("qname")))!=0]
+    if conflicts:
+        raise BridgeScopeReviewRequired("separate cash or investment fact conflicts with combined cash scope")
+    sources=[total_row,*[row for row in rows if row.get("qname") in set(rule.searched_separate_cash_qnames)]]
+    refs=tuple(_source_ref(accession,period_end,row) for row in sources)
+    common={"period_end":period_end,"source_accession":accession,"source_kind":"practical_policy",
+            "evidence_class":"reported_component_reconciliation","freshness":"current",
+            "fallback_level":"reported_aggregate","coverage_basis":"reconciled_disjoint_components",
+            "coverage_source_facts":refs,"extraction_complete":True,
+            "searched_concepts":tuple((rule.combined_cash_qname,*rule.searched_separate_cash_qnames)),
+            "authority":"production","mapping_version":rule.version}
+    records=(
+        FieldAvailability(field="cash",value=total,state="reported",
+            reason_code="COMBINED_CASH_AND_SHORT_INVESTMENTS_REPORTED",covered_fields=("cash",),
+            economic_scope="reported cash, cash equivalents and short-term investments counted once",**common),
+        FieldAvailability(field="marketable_securities_current",value=0.,state="evidence_backed_zero",
+            reason_code="COMBINED_CASH_SCOPE_PREVENTS_DUPLICATE_CURRENT_INVESTMENTS",
+            covered_fields=("marketable_securities_current",),
+            economic_scope="current marketable investments are contained in the reported combined cash total",**common),
+        FieldAvailability(field="marketable_securities_noncurrent",value=0.,state="evidence_backed_zero",
+            reason_code="COMPLETE_COMBINED_CASH_SCOPE_HAS_NO_NONCURRENT_INVESTMENTS",
+            covered_fields=("marketable_securities_noncurrent",),
+            economic_scope="complete current filing reports no separate noncurrent cash-like investment",**common),
+    )
+    return records,{"status":"source_bound","policy_version":rule.version,"ticker":ticker,
+        "accession":accession,"period_end":period_end,"combined_cash_and_short_investments":total,
+        "separate_cash_or_investment_rows":[{"qname":row["qname"],"value":float(row["value"])} for row in sources[1:]]}
 
 
 def nonmarketable_investment_zero_availabilities(*, ticker: str, policy: Mapping[str, Any],
@@ -641,6 +1049,10 @@ def preferred_equity_zero_availability(*,ticker: str,policy: Mapping[str,Any],
     canonical=dict(expected or {});canonical["components"]=tuple(tuple(item) for item in canonical.get("components",()))
     actual["allowed_outside_equity_qnames"]=tuple(actual.get("allowed_outside_equity_qnames",()))
     canonical["allowed_outside_equity_qnames"]=tuple(canonical.get("allowed_outside_equity_qnames",()))
+    actual["par_only_qnames"]=tuple(actual.get("par_only_qnames",()))
+    canonical["par_only_qnames"]=tuple(canonical.get("par_only_qnames",()))
+    actual["zero_preferred_share_qnames"]=tuple(actual.get("zero_preferred_share_qnames",()))
+    canonical["zero_preferred_share_qnames"]=tuple(canonical.get("zero_preferred_share_qnames",()))
     if expected is None or actual!=canonical:
         raise BridgeScopeReviewRequired("preferred-equity policy identity/version mismatch")
     metadata=dict(structural_packet.get("filing_metadata",()))
@@ -651,24 +1063,63 @@ def preferred_equity_zero_availability(*,ticker: str,policy: Mapping[str,Any],
     parent=_one_undimensioned_signed(rows,expected["parent_qname"])
     components=[(_one_undimensioned_signed(rows,qname),weight) for qname,weight in expected["components"]]
     total=sum(_finite_signed(row["value"],str(row["qname"]))*weight for row,weight in components)
-    if not isclose(total,float(parent["value"]),rel_tol=1e-12,abs_tol=0.01):
+    rounding_tolerance=.01
+    precision_proof=None
+    if expected.get('allow_source_rounding'):
+        from .reported_precision import reconcile_reported_sum
+        source_rows=[parent,*[row for row,_ in components]]
+        for row in source_rows:
+            decimals=row.get('decimals')
+            if not isinstance(decimals,str) or not re.fullmatch(r'-?\d+',decimals):
+                raise BridgeScopeReviewRequired('common equity source precision is missing')
+            if int(decimals)<expected['minimum_source_decimals']:
+                raise BridgeScopeReviewRequired('common equity source precision became too coarse')
+        weighted=[{**row,'value':float(row['value'])*weight} for row,weight in components]
+        try:
+            precision_proof=reconcile_reported_sum(parent,weighted,cik=expected['cik'],
+                accession=accession,period=period_end)
+        except ValueError as exc:
+            raise BridgeScopeReviewRequired('common equity reported-precision reconciliation failed: '+str(exc)) from exc
+        rounding_tolerance=precision_proof['maximum_rounding_difference']
+    if not isclose(total,float(parent["value"]),rel_tol=1e-12,abs_tol=rounding_tolerance):
         raise BridgeScopeReviewRequired("reported common components do not reconcile to parent equity")
-    preferred=[];outside=[]
+    preferred=[];outside=[];par_only=[];share_zeros=[]
     allowed_outside=set(expected.get("allowed_outside_equity_qnames",()))
+    allowed_par=set(expected.get("par_only_qnames",()))
+    share_qnames=set(expected.get("zero_preferred_share_qnames",()))
     for row in rows:
         name=str(row.get("local_name","")).lower()
         if any(token in name for token in ("preferredstock","preferredequity","temporaryequity")):
-            if row.get("qname") in allowed_outside:
+            if row.get("qname") in allowed_par:
+                par_only.append(row)
+            elif row.get("qname") in share_qnames:
+                share_zeros.append(row)
+            elif row.get("qname") in allowed_outside:
                 outside.append(row)
             else:
                 preferred.append(row)
+    if share_qnames:
+        facts=structural_packet.get("facts")
+        if not isinstance(facts,list):
+            raise BridgeScopeReviewRequired("preferred-share facts are unavailable")
+        share_zeros=[row for row in facts if isinstance(row,Mapping)
+                     and row.get("qname") in share_qnames and row.get("source_accession")==accession
+                     and row.get("period_end")==period_end and row.get("period_start") is None
+                     and row.get("unit")=="xbrli:shares" and row.get("entity_scheme")=="http://www.sec.gov/CIK"
+                     and str(row.get("entity_identifier","")).zfill(10)==expected["cik"]]
     preferred=list({(row.get("qname"),row.get("value"),row.get("context_id"),str(row.get("dimensions"))):row
                     for row in preferred}.values())
     outside=list({(row.get("qname"),row.get("value"),row.get("context_id"),str(row.get("dimensions"))):row
                   for row in outside}.values())
+    par_only=list({(row.get("qname"),row.get("value"),row.get("context_id"),str(row.get("dimensions"))):row
+                   for row in par_only}.values())
+    share_zeros=list({(row.get("qname"),row.get("value"),row.get("context_id"),str(row.get("dimensions"))):row
+                      for row in share_zeros}.values())
+    if allowed_par and (not share_zeros or any(_finite(row.get("value"),"preferred shares")!=0 for row in share_zeros)):
+        raise BridgeScopeReviewRequired("par-only preferred disclosure lacks reported zero issued shares")
     if any(_finite(row.get("value"),"preferred claim")!=0 for row in preferred):
         raise BridgeScopeReviewRequired("nonzero preferred claim conflicts with common-only equity")
-    sources=[parent,*[row for row,_ in components],*preferred,*outside]
+    sources=[parent,*[row for row,_ in components],*preferred,*outside,*par_only,*share_zeros]
     refs=tuple(_source_ref(accession,period_end,row) for row in sources)
     availability=FieldAvailability(field="preferred_equity",value=0.,state="evidence_backed_zero",
         reason_code="COMMON_COMPONENTS_RECONCILE_TO_PARENT_EQUITY",period_end=period_end,
@@ -680,12 +1131,17 @@ def preferred_equity_zero_availability(*,ticker: str,policy: Mapping[str,Any],
             *allowed_outside,"preferred, temporary-equity and outstanding-share concepts"]),authority="production",mapping_version=expected["version"])
     return availability,{"status":"source_bound","policy_version":expected["version"],"ticker":ticker,
         "accession":accession,"period_end":period_end,"value":0.,"parent_equity":float(parent["value"]),
-        "component_sum":total,"components":[{"qname":row["qname"],"value":float(row["value"]),"weight":weight}
-            for row,weight in components],"outside_equity_components":[{"qname":row["qname"],"value":float(row["value"])} for row in outside]}
+        "component_sum":total,"rounding_residual":total-float(parent['value']),
+        "source_rounding_tolerance":rounding_tolerance,
+        "reported_precision_reconciliation":precision_proof,
+        "components":[{"qname":row["qname"],"value":float(row["value"]),"weight":weight}
+            for row,weight in components],"outside_equity_components":[{"qname":row["qname"],"value":float(row["value"])} for row in outside],
+        "par_only_disclosures":[{"qname":row["qname"],"value":float(row["value"])} for row in par_only],
+        "zero_preferred_share_facts":[{"qname":row["qname"],"value":float(row["value"])} for row in share_zeros]}
 
 
 __all__ = ["AGGREGATE_DEBT_SCOPE_RULES", "AggregateDebtScopeRule",
            "BRIDGE_SCOPE_POLICY_VERSION", "BridgeScopeReviewRequired",
            "OUTSIDE_EQUITY_ZERO_RULES", "PREFERRED_EQUITY_ZERO_RULES", "aggregate_debt_field_availability",
-           "nonmarketable_investment_zero_availabilities", "outside_equity_zero_availability",
+           "combined_cash_scope_availabilities", "nonmarketable_investment_zero_availabilities", "outside_equity_zero_availability",
            "preferred_equity_zero_availability"]

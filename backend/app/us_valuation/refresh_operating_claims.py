@@ -18,10 +18,47 @@ from typing import Any, Mapping
 
 SCHEMA = "FINSIGHT-OPERATING-CLAIM-1"
 VERSION = "FINSIGHT-OPERATING-CLAIM-WG7-1"
+WG19_VERSION = "FINSIGHT-OPERATING-CLAIM-WG19-1"
+WG20_VERSION = "FINSIGHT-OPERATING-CLAIM-WG20-1"
 _GAAP = re.compile(r"^https?://(?:fasb\.org|xbrl\.us-gaap)/us-gaap/20\d{2}$")
 
 
 RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
+    "HSIC": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG19_VERSION,"ticker":"HSIC","cik":"0001000228",
+        "mode":"operating_restructuring_only",
+        "reserve_qname":"us-gaap:RestructuringReserve",
+        "charge_qname":"us-gaap:RestructuringCharges",
+        "payment_local_name":"PaymentsForRestructuringAndRestructuringReserveAccrualAdjustment",
+        "issuer_namespace_pattern":r"https?://(?:www\.)?henryschein\.com/\d{8}",
+        "require_component_reconciliation":False,
+        "treatment":"retain the current restructuring reserve, charges and cash payments in operating cash conversion; do not deduct the ending reserve again in the equity bridge",
+    }),
+    "ON": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG19_VERSION,"ticker":"ON","cik":"0001097864",
+        "mode":"operating_restructuring_only",
+        "reserve_qname":"us-gaap:RestructuringReserve",
+        "charge_qname":"us-gaap:RestructuringCharges",
+        "payment_qname":"us-gaap:PaymentsForRestructuring",
+        "require_component_reconciliation":True,
+        "treatment":"retain the current restructuring reserve and its reconciled plans, charges and cash payments in operating cash conversion; do not deduct them again in the equity bridge",
+    }),
+    "TEL": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG20_VERSION,"ticker":"TEL","cik":"0001385157",
+        "mode":"environmental_range_operating",
+        "reserve_qname":"us-gaap:AccrualForEnvironmentalLossContingencies",
+        "range_axis_local_name":"RangeAxis","range_member_local_names":("MinimumMember","MaximumMember"),
+        "legal_payment_qname":"us-gaap:PaymentsForLegalSettlements",
+        "treatment":"deduct the current environmental reserve once; the disclosed range and legal settlement cash remain non-additive diagnostics",
+    }),
+    "CRWD": MappingProxyType({
+        "schema_version":SCHEMA,"version":WG20_VERSION,"ticker":"CRWD","cik":"0001535527",
+        "mode":"loss_contingency_operating_rollforward",
+        "reserve_qname":"us-gaap:LossContingencyAccrualAtCarryingValue",
+        "provision_qname":"us-gaap:LossContingencyAccrualProvision",
+        "payment_qname":"us-gaap:LossContingencyAccrualPayments",
+        "treatment":"deduct the current loss-contingency reserve once; provision and payment rollforward facts remain non-additive cash-flow diagnostics",
+    }),
     "AVY": MappingProxyType({
         "schema_version": SCHEMA, "version": VERSION, "ticker": "AVY", "cik": "0000008818",
         "mode": "mixed_reserves_review",
@@ -190,7 +227,79 @@ def select_operating_claim(policy: Mapping[str, Any], structural: Mapping[str, A
                              qname=qname, instant=instant, member=member)
         return row, value
 
-    if mode == "mixed_reserves_review":
+    if mode == "environmental_range_operating":
+        reserve_row,reserve=one(policy["reserve_qname"])
+        ranges=[]
+        for row in facts:
+            if (row.get("qname")!=policy["reserve_qname"] or row.get("period_end")!=period
+                or row.get("period_start") is not None or len(row.get("dimensions") or [])!=1):
+                continue
+            axis,member=(row.get("dimensions") or [])[0]
+            if (str(axis).rsplit(":",1)[-1]!=policy["range_axis_local_name"]
+                or str(member).rsplit(":",1)[-1] not in policy["range_member_local_names"]):
+                continue
+            _valid(row,policy=policy,accession=accession,period=period)
+            ranges.append(dict(row))
+        by_member={str((row.get("dimensions") or [])[0][1]).rsplit(":",1)[-1]:float(row["value"])
+                   for row in ranges}
+        if set(by_member)!=set(policy["range_member_local_names"]):
+            raise ValueError("environmental reserve range is incomplete")
+        low,high=by_member["MinimumMember"],by_member["MaximumMember"]
+        if min(low,reserve)<0 or not low<=reserve<=high:
+            raise ValueError("environmental reserve does not fall inside its disclosed range")
+        payments=[row for row in facts if row.get("qname")==policy["legal_payment_qname"]
+                  and row.get("period_end")==period and isinstance(row.get("period_start"),str)]
+        for row in payments:_valid(row,policy=policy,accession=accession,period=period,instant=False)
+        if not payments:
+            raise ValueError("current legal settlement cash diagnostic is missing")
+        start=min(row["period_start"] for row in payments);payments=[row for row in payments if row["period_start"]==start]
+        claim_adjustment=reserve;sources=[reserve_row];excluded=[*ranges,*payments]
+        components={"operating_environmental_reserve":reserve,"environmental_range":[low,high],
+                    "legal_settlement_cash_flows":sorted({float(row["value"]) for row in payments}),
+                    "additional_equity_bridge_claim":reserve}
+        formula="current environmental reserve deducted once; disclosed range and legal cash excluded"
+    elif mode == "loss_contingency_operating_rollforward":
+        reserve_row,reserve=one(policy["reserve_qname"])
+        provision_row,provision=one(policy["provision_qname"],instant=False)
+        payment_row,payments=one(policy["payment_qname"],instant=False)
+        if min(reserve,provision,payments)<0:
+            raise ValueError("loss-contingency reserve rollforward sign requires review")
+        claim_adjustment=reserve;sources=[reserve_row];excluded=[provision_row,payment_row]
+        components={"operating_loss_contingency_reserve":reserve,
+                    "loss_contingency_provision":provision,
+                    "loss_contingency_cash_payments":payments,
+                    "additional_equity_bridge_claim":reserve}
+        formula="current loss-contingency reserve deducted once; provision and payment flows excluded"
+    elif mode == "operating_restructuring_only":
+        reserve_row,reserve=one(policy["reserve_qname"])
+        reserve_parts=_dimensioned_components(
+            facts,policy=policy,accession=accession,period=period,qname=policy["reserve_qname"])
+        if policy.get("require_component_reconciliation"):
+            # Duplicate dimensional rows can arise when one plan is presented
+            # in multiple tables. Collapse exact context/value duplicates
+            # before testing the disjoint plan sum.
+            unique={(row.get("context_id"),float(row["value"])):row for row in reserve_parts}
+            reserve_parts=list(unique.values())
+            if not reserve_parts or not isclose(sum(float(row["value"]) for row in reserve_parts),reserve,
+                                                rel_tol=1e-12,abs_tol=.01):
+                raise ValueError("restructuring reserve components do not reconcile to ending total")
+        charge_row,charges=one(policy["charge_qname"],instant=False)
+        if policy.get("payment_qname"):
+            payment_row,payments=one(policy["payment_qname"],instant=False)
+        else:
+            payment_row,payments=_select(
+                facts,policy=policy,accession=accession,period=period,
+                local_name=policy["payment_local_name"],instant=False,issuer=True)
+        if min(reserve,charges,payments)<0:
+            raise ValueError("restructuring reserve, charge or cash-payment sign requires review")
+        claim_adjustment=0.0
+        sources=[];excluded=[reserve_row,*reserve_parts,charge_row,payment_row]
+        components={"operating_restructuring_reserve":reserve,
+                    "restructuring_charges":charges,
+                    "restructuring_cash_payments":payments,
+                    "additional_equity_bridge_claim":0.0}
+        formula="current restructuring reserve, charges and cash payments retained in operating scope; no second equity-bridge deduction"
+    elif mode == "mixed_reserves_review":
         restructuring_row, restructuring = one(policy["restructuring_qname"])
         reserve_parts = _dimensioned_components(
             facts, policy=policy, accession=accession, period=period,

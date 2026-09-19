@@ -5,8 +5,10 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import errno
 from pathlib import Path
 import zipfile
+from urllib.error import HTTPError
 from urllib.request import HTTPRedirectHandler, Request
 
 import pytest
@@ -133,6 +135,250 @@ def test_package_cache_uses_official_xbrl_zip_when_index_hides_individual_files(
     assert schema["archive_member"] == "filing.xsd"
     assert (entrypoint.parent / "filing.xsd").read_text() == "schema"
     assert set(client.requested) == {zip_name, "filing.htm"}
+
+
+def test_package_cache_reuses_verified_content_addressed_resource_store(
+    tmp_path: Path,
+) -> None:
+    client = FakeSecClient(
+        index_names=["filing.htm", "filing.xsd"],
+        attachments={"filing.htm": b'<link href="filing.xsd"/>', "filing.xsd": b"schema"},
+    )
+    store = tmp_path / "resource-store"
+    first = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path / "packages-a",
+        resource_store=store,
+    )
+    second = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path / "packages-b",
+        resource_store=store,
+    )
+
+    manifest = json.loads((first.parent / "package-manifest.json").read_text())
+    store_files = [path for path in store.rglob("*") if path.is_file()]
+    assert len(store_files) == len(manifest["files"])
+    for item in manifest["files"]:
+        package_file = first.parent / item["local_path"]
+        store_file = store / item["sha256"][:2] / item["sha256"]
+        assert package_file.is_file() and not package_file.is_symlink()
+        assert store_file.is_file() and not store_file.is_symlink()
+        assert package_file.stat().st_ino == store_file.stat().st_ino
+    assert second.read_bytes() == first.read_bytes()
+
+
+def test_package_cache_rejects_corrupt_resource_store_entry(tmp_path: Path) -> None:
+    client = FakeSecClient(
+        index_names=["filing.htm", "filing.xsd"],
+        attachments={"filing.htm": b'<link href="filing.xsd"/>', "filing.xsd": b"schema"},
+    )
+    store = tmp_path / "resource-store"
+    cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path / "packages-a",
+        resource_store=store,
+    )
+    schema_digest = hashlib.sha256(b"schema").hexdigest()
+    (store / schema_digest[:2] / schema_digest).write_bytes(b"tampered")
+
+    with pytest.raises(FilingPackageIncomplete, match="XBRL_RESOURCE_STORE_INTEGRITY"):
+        cache_structural_filing_package(
+            client,
+            cik="1",
+            accession="0000000001-26-000001",
+            primary_document="filing.htm",
+            output_dir=tmp_path / "packages-b",
+            resource_store=store,
+        )
+
+
+def test_package_cache_copies_when_hard_link_is_cross_filesystem_unsupported(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    client = FakeSecClient(
+        index_names=["filing.htm", "filing.xsd"],
+        attachments={"filing.htm": b'<link href="filing.xsd"/>', "filing.xsd": b"schema"},
+    )
+    store = tmp_path / "resource-store"
+    cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path / "packages-a",
+        resource_store=store,
+    )
+
+    def unsupported_link(*args: object, **kwargs: object) -> None:
+        raise OSError(errno.EXDEV, "cross-device link")
+
+    monkeypatch.setattr("app.us_valuation.filing_package.os.link", unsupported_link)
+    entrypoint = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path / "packages-b",
+        resource_store=store,
+    )
+
+    manifest = json.loads((entrypoint.parent / "package-manifest.json").read_text())
+    for item in manifest["files"]:
+        package_file = entrypoint.parent / item["local_path"]
+        store_file = store / item["sha256"][:2] / item["sha256"]
+        assert package_file.is_file() and not package_file.is_symlink()
+        assert package_file.stat().st_ino != store_file.stat().st_ino
+        assert hashlib.sha256(package_file.read_bytes()).hexdigest() == item["sha256"]
+
+
+def test_package_cache_falls_back_to_individual_resources_when_xbrl_zip_is_unavailable(
+    tmp_path: Path,
+) -> None:
+    zip_name = "0000000001-26-000001-xbrl.zip"
+    client = FakeSecClient(
+        index_names=[zip_name, "filing.htm", "filing.xsd", "filing_pre.xml"],
+        attachments={
+            "filing.htm": b'<link href="filing.xsd"/>',
+            "filing.xsd": b"schema",
+            "filing_pre.xml": b"presentation",
+        },
+    )
+
+    entrypoint = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path,
+    )
+
+    manifest = json.loads((entrypoint.parent / "package-manifest.json").read_text())
+    assert {item["local_path"] for item in manifest["files"]} == {
+        "filing.htm",
+        "filing.xsd",
+        "filing_pre.xml",
+    }
+    assert all(zip_name not in item["source_url"] for item in manifest["files"])
+    assert set(client.requested) == {
+        zip_name,
+        "filing.htm",
+        "filing.xsd",
+        "filing_pre.xml",
+    }
+
+
+def test_package_cache_falls_back_when_xbrl_zip_transport_fails(
+    tmp_path: Path,
+) -> None:
+    zip_name = "0000000001-26-000001-xbrl.zip"
+
+    class TransportUnavailableClient(FakeSecClient):
+        def filing_attachment(
+            self,
+            cik: str,
+            accession: str,
+            filename: str,
+            *,
+            refresh: bool = False,
+            max_bytes: int | None = None,
+        ) -> bytes:
+            if filename == zip_name:
+                raise RuntimeError("SEC request failed after retries") from HTTPError(
+                    "https://www.sec.gov/Archives/edgar/data/1/000000000126000001/"
+                    + zip_name,
+                    404,
+                    "Not Found",
+                    {},
+                    None,
+                )
+            return super().filing_attachment(
+                cik,
+                accession,
+                filename,
+                refresh=refresh,
+                max_bytes=max_bytes,
+            )
+
+    client = TransportUnavailableClient(
+        index_names=[zip_name, "filing.htm", "filing.xsd"],
+        attachments={
+            "filing.htm": b'<link href="filing.xsd"/>',
+            "filing.xsd": b"schema",
+        },
+    )
+
+    entrypoint = cache_structural_filing_package(
+        client,
+        cik="1",
+        accession="0000000001-26-000001",
+        primary_document="filing.htm",
+        output_dir=tmp_path,
+    )
+
+    assert entrypoint.read_bytes() == b'<link href="filing.xsd"/>'
+
+
+def test_package_cache_does_not_fallback_from_malformed_xbrl_zip(
+    tmp_path: Path,
+) -> None:
+    zip_name = "0000000001-26-000001-xbrl.zip"
+    client = FakeSecClient(
+        index_names=[zip_name, "filing.htm", "filing.xsd"],
+        attachments={
+            zip_name: b"not a zip",
+            "filing.htm": b'<link href="filing.xsd"/>',
+            "filing.xsd": b"schema",
+        },
+    )
+
+    with pytest.raises(FilingPackageIncomplete, match="invalid filing XBRL archive"):
+        cache_structural_filing_package(
+            client,
+            cik="1",
+            accession="0000000001-26-000001",
+            primary_document="filing.htm",
+            output_dir=tmp_path,
+        )
+
+    assert client.requested == [zip_name]
+
+
+def test_package_cache_does_not_fallback_from_unsafe_xbrl_zip_member(
+    tmp_path: Path,
+) -> None:
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as archive:
+        archive.writestr("evil\\filing.xsd", "unsafe")
+    zip_name = "0000000001-26-000001-xbrl.zip"
+    client = FakeSecClient(
+        index_names=[zip_name, "filing.htm", "filing.xsd"],
+        attachments={
+            zip_name: buffer.getvalue(),
+            "filing.htm": b'<link href="filing.xsd"/>',
+            "filing.xsd": b"schema",
+        },
+    )
+
+    with pytest.raises(FilingPackageIncomplete, match="unsafe XBRL archive member"):
+        cache_structural_filing_package(
+            client,
+            cik="1",
+            accession="0000000001-26-000001",
+            primary_document="filing.htm",
+            output_dir=tmp_path,
+        )
+
+    assert client.requested == [zip_name]
 
 
 def test_package_cache_includes_only_governed_relevant_attachments_and_cutoff_metadata(

@@ -121,6 +121,116 @@ def _enterprise(rows: list[dict[str, Any]], owner: Mapping[str, Any]) -> dict[st
     return scenarios
 
 
+def _enterprise_trace_rows(rows: list[dict[str, Any]], owner: Mapping[str, Any]) -> dict[str, Any] | None:
+    """Migrate the compact enterprise rows used by the later REIT batches.
+
+    These packets record the same inputs as ``_enterprise`` under the names
+    emitted by the batch history builder (``growth_rate``, ``cash``,
+    ``preferred_and_nci``).  The combined claim amount is intentionally kept
+    in ``preferred_equity``; splitting it into preferred and NCI would invent
+    a fact that the private packet does not contain.
+    """
+    required = {
+        "starting_cash_fcff", "growth_rate", "terminal_growth", "wacc",
+        "cash", "debt", "preferred_and_nci", "shares", "forecast_years",
+    }
+    if not rows or not required <= set(rows[0]):
+        return None
+    scenarios = {}
+    for row in rows:
+        scenarios[row["name"]] = {"engine": "enterprise_cash_fcff", "inputs": {
+            "cash_fcff": row["starting_cash_fcff"],
+            "initial_growth": row["growth_rate"],
+            "terminal_growth": row["terminal_growth"],
+            "wacc": row["wacc"],
+            "cash_and_investments": row["cash"],
+            "interest_bearing_debt": row["debt"],
+            "preferred_equity": row["preferred_and_nci"],
+            "noncontrolling_interests": 0.0,
+            "diluted_shares": row["shares"],
+            "forecast_years": row["forecast_years"],
+            "nonoperating_adjustment": 0.0,
+        }}
+    return scenarios
+
+
+def _cash_schedule(
+    rows: list[dict[str, Any]],
+    owner: Mapping[str, Any],
+) -> dict[str, Any] | None:
+    """Translate recorded two-stage per-share cash-flow rows.
+
+    ``cash_schedule`` is the same pure evaluator used by the public
+    calculator.  Keeping per-share cash as a one-share schedule avoids
+    inventing a share count for AFFO/FCFE packets that were already expressed
+    per share.  Any event adjustment is a recorded per-share bridge amount;
+    absence means that the originating model had no such adjustment.
+    """
+    required = {"normalized_affo_per_share", "growth_rate", "terminal_growth", "discount_rate", "forecast_years"}
+    if not rows or not required <= set(rows[0]):
+        return None
+    scenarios = {}
+    for row in rows:
+        cash = row["normalized_affo_per_share"]
+        growth = row["growth_rate"]
+        terminal_growth = row["terminal_growth"]
+        years = row["forecast_years"]
+        flows = [cash * (1 + growth) ** year for year in range(1, years + 1)]
+        scenarios[row["name"]] = {"engine": "cash_schedule", "inputs": {
+            "cash_flows": flows,
+            "terminal_cash_flow": flows[-1] * (1 + terminal_growth),
+            "discount_rate": row["discount_rate"],
+            "terminal_growth": terminal_growth,
+            "shares": 1.0,
+            "net_bridge": row.get("nonrecurring_value_adjustment_per_share", 0.0),
+        }}
+    return scenarios
+
+
+def _utility_cash_schedule(rows: list[dict[str, Any]], owner: Mapping[str, Any]) -> dict[str, Any] | None:
+    """Translate the recorded utility FCFE schedule into the pure engine."""
+    required = {"cash_flow", "growth_rate", "terminal_growth", "cost_of_equity", "shares"}
+    years = owner.get("governed_assumptions", {}).get("forecast_years")
+    if not rows or not required <= set(rows[0]) or not isinstance(years, int) or years < 1:
+        return None
+    scenarios = {}
+    for row in rows:
+        cash = row["cash_flow"]
+        growth = row["growth_rate"]
+        terminal_growth = row["terminal_growth"]
+        flows = [cash * (1 + growth) ** year for year in range(1, years + 1)]
+        scenarios[row["name"]] = {"engine": "cash_schedule", "inputs": {
+            "cash_flows": flows,
+            "terminal_cash_flow": flows[-1] * (1 + terminal_growth),
+            "discount_rate": row["cost_of_equity"],
+            "terminal_growth": terminal_growth,
+            "shares": row["shares"],
+            "net_bridge": 0.0,
+        }}
+    return scenarios
+
+
+def _distribution_ddm(rows: list[dict[str, Any]], owner: Mapping[str, Any]) -> dict[str, Any] | None:
+    """Translate the one-period Gordon distribution recovery packet."""
+    required = {"owner_distribution_per_share", "distribution_growth", "cost_of_equity"}
+    years = owner.get("governed_assumptions", {}).get("forecast_years")
+    if not rows or not required <= set(rows[0]) or years != 1:
+        return None
+    scenarios = {}
+    for row in rows:
+        distribution = row["owner_distribution_per_share"]
+        growth = row["distribution_growth"]
+        scenarios[row["name"]] = {"engine": "cash_schedule", "inputs": {
+            "cash_flows": [distribution],
+            "terminal_cash_flow": distribution * (1 + growth),
+            "discount_rate": row["cost_of_equity"],
+            "terminal_growth": growth,
+            "shares": 1.0,
+            "net_bridge": 0.0,
+        }}
+    return scenarios
+
+
 def _constant_growth(rows: list[dict[str, Any]], owner: Mapping[str, Any]) -> dict[str, Any] | None:
     if not ("cash_conversion_margin" in rows[0] or "fcff_margin" in rows[0]) or "growth" not in rows[0]:
         return None
@@ -566,7 +676,10 @@ def compile_private_recipe(
             forced_scenarios["bull"] = {"engine": "earnings_multiple", "inputs": {"earnings": contract_per_share * shares, "multiple": 1.0, "shares": shares, "net_bridge": 0.0}}
         rows = dcf_rows
         owner = {"reported_inputs": reported, "governed_assumptions": {}, "source_ledger": {}}
-    scenarios = (forced_scenarios or _enterprise(rows, owner) or _constant_growth(rows, owner) or _residual(rows, owner) or _multiple(rows, owner) or _cash_runway(rows, owner))
+    scenarios = (forced_scenarios or _enterprise(rows, owner) or _enterprise_trace_rows(rows, owner)
+                 or _constant_growth(rows, owner) or _residual(rows, owner) or _multiple(rows, owner)
+                 or _cash_schedule(rows, owner) or _utility_cash_schedule(rows, owner)
+                 or _distribution_ddm(rows, owner) or _cash_runway(rows, owner))
     if scenarios is None:
         return {"ticker": ticker, "status": "gap", "reason": "unsupported_or_incomplete_recorded_shape", "source_path": str(source_path)}
     # The evaluator requires all three scenario names.  No target output is

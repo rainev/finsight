@@ -168,6 +168,17 @@ export default function UsValuations() {
       ?? data?.review?.warnings?.[0]
       ?? data?.model_policy.reason,
   ) || 'FinSight cannot produce a reliable valuation from the available evidence.'
+  const freshness = data?.freshness
+  const freshnessMessage = freshness?.outcome === 'source_bound'
+    ? `Updated from source-bound filing evidence${freshness.new_source_date ? ` filed ${freshness.new_source_date}` : ''}; staged catalog checked through ${data?.valuation_date}.`
+    : freshness?.outcome === 'verified_unchanged'
+      ? `Checked through ${freshness.checked_as_of ?? data?.valuation_date}; no supported financial change was found, so the approved dated estimate is unchanged.`
+      : freshness?.outcome === 'prior_unavailable_verified'
+        ? 'Current evidence was checked, but no supported numeric valuation is available.'
+        : freshness?.outcome && freshness.outcome !== 'historical_snapshot'
+          ? freshness.recommendation ?? freshness.reason ?? 'The approved dated estimate is shown as historical only; current refresh review remains open.'
+          : null
+  const freshnessCurrent = freshness?.outcome === 'source_bound' || freshness?.outcome === 'verified_unchanged'
 
   function resetCalculator() {
     if (!calculator) return
@@ -190,7 +201,7 @@ export default function UsValuations() {
     {loading && <p className="text-sm text-[var(--app-muted)]">Loading {ticker}…</p>}
     {error && !loading && <div className={cn(panel, 'flex items-center gap-2 p-5 text-sm text-red-500')}><AlertTriangle className="h-4 w-4" /> Could not load {ticker}: {error}</div>}
     {data && !loading && !error && <div className="space-y-6">
-      {data.freshness?.outcome === 'acquisition_failed' && <p role="status" className="text-sm text-amber-600">The latest source refresh failed. The previous dated estimate is shown; it has not been refreshed.</p>}
+      {freshnessMessage && <div role="status" className={cn(panel, 'border-l-4 p-4 text-sm', freshnessCurrent ? 'border-l-emerald-500 text-emerald-700' : 'border-l-amber-500 text-amber-700')}><span className="font-semibold">{freshnessCurrent ? 'Refresh status: current.' : 'Refresh status: historical estimate.'}</span> {freshnessMessage}</div>}
       <details className={cn(panel, 'p-5')}><summary className="cursor-pointer text-sm font-semibold">Dated valuation history</summary><p className="mt-2 text-xs text-[var(--app-muted)]">Earlier estimates stay unchanged when new evidence arrives.</p>{historyError ? <p className="mt-3 text-sm text-red-500">History could not be loaded: {historyError}</p> : history ? <ul className="mt-3 space-y-2 text-sm">{history.items.map((item) => <li key={item.catalog_version}>{item.valuation_date} · {item.availability_type === 'not_available' ? 'Not available' : `${usd(item.scenario_range.low)} / ${usd(item.scenario_range.base)} / ${usd(item.scenario_range.high)}`} · filing period {item.source_financial_statement.period_end}</li>)}</ul> : <p className="mt-3 text-sm">Loading history…</p>}</details>
       <div className={cn(panel, 'p-6')}><div className="flex flex-wrap items-start justify-between gap-5"><div><div className="flex items-center gap-3"><h2 className="text-2xl font-semibold tracking-[-.02em]">{data.issuer.issuer_name}</h2>{unavailable && <span className="rounded-full border border-[var(--app-border)] bg-[var(--app-bg)] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[.12em] text-[var(--app-muted)]">Valuation unavailable</span>}</div><p className="mt-1 text-sm text-[var(--app-muted)]">{data.ticker} · {data.issuer.finsight_sector} · {unavailable ? 'No reliable valuation' : methodLabel(data)}</p></div><div className="text-right"><p className="text-[10px] font-semibold uppercase tracking-[.14em] text-[var(--app-muted)]">{unavailable ? 'Intrinsic value per share' : `${assumptionsDirty ? 'Your' : 'FinSight'} ${scenario} case`}</p><p className="font-serif text-4xl font-semibold tracking-[-.03em]">{unavailable ? '—' : usd(selectedValue)}</p>{!unavailable && <div className="mt-3 flex rounded-lg border border-[var(--app-border)] p-1">{(['low', 'base', 'high'] as const).map((key) => <button key={key} onClick={() => setScenario(key)} className={cn('rounded-md px-3 py-1 text-xs font-semibold', scenario === key && 'bg-[var(--app-text)] text-[var(--app-bg)]')}>{key === 'low' ? 'Bear' : key === 'high' ? 'Bull' : 'Base'}</button>)}</div>}</div></div></div>
       {!unavailable && <div className={cn(panel, 'p-5')}><p className="text-[10px] font-semibold uppercase tracking-[.14em] text-[var(--app-muted)]">Market comparison</p><p className="mt-2 text-lg font-semibold">{comparison?.status === 'available' ? comparison.label : 'Add a market price to compare'}</p><p className="mt-2 text-xs text-[var(--app-muted)]">{comparison?.price_date ? `EOD date ${comparison.price_date}; raw price stays private.` : comparison?.status === 'available' && manualPrice ? 'Compared with the market price you entered.' : 'Open Your assumptions and enter a market price. It will not change intrinsic value.'}</p></div>}

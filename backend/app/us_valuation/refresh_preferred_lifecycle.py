@@ -25,6 +25,12 @@ RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
         "current_shares_local_name": "PreferredStockSharesIssued",
         "treatment": "current preferred equity is zero only when both reported carrying value and issued shares are zero; authorized shares and par value are diagnostics, not claims",
     }),
+    "BSX": MappingProxyType({
+        "schema_version": SCHEMA, "version": VERSION, "ticker": "BSX", "cik": "0000885725",
+        "mode": "reported_zero", "current_carrying_local_name": "PreferredStockValue",
+        "current_shares_local_name": "PreferredStockSharesIssued",
+        "treatment": "current preferred equity is zero only when reported carrying value and issued shares are zero; authorized shares are not a claim",
+    }),
     "COHR": MappingProxyType({
         "schema_version": SCHEMA, "version": VERSION, "ticker": "COHR", "cik": "0000820318",
         "mode": "settled_conversion_zero",
@@ -36,6 +42,30 @@ RULES: Mapping[str, Mapping[str, Any]] = MappingProxyType({
         "conversion_value_local_name": "TemporaryEquityStockIssuedDuringPeriodValueConversionOfConvertibleSecurities",
         "common_conversion_effect_local_name": "IncrementalCommonSharesAttributableToConversionOfPreferredStock",
         "treatment": "current preferred claim is zero only after current carrying, redemption and share balances are zero and the same filing reports the completed conversion roll-forward; historical terms are not carried forward",
+    }),
+    "CRL": MappingProxyType({
+        "schema_version": SCHEMA, "version": VERSION, "ticker": "CRL", "cik": "0001100682",
+        "mode": "reported_zero", "current_carrying_local_name": "PreferredStockValue",
+        "current_shares_local_name": "PreferredStockSharesIssued",
+        "treatment": "current preferred equity is zero only when reported carrying value and issued shares are zero; redeemable NCI remains a separate outside-owner claim",
+    }),
+    "DVA": MappingProxyType({
+        "schema_version": SCHEMA, "version": VERSION, "ticker": "DVA", "cik": "0000927066",
+        "mode": "reported_zero", "current_carrying_local_name": "PreferredStockValue",
+        "current_shares_local_name": "PreferredStockSharesIssued",
+        "treatment": "current preferred equity is zero only when reported carrying value and issued shares are zero; redeemable NCI remains a separate outside-owner claim",
+    }),
+    "EW": MappingProxyType({
+        "schema_version": SCHEMA, "version": VERSION, "ticker": "EW", "cik": "0001099800",
+        "mode": "reported_zero", "current_carrying_local_name": "PreferredStockValue",
+        "current_shares_local_name": "PreferredStockSharesOutstanding",
+        "treatment": "current preferred equity is zero only when reported carrying value and outstanding shares are zero; authorized shares are not a claim",
+    }),
+    "PH": MappingProxyType({
+        "schema_version": SCHEMA, "version": VERSION, "ticker": "PH", "cik": "0000076334",
+        "mode": "reported_zero", "current_carrying_local_name": "PreferredStockValue",
+        "current_shares_local_name": "PreferredStockSharesIssued",
+        "treatment": "current preferred equity is zero only when reported carrying value and issued shares are zero; NCI and acquisition funding remain separate",
     }),
     "WMB": MappingProxyType({
         "schema_version": SCHEMA, "version": VERSION, "ticker": "WMB", "cik": "0000107263",

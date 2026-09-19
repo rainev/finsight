@@ -165,6 +165,20 @@ def load_frozen_registry(
     )
 
 
+def load_runtime_registry(root: Path) -> FrozenRegistry:
+    """Bind runtime membership to its immutable baseline, not a legacy count."""
+    root=Path(root).resolve()
+    baseline=load_catalog_version(root/'baseline')
+    registry=load_frozen_registry(root/'registry.json',expected_count=len(baseline.entries))
+    if registry.baseline_manifest_sha256 != baseline.manifest_sha256:
+        raise CatalogIntegrityError('runtime registry baseline manifest drift')
+    if registry.baseline_catalog_version != baseline.catalog_version:
+        raise CatalogIntegrityError('runtime registry baseline version drift')
+    if {(e.ticker,e.cik,e.batch) for e in registry.entries} != {(e.ticker,e.cik,e.batch) for e in baseline.entries}:
+        raise CatalogIntegrityError('runtime registry baseline membership drift')
+    return registry
+
+
 def _coerce_registry(
     registry: FrozenRegistry | Path | Mapping[str, Any],
     *,

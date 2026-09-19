@@ -14,7 +14,7 @@ from .catalog import canonical_json_bytes, sha256_bytes, load_catalog_version, a
 from .calculation_recipe import evaluate_recipe, recipe_hash
 from .calculator import baseline_version
 from .refresh_bindings import bind_current_recipe, EconomicException, AcquisitionIncomplete
-from .refresh_catalog_store import RefreshCatalogStore, load_frozen_registry, load_retry_states
+from .refresh_catalog_store import RefreshCatalogStore, load_frozen_registry, load_retry_states, load_runtime_registry
 from .sec_client import SecClient
 from .artifacts import sanitize_public_artifact
 from .reliability import assess_reliability
@@ -149,7 +149,7 @@ def writer(root: Path):
 
 
 def preflight(root: Path) -> dict:
-    frozen_registry = load_frozen_registry(root / 'registry.json')
+    frozen_registry = load_runtime_registry(root)
     registry = json.loads((root / 'registry.json').read_text())
     baseline = load_catalog_version(root / 'baseline')
     if {(e.ticker, e.cik, e.batch) for e in frozen_registry.entries} != {(e.ticker, e.cik, e.batch) for e in baseline.entries}:
@@ -312,16 +312,29 @@ def capture(root: Path, registry: dict, cutoff: str, user_agent: str, *, acquisi
                         # is not a temporary download failure.
                         packets[entry['ticker']]['normalization_review_required'] = str(exc)
                 if policy.get('narrative_evidence_policy'):
-                    from .refresh_narrative_evidence import extract_narrative_evidence
+                    from .refresh_narrative_evidence import (
+                        extract_narrative_evidence, validate_narrative_evidence,
+                    )
                     packet=packets[entry['ticker']]
-                    accession=(packet.get('controlling_filing') or {}).get('accessionNumber')
-                    receipts=[row for row in packet.get('structural_receipts',[]) if row.get('accession')==accession]
-                    if len(receipts)!=1:
-                        raise ValueError('current narrative filing package is missing or ambiguous')
-                    entrypoint=Path(str(receipts[0].get('path',''))).resolve()
-                    package_manifest=entrypoint.parent/'package-manifest.json'
-                    packet['narrative_evidence']=extract_narrative_evidence(
-                        policy['narrative_evidence_policy'],package_manifest,source_root=(root/'source-cache').resolve())
+                    narrative_policy=policy['narrative_evidence_policy']
+                    if narrative_policy.get('source_role')=='event_filing':
+                        receipt_path=root/'narrative-evidence'/f"{entry['ticker']}.json"
+                        if not receipt_path.is_file():
+                            raise ValueError('approved event narrative receipt is not captured')
+                        stored=json.loads(receipt_path.read_bytes())
+                        packet['narrative_evidence']=validate_narrative_evidence(
+                            stored,narrative_policy,source_root=root.parent.resolve())
+                        packet['_narrative_source_root']=str(root.parent.resolve())
+                    else:
+                        accession=(packet.get('controlling_filing') or {}).get('accessionNumber')
+                        receipts=[row for row in packet.get('structural_receipts',[]) if row.get('accession')==accession]
+                        if len(receipts)!=1:
+                            raise ValueError('current narrative filing package is missing or ambiguous')
+                        entrypoint=Path(str(receipts[0].get('path',''))).resolve()
+                        package_manifest=entrypoint.parent/'package-manifest.json'
+                        packet['narrative_evidence']=extract_narrative_evidence(
+                            narrative_policy,package_manifest,source_root=(root/'source-cache').resolve())
+                        packet['_narrative_source_root']=str((root/'source-cache').resolve())
         except (OSError, RuntimeError, ValueError) as exc:
             cause = exc
             for _ in range(8):
@@ -456,6 +469,16 @@ def refreshed_public(public: dict, recipe: dict, valued: dict, ledger: dict, cut
             margins = ledger['margin_stress']['effective_margins']
             assumptions.update(cash_conversion_margin=margins['base'],cash_conversion_margin_low=margins['bear'],cash_conversion_margin_high=margins['bull'])
             value['normalization_explanation'] += ' Scenario cash-conversion haircuts are applied after historical normalization. They are governed assumptions, not reported working-capital corrections; the source cash flows are unchanged.'
+        if normalization.get('governed_margin_policy'):
+            margins=normalization['governed_cash_conversion_margin']
+            assumptions.update(cash_conversion_margin=margins['base'],cash_conversion_margin_low=margins['low'],
+                cash_conversion_margin_high=margins['high'],normalization_basis='explicit versioned governed post-capex margins',
+                assumption_source_mix='reported cash/history diagnostics and separately governed cash margins')
+            value['normalization_explanation']=(
+                'The starting scenario cash uses retained, versioned post-total-capex margin assumptions applied to current reported revenue. '
+                'These margins are not reported results or historical medians. Reported operating cash flow, investing capex, financing, taxes '
+                'and all negative annual observations remain separate source diagnostics. Source validity requires current reinvestment '
+                'and funding scope to reconcile; no maintenance/growth split, unusual-item addback or parameter tuning is inferred.')
     elif ledger.get('recipe_engine') == 'residual_income':
         value['normalization_explanation'] = ('Starts with reported parent equity less evidenced preferred claims and current reported diluted shares. '
             'Common earnings/equity history informs the return-on-equity range when comparable; otherwise the approved scenario-specific ROE assumptions remain explicit. '
@@ -488,6 +511,11 @@ def refreshed_public(public: dict, recipe: dict, valued: dict, ledger: dict, cut
     value['review']['warnings'] = [
         'Source-refreshed valuation under versioned model assumptions; the scenario range is not a statistical confidence interval.',
         *normalization.get('limitations', []),
+        *ledger.get('event_review',{}).get('limitations',[]),
+        *(ledger.get('normalized_bridge',{}).get('approved_share_basis',{}).get('limitations',[])
+            if ledger.get('normalized_bridge',{}).get('approved_share_basis') else []),
+        *(['Approved cash-only bridge: other investments and restricted cash are excluded from the modeled addition, not asserted to be zero. NCI reporting precision is retained as a separate bound.']
+          if ledger.get('normalized_bridge',{}).get('approved_cash_only_scope') else []),
         *((ledger['bridge_quality']['warning'],) if ledger.get('bridge_quality', {}).get('warning') else ()),
     ]
     sanitized = sanitize_public_artifact(value)
@@ -522,10 +550,10 @@ def execute(root: Path, *, mode: str, cutoff: str | None = None, snapshot: str |
     with writer(root):
         registry_raw = (root / 'registry.json').read_bytes()
         registry = json.loads(registry_raw)
-        registry_contract = load_frozen_registry(root / 'registry.json')
+        registry_contract = load_runtime_registry(root)
         if registry_contract.registry_sha256 != sha256_bytes(registry_raw):
             raise ValueError('registry changed during refresh startup')
-        store = RefreshCatalogStore(root / 'catalogs', frozen_registry=registry_contract)
+        store = RefreshCatalogStore(root / 'catalogs', frozen_registry=registry_contract,expected_registry_count=len(registry_contract.entries))
         if mode == 'replay':
             if not snapshot or len(snapshot) != 64 or any(c not in '0123456789abcdef' for c in snapshot): raise ValueError('safe snapshot run id required')
             frozen = json.loads((root / 'runs' / snapshot / 'input.json').read_text())

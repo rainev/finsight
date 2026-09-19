@@ -9,7 +9,7 @@ import pytest
 from app.us_valuation import refresh_job
 from app.us_valuation.artifacts import sanitize_public_artifact
 from app.us_valuation.calculator import baseline_version
-from app.us_valuation.catalog import canonical_json_bytes, load_catalog_version
+from app.us_valuation.catalog import CatalogIntegrityError, canonical_json_bytes, load_catalog_version
 from app.us_valuation.refresh_catalog_store import REFRESH_REGISTRY_SCHEMA, load_frozen_registry
 
 
@@ -158,8 +158,8 @@ def test_predecessor_artifact_is_retained_on_known_outage(
     monkeypatch.setattr(refresh_job, 'preflight', lambda root: {'numeric_count': 1, 'recipe_ready_count': 1, 'refresh_ready_count': 1})
     monkeypatch.setattr(
         refresh_job,
-        "load_frozen_registry",
-        lambda path: load_frozen_registry(path, expected_count=1),
+        "load_runtime_registry",
+        lambda root: load_frozen_registry(root / "registry.json", expected_count=1),
     )
     report = refresh_job.execute(
         runtime,
@@ -208,16 +208,20 @@ def test_capture_contains_unexpected_provider_corruption_per_issuer(tmp_path: Pa
     assert failure['http_status'] is None
 
 
-def test_preflight_requires_exact_frozen_440_registry(tmp_path: Path) -> None:
+def test_preflight_requires_registry_count_to_match_frozen_baseline(tmp_path: Path) -> None:
     runtime, _ = _tiny_runtime(tmp_path)
 
-    with pytest.raises(ValueError, match='440'):
+    with pytest.raises(CatalogIntegrityError, match='expected 100 entries, got 1'):
         refresh_job.preflight(runtime)
 
 
 def test_preflight_reconciles_registry_identity_to_predecessor(tmp_path: Path, monkeypatch) -> None:
     runtime, _ = _tiny_runtime(tmp_path, cik="0000000001")
 
-    monkeypatch.setattr(refresh_job, 'load_frozen_registry', lambda path: load_frozen_registry(path, expected_count=1))
+    monkeypatch.setattr(
+        refresh_job,
+        'load_runtime_registry',
+        lambda root: load_frozen_registry(root / 'registry.json', expected_count=1),
+    )
     with pytest.raises(ValueError, match='identity'):
         refresh_job.preflight(runtime)

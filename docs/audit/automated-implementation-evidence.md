@@ -1,6 +1,391 @@
 # Automated U.S. valuation implementation evidence
 
-Status on 2026-09-09: **not done yet**. These are partial implementation results, not rollout acceptance. No production activation, deployment, merge, push, schedule, paid source or AI runtime was added.
+Status on 2026-09-12: **not done yet**. These are partial implementation results,
+not rollout acceptance. WG15 invoked no production activation, deployment,
+merge, push, schedule, paid source or AI runtime. The shared branch moved
+externally to pushed Batch 50 commit `4fa0a64` during the run; the WG15 audit
+records which files were already included and which evidence notes remain
+uncommitted.
+
+## Latest continuation, 2026-09-19
+
+- WG40 separates BIIB's appealed124.3M Genentech judgment from the source-bound
+  273.5M acquisition claim and retires the unsupported100%/50%/0% legal
+  sensitivity. Current cash1285M, debt800+7290.3=8090.3M, Apellis consideration/
+  funding/product revenue/integration evidence bind; legal accrual/payment/
+  interest/recovery, comparable acquired cash, exclusive integration payments
+  and RayThera cutoff status remain unknown. No successor; historical values
+  unchanged. Explicit preferred-zero proof prevents legacy/new claim double
+  counting. Frozen repeat preserves GILD/INCY candidates; focused134,
+  independent final25, broad811 and isolated440-record API/calculator parity pass.
+  Register440/419/285 compiled,134 coding gaps,197 financial/
+  169 source flags,437 rechecks,2 current candidates,0 successive proof. No
+  release action. [WG40 evidence](wg40-biib-legal-apellis-scope.md).
+
+- WG39 turns the GILD/INCY WG38 blockers into two current-version source-bound
+  Low candidates. GILD binds $3.179B cash, $26.246B total debt containing the
+  $1.077B royalty component, zero valuation NCI and $337M separate acquisition
+  claim; financing reductions33M+2750M reconcile to2783M repayments. Candidate
+  50.84725647933317/90.53884458037521/155.4654607530073. INCY binds3982.375M
+  cash+553.365M current AFS,32.679M leases, zero NCI/preferred,102M claim and
+  -1250M dated Vega cash; structural TTM interest is2428+1151-1254=2325K.
+  Candidate49.655920876512866/96.2418217177929/150.63899303483984. Frozen repeat,
+  focused138, independent197, broad803, and two real isolated API/calculator
+  activation/reload/stale-CAS/rollback paths pass. Register440/419/285 compiled,
+  134 coding gaps,197 financial/169 source flags,438 rechecks,2 current source-
+  bound candidates,0 successive proof. No release action.
+  [WG39 evidence](wg39-pharma-current-bridge.md).
+
+- WG38 implements a reusable pharmaceutical contingent-claim ledger for BIIB,
+  GILD and INCY. Recognized carrying liabilities reconcile once across
+  aggregate, Level-3 and component views; CVR/milestone ceilings, paid cash,
+  litigation and royalty scopes remain separate. BIIB $273.5M stays blocked by
+  the separate $124.3M judgment scope; GILD reconciles a $337M acquisition
+  subclaim but its separate $1.1B carrying/$700M fair-value royalty scope and
+  current bridge remain incomplete; INCY binds $102M and a separate -$1.25B post-period cash
+  adjustment but its bridge remains incomplete. No successor or value change.
+  Compilation is285 with134 coding gaps; current register financial/source/
+  recheck flags199/171/437 are overlapping accumulated diagnostics, not release
+  readiness. Frozen two-worker repeat, focused40, broad795, independent final10
+  and isolated440-record API parity pass. No release action.
+  [WG38 evidence](wg38-pharma-contingent-claims.md).
+
+- WG37 explicitly authorized HON 8-K/exhibit capture completed2/2; corrected the
+  SEC index-type trap and produced byte-identical canonical/offline receipts for
+  nine selected directly linked relevant documents. Pro forma March balance and
+  multi-year continuing earnings, HON-only Q2 cash, FY guidance, intergroup/
+  cash-distribution/trademark terms bind exactly. Dates and event perimeters do
+  not form a current post-close enterprise bridge, so all values remain unchanged
+  and no successor issues. Focused36/independent9/broad811, frozen repeat and
+  isolated API pass. Register stays440/419,282 compiled/137 coding gaps,196
+  financial/168 source flags,434 rechecks and zero successive proof. No release
+  action. [WG37 evidence](wg37-hon-closing-agreements.md).
+
+- WG36 binds HON actual accounting close, calendar reporting label, completed
+  separation and already adjusted shares to one hashed narrative/structural
+  source. Acquisition price, pending allocation, trademark receipts/conditional
+  reimbursements and Quantinuum noncash deconsolidation remain separate. Cached
+  HONA allocations/pooling do not establish current parent FCFF. Source rule and
+  blocking safeguards verified; full reconciliation remains required. Focused25,
+  independent14, broad802 pass; frozen HON/HCA repeat and six-company real isolated
+  API parity pass. Values unchanged, no successor. Register440/419,282 compiled,
+  137 coding gaps,196 financial/168 source flags,434 rechecks; no release action.
+  [WG36 evidence](wg36-hon-separation-scope.md).
+
+- WG35 captured/parsed both explicitly authorized HCA annuals and reproduced the
+  capture offline byte-for-byte without serving changes. Annual gross/current/
+  noncurrent reserves, recognized reinsurance, provisions and paid-claim
+  rollforwards reconcile exactly; historical recurring claims stay in OCF.
+  Current multi-year runoff, current reserve/reinsurance split and premiums remain
+  incomplete, so1464/732/0M sensitivity and all values stay unchanged. Independent
+  final focused22, stable broad788, frozen repeat and isolated API pass.
+  Register stays440/419/282 compiled/137 coding gaps,196 financial/168 source
+  flags,435 rechecks and zero successive certifications. No numeric successor.
+  [WG35 evidence](wg35-hca-annual-professional-liability-cash.md).
+
+- WG34 cached HCA professional-liability ledger implemented, not full refresh.
+  Balance line1464M/comparative1466M; narrative insurer104M+self-insured1892M=
+  1996M; next12 net573M/retained532M; dedicated investments519M=current117M+
+  noncurrent402M. The1996−1464=532 equality stays inference-only, not tagged
+  current reserve. Reinsurance amount/payments timing absent; no recovery/cash
+  addback. Independent review rejected blanket reserve removal; legacy100/50/0
+  noncurrent sensitivity preserved/relabelled, all values unchanged. Reviewer
+  required the five-year OCF inventory to fail closed at four; primary corrected.
+  Focused15, independent15, stable broad781 (one existing warning), repeated
+  frozen workers and isolated six-name API parity pass. Register remains440/419,
+  282 compiled/137 coding gaps,196 financial/168 source flags,435 rechecks and
+  zero successive certifications. No numeric successor; narrow gate user-confirmed.
+  [WG34 evidence](wg34-hca-professional-liability-overlap.md).
+
+- WG33 governed MCK ownership proxy implemented, not full refresh. Current
+  ordinary376M+redeemable2563M=2939M approved once as reported carrying proxy
+  against consolidated enterprise cash, not contract intrinsic value. Conditional
+  legal5164M remains signed separate claim; semantic split of legacy8103M to
+  preferred0/NCI2939M/nonop-5164M reproduces all scenarios exactly. Core525M,
+  Apollo1.25B/13B, annual87M/122M, current293M/81M and proceeds1238M remain
+  nonadditive. No numeric successor. Independent review found promoted-flag/
+  offset-component gaps, primary corrected exact false/qname/value/source-total
+  guards. Focused70, independent17, stable broad766 (one existing warning) and
+  isolated API pass. Narrow gate user-confirmed; full MCK remains
+  implementation_gap. [WG33 evidence](wg33-mck-governed-rni-carrying.md).
+
+- WG32 user-approved official public source capture completed6/6 after explicit
+  contact-egress approval. Exact URLs/dates/types/cutoff/bytes/hashes frozen;
+  source receipt runs inside two workers. Two vintages prove Core five-year put/
+  75% initial-fair-value floor;700M initial gives525M arithmetic lower bound,
+  not current claim. Annual87M/122M historical adjustments stay separate.
+  Apollo1.25B/13%/13B enterprise transaction descriptor is not intrinsic/current
+  claim/conversion/dilution/cash. Executed agreements/current components/Monte
+  Carlo inputs absent. Exact official identity guard and substitution negative
+  added. Focused55, independent final8, stable broad749 (one existing warning)
+  and isolated six-name API parity pass. Narrow gate verified, confirmation
+  needed. Narrow WG32 gate user-confirmed. Exact historical valuations unchanged, no numeric/unavailable successor
+  or release action. [WG32 evidence](wg32-mck-public-contract-evidence.md).
+
+- WG31 source carrying/ownership rollforward and mechanism gate user-confirmed,
+  not completed MCK refresh. Reported ordinary376M/RNI2563M,
+  net financing1238M and redemption293M+81M bound without added claims/cash or
+  parent13% dilution. Core5-year cadence is not first exercise date. Executed
+  preferred/put terms and current components not captured; economic outcomesNone.
+  WG30 receipt bytes preserved in history; actual cash/funding/allocation/legal
+  and all prior-company gaps required. Independent challenge found QName and
+  duplicate-role holes, primary reproduced/fixed via parser canonicalizer and
+  every-row role checks. Final independent21, focused59, stable739 pass (one
+  existing warning,817.40s), frozen repeat and six-name PostgreSQL-backed API
+  parity pass. Exact historical values unchanged; no numeric candidate, unavailable
+  conversion, network, UI/save behavior change or release action. See
+  [WG31 receipts](wg31-mck-subsidiary-ownership-scope.md).
+
+- WG30 scoped cached MCK settlement payment binds narrative and XBRL facts;
+  paired payment-only cash $4.668B/legal claim $5.164B leaves net change zero.
+  Actual post-period cash/liability unknown, securities and full preferred/put/
+  legal/acquisition economics remain required. No updated numeric successor,
+  old valuation changes zero; main MCK/LHX implementation gaps retained.
+  Final54 focused source/engine checks and six-name isolated PostgreSQL-backed
+  API/calculator parity pass. Independent challenge found and primary corrected
+  nearby-quarter acceptance using independent EPS period, retaining allocation/
+  funding blockers. Final independent24 and stable718 checks pass, one existing
+  warning; frozen repeat identical. Narrow gate user-confirmed;
+  no full MCK/company refresh. [WG30 evidence](wg30-mck-ownership-opioid-bridge.md).
+
+- WG29 explicitly authorized two LHX annual packages, latest first. Real SEC
+  capture/offline Arelle parsed 2/2; failed sandbox receipt retained. Cached
+  replay reports byte-identical. Reusable private annual evidence binds related
+  balances/terms, complete package hashes and current-Q overlap in frozen flow.
+  Latest annual adds conditional discounting/capitalization policy, not cash
+  payment timing or permission to net a claim. Main LHX/MCK gaps retained, exact
+  official valuation changes zero. Final 54 focused checks and isolated six-company
+  PostgreSQL-backed API/calculator parity pass; final stable broad 694 checks pass,
+  one existing warning. Independent Luna High source/economic and final 24-check
+  guard review pass; primary verifies cutoff/resource corrections firsthand.
+  Narrow WG29 result user-confirmed. No full cash
+  overlap or numeric successor claimed. [WG29 evidence](wg29-annual-environmental-cash-evidence.md).
+
+- WG28 related environmental source ledger and blocked-update gate user-confirmed;
+  full LHX cash overlap remains required. Current
+  reported liability $660M/recovery $485M share source scope; $175M is diagnostic
+  only, not PV/claim/cash. Missing payment/timing stays unknown, annual OCF
+  unchanged, legacy deduction and preferred basis retained. Recent annual raw
+  packages not captured, not proven unreported. Independent Luna High challenge
+  (12 checks) found no required current correction; primary confirmed findings.
+- Stable 670 checks, focused 30 checks, byte-identical frozen two-worker report
+  and isolated six-name PostgreSQL-backed API/calculator parity pass. No new
+  numeric successor or unavailable conversion; exact LHX/MCK changes zero.
+  UI/save/model behavior unchanged, browser/save/activation/reload/rollback not
+  repeated or claimed. Rebuilt register 440 companies/419 recipes, 282 compiled,
+  137 coding gaps, 196 financial flags, 168 source flags, 436 needing recheck,
+  zero current full numeric/successive certifications. These overlap, not an
+  overall completion percentage. [WG28 receipts](wg28-environmental-forward-cash-overlap.md).
+
+- WG27 narrow accounting/economic-safety gate user-confirmed 2026-09-16;
+  full LHX economic preferred value not approved. Initial1386M allocation,
+  host968M rollforward and973M net cash reconcile. Current130M/186M derivatives
+  separate;1284M accounting exposure NOT intrinsic claim. Cash/dilution/host-feature
+  overlap guarded, program386M noncash/20-year milestone amortization not surplus
+  cash, reported parent shares locked with no subsidiary-percent substitution.
+  Main LHX/MCK implementation gaps and old prices/deductions remain unchanged.
+- Stable final658 checks and independent18 tests pass; earlier mixed-version
+  broad failures not acceptance. Real frozen current ledger/repeat and isolated
+  six-name PostgreSQL-backed API/calculator parity pass. No public UI/save change;
+  browser/save/activation/reload/rollback not claimed. Current register440/419,
+  282 compiled/137 coding gaps,196 financial reviews,168 source gaps,436 needs
+  recheck,zero current numeric/successive proofs. All source/economic/operational
+  gaps remain required; no release actions. See [WG27 evidence](wg27-subsidiary-preferred-bridge.md).
+
+- WG26 narrow carrying/alias source gate verified and user-confirmed, not
+  full claim-stack completion. LHX $968M current preferred carrying and temporary
+  alias count once, $1.422B redemption separate. MCK only shares the typed alias
+  primitive: $376M ordinary + $2.563B redeemable, dimensional alias not added.
+  Dissent about full LHX preferred mechanism resolved against actual code; no
+  conversion/redemption rule applied to MCK. Both main rows implementation_gap.
+- Exact legacy reclassification preserves all remaining $660M/$5.164B deductions
+  and cash history; official valuation changes zero, no numerical successor or
+  unavailable conversion. Current 640 checks, independent final14 guard tests,
+  repeated frozen two-worker and isolated six-company API parity pass. No public
+  UI/save change, so browser/save/activation/reload/rollback not claimed.
+  Register: 440/419/282 compiled/137 coding gaps,196 financial reviews,168 source
+  gaps,436 needs_recheck,zero current numeric/successive proofs. WG26-S1/H1,
+  WG25-S1/O1 and HCA/HON required work remain. See
+  [WG26 evidence](wg26-redeemable-ownership-stack.md).
+
+- WG25 source ledger/blocked-update gate verified and user-confirmed, not
+  completed lease/debt reconciliation. INTC/JBL cash, noncash disclosures,
+  current carrying and new-only schedules remain separate; missing closing
+  balances/debt overlap cannot become zero or extra deductions. Exact official
+  changes 0/0/0 for both, no successor/unavailable conversion. 626 current
+  checks pass, two independent Luna High challenges clear final deltas; primary
+  checked actual financial reason text and corrected frozen narrative-root handoff.
+- Frozen two-worker replay and real PostgreSQL-backed isolated API parity for
+  INTC/JBL/LHX/MCK/HCA/HON pass. No changed public UI/save or candidate existed;
+  browser/save/activation/reload/rollback not claimed. External temporary output-
+  root portability failure is operational backlog, not waived. Register remains
+  440/419/282 compiled/137 coding gaps, 196 financial reviews, 168 source gaps,
+  438 needs_recheck, zero current numeric source-bound/successive-period proofs.
+  Source/economic gaps remain required work. See
+  [WG25 evidence](wg25-lease-capital-payment-overlap.md).
+
+- WG24 narrow governed-margin migration/exception gate verified; user confirmation
+  received 2026-09-15. Independent Luna High final code/delta review found no material defect;
+  primary verified findings. INTC exact 3%/7%/12% assumptions remain separate from reported cash,
+  taxes and five annual observations/four negative years. Gross-interest alias
+  lineage and bear-only floor replay exactly: `0.0 / 3.001327108470505 / 16.50488639459598`.
+  No numeric successor or official value change. Separate financing-capital
+  payments, cash/AFS overlap and special-situation economic validity remain
+  required review; no missing input becomes zero or unavailable.
+- 609 final current-version broad tests passed; frozen two-worker INTC/JBL flow returned named reviews
+  twice with identical frozen report. Real PostgreSQL-backed isolated API
+  detail/default-calculator parity held for INTC/JBL/LHX/MCK/HCA/HON. No public
+  UI/save behavior changed; no browser/persistence-save or activation/reload/
+  rollback test is claimed this group. Register: 440 companies, 419 recipes,
+  282 compiled, 137 implementation gaps, 196 financial review, 168 source gaps,
+  438 needs_recheck, zero current-snapshot numeric source-bound and zero
+  successive-period proofs. See [WG24 evidence](wg24-governed-cash-margin-normalization.md).
+
+- WG23 ordinary-NCI exception/classification gate is verified; confirmation
+  received 2026-09-15. JBL $4M and INTC $15.601B NCI reconcile, including INTC's disjoint
+  subsidiaries. JBL still lacks full lease carrying/timing/overlap evidence;
+  INTC still requires its explicit governed-margin normalization rule. LHX and
+  MCK have distinct redeemable/mixed claim stacks and are excluded only from
+  this mechanism. No numeric successor or valuation change was issued.
+- Frozen two-worker flow reproduced one review/one implementation gap; 595
+  broad tests passed, two independent Luna High reviews completed, primary
+  rechecked sources and 25 focused tests passed. Real isolated API detail/
+  calculator parity held for all four. Current register: 281 compiled, 138
+  implementation gaps, 195 financial reviews, 167 source gaps, zero current-
+  snapshot numeric source-bound results and zero successive-period proofs.
+  This +1 coded JBL review contract is not a working numerical refresh. See
+  [WG23 evidence](wg23-ordinary-nci-carrying-leftovers.md).
+
+- WG22 remaining ordinary-NCI mappings are verified and user-confirmed
+  2026-09-15. Luna High completed the independent challenge with no material defect;
+  primary raw/structural-source replay reproduced the same snapshot and 48
+  focused checks passed without implementation changes. ETN produced one
+  current-source-bound candidate; HCA/HON have verified NCI but deliberately
+  retain their professional-liability/separation implementation gaps. EFX and
+  GEHC were excluded from this ordinary-only mechanism due redeemable NCI.
+- ETN candidate low/base/high is
+  `42.46743340009923 / 104.64533688527396 / 193.381497547478`, changes of
+  `+0.02688092809476217 / +0.05225679722971677 / -0.11175008121358587`.
+  The $45M NCI reclassification is neutral; its separate $32M acquisition
+  carrying claim is now included once. The final two-worker flow reproduced one
+  candidate/two implementation gaps. ETN passed isolated real API/database
+  activation/reload/rollback; all four blocked/excluded names retained exact
+  detail/calculator parity. Final broad regression: 595 passed, one existing
+  warning. Current register: 280 compiled, 139 implementation gaps, 194 financial
+  reviews, 166 source gaps and zero successive-period proofs. See
+  [WG22 evidence](wg22-ordinary-nci-mappings.md).
+
+- WG21 post-close acquisition funding-overlay gate is implementation-verified
+  and user-confirmed 2026-09-15. ECL is current-source-bound; PH now has an
+  executable contract but remains explicit source/economic review because its
+  residual funding and post-close cash/debt/share/operating state are not
+  reported.
+- ECL's candidate low/base/high range is
+  `34.06202191416534 / 78.07933916802813 / 129.30056823405633`, changes of
+  `+0.3118407506416574 / -0.4456446517833399 / -2.718276971061897`.
+  PH issued no candidate and its official change is zero. The frozen two-worker
+  group reproduced both classifications, ECL passed isolated activation/reload/
+  rollback, PH retained exact API/calculator parity, and 585 focused tests
+  passed. Current state: 279 compiled, 140 implementation gaps, one current-
+  policy source-bound result in the latest group and zero successive-period
+  proofs. See [WG21 evidence](wg21-post-close-acquisition-funding-overlays.md).
+
+- WG20 remaining NCI/acquisition special-situation gate is implementation-
+  verified and user-confirmed. TEL and CRWD are current-source-bound;
+  PH remains a separate post-close transaction/funding-overlay implementation
+  gap rather than being forced into the shared carrying-liability rule.
+- Candidate low/base/high ranges are TEL
+  `75.85809069100424 / 154.37537351621745 / 262.2274770122707` and CRWD
+  `89.74846127341807 / 157.4598776814252 / 252.3702679976996`.
+  Claim reclassification preserves each prior claim total exactly. The frozen
+  two-worker group reproduced both candidates, both passed isolated
+  activation/reload/rollback, and 220 focused tests passed. Current state: 277
+  compiled, 142 implementation gaps, two current-policy source-bound results in
+  the latest group and zero successive-period proofs. See
+  [WG20 evidence](wg20-nci-acquisition-special-situations.md).
+
+- WG19 mixed ordinary-NCI claim gate is implementation-verified and
+  user-confirmed. HSIC and ON are current-source-bound; ZBH moved from an
+  implementation gap into explicit financial review, and TEL was excluded
+  because it has redeemable NCI but no ordinary-NCI carrying balance.
+- Candidate low/base/high ranges are HSIC
+  `10.04677146296533 / 41.80384239253465 / 66.57011644761013` and ON
+  `15.586060539083345 / 24.319732703848125 / 55.715274446602756`.
+  ZBH issued no candidate because distributor/tax exposure remains unbounded.
+  The frozen two-worker group reproduced two candidates and one review; both
+  candidates passed isolated activation/reload/rollback and ZBH preserved exact
+  API/calculator parity. Focused regression: 198 passed. Current state: 275
+  compiled, 144 implementation gaps, two current-policy source-bound results in
+  the latest group and zero successive-period proofs. See
+  [WG19 evidence](wg19-mixed-ordinary-nci-claim-stacks.md).
+
+- WG18 ordinary-NCI/acquisition carrying-claim gate is implementation-verified
+  and user-confirmed. GLW, MDT and PFE are current-source-bound on
+  one frozen implementation/policy snapshot. Their current NCI and acquisition
+  claims are respectively $567M + $156M, $609M + $163M, and $302M + $2.259B.
+  MDT's separate $200M operating legal accrual is no longer deducted twice.
+- Candidate low/base/high ranges are GLW
+  `3.3832508772483743 / 15.282530866244509 / 31.817188337275947`, MDT
+  `30.870846235865745 / 55.739197524880744 / 79.36607325501032`, and PFE
+  `5.516414408100449 / 14.95295334390251 / 33.83719063801446`. The frozen
+  two-worker group produced three source-bound results. Each company passed an
+  isolated real FastAPI/database activation, reload, stale-CAS rejection and
+  rollback. Current state: 272 compiled, 147 implementation gaps, three
+  current-policy source-bound results, and zero successive-period proofs. See
+  [WG18 evidence](wg18-ordinary-nci-acquisition-claims.md).
+
+- WG17 ordinary/redeemable-NCI and contingent-claim gate is implementation-
+  verified and user-confirmed. DVA and CRL have compiled source
+  mechanisms but remain source/economic review; ZBH was excluded because it has
+  no current redeemable-NCI balance. DVA's $39.463M acquisition obligation is
+  already inside aggregate debt and its $200M Elara event lacks a rollforward.
+  CRL's $105M deferred consideration has unresolved cash overlap and its
+  securities/derivative tail is unbounded.
+- No successor valuation was issued, so exact official change is zero for DVA,
+  CRL and ZBH. Frozen two-worker group
+  `output/us-refresh-group-verification/fdb10eeb8552f38a1bf9ed6d74d5a226ba05d88759ab7aea76f9fabb9e84b884/report.json`
+  produced two source/economic reviews and one implementation gap. The isolated
+  API served exact prior detail/calculator parity for all three and retained 440
+  companies with no activation. Focused regression: 172 passed. Current state:
+  269 compiled, 150 implementation gaps, zero current-policy source-bound
+  results in this latest group and zero successive-period proofs. See
+  [WG17 evidence](wg17-nci-redeemable-contingent-claims.md).
+
+- WG16 NCI/acquisition/litigation overlap gate is implementation-verified and
+  user-confirmed. DGX binds $383M ordinary/redeemable NCI and $100M
+  contingent consideration while keeping $174M malpractice and $17M legal
+  reserves inside operating cash conversion. BSX's current claim components
+  reconcile but its post-period restructuring cash lacks a timed schedule. EW's
+  $9.9M aggregate contingent carrying value and $56.9M reserve reconcile, but
+  unaccrued patent, milestone, appeal and tax exposure remains unbounded.
+- DGX changes `60.392900977119275 / 146.04096163084048 /
+  288.50140798514724` to `53.97122682607165 / 139.2569970055438 /
+  278.9208215655317`. Frozen two-worker group
+  `output/us-refresh-group-verification/57fbccd5d710025ed884792d45a53ab82662728fb60ac7b7c29a04a25cd5d453/report.json`
+  produced one bound candidate, one implementation gap and one source/economic
+  review. DGX isolated API/database activation, reload, stale-CAS rejection and
+  rollback passed with production untouched. Focused regression: 163 passed.
+  Current state: 267 compiled, 152 implementation gaps, one current-policy
+  source-bound result and zero successive-period proofs. See
+  [WG16 evidence](wg16-nci-acquisition-litigation-overlaps.md).
+
+- WG15 NCI/contingent/legal gate is implementation-verified and user-confirmed.
+  ABT binds $652M NCI, $263M contingent consideration and a $510M
+  legal/environmental accrual separately, with its filed Exact Sciences
+  pro-forma revenue feeding the forecast scale. BAX's $105M claim stack and
+  negative-NCI treatment compile but its cash/securities bridge remains review.
+  BA's $15M NCI is source-separable, while mandatory-convertible preferred and
+  legal/guarantee mechanisms remain an implementation gap.
+- ABT changes `29.689388909506913 / 58.20809920073297 /
+  89.65169838253692` to `30.395758666637082 / 58.139498474687564 /
+  87.30738903369902`. Frozen two-worker group
+  `output/us-refresh-group-verification/01edc57c62b6947e045abadb40ebc33a443bce75c11fdc491178ec82a6394d8b/report.json`
+  produced one bound candidate, one source/economic review and one implementation
+  gap. ABT isolated API/database activation, reload, stale-CAS rejection and
+  rollback passed with production untouched. Focused regression: 150 passed.
+  Current state: 265 compiled, 154 implementation gaps, 1 current-policy
+  source-bound result and 0 successive-period proofs. See
+  [WG15 evidence](wg15-nci-mixed-contingent-legal-claims.md).
 
 ## Latest continuation, 2026-09-09
 

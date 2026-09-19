@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 def _source(ticker: str, qnames: tuple[str, ...]) -> tuple[dict, str, str]:
     recipe = json.loads((ROOT / "output/us-refresh-runtime/recipes" / f"{ticker}.json").read_text())
     private = json.loads(Path(recipe["provenance"]["source_path"]).read_text())
-    value = private.get("history_backed") or private.get("recovery") or private
+    value = private.get("history_backed") or private.get("recovery") or private.get("whole_repair") or private
     filing = value["source_ledger"]["controlling_filing"]
     accession, period = filing["accession"], filing["period_end"]
     for path in sorted((ROOT / "output").glob(f"**/{ticker}/structural-filing.json")):
@@ -260,6 +260,46 @@ def test_reported_nci_prebridge_binding_rejects_policy_tampering():
     with pytest.raises(ClaimScopeReviewRequired,match='identity/version mismatch'):
         reported_nci_field_availability(ticker=ticker,policy=policy,
             structural_packet=structural,accession=accession,period_end=period)
+
+
+@pytest.mark.parametrize(
+    "ticker,total",
+    [("KR", 6_000_000.0), ("WMT", 6_645_000_000.0)],
+)
+def test_latest_500_ordinary_and_redeemable_nci_rules_replay_approved_sources(ticker, total):
+    from app.us_valuation.refresh_operating_policies import _policy_for_entry
+    from app.us_valuation.xbrl import load_concept_config
+
+    root = ROOT / "output/us-refresh-runtime"
+    recipe = json.loads((root / "recipes" / f"{ticker}.json").read_text())
+    entry = next(
+        row for row in json.loads((root / "registry.json").read_text())["entries"]
+        if row["ticker"] == ticker
+    )
+    artifact = json.loads((root / "baseline/artifacts" / f"{ticker}.json").read_text())
+    compiled = _policy_for_entry(
+        entry,
+        artifact=artifact,
+        recipe=recipe,
+        source_evidence=None,
+        concept_config=load_concept_config(),
+    )
+    assert "baseline_non_debt_claim_scope_requires_source_rule" not in compiled.reason_codes
+    rule = REPORTED_NCI_SCOPE_RULES[ticker]
+    structural, accession, period = _source(ticker, rule.required_qnames)
+    availability, proof = reported_nci_field_availability(
+        ticker=ticker,
+        policy=asdict(rule),
+        structural_packet=structural,
+        accession=accession,
+        period_end=period,
+    )
+    assert availability.value == total
+    assert proof["source_total"] == total
+    assert all(
+        scenario["inputs"]["noncontrolling_interests"] == total
+        for scenario in recipe["scenarios"].values()
+    )
 
 
 def test_missing_required_component_requires_review() -> None:

@@ -17,6 +17,7 @@ from .calculation_recipe import number, evaluate_recipe
 from .refresh_financials import cash_history, normalized_bridge, bridge_assessment
 from .xbrl import CompanyFactsNormalizer, load_concept_config
 from .sec_client import normalize_cik
+from .refresh_event_review import EventReviewError, EventReviewIncomplete, review_event_records
 from .sustainable_inputs import (
     BoundedAdjustment,
     SourceEvidence,
@@ -465,17 +466,31 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
         packet['structural_filing']=structural_packet
     if packet.get('normalization_review_required'):
         raise EconomicException(str(packet['normalization_review_required']))
-    allowed_items = set(policy.get('routine_8k_items', ['2.02','9.01']))
-    captured_events = {event.get('accession'):event for event in packet.get('events', []) if isinstance(event, dict)}
-    for event in records:
-        if event.get('form') in {'8-K','8-K/A'} and prior_cutoff < event.get('filingDate','') <= cutoff:
-            items = {item.strip() for item in str(event.get('items', '')).split(',') if item.strip()}
-            if not items or items - allowed_items:
-                raise EconomicException('new corporate-event filing requires an approved event rule')
-            if policy.get('source_requirements', {}).get('event_exhibits'):
-                captured = captured_events.get(event['accessionNumber'])
-                if not captured or captured.get('relationships_status') != 'exhibit_relationships_captured':
-                    raise AcquisitionIncomplete('new event filing is missing verified exhibit relationships or attachment bodies')
+    try:
+        event_review = review_event_records(
+            records,
+            [event for event in packet.get('events', []) if isinstance(event, dict)],
+            policy,
+            prior_cutoff=prior_cutoff,
+            cutoff=cutoff,
+            require_exhibits=bool(policy.get('source_requirements', {}).get('event_exhibits')),
+            controlling_filing=controlling,
+        )
+    except EventReviewIncomplete as exc:
+        raise AcquisitionIncomplete(str(exc)) from exc
+    except EventReviewError as exc:
+        raise EconomicException(str(exc)) from exc
+
+    def attach_event_review(ledger: dict) -> dict:
+        if event_review:
+            ledger = dict(ledger)
+            ledger['event_review'] = {
+                'events': event_review,
+                'limitations': sorted({item for event in event_review for item in event['limitations']}),
+            }
+        return ledger
+
+    packet = {**packet, 'event_review': event_review}
     if policy.get('schema_version') == 'FINSIGHT-ASSET-RUNWAY-REFRESH-POLICY-1':
         from .refresh_runway_policy import bind_mrna_runway_sources
         try:
@@ -484,7 +499,7 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
         except ValueError as exc:
             raise EconomicException(f'asset-runway source policy failed: {exc}') from exc
         ledger['latest_annual_filing'] = latest_annual
-        return refreshed,ledger
+        return refreshed,attach_event_review(ledger)
     if policy.get('schema_version') == 'FINSIGHT-CASH-SCHEDULE-REFRESH-POLICY-1':
         from .refresh_schedule_policies import bind_cash_schedule_sources
         try:
@@ -493,7 +508,7 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
         except ValueError as exc:
             raise EconomicException(f'cash-schedule source policy failed: {exc}') from exc
         ledger['latest_annual_filing'] = latest_annual
-        return refreshed, ledger
+        return refreshed, attach_event_review(ledger)
     if policy.get('schema_version') == 'FINSIGHT-CYCLICAL-FCFF-REFRESH-POLICY-1':
         from dataclasses import replace
         from .refresh_cyclical_policy import bind_and_evaluate_cyclical_recipe
@@ -525,14 +540,14 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
         # Accounting uncertainty uses the family's source-reported base
         # denominator, not the separate generic cover-plus-awards proxy.
         assessment = assess_bridge_materiality(replace(resolution,fully_diluted_shares=base['diluted_shares']),enterprise_value=enterprise)
-        return refreshed, {'controlling_filing':controlling,'latest_annual_filing':latest_annual,
+        return refreshed, attach_event_review({'controlling_filing':controlling,'latest_annual_filing':latest_annual,
             'period_end':period,'frozen_cutoff':cutoff,'cik':cik,'recipe_engine':'cyclical_fcff_quantile',
             'policy_version':policy['version'],'sources':result['source_ledger'],'normalized_bridge':bridge,
             'values':{'shares':base['diluted_shares'],'cash':base['cash'],'debt':base['debt']},
             'normalization':{'method':'issuer-balanced cyclical operating history; complete reported trade working capital',
                 'peer_ticker':policy['peer_ticker'],'claim_scope':result['source_ledger']['claim_review'],
                 'base_share_basis':'reported diluted shares selected by cyclical policy'},
-            'bridge_quality':{**assessment.as_dict(),'complete':resolution.complete}}
+            'bridge_quality':{**assessment.as_dict(),'complete':resolution.complete}})
     if policy.get('schema_version') == 'FINSIGHT-EARNINGS-REFRESH-POLICY-1':
         from .refresh_earnings_policies import bind_earnings_recipe
         selected_packet = {**packet,'_selected_controlling_filing':{'accession':controlling['accessionNumber'],'period_end':period}}
@@ -540,11 +555,11 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
             result = bind_earnings_recipe(policy,recipe,selected_packet,cutoff=cutoff)
         except ValueError as exc:
             raise EconomicException(f'equity-earnings source policy failed: {exc}') from exc
-        return result['recipe'], {'controlling_filing':controlling,'latest_annual_filing':latest_annual,
+        return result['recipe'], attach_event_review({'controlling_filing':controlling,'latest_annual_filing':latest_annual,
             'period_end':period,'frozen_cutoff':cutoff,'cik':cik,'recipe_engine':'earnings_multiple','policy_version':policy['version'],
             'sources':result['source_ledger'],'values':result['recipe']['scenarios']['base']['inputs'],
             'normalization':{'method':'comparable annual common-earnings history quantiles','history':result['source_ledger']['history_normalization'],
-                'scope':policy['scope'],'correctness_repair':policy.get('correctness_repair')}}
+            'scope':policy['scope'],'correctness_repair':policy.get('correctness_repair')}})
     if policy.get('schema_version') == 'FINSIGHT-RESIDUAL-REFRESH-POLICY-1':
         from .newrefresh_family_policies import bind_and_evaluate_existing_recipe
         selected_packet = {**packet, '_selected_controlling_filing':{'accession':controlling['accessionNumber'], 'period_end':period}}
@@ -556,11 +571,11 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
         refreshed['evidence_cutoff'] = cutoff
         refreshed['source_accession'] = controlling['accessionNumber']
         bound = result['bound']
-        return refreshed, {'controlling_filing':controlling, 'latest_annual_filing':latest_annual,
+        return refreshed, attach_event_review({'controlling_filing':controlling, 'latest_annual_filing':latest_annual,
             'period_end':period, 'frozen_cutoff':cutoff, 'cik':cik, 'recipe_engine':'residual_income',
             'sources':bound['source_rows'], 'values':bound['inputs'], 'policy_version':policy['version'],
             'normalization':{'method':bound['source_ledger']['roe_status'],'roe_range':bound['roe_range'],
-                'common_equity':bound['inputs']['common_equity'],'preferred_claim_treatment':bound['claim_status']}}
+                'common_equity':bound['inputs']['common_equity'],'preferred_claim_treatment':bound['claim_status']}})
     if policy.get('schema_version') == 'FINSIGHT-SPECIAL-REFRESH-POLICY-1' and policy.get('ticker') == 'APTV':
         from .refresh_special_policies import bind_aptv_special_recipe
         selected_packet = {**packet, '_selected_controlling_filing':{'accession':controlling['accessionNumber'],'period_end':period}}
@@ -568,12 +583,12 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
             result = bind_aptv_special_recipe(policy,recipe,selected_packet,cutoff=cutoff)
         except ValueError as exc:
             raise EconomicException(f'APTV continuing-equity source policy failed: {exc}') from exc
-        return result['recipe'], {'controlling_filing':controlling,'latest_annual_filing':latest_annual,
+        return result['recipe'], attach_event_review({'controlling_filing':controlling,'latest_annual_filing':latest_annual,
             'period_end':period,'frozen_cutoff':cutoff,'cik':cik,'recipe_engine':'earnings_multiple',
             'policy_version':policy['version'],'sources':result['source_ledger'],
             'normalization':{'method':'current comparable continuing-parent earnings annualized from reported fiscal YTD',
                 'annualization_factor':result['source_ledger']['annualization_factor'], 'nci_subtracted_again':False},
-            'values':result['recipe']['scenarios']['base']['inputs']}
+            'values':result['recipe']['scenarios']['base']['inputs']})
     normalizer = CompanyFactsNormalizer(companyfacts, fiscal_year_end=submissions.get('fiscalYearEnd'), as_of_date=cutoff, filing_records=records,
                                        concept_config=dict(concept_config))
     values, sources = {}, {}
@@ -586,7 +601,10 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
     # actual economic blocker.
     input_items = sorted(
         policy['inputs'].items(),
-        key=lambda item: 0 if isinstance(item[1], dict) and item[1].get('selector') == 'special_claim' else 1,
+        key=lambda item: (0 if isinstance(item[1], dict) and item[1].get('selector')=='lease_capital_scope'
+                          else 1 if isinstance(item[1], dict) and item[1].get('selector') == 'special_claim'
+                          else 2 if isinstance(item[1], dict) and item[1].get('field') == 'governed_cash_conversion_margin'
+                          else 3),
     )
     for name, rule in input_items:
         if not isinstance(rule, dict) or not isinstance(rule.get('field'), str):
@@ -595,7 +613,16 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
         if not isinstance(selector, str):
             raise RuntimeError('refresh binding source selector is invalid')
         try:
-            if selector == 'special_claim':
+            if selector=='lease_capital_scope':
+                from .refresh_lease_capital_scope import assess_lease_capital_scope
+                if structural_packet is None or not packet.get('narrative_evidence'):
+                    raise AcquisitionIncomplete('lease/capital scope needs current structural and narrative evidence')
+                scope=assess_lease_capital_scope(rule['policy'],structural_packet,controlling,cik,cutoff,
+                    packet['narrative_evidence'],source_root=packet.get('_narrative_source_root'))
+                if scope['status']!='source_bound':
+                    raise EconomicException('lease/capital claims require review: '+', '.join(scope['review_reasons']))
+                values[name],sources[name]=number(scope[field],name),scope
+            elif selector == 'special_claim':
                 from .refresh_claim_policies import select_current_claims
                 if not isinstance(rule.get('policy'), dict):
                     raise RuntimeError('invalid special-claim binding contract')
@@ -611,7 +638,7 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
                     raise EconomicException(f'special claim field is unavailable: {field}')
                 values[name],sources[name] = number(selected,name),claim
             elif selector == 'structural_ttm':
-                if recipe['ticker'] not in {'ABT','CTSH'} or structural_packet is None:
+                if recipe['ticker'] not in {'ABT','CTSH','GLW','INCY'} or structural_packet is None:
                     raise RuntimeError('unsupported structural TTM binding contract')
                 from .refresh_financials import _structural_ttm_flow
                 flow=_structural_ttm_flow(normalizer,structural_packet,period,field)
@@ -654,7 +681,10 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
                             raise RuntimeError('cash receipt history hash mismatch')
                     cash_history_cache = cash_history(normalizer, period=period, cutoff=cutoff, rule=rule,
                                                       cash_receipts=cash_receipts,structural_packet=structural_packet)
-                if field in {'cash_conversion_margin','revenue_growth'}:
+                if field in {'cash_conversion_margin','revenue_growth','governed_cash_conversion_margin'}:
+                    if field=='governed_cash_conversion_margin' and not cash_history_cache.get('governed_validity',{}).get('passed'):
+                        raise EconomicException('governed cash-margin source validity requires review: '+
+                            ', '.join(cash_history_cache.get('governed_validity',{}).get('review_reasons',[])))
                     statistic = rule.get('statistic', 'base')
                     if statistic not in {'low','base','high'}: raise RuntimeError('unsupported cash history statistic')
                     if field not in cash_history_cache:
@@ -665,6 +695,9 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
                 else:
                     raise RuntimeError(f'unsupported cash history output: {name} requests {field}')
                 sources[name] = {'normalization_ref':'normalization','field':field,'statistic':rule.get('statistic','base')}
+                if field=='governed_cash_conversion_margin':
+                    sources[name].update(classification='finsight_assumption',
+                        policy_version=cash_history_cache['governed_margin_policy']['version'])
             elif selector == 'normalized_bridge':
                 if bridge_cache is None:
                     bridge_cache = normalized_bridge(
@@ -678,6 +711,9 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
                         preferred_equity_zero_scope=policy.get('preferred_equity_zero_scope'),
                         preferred_lifecycle_scope=policy.get('preferred_lifecycle_scope'),
                         unconsolidated_vie_scope=policy.get('unconsolidated_vie_scope'),
+                        pharma_bridge_scope=policy.get('pharma_bridge_scope'),
+                        approved_cash_only_scope=policy.get('approved_cash_only_scope'),
+                        approved_share_basis=policy.get('approved_share_basis'),
                     )
                     if policy.get('cash_policy'):
                         from .refresh_financials import CMG_OWNER_CASH_POLICY,DASH_OWNER_CASH_POLICY
@@ -689,6 +725,11 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
                             raise EconomicException('owner-cash scope requires a verified debt-free bridge; interest-bearing debt needs model review')
                 if field == 'fully_diluted_shares_proxy':
                     values[name] = number(bridge_cache['balance_sheet'][field], name)
+                elif field=='scenario_shares':
+                    case=rule.get('scenario')
+                    if case not in {'bear','base','bull'} or not bridge_cache.get('approved_share_basis'):
+                        raise RuntimeError('approved share basis is missing or invalid')
+                    values[name]=number(bridge_cache['approved_share_basis']['scenario_shares'][case],name)
                 else:
                     range_name = {'cash_and_investments':'cash_and_investments','debt':'total_debt',
                                   'preferred_equity':'preferred_equity','noncontrolling_interests':'noncontrolling_interests'}.get(field)
@@ -879,12 +920,23 @@ def bind_current_recipe(entry: dict, recipe: dict, packet: dict, cutoff: str) ->
             cash_reserve_range=(values['restricted_cash'],)*3
         ledger['bridge_quality'] = bridge_assessment(
             bridge_cache,bound,evaluated,cash_reserve_range=cash_reserve_range,
+            cash_adjustment=values.get('pharma_post_period_cash_adjustment',0.0),
             additional_claim_adjustment=(
                 values.get('litigation_claim',0.0) if recipe.get('ticker')=='DASH'
                 else values.get('base_acquisition_financing_claim',0.0) if recipe.get('ticker')=='KDP'
                 else values.get('mixed_acquisition_claim',0.0)+values.get('mixed_litigation_claim',0.0)
                     if recipe.get('ticker') in {'ABT','BAX'}
+                else values.get('overlap_acquisition_claim',0.0)+values.get('overlap_litigation_claim',0.0)
+                    if recipe.get('ticker') in {'BSX','DGX','EW'}
+                else values.get('nci_contingent_acquisition_claim',0.0)
+                    if recipe.get('ticker') in {'DVA','CRL'}
+                else values.get('ordinary_nci_acquisition_claim',0.0)+values.get('ordinary_nci_operating_reserve',0.0)
+                    if recipe.get('ticker') in {'GLW','MDT','PFE'}
+                else values.get('mixed_ordinary_nci_acquisition_claim',0.0)+values.get('mixed_ordinary_nci_operating_claim',0.0)+values.get('mixed_ordinary_nci_legal_review',0.0)
+                    if recipe.get('ticker') in {'HSIC','ON','ZBH'}
+                else values.get('special_nci_acquisition_claim',0.0)+values.get('special_nci_operating_claim',0.0)+values.get('special_nci_commitment_claim',0.0)
+                    if recipe.get('ticker') in {'TEL','CRWD'}
                 else 0.0),
             share_adjustment=(values.get('base_convertible_conversion_shares',0.0) if recipe.get('ticker')=='MCHP' else 0.0),
             preferred_adjustment=(values.get('base_convertible_dividend_pv',0.0) if recipe.get('ticker')=='MCHP' else 0.0))
-    return bound, ledger
+    return bound, attach_event_review(ledger)

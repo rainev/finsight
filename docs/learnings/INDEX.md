@@ -2,6 +2,20 @@
 
 # Project learnings
 
+- [Disclosure presence is not economic change](disclosure-presence-is-not-economic-change.md) — separate retrieval, filing classification and financial impact before marking an approved estimate historical.
+
+- [Share range can be source observations](share-range-can-be-source-observations.md) — distinguish two reported denominator endpoints from a governed percentage sensitivity before refreshing shares.
+
+- [Latest capture storage and replay](latest-capture-storage-and-replay.md) — bounded SEC acquisition, transport-only ZIP fallback, compressed checkpoints and honest freshness distinctions.
+
+- [WG evidence and launch are separate decisions](wg-evidence-and-launch-are-separate-decisions.md) — preserve approved exclusions; distinguish launch baselines, current replays and successive-filing proof.
+
+- [Judgment amount is not carrying liability](judgment-amount-is-not-carrying-liability.md) — separate damages, accrual, interest, payment, recovery and appeal status; never invent legal probabilities.
+
+- [Post-period cash must project bridge assessment](post-period-cash-must-project-bridge-assessment.md) — keep reported and event-dated cash surfaces separate, then compare the recipe to the correctly projected bridge.
+
+- [Contractual ceilings are not carrying liabilities](contractual-ceilings-are-not-carrying-liabilities.md) — reconcile recognized fair value once; keep CVR/milestone maxima and paid acquisition cash on separate ledgers.
+
 - [Source index is not source selection](source-index-is-not-source-selection.md) — accelerate candidate discovery while preserving cutoff selection, identity and byte revalidation.
 
 - [Scenario margin stress is not reported cash](scenario-margin-stress-is-not-reported-cash.md) — preserve the post-history haircuts without relabelling assumptions as filing facts.
@@ -132,6 +146,8 @@
 - [Runtime detail parity includes enrichment](runtime-detail-parity-includes-enrichment.md) — add catalog and freshness fields intentionally owned by the serving layer before exact staged/API comparison.
 - [Claim evidence must enter before bridge resolution](claim-evidence-must-enter-before-bridge-resolution.md) — bind validated claim scope before the bridge decision, then reconcile the resolved amount afterward.
 - [Generic long-term investments are not automatically cash-like](generic-long-term-investments-are-not-automatically-cash-like.md) — require current placement or component scope before adding a generic investment balance to excess cash.
+- [Combined cash total is not a missing component](combined-cash-total-is-not-a-missing-component.md) — bind a complete cash-plus-short-investments total once without inventing or duplicating its components.
+- [Loss years do not invalidate cash history](loss-years-do-not-invalidate-cash-history.md) — separate the cash-history denominator from profitable-year tax-rate evidence and retain explicit loss fallbacks.
 - [Duplicate claim presentations are not additive](duplicate-claim-presentations-are-not-additive.md) — reconcile aggregate, hierarchy and acquisition-member views by scope instead of summing every nonzero fact.
 - [Duration acquisition accrual is not an instant claim](duration-acquisition-accrual-is-not-an-instant-claim.md) — require carrying-balance and cash-overlap proof before deducting a duration accrual from equity.
 - [Settlement balances are not necessarily legal claims](settlement-balances-are-not-necessarily-legal-claims.md) — classify payment-network settlement working capital by scope, not by the word settlement.
@@ -151,3 +167,10 @@
 - [NCI subsets and owner flows are not additive](nci-subsets-and-owner-flows-are-not-additive.md) — reconcile the current total once; VIE members and contribution/distribution flows remain subsets or roll-forward evidence.
 - [Partition family does not select the valuation formula](partition-family-does-not-select-the-valuation-formula.md) — route economic service companies independently of universe cohort metadata.
 - [Nonrecurring item exclusion must bind both sides of a conversion](nonrecurring-item-exclusion-must-bind-both-sides-of-a-conversion.md) — prevent one-time gains from leaking into normalized owner cash.
+- [Investing capex is not total reinvestment](investing-capex-is-not-total-reinvestment.md) — financing capital payments must reconcile with cash and debt; governed margins do not cure missing scope.
+- [Narrative input root is not implementation root](narrative-input-root-is-not-implementation-root.md) — hand validated source roots into frozen readers; inspect exact review reasons, not counts.
+- [Settlement payment moves cash and claim together](settlement-payment-moves-cash-and-claim-together.md) — MCK payment-only arithmetic is not a fresh closing balance; avoid double deductions or value created by moving only one side.
+- [Reported NCI carrying is a proxy, not intrinsic](reported-nci-carrying-is-a-proxy-not-intrinsic.md) — subtract reconciled current outside ownership once from consolidated enterprise cash without adding movements/floors/dilution.
+- [Historical claim payments do not prove forward reserve runoff](historical-claim-payments-do-not-prove-forward-reserve-runoff.md) — keep recurring paid claims in OCF while requiring a current schedule or equivalent reconciliation before removing a separate noncurrent-reserve sensitivity.
+- [Accounting close and split restatement precede event bridges](accounting-close-and-split-restatement-precede-event-bridges.md) — use the actual close and explicit share restatement before separating financial and event scopes.
+- [Pro forma history and guidance do not form a current bridge](pro-forma-history-and-guidance-do-not-form-a-current-bridge.md) — require matching date, event perimeter and cash-flow definition before producing a successor.

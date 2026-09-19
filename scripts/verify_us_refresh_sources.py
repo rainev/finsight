@@ -9,6 +9,7 @@ import argparse
 from collections import Counter
 from copy import deepcopy
 import json
+import gzip
 from pathlib import Path
 import re
 import sys
@@ -23,6 +24,7 @@ from app.us_valuation.refresh_job import atomic, policy_readiness, writer, refre
 from app.us_valuation.refresh_bindings import bind_current_recipe, EconomicException, AcquisitionIncomplete
 from app.us_valuation.refresh_source_ingestion import capture_company_source, SourceCaptureError, _definition_hash
 from app.us_valuation.refresh_source_index import load_source_index, SourceIndexError
+from app.us_valuation.refresh_snapshot_cutoff import freeze_companyfacts
 
 
 def implementation_fingerprint():
@@ -180,7 +182,30 @@ def acquired_packet(runtime_root, acquisition, entry, cutoff):
                     'limitations': ['Binding reuses the frozen live capture; no new retrieval occurs in verification.']}
 
 
-def verify_sources(runtime_root: Path, tickers=(), cutoff=None, acquisition=None, source_index=None, verify_full_baseline=True, source_root=None):
+def latest_captured_packet(capture_root, entry, cutoff):
+    root=Path(capture_root).resolve()
+    descriptor=json.loads((root/'capture-input.json').read_bytes())
+    if descriptor['cutoff'] != cutoff:
+        raise SourceCaptureError('verification cutoff differs from latest capture')
+    if sha256_bytes((root/'discovery-report.json').read_bytes()) != descriptor['discovery_sha256']:
+        raise SourceCaptureError('latest discovery hash mismatch')
+    path=root/'captures'/f'{entry["ticker"]}.json.gz'
+    if not path.exists():path=path.with_suffix('')
+    raw=path.read_bytes()
+    wrapper=json.loads(gzip.decompress(raw) if path.suffix=='.gz' else raw)
+    if any(wrapper.get(key)!=value for key,value in descriptor.items()):
+        raise SourceCaptureError('latest capture descriptor mismatch')
+    if (wrapper['ticker'],str(wrapper['cik']).zfill(10)) != (entry['ticker'],str(entry['cik']).zfill(10)):
+        raise SourceCaptureError('latest capture identity mismatch')
+    if sha256_bytes(canonical_json_bytes(wrapper['packet'])) != wrapper['packet_sha256']:
+        raise SourceCaptureError('latest capture packet hash mismatch')
+    packet=freeze_companyfacts(wrapper['packet'],descriptor['retrieval_snapshot_timestamp'])
+    return packet,{'wrapper_sha256':sha256_bytes(raw),'packet_sha256':wrapper['packet_sha256'],
+        'effective_packet_sha256':sha256_bytes(canonical_json_bytes(packet)),
+        'retrieval_snapshot_timestamp':descriptor['retrieval_snapshot_timestamp'],'network_accessed':False}
+
+
+def verify_sources(runtime_root: Path, tickers=(), cutoff=None, acquisition=None, source_index=None, verify_full_baseline=True, source_root=None, capture_root=None):
     total_started=time.perf_counter();prepare_started=total_started
     runtime_root = runtime_root.resolve()
     with writer(runtime_root):
@@ -193,10 +218,11 @@ def verify_sources(runtime_root: Path, tickers=(), cutoff=None, acquisition=None
         known = {entry['ticker'] for entry in registry['entries']}
         if wanted - known:
             raise ValueError(f'issuers outside frozen registry: {sorted(wanted-known)}')
-        if acquisition and (not cutoff or not wanted):
+        if capture_root and (acquisition or source_index):raise ValueError('capture root cannot be combined with another source selector')
+        if (acquisition or capture_root) and (not cutoff or not wanted):
             raise ValueError('acquisition verification requires explicit --as-of and --ticker scope')
         indexed = None
-        if acquisition:
+        if acquisition or capture_root:
             packets,structures={},{}
         elif source_index:
             packets,structures,indexed=indexed_paths(Path(source_root or ROOT/'output'),registry,Path(source_index),wanted)
@@ -207,7 +233,9 @@ def verify_sources(runtime_root: Path, tickers=(), cutoff=None, acquisition=None
         def resolved_packet(company_entry,company_recipe,selected_cutoff):
             key=(company_entry['ticker'],selected_cutoff,acquisition or 'cached')
             if key not in packet_cache:
-                if acquisition:
+                if capture_root:
+                    packet_cache[key]=latest_captured_packet(capture_root,company_entry,selected_cutoff)
+                elif acquisition:
                     packet_cache[key]=acquired_packet(runtime_root,acquisition,company_entry,selected_cutoff)
                 else:
                     packet_cache[key]=_packet(company_entry,company_recipe,packets,structures,runtime_root/'source-validation-cache',selected_cutoff,indexed=indexed,
@@ -229,6 +257,111 @@ def verify_sources(runtime_root: Path, tickers=(), cutoff=None, acquisition=None
                 row.update(previous_range=evaluate_recipe(recipe)['range'])
                 if not ready:
                     row.update(status='implementation_gap',reason=reason)
+                    # A partial source mapping is useful evidence, never a
+                    # replacement for the missing full numeric refresh rule.
+                    scope=(policies.get(ticker) or {}).get('reported_claim_scope')
+                    if isinstance(scope,dict) and scope.get('clears_legacy_claim_scope') is False:
+                        phase_started=time.perf_counter()
+                        try:
+                            from app.us_valuation.refresh_reported_claim_scope import reported_nci_field_availability
+                            packet,provenance=resolved_packet(entry,recipe,cutoff or recipe['evidence_cutoff'])
+                            structural=packet.get('structural_filing')
+                            if not isinstance(structural,dict):
+                                raise SourceCaptureError('partial ownership proof requires current structural evidence')
+                            _,partial=reported_nci_field_availability(ticker=ticker,policy=scope,
+                                structural_packet=structural,accession=structural['source_accession'],
+                                period_end=structural['report_date'])
+                            row['partial_ownership_proof']={**partial,'numeric_successor_issued':False,
+                                'scope':'ownership carrying/alias proof only; full implementation gap retained'}
+                            row['source_capture']=provenance
+                            subsidiary_scope=(policies.get(ticker) or {}).get('subsidiary_preferred_bridge_scope')
+                            environmental_scope=(policies.get(ticker) or {}).get('environmental_forward_scope')
+                            settlement_scope=(policies.get(ticker) or {}).get('settlement_payment_bridge_scope')
+                            professional_scope=(policies.get(ticker) or {}).get('professional_liability_scope')
+                            separation_scope=(policies.get(ticker) or {}).get('separation_scope')
+                            if subsidiary_scope or environmental_scope or settlement_scope or professional_scope or separation_scope:
+                                narrative=json.loads((runtime_root/'narrative-evidence'/f'{ticker}.json').read_bytes())
+                            if separation_scope:
+                                from app.us_valuation.refresh_separation_scope import bind_separation_scope
+                                row['partial_separation_scope']=bind_separation_scope(separation_scope,structural,narrative,recipe,
+                                    cutoff=cutoff or recipe['evidence_cutoff'],source_root=Path(source_root or ROOT/'output').resolve())
+                                event_policy=(policies.get(ticker) or {}).get('separation_event_evidence_policy')
+                                if event_policy:
+                                    from app.us_valuation.refresh_separation_event_evidence import bind_separation_event_evidence
+                                    event=json.loads((runtime_root/'separation-event-evidence'/f'{ticker}.json').read_bytes())
+                                    if event.get('version')!=event_policy.get('version'):
+                                        raise ValueError('separation event policy/receipt mismatch')
+                                    row['partial_separation_event_evidence']=bind_separation_event_evidence(event_policy,event,
+                                        row['partial_separation_scope'],recipe,cutoff=cutoff or recipe['evidence_cutoff'],
+                                        source_root=Path(source_root or ROOT/'output').resolve())
+                            if professional_scope:
+                                from app.us_valuation.refresh_professional_liability_scope import bind_professional_liability_scope
+                                row['partial_professional_liability_scope']=bind_professional_liability_scope(
+                                    professional_scope,structural,narrative,packet['companyfacts'],packet['submissions'],recipe,
+                                    cutoff=cutoff or recipe['evidence_cutoff'],source_root=Path(source_root or ROOT/'output').resolve())
+                                annual_professional_version=(policies.get(ticker) or {}).get('professional_liability_annual_evidence_version')
+                                if annual_professional_version:
+                                    from app.us_valuation.refresh_professional_liability_annual_evidence import (
+                                        bind_annual_professional_liability_cash, professional_liability_annual_policy,
+                                    )
+                                    annual_professional=json.loads((runtime_root/'professional-liability-annual-evidence'/f'{ticker}.json').read_bytes())
+                                    if annual_professional.get('version')!=annual_professional_version:
+                                        raise ValueError('annual professional-liability policy/receipt mismatch')
+                                    row['partial_professional_liability_annual_evidence']=bind_annual_professional_liability_cash(
+                                        professional_liability_annual_policy(ticker),annual_professional,
+                                        row['partial_professional_liability_scope'],recipe,
+                                        cutoff=cutoff or recipe['evidence_cutoff'],source_root=Path(source_root or ROOT/'output').resolve())
+                            if settlement_scope:
+                                from app.us_valuation.refresh_settlement_payment_bridge import bind_settlement_payment_bridge
+                                row['partial_settlement_payment_bridge']=bind_settlement_payment_bridge(
+                                    settlement_scope,structural,narrative,cutoff=cutoff or recipe['evidence_cutoff'],
+                                    source_root=Path(source_root or ROOT/'output').resolve())
+                                ownership_scope=(policies.get(ticker) or {}).get('subsidiary_ownership_scope')
+                                if ownership_scope:
+                                    from app.us_valuation.refresh_subsidiary_ownership_scope import bind_subsidiary_ownership_scope
+                                    row['partial_subsidiary_ownership_scope']=bind_subsidiary_ownership_scope(
+                                        ownership_scope,structural,narrative,cutoff=cutoff or recipe['evidence_cutoff'],
+                                        source_root=Path(source_root or ROOT/'output').resolve())
+                                public_version=(policies.get(ticker) or {}).get('public_contract_evidence_version')
+                                if public_version:
+                                    from app.us_valuation.refresh_public_contract_evidence import validate_public_contract_evidence
+                                    public=json.loads((runtime_root/'public-contract-evidence'/f'{ticker}.json').read_bytes())
+                                    if public.get('version')!=public_version:raise ValueError('public contract policy version mismatch')
+                                    row['partial_public_contract_evidence']=validate_public_contract_evidence(public,source_root=Path(source_root or ROOT/'output').resolve())
+                                    claim_policy=(policies.get(ticker) or {}).get('governed_claim_bridge_policy')
+                                    if claim_policy:
+                                        from app.us_valuation.refresh_governed_claim_bridge import bind_governed_claim_bridge
+                                        row['partial_governed_claim_bridge']=bind_governed_claim_bridge(claim_policy,recipe,
+                                            row['partial_subsidiary_ownership_scope'],row['partial_settlement_payment_bridge'],row['partial_public_contract_evidence'])
+                            if subsidiary_scope:
+                                from app.us_valuation.refresh_subsidiary_preferred_bridge import bind_subsidiary_preferred_bridge
+                                row['partial_subsidiary_preferred_bridge']=bind_subsidiary_preferred_bridge(
+                                    subsidiary_scope,structural,narrative,cutoff=cutoff or recipe['evidence_cutoff'],
+                                    source_root=Path(source_root or ROOT/'output').resolve())
+                            if environmental_scope:
+                                from app.us_valuation.refresh_environmental_forward_scope import bind_environmental_forward_scope
+                                row['partial_environmental_forward_scope']=bind_environmental_forward_scope(
+                                    environmental_scope,structural,narrative,packet['companyfacts'],packet['submissions'],
+                                    cutoff=cutoff or recipe['evidence_cutoff'],source_root=Path(source_root or ROOT/'output').resolve())
+                                annual_version=(policies.get(ticker) or {}).get('environmental_annual_evidence_version')
+                                if annual_version:
+                                    from app.us_valuation.refresh_environmental_annual_evidence import validate_annual_environmental_evidence
+                                    annual=json.loads((runtime_root/'environmental-annual-evidence'/f'{ticker}.json').read_bytes())
+                                    if annual.get('version') != annual_version:raise ValueError('annual environmental policy version mismatch')
+                                    bound=validate_annual_environmental_evidence(annual,cutoff=cutoff or recipe['evidence_cutoff'],
+                                        source_root=Path(source_root or ROOT/'output').resolve())
+                                    current=row['partial_environmental_forward_scope']['balance_history_from_same_current_packet']
+                                    for obs in bound['observations']:
+                                        for pair in obs['related_balances']:
+                                            date=pair['period_end']
+                                            if date in current['gross'] and (current['gross'][date]['value']!=pair['reported_liability']['value']
+                                                or current['recovery'][date]['value']!=pair['recoverable_asset']['value']):
+                                                raise ValueError('annual/current overlapping environmental balances conflict')
+                                    row['partial_environmental_annual_evidence']=bound
+                        except (SourceCaptureError,ValueError,OSError) as exc:
+                            row['partial_ownership_proof']={'status':'review_required','reason':str(exc),
+                                'numeric_successor_issued':False}
+                        timings['source']+=time.perf_counter()-phase_started
                 else:
                     try:
                         phase='source';phase_started=time.perf_counter()
@@ -256,6 +389,8 @@ def verify_sources(runtime_root: Path, tickers=(), cutoff=None, acquisition=None
                             except CashReceiptReviewRequired as exc:
                                 raise EconomicException(str(exc)) from exc
                         narrative_policy = policies[ticker].get('narrative_evidence_policy')
+                        if narrative_policy:
+                            packet['_narrative_source_root']=str(Path(source_root or ROOT/'output').resolve())
                         if narrative_policy and not packet.get('narrative_evidence'):
                             from app.us_valuation.refresh_narrative_evidence import (
                                 NarrativeEvidenceError, validate_narrative_evidence,
@@ -298,6 +433,9 @@ def verify_sources(runtime_root: Path, tickers=(), cutoff=None, acquisition=None
                         if phase in timings: timings[phase]+=time.perf_counter()-phase_started
             rows.append(row)
             print(json.dumps({'ticker':ticker,'status':row['status']}),flush=True)
+            # A universe run must not retain hundreds of full filing trees.
+            # Declared peers are reused within a company, then released.
+            packet_cache.clear()
         if implementation_fingerprint() != implementation_sha:
             raise RuntimeError('source verification implementation changed during run; rerun before accepting evidence')
         report = {'implementation_sha256':implementation_sha,'registry_sha256':sha256_bytes(registry_raw),'policy_sha256':sha256_bytes(policy_raw),
@@ -322,6 +460,7 @@ if __name__ == '__main__':
     parser.add_argument('--acquisition', help='Verify a frozen live acquisition without retrieving or activating anything')
     parser.add_argument('--source-index',type=Path,help='Frozen cached-source index; avoids recursive output discovery and revalidates selected bytes')
     parser.add_argument('--source-root',type=Path,help='Allowed source root recorded by the index (default: this checkout output)')
+    parser.add_argument('--capture-root',type=Path,help='Frozen latest-universe capture; hash-checked offline diagnostics only')
     args = parser.parse_args()
-    report = verify_sources(args.runtime_root,args.ticker,args.cutoff,args.acquisition,args.source_index,source_root=args.source_root)
+    report = verify_sources(args.runtime_root,args.ticker,args.cutoff,args.acquisition,args.source_index,source_root=args.source_root,capture_root=args.capture_root)
     print(json.dumps({key:value for key,value in report.items() if key not in {'rows','evidence_sha256'}},sort_keys=True))

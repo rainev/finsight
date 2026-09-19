@@ -8,7 +8,8 @@ from datetime import date, timedelta
 from typing import Any
 from copy import deepcopy
 
-from .history import build_cash_fcff_history_profile
+from .history import build_cash_fcff_history_profile, summarize_history_metric
+from dataclasses import replace
 from .xbrl import CompanyFactsNormalizer
 from .calculation_recipe import number
 from .bridge_policy import BridgeRange, BridgeResolution, assess_bridge_materiality
@@ -27,9 +28,59 @@ CDW_CASH_INTEREST_POLICY = 'CDW-CASH-INTEREST-1'
 MCO_CASH_INTEREST_POLICY = 'MCO-CASH-INTEREST-1'
 CTSH_STRUCTURAL_INTEREST_POLICY = 'CTSH-STRUCTURAL-INTEREST-1'
 ABT_STRUCTURAL_INTEREST_POLICY = 'ABT-STRUCTURAL-INTEREST-1'
+GLW_STRUCTURAL_INTEREST_POLICY = 'GLW-STRUCTURAL-INTEREST-1'
+INCY_STRUCTURAL_INTEREST_POLICY = 'INCY-STRUCTURAL-INTEREST-1'
+CRWD_MIXED_PROFIT_TAX_POLICY = 'CRWD-MIXED-PROFIT-TAX-HISTORY-1'
 COHR_OPERATING_INTEREST_POLICY = 'COHR-OPERATING-INTEREST-1'
 CMG_OWNER_CASH_POLICY = 'CMG-OWNER-CASH-1'
 DASH_OWNER_CASH_POLICY = 'DASH-OWNER-CASH-1'
+INTC_GROSS_INTEREST_POLICY = 'INTC-GROSS-INTEREST-1'
+ANNUAL_ONLY_CASH_MARGIN_POLICY = 'PRESERVE-APPROVED-ANNUAL-ONLY-CASH-MARGIN-1'
+ANNUAL_ONLY_EXCLUSION_PROVENANCE_SCHEMA = 'FINSIGHT-ANNUAL-ONLY-EXCLUSION-PROVENANCE-1'
+
+
+def validate_annual_only_exclusion_provenance(value: object, cik: str) -> dict:
+    """Validate the source-linked exclusion carried by an annual-only rule.
+
+    The exclusion text is deliberately loaded from the approved private
+    lineage by the policy compiler; this validator only checks its contract,
+    issuer binding, and source identity. It does not embed filing-specific
+    amounts or prose constants in executable code.
+    """
+    if not isinstance(value, dict) or value.get('schema_version') != ANNUAL_ONLY_EXCLUSION_PROVENANCE_SCHEMA:
+        raise ValueError('annual-only exclusion provenance is missing or unsupported')
+    if str(value.get('cik', '')).zfill(10) != str(cik).zfill(10):
+        raise ValueError('annual-only exclusion provenance issuer mismatch')
+    source_path = value.get('source_path')
+    source_sha256 = value.get('source_sha256')
+    exclusions = value.get('exclusions')
+    if (not isinstance(source_path, str) or not source_path
+            or not isinstance(source_sha256, str) or len(source_sha256) != 64
+            or any(char not in '0123456789abcdef' for char in source_sha256)
+            or not isinstance(exclusions, list) or not exclusions
+            or any(not isinstance(item, str) or not item.strip() for item in exclusions)):
+        raise ValueError('annual-only exclusion provenance is incomplete')
+    if not any('current ttm cash margin excluded' in item.casefold() for item in exclusions):
+        raise ValueError('annual-only exclusion provenance does not describe a TTM cash-margin exclusion')
+    return value
+
+
+def preserve_cash_observation_policy(profile, rule, cik):
+    """Preserve approved annual-only normalization; keep TTM as a diagnostic."""
+    policy=rule.get('cash_observation_policy')
+    if policy is None:
+        return profile
+    if policy!=ANNUAL_ONLY_CASH_MARGIN_POLICY or str(cik).zfill(10) not in {'0000882095','0000879169'}:
+        raise ValueError('unsupported cash observation policy or issuer')
+    validate_annual_only_exclusion_provenance(rule.get('cash_observation_policy_provenance'), cik)
+    metric=profile.metric('cash_conversion_margin')
+    if metric is None:
+        raise ValueError('cash conversion history missing')
+    annual=tuple(row for row in metric.observations if row.period_role=='annual')
+    if len(annual)<3:
+        raise ValueError('annual-only normalization needs three comparable annual observations')
+    revised=summarize_history_metric('cash_conversion_margin',annual)
+    return replace(profile,metrics=tuple(revised if item.name=='cash_conversion_margin' else item for item in profile.metrics))
 
 
 def financing_adjustment(value: float, *, basis: str) -> float:
@@ -58,6 +109,8 @@ def _structural_financing_normalizer(normalizer: CompanyFactsNormalizer, structu
     scopes={
         CTSH_STRUCTURAL_INTEREST_POLICY:('0001058290',('InterestExpenseNonoperating','InterestExpense')),
         ABT_STRUCTURAL_INTEREST_POLICY:('0000001800',('InterestExpenseNonoperating','InterestExpense')),
+        GLW_STRUCTURAL_INTEREST_POLICY:('0000024741',('InterestExpenseNonoperating',)),
+        INCY_STRUCTURAL_INTEREST_POLICY:('0000879169',('InterestExpenseNonoperating','InterestExpense')),
     }
     expected=scopes.get(financing_policy)
     if expected is None or cik!=expected[0] or structural.get('report_date')!=period:
@@ -117,7 +170,13 @@ def _structural_financing_normalizer(normalizer: CompanyFactsNormalizer, structu
 def _structural_ttm_flow(normalizer: CompanyFactsNormalizer, structural: dict, period: str, field: str) -> dict:
     """Reconstruct a current TTM flow from exact structural YTD comparatives."""
     cik=str(normalizer.companyfacts.get('cik','')).zfill(10)
-    if cik not in {'0000001800','0001058290'} or structural.get('report_date')!=period:
+    allowed_fields={
+        '0000001800':{'revenue','operating_cash_flow','capital_expenditures'},
+        '0001058290':{'revenue','operating_cash_flow','capital_expenditures'},
+        '0000024741':{'revenue','operating_cash_flow','capital_expenditures'},
+        '0000879169':{'revenue','operating_cash_flow','capital_expenditures'},
+    }
+    if field not in allowed_fields.get(cik,set()) or structural.get('report_date')!=period:
         raise ValueError('unsupported structural TTM source scope')
     accession=structural.get('source_accession')
     concepts=normalizer.config.get('fields',{}).get(field,{}).get('concepts',())
@@ -167,7 +226,7 @@ def _structural_ttm_flow(normalizer: CompanyFactsNormalizer, structural: dict, p
 def _financing_normalizer(normalizer: CompanyFactsNormalizer, period: str, financing_policy: str | None = None,
                           structural_packet: dict | None = None):
     """Never combine gross expense and net-income concepts in one TTM sum."""
-    if financing_policy in {CTSH_STRUCTURAL_INTEREST_POLICY,ABT_STRUCTURAL_INTEREST_POLICY}:
+    if financing_policy in {CTSH_STRUCTURAL_INTEREST_POLICY,ABT_STRUCTURAL_INTEREST_POLICY,GLW_STRUCTURAL_INTEREST_POLICY,INCY_STRUCTURAL_INTEREST_POLICY}:
         if not isinstance(structural_packet,dict):
             raise ValueError('structural financing policy requires the current filing')
         return _structural_financing_normalizer(normalizer,structural_packet,period,financing_policy)
@@ -175,11 +234,13 @@ def _financing_normalizer(normalizer: CompanyFactsNormalizer, period: str, finan
     choices = (('net_nonoperating_interest',(_NET_INTEREST,)),('gross_expense_proxy',_GROSS_INTEREST))
     if financing_policy is not None:
         scopes = {CDW_CASH_INTEREST_POLICY:'0001402057',MCO_CASH_INTEREST_POLICY:'0001059556',
-                  COHR_OPERATING_INTEREST_POLICY:'0000820318'}
+                  COHR_OPERATING_INTEREST_POLICY:'0000820318',INTC_GROSS_INTEREST_POLICY:'0000050863'}
         if financing_policy not in scopes or str(normalizer.companyfacts.get('cik','')).zfill(10) != scopes[financing_policy]:
             raise ValueError('unsupported issuer-specific cash-interest policy')
         choices = ((('gross_expense_proxy',('InterestExpenseOperating',)),)
                    if financing_policy==COHR_OPERATING_INTEREST_POLICY
+                   else (('gross_expense_proxy',('InterestExpenseNonoperating','InterestExpense')),)
+                   if financing_policy==INTC_GROSS_INTEREST_POLICY
                    else (('cash_interest_paid_proxy',('InterestPaidNet',)),))
     for basis,concepts in choices:
         config = deepcopy(normalizer.config)
@@ -284,6 +345,13 @@ def cash_history(normalizer: CompanyFactsNormalizer, *, period: str, cutoff: str
     version = rule.get('normalization_version')
     if version not in {POLICY_VERSION,LEGACY_POLICY_VERSION}:
         raise ValueError('explicit supported cash-history policy version required')
+    governed_policy=rule.get('governed_margin_policy')
+    if governed_policy is not None:
+        from .refresh_governed_margins import validate_governed_margin_policy
+        governed_policy=validate_governed_margin_policy(governed_policy,cik=normalizer.companyfacts['cik'])
+        if (version!=POLICY_VERSION or rule.get('financing_policy')!=INTC_GROSS_INTEREST_POLICY
+            or rule.get('cash_policy') or rule.get('additional_capex_fields')):
+            raise ValueError('governed margin source/financing scope is unsupported')
     cash_policy=rule.get('cash_policy')
     owner_cash = cash_policy in {CMG_OWNER_CASH_POLICY,DASH_OWNER_CASH_POLICY}
     owner_cash_ciks={CMG_OWNER_CASH_POLICY:'0001058090',DASH_OWNER_CASH_POLICY:'0001792789'}
@@ -293,12 +361,26 @@ def cash_history(normalizer: CompanyFactsNormalizer, *, period: str, cutoff: str
         raise ValueError('unsupported owner-cash policy or issuer')
     cap = number(rule.get('annual_tax_cap', .30), 'annual_tax_cap')
     fallback = number(rule.get('loss_tax_fallback', .21), 'loss_tax_fallback')
+    tax_history_policy=rule.get('tax_history_policy')
+    if tax_history_policy is not None and (
+        tax_history_policy!=CRWD_MIXED_PROFIT_TAX_POLICY
+        or str(normalizer.companyfacts.get('cik','')).zfill(10)!='0001535527'
+        or version!=POLICY_VERSION
+    ):
+        raise ValueError('unsupported sparse profitable-period tax policy')
     if not 0 <= fallback <= cap <= 1:
         raise ValueError('invalid approved tax normalization policy')
+    if governed_policy and (cap!=governed_policy['annual_tax_cap'] or fallback!=governed_policy['loss_tax_fallback']):
+        raise ValueError('governed margin tax assumption policy changed')
     extra_capex = tuple(rule.get('additional_capex_fields', ()))
     structural_ttm_fields=tuple(rule.get('structural_ttm_fields',()))
-    if structural_ttm_fields and (str(normalizer.companyfacts.get('cik','')).zfill(10) not in {'0000001800','0001058290'}
-        or structural_ttm_fields!=('revenue','operating_cash_flow','capital_expenditures')
+    structural_scope={
+        '0000001800':('revenue','operating_cash_flow','capital_expenditures'),
+        '0001058290':('revenue','operating_cash_flow','capital_expenditures'),
+        '0000024741':('revenue','operating_cash_flow','capital_expenditures'),
+        '0000879169':('revenue','operating_cash_flow','capital_expenditures'),
+    }
+    if structural_ttm_fields and (structural_ttm_fields!=structural_scope.get(str(normalizer.companyfacts.get('cik','')).zfill(10))
         or not isinstance(structural_packet,dict)):
         raise ValueError('unsupported structural TTM field policy')
     if extra_capex:
@@ -311,7 +393,8 @@ def cash_history(normalizer: CompanyFactsNormalizer, *, period: str, cutoff: str
             and 'PaymentsToDevelopSoftware' in normalizer.config['fields']['software_development']['concepts'])
         if version != POLICY_VERSION or not (br_valid or dash_valid):
             raise RuntimeError('additional capex requires an approved disjoint issuer source mapping')
-    fields = ('revenue','operating_cash_flow','capital_expenditures', *(() if owner_cash else ('interest_expense',)), *extra_capex)
+    fields = ('revenue','operating_cash_flow','capital_expenditures', *(() if owner_cash else ('interest_expense',)), *extra_capex,
+              *(('income_tax','pretax_income') if governed_policy else ()))
     interest_normalizer = normalizer
     basis = 'legacy_absolute_interest'
     if owner_cash:
@@ -363,12 +446,20 @@ def cash_history(normalizer: CompanyFactsNormalizer, *, period: str, cutoff: str
                 financing_adjustment_after_tax=adjustment*(1-rate))
         if owner_cash:
             annual[-1].update(tax_rate=None,tax_basis='not_used_owner_cash',formula='reported operating cash flow - capital expenditures')
-    minimum = rule.get('minimum_annual_periods', 3)
+    minimum = governed_policy['minimum_annual_periods'] if governed_policy else rule.get('minimum_annual_periods', 3)
     if isinstance(minimum, bool) or not isinstance(minimum, int) or not 3 <= minimum <= 5:
         raise ValueError('ordinary cash-history policy requires three to five annual periods')
-    if len(annual) < minimum or (not owner_cash and len(tax_rates) < minimum):
+    minimum_tax_periods=2 if tax_history_policy==CRWD_MIXED_PROFIT_TAX_POLICY else minimum
+    if len(annual) < minimum or (not governed_policy and not owner_cash and len(tax_rates) < minimum_tax_periods):
         raise ValueError('insufficient comparable annual cash or tax history')
-    tax_rate = 0. if owner_cash else median(tax_rates)
+    tax_rate = 0. if owner_cash else median(tax_rates) if tax_rates else fallback
+    tax_selection='median_bounded_reported_annual_rates'
+    if governed_policy:
+        candidate=median(tax_rates) if len(tax_rates)>=governed_policy['minimum_profitable_tax_periods'] else None
+        if candidate is None or not governed_policy['current_tax_median_minimum']<=candidate<=governed_policy['annual_tax_cap']:
+            tax_rate=governed_policy['loss_tax_fallback']
+            tax_selection='approved_special_situation_tax_fallback_not_reported_tax'
+        else:tax_rate=candidate
     reported = {field: number(row['value'], field) for field,row in ttm.items()}
     if any(reported[field] < 0 for field in ('capital_expenditures', *extra_capex)):
         raise ValueError('reported capex sign requires an explicit mapping rule')
@@ -401,9 +492,11 @@ def cash_history(normalizer: CompanyFactsNormalizer, *, period: str, cutoff: str
             row['cash_receipt_adjustment'] = adjustment_row
     profile = build_cash_fcff_history_profile(annual_cash_states=annual, ttm_revenue=reported['revenue'],
              ttm_cash_fcff=fcff, ttm_period_end=period, ttm_sources=sources, valuation_date=cutoff)
+    profile=preserve_cash_observation_policy(profile,rule,normalizer.companyfacts['cik'])
     metric = profile.metric('cash_conversion_margin')
     if metric is None: raise ValueError('cash-conversion history unavailable')
     derivation = {'policy_version':version,'cash_sources':ttm,'annual_tax_sources':annual,'tax_rate':tax_rate,'value':fcff}
+    if governed_policy:derivation.update(governed_margin_policy=governed_policy,tax_selection=tax_selection)
     if owner_cash:
         derivation.update(tax_rate=None,cash_policy=cash_policy)
     if receipt_adjustment is not None:
@@ -434,12 +527,30 @@ def cash_history(normalizer: CompanyFactsNormalizer, *, period: str, cutoff: str
         result.update(financing_adjustment_basis=basis,financing_adjustment_before_tax=adjustment,
             financing_adjustment_after_tax=adjustment*(1-tax_rate),
             formula='reported OCF - total reported capex + signed after-tax financing adjustment')
+        if rule.get('cash_observation_policy'):
+            result['cash_observation_policy']=rule['cash_observation_policy']
+            result['limitations'].append('Approved annual-only cash-margin normalization retained; current TTM remains diagnostic pending explicit comparability review.')
         if basis == 'cash_interest_paid_proxy':
             result['limitations'].append('Source-linked cash interest paid is the approved issuer-specific financing proxy, not accrued interest expense.')
         elif not owner_cash:
             result['limitations'].append('Reported interest is an accrual-based financing proxy, not a claim that cash interest paid was separately verified.')
         if basis == 'gross_expense_proxy':
             result['limitations'].append('Gross expense is added back; any separately unreported nonoperating interest income remains in reported OCF.')
+    if governed_policy:
+        result['governed_margin_policy']=governed_policy
+        result['governed_cash_conversion_margin']=dict(zip(('low','base','high'),governed_policy['scenario_margins']))
+        result['tax_selection']=tax_selection
+        from .refresh_governed_margins import governed_source_validity
+        current_flow=ttm['operating_cash_flow']
+        current_flow_start=(current_flow['current_ytd']['start']
+            if current_flow['method']=='latest_fy_plus_current_ytd_minus_prior_ytd'
+            else current_flow['sources'][0]['start'])
+        result['governed_validity']=governed_source_validity(governed_policy,reported,annual,structural_packet,
+            period=period,current_flow_start=current_flow_start)
+        result['actual_measure']['source']['locator']=version+': OCF minus investing-classified capex plus gross interest after approved tax; financing capital payments require separate reconciliation; full source derivation retained'
+        result['actual_measure']['economic_scope']='reported investing-capex cash diagnostic; financing capital payments require separate scope reconciliation'
+        result['formula']='reported OCF - investing-classified capex + gross after-tax interest; financing capital payments not assumed zero or silently deducted twice'
+        result['limitations'].append('Governed margins are approved hypothetical post-total-capex cash assumptions, not reported sustainable margins or history medians; current source validity is not market calibration.')
     if owner_cash:
         result.update(tax_rate=None,tax_basis='not_used_owner_cash',formula='reported OCF - total reported capex')
         result['limitations'].append('Explicit owner-cash lane: no interest or tax adjustment. Financing claims remain separately validated in the current bridge.')
@@ -470,12 +581,28 @@ def normalized_bridge(
     preferred_equity_zero_scope: dict | None = None,
     preferred_lifecycle_scope: dict | None = None,
     unconsolidated_vie_scope: dict | None = None,
+    pharma_bridge_scope: dict | None = None,
+    approved_cash_only_scope: dict | None = None,
+    approved_share_basis: dict | None = None,
 ) -> dict:
     """Reuse existing evidence-aware normalization and bridge resolution."""
     evidence = [FieldAvailability.from_dict(row) for row in packet.get('bridge_evidence', [])]
     recovered, recovery_receipt = structural_bridge_evidence(packet, period=period, cutoff=normalizer.as_of_date,
                                   cik=str(normalizer.companyfacts['cik']).zfill(10))
     evidence.extend(recovered)
+    pharma_bridge_proof = None
+    if pharma_bridge_scope is not None:
+        from .refresh_pharma_bridge import bind_pharma_bridge
+        structural = packet.get('structural_filing')
+        controlling = packet.get('controlling_filing', {})
+        accession = controlling.get('accessionNumber') or controlling.get('accession')
+        if not isinstance(structural, dict) or not isinstance(accession, str):
+            raise ValueError('pharmaceutical bridge scope requires the current structural filing')
+        pharma_records, pharma_bridge_proof = bind_pharma_bridge(
+            pharma_bridge_scope, structural, accession=accession, period=period)
+        replaced_fields = {record.field for record in pharma_records}
+        evidence = [record for record in evidence if record.field not in replaced_fields]
+        evidence.extend(pharma_records)
     unconsolidated_vie_proof=None
     if unconsolidated_vie_scope is not None:
         from .refresh_vie_scope import bind_unconsolidated_vie_scope
@@ -501,6 +628,7 @@ def normalized_bridge(
         evidence.append(availability)
     aggregate_debt_proof = None
     investment_scope_proof = None
+    combined_cash_scope_proof = None
     if aggregate_debt_scope is not None:
         from .refresh_bridge_scope_policies import (
             aggregate_debt_field_availability,
@@ -519,6 +647,15 @@ def normalized_bridge(
             period_end=period,
         )
         evidence.append(availability)
+        if aggregate_debt_scope.get('combined_cash_qname'):
+            from .refresh_bridge_scope_policies import combined_cash_scope_availabilities
+            cash_records,combined_cash_scope_proof=combined_cash_scope_availabilities(
+                ticker=str(aggregate_debt_scope.get('ticker','')),
+                policy=aggregate_debt_scope,structural_packet=structural,
+                accession=accession,period_end=period)
+            replaced_fields={record.field for record in cash_records}
+            evidence=[record for record in evidence if record.field not in replaced_fields]
+            evidence.extend(cash_records)
         if (aggregate_debt_scope.get('excluded_investment_total_qname')
             or aggregate_debt_scope.get('direct_marketable_qnames')
             or aggregate_debt_scope.get('zero_marketable_fields')):
@@ -576,17 +713,76 @@ def normalized_bridge(
             period_end=period,
         )
         evidence.append(availability)
+    cash_scope_proof=nci_difference_proof=None
+    if approved_cash_only_scope is not None:
+        from .approved_cash_only_scope import bind_current_cash_only_scope
+        from .refresh_nci_equity_difference import reconcile_parent_nci_difference
+        structural=packet['structural_filing'];accession=packet['controlling_filing']['accessionNumber']
+        cik=str(normalizer.companyfacts['cik']).zfill(10)
+        cash_scope_proof=bind_current_cash_only_scope(approved_cash_only_scope,structural,
+            current_accession=accession,cik=cik,period_end=period)
+        if claim_scope_proof is None:
+            nci_availability,nci_difference_proof=reconcile_parent_nci_difference(structural,
+                cik=cik,accession=accession,period_end=period,
+                approved_basepoint=approved_cash_only_scope['approved_nci_basepoint'])
+            evidence.append(nci_availability)
+        else:
+            nci_difference_proof={
+                'status':'not_used_reported_nci_scope_is_authoritative',
+                'reported_claim_mapping_version':claim_scope_proof['mapping_version'],
+            }
     normalized = normalizer.normalize_balance_sheet(period_end=period, filing_evidence=packet.get('filing_evidence', ()), bridge_evidence=evidence)
     balance = normalized['balance_sheet']
     if balance['period_end'] != period:
         raise ValueError('normalized bridge is not anchored to current financial period')
     resolution = BridgeResolution.from_dict(balance['bridge_precheck'])
+    if cash_scope_proof is not None:
+        # The model excludes other investments; no zero facts are fabricated.
+        # All debt, preferred, share and other source blockers remain binding.
+        excluded={'marketable_securities_current','marketable_securities_noncurrent','marketable_securities_total'}
+        blocking=tuple(sorted(set(resolution.blocking_fields)-excluded))
+        bounded=set(resolution.bounded_fields)-excluded
+        if claim_scope_proof is None:
+            low=nci_difference_proof['uncertainty']['low'];high=nci_difference_proof['uncertainty']['high']
+            midpoint=number(approved_cash_only_scope['approved_nci_basepoint'],'approved NCI basepoint')
+            nci=BridgeRange(low,midpoint,high)
+            nci_difference_proof={**nci_difference_proof,'model_basepoint_projection':{
+                'status':'applied','midpoint':midpoint,'source_bounds_retained':True}}
+            if low!=high:bounded.add('noncontrolling_interests')
+        else:
+            nci=resolution.noncontrolling_interests
+        cash_value=cash_scope_proof['cash_and_cash_equivalents']
+        cash=BridgeRange(cash_value,cash_value,cash_value)
+        debt=resolution.total_debt;preferred=resolution.preferred_equity
+        adjustment=BridgeRange(cash.low-debt.high-preferred.high-nci.high,
+            cash.midpoint-debt.midpoint-preferred.midpoint-nci.midpoint,
+            cash.high-debt.low-preferred.low-nci.low)
+        resolution=replace(resolution,complete=not blocking and not bounded,can_value=not blocking,
+            missing_fields=tuple(sorted(set(blocking)|bounded)),blocking_fields=blocking,
+            bounded_fields=tuple(sorted(bounded)),cash_and_investments=cash,
+            noncontrolling_interests=nci,bridge_adjustment=adjustment,
+            reason_codes=tuple((*resolution.reason_codes,'APPROVED_CASH_ONLY_SCOPE','NCI_SOURCE_PRECISION_BOUND')))
+        balance={**balance,'bridge_precheck':resolution.as_dict(),
+            'modeled_cash_scope':'cash_and_cash_equivalents_only',
+            'excluded_investments':'unknown_outside_approved_scope_not_zero'}
     if preferred_lifecycle_proof is not None:
         preferred=resolution.preferred_equity
         expected=float(preferred_lifecycle_proof['preferred_equity'])
         if not (preferred.low==preferred.midpoint==preferred.high==expected):
             raise ValueError('preferred lifecycle claim does not reconcile to normalized bridge')
     projection = None
+    share_basis_proof=None
+    if approved_share_basis is not None:
+        from .refresh_share_basis import bind_current_share_basis
+        if capital_structure_policy is not None:raise ValueError('approved share basis cannot overlap conversion policy')
+        share_basis_proof=bind_current_share_basis(approved_share_basis,packet,
+            ticker=approved_share_basis['ticker'],cik=str(normalizer.companyfacts['cik']).zfill(10),
+            accession=packet['controlling_filing']['accessionNumber'],report_period_end=period,
+            cutoff=normalizer.as_of_date)
+        resolution=replace(resolution,fully_diluted_shares=share_basis_proof['base_shares'])
+        balance={**balance,'prior_normalizer_share_proxy_diagnostic':balance['fully_diluted_shares_proxy'],
+            'fully_diluted_shares_proxy':share_basis_proof['base_shares'],
+            'modeled_share_basis':share_basis_proof['profile'],'bridge_precheck':resolution.as_dict()}
     if capital_structure_policy is not None:
         from .refresh_preferred_conversion import CONVERSION_POLICY, bind_preferred_conversion_sources, project_converted_bridge
         if capital_structure_policy != CONVERSION_POLICY or str(normalizer.companyfacts['cik']).zfill(10) != CONVERSION_POLICY['cik']:
@@ -632,14 +828,19 @@ def normalized_bridge(
     return {'balance_sheet':balance, 'resolution':resolution.as_dict(), 'warnings':normalized.get('warnings', []),
             'structural_recovery':recovery_receipt,'capital_structure_projection':projection,
             'reported_claim_scope':claim_scope_proof,'aggregate_debt_scope':aggregate_debt_proof,
-            'investment_scope':investment_scope_proof,'outside_equity_scope':outside_equity_proof,
+            'investment_scope':investment_scope_proof,'combined_cash_scope':combined_cash_scope_proof,
+            'outside_equity_scope':outside_equity_proof,
             'preferred_equity_zero_scope':preferred_zero_proof,
+            'approved_cash_only_scope':cash_scope_proof,'nci_equity_difference':nci_difference_proof,
+            'approved_share_basis':share_basis_proof,
             'preferred_lifecycle_scope':preferred_lifecycle_proof,
-            'unconsolidated_vie_scope':unconsolidated_vie_proof}
+            'unconsolidated_vie_scope':unconsolidated_vie_proof,
+            'pharma_bridge_scope':pharma_bridge_proof}
 
 
 def bridge_assessment(bridge: dict, recipe: dict, valued: dict,
                       cash_reserve_range: tuple[float,float,float] | None = None,
+                      cash_adjustment: float = 0.0,
                       additional_claim_adjustment: float = 0.0,
                       share_adjustment: float = 0.0,
                       preferred_adjustment: float = 0.0) -> dict:
@@ -668,6 +869,27 @@ def bridge_assessment(bridge: dict, recipe: dict, valued: dict,
             reason_codes=(tuple((*resolution.reason_codes,'CURRENT_NOTE_SUPPLIES_FINITE_RANGE'))
                           if reserve_is_range else resolution.reason_codes),
             policy_version=resolution.policy_version+'-CASH-RESERVE-1')
+    fixed_cash_adjustment=number(cash_adjustment,'fixed cash bridge adjustment')
+    if fixed_cash_adjustment:
+        original=resolution.cash_and_investments
+        cash=BridgeRange(original.low+fixed_cash_adjustment,
+                         original.midpoint+fixed_cash_adjustment,
+                         original.high+fixed_cash_adjustment)
+        if cash.low < 0:
+            raise ValueError('fixed cash bridge adjustment exceeds source cash')
+        adjustment=BridgeRange(
+            cash.low-resolution.total_debt.high-resolution.preferred_equity.high-resolution.noncontrolling_interests.high,
+            cash.midpoint-resolution.total_debt.midpoint-resolution.preferred_equity.midpoint-resolution.noncontrolling_interests.midpoint,
+            cash.high-resolution.total_debt.low-resolution.preferred_equity.low-resolution.noncontrolling_interests.low)
+        resolution=BridgeResolution(
+            complete=resolution.complete,can_value=resolution.can_value,
+            missing_fields=resolution.missing_fields,blocking_fields=resolution.blocking_fields,
+            bounded_fields=resolution.bounded_fields,cash_and_investments=cash,
+            total_debt=resolution.total_debt,preferred_equity=resolution.preferred_equity,
+            noncontrolling_interests=resolution.noncontrolling_interests,
+            bridge_adjustment=adjustment,fully_diluted_shares=resolution.fully_diluted_shares,
+            reason_codes=tuple((*resolution.reason_codes,'DATED_POST_PERIOD_CASH_ADJUSTMENT')),
+            policy_version=resolution.policy_version+'-FIXED-CASH-ADJUSTMENT-1')
     spec = recipe['scenarios']['base']
     inputs = spec['inputs']
     if spec['engine'] == 'enterprise_cash_fcff':

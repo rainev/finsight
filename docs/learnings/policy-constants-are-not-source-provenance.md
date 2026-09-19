@@ -18,3 +18,9 @@ approving arithmetic. For unresolved claims, store `reported_nci: null`, an expl
 status, and the estimated reserve range. Related: [[specialist-facts-require-filed-lineage]],
 [[input-range-zero-endpoint-is-not-zero-substitution]], and [[financing-claims-reconcile-to-statement-totals]].
 
+INTC's retained foundry cash-conversion margins of 3%/7%/12% are governed
+assumptions, not reported cash/history statistics. A generic refresh compiler
+must not silently replace such an explicit override with a history median (or
+discard negative years to manufacture a positive median). Migrate the approved
+rule separately, version it, bind the actual cash/history and reinvestment
+evidence, and keep the company implementation-blocked until the rule is wired.

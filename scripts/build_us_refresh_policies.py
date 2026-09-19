@@ -61,6 +61,23 @@ def compile_policies(root: Path) -> dict:
                 report.append({'ticker':ticker,'status':'implementation_required','reason':f'Family adapter required: {sorted(engines)}'})
                 continue
             policies[ticker] = policy
+            policy['supersede_financial_events_by_controlling_filing']=True
+            policy['version']+='-FINANCIAL-EVENT-SUPERSESSION-1'
+            review_path=root/'event-reviews'/f'{ticker}.json'
+            if review_path.is_file():
+                review_raw=review_path.read_bytes();review=json.loads(review_raw)
+                if review.get('ticker')!=ticker or review.get('cik')!=entry['cik'] or review.get('baseline_manifest_sha256')!=baseline.manifest_sha256:
+                    raise ValueError('reviewed event baseline/issuer mismatch')
+                rules=review.get('reviewed_events')
+                if not isinstance(rules,dict) or not rules:raise ValueError('reviewed event rules missing')
+                for rule in rules.values():
+                    if rule.get('decision')!='no_current_input_change':raise ValueError('unsupported reviewed event decision')
+                    for key,hash_key in [('primary_source_path','primary_sha256'),('complete_submission_source_path','complete_submission_sha256')]:
+                        path=(ROOT/rule[key]).resolve()
+                        if not path.is_relative_to((ROOT/'output').resolve()) or sha256_bytes(path.read_bytes())!=rule[hash_key]:
+                            raise ValueError('reviewed event source bytes mismatch')
+                policy['reviewed_events']=rules
+                policy['version']+='-EVENT-REVIEW-'+sha256_bytes(review_raw)[:16]
             ready, reason = policy_readiness(recipe, policy)
             report.append({'ticker':ticker,'status':'contract_compiled' if ready else 'implementation_required','reason':reason,
                            'source_validation':'must_run_before_activation'})

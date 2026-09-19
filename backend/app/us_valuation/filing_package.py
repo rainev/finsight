@@ -6,6 +6,7 @@ import hashlib
 import html
 import io
 import json
+import errno
 import os
 import re
 import shutil
@@ -16,6 +17,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path, PurePosixPath
 from typing import Any, Mapping
+from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse, urlunparse
 
 from .sec_client import (
@@ -31,7 +33,10 @@ from .structural_xbrl import ELIGIBLE_FILING_FORMS, normalize_filing_form
 
 MANIFEST_VERSION = "FINSIGHT-XBRL-PACKAGE-1"
 DEFAULT_MAX_RESOURCE_COUNT = 128
-DEFAULT_MAX_FILE_BYTES = 16 * 1024 * 1024
+# Combined utility registrant reports can exceed 16 MiB (the captured AEP
+# annual primary document is 18,321,402 bytes). Keep a bounded per-file limit;
+# the independent package-total and resource-count limits still apply.
+DEFAULT_MAX_FILE_BYTES = 32 * 1024 * 1024
 DEFAULT_MAX_TOTAL_BYTES = 128 * 1024 * 1024
 DEFAULT_MAX_DEPENDENCY_DEPTH = 32
 
@@ -75,6 +80,7 @@ def cache_structural_filing_package(
     accession: str,
     primary_document: str,
     output_dir: Path,
+    resource_store: Path | None = None,
     form: str = "10-K",
     refresh: bool = False,
     max_resource_count: int = DEFAULT_MAX_RESOURCE_COUNT,
@@ -130,7 +136,7 @@ def cache_structural_filing_package(
     if xbrl_zip_names:
         zip_name = xbrl_zip_names[0]
         zip_url = sec_archive_url(normalized_cik, archive_accession, zip_name)
-        zip_raw = _fetch_filing_resource(
+        zip_raw = _fetch_optional_xbrl_archive(
             client,
             cik=cik,
             accession=accession,
@@ -138,44 +144,45 @@ def cache_structural_filing_package(
             refresh=refresh,
             max_file_bytes=max_file_bytes,
         )
-        try:
-            with zipfile.ZipFile(io.BytesIO(zip_raw)) as archive:
-                members = [item for item in archive.infolist() if not item.is_dir()]
-                if len(members) > max_resource_count:
-                    raise FilingPackageIncomplete(
-                        "XBRL_RESOURCE_COUNT_LIMIT", zip_url
-                    )
-                if sum(item.file_size for item in members) > max_total_bytes:
-                    raise FilingPackageIncomplete("XBRL_PACKAGE_SIZE_LIMIT", zip_url)
-                for member in members:
-                    basename = Path(member.filename).name
-                    if not _is_safe_basename(basename):
+        if zip_raw is not None:
+            try:
+                with zipfile.ZipFile(io.BytesIO(zip_raw)) as archive:
+                    members = [item for item in archive.infolist() if not item.is_dir()]
+                    if len(members) > max_resource_count:
                         raise FilingPackageIncomplete(
-                            "XBRL_PACKAGE_INCOMPLETE",
-                            f"unsafe XBRL archive member: {member.filename}",
+                            "XBRL_RESOURCE_COUNT_LIMIT", zip_url
                         )
-                    if member.file_size > max_file_bytes:
-                        raise FilingPackageIncomplete(
-                            "XBRL_FILE_SIZE_LIMIT", f"{zip_url}#{member.filename}"
+                    if sum(item.file_size for item in members) > max_total_bytes:
+                        raise FilingPackageIncomplete("XBRL_PACKAGE_SIZE_LIMIT", zip_url)
+                    for member in members:
+                        basename = Path(member.filename).name
+                        if not _is_safe_basename(basename):
+                            raise FilingPackageIncomplete(
+                                "XBRL_PACKAGE_INCOMPLETE",
+                                f"unsafe XBRL archive member: {member.filename}",
+                            )
+                        if member.file_size > max_file_bytes:
+                            raise FilingPackageIncomplete(
+                                "XBRL_FILE_SIZE_LIMIT", f"{zip_url}#{member.filename}"
+                            )
+                        logical_url = sec_archive_url(
+                            normalized_cik, archive_accession, basename
                         )
-                    logical_url = sec_archive_url(
-                        normalized_cik, archive_accession, basename
-                    )
-                    if logical_url in zip_prefetched:
-                        raise FilingPackageIncomplete(
-                            "XBRL_PACKAGE_INCOMPLETE",
-                            f"duplicate XBRL archive member: {basename}",
+                        if logical_url in zip_prefetched:
+                            raise FilingPackageIncomplete(
+                                "XBRL_PACKAGE_INCOMPLETE",
+                                f"duplicate XBRL archive member: {basename}",
+                            )
+                        zip_prefetched[logical_url] = (
+                            archive.read(member),
+                            zip_url,
+                            member.filename,
                         )
-                    zip_prefetched[logical_url] = (
-                        archive.read(member),
-                        zip_url,
-                        member.filename,
-                    )
-                    filing_names.add(basename)
-        except (OSError, zipfile.BadZipFile) as exc:
-            raise FilingPackageIncomplete(
-                "XBRL_PACKAGE_INCOMPLETE", f"invalid filing XBRL archive: {zip_name}"
-            ) from exc
+                        filing_names.add(basename)
+            except (OSError, zipfile.BadZipFile) as exc:
+                raise FilingPackageIncomplete(
+                    "XBRL_PACKAGE_INCOMPLETE", f"invalid filing XBRL archive: {zip_name}"
+                ) from exc
     primary_url = sec_archive_url(normalized_cik, archive_accession, primary_document)
     primary_raw = _fetch_filing_resource(
         client,
@@ -362,7 +369,11 @@ def cache_structural_filing_package(
         for resource in resources.values():
             destination = temp_path / resource.local_path
             destination.parent.mkdir(parents=True, exist_ok=True)
-            destination.write_bytes(resource.raw)
+            _materialize_resource(
+                destination,
+                resource.raw,
+                resource_store=resource_store,
+            )
         (temp_path / "package-manifest.json").write_text(
             json.dumps(manifest, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
@@ -376,6 +387,105 @@ def cache_structural_filing_package(
     finally:
         if temp_path.exists():
             shutil.rmtree(temp_path)
+
+
+def _materialize_resource(
+    destination: Path,
+    raw: bytes,
+    *,
+    resource_store: Path | None,
+) -> None:
+    """Materialize one verified resource without introducing symlinks."""
+
+    digest = hashlib.sha256(raw).hexdigest()
+    if resource_store is None:
+        destination.write_bytes(raw)
+        return
+    store_path = _ensure_resource_store_bytes(Path(resource_store), digest, raw)
+    try:
+        os.link(store_path, destination)
+    except OSError as exc:
+        if exc.errno not in {errno.EXDEV, errno.EOPNOTSUPP, errno.ENOTSUP}:
+            raise FilingPackageIncomplete(
+                "XBRL_RESOURCE_STORE_INTEGRITY",
+                f"resource hard-link failed: {destination}",
+            ) from exc
+        destination.write_bytes(raw)
+    if destination.is_symlink() or not destination.is_file():
+        raise FilingPackageIncomplete(
+            "XBRL_RESOURCE_STORE_INTEGRITY",
+            f"materialized resource is not a regular file: {destination}",
+        )
+    try:
+        materialized_digest = hashlib.sha256(destination.read_bytes()).hexdigest()
+    except OSError as exc:
+        raise FilingPackageIncomplete(
+            "XBRL_RESOURCE_STORE_INTEGRITY",
+            f"materialized resource cannot be verified: {destination}",
+        ) from exc
+    if materialized_digest != digest:
+        raise FilingPackageIncomplete(
+            "XBRL_RESOURCE_STORE_INTEGRITY",
+            f"materialized resource hash mismatch: {destination}",
+        )
+
+
+def _ensure_resource_store_bytes(store_root: Path, digest: str, raw: bytes) -> Path:
+    """Publish and verify one SHA-256-addressed immutable store blob."""
+
+    target = store_root / digest[:2] / digest
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.is_symlink() or (target.exists() and not target.is_file()):
+        raise FilingPackageIncomplete(
+            "XBRL_RESOURCE_STORE_INTEGRITY", f"resource store entry is not a regular file: {target}"
+        )
+    if target.exists():
+        _verify_resource_store_bytes(target, digest)
+        return target
+
+    descriptor, name = tempfile.mkstemp(prefix=f".{digest}-", dir=target.parent)
+    temporary = Path(name)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(raw)
+            handle.flush()
+            os.fsync(handle.fileno())
+        _verify_resource_store_bytes(temporary, digest)
+        try:
+            os.link(temporary, target)
+        except FileExistsError:
+            _verify_resource_store_bytes(target, digest)
+        except OSError as exc:
+            if exc.errno not in {errno.EOPNOTSUPP, errno.ENOTSUP}:
+                raise FilingPackageIncomplete(
+                    "XBRL_RESOURCE_STORE_INTEGRITY", f"resource store publish failed: {target}"
+                ) from exc
+            if target.exists():
+                _verify_resource_store_bytes(target, digest)
+            else:
+                os.replace(temporary, target)
+                temporary = None  # type: ignore[assignment]
+        return target
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
+def _verify_resource_store_bytes(path: Path, digest: str) -> None:
+    if path.is_symlink() or not path.is_file():
+        raise FilingPackageIncomplete(
+            "XBRL_RESOURCE_STORE_INTEGRITY", f"resource store entry is not a regular file: {path}"
+        )
+    try:
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError as exc:
+        raise FilingPackageIncomplete(
+            "XBRL_RESOURCE_STORE_INTEGRITY", f"resource store entry cannot be read: {path}"
+        ) from exc
+    if actual != digest:
+        raise FilingPackageIncomplete(
+            "XBRL_RESOURCE_STORE_INTEGRITY", f"resource store hash mismatch: {path}"
+        )
 
 
 def _fetch_filing_resource(
@@ -399,6 +509,62 @@ def _fetch_filing_resource(
         raise FilingPackageIncomplete(
             "XBRL_PACKAGE_INCOMPLETE", f"resource unavailable: {filename}"
         ) from exc
+
+
+def _fetch_optional_xbrl_archive(
+    client: SecClient,
+    *,
+    cik: str,
+    accession: str,
+    filename: str,
+    refresh: bool,
+    max_file_bytes: int,
+) -> bytes | None:
+    """Fetch a listed XBRL archive, falling back only when it cannot be retrieved.
+
+    A listed archive can be stale or unavailable while the individual filing
+    resources remain available.  Retrieval failures are safe to fall back from;
+    once bytes are returned, archive parsing and all member checks remain strict.
+    """
+
+    try:
+        return _fetch_filing_resource(
+            client,
+            cik=cik,
+            accession=accession,
+            filename=filename,
+            refresh=refresh,
+            max_file_bytes=max_file_bytes,
+        )
+    except FilingPackageIncomplete as exc:
+        if _is_retrieval_unavailable(exc):
+            return None
+        raise
+
+
+def _is_retrieval_unavailable(exc: BaseException) -> bool:
+    """Identify transport/missing-resource failures without hiding bad payloads."""
+
+    seen: set[int] = set()
+    current: BaseException | None = exc
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        if isinstance(current, (KeyError, OSError, HTTPError, URLError, TimeoutError)):
+            return True
+        if isinstance(current, RuntimeError):
+            message = str(current).casefold()
+            if any(
+                marker in message
+                for marker in (
+                    "request failed after retries",
+                    "resource unavailable",
+                    "not found",
+                    "http error",
+                )
+            ):
+                return True
+        current = current.__cause__ or current.__context__
+    return False
 
 
 def _fetch_taxonomy_resource(
