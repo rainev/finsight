@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "dc64361206c6ad07b6cd7a9a7f4f63bcf13c38a8d56d2a75560ecfacdd71d6a4",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The PSE interim parent-equity field is blank and reported BVPS does not reconcile to 1,403,013,920 listed common shares; capital quality, dilution and cost-of-equity bridge remain unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "38e4135ff47d745f5370943db074d30a86a46d6ff428b384c132b27584a65d84",
+  "issuer": {
+    "issuer_id": "PSE:BNCOM",
+    "name": "Bank of Commerce"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 17.664,
+      "high": 22.08,
+      "low": 13.248
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 22.08,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic FCFF, residual-income or SOTP valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-BANK-REVIEW-B16-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "28732a8dedfb1644e2d1a734f2ecd724b5a1e7d93ce872b0f4d17eba64b57102",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B16-1.0",
+  "numerical_range": {
+    "high": 22.08,
+    "low": 13.248
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "intrinsic_blocker": "The PSE interim parent-equity field is blank and reported BVPS does not reconcile to 1,403,013,920 listed common shares; capital quality, dilution and cost-of-equity bridge remain unresolved.",
+    "metric_basis": "reported PHP book value per share; not independently reconciled to ordinary shares",
+    "policy_rationale": "Reuse the Batch 5 lender-review P/B band while common-share/BVPS and interim parent-capital bases remain unreconciled.",
+    "reliability": "Low",
+    "route_reason": "Residual income remains the bank's primary intrinsic route; P/B is a separate finite screen pending common-capital reconciliation."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BNCOM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "28732a8dedfb1644",
+      "form": "PSE quarterly financial summary",
+      "label": "BNCOM FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "28732a8dedfb1644e2d1a734f2ecd724b5a1e7d93ce872b0f4d17eba64b57102",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=692"
+    },
+    {
+      "document_id": "28732a8dedfb1644-support-1",
+      "form": "PSE common-stock data",
+      "label": "BNCOM listed common-share stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "28732a8dedfb1644e2d1a734f2ecd724b5a1e7d93ce872b0f4d17eba64b57102",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=692"
+    }
+  ],
+  "subsector": "Universal bank",
+  "ticker": "BNCOM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, capital efficiency and common-equity claims have not been fully reconciled.",
+    "Reported 1H2026 equity of PHP36.373bn divided by listed common shares implies about PHP25.93, not the reported PHP22.08 BVPS. Do not infer missing parent equity or use this P/B screen as intrinsic residual income."
+  ]
+}

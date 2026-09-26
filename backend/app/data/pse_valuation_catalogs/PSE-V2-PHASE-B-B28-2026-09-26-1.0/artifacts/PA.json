@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "8a55ae8f7ba4b649296b667fba51029c84fa0cfff508a3a5d69ba9e9f1579a30",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Investment realizability, future business funding and parent-only claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "4184fec535adf2cd9177bc25f9997aaebdd8031a14168c7640fb5319e95012d7",
+  "issuer": {
+    "issuer_id": "PSE:PA",
+    "name": "Pacifica Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.125776182,
+      "high": 0.17294225,
+      "low": 0.078610114
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.3144404553846154,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e762b23a80fe3d236d6a735b8b2ec840734f1f5e40607adb15a89b3a983483ca",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 0.17294225,
+    "low": 0.078610114
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Investment realizability, future business funding and parent-only claims are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 325,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; no peer calibration, proven reserve appraisal or attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Investment interests require attributable SOTP; book per common share is only a screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e762b23a80fe3d23",
+      "form": "PSE financial summary",
+      "label": "PA FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e762b23a80fe3d236d6a735b8b2ec840734f1f5e40607adb15a89b3a983483ca",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=109"
+    },
+    {
+      "document_id": "e762b23a80fe3d23-support-1",
+      "form": "PSE common-stock data",
+      "label": "PA open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "e762b23a80fe3d236d6a735b8b2ec840734f1f5e40607adb15a89b3a983483ca",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=109"
+    }
+  ],
+  "subsector": "Investment holding",
+  "ticker": "PA",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The PSE summary reports no FY2025 or 1H2026 revenue and continuing losses; positive book value is not evidence of recurring cash generation."
+  ]
+}

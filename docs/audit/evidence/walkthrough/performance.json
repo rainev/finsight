@@ -1,0 +1,11 @@
+{
+  "environment": "Isolated local Chrome; 1440×1000, DPR 1. Not a universal/device-independent performance guarantee.",
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+  "samples": 89,
+  "medianFrameMs": 16.699999999999818,
+  "p95FrameMs": 16.700000000000273,
+  "maxFrameMs": 16.800000000000182,
+  "framesOver34ms": 0,
+  "medianRendererSubmissionMs": 0.4,
+  "p95RendererSubmissionMs": 0.6
+}

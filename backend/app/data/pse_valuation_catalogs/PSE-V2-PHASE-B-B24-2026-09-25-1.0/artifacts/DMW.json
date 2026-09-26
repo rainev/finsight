@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "af438d43c7381c4e64ba55ec3982ffb934f13d7f12a72b47b6ea32728c6ddab6",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property-level appraisals, project costs, debt, minority ownership and realization timing are not independently reviewed."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "4cfd1340dfe2ccca027935653f2b93a9c7e16ac0fe9332f18c814a9ece12abfe",
+  "issuer": {
+    "issuer_id": "PSE:DMW",
+    "name": "D.M. Wenceslao & Associates, Incorporated"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 4.809215143,
+      "high": 6.412286857,
+      "low": 3.206143429
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 10.687144762359601,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-PROPERTY-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "d2f76f267a407848dabc067be50b5daa1a5556b21af70fdb819c94a0b14565e3",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 6.412286857,
+    "low": 3.206143429
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property-level appraisals, project costs, debt, minority ownership and realization timing are not independently reviewed.",
+    "metric_basis": "PHP parent equity (pesos) / 3,395,864,100 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite property-book screening band; no asset appraisal, project-level RNAV or completed SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Distinct land, development and recurring leasing interests require attributable property SOTP/RNAV."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:DMW:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "d2f76f267a407848",
+      "form": "PSE financial summary",
+      "label": "DMW FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "d2f76f267a407848dabc067be50b5daa1a5556b21af70fdb819c94a0b14565e3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=671"
+    },
+    {
+      "document_id": "d2f76f267a407848-support-1",
+      "form": "PSE common-stock data",
+      "label": "DMW open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "d2f76f267a407848dabc067be50b5daa1a5556b21af70fdb819c94a0b14565e3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=671"
+    }
+  ],
+  "subsector": "Property development and leasing",
+  "ticker": "DMW",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "Parent equity excludes PHP6.25bn of non-parent equity; the P/B screen is not an appraised land or leasing value."
+  ]
+}

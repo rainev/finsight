@@ -1,0 +1,126 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-27.0",
+  "batch_version": "PSE-V2-PHASE-B-B27-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B27-2026-09-25-1.0",
+  "universe_version": "PSE-V2-278-B27-1.0",
+  "valuation_date": "2026-09-25",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["AR", "BMM", "CYBR", "MGH", "MJIC", "PNC", "PORT", "SOC", "T", "TUBIG"],
+  "policies": {},
+  "issuers": {
+    "AR": {
+      "issuer_name": "Abra Mining and Industrial Corporation", "subsector": "Mining and mineral interests", "primary_model": "sotp",
+      "period_end": "2020-09-30", "currency": "PHP", "source_currency_label": "PES0", "equity_unit_scale": "pesos", "equity_basis": "total", "equity_value": 1715850145.74, "reported_bvps": 0,
+      "shares_outstanding": 199294584200, "share_as_of": "2026-09-18", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-18",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=33",
+      "share_classes": [{"class": "quoted common", "shares": 199294584200, "as_of": "2026-09-18", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=33"}],
+      "supporting_sources": [{"label": "AR continued trading suspension for missing 2Q2026 report", "form": "PSE disclosure notice", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1959707", "published_at": null}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Mineral claims require finite reserve economics and a reconciled attributable common-share bridge.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2020, parent attribution is reported as zero, and the suspended stock snapshot's outstanding shares exceed issued shares; current reserves and common claims are unresolved.",
+      "source_warning": "The 3Q2020 PSE currency label reads 'PES0' and total equity is PHP1.716bn while parent equity is printed zero. The 2026 stock page shows 199.295bn outstanding versus 99.295bn issued and 72.947bn listed shares. None is silently chosen for a per-share result."
+    },
+    "BMM": {
+      "issuer_name": "Bogo-Medellin Milling Company, Inc.", "subsector": "Sugar milling", "primary_model": "fcff_dcf",
+      "period_end": "2022-06-30", "currency": "PHP", "source_currency_label": "PHP (IN THOUSAND)", "equity_unit_scale": "thousands", "equity_basis": "parent", "equity_value": 177753, "reported_bvps": 29.63,
+      "shares_outstanding": 6000000, "share_as_of": "2026-07-10", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-07-10",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=181",
+      "share_classes": [{"class": "ordinary common", "shares": 6000000, "as_of": "2026-07-10", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=181"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Sugar milling FCFF needs current crop-cycle, operating-cost and debt-service inputs.",
+      "intrinsic_blocker": "The latest reviewed summary ends June 2022, the line remains suspended and later operating/capital claims are not reviewed.",
+      "source_warning": "PSE June 2022 parent equity is PHP177,753 thousand and YTD income is negative. The last trade shown is December 2022; neither old book nor stale price is a current valuation."
+    },
+    "CYBR": {
+      "issuer_name": "Cyber Bay Corporation", "subsector": "Property and investment holding", "primary_model": "nav_sotp",
+      "period_end": "2026-06-30", "currency": "PHP", "source_currency_label": "PhP (in thousands)", "equity_unit_scale": "thousands", "equity_basis": "parent", "equity_value": -1520397, "reported_bvps": -0.21,
+      "shares_outstanding": 6806878853, "share_as_of": "2026-06-30", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-06-30",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=67",
+      "share_classes": [{"class": "ordinary common", "shares": 6806878853, "as_of": "2026-06-30", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=67"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Property/investment rights need recoverable NAV and a positive parent-common residual.",
+      "intrinsic_blocker": "1H2026 parent equity is negative, operations report no revenue and the common line remains suspended; no positive book or asset realization case is reviewed.",
+      "source_warning": "PSE 1H2026 parent equity is negative PHP1,520,397 thousand and printed BVPS is negative PHP0.21. The summary's 2025 annual parent-equity field appears in a different scale; no cross-period proxy is applied."
+    },
+    "MGH": {
+      "issuer_name": "Metro Global Holdings Corporation", "subsector": "Infrastructure and investment holding", "primary_model": "sotp",
+      "period_end": "2025-09-30", "currency": "PHP", "source_currency_label": "PESO", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 3518441949, "reported_bvps": 1.27,
+      "shares_outstanding": 2750000000, "share_as_of": "2026-06-24", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-06-24",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=192",
+      "share_classes": [{"class": "quoted common", "shares": 2750000000, "as_of": "2026-06-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=192"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Investment holdings need attributable subsidiary values and a settled quoted/common-capital structure.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2025 with no revenue, only 299.85m of 2.75bn outstanding shares appear listed and trading has been suspended for years.",
+      "source_warning": "PSE 3Q2025 parent equity is PHP3.518bn, but the stock page shows 2.75bn outstanding versus 299.85m listed shares. The historical last close is February 2007, not a current price."
+    },
+    "MJIC": {
+      "issuer_name": "MJC Investments Corporation", "subsector": "Hotel and leisure holding", "primary_model": "nav_sotp",
+      "period_end": "2022-09-30", "currency": "PHP", "source_currency_label": "Philippine Peso", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": -1530001417, "reported_bvps": -0.48,
+      "shares_outstanding": 3174405821, "share_as_of": "2026-08-04", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-08-04",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=24",
+      "share_classes": [{"class": "ordinary common", "shares": 3174405821, "as_of": "2026-08-04", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=24"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Leisure assets require recoverable NAV and a positive parent-common bridge.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2022 with negative parent equity and losses; no current financing or recovery case is sourced.",
+      "source_warning": "PSE 3Q2022 parent equity is negative PHP1.530bn and BVPS negative PHP0.48. The suspended common line last traded in May 2023; neither stale quote nor negative book is converted to a positive screen."
+    },
+    "PNC": {
+      "issuer_name": "Philippine National Construction Corporation", "subsector": "Infrastructure and concession holding", "primary_model": "nav_sotp",
+      "period_end": null, "currency": "PHP", "source_currency_label": null, "equity_unit_scale": null, "equity_basis": null, "equity_value": null, "reported_bvps": null,
+      "shares_outstanding": 174444759, "share_as_of": "2026-09-18", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-18",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=7",
+      "share_classes": [{"class": "quoted common", "shares": 174444759, "as_of": "2026-09-18", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=7"}],
+      "supporting_sources": [{"label": "PNC continued trading suspension for missing 2Q2026 report", "form": "PSE disclosure notice", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1959707", "published_at": null}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Infrastructure concessions require dated financials, concession life and parent-only claims.",
+      "intrinsic_blocker": "The PSE financial-summary page contains no fiscal period, equity or income figures; no reported financial base exists for a concession or per-share model.",
+      "source_warning": "The PSE common stock page shows 174,444,759 outstanding shares but only 75m listed and a suspended status. The financial-summary period, currency, equity and BVPS are blank; those critical fields remain null, not zero."
+    },
+    "PORT": {
+      "issuer_name": "Globalport 900, Inc.", "subsector": "Transport and investment holding", "primary_model": "sotp",
+      "period_end": "2020-06-30", "currency": "PHP", "source_currency_label": "Peso", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 150092077, "reported_bvps": 0.06,
+      "shares_outstanding": 2335134100, "share_as_of": "2026-06-24", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-06-24",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=129",
+      "share_classes": [{"class": "quoted common", "shares": 2335134100, "as_of": "2026-06-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=129"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Transport investments require current attributable SOTP and a settled common claim.",
+      "intrinsic_blocker": "The latest reviewed summary ends 1H2020 with no revenue; only 54.212m of 2.335bn outstanding shares appear listed, and trading has been suspended for years.",
+      "source_warning": "PSE 1H2020 parent equity is PHP150.092m against 2.335bn outstanding shares, but only 54.212m appear listed. The May 2014 last close is not a current price or valuation input."
+    },
+    "SOC": {
+      "issuer_name": "SOCResources, Inc.", "subsector": "Property and investment holding", "primary_model": "nav_sotp",
+      "period_end": "2026-06-30", "currency": "PHP", "source_currency_label": "Philippine Peso", "equity_unit_scale": "pesos", "equity_basis": "total", "equity_value": 1882304137, "reported_bvps": 2.07,
+      "shares_outstanding": 901920568, "share_as_of": "2026-08-05", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-08-05",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=161",
+      "share_classes": [{"class": "quoted common", "shares": 901920568, "as_of": "2026-08-05", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=161&security_id=345"}],
+      "supporting_sources": [{"label": "SOC continued suspension and unfiled 2025 annual report", "form": "PSE disclosure notice", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1960868", "published_at": null}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Property assets require an attributable common-equity NAV and current audited base.",
+      "intrinsic_blocker": "The 1H2026 summary reports zero parent-attributable equity against positive total equity, while the 2025 annual report remains unfiled; a total-book shortcut is not a reviewed parent-common residual.",
+      "source_warning": "PSE 1H2026 total equity is PHP1.882bn and printed BVPS PHP2.07, but parent attribution is zero. The exchange notice says SOC remains suspended because FY2025 annual reporting is missing despite the 2Q2026 report."
+    },
+    "T": {
+      "issuer_name": "TKC Metals Corporation", "subsector": "Metals and industrial holding", "primary_model": "fcff_dcf",
+      "period_end": "2025-09-30", "currency": "PHP", "source_currency_label": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 857375017, "reported_bvps": 0.51,
+      "shares_outstanding": 1690000000, "share_as_of": "2026-08-19", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-08-19",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=163",
+      "share_classes": [{"class": "quoted common", "shares": 1690000000, "as_of": "2026-08-19", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=163"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Metals FCFF requires current operations, asset realization and financing claims.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2025 with no revenue; trading is suspended and 940m of 1.69bn outstanding shares appear listed.",
+      "source_warning": "PSE 3Q2025 parent equity is PHP857.375m but revenue is zero. Listed and outstanding common shares diverge, and the June 2026 last close is not current."
+    },
+    "TUBIG": {
+      "issuer_name": "Tubig Pilipinas Holdings Inc.", "subsector": "Water and resource holding", "primary_model": "nav_sotp",
+      "period_end": "2026-03-31", "currency": "PHP", "source_currency_label": "Php", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 3358533, "reported_bvps": 0,
+      "shares_outstanding": 40000000040, "share_as_of": "2026-09-11", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=637",
+      "share_classes": [{"class": "quoted common", "shares": 40000000040, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=637"}],
+      "supporting_sources": [{"label": "TUBIG predecessor COAL backdoor-listing asset and share exchange", "form": "PSE issuer disclosure", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1874056", "published_at": null}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "The water/business transition requires post-exchange attributable assets and common-claim NAV.",
+      "intrinsic_blocker": "1Q2026 parent equity is nearly exhausted with no revenue and an approximately PHP821m YTD loss; the COAL-to-TUBIG backdoor asset/share exchange is not underwritten into a post-transaction common residual.",
+      "source_warning": "PSE 1Q2026 parent equity is PHP3.359m across 40bn quoted shares and BVPS rounds to zero. The financial summary is from the predecessor transition; suspended trading and unreviewed post-exchange assets preclude a finite screen."
+    }
+  }
+}

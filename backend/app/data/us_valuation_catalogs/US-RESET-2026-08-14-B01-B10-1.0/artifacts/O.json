@@ -1,0 +1,156 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "TTM AFFO uses annualized current-H1 straight-line rent and source-derived recurring-capital ranges; private gross-lease diagnostic is non-primary. Reliability capped at Low.",
+      "Model 'ffo': TTM AFFO uses annualized current-H1 straight-line rent and source-derived recurring-capital ranges; private gross-lease diagnostic is non-primary. Reliability capped at Low.",
+      "Primary model 'ffo' is review_required.",
+      "Scenario 'base' model 'ffo' is review_required.",
+      "Scenario 'bear' model 'ffo' is review_required.",
+      "Scenario 'bull' model 'ffo' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "calculator_link": "/api/us-valuations/O/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "REPORTED_AFFO_FALLBACK",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000726728",
+    "classification_confidence": 0.6,
+    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Real Estate",
+    "issuer_name": "REALTY INCOME CORP",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "override_applied": false,
+    "primary_archetype": "us_reit",
+    "sec_sic_code": "6798",
+    "sec_sic_label": "Real Estate Investment Trusts",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000726728-26-000048",
+      "0000726728-26-000030",
+      "0000726728-26-000011",
+      "0000726728-25-000148",
+      "0000726728-25-000131",
+      "0000726728-25-000096",
+      "0000726728-25-000055",
+      "0000726728-24-000130"
+    ],
+    "ticker": "O"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
+    "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
+    "source_policy": "SEC Companyfacts and submissions; no exchange prices"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "ffo",
+    "reason": "CANDIDATE (review_required) — REITs valued on FFO (net income + real-estate depreciation - property-sale gains), a filing-derived non-GAAP approximation, at a governed P/FFO multiple (13-18x). DDM is inappropriate (monthly payers, growth REITs); a full AFFO/NAV model is a future refinement.",
+    "supporting": [
+      "justified_pffo"
+    ]
+  },
+  "models": {
+    "ffo": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 48.288108579164856,
+      "model": "ffo",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "TTM AFFO uses annualized current-H1 straight-line rent and source-derived recurring-capital ranges; private gross-lease diagnostic is non-primary. Reliability capped at Low."
+      ]
+    }
+  },
+  "primary_valuation_method": "ffo",
+  "public_assumptions": {},
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "REPORTED_AFFO_FALLBACK",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.5266355295795673,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "medium",
+    "errors": [],
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "TTM AFFO uses annualized current-H1 straight-line rent and source-derived recurring-capital ranges; private gross-lease diagnostic is non-primary. Reliability capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 48.288108579164856,
+    "high": 73.71834221314899,
+    "label": "practical TTM AFFO DCF range",
+    "low": 36.35875242018359
+  },
+  "scenarios": {
+    "base": {
+      "ffo": {
+        "intrinsic_value_per_share": 48.288108579164856,
+        "publication_state": "review_required"
+      }
+    },
+    "bear": {
+      "ffo": {
+        "intrinsic_value_per_share": 36.35875242018359,
+        "publication_state": "review_required"
+      }
+    },
+    "bull": {
+      "ffo": {
+        "intrinsic_value_per_share": 73.71834221314899,
+        "publication_state": "review_required"
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "source_financial_statement": {
+    "accession": "0000726728-26-000048",
+    "filed_date": "2026-08-06",
+    "form": "10-Q",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000048/o-20260630.htm"
+  },
+  "ticker": "O",
+  "valuation_date": "2026-08-14"
+}

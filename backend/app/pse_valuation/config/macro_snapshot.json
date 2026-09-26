@@ -1,0 +1,14 @@
+{
+  "schema_version": "PSE-V2-MACRO-SNAPSHOT-1.0",
+  "snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+  "review_status": "reviewed_for_pilot",
+  "risk_free_rate": 0.07052,
+  "risk_free_observed_at": "2026-06-23",
+  "risk_free_source": {
+    "label": "Bureau of the Treasury - 10-year T-bond auction, 23 June 2026",
+    "url": "https://www.treasury.gov.ph/wp-content/uploads/2026/06/Treasury-Bonds-Auction-Result-on-23-June-2026-.pdf"
+  },
+  "terminal_growth_review_band": {"low": 0.02, "high": 0.04},
+  "note": "A dated Phase A assumption snapshot; not a claim that the benchmark is current after the observation date."
+}
+

@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "66fb3c53ed7649180284eb707b1bff155aa088be77420cbbc69cd3a182432694",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Store-level economics, parent attribution, FRUIT ownership, leases, capex, debt and terminal cash flows are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "65bd602fdfc2e3651c69d31371d0dc649f938829cffbfbb6f4de4ee6bdd5c98e",
+  "issuer": {
+    "issuer_id": "PSE:BALAI",
+    "name": "Balai Ni Fruitas Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.21,
+      "high": 0.294,
+      "low": 0.126
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 0.42,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic FCFF, residual-income or SOTP valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-REVIEW-B16-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "15a8f8c08bedc0d5dc18cba37b07a4a97e391db1de102d40435dc3525dd4b2ea",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B16-1.0",
+  "numerical_range": {
+    "high": 0.294,
+    "low": 0.126
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Store-level economics, parent attribution, FRUIT ownership, leases, capex, debt and terminal cash flows are not reconciled.",
+    "metric_basis": "reported PHP book value per share; do not substitute zero parent-attribution fields",
+    "policy_rationale": "Reuse the conservative Batch 14 filing-review P/B band when reported per-share book value is usable only as a preliminary screen.",
+    "reliability": "Low",
+    "route_reason": "Store cohorts, brand margins, leases and reinvestment require FCFF; reported BVPS supplies only a finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BALAI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "15a8f8c08bedc0d5",
+      "form": "PSE quarterly financial summary",
+      "label": "BALAI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "15a8f8c08bedc0d5dc18cba37b07a4a97e391db1de102d40435dc3525dd4b2ea",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=697"
+    },
+    {
+      "document_id": "15a8f8c08bedc0d5-support-1",
+      "form": "PSE company information",
+      "label": "BALAI PSE company information and FRUIT relationship",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "15a8f8c08bedc0d5dc18cba37b07a4a97e391db1de102d40435dc3525dd4b2ea",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=697"
+    }
+  ],
+  "subsector": "Baked goods and fruit-drink retail",
+  "ticker": "BALAI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, capital efficiency and common-equity claims have not been fully reconciled.",
+    "PSE summary parent equity and income fields appear as zero while total equity and BVPS are positive; they are treated as unavailable, not economic zero. BALAI is FRUIT-related and per-share screens are non-additive."
+  ]
+}

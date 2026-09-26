@@ -1,0 +1,80 @@
+{
+  "artifact_hash": "640e99a782d8cc5556a75da5635c33216de7efb0e9e9c9055467a18fbf94eeb0",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2022 with negative parent equity and losses; no current financing or recovery case is sourced."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2022-09-30",
+  "filing_published_at": null,
+  "input_hash": "a98bfc8b4b095752459edfa74a65d5f9d94d24ae68a318d122043e371afcc2e5",
+  "issuer": {
+    "issuer_id": "PSE:MJIC",
+    "name": "MJC Investments Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2022 with negative parent equity and losses; no current financing or recovery case is sourced.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Leisure assets require recoverable NAV and a positive parent-common bridge.",
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-08-04"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "MJIC",
+    "security_id": "PSE:MJIC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f76c8c47dbf785c2",
+      "form": "PSE financial summary",
+      "label": "MJIC reviewed PSE financial-summary page",
+      "period_end": "2022-09-30",
+      "published_at": null,
+      "sha256": "f76c8c47dbf785c2a11ac1a4352810d74d3358db52d2db5f66388a7376f72f33",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=24"
+    },
+    {
+      "document_id": "f76c8c47dbf785c2-support-1",
+      "form": "PSE common-stock data",
+      "label": "MJIC ordinary common stock data",
+      "period_end": "2026-08-04",
+      "published_at": null,
+      "sha256": "f76c8c47dbf785c2a11ac1a4352810d74d3358db52d2db5f66388a7376f72f33",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=24"
+    }
+  ],
+  "subsector": "Hotel and leisure holding",
+  "ticker": "MJIC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "PSE 3Q2022 parent equity is negative PHP1.530bn and BVPS negative PHP0.48. The suspended common line last traded in May 2023; neither stale quote nor negative book is converted to a positive screen."
+  ]
+}

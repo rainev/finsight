@@ -1,0 +1,95 @@
+{
+  "workpaper_id": "PSE-V2-PHASE-C-AP-RLC-2026-09-26-1",
+  "scope": ["AP", "RLC"],
+  "status": "staged_unapproved_not_served",
+  "currency": "PHP",
+  "working_values_unit": "PHP millions",
+  "ap": {
+    "period_end": "2026-06-30",
+    "source_review_status": "online_2026_filing_not_byte_hashed",
+    "source_urls": [
+      "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/08/Disclosure-No.-2960-2026-Quarterly-Report-SEC-Form-17-Q.pdf",
+      "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/04/Disclosure-No.-1254-2026-Annual-Report-SEC-Form-17-A.pdf"
+    ],
+    "reported_and_derived": {
+      "fy2025_operating_cash_flow": 51722.480,
+      "h1_2025_operating_cash_flow": 21889.383,
+      "h1_2026_operating_cash_flow": 20674.210,
+      "ttm_operating_cash_flow": 50507.307,
+      "fy2025_ppe_and_intangible_cash_additions": 28501.353,
+      "h1_2025_ppe_and_intangible_cash_additions": 9260.562,
+      "h1_2026_ppe_and_intangible_cash_additions": 10282.498,
+      "ttm_ppe_and_intangible_cash_additions": 29523.289,
+      "fy2025_cash_interest_paid": 17491.517,
+      "h1_2025_cash_interest_paid": 9061.746,
+      "h1_2026_cash_interest_paid": 9978.697,
+      "ttm_cash_interest_paid": 18408.468,
+      "ttm_cash_dividends_from_equity_accounted_investments": 11528.280,
+      "ttm_cash_after_additions_before_interest_addback": 20984.018,
+      "fy2025_cash_after_additions_before_interest_addback": 23221.127,
+      "ttm_illustrative_fcff_excluding_equity_method_investments": 34790.369,
+      "fy2025_illustrative_fcff_excluding_equity_method_investments": 36339.76475,
+      "common_shares_millions": 7205.854307,
+      "cash": 62658.309,
+      "borrowings_plus_leases": 325625.209,
+      "equity_method_investments_book_proxy": 138809.675,
+      "noncontrolling_interest_book_proxy": 14103.045,
+      "outstanding_cghi_contingent_consideration_approximate": 3900.0
+    },
+    "unapproved_assumptions": {
+      "interest_tax_shield_rate": 0.25,
+      "equity_method_investments_valuation_method": "book_carrying_value_proxy_separate_from_consolidated_fcff",
+      "minority_valuation_method": "book_value_proxy_not_fair_value",
+      "contingent_consideration_method": "approximate_reported_outstanding_claim",
+      "borrowings_lease_method": "include_both_in_equity_bridge",
+      "forecast_and_discount_policy": "unchanged_active_AP_scenario_ROIC_growth_WACC_terminal_inputs",
+      "bear_starting_fcff": 34790.369,
+      "base_starting_fcff": 35565.066875,
+      "bull_starting_fcff": 36339.76475
+    },
+    "engine_scenario_assumptions": {
+      "bear": {"growth_rate": 0.02, "roic": 0.10, "wacc": 0.125, "terminal_growth": 0.025, "terminal_roic": 0.095, "forecast_years": 5},
+      "base": {"growth_rate": 0.035, "roic": 0.12, "wacc": 0.115, "terminal_growth": 0.03, "terminal_roic": 0.11, "forecast_years": 5},
+      "bull": {"growth_rate": 0.05, "roic": 0.14, "wacc": 0.105, "terminal_growth": 0.035, "terminal_roic": 0.125, "forecast_years": 5}
+    },
+    "calculation_only_scenarios": {
+      "bear": {"enterprise_value": 332133.851867, "common_equity_value": 189973.581867, "value_per_share": 26.363783},
+      "base": {"enterprise_value": 447969.511615, "common_equity_value": 305809.241615, "value_per_share": 42.438999},
+      "bull": {"enterprise_value": 622507.686092, "common_equity_value": 480347.416092, "value_per_share": 66.660717}
+    },
+    "publication_candidate_values": null,
+    "blocking_reasons": [
+      "2026 filing bytes and source-page images not captured for source-hash review",
+      "25% interest tax-shield rate and sustainable FCFF normalization not analyst-approved",
+      "equity-method investment book value is not an independently valued JV equity claim",
+      "book minority value is not a fair-value attribution and other capital claims are not fully reconciled",
+      "June 2026 macro benchmark and scenario WACC are not newly reviewed"
+    ]
+  },
+  "rlc": {
+    "period_end": "2025-12-31",
+    "source_review_status": "primary_filing_text_not_byte_hashed",
+    "source_urls": [
+      "https://robinsonsland.com/sites/default/files/2026-04/RLC_SEC%2017-A_December%2031%202025.pdf",
+      "https://robinsonsland.com/sites/default/files/2026-04/Robinsons%20Land%20Corporation_%20SEC%20Form%2020-IS%20%28Definitive%20Information%20Statement%29%20Clean%20%28redacted%29_compressed.pdf",
+      "https://rlcommercialreit.com.ph/sites/default/files/2026-03/RCR%20SEC%2017A%20122025_to%20file.pdf"
+    ],
+    "consolidated": {"investment_property_carrying": 143427.865325, "investment_property_fair_value": 447175.301821, "gross_uplift": 303747.436496},
+    "parent_standalone": {"ownership": 1.0, "investment_property_carrying": 115836.052226, "investment_property_fair_value": 319521.030102, "gross_uplift": 203684.977876},
+    "group_less_parent_diagnostic_not_an_owner_allocation": {"investment_property_carrying": 27591.813099, "investment_property_fair_value": 127654.271719, "gross_uplift": 100062.458620},
+    "rcr_standalone": {"parent_ownership": 0.6051, "investment_properties_already_at_fair_value": 161470.010490},
+    "other_partly_owned_entities": {"BRFLC": 0.70, "AAI": 0.51, "GDI": 0.51},
+    "parent_equity": 175531.939468,
+    "shares_millions": 4805.105288,
+    "parent_direct_only_base_equity_subtotal_not_full_rnav": 257005.9306184,
+    "parent_direct_only_base_per_share_diagnostic_not_a_valuation": 53.48601439810948,
+    "full_attributable_uplift": null,
+    "publication_candidate_values": null,
+    "blocking_reasons": [
+      "parent standalone figures do not isolate their exact post-elimination consolidated property slice",
+      "RCR standalone fair-value book basis does not reconcile to RLC consolidated carrying amounts by asset",
+      "remaining group uplift cannot be allocated among RCR and other owners from public aggregate facts",
+      "retained RLC land versus transferred RCR buildings require property-right separation"
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "bfd9a37fe0a05e262e158ad254b9c03b33b44331ede087090f8cfc45813a6e40",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A reviewed FCFF bridge with mid-cycle refining margins, throughput, inventory normalization, debt, leases, and all preferred-share claims is incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "d402543946d08870aa2f11c2528a70defa90ecdda3e0da6de0c96cbfcad6ae96",
+  "issuer": {
+    "issuer_id": "PSE:PCOR",
+    "name": "Petron Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 2.9440000000000004,
+      "high": 3.68,
+      "low": 2.208
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 3.68,
+    "note": "Transparent screening fallback while the reserve-aware intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-RESOURCE-B08-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e52e9ce6f15d9d7c3a4759c40f9119945cd5d02c6990a3507f0faa9e5bd90c9f",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B08-1.0",
+  "numerical_range": {
+    "high": 3.68,
+    "low": 2.208
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "A reviewed FCFF bridge with mid-cycle refining margins, throughput, inventory normalization, debt, leases, and all preferred-share claims is incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Normalized downstream FCFF remains primary; P/B provides a finite screen while refining margins, inventory effects, debt, leases, and preferred claims remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PCOR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e52e9ce6f15d9d7c",
+      "form": "17-Q",
+      "label": "PCOR FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e52e9ce6f15d9d7c3a4759c40f9119945cd5d02c6990a3507f0faa9e5bd90c9f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=136"
+    }
+  ],
+  "subsector": "Downstream refining and fuel marketing",
+  "ticker": "PCOR",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved reserve-aware intrinsic valuation.",
+    "Commodity prices, resource depletion, costs, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

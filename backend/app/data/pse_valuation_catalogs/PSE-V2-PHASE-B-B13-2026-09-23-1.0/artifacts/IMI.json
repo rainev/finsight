@@ -1,0 +1,101 @@
+{
+  "artifact_hash": "f3019db934b8c189b26402237ed6f3add174333c060cd95c09c59fa2c99628aa",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed customer and geography cash flows, margins, working capital, capex, leases, debt, and terminal economics are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "5d5751ee2f3c900426eaef85e5c5e0760ca87b20469b773947bc422497bb955b",
+  "issuer": {
+    "issuer_id": "PSE:IMI",
+    "name": "Integrated Micro-Electronics, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 3.76188,
+      "high": 5.2666319999999995,
+      "low": 2.257128
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported USD book value per share translated to PHP",
+    "metric_value_per_share": 7.52376,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-ELECTRONICS-RECOVERY-B13-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "368348e3a6582b027622c69627ad31b50a6ea183f0cc08d7f15e6dc6917c6f23",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B13-1.0",
+  "numerical_range": {
+    "high": 5.2666319999999995,
+    "low": 2.257128
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "fx_observed_at": "2026-09-23",
+    "fx_rate_php_per_usd": 62.698,
+    "intrinsic_blocker": "Reviewed customer and geography cash flows, margins, working capital, capex, leases, debt, and terminal economics are incomplete.",
+    "metric_basis": "0.12 USD/share x 62.698 PHP/USD",
+    "policy_rationale": "A conservative shared P/B screening band for export electronics with rounded USD per-share facts, cyclical cash flows, and unresolved common claims. The numerical band reuses the prior lower-risk-adjusted screening range; it is not peer-calibrated.",
+    "reliability": "Low",
+    "route_reason": "Operating electronics cash flows and reinvestment require FCFF; a translated P/B range is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:IMI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "368348e3a6582b02",
+      "form": "PSE quarterly financial summary",
+      "label": "IMI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "368348e3a6582b027622c69627ad31b50a6ea183f0cc08d7f15e6dc6917c6f23",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=622"
+    },
+    {
+      "document_id": "368348e3a6582b02-fx",
+      "form": "BSP exchange-rate observation",
+      "label": "BSP Philippine peso per US dollar, 23 September 2026",
+      "period_end": "2026-09-23",
+      "published_at": null,
+      "sha256": "368348e3a6582b027622c69627ad31b50a6ea183f0cc08d7f15e6dc6917c6f23",
+      "source_page": null,
+      "url": "https://www.bsp.gov.ph/Statistics/sdds/sdds.aspx"
+    }
+  ],
+  "subsector": "Electronics manufacturing services",
+  "ticker": "IMI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative P/B; the operating FCFF or attributable SOTP remains unresolved.",
+    "Reported book value per share does not establish a common-equity claim bridge or a peer-calibrated multiple.",
+    "PSE USD book value per share is rounded to cents before PHP conversion; this screen inherits material rounding and FX sensitivity."
+  ]
+}

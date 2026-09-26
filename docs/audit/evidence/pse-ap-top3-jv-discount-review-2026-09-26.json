@@ -1,0 +1,75 @@
+{
+  "review_id": "PSE-V2-AP-TOP3-JV-DISCOUNT-2026-09-26-1",
+  "status": "staged_findings_only",
+  "issuer": "PSE:AP",
+  "source_hashes": {
+    "ap_2025_17a_sha256": "f1985fdc43ca7e8111d7915c9c3300ef2ca676922b43619b5659f8aface6f60b",
+    "ap_2026_1h_17q_sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80"
+  },
+  "working_values_unit": "PHP millions",
+  "jv_book_total_2026_06_30": 138809.675,
+  "top_three_book_total_2026_06_30": 120724.491,
+  "top_three_fraction_of_jv_book": 0.869712366951367,
+  "positions": {
+    "GNPD_direct": {
+      "effective_AP_economic_interest": 0.70,
+      "direct_interest": 0.40,
+      "indirect_interest_via_AA_Thermal": 0.30,
+      "book_2025_12_31": 42999.726,
+      "book_2026_06_30": 46389.217,
+      "investee_equity_2025_12_31": 65728.182,
+      "attributable_2025_net_assets_direct_only": 26291.2728,
+      "book_minus_attributable_net_assets_2025_diagnostic": 16708.4532,
+      "group_share_net_income_2023": 9497.339,
+      "group_share_net_income_2024": 6261.162,
+      "group_share_net_income_2025": 3877.386,
+      "investee_net_financial_debt_2025_diagnostic": 37604.858,
+      "review_gap": "Direct-versus-indirect income and book-premium reconciliation, normalized plant cash returns, maintenance and financing exposure."
+    },
+    "AA_Thermal": {
+      "AP_economic_interest": 0.60,
+      "indirect_interest_in_GNPD_at_AA_Thermal_level": 0.50,
+      "book_2025_12_31": 40291.849,
+      "book_2026_06_30": 41780.142,
+      "investee_equity_2025_12_31": 16778.314,
+      "attributable_2025_net_assets_diagnostic": 10066.9884,
+      "book_minus_attributable_net_assets_2025_diagnostic": 30224.8606,
+      "investee_net_loss_2025": 1.003,
+      "group_share_net_loss_2025": 17.596,
+      "review_gap": "Explain purchase-price, goodwill and look-through components; the summarized holding-company loss does not value the indirect GNPD stake."
+    },
+    "CGHI": {
+      "AP_interest": 0.40,
+      "book_2025_12_31": 58979.923,
+      "book_2026_06_30": 32555.132,
+      "investee_equity_2025_12_31": 128134.437,
+      "attributable_2025_net_assets_diagnostic": 51253.7748,
+      "book_minus_attributable_net_assets_2025_diagnostic": 7726.1482,
+      "investee_net_income_2025": 11580.537,
+      "group_share_net_income_2025": 4361.523,
+      "preferred_share_redemption_2026_1h": 29480.0,
+      "contingent_consideration_outstanding_2026_06_30_approx": 3900.0,
+      "review_gap": "Reconcile post-redemption equity book, preferred/common rights, and current operating cash contribution; 2025 holding-company income is not a standalone current fair value."
+    }
+  },
+  "discount": {
+    "current_base_wacc": 0.115,
+    "risk_free_observed_at": "2026-06-23",
+    "risk_free_rate": 0.07052,
+    "risk_free_instrument_remaining_years_at_observation": 9.7,
+    "risk_free_source_url": "https://www.treasury.gov.ph/wp-content/uploads/2026/06/Treasury-Bonds-Auction-Result-on-23-June-2026-.pdf",
+    "same_tenor_current_yield_pinned": false,
+    "updated_wacc_approved": false,
+    "one_way_base_per_share": {
+      "wacc_10_5_percent": 49.73140756902451,
+      "wacc_11_5_percent": 41.36077402036423,
+      "wacc_12_5_percent": 34.75541723614597
+    },
+    "base_enterprise_terminal_pv_fraction": 0.680738801233987,
+    "review_gap": "Pin an exact-tenor dated yield or explicitly review carrying forward the June series, then document capital weights, cost of debt/equity and terminal reinvestment."
+  },
+  "decision": "top_three_book_proxy_and_discount_not_yet_approval_ready",
+  "issuer_approved": false,
+  "activation_authorized": false,
+  "rlc_status": "pending_consolidation_property_bridge"
+}

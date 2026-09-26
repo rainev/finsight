@@ -1,0 +1,7 @@
+{
+  "catalog_path": "PSE-V2-RCR-SUPERVISED-2026-09-26-1.0",
+  "catalog_version": "PSE-V2-RCR-SUPERVISED-2026-09-26-1.0",
+  "manifest_sha256": "d419b2f5672c4a56b44dd132528e4809309464dde328d05e39fb1440d88f2452",
+  "schema_version": "FINSIGHT-PSE-VALUATION-POINTER-1.0",
+  "status": "staged"
+}

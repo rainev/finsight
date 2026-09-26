@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "7a7f41c213fcfabe24471da482414d37c0e3086b4e07a48e103b795c3721e40f",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Project inventory realization, land values, financing and sustainable development margins are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "39c1d0df46e88f79488ee5b39da24a4fdbc7ab0f528de1a057e3b2b54ff1fe7e",
+  "issuer": {
+    "issuer_id": "PSE:HTI",
+    "name": "Haus Talk, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.700478194,
+      "high": 0.933970925,
+      "low": 0.466985462
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 1.556618208,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-PROPERTY-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "307dc38443ddb43cbf28a5063e3e28a03af9da0926843219a1cebaefd06c6eb3",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 0.933970925,
+    "low": 0.466985462
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Project inventory realization, land values, financing and sustainable development margins are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 2,500,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite property-book screening band; no asset appraisal, project-level RNAV or completed SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Residential inventory and project margins require a property-level valuation; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:HTI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "307dc38443ddb43c",
+      "form": "PSE financial summary",
+      "label": "HTI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "307dc38443ddb43cbf28a5063e3e28a03af9da0926843219a1cebaefd06c6eb3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=690"
+    },
+    {
+      "document_id": "307dc38443ddb43c-support-1",
+      "form": "PSE common-stock data",
+      "label": "HTI open ordinary-common stock data",
+      "period_end": "2026-09-22",
+      "published_at": null,
+      "sha256": "307dc38443ddb43cbf28a5063e3e28a03af9da0926843219a1cebaefd06c6eb3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=690"
+    }
+  ],
+  "subsector": "Residential property development",
+  "ticker": "HTI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The PSE-reported PHP1.67 BVPS follows total equity; the screen uses PHP3.892bn parent equity. 1H2026 parent income declined year on year."
+  ]
+}

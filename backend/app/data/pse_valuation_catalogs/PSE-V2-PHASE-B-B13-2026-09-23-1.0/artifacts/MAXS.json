@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "9266fb12c1ef5d60ef3f629ad550678e25fe73cf2fbe2a355a9e2a8dc5746497",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed store-level economics, franchise mix, leases, closures, growth capex, debt, and terminal assumptions are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "e5cf0df2c4d6982ccc281dc50533f5e054cfcb5e89ef81ed67c4bfe51765ddc5",
+  "issuer": {
+    "issuer_id": "PSE:MAXS",
+    "name": "Max's Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 8.0,
+      "high": 10.0,
+      "low": 6.0
+    },
+    "estimates": {
+      "base": 3.6,
+      "high": 4.5,
+      "low": 2.7
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.45,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-RESTAURANT-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "9edb07a2a5bb7bdb14c2af2d9957120523363f27006ede95d8c5d071186ec8cd",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 4.5,
+    "low": 2.7
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed store-level economics, franchise mix, leases, closures, growth capex, debt, and terminal assumptions are incomplete.",
+    "metric_basis": "0.47 FY2025 EPS + 0.17 1H2026 EPS - 0.19 1H2025 EPS",
+    "reliability": "Low",
+    "route_reason": "Store and franchise FCFF remains primary; P/E is a finite screen while leases, store cohorts, franchise mix, debt, and reinvestment remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MAXS:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9edb07a2a5bb7bdb",
+      "form": "17-Q",
+      "label": "MAXS FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "9edb07a2a5bb7bdb14c2af2d9957120523363f27006ede95d8c5d071186ec8cd",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=135"
+    }
+  ],
+  "subsector": "Restaurant and franchise portfolio",
+  "ticker": "MAXS",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

@@ -1,0 +1,741 @@
+{
+  "artifact_count": 88,
+  "availability_counts": {
+    "intrinsic_valuation": 34,
+    "market_relative_only": 54,
+    "not_available": 0
+  },
+  "batch": {
+    "active_parent_catalog": "PSE-V2-PHASE-B-B07-2026-09-23-1.0",
+    "active_parent_manifest_sha256": "7b3419c52934f9a15d378f8918027697fd9737f2fc449d7f897fa5dcda9f6f91",
+    "batch_version": "PSE-V2-PHASE-B-B08-1.0",
+    "frozen_tickers": [
+      "NIKL",
+      "PX",
+      "APX",
+      "FNI",
+      "AT",
+      "MARC",
+      "OGP",
+      "PCOR",
+      "PXP",
+      "OV"
+    ]
+  },
+  "catalog_status": "staged",
+  "catalog_version": "PSE-V2-PHASE-B-B08-2026-09-23-1.0",
+  "entries": [
+    {
+      "artifact_sha256": "e4f4f6e55595318b0fd98b5a68032c6604bd262d133445092791d8504e366a99",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-ABS-SOURCE-1.0",
+      "ticker": "ABS"
+    },
+    {
+      "artifact_sha256": "e256cfacbfc1368a8b90a1af893cb0c47c4a69c7944d0f38b7250189e0207366",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AC-SOURCE-1.0",
+      "ticker": "AC"
+    },
+    {
+      "artifact_sha256": "c5338cd9fcf64447f1ff828d22abfb41abc8ff58579a3824e6adc43b0196b6a0",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-ACEN-SOURCE-1.0",
+      "ticker": "ACEN"
+    },
+    {
+      "artifact_sha256": "03254d18373317999a3efa0cc436be21064aeaae4a6b832323b663860be42a2d",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-ACR-SOURCE-1.0",
+      "ticker": "ACR"
+    },
+    {
+      "artifact_sha256": "3ba265c254db0029e93aeb0fe442420040725d471aa0e23cdc75a0e09cb24c1b",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-AEV-SOURCE-1.0",
+      "ticker": "AEV"
+    },
+    {
+      "artifact_sha256": "da21fa64cfeee94164f28a66fbcb6765fb24ea5adbfa7f45e1864b510c6b968a",
+      "availability_type": "market_relative_only",
+      "primary_model": "normalized_fcff",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-ALI-SOURCE-1.0",
+      "ticker": "ALI"
+    },
+    {
+      "artifact_sha256": "bd766f2535c0cb9f754dd8d64a174ff1f2ef9ebc50e0754b1e9409f8bba1b95e",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-ALTER-SOURCE-1.0",
+      "ticker": "ALTER"
+    },
+    {
+      "artifact_sha256": "91f91c281bf64694388ca09283a7f6b89c582c6f8d2e3431ae98f259d537f894",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AP-SOURCE-1.0",
+      "ticker": "AP"
+    },
+    {
+      "artifact_sha256": "98866de59178a4c591261ab159d36deb8ba5ad8c0edbc27b6926d54916b28283",
+      "availability_type": "market_relative_only",
+      "primary_model": "finite_life_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-APX-SOURCE-1.0",
+      "ticker": "APX"
+    },
+    {
+      "artifact_sha256": "2ba42aac06f17fcba2c4faf10167de5fe8c7b1ff62b7934be4d43b720c4ad9d5",
+      "availability_type": "market_relative_only",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AREIT-SOURCE-1.0",
+      "ticker": "AREIT"
+    },
+    {
+      "artifact_sha256": "c848a3bcc5a2cbef3958f3bb94a5c5d540d3388da681dc4bcd3762ed981dd3fc",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-ASLAG-SOURCE-1.0",
+      "ticker": "ASLAG"
+    },
+    {
+      "artifact_sha256": "261db1c19ecff2852c302b45d2da84c5869a72de7a570a02d52cb8341916c73c",
+      "availability_type": "market_relative_only",
+      "primary_model": "finite_life_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-AT-SOURCE-1.0",
+      "ticker": "AT"
+    },
+    {
+      "artifact_sha256": "8103edf6e460aaba6e6859fd697fd56369f894da7a17a3628c0aa2710ef7eb9d",
+      "availability_type": "market_relative_only",
+      "primary_model": "finite_life_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-ATI-SOURCE-1.0",
+      "ticker": "ATI"
+    },
+    {
+      "artifact_sha256": "4b0d4d271e19945b496999317e396b32e7bfb69d3b315ca731b05dc503d01742",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-AUB-SOURCE-1.0",
+      "ticker": "AUB"
+    },
+    {
+      "artifact_sha256": "97bf7e854010a7b2ab9c2f23da2dc1ed5c8e4cdd26b3cbf42ca49b958bd0163c",
+      "availability_type": "market_relative_only",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-BDO-SOURCE-1.0",
+      "ticker": "BDO"
+    },
+    {
+      "artifact_sha256": "7e817c43750a7373611ea2ee651b17901685594fecdf85ee1bde272860014ce6",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-BPI-SOURCE-1.0",
+      "ticker": "BPI"
+    },
+    {
+      "artifact_sha256": "2b1c566900479b34d7ea312eb9a6277d4e0d047df2189a3cdaa51a0b21a4e1ce",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-C-SOURCE-1.0",
+      "ticker": "C"
+    },
+    {
+      "artifact_sha256": "23f7f63f99ec60dd10fcf3a927e772c205f7a40e28b61f6e790bd88ab3ef297f",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-CBC-SOURCE-1.0",
+      "ticker": "CBC"
+    },
+    {
+      "artifact_sha256": "e35944f483191b5260a0b8cdbb9a8cc28c21f0ba0b0ab5cb6da3d6a3cd673a24",
+      "availability_type": "market_relative_only",
+      "primary_model": "nav_sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-CEB-SOURCE-1.0",
+      "ticker": "CEB"
+    },
+    {
+      "artifact_sha256": "8b6e0d8eb0f41645ba73c8ef474d7a63f262ca42b286a36916cec901f8b0c1eb",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-CLI-SOURCE-1.0",
+      "ticker": "CLI"
+    },
+    {
+      "artifact_sha256": "e0a5f5f707a78ab9e3aef545f3f26429e825ef39089cbb0369db524d00eebcd3",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-CNPF-SOURCE-1.0",
+      "ticker": "CNPF"
+    },
+    {
+      "artifact_sha256": "77773f09b1ebe96c30084731e87ad8cfbc23bcaaee3c5290994fc2fe2c53f629",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-CNVRG-SOURCE-1.0",
+      "ticker": "CNVRG"
+    },
+    {
+      "artifact_sha256": "63556bd4660473c266dbaca236d6f2705fe790ffee8baf60cf27b63128456dd8",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-COL-SOURCE-1.0",
+      "ticker": "COL"
+    },
+    {
+      "artifact_sha256": "1f0648691268becbe4e06021aa5763908dee9e5c84312d4535991d7d85637106",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-CREC-SOURCE-1.0",
+      "ticker": "CREC"
+    },
+    {
+      "artifact_sha256": "22d9c8afd9d595ece059f69b2805a5def78f43b2d46ce9dc784db6459e457002",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-CREIT-SOURCE-1.0",
+      "ticker": "CREIT"
+    },
+    {
+      "artifact_sha256": "13b561c2026db5e005c31ca52ab59092f31ac4582c0aad75da0f8a1c25a531af",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-DDMPR-SOURCE-1.0",
+      "ticker": "DDMPR"
+    },
+    {
+      "artifact_sha256": "ef2cd4713fcacc26361feec1e5087a51e5e431aee38ed530a6f92726ccce3de9",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-DFNN-SOURCE-1.0",
+      "ticker": "DFNN"
+    },
+    {
+      "artifact_sha256": "d6f174c9ffd820f78f5010ea01f739965153a0478facccd4b50450763c58ab25",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-DITO-SOURCE-1.0",
+      "ticker": "DITO"
+    },
+    {
+      "artifact_sha256": "505cfab923d01618dac29a5478636997bbedde5629394529c001ea3ab8c5c6a4",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-DMC-SOURCE-1.0",
+      "ticker": "DMC"
+    },
+    {
+      "artifact_sha256": "edcc5a320965cb5d4d1bbfea7dfa5d8ac1e9ec64fe5a6c576f4ca9cc140295e2",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-DNL-SOURCE-1.0",
+      "ticker": "DNL"
+    },
+    {
+      "artifact_sha256": "aa6853f19aeeacdc8128ae823f5ae0d315e59f2b4b6eef4b271bc5719a69bdc9",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-EEI-SOURCE-1.0",
+      "ticker": "EEI"
+    },
+    {
+      "artifact_sha256": "80f91b9d9398621b5382700e759ec0f29b13d55f58c18382f6a730b5bca68445",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-EW-SOURCE-1.0",
+      "ticker": "EW"
+    },
+    {
+      "artifact_sha256": "46dffb04489b52c1ad8ad877d9a08157bbc1779262c64d0d74a628a95e046bda",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-FGEN-SOURCE-1.0",
+      "ticker": "FGEN"
+    },
+    {
+      "artifact_sha256": "6a3b824b0fd8354bde088954da470f069f2d0f298d6429af0a5362ebf6fc8449",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-FILRT-SOURCE-1.0",
+      "ticker": "FILRT"
+    },
+    {
+      "artifact_sha256": "c292af57a7a692cfc991ce634ddae4b94b7f4dc24433f6769bdff82d4afe7b72",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-FLI-SOURCE-1.0",
+      "ticker": "FLI"
+    },
+    {
+      "artifact_sha256": "cfb6a83b1c1c9cbe6cb62845e0fd035f1026b16bf13d32d752a8969dea89bdf5",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-FNI-SOURCE-1.0",
+      "ticker": "FNI"
+    },
+    {
+      "artifact_sha256": "44fb4a96e9e9d74fb23c4309d89da4941614695bcda185a866665495d909e1ce",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-GLO-SOURCE-1.0",
+      "ticker": "GLO"
+    },
+    {
+      "artifact_sha256": "0d99ca7c18a50aad2c2825cfed21bb1b7890e5ae485e7b340db10073f88d2e55",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-GMA7-SOURCE-1.0",
+      "ticker": "GMA7"
+    },
+    {
+      "artifact_sha256": "cf244585308819060d724b06f00b82a168ba4c46ac15cb33003517a0ba8232da",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-GTCAP-SOURCE-1.0",
+      "ticker": "GTCAP"
+    },
+    {
+      "artifact_sha256": "00c6b3facf5620947f4d09b7a321622d801706a0b9b7231037a6088593e6e700",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-ICT-SOURCE-1.0",
+      "ticker": "ICT"
+    },
+    {
+      "artifact_sha256": "eea777dcd83d864ea6a9cbb63d18f0292f15c38d6a962ea66dbd3f49fdaf7914",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-JFC-SOURCE-1.0",
+      "ticker": "JFC"
+    },
+    {
+      "artifact_sha256": "6c1356bf5d6b7fa894270b5a8e1c87825f81433d95f5a8727f8906335524434f",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-JGS-SOURCE-1.0",
+      "ticker": "JGS"
+    },
+    {
+      "artifact_sha256": "11b6a5bf31ea9d2ecd68a437c8121331169adbff51f377ebf915b3050483dac2",
+      "availability_type": "market_relative_only",
+      "primary_model": "nav_sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-LSC-SOURCE-1.0",
+      "ticker": "LSC"
+    },
+    {
+      "artifact_sha256": "f24868f381f6e5f32cabfaac7c0dc0dc73a6a6d2741d7c67cba7f61bb1f26270",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-MAC-SOURCE-1.0",
+      "ticker": "MAC"
+    },
+    {
+      "artifact_sha256": "56226f01bbe3d237259ca00635648954010870433634ee146a4606a7908748cc",
+      "availability_type": "market_relative_only",
+      "primary_model": "nav_sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-MARC-SOURCE-1.0",
+      "ticker": "MARC"
+    },
+    {
+      "artifact_sha256": "3f7470e90356bb31b2df51d8343162c03dda8f5065b0509310f4ccf796b3f16a",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-MB-SOURCE-1.0",
+      "ticker": "MB"
+    },
+    {
+      "artifact_sha256": "529230bbcd420fabc138846e21feb409d6079b23990e995dabd2c2863365e483",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-MBT-SOURCE-1.0",
+      "ticker": "MBT"
+    },
+    {
+      "artifact_sha256": "b1b3e8c65d33f1c573d07ddac81aae2b9614eedcef63c5173a81305af980fca1",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-MEG-SOURCE-1.0",
+      "ticker": "MEG"
+    },
+    {
+      "artifact_sha256": "d2e9dad14acf8dda688d126ba3634d434a80e3a5f480463c88e9d426fdb32aef",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-MER-SOURCE-1.0",
+      "ticker": "MER"
+    },
+    {
+      "artifact_sha256": "2e5f4e95064efd41061a8ddc67ca44820e761684258c94badf8a3a808d2c460d",
+      "availability_type": "market_relative_only",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-MFIN-SOURCE-1.0",
+      "ticker": "MFIN"
+    },
+    {
+      "artifact_sha256": "1af8d1fb1ecf6aa18682ebff7145540d6d6a78746325e01f3642e3607690d523",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-MONDE-SOURCE-1.0",
+      "ticker": "MONDE"
+    },
+    {
+      "artifact_sha256": "4d4e9e3184441066006e915b1789688a83d5dedf3dd01b353e7512c2a9c02ac6",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-MREIT-SOURCE-1.0",
+      "ticker": "MREIT"
+    },
+    {
+      "artifact_sha256": "dfb0f9461ce85355dd06fd27c44844d70c617cee7aaf3eb3537c39ab1e1175e2",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-MWC-SOURCE-1.0",
+      "ticker": "MWC"
+    },
+    {
+      "artifact_sha256": "bf670cff40bb3748021f55aa88190dc5925146e083101802805a07dce1849c76",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-MWIDE-SOURCE-1.0",
+      "ticker": "MWIDE"
+    },
+    {
+      "artifact_sha256": "939d3b3051a1f30e4f0e671dfb2e1b73f099fc123b103f42c7ec0abbec5b3d69",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-MYNLD-SOURCE-1.0",
+      "ticker": "MYNLD"
+    },
+    {
+      "artifact_sha256": "f525d0c2411cc6fd850021ed328f2c481a6f7e0df248f1a5f3e65f6172617170",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-NIKL-SOURCE-1.0",
+      "ticker": "NIKL"
+    },
+    {
+      "artifact_sha256": "e7e4fe22b0978cec857e635e1b58bc1064fb8f7a73d73af9701abd3d43c53d01",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-NOW-SOURCE-1.0",
+      "ticker": "NOW"
+    },
+    {
+      "artifact_sha256": "2871b107c701a51c1f3be774621e2ed66ac6dcd711403d7fc8ec9d50eb4058b8",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-NRCP-SOURCE-1.0",
+      "ticker": "NRCP"
+    },
+    {
+      "artifact_sha256": "b2f3a976e41bf2f2e16999f58f76e8ba40006279acc7b0f4c78d474483b4b801",
+      "availability_type": "market_relative_only",
+      "primary_model": "finite_life_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-OGP-SOURCE-1.0",
+      "ticker": "OGP"
+    },
+    {
+      "artifact_sha256": "f63c03049e3f2673aecf1b667461fde8ac6b806d3e609b4aab9daec17c3682e7",
+      "availability_type": "market_relative_only",
+      "primary_model": "nav_sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-OV-SOURCE-1.0",
+      "ticker": "OV"
+    },
+    {
+      "artifact_sha256": "2b21da7c1acd7e635aa82c25f33135ab4a155aae531d1a6959a4e7d1a12b1928",
+      "availability_type": "market_relative_only",
+      "primary_model": "nav_sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-PAL-SOURCE-1.0",
+      "ticker": "PAL"
+    },
+    {
+      "artifact_sha256": "da662d18dcfbcb97cd2944c4312b73f7592b086d5dcd831917f1db2eacca2b54",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-PBB-SOURCE-1.0",
+      "ticker": "PBB"
+    },
+    {
+      "artifact_sha256": "d1f7724c4c3e522537ba38484db1ced327e97407f44d25ab354fc827ebe485ed",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-PCOR-SOURCE-1.0",
+      "ticker": "PCOR"
+    },
+    {
+      "artifact_sha256": "939d077ccc7dac294f5214fa495c70d8283af5270fc0136102b7fcef4cb471ec",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-PERC-SOURCE-1.0",
+      "ticker": "PERC"
+    },
+    {
+      "artifact_sha256": "2caea570a5747cd7d213017eb5804f658f998f56d397a32cd548d85c5ba4a687",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-PGOLD-SOURCE-1.0",
+      "ticker": "PGOLD"
+    },
+    {
+      "artifact_sha256": "5f14be70498ee1ee95e91526c91d88f02b2b1c3d6c5960c4ea4ae1ead29bd0a4",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-PLUS-SOURCE-1.0",
+      "ticker": "PLUS"
+    },
+    {
+      "artifact_sha256": "b31ed118c55be2b83cdbdda979491289a8634c30eb102976eb24c5568c27443c",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-PNB-SOURCE-1.0",
+      "ticker": "PNB"
+    },
+    {
+      "artifact_sha256": "6b52e75eafab1f10a8bcce98c63ff1477769d003f1583da86902cc17f43e146d",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-PSB-SOURCE-1.0",
+      "ticker": "PSB"
+    },
+    {
+      "artifact_sha256": "8d2c9ba2870d30ad9133445dc955fc01187b20b80cc5c95ecbc0194b3163bbac",
+      "availability_type": "market_relative_only",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-PSE-SOURCE-1.0",
+      "ticker": "PSE"
+    },
+    {
+      "artifact_sha256": "6417f91f624ca4d76be4b7a18b03cc1ac91ccbfbbcbf3becec93743b05b9a9a3",
+      "availability_type": "market_relative_only",
+      "primary_model": "nav_sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-PX-SOURCE-1.0",
+      "ticker": "PX"
+    },
+    {
+      "artifact_sha256": "3e440550b1c398d172424988684684520f70725f65498cdc047c07a424fe0199",
+      "availability_type": "market_relative_only",
+      "primary_model": "nav_sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B08-PXP-SOURCE-1.0",
+      "ticker": "PXP"
+    },
+    {
+      "artifact_sha256": "81f5c55045cb2d5140ea8a662842358a3a56d0e9f79a84524dd604747af74d98",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-RCB-SOURCE-1.0",
+      "ticker": "RCB"
+    },
+    {
+      "artifact_sha256": "51a4595c1e5355124ad4a361ac8bc901882d79ce9dc23643240aec507629675d",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-RCR-SOURCE-1.0",
+      "ticker": "RCR"
+    },
+    {
+      "artifact_sha256": "85e31562a4a1f72ca146b6947414769443917a7c6c6c2f6de49088a33739e523",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-RLC-SOURCE-1.0",
+      "ticker": "RLC"
+    },
+    {
+      "artifact_sha256": "2b1b1f55c1b2c50c1ac29d2ead9b87d427a52bd441e240f873e6188a5e5d0699",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-RRHI-SOURCE-1.0",
+      "ticker": "RRHI"
+    },
+    {
+      "artifact_sha256": "b7539a512d0c9f980d3ab3efe43da13249753fa66dfc3891e6308820d910b0db",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-SCC-SOURCE-1.0",
+      "ticker": "SCC"
+    },
+    {
+      "artifact_sha256": "5465a2be27981cf64e24f70121060587ad8b0e2e4baec1978d8aad90c8495166",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-SECB-SOURCE-1.0",
+      "ticker": "SECB"
+    },
+    {
+      "artifact_sha256": "405cfc45460ec14d49c72b743951fdc36677255888eea8b9c21fc6084aca143d",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-SEVN-SOURCE-1.0",
+      "ticker": "SEVN"
+    },
+    {
+      "artifact_sha256": "b34dd610eb4a559102157d4d087ae693d474900795f3816aa531547e97651c55",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-SM-SOURCE-1.0",
+      "ticker": "SM"
+    },
+    {
+      "artifact_sha256": "d6ab68b01bb99b09f565eb217ef99b07af262506bb1fa1a58db78b5cafe0878f",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B03-SMPH-SOURCE-1.0",
+      "ticker": "SMPH"
+    },
+    {
+      "artifact_sha256": "b7c6ca2a8097b6ff73b9ef10f168df2e775cdb824f371b7894025b120ca60cab",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-SPC-SOURCE-1.0",
+      "ticker": "SPC"
+    },
+    {
+      "artifact_sha256": "3ab26a85cf27fa852d2380d8e0fa6f78b58501810b88765ba0a92bc217e72894",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B04-SPNEC-SOURCE-1.0",
+      "ticker": "SPNEC"
+    },
+    {
+      "artifact_sha256": "3359fe984fae78ca984de695e7a0c964ff3dc48ad5730cb778eaf6f200d76259",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-SSI-SOURCE-1.0",
+      "ticker": "SSI"
+    },
+    {
+      "artifact_sha256": "bebab8ee2503f7498957e1c69ce07c29dba64ea27c1f047abda245412b2f7aac",
+      "availability_type": "market_relative_only",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B06-TEL-SOURCE-1.0",
+      "ticker": "TEL"
+    },
+    {
+      "artifact_sha256": "48fdb22436dbf9cabcaf412fa03993dc53974a8714529448617571ed6327b3dd",
+      "availability_type": "market_relative_only",
+      "primary_model": "nav_sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B07-TUGS-SOURCE-1.0",
+      "ticker": "TUGS"
+    },
+    {
+      "artifact_sha256": "37c0ccd518651b0f473b2a5448e3c13dd31dd3ab88806aa139e38462b9c11954",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B05-UBP-SOURCE-1.0",
+      "ticker": "UBP"
+    },
+    {
+      "artifact_sha256": "60ca3c8d74440dbc1291e65a4c0e1231adac74b947ecabe9072d683b18b754ed",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-URC-SOURCE-1.0",
+      "ticker": "URC"
+    },
+    {
+      "artifact_sha256": "df08d12652d9b669295829687478147977010af2330523c5c92426596a858844",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B02-WLCON-SOURCE-1.0",
+      "ticker": "WLCON"
+    }
+  ],
+  "publication_counts": {
+    "approved": 0,
+    "blocked": 0,
+    "provisional": 88
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-CATALOG-1.0",
+  "universe_version": "PSE-V2-88-B08-1.0",
+  "valuation_date": "2026-09-23"
+}

@@ -35,64 +35,34 @@
     "filed_date": "2026-07-30",
     "accession": "0001628280-26-050900",
     "url": "https://www.sec.gov/Archives/edgar/data/47111/000162828026050900/hsy-20260628.htm",
-    "note": "Equity-level model (residual income / DDM); no enterprise-to-equity bridge."
+    "note": "Technical quarantine; no intrinsic value was produced."
   },
   "model_policy": {
-    "primary": "ddm",
+    "primary": "fcff_dcf",
     "supporting": [],
     "blend_models": false,
-    "reason": "Fallback (DDM): FCFF enterprise bridge incomplete.",
-    "fallback_from": "fcff_dcf"
+    "reason": "FCFF valuation withheld because current required inputs could not be established."
   },
   "methodology": {
     "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
     "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
     "source_policy": "SEC Companyfacts and submissions; no exchange prices"
   },
-  "public_assumptions": {
-    "cost_of_equity": 0.0873,
-    "risk_free_rate": 0.0468,
-    "equity_risk_premium": 0.045,
-    "policy_beta": 0.9,
-    "last_dividend": 5.350511933425878,
-    "high_dividend_growth": 0.03,
-    "terminal_growth": 0.025,
-    "high_growth_years": 5
-  },
+  "public_assumptions": {},
   "models": {
-    "ddm": {
-      "model": "ddm",
+    "fcff_dcf": {
+      "model": "fcff_dcf",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
       "intrinsic_value_per_share": null,
       "publication_state": "withheld",
-      "errors": [],
-      "warnings": [
-        "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent); valued via ddm equity-level fallback.",
-        "Dividend growth is a governed policy assumption, not a per-issuer forecast."
-      ]
+      "errors": [
+        "technical_error:ValueError:Latest common shares outstanding are required"
+      ],
+      "warnings": []
     }
   },
-  "scenarios": {
-    "bear": {
-      "ddm": {
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld"
-      }
-    },
-    "base": {
-      "ddm": {
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld"
-      }
-    },
-    "bull": {
-      "ddm": {
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld"
-      }
-    }
-  },
+  "scenarios": {},
   "scenario_range": {
     "low": null,
     "base": null,
@@ -101,14 +71,11 @@
   },
   "review": {
     "publication_state": "withheld",
-    "confidence_grade": "medium",
+    "confidence_grade": "insufficient",
     "errors": [
-      "Legacy FCFF fallback artifact is not publishable; repair the current enterprise-to-equity bridge or regenerate through the governed model route."
+      "technical_error:ValueError:Latest common shares outstanding are required"
     ],
-    "warnings": [
-      "FCFF enterprise-to-equity bridge incomplete (missing marketable_securities_noncurrent); valued via ddm equity-level fallback.",
-      "Dividend growth is a governed policy assumption, not a per-issuer forecast."
-    ],
+    "warnings": [],
     "prohibited_output_check": {
       "current_price": false,
       "upside_downside": false,

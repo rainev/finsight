@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "6ae1cf19a341ad9dcae948d309135e95f895c5dd2a48fe72098227c94f3b57ed",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Asset fair values, investment liquidity, ownership, debt and parent common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "eeb62289e8d09524c69e251f101a4f63e0f612f6d49ab9ec48aa4c4a22b6a8be",
+  "issuer": {
+    "issuer_id": "PSE:V",
+    "name": "Vantage Equities, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.988,
+      "high": 1.3585,
+      "low": 0.6175
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 2.47,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "ea2621351513afb655e9ef5ec061f90bd4d70472766efb2ee0b4654d9a19a7ee",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 1.3585,
+    "low": 0.6175
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Asset fair values, investment liquidity, ownership, debt and parent common claims are not reconciled.",
+    "metric_basis": "reported PHP2.47 BVPS; no extrapolation of investment gains",
+    "policy_rationale": "Reuse the finite Batch 17 layered-holding P/B band on the reviewed parent-common basis where available; not appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Investments and financial subsidiaries require attributable SOTP; P/B is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:V:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ea2621351513afb6",
+      "form": "PSE quarterly financial summary",
+      "label": "V FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "ea2621351513afb655e9ef5ec061f90bd4d70472766efb2ee0b4654d9a19a7ee",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=65"
+    },
+    {
+      "document_id": "ea2621351513afb6-support-1",
+      "form": "PSE common-stock data",
+      "label": "V open ordinary-common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "ea2621351513afb655e9ef5ec061f90bd4d70472766efb2ee0b4654d9a19a7ee",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=65"
+    }
+  ],
+  "subsector": "Financial and investment holding",
+  "ticker": "V",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "1H2026 parent-attributable income was far below prior 1H; P/B is not a normalized earnings estimate."
+  ]
+}

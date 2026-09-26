@@ -1,0 +1,79 @@
+{
+  "artifact_hash": "e9a9f48e2f899bae73b509fe81738a19a56affe23dffdf71921b63200b85f735",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "1H2026 parent equity is negative while total equity and printed BVPS are positive; minority attribution and common residual claims remain unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "1a247a5b7c80d95f39226a058ced03a2fe3600d476a63e48d7107ae0e17ed10d",
+  "issuer": {
+    "issuer_id": "PSE:AB",
+    "name": "Atok-Big Wedge Co., Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "1H2026 parent equity is negative while total equity and printed BVPS are positive; minority attribution and common residual claims remain unresolved.",
+    "metric_basis": "PHP parent equity (pesos) / 2,545,000,000 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Resource and investment interests require attributable SOTP and common-claim reconciliation.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "AB",
+    "security_id": "PSE:AB:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "20739098cbd10dd0",
+      "form": "PSE financial summary",
+      "label": "AB FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "20739098cbd10dd01a801364b374190926441e0970229863a2c1d1972fa90bcf",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=19"
+    },
+    {
+      "document_id": "20739098cbd10dd0-support-1",
+      "form": "PSE common-stock data",
+      "label": "AB ordinary common common stock data",
+      "period_end": "2026-09-16",
+      "published_at": null,
+      "sha256": "20739098cbd10dd01a801364b374190926441e0970229863a2c1d1972fa90bcf",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=19"
+    }
+  ],
+  "subsector": "Resource and investment holding",
+  "ticker": "AB",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE 1H2026 parent equity is negative PHP390.230m despite PHP979.293m positive total equity. Printed PHP0.38 BVPS follows total equity, not a positive parent-common bridge; no book screen is published."
+  ]
+}

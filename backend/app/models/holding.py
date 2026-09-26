@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 class HoldingCreate(BaseModel):
     ticker: str = Field(min_length=1, max_length=20)
+    market: str = Field(default="PH", min_length=2, max_length=4)
 
 
 class Holding(BaseModel):
@@ -17,3 +18,6 @@ class Holding(BaseModel):
     ticker: str
     name: str
     sector: str | None
+    currency: str
+    market: str
+    exchange: str | None = None

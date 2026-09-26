@@ -1,0 +1,109 @@
+{
+  "artifact_hash": "5d6834ab0c440e8ddbf3d3eb624d56b13850586dd7717405879bc491f3a2800d",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Associate value, investment liquidity, debt, distribution economics and parent common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "bb83f994086e3343c7130224c1dcbf5d8177925e4cdde5eaed2dbf48b60c1a05",
+  "issuer": {
+    "issuer_id": "PSE:BKR",
+    "name": "Bright Kindle Resources & Investments Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.384,
+      "high": 0.528,
+      "low": 0.24
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 0.96,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "5791ed214f187e14c21eca1049681f6ac330d059d24aed79d7ff8d0e7575fbdd",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 0.528,
+    "low": 0.24
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Associate value, investment liquidity, debt, distribution economics and parent common claims are not reconciled.",
+    "metric_basis": "reported PHP0.96 BVPS; investment value and distribution are not independently appraised",
+    "policy_rationale": "Reuse the finite Batch 17 layered-holding P/B band on the reviewed parent-common basis where available; not appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Investment interests require attributable SOTP; P/B is a finite separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BKR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "5791ed214f187e14",
+      "form": "PSE quarterly financial summary",
+      "label": "BKR FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "5791ed214f187e14c21eca1049681f6ac330d059d24aed79d7ff8d0e7575fbdd",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=66"
+    },
+    {
+      "document_id": "5791ed214f187e14-support-1",
+      "form": "PSE common-stock data",
+      "label": "BKR open ordinary-common stock data",
+      "period_end": "2026-09-17",
+      "published_at": null,
+      "sha256": "5791ed214f187e14c21eca1049681f6ac330d059d24aed79d7ff8d0e7575fbdd",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=66"
+    },
+    {
+      "document_id": "5791ed214f187e14-support-2",
+      "form": "PSE company information",
+      "label": "BKR investment-holding company information",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "5791ed214f187e14c21eca1049681f6ac330d059d24aed79d7ff8d0e7575fbdd",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=66"
+    }
+  ],
+  "subsector": "Investment holding",
+  "ticker": "BKR",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "PSE company information describes no operating segment and a 19.9% MARC interest. The 1H2026 reported EPS is negative despite positive attributed income; it is not used as an earnings input."
+  ]
+}

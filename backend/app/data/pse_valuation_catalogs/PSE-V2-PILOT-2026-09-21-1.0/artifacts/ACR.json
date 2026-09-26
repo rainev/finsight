@@ -1,0 +1,59 @@
+{
+  "artifact_hash": "5dd65dcc13d9c108eb1f72990942f2578c5ad8cd61021bc061cf4e74096e1238",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The consolidated filing is captured, but attributable SOTP component values and ownership-scoped claims have not been reviewed.",
+    "The legacy single-company estimate is not promoted into the specialist V2 route."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": null,
+  "filing_published_at": null,
+  "input_hash": "a108694a97c7c52ea163fa317346e4188313c515e406db3338362c93c6acbd21",
+  "issuer": {
+    "issuer_id": "ACR",
+    "name": "Alsons Consolidated Resources, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PILOT-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {},
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ACR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "d718b654d1bab876",
+      "form": "17-A",
+      "label": "2026-04-15 ACR 17A_2025_Final_compressed.pdf",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "d718b654d1bab876b3da04b76eea373105fcb48411874728135289e82915acb8",
+      "source_page": 63,
+      "url": null
+    }
+  ],
+  "subsector": "Power generation and property",
+  "ticker": "ACR",
+  "valuation_date": "2026-09-21",
+  "warnings": []
+}

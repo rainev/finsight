@@ -17,7 +17,7 @@ def list_holdings(user: CurrentUser) -> list[dict]:
 
 @router.post("", response_model=Holding, status_code=status.HTTP_201_CREATED)
 def add_holding(body: HoldingCreate, user: CurrentUser) -> dict:
-    return holdings_service.add(user["sub"], body.ticker)
+    return holdings_service.add(user["sub"], body.ticker, body.market)
 
 
 @router.delete("/{holding_id}", status_code=status.HTTP_204_NO_CONTENT)

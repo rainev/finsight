@@ -1,0 +1,81 @@
+{
+  "artifact_hash": "5fcf2e7bc30eb213de5c1b9a1443dbf9486c76418b9682ccce3642639e61e281",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "1H2026 parent equity is negative despite positive consolidated equity, and multiple quoted common lines remain unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a5a97cadff468f84029dc52cc531db6a7356cd672c3e29ab5d34645c8d96e7a6",
+  "issuer": {
+    "issuer_id": "PSE:MAH",
+    "name": "Metro Alliance Holdings & Equities Corp."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "1H2026 parent equity is negative despite positive consolidated equity, and multiple quoted common lines remain unresolved.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Attributable subsidiary values and all outstanding common lines require reconciliation before SOTP.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "open",
+    "trading_status_as_of": "2026-09-22"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "MAH",
+    "security_id": "PSE:MAH:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "4861c1bd71140202",
+      "form": "PSE financial summary",
+      "label": "MAH reviewed PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "4861c1bd71140202d8923f02e368d6ba3315afe605149e52a21839dc55344524",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=3"
+    },
+    {
+      "document_id": "4861c1bd71140202-support-1",
+      "form": "PSE common-stock data",
+      "label": "MAH quoted common line stock data",
+      "period_end": "2026-09-22",
+      "published_at": null,
+      "sha256": "4861c1bd71140202d8923f02e368d6ba3315afe605149e52a21839dc55344524",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=3"
+    }
+  ],
+  "subsector": "Holding and services",
+  "ticker": "MAH",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "PSE reports negative PHP25.606m parent equity versus positive PHP44.768m total equity; printed PHP0.15 BVPS is not a positive parent-common residual. The 306.122m shares are one quoted line, not an issuer-wide denominator."
+  ]
+}

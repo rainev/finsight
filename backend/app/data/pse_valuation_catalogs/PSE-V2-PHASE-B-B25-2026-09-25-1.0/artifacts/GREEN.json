@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "31755fcf0f4f9d1e528e0ffe587fe8896daf3e0ec5a6837d3c390bbc505a9534",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Investment fair values, cash realizability, subsidiary debt and minority claims are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "6fd0fc2a04016bb69fec1276e9606dbda546f191f69a99a5f8a171a973675bc3",
+  "issuer": {
+    "issuer_id": "PSE:GREEN",
+    "name": "Greenergy Holdings Incorporated"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.168738147,
+      "high": 0.232014952,
+      "low": 0.105461342
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.4218453679914365,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "60bb23cef0ceb2a486f4641db52d0ecbc0f037aab56a084cd7c1266441a8f722",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 0.232014952,
+    "low": 0.105461342
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Investment fair values, cash realizability, subsidiary debt and minority claims are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 4,150,778,574 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; no peer calibration, proven reserve appraisal or attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Distinct investments require attributable asset and claims analysis; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:GREEN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "60bb23cef0ceb2a4",
+      "form": "PSE financial summary",
+      "label": "GREEN FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "60bb23cef0ceb2a486f4641db52d0ecbc0f037aab56a084cd7c1266441a8f722",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=132"
+    },
+    {
+      "document_id": "60bb23cef0ceb2a4-support-1",
+      "form": "PSE common-stock data",
+      "label": "GREEN open ordinary-common stock data",
+      "period_end": "2026-09-17",
+      "published_at": null,
+      "sha256": "60bb23cef0ceb2a486f4641db52d0ecbc0f037aab56a084cd7c1266441a8f722",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=132"
+    }
+  ],
+  "subsector": "Diversified investment holding",
+  "ticker": "GREEN",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE printed PHP0.62 BVPS does not reconcile to PHP1.751bn parent equity / 4.151bn outstanding shares; 1H2026 revenue is much lower than the prior half. The screen uses the explicit parent/share bridge."
+  ]
+}

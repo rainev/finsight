@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "b7b23f1a6ec2fe27acc24312900916995bf557ed0a4ca225e77bcad34f094c05",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Brand-level cash flows, franchise mix, store growth and closures, leases, reinvestment, and minority claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "e7b6242cf8232acbf1556ded46c80cf63d96012bc9492ab89ef6f9467c3fcfef",
+  "issuer": {
+    "issuer_id": "PSE:FRUIT",
+    "name": "Fruitas Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 0.5,
+      "high": 0.6,
+      "low": 0.4
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.05,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-OPERATING-SERVICES-B14-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "74cc7a388949e45c537fb8baafc829d89a8ecfacf5089e3c0f2a332819aeae60",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B14-1.0",
+  "numerical_range": {
+    "high": 0.6,
+    "low": 0.4
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Brand-level cash flows, franchise mix, store growth and closures, leases, reinvestment, and minority claims are not reconciled.",
+    "metric_basis": "0.05 FY2025 basic EPS + 0.03 1H2026 EPS - 0.03 prior 1H EPS",
+    "policy_rationale": "Shared finite P/E screening band for positive source-bounded per-share earnings; it numerically reuses a prior operating screen, not a peer study or intrinsic cash-flow valuation.",
+    "reliability": "Low",
+    "route_reason": "Kiosk, brand, and franchise economics require normalized FCFF; P/E is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:FRUIT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "74cc7a388949e45c",
+      "form": "PSE quarterly financial summary",
+      "label": "FRUIT FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "74cc7a388949e45c537fb8baafc829d89a8ecfacf5089e3c0f2a332819aeae60",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=676"
+    }
+  ],
+  "subsector": "Food kiosks, retail brands, and franchising",
+  "ticker": "FRUIT",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, reinvestment and common-equity claims have not been reconciled.",
+    "Reported EPS covers a multi-brand group; subsidiary interests and share claims are not separately valued."
+  ]
+}

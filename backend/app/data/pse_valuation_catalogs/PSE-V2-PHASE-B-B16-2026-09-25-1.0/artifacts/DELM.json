@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "e8d46f7e67ba18391a30d319fb5d804eb9424acf9f3899369341c046facd84be",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Negative parent equity and unresolved debt, geography and brand cash flows, asset sales, restructuring, FX, and capital claims block a completed intrinsic SOTP."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-04-30",
+  "filing_published_at": null,
+  "input_hash": "c225432eefa5ab313da4fcd57e582ed7a632a1264081d76b4617d6ae9cd3151f",
+  "issuer": {
+    "issuer_id": "PSE:DELM",
+    "name": "Del Monte Pacific Limited"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.15,
+      "high": 0.2,
+      "low": 0.1
+    },
+    "estimates": {
+      "base": 3.825463275961893,
+      "high": 5.100617701282524,
+      "low": 2.550308850641262
+    },
+    "metric": "price_to_sales",
+    "metric_label": "FY2025 revenue per outstanding common share converted to PHP",
+    "metric_value_per_share": 25.50308850641262,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PS-STRESSED-FOOD-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "ff0494d03517f1bf325e52bd5ee57ef8210267b2081f6a70ff5d14ea284560e0",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 5.100617701282524,
+    "low": 2.550308850641262
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Negative parent equity and unresolved debt, geography and brand cash flows, asset sales, restructuring, FX, and capital claims block a completed intrinsic SOTP.",
+    "metric_basis": "USD 789,455,000 revenue / 1,943,960,024 shares x 62.799 PHP/USD",
+    "reliability": "Low",
+    "route_reason": "Geographic and brand SOTP/restructuring analysis remains primary; P/S provides a finite screen because parent equity is negative."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:DELM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ff0494d03517f1bf",
+      "form": "17-A",
+      "label": "DELM FY2025 PSE financial report and common-share record",
+      "period_end": "2025-04-30",
+      "published_at": null,
+      "sha256": "ff0494d03517f1bf325e52bd5ee57ef8210267b2081f6a70ff5d14ea284560e0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=642"
+    }
+  ],
+  "subsector": "Packaged food holding company",
+  "ticker": "DELM",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band.",
+    "The screen uses the last clearly labeled annual PSE summary for FY2025; later interim data still show negative parent equity and require a full restructuring bridge."
+  ]
+}

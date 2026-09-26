@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "7d6b84a2303d038327a40aaef819660661e05d1524b8615eacaf781ff0d02571",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Enrollment and tuition mix, campus utilization, capital spending, leases, working capital, and terminal assumptions are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-02-28",
+  "filing_published_at": null,
+  "input_hash": "beab17bbf0d6f2413620d086c8cb7c28578664ab2272caeac5deb1b91354d541",
+  "issuer": {
+    "issuer_id": "PSE:CEU",
+    "name": "Centro Escolar University"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 14.9,
+      "high": 17.88,
+      "low": 11.92
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through February 2026, May fiscal year",
+    "metric_value_per_share": 1.49,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-OPERATING-SERVICES-B14-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "24e5bcbf2968ba1f0b8bf73efb583bca91505bddee989c9b09e3e0621039e411",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B14-1.0",
+  "numerical_range": {
+    "high": 17.88,
+    "low": 11.92
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Enrollment and tuition mix, campus utilization, capital spending, leases, working capital, and terminal assumptions are not reconciled.",
+    "metric_basis": "1.53 FY2025 basic EPS + 1.20 9M FY2026 EPS - 1.24 prior 9M EPS",
+    "policy_rationale": "Shared finite P/E screening band for positive source-bounded per-share earnings; it numerically reuses a prior operating screen, not a peer study or intrinsic cash-flow valuation.",
+    "reliability": "Low",
+    "route_reason": "Student economics and campus assets require normalized FCFF; P/E is a finite screen on aligned May fiscal periods."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CEU:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "24e5bcbf2968ba1f",
+      "form": "PSE quarterly financial summary",
+      "label": "CEU May FY2025 and 9M FY2026 PSE financial summary",
+      "period_end": "2026-02-28",
+      "published_at": null,
+      "sha256": "24e5bcbf2968ba1f0b8bf73efb583bca91505bddee989c9b09e3e0621039e411",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=223"
+    }
+  ],
+  "subsector": "University education and training",
+  "ticker": "CEU",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, reinvestment and common-equity claims have not been reconciled.",
+    "CEU uses a May fiscal year and the latest PSE summary used here ends February 2026; a later annual filing is not silently substituted."
+  ]
+}

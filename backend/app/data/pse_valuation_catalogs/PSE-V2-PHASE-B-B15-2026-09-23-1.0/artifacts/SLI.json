@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "7cfc3964736aed94d69a29cb276f1989ee856808e96320b3cd0572f714e1f455",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Land fair values, project cash flows, mall leases, realization tax, debt and treasury-share bridge are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "8a5e30c66763420f82863daeda85dff059eb894d111219a835fa5e5955f5155f",
+  "issuer": {
+    "issuer_id": "PSE:SLI",
+    "name": "Sta. Lucia Land, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 1.8,
+      "high": 2.4,
+      "low": 1.2
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 4.0,
+    "note": "Finite analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B15-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f41e2615a6b7dce0b96b30b8e6059882a08a2358249684174bf8790ced536c42",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B15-1.0",
+  "numerical_range": {
+    "high": 2.4,
+    "low": 1.2
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Land fair values, project cash flows, mall leases, realization tax, debt and treasury-share bridge are not reconciled.",
+    "metric_basis": "PSE-reported PHP book value per share; no property fair-value adjustment",
+    "policy_rationale": "Reuse the reviewed Batch 12 diversified-property P/B screening band for positive reported BVPS; this is not a peer study or a completed property RNAV/SOTP.",
+    "reliability": "Low",
+    "route_reason": "Land projects and mall property require property-level RNAV/SOTP; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SLI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f41e2615a6b7dce0",
+      "form": "PSE quarterly financial summary",
+      "label": "SLI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f41e2615a6b7dce0b96b30b8e6059882a08a2358249684174bf8790ced536c42",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=41"
+    },
+    {
+      "document_id": "f41e2615a6b7dce0-support",
+      "form": "PSE shareholder disclosure",
+      "label": "SLI PSE common-share and treasury-stock disclosure",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "f41e2615a6b7dce0b96b30b8e6059882a08a2358249684174bf8790ced536c42",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1855430"
+    }
+  ],
+  "subsector": "Residential land development and shopping-mall ownership",
+  "ticker": "SLI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Reported book value is not a completed property RNAV or peer-calibrated target.",
+    "SLI has material treasury shares; the reported BVPS is retained for screening, not silently reused as an intrinsic common-equity denominator."
+  ]
+}

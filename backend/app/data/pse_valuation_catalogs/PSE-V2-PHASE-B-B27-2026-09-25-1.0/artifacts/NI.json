@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "e084a39aa24edcaf0e6f127ea8088705acc5b7546bc82a756ab0b05bcf4788a3",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Recoverable reserves, license terms, production plan and required financing are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "5bba9d71533da4de0dbb37d400b515983459b8896f0c85d9077e3d87675da716",
+  "issuer": {
+    "issuer_id": "PSE:NI",
+    "name": "NiHAO Mineral Resources International, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.094835371,
+      "high": 0.130398635,
+      "low": 0.059272107
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.23708842772277228,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "63d750afd072f4eeffaa1c138a2683bc92aeb12f6de5f356e9760b784579c67f",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 0.130398635,
+    "low": 0.059272107
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Recoverable reserves, license terms, production plan and required financing are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 1,010,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; no peer calibration, proven reserve appraisal or attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Mineral interests require reserve, license and attributable asset-life analysis; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:NI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "63d750afd072f4ee",
+      "form": "PSE financial summary",
+      "label": "NI FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "63d750afd072f4eeffaa1c138a2683bc92aeb12f6de5f356e9760b784579c67f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=103"
+    },
+    {
+      "document_id": "63d750afd072f4ee-support-1",
+      "form": "PSE common-stock data",
+      "label": "NI open ordinary-common stock data",
+      "period_end": "2026-09-21",
+      "published_at": null,
+      "sha256": "63d750afd072f4eeffaa1c138a2683bc92aeb12f6de5f356e9760b784579c67f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=103"
+    }
+  ],
+  "subsector": "Mining and resource holding",
+  "ticker": "NI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "FY2025 and 1H2026 gross revenue are zero; PHP239.459m parent book is not a proven-mineral reserve value. Only 600m of 1.01bn outstanding shares appear listed."
+  ]
+}

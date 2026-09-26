@@ -1,0 +1,100 @@
+{
+  "artifact_hash": "9138a5c49597506589d15e7adfd805c5db3ff31d4d01df4a28fd95c7f42d0549",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Investment realizability, minority interests and exceptionally thin trading are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "e56adbcd5e35bb6a0fa728ee83b98e0dea05a5727d4397001f54f57016e8e03e",
+  "issuer": {
+    "issuer_id": "PSE:BH",
+    "name": "BHI Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 69.682434943,
+      "high": 95.813348047,
+      "low": 43.55152184
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 174.2060873582713,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B24-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "00c9fc15a954238a032a27be54a1659a88cb69d1c8b1d6afdd87c458bf3e7d8c",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": 95.813348047,
+    "low": 43.55152184
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Investment realizability, minority interests and exceptionally thin trading are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 499,987 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, an asset appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Investment holdings require attributable SOTP; current parent book per common share is only a finite screen.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "BH",
+    "security_id": "PSE:BH:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "00c9fc15a954238a",
+      "form": "PSE financial summary",
+      "label": "BH FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "00c9fc15a954238a032a27be54a1659a88cb69d1c8b1d6afdd87c458bf3e7d8c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=62"
+    },
+    {
+      "document_id": "00c9fc15a954238a-support-1",
+      "form": "PSE common-stock data",
+      "label": "BH ordinary common common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "00c9fc15a954238a032a27be54a1659a88cb69d1c8b1d6afdd87c458bf3e7d8c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=62&security_id=358"
+    }
+  ],
+  "subsector": "Investment holding",
+  "ticker": "BH",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "Only 20,000 of 499,987 outstanding common shares appear listed, and the last trade is stale. Printed PHP199 BVPS follows PHP99.283m total equity; the screen uses PHP87.101m parent equity and the full outstanding common count, with no current-upside claim."
+  ]
+}

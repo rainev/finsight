@@ -1,0 +1,102 @@
+{
+  "artifact_hash": "c45233ae054eb79075ebe6bd1e2da0861941c9a76ae5f73144c3b6e8cd851b7f",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Normalized cash conversion, debt service, working capital and minority claims are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "6eb7bc17934298104b28ee38389b14926c5307515ea1868139e5b938d0ff7488",
+  "issuer": {
+    "issuer_id": "PSE:MG",
+    "name": "Millennium Global Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.022773648,
+      "high": 0.031313767,
+      "low": 0.01423353
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.05693412107174588,
+    "note": "Finite Low-reliability analyst P/B screen; not peer-calibrated, intrinsic or a current-price comparison.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B25-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a5a9dfe6a4199009a7c5e7b362daaba08234e3c71bdf6f9900eac56c59217a38",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": 0.031313767,
+    "low": 0.01423353
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Normalized cash conversion, debt service, working capital and minority claims are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 2,369,684,619 reviewed ordinary-common shares",
+    "policy_rationale": "Finite analyst P/B screening band reused from Batch 24; not peer-calibrated, appraised NAV or intrinsic value.",
+    "reliability": "Low",
+    "route_reason": "The operating businesses require normalized FCFF; parent common book is only a finite cross-check.",
+    "share_bridge_type": "single_class",
+    "trading_status": "open",
+    "trading_status_as_of": "2026-09-10"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "MG",
+    "security_id": "PSE:MG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a5a9dfe6a4199009",
+      "form": "PSE financial summary",
+      "label": "MG reviewed PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a5a9dfe6a4199009a7c5e7b362daaba08234e3c71bdf6f9900eac56c59217a38",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=105"
+    },
+    {
+      "document_id": "a5a9dfe6a4199009-support-1",
+      "form": "PSE common-stock data",
+      "label": "MG ordinary common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "a5a9dfe6a4199009a7c5e7b362daaba08234e3c71bdf6f9900eac56c59217a38",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=105"
+    }
+  ],
+  "subsector": "Food and operating holding",
+  "ticker": "MG",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "PSE 1H2026 parent equity is PHP134.916m, but reported PHP0.15 BVPS approximately follows PHP364.833m total equity, not parent equity. The interim FY2025 comparative parent equity also conflicts with the annual summary; the screen uses the dated current parent/share bridge and flags the discrepancy."
+  ]
+}

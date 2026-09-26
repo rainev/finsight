@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "f533d07ded81d2b5ea5652be7e53cf84dab6e2dabd8bfd112b7987be39107b5f",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Parent attribution, property fair value, exceptional capital transactions and funding are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "df84d1b0f68411bf8e3a39c3544ed4c3d3553d8f1753f5a5128defa9b5284ab3",
+  "issuer": {
+    "issuer_id": "PSE:SRDC",
+    "name": "Supercity Realty Development Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.186220538,
+      "high": 0.248294051,
+      "low": 0.124147025
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 total equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.41382341818181817,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-PROPERTY-B21-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "30b90f837a7a890b281f220b1ffd748169aff174099f87cba14068555091eaea",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B21-1.0",
+  "numerical_range": {
+    "high": 0.248294051,
+    "low": 0.124147025
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Parent attribution, property fair value, exceptional capital transactions and funding are not reconciled.",
+    "metric_basis": "PHP total equity (pesos) / 110,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite property-book screening band; project appraisals, debt, minority claims and realization timing are not independently underwritten.",
+    "reliability": "Low",
+    "route_reason": "Development and investment rights require asset-level appraisal; total book is only a tentative common-share screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SRDC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "30b90f837a7a890b",
+      "form": "PSE financial summary",
+      "label": "SRDC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "30b90f837a7a890b281f220b1ffd748169aff174099f87cba14068555091eaea",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=479"
+    },
+    {
+      "document_id": "30b90f837a7a890b-support-1",
+      "form": "PSE common-stock data",
+      "label": "SRDC open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "30b90f837a7a890b281f220b1ffd748169aff174099f87cba14068555091eaea",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=479"
+    }
+  ],
+  "subsector": "Property and investment holding",
+  "ticker": "SRDC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE parent-equity/income fields display zero despite positive total equity, so zero is treated as unavailable attribution. The PHP45.521m total-book proxy is not an appraisal and does not explain the much higher recent trading price."
+  ]
+}

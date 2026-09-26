@@ -1,0 +1,128 @@
+{
+  "artifact_hash": "89bb5da32bd2f9d0b3309bf66aa6e99e3a52502231e7242a23fefe50b59fc599",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Missing: noi, affo, occupancy_rate, wale, nav_per_unit; needs review: shares_outstanding, total_debt, dividends_per_share."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": null,
+  "filing_published_at": null,
+  "input_hash": "832d49fd2888e44b646751f486ad5089cd8dcbd01dfa2871930fc0127cb773df",
+  "issuer": {
+    "issuer_id": "AREIT",
+    "name": "AREIT, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PILOT-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sustainable_distributions",
+  "public_assumptions": {},
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:AREIT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "0f318a27e7c61c28",
+      "form": "17-Q",
+      "label": "MSRD_AREIT,Inc._SEC Form 17-Q_14November2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "0f318a27e7c61c28d142a12234f2b27547be3ea960b6d292ba460bcb949d470d",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "29340a1761f0449c",
+      "form": "17-Q",
+      "label": "MSRD_AREIT, Inc._SEC Form 17-Q_14May2026.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "29340a1761f0449c3f364a5ce570e7feb0685aa3ae89c9cc98d76cfe6977aa5e",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "4d9661c9e41e2f17",
+      "form": "17-A",
+      "label": "MSRD_AREIT, Inc._SEC Form 17-A_14April2026 (1).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "4d9661c9e41e2f170b861436d42b6a327f78dd78cef3075e8fc14facd77bc84d",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "7f5738a0d5286d05",
+      "form": "17-A",
+      "label": "MSRD_AREIT, Inc._SEC Form 17-A_14April2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "7f5738a0d5286d050d8466326c8da01577e2d465a6d11586ba815c5d8dd80a57",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "d741c76a94b14732",
+      "form": "17-Q",
+      "label": "MSRD_AREIT, Inc._SEC Form 17-Q_14May2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "d741c76a94b14732b631a6be1ce20d091f54d053db003f46d01ac1cf9ad7da66",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "c6e3c165b4cd74a2",
+      "form": "17-Q",
+      "label": "MSRD_AREIT, Inc._SEC Form 17-Q_14November2025 (1).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "c6e3c165b4cd74a2bd5bc546b77d9a0a63bb34948ff64e723379d5692842444d",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "da91604e85ecdc4d",
+      "form": "17-Q",
+      "label": "MSRD_AREIT, Inc._SEC Form 17-Q_14August2024 (1).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "da91604e85ecdc4d6faa0a48a9e9a3abfe8ebba368a196f7d267e7898575e48b",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "fb5d446ca204a567",
+      "form": "17-Q",
+      "label": "MSRD_AREIT Inc._SEC Form 17-Q_14Aug2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "fb5d446ca204a567974d5937581cca63930656ac21ddf63d3f96a52815b952bf",
+      "source_page": null,
+      "url": null
+    }
+  ],
+  "subsector": "Real estate investment trust",
+  "ticker": "AREIT",
+  "valuation_date": "2026-09-21",
+  "warnings": []
+}

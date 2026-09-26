@@ -1,0 +1,97 @@
+{
+  "artifact_hash": "c5d100b3b73fb72bc9c6904f0c69ba627e71f86248893d99341a41afa3be4725",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Attributable DDMPR equity value, property and hotel economics, parent-only debt, minority interests, and other claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "c95cd287fb8faf837f4be6fca60254812ee3f6be605badbd1ccef0ad1a5cca04",
+  "issuer": {
+    "issuer_id": "PSE:DD",
+    "name": "DoubleDragon Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 7.776000000000001,
+      "high": 10.692000000000002,
+      "low": 4.86
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 19.44,
+    "note": "Analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-HOLDCO-B12-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "4a5f824e3bc2eafae5458223cd7ed79821d25c1b94c66bf46031f17da4fd2091",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B12-1.0",
+  "numerical_range": {
+    "high": 10.692000000000002,
+    "low": 4.86
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Attributable DDMPR equity value, property and hotel economics, parent-only debt, minority interests, and other claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 11 layered-holding P/B screening band for mixed businesses and unresolved parent claims; not a peer study or SOTP.",
+    "reliability": "Low",
+    "route_reason": "Property segments, hotels, and listed REIT interest require attributable SOTP and parent-only claims; P/B is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:DD:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "4a5f824e3bc2eafa",
+      "form": "PSE quarterly financial summary",
+      "label": "DD FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "4a5f824e3bc2eafae5458223cd7ed79821d25c1b94c66bf46031f17da4fd2091",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=651"
+    },
+    {
+      "document_id": "4a5f824e3bc2eafa-support",
+      "form": "PSE company information",
+      "label": "DD PSE company information and DDMPR relationship",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "4a5f824e3bc2eafae5458223cd7ed79821d25c1b94c66bf46031f17da4fd2091",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=651"
+    }
+  ],
+  "subsector": "Retail, office, industrial, and hotel property holding company",
+  "ticker": "DD",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "DD owns listed DDMPR; their per-share screens overlap and must not be added."
+  ]
+}

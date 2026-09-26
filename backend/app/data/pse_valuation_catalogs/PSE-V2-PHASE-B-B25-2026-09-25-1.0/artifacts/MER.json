@@ -1,0 +1,127 @@
+{
+  "artifact_hash": "db5f60227e9e7e4dc1721c12da651379a5b843a77e208dfb2c6a2d8d21611310",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "dc35ed58266dd0b9bd846eb23f4e5920e7b9aa0239fdfddda5e4156236584f06",
+  "issuer": {
+    "issuer_id": "PSE:MER",
+    "name": "Manila Electric Company"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B04-1.0",
+  "numerical_range": {
+    "high": 441.9236919232287,
+    "low": 200.61637189455172
+  },
+  "price": null,
+  "primary_model": "sustainable_distributions",
+  "public_assumptions": {
+    "current_distribution_per_share": 28.0,
+    "distribution_derivation": "PHP11.328 interim plus PHP16.672 final common dividends tied to FY2025 core earnings",
+    "expiry_date": "2053-06-28",
+    "finite_life_years": 27,
+    "forecast_years": 27,
+    "policy_rationale": "Finite-life common-distribution policy ending at the documented franchise or concession expiry with no terminal value.",
+    "policy_version": "PSE-V2-DIST-REGULATED-B04-1.0",
+    "reliability": "Low",
+    "route_reason": "A reviewed common payout and renewed franchise support a finite-life distribution valuation without value beyond the 2053 franchise expiry.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.11,
+        "explicit_growth": 0.025
+      },
+      "bear": {
+        "cost_of_equity": 0.135,
+        "explicit_growth": 0.0
+      },
+      "bull": {
+        "cost_of_equity": 0.09,
+        "explicit_growth": 0.045
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 336275.5083525454,
+      "enterprise_value": null,
+      "value_per_share": 298.3566172850372
+    },
+    "bear": {
+      "common_equity_value": 226113.2099451074,
+      "enterprise_value": null,
+      "value_per_share": 200.61637189455172
+    },
+    "bull": {
+      "common_equity_value": 498088.8827162949,
+      "enterprise_value": null,
+      "value_per_share": 441.9236919232287
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MER:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_distribution_per_share",
+        "explicit_growth",
+        "cost_of_equity",
+        "documented_expiry"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "b76b2b79ad8c40f3",
+      "form": "17-A",
+      "label": "MER FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "b76b2b79ad8c40f353748b66067c1b7d4ec2330c41e908840f5a271ef2d0de3d",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=118"
+    },
+    {
+      "document_id": "089731ba072e919e",
+      "form": "17-C",
+      "label": "MER FY2025 interim common dividend",
+      "period_end": "2025-06-30",
+      "published_at": "2025-07-28",
+      "sha256": "089731ba072e919ea4f2cc2387a408579a4ab00325369717c904d4551807be9f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1794392"
+    },
+    {
+      "document_id": "e477683419630ff7",
+      "form": "17-C",
+      "label": "MER FY2025 final common dividend",
+      "period_end": "2025-12-31",
+      "published_at": "2026-02-25",
+      "sha256": "e477683419630ff733fcb91c9f1dda48f200224811aa1fa364cf40db1fc768f4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1872433"
+    }
+  ],
+  "subsector": "Regulated electricity distribution",
+  "ticker": "MER",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional common-distribution valuation; it is not a substitute for the unresolved asset-level or regulated FCFF model.",
+    "The current payout and growth policy remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hashes bind reviewed fact receipts; remote filings are referenced but not redistributed in the candidate catalog.",
+    "No terminal value is assigned beyond the documented franchise or concession expiry."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "6fc038f23af75936ba908de91b3e5d9c78a638e7acfa38090e74723c9cea083c",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property appraisals, normalized occupancy/margins, leases, debt and minority claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "fe1a1f8e34e4fccf2f581dfbe27ac3e93c41551984ce41563f164098e104de7a",
+  "issuer": {
+    "issuer_id": "PSE:DWC",
+    "name": "Discovery World Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 2.928828951,
+      "high": 3.905105269,
+      "low": 1.952552634
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 6.508508781030445,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-PROPERTY-B21-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a685a2fc67ff98e31b3621ea82cb13ec7b6cbba9997e876293d704bec49c7707",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B21-1.0",
+  "numerical_range": {
+    "high": 3.905105269,
+    "low": 1.952552634
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property appraisals, normalized occupancy/margins, leases, debt and minority claims are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 854,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite property-book screening band; project appraisals, debt, minority claims and realization timing are not independently underwritten.",
+    "reliability": "Low",
+    "route_reason": "Resort properties and operations require asset-level values plus operating cash flows within attributable SOTP."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:DWC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a685a2fc67ff98e3",
+      "form": "PSE financial summary",
+      "label": "DWC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a685a2fc67ff98e31b3621ea82cb13ec7b6cbba9997e876293d704bec49c7707",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=647"
+    },
+    {
+      "document_id": "a685a2fc67ff98e3-support-1",
+      "form": "PSE common-stock data",
+      "label": "DWC open ordinary-common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "a685a2fc67ff98e31b3621ea82cb13ec7b6cbba9997e876293d704bec49c7707",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=647"
+    }
+  ],
+  "subsector": "Hospitality and resort properties",
+  "ticker": "DWC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "FY2025 and 1H2026 parent results were losses; the book screen is not a normalized earnings or resort-cash-flow valuation."
+  ]
+}

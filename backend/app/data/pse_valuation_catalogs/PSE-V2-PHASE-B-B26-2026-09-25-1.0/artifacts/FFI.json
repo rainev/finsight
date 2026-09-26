@@ -1,0 +1,102 @@
+{
+  "artifact_hash": "85161acbf98c16e630c21da060183ce885d23df47738fa99158089972742165d",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Holdings-level fair values, liquidity and realization costs are not underwritten into an intrinsic NAV."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "bb798438cda76f99d6934815132a711ca8bb72134e84ace285d31e08a4f859ef",
+  "issuer": {
+    "issuer_id": "PSE:FFI",
+    "name": "Filipino Fund, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 1.865029521,
+      "high": 2.564415591,
+      "low": 1.165643451
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 total equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 4.662573802663112,
+    "note": "Finite Low-reliability analyst P/B screen; not peer-calibrated, intrinsic or a current-price comparison.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B25-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "5cefd652e34ecaa4c9a1486693ff0b6bf16d4f3d8933239f45a3d0f695b135be",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": 2.564415591,
+    "low": 1.165643451
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Holdings-level fair values, liquidity and realization costs are not underwritten into an intrinsic NAV.",
+    "metric_basis": "PHP total equity (pesos) / 50,167,397 reviewed ordinary-common shares",
+    "policy_rationale": "Finite analyst P/B screening band reused from Batch 24; not peer-calibrated, appraised NAV or intrinsic value.",
+    "reliability": "Low",
+    "route_reason": "An investment fund needs reviewed underlying-asset NAV and fees; book per ordinary common share is only a finite market-relative screen.",
+    "share_bridge_type": "single_class",
+    "trading_status": "open",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "FFI",
+    "security_id": "PSE:FFI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "5cefd652e34ecaa4",
+      "form": "PSE financial summary",
+      "label": "FFI reviewed PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "5cefd652e34ecaa4c9a1486693ff0b6bf16d4f3d8933239f45a3d0f695b135be",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=196"
+    },
+    {
+      "document_id": "5cefd652e34ecaa4-support-1",
+      "form": "PSE common-stock data",
+      "label": "FFI ordinary common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "5cefd652e34ecaa4c9a1486693ff0b6bf16d4f3d8933239f45a3d0f695b135be",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=196"
+    }
+  ],
+  "subsector": "Investment fund",
+  "ticker": "FFI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "PSE's 1H2026 parent-attributable equity is blank. The screen uses PHP233.909m reported total fund equity and 50.167m outstanding common shares; verify minority or other senior claims before relying on it. No dated current price is used."
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "9be9035e2f47466f20f54eac1378d3948f2b3e553824431b47c6a2fbde05fa36",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property-level cash flows, asset values, non-controlling interests and parent common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-05-31",
+  "filing_published_at": null,
+  "input_hash": "a96ce1eca37ab5a696a51584b80a2fde3143688eb37a07c7af14c29bba0b76c9",
+  "issuer": {
+    "issuer_id": "PSE:TFC",
+    "name": "PTFC Redevelopment Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 37.5,
+      "high": 45.0,
+      "low": 30.0
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through May 2026, August fiscal year",
+    "metric_value_per_share": 3.75,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-OPERATING-B17-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f7dde7a35016fb8fd74037201ebe0e5584d4b730e4b6537cc0131d6612deb076",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B17-1.0",
+  "numerical_range": {
+    "high": 45.0,
+    "low": 30.0
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property-level cash flows, asset values, non-controlling interests and parent common claims are not reconciled.",
+    "metric_basis": "PHP3.52 FY2025 basic EPS + PHP2.81 nine-month FY2026 EPS - PHP2.58 prior nine-month EPS",
+    "policy_rationale": "Reuse the finite Batch 16 operating P/E screen for positive aligned TTM basic EPS; not a peer study or intrinsic property valuation.",
+    "reliability": "Low",
+    "route_reason": "Redevelopment and property claims require SOTP; aligned P/E is a finite separate earnings screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:TFC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f7dde7a35016fb8f",
+      "form": "PSE quarterly financial summary",
+      "label": "TFC August FY2025 and nine-month May 2026 PSE financial summary",
+      "period_end": "2026-05-31",
+      "published_at": null,
+      "sha256": "f7dde7a35016fb8fd74037201ebe0e5584d4b730e4b6537cc0131d6612deb076",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=8"
+    },
+    {
+      "document_id": "f7dde7a35016fb8f-support-1",
+      "form": "PSE common-stock data",
+      "label": "TFC open ordinary-common stock data",
+      "period_end": "2026-09-07",
+      "published_at": null,
+      "sha256": "f7dde7a35016fb8fd74037201ebe0e5584d4b730e4b6537cc0131d6612deb076",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=8"
+    }
+  ],
+  "subsector": "Property redevelopment and operating assets",
+  "ticker": "TFC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Cash flows, attributable ownership and common-equity claims are not fully reconciled.",
+    "TFC has an August fiscal year. The annual BVPS column differs from annual parent equity divided by common shares; this P/E screen does not rely on that book figure."
+  ]
+}

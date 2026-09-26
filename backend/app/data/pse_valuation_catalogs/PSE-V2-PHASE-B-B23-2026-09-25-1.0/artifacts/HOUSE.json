@@ -1,0 +1,76 @@
+{
+  "artifact_hash": "97e2f9958599922b78ee5c477a300bd97c93343d7210c9740a241f230f1fc0b0",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "PSE delisted HOUSE common shares effective October 31, 2025. The last PSE summary is pre-delisting and cannot support a current listed-common valuation."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-06-30",
+  "filing_published_at": null,
+  "input_hash": "5377b845d46084351e158724b662762d9305ab142d8286e244201f3f6a88a5b0",
+  "issuer": {
+    "issuer_id": "PSE:HOUSE",
+    "name": "8990 Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B15-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "listing_status": "delisted",
+    "metric_basis": "Historical pre-delisting reported BVPS, not a current per-share estimate",
+    "reliability": "Unavailable",
+    "route_reason": "Historical property SOTP would require current claims; the security is outside the listed-common-equity universe after delisting."
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:HOUSE:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a935bcefa9762a77",
+      "form": "PSE historical financial summary",
+      "label": "HOUSE historical FY2024 and 1H2025 PSE financial summary",
+      "period_end": "2025-06-30",
+      "published_at": null,
+      "sha256": "a935bcefa9762a777f17606c41c8c05074114dcad86accacd8f870d0bd4ce713",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=626"
+    },
+    {
+      "document_id": "a935bcefa9762a77-support",
+      "form": "PSE delisting notice",
+      "label": "PSE notice: HOUSE common shares delisted effective October 31, 2025",
+      "period_end": "2025-10-31",
+      "published_at": null,
+      "sha256": "a935bcefa9762a777f17606c41c8c05074114dcad86accacd8f870d0bd4ce713",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1827603"
+    }
+  ],
+  "subsector": "Formerly listed residential developer",
+  "ticker": "HOUSE",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Reported book value is not a completed property RNAV or peer-calibrated target.",
+    "Historical BVPS is retained as a reported fact only; no current price estimate or calculator is published for delisted HOUSE."
+  ]
+}

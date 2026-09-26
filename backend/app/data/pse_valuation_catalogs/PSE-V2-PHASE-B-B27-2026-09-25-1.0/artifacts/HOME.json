@@ -1,0 +1,82 @@
+{
+  "artifact_hash": "ca64a1d7bd6a1cade498425cee6fd16718c7a4c933f99c16b412127faa2a7031",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed PSE summary ends 3Q2025 and the common line is suspended; current operating and debt-service economics are not reviewed."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "b40c1f033008d77e5f0e084eee565e85d26413901df27c5fd55a4279a529a497",
+  "issuer": {
+    "issuer_id": "PSE:HOME",
+    "name": "AllHome Corp."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B26-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed PSE summary ends 3Q2025 and the common line is suspended; current operating and debt-service economics are not reviewed.",
+    "metric_basis": "PHP parent equity (pesos) / 3,750,000,002 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Retail FCFF needs current operating margin, working-capital and funding evidence.",
+    "screen_time_basis": null,
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "HOME",
+    "security_id": "PSE:HOME:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "7f987fe8ccbb6b91",
+      "form": "PSE financial summary",
+      "label": "HOME reviewed PSE financial summary",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "7f987fe8ccbb6b91ebe624fdde93a727175ab7e0357104ee8e56a6997bf7ccb8",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=674"
+    },
+    {
+      "document_id": "7f987fe8ccbb6b91-support-1",
+      "form": "PSE common-stock data",
+      "label": "HOME ordinary common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "7f987fe8ccbb6b91ebe624fdde93a727175ab7e0357104ee8e56a6997bf7ccb8",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=674"
+    }
+  ],
+  "subsector": "Home-improvement retail",
+  "ticker": "HOME",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No current market quote or upside is published for this suspended security.",
+    "PSE FY2024/3Q2025 summaries are historical and 2025 YTD parent earnings turned negative. The June 2026 last close on the suspended stock page is not a current price."
+  ]
+}

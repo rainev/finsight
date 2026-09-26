@@ -1,0 +1,7 @@
+{
+  "catalog_path": "PSE-V2-PHASE-B-B28-2026-09-26-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B28-2026-09-26-1.0",
+  "manifest_sha256": "8145c9d5c9b1ff4c05400fdd0ead4d6528594ed32cb424ab70c481c0f245c5a7",
+  "schema_version": "FINSIGHT-PSE-VALUATION-POINTER-1.0",
+  "status": "staged"
+}

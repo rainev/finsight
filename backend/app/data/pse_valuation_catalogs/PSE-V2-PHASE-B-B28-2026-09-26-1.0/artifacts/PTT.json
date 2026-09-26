@@ -1,0 +1,92 @@
+{
+  "artifact_hash": "98666969594bd108bd892f08f935dff99a83b9f116916067f8f221047191ddbe",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The 1H2026 summary reports positive total equity but zero parent-attributable equity. Only 800m of 1.5bn outstanding common shares appear listed, and senior capital and financing claims are not reconciled for the suspended line."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "ecde7f2ffe30a9322d71a2ad601a715b6e1866c11432dd81603db95352ba4a1a",
+  "issuer": {
+    "issuer_id": "PSE:PTT",
+    "name": "PT&T Corp."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B28-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The 1H2026 summary reports positive total equity but zero parent-attributable equity. Only 800m of 1.5bn outstanding common shares appear listed, and senior capital and financing claims are not reconciled for the suspended line.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Telecom FCFF needs current operating cash flow, capex, financing and parent-common claims.",
+    "screen_time_basis": null,
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-25"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "PTT",
+    "security_id": "PSE:PTT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f053c0a0e83d2369",
+      "form": "PSE financial summary",
+      "label": "PTT reviewed PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f053c0a0e83d2369489abf1dc7f41267704b6da7f11d4c23f6b4712dde1ddbfb",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=76"
+    },
+    {
+      "document_id": "f053c0a0e83d2369-support-1",
+      "form": "PSE common-stock data",
+      "label": "PTT quoted common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "f053c0a0e83d2369489abf1dc7f41267704b6da7f11d4c23f6b4712dde1ddbfb",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=76&security_id=132"
+    },
+    {
+      "document_id": "f053c0a0e83d2369-support-2",
+      "form": "PSE issuer disclosure",
+      "label": "PTT disclosed authorized common and preferred share classes; issued senior claims remain to be reconciled",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "f053c0a0e83d2369489abf1dc7f41267704b6da7f11d4c23f6b4712dde1ddbfb",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1397316"
+    }
+  ],
+  "subsector": "Telecommunications",
+  "ticker": "PTT",
+  "valuation_date": "2026-09-26",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No licensed current market quote or upside is published.",
+    "PSE 1H2026 total equity is PHP173,718 thousand with printed BVPS PHP0.12, but parent-attributable equity is zero in the summary. The December 2004 last close is not a current price; no total-book shortcut is applied to common value."
+  ]
+}

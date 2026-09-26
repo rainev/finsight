@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "07e31f9ce61dc03c52c147a718a85fa6554e4135c1f9984f1ac22961bd9e47ea",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Project asset values, funding, minority claims and common-equity dilution are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "391ec0aa5ca66d23f501f9185d9ead849781c1edfa6c384ff8c14826dd19b9b1",
+  "issuer": {
+    "issuer_id": "PSE:PHA",
+    "name": "Premiere Horizon Alliance Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.17519282,
+      "high": 0.240890128,
+      "low": 0.109495513
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.43798205040311,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B21-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "6d91f7948f39a1065361a8996bc871615b710e3d9e5a76caa7760ef4810a29fa",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B21-1.0",
+  "numerical_range": {
+    "high": 0.240890128,
+    "low": 0.109495513
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Project asset values, funding, minority claims and common-equity dilution are not reconciled.",
+    "metric_basis": "PHP parent equity (thousands) / 5,708,359,504 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/asset P/B screening band; no peer calibration, appraised NAV or completed attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Distinct project and investment interests require attributable SOTP; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PHA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "6d91f7948f39a106",
+      "form": "PSE financial summary",
+      "label": "PHA FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "6d91f7948f39a1065361a8996bc871615b710e3d9e5a76caa7760ef4810a29fa",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=148"
+    },
+    {
+      "document_id": "6d91f7948f39a106-support-1",
+      "form": "PSE common-stock data",
+      "label": "PHA open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "6d91f7948f39a1065361a8996bc871615b710e3d9e5a76caa7760ef4810a29fa",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=148"
+    }
+  ],
+  "subsector": "Diversified asset holding",
+  "ticker": "PHA",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "Source parent equity is PHP thousands: PHP2,500,159 thousand, not PHP2.500m. Reported PHP0.53 BVPS follows total equity; only 2.254bn of 5.708bn outstanding common shares appear listed."
+  ]
+}

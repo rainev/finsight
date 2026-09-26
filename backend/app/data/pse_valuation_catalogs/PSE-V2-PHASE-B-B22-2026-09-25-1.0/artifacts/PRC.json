@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "99d89a6bc94316cb9f98a876049b6e501a580c8644c43980d1cdd8b0883829ce",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Racing license, property appraisal, restructuring, debt and realization timing are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "7f43d5eb51dfdafde544d751f564599e6bdeccc922a92071973c0a0f7ad8c635",
+  "issuer": {
+    "issuer_id": "PSE:PRC",
+    "name": "Philippine Racing Club, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 3.795037801,
+      "high": 5.060050401,
+      "low": 2.5300252
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 8.433417334704385,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-PROPERTY-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "dd64672b0b571d2e5f4802ba04c52dcb9e0f4c82fa6f1dccada02cf7a984858f",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 5.060050401,
+    "low": 2.5300252
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Racing license, property appraisal, restructuring, debt and realization timing are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 546,706,156 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite property-book screening band; no asset appraisal, project-level RNAV or completed SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Racing rights and property interests require finite-life, attributable SOTP rather than a perpetual operating value."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PRC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "dd64672b0b571d2e",
+      "form": "PSE financial summary",
+      "label": "PRC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "dd64672b0b571d2e5f4802ba04c52dcb9e0f4c82fa6f1dccada02cf7a984858f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=141"
+    },
+    {
+      "document_id": "dd64672b0b571d2e-support-1",
+      "form": "PSE common-stock data",
+      "label": "PRC open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "dd64672b0b571d2e5f4802ba04c52dcb9e0f4c82fa6f1dccada02cf7a984858f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=141"
+    }
+  ],
+  "subsector": "Racing and property interests",
+  "ticker": "PRC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "FY2025 and 1H2026 parent losses make earnings multiples unsuitable. Printed PHP9.06 BVPS does not reconcile to June parent equity / September outstanding shares (about PHP8.434), so the dated arithmetic bridge is used."
+  ]
+}

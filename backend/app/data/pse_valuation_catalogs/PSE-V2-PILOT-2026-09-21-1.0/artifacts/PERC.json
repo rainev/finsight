@@ -1,0 +1,59 @@
+{
+  "artifact_hash": "424da6cf34123be2e6ba475f3940c6e44982851de099f7eb49ca4d22f0f6de82",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The consolidated filing is captured, but attributable SOTP component values and ownership-scoped claims have not been reviewed.",
+    "The legacy single-company estimate is not promoted into the specialist V2 route."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": null,
+  "filing_published_at": null,
+  "input_hash": "7015075bbdb8567676cd81dc01964f2015ea06acd1e73bf616ad06116a13c262",
+  "issuer": {
+    "issuer_id": "PERC",
+    "name": "PetroEnergy Resources Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PILOT-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {},
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PERC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ebca8b376be12a58",
+      "form": "17-A",
+      "label": "PERC SEC 17-A 2025.pdf",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "ebca8b376be12a58b0ddb48b9b4c18a4bca991aa31eae973d59f3316fe746425",
+      "source_page": 30,
+      "url": null
+    }
+  ],
+  "subsector": "Renewables and upstream energy",
+  "ticker": "PERC",
+  "valuation_date": "2026-09-21",
+  "warnings": []
+}

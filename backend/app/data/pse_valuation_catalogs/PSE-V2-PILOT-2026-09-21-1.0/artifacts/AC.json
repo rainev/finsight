@@ -1,0 +1,128 @@
+{
+  "artifact_hash": "d5b891a1df21cff746921b912e41ade7107ee736f4d433a6de65f7e4ed63114c",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Missing: none; needs review: cash, shares_outstanding, total_debt."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": null,
+  "filing_published_at": null,
+  "input_hash": "67c1fef89c51f6b2c1052fe78b0bbfadf9833f236d2e5bddb0bb357d898af251",
+  "issuer": {
+    "issuer_id": "AC",
+    "name": "Ayala Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PILOT-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {},
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:AC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "10f97449b29dd0b0",
+      "form": "17-Q",
+      "label": "Q1 2025 Ayala Corporation_SEC Form 17-Q_14May2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "10f97449b29dd0b0336f503e2b8c190aedcf9829ad86ac3c64693ea46e29ca00",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "37692470f53ec5dc",
+      "form": "17-Q",
+      "label": "Q3 2024 Ayala Corporation_SEC Form 17-Q_14November2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "37692470f53ec5dcb0f0496954fbcf23ba7e0987a332e533b65b50709ba3d0a0",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "2daace8963d4c551",
+      "form": "17-A",
+      "label": "2024 Ayala Corporation_SEC Form 17-A_11April2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "2daace8963d4c5513b702d5d755cfd542ab25c7061e8b67664cd356573e79c1c",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "387c801a232f4401",
+      "form": "17-A",
+      "label": "2025 Ayala Corporation_SEC Form 17-A_13April2025_Redacted.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "387c801a232f44014ce39dda08bf251256834153e0a1423adcc553f39087c343",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "87e5695eb6c4c922",
+      "form": "17-Q",
+      "label": "Q3 2025 Ayala Corporation_SEC Form 17-Q_13November2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "87e5695eb6c4c922fa6d566aba0641db19abca003a8c71e4ea7bbf3f74746d11",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "9713689af191ec1d",
+      "form": "17-Q",
+      "label": "Q1 2026 Ayala Corporation_SEC Form 17-Q_13May2026_Redacted.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "9713689af191ec1dc342933c3972bea72277f28a6d16dde9f58affe1a44a46fd",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "adcfca088801929a",
+      "form": "17-Q",
+      "label": "Q2 2025 Ayala Corporation_SEC Form 17-Q_13August2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "adcfca088801929af7c9fe11497fcc9be5b837817a8b5769d11f52fd7dfd3be9",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "e73de3679d43c487",
+      "form": "17-Q",
+      "label": "Q2 2024 Ayala Corporation_SEC Form 17-Q_14August2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "e73de3679d43c48751c2d706bdc215c8a33acfb0a0af67e4d890ea6f1d4e7ff3",
+      "source_page": null,
+      "url": null
+    }
+  ],
+  "subsector": "Diversified holding company",
+  "ticker": "AC",
+  "valuation_date": "2026-09-21",
+  "warnings": []
+}

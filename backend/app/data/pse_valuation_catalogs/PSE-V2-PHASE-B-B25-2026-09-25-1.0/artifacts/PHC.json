@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "e79ce3fc8e235e99192682ff2bdc91f507a39ec6cd8b7ea90ca937f2eee94cbd",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Investment values, ownership, cash realization and subsidiary claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "fe8829b9bdebdcd6d7ac65551e2733039496ef89fdddfe4eab26df469a0eec40",
+  "issuer": {
+    "issuer_id": "PSE:PHC",
+    "name": "Philcomsat Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.583948465,
+      "high": 0.802929139,
+      "low": 0.364967791
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding common share",
+    "metric_value_per_share": 1.4598711622171665,
+    "note": "Finite analyst book-value screen; no peer calibration or complete intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B19-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "ef1c087411bdf634707bbfe820eaec491f332043e274abdbce6d78a198c691fc",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": 0.802929139,
+    "low": 0.364967791
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Investment values, ownership, cash realization and subsidiary claims are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 996,391,254 outstanding common shares",
+    "policy_rationale": "Reuse the finite holding and asset-company P/B screen; not appraised NAV, proven-resource value, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Telecom interests and investments require attributable SOTP; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PHC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ef1c087411bdf634",
+      "form": "PSE financial summary",
+      "label": "PHC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "ef1c087411bdf634707bbfe820eaec491f332043e274abdbce6d78a198c691fc",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=97"
+    },
+    {
+      "document_id": "ef1c087411bdf634-support-1",
+      "form": "PSE common-stock data",
+      "label": "PHC ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "ef1c087411bdf634707bbfe820eaec491f332043e274abdbce6d78a198c691fc",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=97"
+    }
+  ],
+  "subsector": "Telecom and investment holding",
+  "ticker": "PHC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "Only 60 million of 996.4 million outstanding common shares appear as listed on the PSE stock page; the screen divides by all outstanding shares, not only listed shares."
+  ]
+}

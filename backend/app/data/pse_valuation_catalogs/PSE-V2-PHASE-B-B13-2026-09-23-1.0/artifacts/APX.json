@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "843d1830739c5076d0290c5cd3133eeefca3c370c009e76776cc375d2cd5eaa0",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed reserves, production schedules, grades, AISC, sustaining capex, commodity decks, and closure obligations are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "7057ee27e88546823aed30dd29e932db475f7975708a39f9f7224356141ab928",
+  "issuer": {
+    "issuer_id": "PSE:APX",
+    "name": "Apex Mining Co., Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 8.0,
+      "high": 10.0,
+      "low": 6.0
+    },
+    "estimates": {
+      "base": 13.92,
+      "high": 17.4,
+      "low": 10.44
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 1.74,
+    "note": "Transparent screening fallback while the reserve-aware intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-PRODUCING-MINER-B08-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e7788d9617b3aede2b5da4b5b2881a2fe57da2e9a28419d67a9fee72d15ed8ed",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B08-1.0",
+  "numerical_range": {
+    "high": 17.4,
+    "low": 10.44
+  },
+  "price": null,
+  "primary_model": "finite_life_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed reserves, production schedules, grades, AISC, sustaining capex, commodity decks, and closure obligations are incomplete.",
+    "metric_basis": "1.35 FY2025 EPS + 0.95 1H2026 EPS - 0.56 1H2025 EPS",
+    "reliability": "Low",
+    "route_reason": "Life-of-mine DCF remains primary; P/E is a finite screen while reserve depletion, grades, AISC, capex, and reclamation remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:APX:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e7788d9617b3aede",
+      "form": "17-Q",
+      "label": "APX FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e7788d9617b3aede2b5da4b5b2881a2fe57da2e9a28419d67a9fee72d15ed8ed",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=178"
+    }
+  ],
+  "subsector": "Gold and silver mining",
+  "ticker": "APX",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved reserve-aware intrinsic valuation.",
+    "Commodity prices, resource depletion, costs, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

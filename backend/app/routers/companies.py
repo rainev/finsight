@@ -12,8 +12,13 @@ router = APIRouter(prefix="/companies", tags=["companies"])
 
 
 @router.get("", response_model=list[Company])
-def list_companies(_user: CurrentUser, sector: str | None = None) -> list[dict]:
-    return company_service.list_all(sector)
+def list_companies(
+    _user: CurrentUser,
+    sector: str | None = None,
+    market: str | None = None,
+    q: str | None = None,
+) -> list[dict]:
+    return company_service.list_all(sector, market, q)
 
 
 @router.get("/{company_id}", response_model=Company)
@@ -26,4 +31,12 @@ def get_company(company_id: int, _user: CurrentUser) -> dict:
 
 @router.post("", response_model=Company, status_code=status.HTTP_201_CREATED)
 def create_company(body: CompanyCreate, _admin: AdminUser) -> dict:
-    return company_service.upsert(body.ticker, body.name, body.sector, body.currency)
+    return company_service.upsert(
+        body.ticker,
+        body.name,
+        body.sector,
+        body.currency,
+        body.market,
+        body.exchange,
+        body.cik,
+    )

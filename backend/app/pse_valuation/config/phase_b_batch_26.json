@@ -1,0 +1,130 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-26.0",
+  "batch_version": "PSE-V2-PHASE-B-B26-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B26-2026-09-25-1.0",
+  "universe_version": "PSE-V2-268-B26-1.0",
+  "valuation_date": "2026-09-25",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["DHI", "HOME", "MM", "STR", "VLC", "UNH", "PNX", "ROX", "INFRA", "I"],
+  "policies": {
+    "historical_book": {
+      "metric": "price_to_book",
+      "assumptions": {"low": 0.25, "base": 0.40, "high": 0.55},
+      "version": "PSE-V2-PB-HISTORICAL-B26-1.0",
+      "rationale": "Finite analyst P/B sensitivity reused from the preceding reviewed batches. This is a historical parent-book screen, not peer-calibrated, intrinsic or a current-price target."
+    }
+  },
+  "issuers": {
+    "DHI": {
+      "issuer_name": "Dominion Holdings, Inc.", "subsector": "Investment and resource holding", "primary_model": "sotp",
+      "period_end": "2026-06-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 3473823424, "reported_bvps": 1.61,
+      "shares_outstanding": 2162475312, "share_as_of": "2026-09-10", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-10",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=31",
+      "share_classes": [{"class": "quoted common", "shares": 2162475312, "as_of": "2026-09-10", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=31"}],
+      "supporting_sources": [{"label": "DHI pending merger and backdoor-listing common-share issuance", "form": "PSE issuer disclosure", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1965428", "published_at": null}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Proposed mining interests and holding-company claims require an attributable post-merger SOTP.",
+      "intrinsic_blocker": "Pending Indophil/Sonar merger may materially expand DHI common shares and alter the asset base; final exchange ratio and post-merger residual are not established.",
+      "source_warning": "PSE 1H2026 PHP3.474bn parent equity and 2.162bn quoted common shares describe pre-merger DHI. The later merger disclosure contemplates new common issuance and says trading remains suspended; no pre-merger book screen is presented as a current common value."
+    },
+    "HOME": {
+      "issuer_name": "AllHome Corp.", "subsector": "Home-improvement retail", "primary_model": "fcff_dcf",
+      "period_end": "2025-09-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 16230243466, "reported_bvps": 4.33,
+      "shares_outstanding": 3750000002, "share_as_of": "2026-09-11", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=674",
+      "share_classes": [{"class": "ordinary common", "shares": 3750000002, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=674"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Retail FCFF needs current operating margin, working-capital and funding evidence.",
+      "intrinsic_blocker": "The latest reviewed PSE summary ends 3Q2025 and the common line is suspended; current operating and debt-service economics are not reviewed.",
+      "source_warning": "PSE FY2024/3Q2025 summaries are historical and 2025 YTD parent earnings turned negative. The June 2026 last close on the suspended stock page is not a current price."
+    },
+    "MM": {
+      "issuer_name": "MerryMart Consumer Corp.", "subsector": "Food and convenience retail", "primary_model": "fcff_dcf",
+      "period_end": "2026-03-31", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 3003150995, "reported_bvps": 0.40,
+      "shares_outstanding": 7594936709, "share_as_of": "2026-09-10", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-09-10",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=677",
+      "share_classes": [{"class": "ordinary common", "shares": 7594936709, "as_of": "2026-09-10", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=677"}],
+      "availability": "market_relative_only", "policy": "historical_book", "screen_time_basis": "historical_2026_q1",
+      "route_reason": "Retail intrinsic value needs normalized FCFF; the dated 1Q2026 parent-common book is a separate finite screen.",
+      "intrinsic_blocker": "Sustainable margins, working capital, financing and the post-1Q2026 reporting/suspension outcome are not underwritten.",
+      "source_warning": "The PSE 1Q2026 PHP3.003bn parent equity / 7.595bn common-share bridge supports only a Low-reliability historical P/B screen. Trading was suspended in the September stock snapshot and public float was 1.37%; no current quote, upside or intrinsic value is published."
+    },
+    "STR": {
+      "issuer_name": "Vistamalls, Inc.", "subsector": "Commercial property", "primary_model": "nav_sotp",
+      "period_end": "2025-09-30", "currency": "PHP", "equity_unit_scale": "millions", "equity_basis": "parent", "equity_value": 58499, "reported_bvps": 6.94,
+      "shares_outstanding": 8425981156, "share_as_of": "2026-09-11", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=147",
+      "share_classes": [{"class": "ordinary common", "shares": 8425981156, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=147"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Commercial property requires lease, asset-level value and refinancing review for NAV/SOTP.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2025 and trading is suspended; current property cash flows, debt and parent claims are not reviewed.",
+      "source_warning": "PSE 3Q2025 PHP58.499bn parent equity is expressed in PHP millions. Its September 2026 common stock snapshot is suspended; no old price or summary book value is promoted to current valuation."
+    },
+    "VLC": {
+      "issuer_name": "Villar Land Holdings Corp.", "subsector": "Property development", "primary_model": "nav_sotp",
+      "period_end": "2025-09-30", "currency": "PHP", "equity_unit_scale": "thousands", "equity_basis": "parent", "equity_value": 13372649, "reported_bvps": 22.31,
+      "shares_outstanding": 644117649, "share_as_of": "2026-09-10", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-10",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=661",
+      "share_classes": [{"class": "quoted common", "shares": 644117649, "as_of": "2026-09-10", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=661"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Development rights and land inventories require project-level RNAV and capital-claim reconciliation.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, trading is suspended and the printed BVPS does not reconcile to the dated parent equity/outstanding-common bridge.",
+      "source_warning": "PSE reports PHP13,372,649 thousand parent equity and printed PHP22.31 BVPS, while 644,117,649 outstanding common shares imply a different per-share book figure. No denominator is selected silently."
+    },
+    "UNH": {
+      "issuer_name": "Uniholdings Inc.", "subsector": "Property and investment holding", "primary_model": "nav_sotp",
+      "period_end": "2026-06-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 8987615495, "reported_bvps": 120.32,
+      "shares_outstanding": 70765401, "share_as_of": "2026-09-11", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=22",
+      "share_classes": [{"class": "quoted common", "shares": 70765401, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=22"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Recently combined property holdings require attributable NAV and a reconciled listed/common capitalization.",
+      "intrinsic_blocker": "Only 10.297m shares are listed against 70.765m outstanding; the printed BVPS and parent/share bridge differ, and merger-related common claims remain unresolved.",
+      "source_warning": "PSE 1H2026 parent equity is PHP8.988bn. The suspended stock snapshot shows 70,765,401 outstanding common shares but only 10,296,688 listed and a 2.92% free float; the per-share residual cannot be treated as a settled tradable line."
+    },
+    "PNX": {
+      "issuer_name": "Phoenix Petroleum Philippines, Inc.", "subsector": "Fuel distribution", "primary_model": "fcff_dcf",
+      "period_end": "2023-09-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 10083802981, "reported_bvps": 1.97,
+      "shares_outstanding": 1442866332, "share_as_of": "2026-09-17", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-17",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=608",
+      "share_classes": [{"class": "ordinary common", "shares": 1442866332, "as_of": "2026-09-17", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=608"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Fuel distribution FCFF needs current debt-service, working-capital and senior-claim underwriting.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2023, trading remains suspended and current debt/preferred/common claims are unquantified.",
+      "source_warning": "PSE FY2022/3Q2023 summaries are stale and loss-making. The company also has separately listed preferred series; none is silently deducted as zero or treated as ordinary common."
+    },
+    "ROX": {
+      "issuer_name": "Roxas Holdings, Inc.", "subsector": "Sugar and agricultural processing", "primary_model": "fcff_dcf",
+      "period_end": "2024-06-30", "currency": "PHP", "equity_unit_scale": "thousands", "equity_basis": "parent", "equity_value": 2238923, "reported_bvps": 1.45,
+      "shares_outstanding": 1547935799, "share_as_of": "2026-09-18", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-09-18",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=64",
+      "share_classes": [{"class": "ordinary common", "shares": 1547935799, "as_of": "2026-09-18", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=64"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Agricultural processing FCFF needs a current cycle, reserve/debt and operating cash-flow case.",
+      "intrinsic_blocker": "The latest reviewed summary ends June 2024 and shows losses; current financial statements, recovery plan and debt claims are not established.",
+      "source_warning": "PSE FY2023/June 2024 figures are in PHP thousands and are too stale for a September 2026 common-equity value. The September 2026 stock snapshot is suspended."
+    },
+    "INFRA": {
+      "issuer_name": "Philippine Infradev Holdings, Inc.", "subsector": "Infrastructure and property interests", "primary_model": "nav_sotp",
+      "period_end": "2025-09-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 100923208521, "reported_bvps": 25.69,
+      "shares_outstanding": 6061560322, "share_as_of": "2026-09-11", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=84",
+      "share_classes": [{"class": "quoted common", "shares": 6061560322, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=84"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Infrastructure development requires project/concession NAV, funding and parent/common claim review.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, trading is suspended and the stated BVPS does not reconcile with the current parent-equity/outstanding-common count.",
+      "source_warning": "PSE reports PHP100.923bn parent equity and PHP25.69 BVPS, but the stock snapshot shows 6.062bn outstanding versus only 1.327bn listed shares. No old denominator or project asset value is silently carried forward."
+    },
+    "I": {
+      "issuer_name": "I-Remit, Inc.", "subsector": "Remittance services", "primary_model": "fcff_dcf",
+      "period_end": "2025-09-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": -29941687, "reported_bvps": -0.05,
+      "shares_outstanding": 611639122, "share_as_of": "2026-09-11", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=613",
+      "share_classes": [{"class": "ordinary common", "shares": 611639122, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=613"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Remittance operating FCFF needs a viable parent-common bridge and sustainable operating cash flow.",
+      "intrinsic_blocker": "3Q2025 parent equity is negative, losses persist and the common line is suspended; a positive common-equity screen is unsupported.",
+      "source_warning": "PSE 3Q2025 parent equity is negative PHP29.942m and printed BVPS is negative PHP0.05. The last traded price is stale and is not used for current upside."
+    }
+  }
+}

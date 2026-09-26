@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "1aa7815c856f40e699d87a849e45593e7e60223cef99929d75053ae1b4f8cc44",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property rights, asset realizability, leasing cash flow and parent-only claims are not appraised."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "ca78b6084c0903c1bad2c4d1adfe890339a6471b87c9c02a2a04709e815a328f",
+  "issuer": {
+    "issuer_id": "PSE:KEP",
+    "name": "Keppel Philippines Properties, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.79454897,
+      "high": 1.059398627,
+      "low": 0.529699313
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 1.7656643781466017,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-PROPERTY-B21-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e9c82ad07c8167960d1ce59ba89be10eebf7f2c440196567ecaead264f9f6d5f",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B21-1.0",
+  "numerical_range": {
+    "high": 1.059398627,
+    "low": 0.529699313
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property rights, asset realizability, leasing cash flow and parent-only claims are not appraised.",
+    "metric_basis": "PHP parent equity (pesos) / 293,828,900 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite property-book screening band; project appraisals, debt, minority claims and realization timing are not independently underwritten.",
+    "reliability": "Low",
+    "route_reason": "Property holdings require asset-level appraisal and attributable SOTP; book value is a finite separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:KEP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e9c82ad07c816796",
+      "form": "PSE financial summary",
+      "label": "KEP FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e9c82ad07c8167960d1ce59ba89be10eebf7f2c440196567ecaead264f9f6d5f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=88"
+    },
+    {
+      "document_id": "e9c82ad07c816796-support-1",
+      "form": "PSE common-stock data",
+      "label": "KEP open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "e9c82ad07c8167960d1ce59ba89be10eebf7f2c440196567ecaead264f9f6d5f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=88"
+    }
+  ],
+  "subsector": "Property and investment holding",
+  "ticker": "KEP",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "FY2025 revenue fell materially from FY2024, so recent profit is not extrapolated. Outstanding common shares, not listed shares, are the denominator."
+  ]
+}

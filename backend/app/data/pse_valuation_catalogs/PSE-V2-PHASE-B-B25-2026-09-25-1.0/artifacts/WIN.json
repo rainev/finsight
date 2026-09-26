@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "0cf0cda32c600cbda9c10eb957eeee8d6f00ac33fa3fbbda8c8c6b2d93f1aaf0",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Declining sales, margins, working capital, capital expenditure and asset realizability are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "15f0b96f2b9028b9b0dabc9d5fd9c88858e88b8ffe3dd9a224c28c7098e61944",
+  "issuer": {
+    "issuer_id": "PSE:WIN",
+    "name": "Wellex Industries, Incorporated"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.211054194,
+      "high": 0.295475872,
+      "low": 0.126632516
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.4221083880718481,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "0f187822612f105089356575a51e337f14669135d14bdeeb9746fd3395e050e4",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 0.295475872,
+    "low": 0.126632516
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Declining sales, margins, working capital, capital expenditure and asset realizability are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 3,276,035,637 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screen while cash-flow, lease, financing and normalization bridges are incomplete; not an FCFF result.",
+    "reliability": "Low",
+    "route_reason": "Normalized operating cash flows and capital needs must support FCFF; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:WIN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "0f187822612f1050",
+      "form": "PSE financial summary",
+      "label": "WIN FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "0f187822612f105089356575a51e337f14669135d14bdeeb9746fd3395e050e4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=90"
+    },
+    {
+      "document_id": "0f187822612f1050-support-1",
+      "form": "PSE common-stock data",
+      "label": "WIN open ordinary-common stock data",
+      "period_end": "2026-09-21",
+      "published_at": null,
+      "sha256": "0f187822612f105089356575a51e337f14669135d14bdeeb9746fd3395e050e4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=90"
+    }
+  ],
+  "subsector": "Industrial products and assets",
+  "ticker": "WIN",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "1H2026 revenue fell versus 1H2025 and parent income was negative; book value is not a sustainable FCFF estimate."
+  ]
+}

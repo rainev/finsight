@@ -1,0 +1,92 @@
+{
+  "artifact_hash": "63915cc4d4fb9ee26ccd0955c94e1c322b98d7a3c15b9568ea65b024421d87d8",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Pending Indophil/Sonar merger may materially expand DHI common shares and alter the asset base; final exchange ratio and post-merger residual are not established."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "89387562f504bbd7e604dc06dc1d7018be8ebac9420512464d2afb322439d61c",
+  "issuer": {
+    "issuer_id": "PSE:DHI",
+    "name": "Dominion Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B26-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Pending Indophil/Sonar merger may materially expand DHI common shares and alter the asset base; final exchange ratio and post-merger residual are not established.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Proposed mining interests and holding-company claims require an attributable post-merger SOTP.",
+    "screen_time_basis": null,
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-10"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "DHI",
+    "security_id": "PSE:DHI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9a3d87f6f04dd661",
+      "form": "PSE financial summary",
+      "label": "DHI reviewed PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "9a3d87f6f04dd66191f34c34bb6fc01fa9e90e7e413e34dee745790686b1ee37",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=31"
+    },
+    {
+      "document_id": "9a3d87f6f04dd661-support-1",
+      "form": "PSE common-stock data",
+      "label": "DHI quoted common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "9a3d87f6f04dd66191f34c34bb6fc01fa9e90e7e413e34dee745790686b1ee37",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=31"
+    },
+    {
+      "document_id": "9a3d87f6f04dd661-support-2",
+      "form": "PSE issuer disclosure",
+      "label": "DHI pending merger and backdoor-listing common-share issuance",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "9a3d87f6f04dd66191f34c34bb6fc01fa9e90e7e413e34dee745790686b1ee37",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1965428"
+    }
+  ],
+  "subsector": "Investment and resource holding",
+  "ticker": "DHI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No current market quote or upside is published for this suspended security.",
+    "PSE 1H2026 PHP3.474bn parent equity and 2.162bn quoted common shares describe pre-merger DHI. The later merger disclosure contemplates new common issuance and says trading remains suspended; no pre-merger book screen is presented as a current common value."
+  ]
+}

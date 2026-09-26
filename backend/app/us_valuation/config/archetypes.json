@@ -1,5 +1,5 @@
 {
-  "version": "US-ARCHETYPE-1.0",
+  "version": "US-ARCHETYPE-1.1",
   "sic_ranges": [
     {
       "start": 3570,
@@ -97,7 +97,9 @@
       "end": 4991,
       "sector": "Utilities",
       "archetype": "us_utility",
-      "confidence": 0.65
+      "confidence": 0.65,
+      "model_route_eligible": false,
+      "model_route_reason": "The broad utility SIC band does not establish regulated-utility status; issuer-level routing evidence is required."
     },
     {
       "start": 3400,
@@ -160,10 +162,170 @@
       "end": 6799,
       "sector": "Real Estate",
       "archetype": "us_reit",
-      "confidence": 0.6
+      "confidence": 0.6,
+      "model_route_eligible": false,
+      "model_route_reason": "The broad real-estate SIC band does not establish REIT status; issuer-level routing evidence is required."
+    }
+  ],
+  "model_routing_groups": [
+    {
+      "issuers": {
+        "0001002910": "AEE",
+        "0000004904": "AEP",
+        "0000731802": "ATO",
+        "0001130310": "CNP",
+        "0000715957": "D",
+        "0000936340": "DTE",
+        "0001326160": "DUK",
+        "0001047862": "ED",
+        "0000827052": "EIX",
+        "0000065984": "ETR",
+        "0001109357": "EXC",
+        "0000753308": "NEE",
+        "0001004980": "PCG",
+        "0000788784": "PEG",
+        "0000092122": "SO",
+        "0001032208": "SRE",
+        "0000783325": "WEC",
+        "0000072903": "XEL"
+      },
+      "sector": "Utilities",
+      "archetype": "us_utility",
+      "confidence": 0.9,
+      "model_route_eligible": true,
+      "reason": "Issuer-level review identifies a predominantly regulated electric or gas utility route; DDM remains review-required pending backtest calibration.",
+      "evidence": {
+        "basis": "Current issuer business descriptions and regulated operating-company disclosures",
+        "reviewed_on": "2026-08-09"
+      }
+    },
+    {
+      "issuers": {
+        "0001053507": "AMT",
+        "0001051470": "CCI",
+        "0001297996": "DLR",
+        "0001101239": "EQIX",
+        "0001289490": "EXR",
+        "0001020569": "IRM",
+        "0000726728": "O",
+        "0001045609": "PLD",
+        "0001393311": "PSA",
+        "0000740260": "VTR",
+        "0000766704": "WELL"
+      },
+      "sector": "Real Estate",
+      "archetype": "us_reit",
+      "confidence": 0.9,
+      "model_route_eligible": true,
+      "reason": "Issuer-level review and SEC SIC 6798 identify a REIT; the FFO route remains review-required pending AFFO/NAV refinement and backtest calibration.",
+      "evidence": {
+        "basis": "Current SEC issuer classification explicitly labeled Real Estate Investment Trusts",
+        "reviewed_on": "2026-08-09"
+      }
+    },
+    {
+      "issuers": {
+        "0001506307": "KMI",
+        "0000003570": "LNG",
+        "0001039684": "OKE",
+        "0001389170": "TRGP",
+        "0002007855": "VG",
+        "0000107263": "WMB"
+      },
+      "sector": "Energy",
+      "archetype": "energy_infrastructure",
+      "confidence": 0.9,
+      "model_route_eligible": true,
+      "reason": "Issuer-level review identifies a pipeline, midstream, or LNG operating company rather than a regulated utility; use enterprise FCFF DCF.",
+      "evidence": {
+        "basis": "Current SEC SIC labels and issuer business descriptions",
+        "reviewed_on": "2026-08-09"
+      }
+    },
+    {
+      "issuers": {
+        "0001868275": "CEG",
+        "0001692819": "VST"
+      },
+      "sector": "Utilities",
+      "archetype": "independent_power_producer",
+      "confidence": 0.9,
+      "model_route_eligible": true,
+      "reason": "Issuer-level review identifies material competitive generation exposure rather than a regulated distribution utility; use enterprise FCFF DCF.",
+      "evidence": {
+        "basis": "Current issuer business descriptions and operating-segment disclosures",
+        "reviewed_on": "2026-08-09"
+      }
+    },
+    {
+      "issuers": {
+        "0001060391": "RSG",
+        "0001318220": "WCN",
+        "0000823768": "WM"
+      },
+      "sector": "Industrials",
+      "archetype": "environmental_services",
+      "confidence": 0.95,
+      "model_route_eligible": true,
+      "reason": "SEC SIC 4953 identifies refuse-system operating companies, not regulated utilities; use enterprise FCFF DCF.",
+      "evidence": {
+        "basis": "Current SEC SIC label Refuse Systems",
+        "reviewed_on": "2026-08-09"
+      }
+    },
+    {
+      "issuers": {
+        "0001138118": "CBRE"
+      },
+      "sector": "Real Estate",
+      "archetype": "real_estate_services",
+      "confidence": 0.95,
+      "model_route_eligible": true,
+      "reason": "CBRE is a real-estate services operating company, not a REIT; use enterprise FCFF DCF.",
+      "evidence": {
+        "basis": "Current issuer business description and non-REIT SEC classification",
+        "reviewed_on": "2026-08-09"
+      }
     }
   ],
   "issuer_overrides": {
+    "0001024478": {
+      "ticker": "ROK",
+      "sector": "Industrials",
+      "archetype": "capital_goods_machinery",
+      "confidence": 0.95,
+      "reason": "Rockwell Automation is an industrial automation and capital-goods company; medical-device assumptions are not economically appropriate."
+    },
+    "0000089800": {
+      "ticker": "SHW",
+      "sector": "Materials",
+      "archetype": "specialty_chemicals",
+      "confidence": 0.95,
+      "reason": "Sherwin-Williams manufactures coatings and specialty chemical products; retail assumptions understate its manufacturing economics and margins."
+    },
+    "0000315293": {
+      "ticker": "AON",
+      "sector": "Financials",
+      "archetype": "insurance_brokerage",
+      "confidence": 0.95,
+      "reason": "Aon is a fee-based insurance broker and advisory company, not a risk-bearing insurance carrier; enterprise FCFF is appropriate."
+    },
+    "0000354190": {
+      "ticker": "AJG",
+      "sector": "Financials",
+      "archetype": "insurance_brokerage",
+      "confidence": 0.95,
+      "reason": "Arthur J. Gallagher is a fee-based insurance broker and risk-management advisor, not a risk-bearing insurance carrier; enterprise FCFF is appropriate."
+    },
+    "0001679788": {
+      "ticker": "COIN",
+      "sector": "Financials",
+      "archetype": "digital_asset_marketplace",
+      "confidence": 0.95,
+      "model_route_eligible": false,
+      "model_route_reason": "Coinbase requires a dedicated digital-asset marketplace and custody model with cycle-normalized transaction revenue and balance-sheet separation; withhold generic FCFF until that model is implemented.",
+      "reason": "Coinbase is a digital-asset marketplace and custodian, not a consumer-credit company."
+    },
     "0000320193": {
       "ticker": "AAPL",
       "sector": "Technology",
@@ -1692,8 +1854,11 @@
       }
     },
     "0000874716": {
-      "ticker": "",
-      "reason": " routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
+      "ticker": "IDXX",
+      "sector": "Health Care",
+      "archetype": "medical_devices_instruments",
+      "confidence": 0.95,
+      "reason": "IDEXX is a veterinary diagnostics and instruments company; medical-device and diagnostics assumptions are more appropriate than pharmaceutical assumptions.",
       "verified_zero_bridge_fields": {
         "commercial_paper": {
           "rationale": "'s controlling filing tags no commercial paper concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
@@ -2578,8 +2743,13 @@
       }
     },
     "0001674101": {
-      "ticker": "",
-      "reason": " routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
+      "ticker": "VRT",
+      "sector": "Technology",
+      "archetype": "hardware_electronic_equipment",
+      "confidence": 0.85,
+      "reason": "Issuer-reviewed route: Vertiv provides mission-critical data-center power, thermal-management, infrastructure hardware, software and lifecycle services; electronic components enable the offering but semiconductor economics do not define the business.",
+      "model_route_eligible": true,
+      "model_route_reason": "VRT is approved for the hardware/electronic-equipment FCFF route based on its controlling filing's company-specific digital-infrastructure product and service description.",
       "verified_zero_bridge_fields": {
         "commercial_paper": {
           "rationale": "'s controlling filing tags no commercial paper concept in its SEC Companyfacts; treated as verified zero pending human confirmation.",
@@ -3056,6 +3226,78 @@
       "default_payout_ratio": 0.3,
       "model_policy_reason": "CANDIDATE (review_required) \u2014 depository banks valued at the equity level via residual income; deposits are operating funding, not an EV->equity debt bridge. Cross-checks: clean-surplus DDM + justified P/B."
     },
+    "energy_infrastructure": {
+      "primary_model": "fcff_dcf",
+      "supporting_models": [
+        "epv"
+      ],
+      "forecast_years": 7,
+      "archetype_median_growth": 0.04,
+      "archetype_target_operating_margin": 0.18,
+      "growth_persistence": 0.72,
+      "margin_persistence": 0.72,
+      "sales_to_capital": 0.8,
+      "unlevered_policy_beta": 1.05,
+      "target_debt_weight": 0.45,
+      "default_debt_spread": 0.018,
+      "terminal_roic_premium": 0.015,
+      "normal_company_overlay": 0.0,
+      "model_policy_reason": "CANDIDATE (review_required) — pipeline, midstream, and LNG operating companies use enterprise FCFF DCF; cycle-aware calibration remains a backtest task."
+    },
+    "independent_power_producer": {
+      "primary_model": "fcff_dcf",
+      "supporting_models": [
+        "epv"
+      ],
+      "forecast_years": 7,
+      "archetype_median_growth": 0.03,
+      "archetype_target_operating_margin": 0.18,
+      "growth_persistence": 0.65,
+      "margin_persistence": 0.65,
+      "sales_to_capital": 0.65,
+      "unlevered_policy_beta": 1.2,
+      "target_debt_weight": 0.4,
+      "default_debt_spread": 0.02,
+      "terminal_roic_premium": 0.01,
+      "normal_company_overlay": 0.0,
+      "model_policy_reason": "CANDIDATE (review_required) — competitive power generation uses enterprise FCFF DCF; commodity-cycle calibration remains a backtest task."
+    },
+    "environmental_services": {
+      "primary_model": "fcff_dcf",
+      "supporting_models": [
+        "epv"
+      ],
+      "forecast_years": 7,
+      "archetype_median_growth": 0.05,
+      "archetype_target_operating_margin": 0.18,
+      "growth_persistence": 0.8,
+      "margin_persistence": 0.8,
+      "sales_to_capital": 1.0,
+      "unlevered_policy_beta": 0.85,
+      "target_debt_weight": 0.4,
+      "default_debt_spread": 0.013,
+      "terminal_roic_premium": 0.025,
+      "normal_company_overlay": 0.0,
+      "model_policy_reason": "CANDIDATE (review_required) — waste and environmental-service operators use enterprise FCFF DCF; calibration remains a backtest task."
+    },
+    "real_estate_services": {
+      "primary_model": "fcff_dcf",
+      "supporting_models": [
+        "epv"
+      ],
+      "forecast_years": 6,
+      "archetype_median_growth": 0.05,
+      "archetype_target_operating_margin": 0.12,
+      "growth_persistence": 0.72,
+      "margin_persistence": 0.72,
+      "sales_to_capital": 2.2,
+      "unlevered_policy_beta": 1.1,
+      "target_debt_weight": 0.35,
+      "default_debt_spread": 0.015,
+      "terminal_roic_premium": 0.02,
+      "normal_company_overlay": 0.0,
+      "model_policy_reason": "CANDIDATE (review_required) — real-estate service operating companies use enterprise FCFF DCF rather than REIT FFO; calibration remains a backtest task."
+    },
     "us_utility": {
       "primary_model": "ddm",
       "supporting_models": [
@@ -3141,6 +3383,42 @@
       "terminal_roic_premium": 0.02,
       "normal_company_overlay": 0.0,
       "model_policy_reason": "CANDIDATE (review_required) \u2014 telecom (VZ,T,CMCSA,TMUS). Calibrated 5 comps; mature low growth, very capital-heavy (huge capex compresses FCFF). Dividend-heavy names may suit DDM better \u2014 revisit."
+    },
+    "insurance_brokerage": {
+      "primary_model": "fcff_dcf",
+      "supporting_models": [
+        "epv"
+      ],
+      "forecast_years": 7,
+      "archetype_median_growth": 0.06,
+      "archetype_target_operating_margin": 0.25,
+      "growth_persistence": 0.78,
+      "margin_persistence": 0.78,
+      "sales_to_capital": 2.5,
+      "unlevered_policy_beta": 0.9,
+      "target_debt_weight": 0.3,
+      "default_debt_spread": 0.012,
+      "terminal_roic_premium": 0.035,
+      "normal_company_overlay": 0.0,
+      "model_policy_reason": "CANDIDATE (review_required) — fee-based insurance brokers and risk advisers use enterprise FCFF rather than carrier residual income; calibration remains a backtest task."
+    },
+    "digital_asset_marketplace": {
+      "primary_model": "fcff_dcf",
+      "supporting_models": [
+        "epv"
+      ],
+      "forecast_years": 7,
+      "archetype_median_growth": 0.05,
+      "archetype_target_operating_margin": 0.2,
+      "growth_persistence": 0.5,
+      "margin_persistence": 0.5,
+      "sales_to_capital": 2.0,
+      "unlevered_policy_beta": 1.4,
+      "target_debt_weight": 0.1,
+      "default_debt_spread": 0.02,
+      "terminal_roic_premium": 0.02,
+      "normal_company_overlay": 0.0,
+      "model_policy_reason": "WITHHOLD — digital-asset marketplaces require cycle-normalized transaction revenue, custody and customer-asset separation, and a dedicated SOTP/FCFF implementation before publication."
     },
     "us_insurance": {
       "primary_model": "residual_income",

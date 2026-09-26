@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "84aa7f6c5c6e643341c206d7bbbd22105b2c15b3d52f5a37fba9cd6e858f37ab",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Franchise life, advertising cycle, capex, debt and minority claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "921f87ad39ef503cc95511c04b6e1cab773a2a43e413cd5411a2412f28afa9af",
+  "issuer": {
+    "issuer_id": "PSE:MBC",
+    "name": "Manila Broadcasting Company"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 2.39701288,
+      "high": 3.355818032,
+      "low": 1.438207728
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 4.794025759568339,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f082f9a86f81eef739216d10d5d7450180e91e27a0201fc8af24a207cde5b6b4",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 3.355818032,
+    "low": 1.438207728
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Franchise life, advertising cycle, capex, debt and minority claims are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 402,682,990 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screening band while normalized FCFF, capital claims and terminal assumptions remain unreviewed; not a peer study or intrinsic model.",
+    "reliability": "Low",
+    "route_reason": "Advertising and broadcast-franchise cash flows require finite-life FCFF; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MBC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f082f9a86f81eef7",
+      "form": "PSE financial summary",
+      "label": "MBC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f082f9a86f81eef739216d10d5d7450180e91e27a0201fc8af24a207cde5b6b4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=117"
+    },
+    {
+      "document_id": "f082f9a86f81eef7-support-1",
+      "form": "PSE common-stock data",
+      "label": "MBC open ordinary-common stock data",
+      "period_end": "2026-09-18",
+      "published_at": null,
+      "sha256": "f082f9a86f81eef739216d10d5d7450180e91e27a0201fc8af24a207cde5b6b4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=117&security_id=382"
+    }
+  ],
+  "subsector": "Broadcast media",
+  "ticker": "MBC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "Parent equity exceeds total equity because non-parent equity is negative; reported PHP4.57 BVPS follows total equity. 1H2026 revenue and parent income fell year on year."
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "artifact_hash": "e7c1f604b95d6095b424367fc520bb070a7e3506db0f195f3659e78e88f3ed7e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Plant utilization, normalized margins, maintenance capex, liabilities, ownership and terminal economics are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "72dc5714d862edb57de148555c9e58b7f90b95d35490c4b94c3b9a2f5450c195",
+  "issuer": {
+    "issuer_id": "PSE:CHP",
+    "name": "Concreat Holdings Philippines, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.475,
+      "high": 0.665,
+      "low": 0.285
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 0.95,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-B17-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "10f8087e0b82920644a054eaa4dbf0cb05191a9a26e4402115a2bd78515ce46c",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B17-1.0",
+  "numerical_range": {
+    "high": 0.665,
+    "low": 0.285
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Plant utilization, normalized margins, maintenance capex, liabilities, ownership and terminal economics are not reconciled.",
+    "metric_basis": "reported PHP0.95 BVPS from PHP-thousands source; per-share amount is PHP",
+    "policy_rationale": "Finite filing-review P/B screen on reported common BVPS; reuse the Batch 16 review band for operating-cycle and claim uncertainty.",
+    "reliability": "Low",
+    "route_reason": "Cement capacity, demand, fuel inputs and reinvestment require FCFF; P/B is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CHP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "10f8087e0b829206",
+      "form": "PSE quarterly financial summary",
+      "label": "CHP FY2025 and 1H2026 PSE financial summary, PHP thousands",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "10f8087e0b82920644a054eaa4dbf0cb05191a9a26e4402115a2bd78515ce46c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=662"
+    },
+    {
+      "document_id": "10f8087e0b829206-support-1",
+      "form": "PSE common-stock data",
+      "label": "CHP open ordinary-common stock data",
+      "period_end": "2026-09-23",
+      "published_at": null,
+      "sha256": "10f8087e0b82920644a054eaa4dbf0cb05191a9a26e4402115a2bd78515ce46c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=662"
+    },
+    {
+      "document_id": "10f8087e0b829206-support-2",
+      "form": "PSE company information",
+      "label": "CHP PSE company information and controlling interests",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "10f8087e0b82920644a054eaa4dbf0cb05191a9a26e4402115a2bd78515ce46c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=662"
+    }
+  ],
+  "subsector": "Cement manufacturing",
+  "ticker": "CHP",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Cash flows, attributable ownership and common-equity claims are not fully reconciled.",
+    "FY2025 and 1H2026 parent results were losses. CHP is controlled by a group including DMC/SCC, so their per-share screens are not additive."
+  ]
+}

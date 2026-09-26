@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "460c1dcea7ff85a14e6844f95a05e96fb6c3495699c03dfba38f2719f830b3aa",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed brand and geography cash flows, working capital, maturation inventory, debt, FX, and terminal economics are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "3e33bdbd7e91e14069b3c9bf049088efa96e927bdfbc43e2be6d82c15ad49f40",
+  "issuer": {
+    "issuer_id": "PSE:EMI",
+    "name": "Emperador Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 2.0,
+      "high": 2.5,
+      "low": 1.5
+    },
+    "estimates": {
+      "base": 14.08,
+      "high": 17.6,
+      "low": 10.56
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 7.04,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-GLOBAL-SPIRITS-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "bca792cf45e5e11eba3466577d038985ecff79ac34675f5b4c6bda40579a8cbc",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 17.6,
+    "low": 10.56
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed brand and geography cash flows, working capital, maturation inventory, debt, FX, and terminal economics are incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Brand-aware FCFF/SOTP remains primary; P/B provides a finite screen while earnings are below the prior year and overseas brand economics remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:EMI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "bca792cf45e5e11e",
+      "form": "17-Q",
+      "label": "EMI FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "bca792cf45e5e11eba3466577d038985ecff79ac34675f5b4c6bda40579a8cbc",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=632"
+    }
+  ],
+  "subsector": "Global spirits and brand portfolio",
+  "ticker": "EMI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

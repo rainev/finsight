@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 
 from .sec_client import normalize_cik
+from .automated_review import assess_artifact, repair_provenance_from_submissions
+from .classification import load_archetype_config
 from .xbrl import load_concept_config
 
 
@@ -140,13 +142,13 @@ def _source_financial_statement(
     }
 
 
-def _public_model(model: dict[str, Any]) -> dict[str, Any]:
+def _public_model(model: dict[str, Any], *, default_model: str | None = None) -> dict[str, Any]:
     return {
-        "model": model["model"],
-        "output_type": model["output_type"],
+        "model": model.get("model", default_model),
+        "output_type": model.get("output_type", "intrinsic_value_per_share"),
         "currency": model.get("currency", "USD"),
         "intrinsic_value_per_share": model.get("intrinsic_value_per_share"),
-        "publication_state": model["publication_state"],
+        "publication_state": model.get("publication_state", "withheld"),
         "errors": model.get("errors", []),
         "warnings": model.get("warnings", []),
     }
@@ -184,11 +186,47 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(review, dict):
         review = {}
         public["review"] = review
+    issuer = public.get("issuer", {})
+    try:
+        cik = normalize_cik(issuer.get("cik", "")) if isinstance(issuer, dict) else ""
+    except ValueError:
+        cik = ""
+    routing_config = load_archetype_config()
+    routing_groups = routing_config.get("model_routing_groups", [])
+    routing_group = next(
+        (group for group in routing_groups if cik in group.get("issuers", {})),
+        None,
+    )
+    if routing_group:
+        expected_archetype = routing_group.get("archetype")
+        expected_model = routing_config.get("valuation_policies", {}).get(
+            expected_archetype, {}
+        ).get("primary_model")
+        actual_archetype = issuer.get("primary_archetype")
+        actual_model = public.get("model_policy", {}).get("primary")
+        route_eligible = routing_group.get("model_route_eligible", True)
+        if (
+            not route_eligible
+            or actual_archetype != expected_archetype
+            or actual_model != expected_model
+        ):
+            review["publication_state"] = "withheld"
+            review.setdefault("errors", []).append(
+                "Current issuer-level routing policy does not approve this generated "
+                "artifact; rebuild it with the governed model route."
+            )
+    legacy_fallback_reason = _legacy_fcff_fallback_reason(public)
+    if legacy_fallback_reason:
+        review["publication_state"] = "withheld"
+        review.setdefault("errors", []).append(legacy_fallback_reason)
     state = review.get("publication_state")
     invalid_state = state not in PUBLICATION_STATES
+    nested_withheld = False
     for model in public.get("models", {}).values():
         if not isinstance(model, dict) or model.get("publication_state") not in PUBLICATION_STATES:
             invalid_state = True
+        elif model.get("publication_state") == "withheld":
+            nested_withheld = True
     for scenario in public.get("scenarios", {}).values():
         # Scenarios are keyed by model name (fcff_dcf, residual_income, ddm, ...);
         # validate whichever model each scenario carries.
@@ -198,10 +236,17 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         for model in scenario_models:
             if not isinstance(model, dict) or model.get("publication_state") not in PUBLICATION_STATES:
                 invalid_state = True
+            elif model.get("publication_state") == "withheld":
+                nested_withheld = True
     if invalid_state:
         review["publication_state"] = "withheld"
         review.setdefault("errors", []).append(
             "Public artifact has an unsupported publication state and was withheld."
+        )
+    if nested_withheld and review.get("publication_state") != "withheld":
+        review["publication_state"] = "withheld"
+        review.setdefault("errors", []).append(
+            "Public artifact contains a withheld model or scenario and was withheld."
         )
     if review["publication_state"] != "withheld":
         return public
@@ -231,8 +276,61 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
     return public
 
 
-def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[str, Any]:
+def _public_equity_result(
+    result: dict[str, Any], submissions: dict[str, Any], *, sanitize: bool
+) -> dict[str, Any]:
+    """Serialize residual-income, DDM, and FFO results without FCFF assumptions."""
+    result = repair_provenance_from_submissions(result, submissions)
+    issuer_keys = (
+        "cik", "ticker", "issuer_name", "finsight_sector", "primary_archetype",
+        "secondary_archetypes", "classification_confidence", "mapping_version",
+        "classification_reason", "model_route_eligible", "model_route_reason",
+    )
+    public = {
+        "schema_version": "US-PUBLIC-VALUATION-1.0",
+        "valuation_date": result["valuation_date"],
+        "market": result["market"],
+        "currency": result["currency"],
+        "ticker": result["issuer"]["ticker"],
+        "issuer": {key: result["issuer"].get(key) for key in issuer_keys},
+        "source_financial_statement": result.get("source_financial_statement", {}),
+        "model_policy": result["model_policy"],
+        "public_assumptions": result.get("public_assumptions", {}),
+        "models": {key: _public_model(model, default_model=key) for key, model in result.get("models", {}).items()},
+        "scenarios": {
+            name: {
+                model_name: _public_model(model, default_model=model_name)
+                for model_name, model in scenario.items()
+            }
+            for name, scenario in result.get("scenarios", {}).items()
+        },
+        "scenario_range": result.get("scenario_range", {"low": None, "base": None, "high": None}),
+        "review": deepcopy(result["review"]),
+        "methodology": result["methodology"],
+        "data_boundary": {
+            "raw_financial_statement_values_included": False,
+            "stock_prices_used": False,
+            "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution",
+        },
+    }
+    return _finalize_automated_public_artifact(public, sanitize=sanitize)
+
+
+def _finalize_automated_public_artifact(
+    public: dict[str, Any], *, sanitize: bool
+) -> dict[str, Any]:
+    assessment = assess_artifact(public)
+    public["automated_review"] = assessment
+    public["review"]["publication_state"] = assessment["publication_state"]
+    return sanitize_public_artifact(public) if sanitize else public
+
+
+def public_result(
+    result: dict[str, Any], submissions: dict[str, Any], *, sanitize: bool = True
+) -> dict[str, Any]:
     """Convert a private valuation result into a raw-statement-free artifact."""
+    if "forecast_assumptions" not in result:
+        return _public_equity_result(result, submissions, sanitize=sanitize)
     assumptions = result["forecast_assumptions"]
     discount_rate = result["discount_rate"]
     market_assumptions = discount_rate["market_assumptions"]
@@ -278,6 +376,8 @@ def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[s
                 "classification_confidence",
                 "mapping_version",
                 "classification_reason",
+                "model_route_eligible",
+                "model_route_reason",
             )
         },
         "source_financial_statement": _source_financial_statement(
@@ -310,7 +410,7 @@ def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[s
         },
         "scenario_range": result["scenario_range"],
         "forecast_quality": result["forecast_quality"],
-        "review": result["review"],
+        "review": deepcopy(result["review"]),
         "methodology": result["methodology"],
         "data_boundary": {
             "raw_financial_statement_values_included": False,
@@ -318,7 +418,7 @@ def public_result(result: dict[str, Any], submissions: dict[str, Any]) -> dict[s
             "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution",
         },
     }
-    return sanitize_public_artifact(public)
+    return _finalize_automated_public_artifact(public, sanitize=sanitize)
 
 
 def frontend_company(
@@ -378,8 +478,8 @@ def frontend_company(
         "valuation": {
             "us": public,
             "modelPolicy": {
-                "primary": "fcff_dcf",
-                "crossChecks": ["epv"],
+                "primary": public["model_policy"]["primary"],
+                "crossChecks": public["model_policy"].get("supporting", []),
                 "publishable": public["review"]["publication_state"] != "withheld",
                 "reason": public["model_policy"]["reason"],
                 "warnings": public["review"]["warnings"],

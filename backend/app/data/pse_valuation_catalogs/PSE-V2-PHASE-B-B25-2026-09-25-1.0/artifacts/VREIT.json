@@ -1,0 +1,81 @@
+{
+  "artifact_hash": "427d5d784b37951084087d3c5a974f2ac8e4939695de9cc50d67b1aca50e1993",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2025, the line is suspended, and current distributable income, debt and lease coverage are not established."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "95fe04c186d722e0ef29a07a75a68e9c1c23a75febdcf0ae2ccd97501642cfca",
+  "issuer": {
+    "issuer_id": "PSE:VREIT",
+    "name": "VistaREIT, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sustainable_distributions",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, the line is suspended, and current distributable income, debt and lease coverage are not established.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "A REIT needs distributable income, leases, financing and sponsor-claim review for sustainable distributions.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "VREIT",
+    "security_id": "PSE:VREIT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f4d3c47e409d4bf5",
+      "form": "PSE financial summary",
+      "label": "VREIT reviewed PSE financial summary",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "f4d3c47e409d4bf58652eb580568ea8551ed748da6444486917a689b0ce25928",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=695"
+    },
+    {
+      "document_id": "f4d3c47e409d4bf5-support-1",
+      "form": "PSE common-stock data",
+      "label": "VREIT ordinary common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "f4d3c47e409d4bf58652eb580568ea8551ed748da6444486917a689b0ce25928",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=695"
+    }
+  ],
+  "subsector": "Real estate investment trust",
+  "ticker": "VREIT",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "PSE 3Q2025 summary reports zero parent-attributable equity despite PHP31.082bn total equity; no total-book shortcut or stale June 2026 close is used for an intrinsic or current-upside estimate."
+  ]
+}

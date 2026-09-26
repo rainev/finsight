@@ -1,0 +1,114 @@
+{
+  "artifact_hash": "014efb271b553c30d08b7aa3b929d2e11cdd99d4009ca8140aa338a695fc8468",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "a776a0a05554694f704c0bdf3de8ade599b9244fd5144e2aca1445e58cfead59",
+  "issuer": {
+    "issuer_id": "PSE:UBP",
+    "name": "Union Bank of the Philippines"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B05-1.0",
+  "numerical_range": {
+    "high": 47.213057829695884,
+    "low": 27.07968544733096
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "book_value_per_share": 60.93,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalized_roe": 0.050046573551247205,
+    "policy_version": "PSE-V2-BANK-RI-B05-1.0",
+    "reliability": "Low",
+    "route_reason": "Book capital and returns above cost of equity drive common-equity value.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.12052,
+        "current_roe": 0.050046573551247205,
+        "payout_ratio": 0.3,
+        "terminal_growth": 0.03,
+        "terminal_roe": 0.09
+      },
+      "bear": {
+        "cost_of_equity": 0.13552,
+        "current_roe": 0.04253958751856012,
+        "payout_ratio": 0.25,
+        "terminal_growth": 0.02,
+        "terminal_roe": 0.08
+      },
+      "bull": {
+        "cost_of_equity": 0.11052,
+        "current_roe": 0.05505123090637193,
+        "payout_ratio": 0.35,
+        "terminal_growth": 0.04,
+        "terminal_roe": 0.1
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 119362.89142093156,
+      "enterprise_value": null,
+      "value_per_share": 35.9930399661488
+    },
+    "bear": {
+      "common_equity_value": 89803.73863398896,
+      "enterprise_value": null,
+      "value_per_share": 27.07968544733096
+    },
+    "bull": {
+      "common_equity_value": 156571.5788573649,
+      "enterprise_value": null,
+      "value_per_share": 47.213057829695884
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:UBP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_roe",
+        "terminal_roe",
+        "cost_of_equity",
+        "payout_ratio",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "71ff6faad327a199",
+      "form": "17-A",
+      "label": "UBP FY2025 PSE financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "71ff6faad327a1997c8a87a421c8f6f7bd0bafb4abf7c97ce12f05535c6ee3c3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=167"
+    }
+  ],
+  "subsector": "Commercial and universal bank",
+  "ticker": "UBP",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Provisional residual-income estimate based on reviewed FY2025 public filing facts and a versioned shared financial policy.",
+    "Capital quality, asset quality, underwriting quality, and market multiples remain challenge checks rather than direct model inputs.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed."
+  ]
+}

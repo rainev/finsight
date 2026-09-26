@@ -1,0 +1,86 @@
+{
+  "artifact_hash": "3e835a236b144b21cbff0603f663f3fe5f4c8eececf30ca5724e1a5c5950be64",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Normalized recurring cash flow, network capex, debt, and small-company liquidity adjustments are not fully reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025 and latest review",
+  "filing_published_at": null,
+  "input_hash": "43888ec01de78ec50a5dcafbbfabe865c903aeb906b634243616d181513a0a87",
+  "issuer": {
+    "issuer_id": "PSE:NOW",
+    "name": "NOW Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 1.0,
+      "high": 1.25,
+      "low": 0.75
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported book value per share",
+    "metric_value_per_share": 1.25,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-SMALL-DIGITAL-B06-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "be4be05a44112b3b74d8eff6f63c0d3c8f4e1539d32d546533fb0ff09221e14e",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B06-1.0",
+  "numerical_range": {
+    "high": 1.25,
+    "low": 0.75
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Normalized recurring cash flow, network capex, debt, and small-company liquidity adjustments are not fully reconciled.",
+    "reliability": "Low",
+    "route_reason": "FCFF remains primary; P/B provides a finite screen pending normalized cash flow and network investment review."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:NOW:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "be4be05a44112b3b",
+      "form": "17-A",
+      "label": "NOW FY2025 PSE financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "be4be05a44112b3b74d8eff6f63c0d3c8f4e1539d32d546533fb0ff09221e14e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=264"
+    }
+  ],
+  "subsector": "Information technology and broadband",
+  "ticker": "NOW",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

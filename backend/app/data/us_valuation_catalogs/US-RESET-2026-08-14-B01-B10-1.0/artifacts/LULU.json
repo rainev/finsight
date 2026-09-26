@@ -1,0 +1,160 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Conditional Low owner-cash estimate. Tariff pressure, uncertain refunds, China demand, supplier finance, and exchangeable shares remain material.",
+      "Invalidate if tariffs/refunds, debt, exchangeable-share dilution, capex, cash, or historical conversion changes.",
+      "Calculator is calibrated to the published base; private history and bridge remain fixed.",
+      "Model 'conditional_estimate': Conditional Low owner-cash estimate. Tariff pressure, uncertain refunds, China demand, supplier finance, and exchangeable shares remain material.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/LULU/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "value range, reliability, warnings, historical-policy summary, assumptions and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low owner-cash estimate. Tariff pressure, uncertain refunds, China demand, supplier finance, and exchangeable shares remain material."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001397187",
+    "classification_confidence": 0.8,
+    "classification_reason": "Frozen Batch 08 lane plus issuer-specific history review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Discretionary",
+    "issuer_name": "Lululemon Athletica",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_discretionary",
+    "sec_sic_code": null,
+    "sec_sic_label": "Apparel, Accessories & Luxury Goods",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001397187-26-000078"
+    ],
+    "ticker": "LULU"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "sector_framework": "apparel_owner_cash_fcff",
+    "source_policy": "Reported facts remain private and separate from historical summaries and governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "History-backed Conditional Low baseline with a named material dependency.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 235.58835845566344,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low owner-cash estimate. Tariff pressure, uncertain refunds, China demand, supplier finance, and exchangeable shares remain material."
+      ]
+    }
+  },
+  "primary_valuation_method": "apparel_owner_cash_fcff",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_history_and_finsight_policy",
+    "cash_conversion_margin": 0.1068989076731417,
+    "cash_conversion_margin_high": 0.1566146242897688,
+    "cash_conversion_margin_low": 0.04082207631237911,
+    "diluted_shares": 115482000.0,
+    "diluted_shares_high": 118369049.99999999,
+    "diluted_shares_low": 112594950.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "not applied",
+    "forecast_mode": "history_backed_normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-08-HISTORY-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 5,
+    "normalization_basis": "company_history_with_material_event_override"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 1.2268498423710814,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low owner-cash estimate. Tariff pressure, uncertain refunds, China demand, supplier finance, and exchangeable shares remain material.",
+      "Invalidate if tariffs/refunds, debt, exchangeable-share dilution, capex, cash, or historical conversion changes.",
+      "Calculator is calibrated to the published base; private history and bridge remain fixed."
+    ]
+  },
+  "scenario_range": {
+    "base": 235.58835845566344,
+    "high": 524.6198988914559,
+    "label": "assumption range, not a statistical confidence interval or recommendation",
+    "low": 62.71525411208584
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001397187-26-000078",
+    "filed_date": "2026-06-04",
+    "form": "10-Q",
+    "note": "Controlling filing anchors current inputs; company history or explicit comparative evidence anchors normalized assumptions.",
+    "period_end": "2026-05-03",
+    "url": "https://www.sec.gov/Archives/edgar/data/1397187/000139718726000078/lulu-20260503.htm"
+  },
+  "ticker": "LULU",
+  "valuation_date": "2026-08-14"
+}

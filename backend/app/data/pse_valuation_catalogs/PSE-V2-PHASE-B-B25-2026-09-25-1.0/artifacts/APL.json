@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "882141b9e1035b3ff04f9f43399ce4f7dad27487d2a6e08981530251ef9958f7",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "No reported revenue in FY2025 or 1H2026; reserve rights, extraction economics, funding and dilution are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "feaed66b7a609468bcef60ac8d447f68f137aa765a1dc3f0d82a8d6f582e8250",
+  "issuer": {
+    "issuer_id": "PSE:APL",
+    "name": "Apollo Global Capital, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.004916188,
+      "high": 0.006759758,
+      "low": 0.003072617
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding common share",
+    "metric_value_per_share": 0.012290469564570401,
+    "note": "Finite analyst book-value screen; no peer calibration or complete intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B19-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f2a9ecdd128428b398fd595656ce68bee2d36e5d07b6d648cadd533742a6cb4b",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": 0.006759758,
+    "low": 0.003072617
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "No reported revenue in FY2025 or 1H2026; reserve rights, extraction economics, funding and dilution are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 292,686,349,297 outstanding common shares",
+    "policy_rationale": "Reuse the finite holding and asset-company P/B screen; not appraised NAV, proven-resource value, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Project rights require finite-life asset economics; parent book is only a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:APL:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f2a9ecdd128428b3",
+      "form": "PSE financial summary",
+      "label": "APL FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f2a9ecdd128428b398fd595656ce68bee2d36e5d07b6d648cadd533742a6cb4b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=638"
+    },
+    {
+      "document_id": "f2a9ecdd128428b3-support-1",
+      "form": "PSE common-stock data",
+      "label": "APL ordinary-common stock data",
+      "period_end": "2026-09-23",
+      "published_at": null,
+      "sha256": "f2a9ecdd128428b398fd595656ce68bee2d36e5d07b6d648cadd533742a6cb4b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=638"
+    }
+  ],
+  "subsector": "Mineral exploration and development",
+  "ticker": "APL",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "The P/B range is a speculative asset-book screen, not a proven mineral reserve value or funded project forecast."
+  ]
+}

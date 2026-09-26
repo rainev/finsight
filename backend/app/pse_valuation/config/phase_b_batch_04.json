@@ -1,0 +1,188 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-4.0",
+  "batch_version": "PSE-V2-PHASE-B-B04-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B04-2026-09-22-1.0",
+  "universe_version": "PSE-V2-48-B04-1.0",
+  "valuation_date": "2026-09-22",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["MER", "FGEN", "ACEN", "MWC", "SPC", "CREC", "ALTER", "ASLAG", "SPNEC", "MYNLD"],
+  "distribution_policies": {
+    "regulated_franchise": {
+      "version": "PSE-V2-DIST-REGULATED-B04-1.0",
+      "scenarios": {
+        "bear": {"explicit_growth": 0.00, "cost_of_equity": 0.135},
+        "base": {"explicit_growth": 0.025, "cost_of_equity": 0.11},
+        "bull": {"explicit_growth": 0.045, "cost_of_equity": 0.09}
+      },
+      "rationale": "Finite-life common-distribution policy ending at the documented franchise or concession expiry with no terminal value."
+    },
+    "mature_power_distribution": {
+      "version": "PSE-V2-DIST-MATURE-POWER-B04-1.0",
+      "forecast_years": 5,
+      "scenarios": {
+        "bear": {"explicit_growth": -0.02, "cost_of_equity": 0.14, "terminal_growth": 0.00},
+        "base": {"explicit_growth": 0.00, "cost_of_equity": 0.12, "terminal_growth": 0.015},
+        "bull": {"explicit_growth": 0.02, "cost_of_equity": 0.10, "terminal_growth": 0.025}
+      },
+      "rationale": "Shared continuing distribution policy for a mature power operator with a reviewed common payout."
+    }
+  },
+  "relative_policies": {
+    "operating_power": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.30, "base": 0.45, "high": 0.60},
+      "policy_version": "PSE-V2-PB-OPERATING-POWER-B04-1.0",
+      "rationale": "P/B screen pending a normalized post-transaction FCFF and complete capital bridge."
+    },
+    "growth_renewable": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.80, "base": 1.10, "high": 1.40},
+      "policy_version": "PSE-V2-PB-GROWTH-RENEWABLE-B04-1.0",
+      "rationale": "P/B screen for a scaled renewable platform pending project-level operating, ownership, and financing reconciliation."
+    },
+    "early_stage_renewable": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.50, "base": 0.75, "high": 1.00},
+      "policy_version": "PSE-V2-PB-EARLY-RENEWABLE-B04-1.0",
+      "rationale": "P/B screen for a development-heavy renewable platform while announced and operating projects cannot yet be valued separately."
+    },
+    "operating_solar": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.70, "base": 0.90, "high": 1.10},
+      "policy_version": "PSE-V2-PB-OPERATING-SOLAR-B04-1.0",
+      "rationale": "P/B screen for an operating solar platform pending project-level FCFF and debt allocation."
+    }
+  },
+  "issuers": {
+    "MER": {
+      "issuer_name": "Manila Electric Company",
+      "subsector": "Regulated electricity distribution",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "A reviewed common payout and renewed franchise support a finite-life distribution valuation without value beyond the 2053 franchise expiry.",
+      "availability": "intrinsic_valuation",
+      "policy": "regulated_franchise",
+      "sources": [
+        {"label": "MER FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=118"},
+        {"label": "MER FY2025 interim common dividend", "form": "17-C", "period_end": "2025-06-30", "published_at": "2025-07-28", "source_page": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1794392"},
+        {"label": "MER FY2025 final common dividend", "form": "17-C", "period_end": "2025-12-31", "published_at": "2026-02-25", "source_page": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1872433"}
+      ],
+      "facts": {"book_value_per_share": 198.32, "reported_equity_php_millions": 223524.0, "shares_millions": 1127.092509, "current_distribution_per_share": 28.0, "finite_life_years": 27, "expiry_date": "2053-06-28", "distribution_derivation": "PHP11.328 interim plus PHP16.672 final common dividends tied to FY2025 core earnings"}
+    },
+    "FGEN": {
+      "issuer_name": "First Gen Corporation",
+      "subsector": "Diversified power generation",
+      "primary_model": "fcff_dcf",
+      "route_reason": "FCFF remains primary, but the 2025 gas-business transaction prevents a normalized comparable cash-flow and capital bridge.",
+      "availability": "market_relative_only",
+      "policy": "operating_power",
+      "sources": [
+        {"label": "FGEN FY2025 audited value translated in issuer PSE filing", "form": "17-Q", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1956016"}
+      ],
+      "facts": {"book_value_per_share": 52.26, "reported_equity_php_millions": 226729.0, "source_currency": "PHP", "intrinsic_blocker": "The 2025 sale and deconsolidation of 60% of the gas business require pro-forma owner-cash normalization and a complete debt, lease, minority, and preferred bridge."}
+    },
+    "ACEN": {
+      "issuer_name": "ACEN Corporation",
+      "subsector": "Renewable power platform",
+      "primary_model": "sotp",
+      "route_reason": "Project SOTP/FCFF remains primary; P/B provides a finite screen pending project ownership, operating status, and financing reconciliation.",
+      "availability": "market_relative_only",
+      "policy": "growth_renewable",
+      "sources": [
+        {"label": "ACEN FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=233"}
+      ],
+      "facts": {"book_value_per_share": 3.19, "reported_equity_php_millions": 152127.614, "source_currency": "PHP", "intrinsic_blocker": "Operating, construction, and committed renewable projects are not yet separated into attributable project values with allocated financing and parent-only claims."}
+    },
+    "MWC": {
+      "issuer_name": "Manila Water Company, Inc.",
+      "subsector": "Regulated water utility",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "A reviewed common payout and extended East Zone concession support a finite-life distribution valuation without value beyond January 2047.",
+      "availability": "intrinsic_valuation",
+      "policy": "regulated_franchise",
+      "sources": [
+        {"label": "MWC FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=270"},
+        {"label": "MWC FY2025 common dividend declaration", "form": "17-C", "period_end": "2025-12-31", "published_at": "2026-02-27", "source_page": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1873134"}
+      ],
+      "facts": {"book_value_per_share": 34.91, "reported_equity_php_millions": 91207.568, "shares_millions": 2603.687141, "current_distribution_per_share": 1.772, "finite_life_years": 20, "expiry_date": "2047-01-21", "distribution_derivation": "FY2025 regular common dividend; the PHP0.254 special dividend is excluded"}
+    },
+    "SPC": {
+      "issuer_name": "SPC Power Corporation",
+      "subsector": "Power generation and distribution",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "Reviewed recurring common dividends support a continuing distribution valuation while asset-level FCFF and contract lives remain unresolved.",
+      "availability": "intrinsic_valuation",
+      "policy": "mature_power_distribution",
+      "sources": [
+        {"label": "SPC FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=237"},
+        {"label": "SPC June 2025 common dividend", "form": "17-C", "period_end": "2025-06-30", "published_at": "2025-06-11", "source_page": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1775731"},
+        {"label": "SPC December 2025 common dividend", "form": "17-C", "period_end": "2025-12-31", "published_at": "2025-12-09", "source_page": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1847046"}
+      ],
+      "facts": {"book_value_per_share": 7.73, "reported_equity_php_millions": 11553.470395, "shares_millions": 1496.551803, "current_distribution_per_share": 1.20, "distribution_derivation": "PHP0.40 June plus PHP0.80 December 2025 regular common dividends"}
+    },
+    "CREC": {
+      "issuer_name": "Citicore Renewable Energy Corporation",
+      "subsector": "Renewable power platform",
+      "primary_model": "sotp",
+      "route_reason": "Project SOTP/FCFF remains primary; P/B provides a finite screen pending project ownership, operating status, and financing reconciliation.",
+      "availability": "market_relative_only",
+      "policy": "growth_renewable",
+      "sources": [
+        {"label": "CREC FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=703"}
+      ],
+      "facts": {"book_value_per_share": 2.17, "reported_equity_php_millions": 24251.151051, "source_currency": "PHP", "intrinsic_blocker": "The 597.2 MW operating portfolio and development pipeline are not yet separated into attributable project values with allocated financing and parent-only claims."}
+    },
+    "ALTER": {
+      "issuer_name": "Alternergy Holdings Corporation",
+      "subsector": "Renewable project developer",
+      "primary_model": "sotp",
+      "route_reason": "Project SOTP/finite-life DCF remains primary; P/B provides a finite screen while project ownership and financing remain incomplete.",
+      "availability": "market_relative_only",
+      "policy": "early_stage_renewable",
+      "sources": [
+        {"label": "ALTER FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-06-30", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=701"}
+      ],
+      "facts": {"book_value_per_share": 0.92, "reported_equity_php_millions": 3627.342130, "source_currency": "PHP", "intrinsic_blocker": "The operating and development projects cannot yet be valued separately with source-bounded ownership, remaining life, cash flows, and allocated project debt."}
+    },
+    "ASLAG": {
+      "issuer_name": "Raslag Corporation",
+      "subsector": "Solar power generation",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Project FCFF remains primary; P/B provides a finite screen pending project-level cash flow and debt allocation.",
+      "availability": "market_relative_only",
+      "policy": "operating_solar",
+      "sources": [
+        {"label": "ASLAG FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=694"}
+      ],
+      "facts": {"book_value_per_share": 2.20, "reported_equity_php_millions": 3306.097171, "source_currency": "PHP", "intrinsic_blocker": "The four operating solar plants and development projects lack a completed project-level FCFF, remaining-life, and debt-allocation bridge."}
+    },
+    "SPNEC": {
+      "issuer_name": "SP New Energy Corporation",
+      "subsector": "Renewable project developer",
+      "primary_model": "sotp",
+      "route_reason": "Project SOTP/finite-life DCF remains primary; P/B provides a finite screen while development assets and claims remain incomplete.",
+      "availability": "market_relative_only",
+      "policy": "early_stage_renewable",
+      "sources": [
+        {"label": "SPNEC FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=688"}
+      ],
+      "facts": {"book_value_per_share": 1.94, "reported_equity_php_millions": 75974.077193, "source_currency": "PHP", "intrinsic_blocker": "Large development-stage assets and 2025 losses require project-by-project operating status, ownership, financing, and parent-claim reconciliation before intrinsic value."}
+    },
+    "MYNLD": {
+      "issuer_name": "Maynilad Water Services, Inc.",
+      "subsector": "Regulated water utility",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "A reviewed common payout and current concession term support a finite-life distribution valuation without assuming the proposed extension beyond July 2037.",
+      "availability": "intrinsic_valuation",
+      "policy": "regulated_franchise",
+      "sources": [
+        {"label": "MYNLD FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=707"},
+        {"label": "MYNLD FY2025 common dividend declaration", "form": "17-C", "period_end": "2025-12-31", "published_at": "2026-02-23", "source_page": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1871853"}
+      ],
+      "facts": {"book_value_per_share": 14.83, "reported_equity_php_millions": 109951.110, "shares_millions": 7402.603600, "current_distribution_per_share": 1.14, "finite_life_years": 11, "expiry_date": "2037-07-31", "distribution_derivation": "PHP1.14 regular common dividend declared from FY2025 retained earnings"}
+    }
+  }
+}

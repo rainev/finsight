@@ -1,0 +1,127 @@
+{
+  "artifact_hash": "6a17719626b2ffceacd32e1cee86e0a07f43f64994088b91cda4f8d4915f848e",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "d4890c102badaec32335e38015e9987dd1ac47cab25bd307cff6d569e9a366a1",
+  "issuer": {
+    "issuer_id": "PSE:RRHI",
+    "name": "Robinsons Retail Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 97.19353649666994,
+    "low": 12.716058412981202
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "capital_bridge": {
+      "cash_php_millions": 15280.475444,
+      "debt_includes_lease_liabilities": true,
+      "debt_php_millions": 65577.407236,
+      "minority_value_php_millions": 3261.544627,
+      "nonoperating_assets_php_millions": 0.0,
+      "other_claims_php_millions": 0.0,
+      "preferred_claims_php_millions": 0.0,
+      "shares_millions": 1065.618535
+    },
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE acquisitions",
+    "normalized_fcff_proxy_php_millions": 8447.676082,
+    "policy_version": "PSE-V2-FCFF-RETAIL-B02-1.0",
+    "reliability": "Low",
+    "route_reason": "Store economics, operating cash flow, and reinvestment drive enterprise value.",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.035,
+        "roic": 0.12,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.1,
+        "wacc": 0.12
+      },
+      "bear": {
+        "growth_rate": 0.01,
+        "roic": 0.09,
+        "terminal_growth": 0.015,
+        "terminal_roic": 0.085,
+        "wacc": 0.135
+      },
+      "bull": {
+        "growth_rate": 0.06,
+        "roic": 0.15,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.12,
+        "wacc": 0.105
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 45021.35790842746,
+      "enterprise_value": 98579.83432742747,
+      "value_per_share": 42.24903793403655
+    },
+    "bear": {
+      "common_equity_value": 13550.467537015455,
+      "enterprise_value": 67108.94395601546,
+      "value_per_share": 12.716058412981202
+    },
+    "bull": {
+      "common_equity_value": 103571.23397305046,
+      "enterprise_value": 157129.71039205045,
+      "value_per_share": 97.19353649666994
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:RRHI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "normalized_fcff",
+        "growth_rate",
+        "roic",
+        "wacc",
+        "terminal_growth",
+        "terminal_roic",
+        "capital_bridge"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "4419784a97652182",
+      "form": "17-A",
+      "label": "RRHI FY2025 audited financial statements fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "4419784a976521823e09731bdb57123fbd6649fbd9352e347d4d44e0b9eb6891",
+      "source_page": null,
+      "url": "https://www.robinsonsretailholdings.com.ph/wp-content/uploads/2026/04/RRHI-SEC-17-A-2025-Audited-Financial-Statements.pdf"
+    }
+  ],
+  "subsector": "Diversified retail",
+  "ticker": "RRHI",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate using a three-year median owner-cash proxy rather than a full issuer forecast.",
+    "Lease liabilities are included in debt; lease principal is not separately deducted from the owner-cash proxy.",
+    "Policy bands and terminal economics remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

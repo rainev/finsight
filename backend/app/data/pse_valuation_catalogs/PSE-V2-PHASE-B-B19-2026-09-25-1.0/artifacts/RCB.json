@@ -1,0 +1,114 @@
+{
+  "artifact_hash": "db1f90ee08bbee3ae7873c7e970d0505a00c2f260f858494ad9a513aef33ccfe",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "c2166cdd249fca1e53cf852ab5bdfd03b40bdd7f2f0ac28f1dc4932d591e8156",
+  "issuer": {
+    "issuer_id": "PSE:RCB",
+    "name": "Rizal Commercial Banking Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B05-1.0",
+  "numerical_range": {
+    "high": 50.310540755551,
+    "low": 28.871354936801264
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "book_value_per_share": 62.46,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalized_roe": 0.0682015624545845,
+    "policy_version": "PSE-V2-BANK-RI-B05-1.0",
+    "reliability": "Low",
+    "route_reason": "Book capital and returns above cost of equity drive common-equity value.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.12052,
+        "current_roe": 0.0682015624545845,
+        "payout_ratio": 0.3,
+        "terminal_growth": 0.03,
+        "terminal_roe": 0.09
+      },
+      "bear": {
+        "cost_of_equity": 0.13552,
+        "current_roe": 0.05797132808639682,
+        "payout_ratio": 0.25,
+        "terminal_growth": 0.02,
+        "terminal_roe": 0.08
+      },
+      "bull": {
+        "cost_of_equity": 0.11052,
+        "current_roe": 0.07502171870004296,
+        "payout_ratio": 0.35,
+        "terminal_growth": 0.04,
+        "terminal_roe": 0.1
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 92931.00858021871,
+      "enterprise_value": null,
+      "value_per_share": 38.399769751853746
+    },
+    "bear": {
+      "common_equity_value": 69871.35992462284,
+      "enterprise_value": null,
+      "value_per_share": 28.871354936801264
+    },
+    "bull": {
+      "common_equity_value": 121756.18043657276,
+      "enterprise_value": null,
+      "value_per_share": 50.310540755551
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:RCB:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_roe",
+        "terminal_roe",
+        "cost_of_equity",
+        "payout_ratio",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "3ed2cbf7b5971f7b",
+      "form": "17-A",
+      "label": "RCB FY2025 PSE and audited financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "3ed2cbf7b5971f7b76a0603da8ad24aec635091b920d585386d6a3f935627e34",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1896992"
+    }
+  ],
+  "subsector": "Commercial and universal bank",
+  "ticker": "RCB",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Provisional residual-income estimate based on reviewed FY2025 public filing facts and a versioned shared financial policy.",
+    "Capital quality, asset quality, underwriting quality, and market multiples remain challenge checks rather than direct model inputs.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed."
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Low-reliability source-bounded estimate. Business-model, cash-conversion, and scenario uncertainty may materially affect the range.",
+      "Model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Primary model 'fcff_dcf' is review_required.",
+      "Scenario 'base' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'base' model 'fcff_dcf' is review_required.",
+      "Scenario 'bear' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'bear' model 'fcff_dcf' is review_required.",
+      "Scenario 'bull' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'bull' model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 36.09891789255755,
+      "low": 36.09891789255755,
+      "midpoint": 36.09891789255755,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/TTD/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "derived range, Low reliability, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-03-PRACTICAL-CASH-FCFF-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Low-reliability source-bounded estimate. Business-model, cash-conversion, and scenario uncertainty may materially affect the range."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001671933",
+    "classification_confidence": 0.8,
+    "classification_reason": "Frozen Batch 03 economic lane with issuer-specific source/model review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "Trade Desk (The)",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "communication_services",
+    "sec_sic_code": null,
+    "sec_sic_label": "Advertising",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001671933-26-000086"
+    ],
+    "ticker": "TTD"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-03-PRACTICAL-CASH-FCFF-1.0",
+    "sector_framework": "source-bounded company-history operating cash-FCFF",
+    "source_policy": "SEC facts filed on or before 2026-08-14; no stock price or analyst target."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "Practical consolidated operating cash-FCFF uses current and recent annual issuer cash conversion with a fully reconciled current claims bridge.",
+    "supporting": []
+  },
+  "models": {
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 36.09891789255755,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "diluted_shares": 485231924.99999994,
+    "diluted_shares_high": 497066850.0,
+    "diluted_shares_low": 473397000.0,
+    "forecast_mode": "company_history_cash_conversion",
+    "forecast_policy_version": "BATCH-03-PRACTICAL-CASH-FCFF-1.0",
+    "forecast_years": 8,
+    "initial_revenue_growth": 0.12,
+    "policy_wacc": 0.091,
+    "terminal_growth": 0.02
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.5072457111321262,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Low-reliability source-bounded estimate. Business-model, cash-conversion, and scenario uncertainty may materially affect the range."
+    ]
+  },
+  "scenario_range": {
+    "base": 36.09891789255755,
+    "high": 54.40993917006814,
+    "label": "assumption range, not a statistical confidence interval",
+    "low": 19.692719804495187
+  },
+  "scenarios": {
+    "base": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 36.09891789255755,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    },
+    "bear": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 19.692719804495187,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    },
+    "bull": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 54.40993917006814,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [
+    {
+      "delta": -0.01,
+      "field": "wacc",
+      "intrinsic_value_per_share": 41.72072155442746,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "wacc",
+      "intrinsic_value_per_share": 36.09891789255755,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.01,
+      "field": "wacc",
+      "intrinsic_value_per_share": 31.871436826839236,
+      "publication_state": "review_required"
+    }
+  ],
+  "source_financial_statement": {
+    "accession": "0001671933-26-000086",
+    "filed_date": "2026-08-06",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing anchors the Batch 03 source-bounded estimate.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000086/ttd-20260630.htm"
+  },
+  "ticker": "TTD",
+  "valuation_date": "2026-08-14"
+}

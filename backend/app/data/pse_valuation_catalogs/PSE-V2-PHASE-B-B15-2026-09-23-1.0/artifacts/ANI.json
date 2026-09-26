@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "62379270e109390232ecc3a215d989dddb6020f983a87b7e830572c46766fb7b",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Continuing losses, delayed audited reporting, preferred claims, subsidiary ownership, working capital, debt, and normalized cash flow remain unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "490c20d17a5454009edd9897cbad6d13c50c2ae0cab937d1ce11a8a53ab917d0",
+  "issuer": {
+    "issuer_id": "PSE:ANI",
+    "name": "AgriNurture, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 1.64,
+      "high": 2.296,
+      "low": 0.9839999999999999
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 3.28,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DISTRESSED-AGRI-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "cfc6ca3248d0e09343ed6d2ccfeade4088f5667ac1fdf64cabe0e6bfce35fc8d",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 2.296,
+    "low": 0.9839999999999999
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Continuing losses, delayed audited reporting, preferred claims, subsidiary ownership, working capital, debt, and normalized cash flow remain unresolved.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Subsidiary SOTP and normalized FCFF remain primary; discounted P/B provides a finite screen while losses continue and the FY2025 annual filing is delayed."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ANI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "cfc6ca3248d0e093",
+      "form": "17-Q",
+      "label": "ANI 1H2026 PSE financial report with delayed FY2025 annual filing",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "cfc6ca3248d0e09343ed6d2ccfeade4088f5667ac1fdf64cabe0e6bfce35fc8d",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=619"
+    }
+  ],
+  "subsector": "Agricultural trading and food distribution",
+  "ticker": "ANI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band.",
+    "The PSE notes that the FY2025 annual report remains unfiled; this interim P/B screen is provisional and filing-risk adjusted."
+  ]
+}

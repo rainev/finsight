@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "154bda8eb98ff293e3a8fcfbb99159ea858941f1b9193e5415b7be63fe020a19",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed property EBITDA, ramp economics, debt, leases, gaming mix, license terms, and overseas assets are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "6aba8d2bcfedb3df5eeb7b6c3c68b5b2b0e2bfcc972b4d128e408bd6c075cc4b",
+  "issuer": {
+    "issuer_id": "PSE:BLOOM",
+    "name": "Bloomberry Resorts Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.6,
+      "high": 0.8,
+      "low": 0.4
+    },
+    "estimates": {
+      "base": 3.3299999999999996,
+      "high": 4.44,
+      "low": 2.22
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 5.55,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-INTEGRATED-RESORT-B10-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a7f75c96a27850b46db3a2d49d6c92a7a5d5f58791a9256701759d0d787353ee",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B10-1.0",
+  "numerical_range": {
+    "high": 4.44,
+    "low": 2.22
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed property EBITDA, ramp economics, debt, leases, gaming mix, license terms, and overseas assets are incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Property-level resort SOTP and normalized FCFF remain primary; P/B provides a finite screen while current earnings are negative."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BLOOM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a7f75c96a27850b4",
+      "form": "17-Q",
+      "label": "BLOOM FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a7f75c96a27850b46db3a2d49d6c92a7a5d5f58791a9256701759d0d787353ee",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=49"
+    }
+  ],
+  "subsector": "Integrated casino resorts",
+  "ticker": "BLOOM",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Gaming regulation, property values, ramp economics, debt, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

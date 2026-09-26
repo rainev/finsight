@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "009bc0e38ef21d61acd841410c928cfeb3c4db53ced0d4161602a4ed0f1688fb",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Trading-book marks, sustainable fee income, capital commitments and parent common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "392795ee370442cf2ad3a02cb3ef734acb9f581405753ddc018504d84425a2dd",
+  "issuer": {
+    "issuer_id": "PSE:CTS",
+    "name": "CTS Global Equity Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.116,
+      "high": 0.1595,
+      "low": 0.0725
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 0.29,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a70fe87199f4ec8863199e57e95580416e6631e88f430e359f627aea4db5cfbf",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 0.1595,
+    "low": 0.0725
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Trading-book marks, sustainable fee income, capital commitments and parent common claims are not reconciled.",
+    "metric_basis": "reported PHP0.29 BVPS; EPS rounded to zero is not used",
+    "policy_rationale": "Reuse the finite Batch 17 layered-holding P/B band on the reviewed parent-common basis where available; not appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Brokerage and proprietary-investment components require attributable asset/earnings review; P/B is a finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CTS:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a70fe87199f4ec88",
+      "form": "PSE quarterly financial summary",
+      "label": "CTS FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a70fe87199f4ec8863199e57e95580416e6631e88f430e359f627aea4db5cfbf",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=693"
+    },
+    {
+      "document_id": "a70fe87199f4ec88-support-1",
+      "form": "PSE common-stock data",
+      "label": "CTS open ordinary-common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "a70fe87199f4ec8863199e57e95580416e6631e88f430e359f627aea4db5cfbf",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=693"
+    }
+  ],
+  "subsector": "Brokerage and investment services",
+  "ticker": "CTS",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "Reported EPS rounds to zero despite nonzero income; an EPS multiple would invent precision. P/B is preliminary and not a broker peer study."
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "2a28db6cb9e67a464f0b4883883af181e4897e18f9c09111eaf47b48b08eb0db",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Investment marks, industrial-estate realizable value, minority interests and parent common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "e28c74e13ec5f614d760ee0d6a926d59264a0d093a860772338f82078df757f1",
+  "issuer": {
+    "issuer_id": "PSE:REG",
+    "name": "Republic Glass Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 1.437536146,
+      "high": 1.976612201,
+      "low": 0.898460091
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 3.5938403652040334,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "87ff274e3f15defa59140e0fa9d8f4d0130b8b1f74ecf8b26c1ded3e6eb0bb1a",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 1.976612201,
+    "low": 0.898460091
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Investment marks, industrial-estate realizable value, minority interests and parent common claims are not reconciled.",
+    "metric_basis": "PHP2,451,235 thousand parent equity \u00d7 1,000 / 682,065,632 outstanding common shares; reported total BVPS PHP4.00 is not substituted",
+    "policy_rationale": "Reuse the finite Batch 17 layered-holding P/B band on the reviewed parent-common basis where available; not appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Portfolio securities and industrial-estate interest require attributable SOTP; parent book value is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:REG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "87ff274e3f15defa",
+      "form": "PSE quarterly financial summary",
+      "label": "REG FY2025 and 1H2026 PSE financial summary, PHP thousands",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "87ff274e3f15defa59140e0fa9d8f4d0130b8b1f74ecf8b26c1ded3e6eb0bb1a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=153"
+    },
+    {
+      "document_id": "87ff274e3f15defa-support-1",
+      "form": "PSE common-stock data",
+      "label": "REG open ordinary-common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "87ff274e3f15defa59140e0fa9d8f4d0130b8b1f74ecf8b26c1ded3e6eb0bb1a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=153"
+    }
+  ],
+  "subsector": "Investment and industrial-estate holding",
+  "ticker": "REG",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "PSE-reported PHP4.00 BVPS follows total equity, while parent equity per common share is about PHP3.594. The parent basis avoids assigning minority equity to REG common holders."
+  ]
+}

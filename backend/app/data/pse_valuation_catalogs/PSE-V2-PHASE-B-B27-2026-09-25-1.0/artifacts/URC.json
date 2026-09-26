@@ -1,0 +1,127 @@
+{
+  "artifact_hash": "a604ae0ad9db4c81413585772197b5e4240586aa3374f2fec84aaff9d9bc4223",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "bbea273e0ff107727fabc38ef68d0032bab0ec394c332459beb9d207dcc8d376",
+  "issuer": {
+    "issuer_id": "PSE:URC",
+    "name": "Universal Robina Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 40.80625504271362,
+    "low": 11.263629431374948
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "capital_bridge": {
+      "cash_php_millions": 11226.608279,
+      "debt_includes_lease_liabilities": true,
+      "debt_php_millions": 26146.155317,
+      "minority_value_php_millions": 1487.009472,
+      "nonoperating_assets_php_millions": 0.0,
+      "other_claims_php_millions": 0.0,
+      "preferred_claims_php_millions": 0.0,
+      "shares_millions": 2137.091088
+    },
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE additions",
+    "normalized_fcff_proxy_php_millions": 4890.254587,
+    "policy_version": "PSE-V2-FCFF-BRAND-B02-1.0",
+    "reliability": "Low",
+    "route_reason": "Branded operating cash flows and reinvestment economics drive enterprise value.",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.04,
+        "roic": 0.14,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.11,
+        "wacc": 0.115
+      },
+      "bear": {
+        "growth_rate": 0.01,
+        "roic": 0.1,
+        "terminal_growth": 0.015,
+        "terminal_roic": 0.09,
+        "wacc": 0.13
+      },
+      "bull": {
+        "growth_rate": 0.07,
+        "roic": 0.18,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.13,
+        "wacc": 0.1
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 46067.669417174395,
+      "enterprise_value": 62474.2259271744,
+      "value_per_share": 21.556249836915885
+    },
+    "bear": {
+      "common_equity_value": 24071.40207632591,
+      "enterprise_value": 40477.95858632591,
+      "value_per_share": 11.263629431374948
+    },
+    "bull": {
+      "common_equity_value": 87206.68398643835,
+      "enterprise_value": 103613.24049643835,
+      "value_per_share": 40.80625504271362
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:URC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "normalized_fcff",
+        "growth_rate",
+        "roic",
+        "wacc",
+        "terminal_growth",
+        "terminal_roic",
+        "capital_bridge"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "3123ec3976f50442",
+      "form": "17-A",
+      "label": "URC FY2025 audited financial statements fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "3123ec3976f50442470e01f3bd9fba6bec5f464a765de59b0ec9e63e96ed09f8",
+      "source_page": 54,
+      "url": "https://www.urc.com.ph/uploads/downloadables/2026/05/URC%20Definitive%20Information%20Statement%202026.pdf"
+    }
+  ],
+  "subsector": "Food and beverage",
+  "ticker": "URC",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate using a three-year median owner-cash proxy rather than a full issuer forecast.",
+    "Lease liabilities are included in debt; lease principal is not separately deducted from the owner-cash proxy.",
+    "Policy bands and terminal economics remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

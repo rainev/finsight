@@ -1,0 +1,28 @@
+{
+  "artifact_count": 1,
+  "availability_counts": {
+    "intrinsic_valuation": 1,
+    "market_relative_only": 0,
+    "not_available": 0
+  },
+  "catalog_status": "staged",
+  "catalog_version": "PSE-V2-AP-SUPERVISED-2026-09-26-1.0",
+  "entries": [
+    {
+      "artifact_sha256": "b002be6d1cc26df44e6ba574d65bb7a9af0b316634524962a24e9a8dcdf01fa0",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "docs/audit/43-pse-ap-proxy-recommendations.md",
+      "ticker": "AP"
+    }
+  ],
+  "publication_counts": {
+    "approved": 0,
+    "blocked": 0,
+    "provisional": 1
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-CATALOG-1.0",
+  "universe_version": "PSE-V2-AP-ISOLATED-TEST-1.0",
+  "valuation_date": "2026-09-26"
+}

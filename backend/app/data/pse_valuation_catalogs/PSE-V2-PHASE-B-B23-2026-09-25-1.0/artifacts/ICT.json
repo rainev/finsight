@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "1ef603edf538de2bad4b2da7f2df611aa15570ccf44aa07116f08076e74f7661",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A reviewed terminal-by-terminal SOTP with finite concession lives, capex, debt, and minority claims is not complete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "0f16c61ffca0b6d8e4ca192028fb5869a5f004a34f7fdd01a255f3e960e4eada",
+  "issuer": {
+    "issuer_id": "PSE:ICT",
+    "name": "International Container Terminal Services, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 15.0,
+      "high": 18.0,
+      "low": 12.0
+    },
+    "estimates": {
+      "base": 527.5116,
+      "high": 633.01392,
+      "low": 422.00928
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS converted to PHP at the 2026-09-22 BSP reference rate",
+    "metric_value_per_share": 35.16744,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-GLOBAL-PORTS-B07-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "531be94c059ff54395a0142b2bd887704132bd3780cd42b650263349c2471861",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B07-1.0",
+  "numerical_range": {
+    "high": 633.01392,
+    "low": 422.00928
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A reviewed terminal-by-terminal SOTP with finite concession lives, capex, debt, and minority claims is not complete.",
+    "metric_basis": "(0.51 + 0.29 - 0.24) USD/share x 62.799 PHP/USD",
+    "reliability": "Low",
+    "route_reason": "Terminal-by-terminal concession-life SOTP remains primary; P/E is a finite screen while terminal cash flows, concession lives, debt, and minority claims remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ICT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "531be94c059ff543",
+      "form": "17-Q",
+      "label": "ICT FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "531be94c059ff54395a0142b2bd887704132bd3780cd42b650263349c2471861",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=83"
+    }
+  ],
+  "subsector": "Global port terminals and concessions",
+  "ticker": "ICT",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "e47633e137d9250be6564884ab9a037e0838a64886fade7e6e47202ffca0b5a1",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed sugar volume and price cycles, feedstock, alcohol economics, property values, debt, working capital, and segment claims are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-03-31",
+  "filing_published_at": null,
+  "input_hash": "07ab9d452ebd265e4fd6d462959c4502dac78b0a261ac324c89f322b66e0f4a6",
+  "issuer": {
+    "issuer_id": "PSE:CAT",
+    "name": "Central Azucarera de Tarlac, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 13.048,
+      "high": 16.776,
+      "low": 9.32
+    },
+    "metric": "price_to_book",
+    "metric_label": "9M FY2026 reported book value per share",
+    "metric_value_per_share": 18.64,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-FOOD-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f3f585c64c0172460ca1004ae171538fcc47067205190a67eeb9621c03c1796c",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 16.776,
+    "low": 9.32
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed sugar volume and price cycles, feedstock, alcohol economics, property values, debt, working capital, and segment claims are incomplete.",
+    "metric_basis": "reported PHP book value per share for the non-December fiscal year",
+    "reliability": "Low",
+    "route_reason": "Sugar-cycle FCFF plus property SOTP remains primary; P/B provides a finite screen across the non-calendar fiscal year."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CAT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f3f585c64c017246",
+      "form": "17-Q",
+      "label": "CAT FY2025 and 9M FY2026 PSE financial report",
+      "period_end": "2026-03-31",
+      "published_at": null,
+      "sha256": "f3f585c64c0172460ca1004ae171538fcc47067205190a67eeb9621c03c1796c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=183"
+    }
+  ],
+  "subsector": "Sugar, alcohol, and property interests",
+  "ticker": "CAT",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

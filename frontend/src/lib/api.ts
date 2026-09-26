@@ -11,6 +11,11 @@ import type {
   HealthResponse,
   Holding,
   NewsArticle,
+  PseCalculatorResult,
+  PseCalculatorView,
+  PseValuation,
+  PseValuationHistory,
+  PseValuationList,
   PublicUser,
   RankingsResponse,
   ResearchCompany,
@@ -19,7 +24,10 @@ import type {
   Sentiment,
   SmartBrief,
   UsValuation,
+  UsCalculatorResult,
+  UsCalculatorView,
   UsValuationList,
+  UsValuationHistory,
   ValuationResult,
 } from './types'
 
@@ -104,9 +112,13 @@ export async function logout(): Promise<void> {
 }
 
 // --- Companies ---
-export function listCompanies(sector?: string): Promise<Company[]> {
-  const q = sector ? `?sector=${encodeURIComponent(sector)}` : ''
-  return request<Company[]>(`/companies${q}`)
+export function listCompanies(filters?: { sector?: string; market?: string; q?: string }): Promise<Company[]> {
+  const params = new URLSearchParams()
+  if (filters?.sector) params.set('sector', filters.sector)
+  if (filters?.market) params.set('market', filters.market)
+  if (filters?.q) params.set('q', filters.q)
+  const query = params.size ? `?${params}` : ''
+  return request<Company[]>(`/companies${query}`)
 }
 
 // --- Valuations ---
@@ -130,10 +142,10 @@ export function listHoldings(): Promise<Holding[]> {
   return request<Holding[]>('/holdings')
 }
 
-export function addHolding(ticker: string): Promise<Holding> {
+export function addHolding(ticker: string, market = 'US'): Promise<Holding> {
   return request<Holding>('/holdings', {
     method: 'POST',
-    body: JSON.stringify({ ticker }),
+    body: JSON.stringify({ ticker, market }),
   })
 }
 
@@ -177,6 +189,33 @@ export function getBrief(ticker: string, risk: number, sentiment: Sentiment): Pr
   return request<SmartBrief>(`/research/brief/${ticker}?risk=${risk}&sentiment=${sentiment}`)
 }
 
+// --- Governed PSE V2 catalog ---
+export function listPseValuations(): Promise<PseValuationList> {
+  return request<PseValuationList>('/pse-valuations')
+}
+
+export function getPseValuation(ticker: string): Promise<PseValuation> {
+  return request<PseValuation>(`/pse-valuations/${ticker}`)
+}
+
+export function getPseValuationCalculator(ticker: string): Promise<PseCalculatorView> {
+  return request<PseCalculatorView>(`/pse-valuations/${ticker}/calculator`)
+}
+
+export function getPseValuationHistory(ticker: string): Promise<PseValuationHistory> {
+  return request<PseValuationHistory>(`/pse-valuations/${ticker}/history`)
+}
+
+export function calculatePseValuation(
+  ticker: string,
+  body: { overrides: Record<string, number>; manual_price?: number; save?: boolean; scenario?: 'low' | 'base' | 'high' },
+): Promise<PseCalculatorResult> {
+  return request<PseCalculatorResult>(`/pse-valuations/${ticker}/calculator`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  })
+}
+
 // Filing-only U.S. valuations (precomputed, reviewed, price-free public artifact).
 export function listUsValuations(): Promise<UsValuationList> {
   return request<UsValuationList>('/us-valuations')
@@ -184,4 +223,25 @@ export function listUsValuations(): Promise<UsValuationList> {
 
 export function getUsValuation(ticker: string): Promise<UsValuation> {
   return request<UsValuation>(`/us-valuations/${ticker}`)
+}
+
+export function getUsValuationCalculator(ticker: string): Promise<UsCalculatorView> {
+  return request<UsCalculatorView>(`/us-valuations/${ticker}/calculator`)
+}
+
+export function getUsValuationHistory(ticker: string): Promise<UsValuationHistory> {
+  return request<UsValuationHistory>(`/us-valuations/${ticker}/history`)
+}
+
+export async function calculateUsValuation(
+  ticker: string,
+  body: { overrides: Record<string, number>; manual_price?: number; save?: boolean; scenario?: 'low' | 'base' | 'high'; baseline_version?: string; recipe_version?: string | null },
+): Promise<UsCalculatorResult> {
+  const result = await request<UsCalculatorResult>(`/us-valuations/${ticker}/calculator`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  })
+  // Staged/newer APIs return an explicit unavailable comparison for zero
+  // values or absent prices; the redesigned UI represents that as null.
+  return { ...result, comparison: result.comparison?.status === 'available' ? result.comparison : null }
 }

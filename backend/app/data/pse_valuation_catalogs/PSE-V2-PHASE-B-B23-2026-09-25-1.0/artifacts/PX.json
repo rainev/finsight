@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "3b279003606c42a861f0a0dfccec883562dc10d78dbb0f28fbfbaae5fb2fca7b",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed reserve schedules, mine lives, Silangan funding and ramp, commodity decks, costs, debt, and closure claims are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "23984064ce07feb047311ed6ee1dd9b907e0d2766301d527bcf2ab3801b4bf93",
+  "issuer": {
+    "issuer_id": "PSE:PX",
+    "name": "Philex Mining Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 1.0,
+      "high": 1.2,
+      "low": 0.8
+    },
+    "estimates": {
+      "base": 5.7,
+      "high": 6.84,
+      "low": 4.5600000000000005
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 5.7,
+    "note": "Transparent screening fallback while the reserve-aware intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DEVELOPMENT-MINER-B08-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "8e5dc4f5fe91db68ece234f96fc8ebfb7fc382c3037f3957628fee667f5bb646",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B08-1.0",
+  "numerical_range": {
+    "high": 6.84,
+    "low": 4.5600000000000005
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed reserve schedules, mine lives, Silangan funding and ramp, commodity decks, costs, debt, and closure claims are incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Padcal and Silangan reserve NAV/SOTP remains primary; P/B provides a finite screen while 1H2026 earnings are negative and project funding remains material."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PX:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "8e5dc4f5fe91db68",
+      "form": "17-Q",
+      "label": "PX FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "8e5dc4f5fe91db68ece234f96fc8ebfb7fc382c3037f3957628fee667f5bb646",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=137"
+    }
+  ],
+  "subsector": "Copper and gold mining",
+  "ticker": "PX",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved reserve-aware intrinsic valuation.",
+    "Commodity prices, resource depletion, costs, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

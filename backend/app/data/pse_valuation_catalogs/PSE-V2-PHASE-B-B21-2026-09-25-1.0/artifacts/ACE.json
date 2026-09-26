@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "eafe92a1de2bfdf51fb6b6692aa1fc24c1fe1b1031361e53112633269ff4fe2b",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "No operating revenue and unresolved property appraisal, redevelopment, funding, debt, and parent/minority claims block intrinsic RNAV."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "69cee0a81ecb2f021407c3fed1f4089c36d88dc0490c7edf8bfb057807928325",
+  "issuer": {
+    "issuer_id": "PSE:ACE",
+    "name": "Acesite (Phils.) Hotel Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.25,
+      "high": 0.35,
+      "low": 0.15
+    },
+    "estimates": {
+      "base": 1.16,
+      "high": 1.6239999999999999,
+      "low": 0.696
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 4.64,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DEEP-VALUE-HOTEL-B10-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "ee43d9a89e4b82d42c48604491260ea1b166955944c0befa14b75d9505d2b212",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B10-1.0",
+  "numerical_range": {
+    "high": 1.6239999999999999,
+    "low": 0.696
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "No operating revenue and unresolved property appraisal, redevelopment, funding, debt, and parent/minority claims block intrinsic RNAV.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Property RNAV/redevelopment SOTP remains primary; discounted P/B provides a finite asset screen while the hotel generates no revenue."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ACE:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ee43d9a89e4b82d4",
+      "form": "17-Q",
+      "label": "ACE FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "ee43d9a89e4b82d42c48604491260ea1b166955944c0befa14b75d9505d2b212",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=48"
+    }
+  ],
+  "subsector": "Hotel property and redevelopment",
+  "ticker": "ACE",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Gaming regulation, property values, ramp economics, debt, and capital claims can materially change value and are not replaced by this screening band.",
+    "ACE reported no operating revenue in FY2025 or 1H2026; the P/B screen is an asset-value placeholder, not an operating valuation."
+  ]
+}

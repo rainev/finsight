@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "9d573c7535e24d7bb3799bbf556ac2bb8a3c27481d080b1d659092b14f3bd04b",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Ownership in listed PGOLD and KEEPR, unlisted subsidiaries, parent-only debt, and minority claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "3a873f13efeee5fb988e619518d9374bae45d4bccc860601503a8230179d8a36",
+  "issuer": {
+    "issuer_id": "PSE:COSCO",
+    "name": "Cosco Capital, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.6,
+      "high": 0.75,
+      "low": 0.45
+    },
+    "estimates": {
+      "base": 14.777999999999999,
+      "high": 18.4725,
+      "low": 11.083499999999999
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 24.63,
+    "note": "Analyst screening band; no peer study or attributable SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-HOLDCO-B11-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "5bcbb2267aec972abd31e72d655cd5ae8d8a5f4bfe39a7eb29fbeb185b79de63",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B11-1.0",
+  "numerical_range": {
+    "high": 18.4725,
+    "low": 11.083499999999999
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Ownership in listed PGOLD and KEEPR, unlisted subsidiaries, parent-only debt, and minority claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified holding-company screening band. It is an analyst band, not a peer study or SOTP.",
+    "reliability": "Low",
+    "route_reason": "Attributable retail, liquor, property, and energy SOTP remains primary; reported P/B is a finite screening fallback."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:COSCO:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "5bcbb2267aec972a",
+      "form": "PSE quarterly financial summary",
+      "label": "COSCO FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "5bcbb2267aec972abd31e72d655cd5ae8d8a5f4bfe39a7eb29fbeb185b79de63",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=50"
+    }
+  ],
+  "subsector": "Retail, liquor, property, and energy holding company",
+  "ticker": "COSCO",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; the component SOTP remains unresolved.",
+    "Reported P/B does not establish attributable subsidiary value, parent-only claims, or a justified holding-company discount.",
+    "COSCO owns listed PGOLD and KEEPR interests; standalone subsidiary screens must not be added to COSCO's screen."
+  ]
+}

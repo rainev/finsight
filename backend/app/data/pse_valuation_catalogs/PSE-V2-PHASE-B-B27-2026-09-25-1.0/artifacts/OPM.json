@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "591bd96a83d101e404e013ca17e56054a83b61b05a38005f0703bcfd7582477e",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "A reviewer-approved dated USD/PHP conversion and reserve/contract cash flows are unavailable; reported USD book cannot silently become PHP per share."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "82ca5f2093c66235618b46e5385d8679bf84e0631b69701e6d1dfc0e7ebb00b6",
+  "issuer": {
+    "issuer_id": "PSE:OPM",
+    "name": "Oriental Petroleum and Minerals Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A reviewer-approved dated USD/PHP conversion and reserve/contract cash flows are unavailable; reported USD book cannot silently become PHP per share.",
+    "metric_basis": "USD parent equity (dollars) / 192,063,300,000 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Finite-life oil and gas interests require a risked asset SOTP and PHP conversion.",
+    "share_bridge_type": "class_sum"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "OPM",
+    "security_id": "PSE:OPM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "447b8df4751206bc",
+      "form": "PSE financial summary",
+      "label": "OPM FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "447b8df4751206bc9d30e813881bf84062dcf5179c90f6e70163a2567a4c1a80",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=43"
+    },
+    {
+      "document_id": "447b8df4751206bc-support-1",
+      "form": "PSE common-stock data",
+      "label": "OPM A common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "447b8df4751206bc9d30e813881bf84062dcf5179c90f6e70163a2567a4c1a80",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=43"
+    },
+    {
+      "document_id": "447b8df4751206bc-support-2",
+      "form": "PSE common-stock data",
+      "label": "OPM B common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "447b8df4751206bc9d30e813881bf84062dcf5179c90f6e70163a2567a4c1a80",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=43&security_id=339"
+    }
+  ],
+  "subsector": "Upstream energy",
+  "ticker": "OPM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE FY2025 and 1H2026 equity units are USD, while the public valuation contract is PHP. A and B share counts are reported separately; no exchange-rate proxy or policy-rate substitution is made."
+  ]
+}

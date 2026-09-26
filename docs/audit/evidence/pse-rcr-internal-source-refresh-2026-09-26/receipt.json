@@ -1,0 +1,103 @@
+{
+  "schema_version": "PSE-V2-INTERNAL-REVIEWED-FACTS-1.0",
+  "ticker": "RCR",
+  "trigger": "new_filing",
+  "reviewer": "Codex supervised issuer-source check; human filing sign-off pending",
+  "reviewed_at": "2026-09-26",
+  "filing_period": "TTM 2025Q3-2026Q2; ordinary shares as of 2026-07-16",
+  "period_end": "2026-06-30",
+  "filing_published_at": "2026-08-11",
+  "source": {
+    "identifier": "RCR-ISSUER-SOURCE-SET-2026-09-26",
+    "label": "RCR issuer-hosted dividend reports and ordinary-share disclosure",
+    "form": "fund-manager report and SEC Form 17-C",
+    "source_page": 15
+  },
+  "source_documents": [
+    {
+      "identifier": "2025-Q3-17C",
+      "label": "RCR 3Q2025 earnings and dividend SEC Form 17-C, PDF p. 4",
+      "url": "https://rlcommercialreit.com.ph/sites/default/files/2025-11/RCR%20SEC%20Form%2017C%20PR%2007%20November%202025.pdf"
+    },
+    {
+      "identifier": "2025-Q4-17C",
+      "label": "RCR 4Q2025 earnings and dividend SEC Form 17-C, PDF p. 4",
+      "url": "https://rlcommercialreit.com.ph/sites/default/files/2026-02/%5BRCR%5D%20PSE%20Full%20Year%20%26%204Q%20CY2025%20Press%20Release%20%2805%20February%202026%29.pdf"
+    },
+    {
+      "identifier": "2026-Q2-MANAGER",
+      "label": "RCR 2Q2026 fund-manager report, PDF p. 15",
+      "url": "https://rlcommercialreit.com.ph/sites/default/files/2026-08/RL%20Fund%20Management%20Quarterly%20Report_Q2%202026.pdf"
+    },
+    {
+      "identifier": "2026-SHARE-17C",
+      "label": "RCR share-change SEC Form 17-C, PDF pp. 2-3; page facts previously checked in Audit 59",
+      "url": "https://rlcommercialreit.com.ph/sites/default/files/2026-07/SEC%20FORM%2017-C%20July%2017%2C%202026%20Change%20in%20the%20Number%20of%20Issued%20and%20Outstanding%20Shares.pdf"
+    },
+    {
+      "identifier": "2026-SHARE-WEB",
+      "label": "RCR issuer share-information page, as of 2026-07-16",
+      "url": "https://rlcommercialreit.com.ph/investor-relations/share-information"
+    }
+  ],
+  "facts": {
+    "current_distribution_per_share": 0.4404,
+    "quarterly_distributions_per_share": {
+      "2025_Q3": 0.1060,
+      "2025_Q4": 0.1112,
+      "2026_Q1": 0.1115,
+      "2026_Q2": 0.1117
+    },
+    "shares_millions": 20836.36531
+  },
+  "fact_provenance": {
+    "current_distribution_per_share": {
+      "unit": "PHP_per_share",
+      "scope": "ordinary_common",
+      "period_end": "2026-06-30",
+      "source_page": 15,
+      "source_identifiers": ["2025-Q3-17C", "2025-Q4-17C", "2026-Q2-MANAGER"]
+    },
+    "quarterly_distributions_per_share": {
+      "unit": "PHP_per_share",
+      "scope": "ordinary_common",
+      "period_end": "2026-06-30",
+      "source_page": 15,
+      "source_identifiers": ["2025-Q3-17C", "2025-Q4-17C", "2026-Q2-MANAGER"]
+    },
+    "shares_millions": {
+      "unit": "shares_millions",
+      "scope": "ordinary_common",
+      "period_end": "2026-07-16",
+      "source_page": 2,
+      "source_identifiers": ["2026-SHARE-17C", "2026-SHARE-WEB"]
+    }
+  },
+  "assumptions": {
+    "policy_version": "PSE-V2-REIT-STABLE-B01-1.0",
+    "forecast_years": 5,
+    "reviewer": "User-confirmed internal Low-reliability test choices; not issuer approval",
+    "reviewed_at": "2026-09-26",
+    "scenario_assumptions": {
+      "bear": {"explicit_growth": -0.02, "cost_of_equity": 0.125, "terminal_growth": 0.015},
+      "base": {"explicit_growth": 0.025, "cost_of_equity": 0.11, "terminal_growth": 0.025},
+      "bull": {"explicit_growth": 0.05, "cost_of_equity": 0.10, "terminal_growth": 0.035}
+    },
+    "macro_snapshot": {
+      "version": "PH-BTR-2026-06-23-NEAR-10Y-TEST-ONLY",
+      "benchmark_kind": "ten_year_government_bond",
+      "benchmark_source": "https://www.treasury.gov.ph/wp-content/uploads/2026/06/Treasury-Bonds-Auction-Result-on-23-June-2026-.pdf",
+      "benchmark_yield": 0.07052,
+      "observed_at": "2026-06-23",
+      "reviewed_at": "2026-09-26",
+      "reviewer": "User-confirmed isolated comparison carry-forward; not a current benchmark approval",
+      "carry_forward_reason": "Carry the 9.7-year 23 June 2026 auction observation only for the internal comparison; the checked 8 September auction had a non-comparable 6.9-year tenor."
+    }
+  },
+  "limitations": [
+    "Issuer source pages were reviewed online; original PDF bytes were not downloaded, retained, or newly hashed in this run.",
+    "The latest four declared dividends span a smaller pre-July share base and do not prove a full-period payout on the enlarged post-infusion shares.",
+    "The 11% cost of equity and 2.5% terminal growth remain test-only policy judgments; the June benchmark is not current.",
+    "This is a provisional internal candidate, not a public-approved intrinsic valuation."
+  ]
+}

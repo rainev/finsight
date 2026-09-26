@@ -1,0 +1,121 @@
+{
+  "artifact_hash": "92c39feed9fd01b30956e3ea263cefa78348a36cd36fb822566611a60e8666ab",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Operating cash flows, restructuring, dilution, debt, minority claims, FX and current common-equity capital bridge are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "78a0764f83769790c88d0106cf8cfd0fb202b933f73026cf7df49323053f7067",
+  "issuer": {
+    "issuer_id": "PSE:FOOD",
+    "name": "Alliance Select Foods International, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.15,
+      "high": 0.2,
+      "low": 0.1
+    },
+    "estimates": {
+      "base": 0.24860946,
+      "high": 0.33147928,
+      "low": 0.16573964
+    },
+    "metric": "price_to_sales",
+    "metric_label": "TTM USD revenue per outstanding common share translated to PHP",
+    "metric_value_per_share": 1.6573963984408875,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic FCFF, residual-income or SOTP valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PS-STRESSED-B16-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a32855674330bbd24b93de617f1e5b2075ea4e09a6c55a1e124c986f845c3807",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B16-1.0",
+  "numerical_range": {
+    "high": 0.33147928,
+    "low": 0.16573964
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "fx_observed_at": "2026-09-23",
+    "fx_rate_php_per_usd": 62.698,
+    "intrinsic_blocker": "Operating cash flows, restructuring, dilution, debt, minority claims, FX and current common-equity capital bridge are not reconciled.",
+    "metric_basis": "(USD 78,817,556 FY2025 + 22,813,840 1H2026 - 35,552,503 prior 1H) / 2,499,712,463 common shares x 62.698 PHP/USD (23 Sep 2026)",
+    "policy_rationale": "Reuse the Batch 9 stressed-food finite P/S band when EPS and common-book claims are not usable; no peer calibration or intrinsic equity bridge.",
+    "reliability": "Low",
+    "route_reason": "Seafood operating components and restructuring require SOTP/FCFF; a low finite sales multiple is a separate screen while losses and common claims are unresolved."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:FOOD:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a32855674330bbd2",
+      "form": "PSE quarterly financial summary",
+      "label": "FOOD FY2025 and 1H2026 USD PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a32855674330bbd24b93de617f1e5b2075ea4e09a6c55a1e124c986f845c3807",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=602"
+    },
+    {
+      "document_id": "a32855674330bbd2-support-1",
+      "form": "PSE common-stock data",
+      "label": "FOOD listed common-share stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "a32855674330bbd24b93de617f1e5b2075ea4e09a6c55a1e124c986f845c3807",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=602"
+    },
+    {
+      "document_id": "a32855674330bbd2-support-2",
+      "form": "PSE corporate-action disclosure",
+      "label": "FOOD proposed September 2026 equity restructuring",
+      "period_end": "2026-09-02",
+      "published_at": null,
+      "sha256": "a32855674330bbd24b93de617f1e5b2075ea4e09a6c55a1e124c986f845c3807",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1963653"
+    },
+    {
+      "document_id": "a32855674330bbd2-fx",
+      "form": "BSP exchange-rate observation",
+      "label": "BSP Philippine peso per US dollar, 23 September 2026; reviewed Batch 13 observation carried forward explicitly",
+      "period_end": "2026-09-23",
+      "published_at": null,
+      "sha256": "a32855674330bbd24b93de617f1e5b2075ea4e09a6c55a1e124c986f845c3807",
+      "source_page": null,
+      "url": "https://www.bsp.gov.ph/Statistics/sdds/sdds.aspx"
+    }
+  ],
+  "subsector": "Tuna processing and seafood exports",
+  "ticker": "FOOD",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, capital efficiency and common-equity claims have not been fully reconciled.",
+    "FOOD reported losses, sharply lower 1H revenue and a proposed September equity restructuring; PSE BVPS is rounded to zero. This USD-to-PHP P/S screen uses a dated 23 September BSP observation and is not a price target."
+  ]
+}

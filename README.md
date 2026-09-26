@@ -86,6 +86,24 @@ cd backend && python -m pytest        # engine correctness, jwt, API routes
 The engine tests verify the models against the original spreadsheet's numbers
 (where it was correct) and against hand-computed values (where bugs were fixed).
 
+## Obsidian / Graphify US valuation notes
+
+The US-equity pipeline uses local SEC EDGAR Companyfacts/submissions artifacts in
+`backend/app/data/us_valuations/`. Export concise, provenance-linked Markdown notes
+into the repository's Obsidian vault with:
+
+```sh
+PYTHONPATH=backend:. python3 scripts/export_us_valuations_to_obsidian.py
+```
+
+This writes `Finsight/US Valuations/`, which Obsidian can index when the repository
+root is opened as the vault. The notes include the SEC filing link, model policy,
+key assumptions, scenario range, review warnings, and the local artifact link.
+Raw XBRL and source payloads are intentionally not copied into Obsidian. Use
+`--dry-run` to inspect the export count without writing files, or pass `--artifacts`
+and `--output` for another local artifact/vault location. The exporter makes no
+network or API calls.
+
 ## Notes / v1 scope
 
 - **Data entry is manual** for v1 (no PSE scraping; `GOOGLEFINANCE` doesn't cover

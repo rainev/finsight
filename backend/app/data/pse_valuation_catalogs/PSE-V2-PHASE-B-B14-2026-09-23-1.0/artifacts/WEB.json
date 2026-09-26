@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "b114708893f4164be0b33fab50fc41c80ae09d4408423a56a3528f23599b0a2e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Negative equity and unresolved license economics, platform investment, regulatory scenarios, debt, and sustainable margins block intrinsic FCFF."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "ae026ae64ae9d902af8f1ece6557010eeef4d78a8b5be6981bb704a4921a556d",
+  "issuer": {
+    "issuer_id": "PSE:WEB",
+    "name": "PhilWeb Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 2.0,
+      "high": 3.0,
+      "low": 1.0
+    },
+    "estimates": {
+      "base": 1.097096984191381,
+      "high": 1.6456454762870714,
+      "low": 0.5485484920956905
+    },
+    "metric": "price_to_sales",
+    "metric_label": "TTM revenue per outstanding common share through 1H2026",
+    "metric_value_per_share": 0.5485484920956905,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PS-GAMING-PLATFORM-B10-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "38f3b5a92799a581c23bdf3a61117ce6824a982de8f6de744ac3e142ddc2a529",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B10-1.0",
+  "numerical_range": {
+    "high": 1.6456454762870714,
+    "low": 0.5485484920956905
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Negative equity and unresolved license economics, platform investment, regulatory scenarios, debt, and sustainable margins block intrinsic FCFF.",
+    "metric_basis": "(PHP 659,420,084 FY2025 + 585,438,277 1H2026 - 358,594,552 1H2025) / 1,615,652,621 shares",
+    "reliability": "Low",
+    "route_reason": "Regulatory-scenario FCFF remains primary; P/S is a finite turnaround screen while parent equity is negative."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:WEB:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "38f3b5a92799a581",
+      "form": "17-Q",
+      "label": "WEB FY2025 and 1H2026 PSE financial report and common-share record",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "38f3b5a92799a581c23bdf3a61117ce6824a982de8f6de744ac3e142ddc2a529",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=122"
+    }
+  ],
+  "subsector": "Regulated gaming technology and services",
+  "ticker": "WEB",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Gaming regulation, property values, ramp economics, debt, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

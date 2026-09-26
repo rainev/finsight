@@ -1,0 +1,82 @@
+{
+  "artifact_hash": "1992444eef9653c07b0dc6369ad7b5defa3ceae676da13aae714498de56d437f",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2025, trading is suspended and the printed BVPS does not reconcile to the dated parent equity/outstanding-common bridge."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "a1909ac87d45952473bc5167c4b31edd2cff2f6977d1ac42c3428039f21d0ca5",
+  "issuer": {
+    "issuer_id": "PSE:VLC",
+    "name": "Villar Land Holdings Corp."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B26-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, trading is suspended and the printed BVPS does not reconcile to the dated parent equity/outstanding-common bridge.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Development rights and land inventories require project-level RNAV and capital-claim reconciliation.",
+    "screen_time_basis": null,
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-10"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "VLC",
+    "security_id": "PSE:VLC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "fdf6affca896626b",
+      "form": "PSE financial summary",
+      "label": "VLC reviewed PSE financial summary",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "fdf6affca896626b377018fb50e0aff9d743fad92aa62d69d9b10ec6e1c533d4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=661"
+    },
+    {
+      "document_id": "fdf6affca896626b-support-1",
+      "form": "PSE common-stock data",
+      "label": "VLC quoted common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "fdf6affca896626b377018fb50e0aff9d743fad92aa62d69d9b10ec6e1c533d4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=661"
+    }
+  ],
+  "subsector": "Property development",
+  "ticker": "VLC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No current market quote or upside is published for this suspended security.",
+    "PSE reports PHP13,372,649 thousand parent equity and printed PHP22.31 BVPS, while 644,117,649 outstanding common shares imply a different per-share book figure. No denominator is selected silently."
+  ]
+}

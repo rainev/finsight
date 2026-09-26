@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "afac732ef3bfa28cd171546da80b578a3bec6c4ede239b540c4d6156382e62c0",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Project fair values, earnings composition, preferred claims, debt and common-equity bridge are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a1c98b664776afd8c41a61e36969e69dd93b1ad761fb0d23e508473c8510947d",
+  "issuer": {
+    "issuer_id": "PSE:ALHI",
+    "name": "Anchor Land Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 5.166,
+      "high": 6.888,
+      "low": 3.444
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 11.48,
+    "note": "Finite analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B15-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "950ec39c3174a0e23cc553bc2eb6fcbbd07f388f58c7c62c8749c15e7e82bf39",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B15-1.0",
+  "numerical_range": {
+    "high": 6.888,
+    "low": 3.444
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Project fair values, earnings composition, preferred claims, debt and common-equity bridge are not reconciled.",
+    "metric_basis": "PSE-reported PHP book value per share; no property fair-value adjustment",
+    "policy_rationale": "Reuse the reviewed Batch 12 diversified-property P/B screening band for positive reported BVPS; this is not a peer study or a completed property RNAV/SOTP.",
+    "reliability": "Low",
+    "route_reason": "Property projects and hospitality investments require attributable SOTP; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ALHI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "950ec39c3174a0e2",
+      "form": "PSE quarterly financial summary",
+      "label": "ALHI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "950ec39c3174a0e23cc553bc2eb6fcbbd07f388f58c7c62c8749c15e7e82bf39",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=612"
+    },
+    {
+      "document_id": "950ec39c3174a0e2-support",
+      "form": "PSE corporate disclosure",
+      "label": "ALHI 2026 PSE disclosure of common and preferred capital",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "950ec39c3174a0e23cc553bc2eb6fcbbd07f388f58c7c62c8749c15e7e82bf39",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1892884"
+    }
+  ],
+  "subsector": "Residential and hospitality property development",
+  "ticker": "ALHI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Reported book value is not a completed property RNAV or peer-calibrated target.",
+    "Reported BVPS rose from PHP8.69 at FY2025 to PHP11.48 at 1H2026; the source of that movement and preferred-share claims require review before treating it as recurring value."
+  ]
+}

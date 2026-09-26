@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "0caf1f59cf83f0b861fa8d016135dee4976e02a6eb50446e244f1322c9ecfa91",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed mine plans, reserves, grades, costs, commodity decks, industrial subsidiaries, debt, and minority claims are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "f759b455aaeef921ae3a5931a4047db9e26776fdfcb1c0380b85107603eb2b81",
+  "issuer": {
+    "issuer_id": "PSE:FNI",
+    "name": "Global Ferronickel Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 8.0,
+      "high": 10.0,
+      "low": 6.0
+    },
+    "estimates": {
+      "base": 3.2,
+      "high": 4.0,
+      "low": 2.4000000000000004
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.4,
+    "note": "Transparent screening fallback while the reserve-aware intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-PRODUCING-MINER-B08-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "c9ca2b3abfa733d46a7844cda6880c025e382785cfb5d1bd8c698897ce9297c6",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B08-1.0",
+  "numerical_range": {
+    "high": 4.0,
+    "low": 2.4000000000000004
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed mine plans, reserves, grades, costs, commodity decks, industrial subsidiaries, debt, and minority claims are incomplete.",
+    "metric_basis": "0.28 FY2025 EPS + 0.24 1H2026 EPS - 0.12 1H2025 EPS",
+    "reliability": "Low",
+    "route_reason": "Mining NAV plus industrial and logistics SOTP remains primary; P/E is a finite screen while reserves, costs, ownership, and non-mining claims remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:FNI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "c9ca2b3abfa733d4",
+      "form": "17-Q",
+      "label": "FNI FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "c9ca2b3abfa733d46a7844cda6880c025e382785cfb5d1bd8c698897ce9297c6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=224"
+    }
+  ],
+  "subsector": "Nickel mining and diversified industrial interests",
+  "ticker": "FNI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved reserve-aware intrinsic valuation.",
+    "Commodity prices, resource depletion, costs, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

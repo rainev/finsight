@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "b4960c6ad730d8e8aa010b2eca91231d36ec275c127431dc5e72bf3714ffdb68",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Parent attribution, investment realizability, debt and common-only claims are not established."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-03-31",
+  "filing_published_at": null,
+  "input_hash": "d2f52402ea90e8c1c47aea7cf93486ac79bcf29536cee6da935a2411d76c0a8f",
+  "issuer": {
+    "issuer_id": "PSE:SPM",
+    "name": "Seafront Resources Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 1.146916865,
+      "high": 1.57701069,
+      "low": 0.716823041
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-03-31 total equity per outstanding ordinary common share",
+    "metric_value_per_share": 2.8672921630695214,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B21-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "ac816dcd9e1323c857d6aee189cf4fbfe4564f1b84cc5802eba54530571f4493",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B21-1.0",
+  "numerical_range": {
+    "high": 1.57701069,
+    "low": 0.716823041
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Parent attribution, investment realizability, debt and common-only claims are not established.",
+    "metric_basis": "PHP total equity (pesos) / 133,074,040 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/asset P/B screening band; no peer calibration, appraised NAV or completed attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Investment interests require attributable SOTP; total book per common share is only a tentative screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SPM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ac816dcd9e1323c8",
+      "form": "PSE financial summary",
+      "label": "SPM FY2025 and latest PSE financial summary",
+      "period_end": "2026-03-31",
+      "published_at": null,
+      "sha256": "ac816dcd9e1323c857d6aee189cf4fbfe4564f1b84cc5802eba54530571f4493",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=156"
+    },
+    {
+      "document_id": "ac816dcd9e1323c8-support-1",
+      "form": "PSE common-stock data",
+      "label": "SPM open ordinary-common stock data",
+      "period_end": "2026-09-23",
+      "published_at": null,
+      "sha256": "ac816dcd9e1323c857d6aee189cf4fbfe4564f1b84cc5802eba54530571f4493",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=156"
+    }
+  ],
+  "subsector": "Investment and resource holding",
+  "ticker": "SPM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The latest PSE interim summary is March 2026. Parent-equity fields are blank/zero, not economic zero; the screen uses PHP381.562m total equity / 133.074m outstanding shares, not 163m listed shares."
+  ]
+}

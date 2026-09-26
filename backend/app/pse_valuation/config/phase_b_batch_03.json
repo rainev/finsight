@@ -1,0 +1,173 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-3.0",
+  "batch_version": "PSE-V2-PHASE-B-B03-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B03-2026-09-22-1.0",
+  "universe_version": "PSE-V2-38-B03-1.0",
+  "valuation_date": "2026-09-22",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["SM", "AEV", "JGS", "GTCAP", "DMC", "SMPH", "RLC", "MEG", "FLI", "CLI"],
+  "nav_policies": {
+    "property_rnav": {
+      "version": "PSE-V2-PROPERTY-RNAV-B03-1.0",
+      "scenarios": {
+        "bear": {"uplift_realization": 0.30, "tax_leakage": 0.25},
+        "base": {"uplift_realization": 0.50, "tax_leakage": 0.20},
+        "bull": {"uplift_realization": 0.70, "tax_leakage": 0.15}
+      },
+      "rationale": "Shared property RNAV policy that applies scenario-specific realization and tax leakage to the disclosed investment-property fair-value uplift."
+    }
+  },
+  "relative_policies": {
+    "premium_holdco": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.9, "base": 1.1, "high": 1.3},
+      "policy_version": "PSE-V2-PB-PREMIUM-HOLDCO-B03-1.0",
+      "rationale": "Shared P/B-to-reported-NAV screen for a large, liquid holding company with diversified recurring earnings."
+    },
+    "diversified_holdco": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.45, "base": 0.6, "high": 0.75},
+      "policy_version": "PSE-V2-PB-DIVERSIFIED-HOLDCO-B03-1.0",
+      "rationale": "Shared P/B-to-reported-NAV screen with an explicit conglomerate discount while full component SOTP remains unresolved."
+    },
+    "income_holdco": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 1.0, "base": 1.25, "high": 1.5},
+      "policy_version": "PSE-V2-PB-INCOME-HOLDCO-B03-1.0",
+      "rationale": "Shared P/B-to-reported-NAV screen for an income-oriented holding company with material commodity and cyclical exposure."
+    },
+    "premium_property": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 1.0, "base": 1.3, "high": 1.6},
+      "policy_version": "PSE-V2-PB-PREMIUM-PROPERTY-B03-1.0",
+      "rationale": "Shared P/B-to-reported-NAV screen for a scaled property platform with a large recurring-income portfolio."
+    },
+    "diversified_property": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.3, "base": 0.45, "high": 0.6},
+      "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B03-1.0",
+      "rationale": "Shared P/B-to-reported-NAV screen for diversified property developers pending property-level RNAV reconciliation."
+    },
+    "deep_discount_property": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.15, "base": 0.22, "high": 0.3},
+      "policy_version": "PSE-V2-PB-DEEP-DISCOUNT-PROPERTY-B03-1.0",
+      "rationale": "Shared deep-discount P/B-to-reported-NAV screen for a leveraged property developer pending property-level RNAV reconciliation."
+    },
+    "growth_property": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.4, "base": 0.55, "high": 0.7},
+      "policy_version": "PSE-V2-PB-GROWTH-PROPERTY-B03-1.0",
+      "rationale": "Shared P/B-to-reported-NAV screen for a regional growth property platform pending property-level RNAV reconciliation."
+    }
+  },
+  "issuers": {
+    "SM": {
+      "issuer_name": "SM Investments Corporation",
+      "subsector": "Diversified holding company",
+      "primary_model": "sotp",
+      "route_reason": "Component SOTP remains primary; a P/B-to-reported-NAV screen provides a finite result while subsidiary values and parent-only claims are reconciled.",
+      "availability": "market_relative_only",
+      "policy": "premium_holdco",
+      "source": {"label": "SM FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": "2026-04-24", "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=599"},
+      "facts": {"book_value_per_share": 572.30, "parent_equity_php_millions": 695258.0, "intrinsic_blocker": "A complete attributable component valuation and parent-only cash, debt, preferred, and other-claim bridge is not yet reconciled."}
+    },
+    "AEV": {
+      "issuer_name": "Aboitiz Equity Ventures, Inc.",
+      "subsector": "Diversified holding company",
+      "primary_model": "sotp",
+      "route_reason": "Component SOTP remains primary; a P/B-to-reported-NAV screen provides a finite result while subsidiary values and parent-only claims are reconciled.",
+      "availability": "market_relative_only",
+      "policy": "diversified_holdco",
+      "source": {"label": "AEV FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=16"},
+      "facts": {"book_value_per_share": 52.31, "parent_equity_php_millions": 290479.305, "intrinsic_blocker": "A complete attributable component valuation and parent-only cash, debt, preferred, and other-claim bridge is not yet reconciled."}
+    },
+    "JGS": {
+      "issuer_name": "JG Summit Holdings, Inc.",
+      "subsector": "Diversified holding company",
+      "primary_model": "sotp",
+      "route_reason": "Component SOTP remains primary; a P/B-to-reported-NAV screen provides a finite result while operating subsidiaries and parent-only claims are reconciled.",
+      "availability": "market_relative_only",
+      "policy": "diversified_holdco",
+      "source": {"label": "JGS FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=210"},
+      "facts": {"book_value_per_share": 37.31, "parent_equity_php_millions": 280606.842, "intrinsic_blocker": "Published market values cover core minority investments, but the operating-subsidiary values and parent-only claim bridge are not complete enough for an attributable SOTP."}
+    },
+    "GTCAP": {
+      "issuer_name": "GT Capital Holdings, Inc.",
+      "subsector": "Diversified holding company",
+      "primary_model": "sotp",
+      "route_reason": "Component SOTP remains primary; a P/B-to-reported-NAV screen provides a finite result while private-company values and parent-only claims are reconciled.",
+      "availability": "market_relative_only",
+      "policy": "diversified_holdco",
+      "source": {"label": "GTCAP FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=633"},
+      "facts": {"book_value_per_share": 1354.29, "parent_equity_php_millions": 298678.0, "intrinsic_blocker": "Private operating-company equity values and the parent-only cash, debt, preferred, and other-claim bridge are not yet reconciled."}
+    },
+    "DMC": {
+      "issuer_name": "DMCI Holdings, Inc.",
+      "subsector": "Diversified holding company",
+      "primary_model": "sotp",
+      "route_reason": "Component SOTP remains primary; a P/B-to-reported-NAV screen provides a finite result while mining, power, property, and construction values are reconciled.",
+      "availability": "market_relative_only",
+      "policy": "income_holdco",
+      "source": {"label": "DMC FY2025 annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": "2026-04-15", "source_page": null, "url": "https://www.dmciholdings.com/investor-relations/financial-report"},
+      "facts": {"book_value_per_share": 9.07, "parent_equity_php_millions": 120410.287, "intrinsic_blocker": "Finite-life mining values, power and property values, and the parent-only claim bridge are not yet reconciled into one attributable SOTP."}
+    },
+    "SMPH": {
+      "issuer_name": "SM Prime Holdings, Inc.",
+      "subsector": "Integrated property developer",
+      "primary_model": "sotp",
+      "route_reason": "Reported parent equity plus the disclosed investment-property fair-value uplift supports a provisional property RNAV.",
+      "availability": "intrinsic_valuation",
+      "policy": "property_rnav",
+      "source": {"label": "SMPH FY2025 audited statements and investment-property fair-value disclosure", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://www.smprime.com/wp-content/uploads/2026/04/PSE-SM-Prime-Holdings-Inc-SEC-Form-17-A-FY2025-1-pdffile.pdf"},
+      "facts": {"book_value_per_share": 16.15, "parent_equity_php_millions": 465557.625, "investment_property_carrying_value_php_millions": 665641.251, "investment_property_fair_value_php_millions": 2505428.940, "preferred_claims_php_millions": 0.0, "shares_millions": 28820.859}
+    },
+    "RLC": {
+      "issuer_name": "Robinsons Land Corporation",
+      "subsector": "Integrated property developer",
+      "primary_model": "sotp",
+      "route_reason": "Reported parent equity plus independently appraised investment-property fair-value uplift supports a provisional property RNAV.",
+      "availability": "intrinsic_valuation",
+      "policy": "property_rnav",
+      "source": {"label": "RLC FY2025 audited statements and investment-property fair-value disclosure", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": 270, "url": "https://robinsonsland.com/sites/default/files/2026-04/RLC_SEC%2017-A_December%2031%202025.pdf"},
+      "facts": {"book_value_per_share": 36.53, "parent_equity_php_millions": 175531.939468, "investment_property_carrying_value_php_millions": 143427.865325, "investment_property_fair_value_php_millions": 447175.301821, "preferred_claims_php_millions": 0.0, "shares_millions": 4805.105288}
+    },
+    "MEG": {
+      "issuer_name": "Megaworld Corporation",
+      "subsector": "Integrated property developer",
+      "primary_model": "sotp",
+      "route_reason": "Property RNAV remains primary; a P/B-to-reported-NAV screen provides a finite result while property-level fair values and claims are reconciled.",
+      "availability": "market_relative_only",
+      "policy": "diversified_property",
+      "source": {"label": "MEG FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=127"},
+      "facts": {"book_value_per_share": 8.23, "parent_equity_php_millions": 267381.462132, "intrinsic_blocker": "A property-level RNAV with township fair values, REIT look-through, preferred claims, and net debt is not yet reconciled."}
+    },
+    "FLI": {
+      "issuer_name": "Filinvest Land, Inc.",
+      "subsector": "Integrated property developer",
+      "primary_model": "sotp",
+      "route_reason": "Reported parent equity plus the disclosed investment-property fair-value uplift supports a provisional property RNAV.",
+      "availability": "intrinsic_valuation",
+      "policy": "property_rnav",
+      "source": {"label": "FLI FY2025 audited statements and investment-property fair-value disclosure", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": 105, "url": "https://filinvest-bbdcgrc0ehbqeuar.z02.azurefd.net/FLI_2026%20Definitive%20Information%20Statement%20(ASM).pdf"},
+      "facts": {"book_value_per_share": 4.30, "parent_equity_php_millions": 91888.342, "investment_property_carrying_value_php_millions": 88160.761, "investment_property_fair_value_php_millions": 223940.0, "preferred_claims_php_millions": 80.0, "shares_millions": 22383.759506}
+    },
+    "CLI": {
+      "issuer_name": "Cebu Landmasters, Inc.",
+      "subsector": "Regional property developer",
+      "primary_model": "sotp",
+      "route_reason": "Property RNAV remains primary; a P/B-to-reported-NAV screen provides a finite result while project-level fair values and claims are reconciled.",
+      "availability": "market_relative_only",
+      "policy": "growth_property",
+      "source": {"label": "CLI FY2025 PSE annual financial report", "form": "17-A", "period_end": "2025-12-31", "published_at": null, "source_page": null, "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=668"},
+      "facts": {"book_value_per_share": 5.23, "parent_equity_php_millions": 22411.230806, "intrinsic_blocker": "A project-level RNAV with regional development fair values and complete debt and minority claims is not yet reconciled."}
+    }
+  }
+}

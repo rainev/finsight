@@ -1,0 +1,136 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Conditional estimate. TTWO's value is highly sensitive to the timing, reception, and profitability of major game releases, especially GTA VI. This range is scenario-based, not a forecast.",
+      "Conditional Low-reliability estimate. Uses reported facts plus hypothetical future-event assumptions; actual value may fall materially outside this range. Not a reported fact or recommendation.",
+      "Model 'conditional_estimate': Conditional estimate. TTWO's value is highly sensitive to the timing, reception, and profitability of major game releases, especially GTA VI. This range is scenario-based, not a forecast.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/TTWO/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, Low reliability, short warning, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-02-CONDITIONAL-ESTIMATE-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional estimate. TTWO's value is highly sensitive to the timing, reception, and profitability of major game releases, especially GTA VI. This range is scenario-based, not a forecast."
+    ]
+  },
+  "issuer": {
+    "cik": "0000946581",
+    "classification_confidence": 0.9,
+    "classification_reason": "TTWO routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
+    "finsight_sector": "Technology",
+    "issuer_name": "TAKE TWO INTERACTIVE SOFTWARE INC",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "primary_archetype": "enterprise_software_cloud",
+    "secondary_archetypes": [],
+    "ticker": "TTWO"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-02-CONDITIONAL-ESTIMATE-1.0",
+    "sector_framework": "issuer-specific conditional decision states",
+    "source_policy": "Reported SEC facts remain separate from governed hypothetical assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "conditional_estimate",
+    "reason": "Conditional decision-support estimate; not an ordinary source-bounded intrinsic value.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 84.89133807432471,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional estimate. TTWO's value is highly sensitive to the timing, reception, and profitability of major game releases, especially GTA VI. This range is scenario-based, not a forecast."
+      ]
+    }
+  },
+  "primary_valuation_method": "conditional_estimate",
+  "public_assumptions": {
+    "forecast_mode": "conditional_scenarios",
+    "forecast_policy_version": "BATCH-02-CONDITIONAL-ESTIMATE-1.0"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 1.275590908346364,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional estimate. TTWO's value is highly sensitive to the timing, reception, and profitability of major game releases, especially GTA VI. This range is scenario-based, not a forecast.",
+      "Conditional Low-reliability estimate. Uses reported facts plus hypothetical future-event assumptions; actual value may fall materially outside this range. Not a reported fact or recommendation."
+    ]
+  },
+  "scenario_range": {
+    "base": 84.89133807432471,
+    "high": 193.17795711929082,
+    "label": "conditional event envelope, not a statistical confidence interval or expected value",
+    "low": 15.981671409346271
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001628280-26-054870",
+    "filed_date": "2026-08-07",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing anchors reported facts; forward states are governed assumptions.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/946581/000162828026054870/ttwo-20260630.htm"
+  },
+  "ticker": "TTWO",
+  "valuation_date": "2026-08-14"
+}

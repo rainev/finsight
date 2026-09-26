@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "5f00600ec6d42b149892f613623376d52f828583373f4be4799d0b7f63dc18c8",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Parent attribution, normalized margins, cash conversion, capital expenditure and financing are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "ca0017ff1c3dd2c7ab3bf3c3c8c7ad18f69b53f3c0088f353db38775f6b7dcdd",
+  "issuer": {
+    "issuer_id": "PSE:JAS",
+    "name": "Jackstones, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.361216277,
+      "high": 0.505702788,
+      "low": 0.216729766
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 total equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.7224325536135164,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "bafb4951226778eb3c57928c6b1c27d7f8b9aecdc3acf9ce24a4089d162bab98",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 0.505702788,
+    "low": 0.216729766
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Parent attribution, normalized margins, cash conversion, capital expenditure and financing are not reconciled.",
+    "metric_basis": "PHP total equity (pesos) / 250,059,097 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screen while cash-flow, lease, financing and normalization bridges are incomplete; not an FCFF result.",
+    "reliability": "Low",
+    "route_reason": "A sustainable operating-cash-flow bridge is needed for FCFF; total book is only a tentative screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:JAS:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "bafb4951226778eb",
+      "form": "PSE financial summary",
+      "label": "JAS FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "bafb4951226778eb3c57928c6b1c27d7f8b9aecdc3acf9ce24a4089d162bab98",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=134"
+    },
+    {
+      "document_id": "bafb4951226778eb-support-1",
+      "form": "PSE common-stock data",
+      "label": "JAS open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "bafb4951226778eb3c57928c6b1c27d7f8b9aecdc3acf9ce24a4089d162bab98",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=134"
+    }
+  ],
+  "subsector": "Industrial services",
+  "ticker": "JAS",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The PSE parent-equity field is blank. PHP180.651m total equity / 250.059m outstanding shares is an explicitly labeled proxy; 1H2026 parent income is also unavailable."
+  ]
+}

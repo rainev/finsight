@@ -53,7 +53,7 @@
       "model": "fcff_dcf",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 40.682763557968336,
+      "intrinsic_value_per_share": 37.16522585799737,
       "publication_state": "pass",
       "errors": [],
       "warnings": []
@@ -62,7 +62,7 @@
       "model": "epv",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 31.928497124705842,
+      "intrinsic_value_per_share": 30.246779931281885,
       "publication_state": "review_required",
       "errors": [],
       "warnings": [
@@ -77,7 +77,7 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 33.428743233819446,
+        "intrinsic_value_per_share": 30.789746214009114,
         "publication_state": "pass",
         "errors": [],
         "warnings": []
@@ -88,7 +88,7 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 40.682763557968336,
+        "intrinsic_value_per_share": 37.16522585799737,
         "publication_state": "pass",
         "errors": [],
         "warnings": []
@@ -99,19 +99,17 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 51.19320150223943,
-        "publication_state": "review_required",
+        "intrinsic_value_per_share": 45.62299520276553,
+        "publication_state": "pass",
         "errors": [],
-        "warnings": [
-          "Present value of terminal value exceeds 75% of enterprise value."
-        ]
+        "warnings": []
       }
     }
   },
   "scenario_range": {
-    "low": 33.428743233819446,
-    "base": 40.682763557968336,
-    "high": 51.19320150223943,
+    "low": 30.789746214009114,
+    "base": 37.16522585799737,
+    "high": 45.62299520276553,
     "label": "assumption range, not a statistical confidence interval"
   },
   "forecast_quality": {
@@ -119,6 +117,7 @@
     "status": "review_required",
     "errors": [],
     "warnings": [
+      "Revenue and FCFF growth tell materially different forecast stories.",
       "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
     ],
     "checks": {
@@ -136,13 +135,13 @@
         "target": 0.02
       },
       "revenue_fcff_consistency": {
-        "status": "pass",
+        "status": "review_required",
         "revenue_cagr": 0.06579305304163086,
-        "fcff_cagr": 0.031115017371563303
+        "fcff_cagr": 0.015253611017337132
       },
       "dcf_epv_dispersion": {
         "status": "pass",
-        "value": 0.21518367160059454,
+        "value": 0.1861537436406227,
         "review_threshold": 0.4
       },
       "segment_evidence_automation": {
@@ -160,6 +159,7 @@
       "Incremental dilutive shares were not available; the per-share denominator uses cover-page/common shares only and requires review.",
       "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
       "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Revenue and FCFF growth tell materially different forecast stories.",
       "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
     ],
     "price_dependent_inputs_used": false,
@@ -179,5 +179,21 @@
     "raw_financial_statement_values_included": false,
     "stock_prices_used": false,
     "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution"
+  },
+  "automated_review": {
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "decision": "approved_with_caveat",
+    "publication_state": "review_required",
+    "evidence_status": "complete",
+    "blocking_reasons": [],
+    "repair_actions": [],
+    "warnings": [
+      "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
+      "Incremental dilutive shares were not available; the per-share denominator uses cover-page/common shares only and requires review.",
+      "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Revenue and FCFF growth tell materially different forecast stories.",
+      "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
+    ]
   }
 }

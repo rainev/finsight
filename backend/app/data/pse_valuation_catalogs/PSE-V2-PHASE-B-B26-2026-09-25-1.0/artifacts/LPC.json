@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "4dc066a579838050f049cfbca45f03a15602d279574eef302f9157283f0a43bc",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Parent attribution, property fair value, financing and common-only claims are not established."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "8d474fcb7ac6fc0b2737db85a8eb716aae482c8553d8b50870a912a77eed3f3a",
+  "issuer": {
+    "issuer_id": "PSE:LPC",
+    "name": "LFM Properties Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.009020459,
+      "high": 0.012027278,
+      "low": 0.006013639
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 total equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.02004546348,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-PROPERTY-B21-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "7bbdd18e5a6414f42e01bbe37285937a10fcc068a0f9b53c5a11b192afe6e935",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B21-1.0",
+  "numerical_range": {
+    "high": 0.012027278,
+    "low": 0.006013639
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Parent attribution, property fair value, financing and common-only claims are not established.",
+    "metric_basis": "PHP total equity (pesos) / 25,000,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite property-book screening band; project appraisals, debt, minority claims and realization timing are not independently underwritten.",
+    "reliability": "Low",
+    "route_reason": "Property interests require asset-level SOTP; total book per common share is only a tentative screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:LPC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "7bbdd18e5a6414f4",
+      "form": "PSE financial summary",
+      "label": "LPC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "7bbdd18e5a6414f42e01bbe37285937a10fcc068a0f9b53c5a11b192afe6e935",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=698"
+    },
+    {
+      "document_id": "7bbdd18e5a6414f4-support-1",
+      "form": "PSE common-stock data",
+      "label": "LPC open ordinary-common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "7bbdd18e5a6414f42e01bbe37285937a10fcc068a0f9b53c5a11b192afe6e935",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=698"
+    }
+  ],
+  "subsector": "Property holding and development",
+  "ticker": "LPC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The PSE parent-equity field is blank, not economic zero. PHP501.137m total equity / 25bn outstanding common shares is an explicitly labeled Low-reliability proxy; printed PHP0.02 BVPS is rounded."
+  ]
+}

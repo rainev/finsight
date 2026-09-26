@@ -53,7 +53,7 @@
       "model": "fcff_dcf",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 82.2189071951475,
+      "intrinsic_value_per_share": 78.23878288139248,
       "publication_state": "pass",
       "errors": [],
       "warnings": []
@@ -77,7 +77,7 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 65.60214319461988,
+        "intrinsic_value_per_share": 63.73842830789878,
         "publication_state": "pass",
         "errors": [],
         "warnings": []
@@ -88,7 +88,7 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 82.2189071951475,
+        "intrinsic_value_per_share": 78.23878288139248,
         "publication_state": "pass",
         "errors": [],
         "warnings": []
@@ -99,19 +99,17 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": 106.50265591648768,
-        "publication_state": "review_required",
+        "intrinsic_value_per_share": 97.70977450349365,
+        "publication_state": "pass",
         "errors": [],
-        "warnings": [
-          "Present value of terminal value exceeds 75% of enterprise value."
-        ]
+        "warnings": []
       }
     }
   },
   "scenario_range": {
-    "low": 65.60214319461988,
-    "base": 82.2189071951475,
-    "high": 106.50265591648768,
+    "low": 63.73842830789878,
+    "base": 78.23878288139248,
+    "high": 97.70977450349365,
     "label": "assumption range, not a statistical confidence interval"
   },
   "forecast_quality": {
@@ -119,6 +117,7 @@
     "status": "review_required",
     "errors": [],
     "warnings": [
+      "Revenue and FCFF growth tell materially different forecast stories.",
       "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
     ],
     "checks": {
@@ -136,13 +135,13 @@
         "target": 0.02
       },
       "revenue_fcff_consistency": {
-        "status": "pass",
+        "status": "review_required",
         "revenue_cagr": 0.03270104529260376,
-        "fcff_cagr": -0.00968954761584162
+        "fcff_cagr": -0.025731183717479955
       },
       "dcf_epv_dispersion": {
         "status": "pass",
-        "value": 0.20421440693276546,
+        "value": 0.16373159941894694,
         "review_threshold": 0.4
       },
       "segment_evidence_automation": {
@@ -159,6 +158,7 @@
       "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
       "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
       "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Revenue and FCFF growth tell materially different forecast stories.",
       "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
     ],
     "price_dependent_inputs_used": false,
@@ -178,5 +178,20 @@
     "raw_financial_statement_values_included": false,
     "stock_prices_used": false,
     "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution"
+  },
+  "automated_review": {
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "decision": "approved_with_caveat",
+    "publication_state": "review_required",
+    "evidence_status": "complete",
+    "blocking_reasons": [],
+    "repair_actions": [],
+    "warnings": [
+      "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
+      "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Revenue and FCFF growth tell materially different forecast stories.",
+      "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
+    ]
   }
 }

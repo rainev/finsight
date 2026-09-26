@@ -1,5 +1,9 @@
 # PSE Valuation Engine — Implementation Plan
 
+> **Superseded for V2:** The active implementation plan is
+> [`docs/plans/PSE-SECTOR-VALUATION-PIPELINE-V2.md`](plans/PSE-SECTOR-VALUATION-PIPELINE-V2.md).
+> This document remains as historical context for the earlier model-blending design.
+
 **Spec:** `PSE_VALUATION_ENGINE_FRAMEWORK.pdf` (11 pages)
 **Scope:** Bring the codebase up to the framework's methodology — a subsector-aware,
 public-data screening valuation engine for PSE issuers.

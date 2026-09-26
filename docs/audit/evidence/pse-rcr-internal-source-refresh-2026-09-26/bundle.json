@@ -1,0 +1,16 @@
+{
+  "schema_version": "PSE-V2-INTERNAL-REFRESH-BUNDLE-1.0",
+  "catalog_version": "PSE-V2-REFRESH-RCR-2026-09-26-1.0",
+  "valuation_date": "2026-09-26",
+  "active_manifest_sha256": "8145c9d5c9b1ff4c05400fdd0ead4d6528594ed32cb424ab70c481c0f245c5a7",
+  "cases": {
+    "AP": {"status": "hold", "reason": "No newly reviewed AP filing-to-FCFF bridge supplied in this RCR-only run"},
+    "BPI": {"status": "hold", "reason": "No newly reviewed BPI banking-capital and share bridge supplied in this RCR-only run"},
+    "RCR": {
+      "status": "ready",
+      "receipt_path": "receipt.json",
+      "receipt_sha256": "ee6f1b082447fd4e586a81564efd7f18f4feb6da42e8756cb8753d32cdaa8988"
+    },
+    "RLC": {"status": "hold", "reason": "Attributable property-by-owner bridge remains pending; RCR change requires parent review"}
+  }
+}

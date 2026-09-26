@@ -1,0 +1,120 @@
+{
+  "artifact_hash": "3bc74de6bb993b4146f13de11d214f3339819c03f5370bfcacb1387a3f9164a4",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Investment fair values, parent claims and the final exchange declassification record have not been reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "56efe924cf1ae2cc0ab8de36db3456b93f7ee59984321f0c864a4bf3259ed0eb",
+  "issuer": {
+    "issuer_id": "PSE:FJP",
+    "name": "F & J Prince Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 1.734658974,
+      "high": 2.385156089,
+      "low": 1.084161858
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 4.336647433973658,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B23-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "eb919fb9c695ead5125b1095665f94128407e97096e1b53434029dae1bb24dc4",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": 2.385156089,
+    "low": 1.084161858
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Investment fair values, parent claims and the final exchange declassification record have not been reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 481,827,653 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, a proven reserve appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Subsidiary interests require attributable SOTP; equal-rights common book is only a screen.",
+    "share_bridge_type": "class_sum"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "FJP",
+    "security_id": "PSE:FJP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "eb919fb9c695ead5",
+      "form": "PSE financial summary",
+      "label": "FJP FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "eb919fb9c695ead5125b1095665f94128407e97096e1b53434029dae1bb24dc4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=225"
+    },
+    {
+      "document_id": "eb919fb9c695ead5-support-1",
+      "form": "PSE common-stock data",
+      "label": "FJP A common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "eb919fb9c695ead5125b1095665f94128407e97096e1b53434029dae1bb24dc4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=225"
+    },
+    {
+      "document_id": "eb919fb9c695ead5-support-2",
+      "form": "PSE common-stock data",
+      "label": "FJP B common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "eb919fb9c695ead5125b1095665f94128407e97096e1b53434029dae1bb24dc4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=225&security_id=371"
+    },
+    {
+      "document_id": "eb919fb9c695ead5-support-3",
+      "form": "PSE issuer disclosure",
+      "label": "FJP class or capital-claim disclosure",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "eb919fb9c695ead5125b1095665f94128407e97096e1b53434029dae1bb24dc4",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1939673"
+    }
+  ],
+  "subsector": "Diversified investment holding",
+  "ticker": "FJP",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "June 2026 company disclosure states A and B common shares have the same rights and privileges. The PHP5.71 printed BVPS does not reconcile to PHP2.090bn parent equity / 481.828m pooled shares; the screen uses the explicit reviewed bridge, not the printed BVPS."
+  ]
+}

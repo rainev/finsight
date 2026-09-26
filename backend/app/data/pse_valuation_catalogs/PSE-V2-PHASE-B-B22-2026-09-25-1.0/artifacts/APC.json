@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "f48f368b9c336be222d2e76de5d5f159663b80c5ccc5c196174ef34e6e12658e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Operating activity, asset rights, funding, share-listing gap and parent common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "01cdca8aaf2954038a9d26753f29320d45bcba05b68eeabf856cd5e3adfb6a26",
+  "issuer": {
+    "issuer_id": "PSE:APC",
+    "name": "APC Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.008,
+      "high": 0.011,
+      "low": 0.005
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported rounded book value per share",
+    "metric_value_per_share": 0.02,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e83e274a400158956220bffc6cfb88782dffccc9c09e99bace7493b266932edb",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 0.011,
+    "low": 0.005
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Operating activity, asset rights, funding, share-listing gap and parent common claims are not reconciled.",
+    "metric_basis": "reported PHP0.02 rounded BVPS; not a funded project NAV",
+    "policy_rationale": "Reuse the finite Batch 17 layered-holding P/B band on the reviewed parent-common basis where available; not appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Potential project and investment interests require attributable SOTP; P/B is only a preliminary screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:APC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e83e274a40015895",
+      "form": "PSE quarterly financial summary",
+      "label": "APC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e83e274a400158956220bffc6cfb88782dffccc9c09e99bace7493b266932edb",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=177"
+    },
+    {
+      "document_id": "e83e274a40015895-support-1",
+      "form": "PSE common-stock data",
+      "label": "APC open ordinary-common stock data",
+      "period_end": "2026-09-21",
+      "published_at": null,
+      "sha256": "e83e274a400158956220bffc6cfb88782dffccc9c09e99bace7493b266932edb",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=177"
+    }
+  ],
+  "subsector": "Renewable and investment holding",
+  "ticker": "APC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "PSE FY2025 and 1H2026 summaries show zero gross revenue, losses and EPS rounded to zero. The PHP0.02 BVPS is rounded and the stock page has more outstanding than listed shares; a tiny P/B result is not an operating valuation."
+  ]
+}

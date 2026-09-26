@@ -1,0 +1,110 @@
+{
+  "artifact_hash": "5f8e4e766914f6522bca1e45ae47106a0944ab88c7f4dcb1eae39c972e5659c6",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reserve life, sustaining capital, reclamation, minority claims and class transition are not fully reviewed."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a66a185f317c0cf1920188ae236090974c1f4896f7b62ab185dfaeab9bb8c443",
+  "issuer": {
+    "issuer_id": "PSE:LC",
+    "name": "Lepanto Consolidated Mining Company"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.046009605,
+      "high": 0.063263207,
+      "low": 0.028756003
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.11502401206239589,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B23-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "fb0502d0a8e0f753afe1616e8a2c165a04cf5356018bd97e17bec18b6d038512",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": 0.063263207,
+    "low": 0.028756003
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reserve life, sustaining capital, reclamation, minority claims and class transition are not fully reviewed.",
+    "metric_basis": "PHP parent equity (thousands) / 66,375,758,097 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, a proven reserve appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Mine-life production and recoverable reserves require SOTP/finite-life DCF; pooled common book is a separate screen.",
+    "share_bridge_type": "class_sum"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "LC",
+    "security_id": "PSE:LC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "fb0502d0a8e0f753",
+      "form": "PSE financial summary",
+      "label": "LC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "fb0502d0a8e0f753afe1616e8a2c165a04cf5356018bd97e17bec18b6d038512",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=98"
+    },
+    {
+      "document_id": "fb0502d0a8e0f753-support-1",
+      "form": "PSE common-stock data",
+      "label": "LC A common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "fb0502d0a8e0f753afe1616e8a2c165a04cf5356018bd97e17bec18b6d038512",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=98"
+    },
+    {
+      "document_id": "fb0502d0a8e0f753-support-2",
+      "form": "PSE common-stock data",
+      "label": "LC B common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "fb0502d0a8e0f753afe1616e8a2c165a04cf5356018bd97e17bec18b6d038512",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=98&security_id=327"
+    }
+  ],
+  "subsector": "Mining",
+  "ticker": "LC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "Source equity is PHP thousands. Reported PHP0.12 BVPS approximately reconciles to both outstanding A and B common classes; dividing only by LC shares would overstate per-share book."
+  ]
+}

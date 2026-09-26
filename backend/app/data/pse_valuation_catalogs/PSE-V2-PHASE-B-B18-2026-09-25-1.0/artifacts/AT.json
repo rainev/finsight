@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "fd00cc0349ff03167838de9ffee79b9040f8d667eeb2fab932ba49a411c9109a",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed reserve depletion, grades, production, costs, commodity decks, debt, and reclamation obligations are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "149b4170e1d3f7199fdfd94e1dee26a973e136427e85f0c7fef51d79ef93e164",
+  "issuer": {
+    "issuer_id": "PSE:AT",
+    "name": "Atlas Consolidated Mining and Development Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 11.784,
+      "high": 14.73,
+      "low": 8.838
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 14.73,
+    "note": "Transparent screening fallback while the reserve-aware intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-RESOURCE-B08-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "3a1cb0dfe71b6fd7e76841eb79768c580996db390308cb8ff09e38c662ec51e2",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B08-1.0",
+  "numerical_range": {
+    "high": 14.73,
+    "low": 8.838
+  },
+  "price": null,
+  "primary_model": "finite_life_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed reserve depletion, grades, production, costs, commodity decks, debt, and reclamation obligations are incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Life-of-mine DCF remains primary; P/B provides a finite cyclical screen after a sharp earnings turnaround."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:AT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "3a1cb0dfe71b6fd7",
+      "form": "17-Q",
+      "label": "AT FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "3a1cb0dfe71b6fd7e76841eb79768c580996db390308cb8ff09e38c662ec51e2",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=34"
+    }
+  ],
+  "subsector": "Copper and gold mining",
+  "ticker": "AT",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved reserve-aware intrinsic valuation.",
+    "Commodity prices, resource depletion, costs, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "2f1cabb0142b69079a1f6f325446d8c20b3bff5c4a417f30d7f0e8d8c584dbc1",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Convertible preferred claims and dilution have not been quantified against common equity; a class-specific finite value would be misleading."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "0482441d7cd9588f55f9904827726a2da2a979e6949d528804f2c3ad1c15028f",
+  "issuer": {
+    "issuer_id": "PSE:BC",
+    "name": "Benguet Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Convertible preferred claims and dilution have not been quantified against common equity; a class-specific finite value would be misleading.",
+    "metric_basis": "PHP parent equity (thousands) / 715,861,854 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "A mine-life SOTP must bridge all ordinary classes and convertible preferred claims.",
+    "share_bridge_type": "class_sum"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "BC",
+    "security_id": "PSE:BC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "491e0d8df319b959",
+      "form": "PSE financial summary",
+      "label": "BC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "491e0d8df319b959300cb735bc816f8996bc6ffc6eaccc65f114db1dc9429a10",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=108"
+    },
+    {
+      "document_id": "491e0d8df319b959-support-1",
+      "form": "PSE common-stock data",
+      "label": "BC A common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "491e0d8df319b959300cb735bc816f8996bc6ffc6eaccc65f114db1dc9429a10",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=108&security_id=353"
+    },
+    {
+      "document_id": "491e0d8df319b959-support-2",
+      "form": "PSE common-stock data",
+      "label": "BC B common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "491e0d8df319b959300cb735bc816f8996bc6ffc6eaccc65f114db1dc9429a10",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=108&security_id=322"
+    },
+    {
+      "document_id": "491e0d8df319b959-support-3",
+      "form": "PSE issuer disclosure",
+      "label": "BC class or capital-claim disclosure",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "491e0d8df319b959300cb735bc816f8996bc6ffc6eaccc65f114db1dc9429a10",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1942132"
+    }
+  ],
+  "subsector": "Mining",
+  "ticker": "BC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE parent equity is PHP thousands and reported BVPS roughly reconciles to pooled A+B common shares, but convertible preferred remains outstanding. No value or calculator is published until its claim is resolved."
+  ]
+}

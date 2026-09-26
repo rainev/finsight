@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "067a1cffbae834deb432643c48f63b797794af9ab1144d472302caf80eacae6e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Plant margins, healthcare subsidiary values, restaurant interests, reinvestment, leases, debt, and parent claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "5422b76ba211caa54962b91bb52a556a370c0bae9131934e1c7d43de0c007a5a",
+  "issuer": {
+    "issuer_id": "PSE:EURO",
+    "name": "Euro-Med Laboratories Phil., Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 1.1,
+      "high": 1.32,
+      "low": 0.88
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.11,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-OPERATING-SERVICES-B14-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "2b091ab4fbab039aec2698fefa5c3a1b85bc5a4dc115e2e9d63da28051363db1",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B14-1.0",
+  "numerical_range": {
+    "high": 1.32,
+    "low": 0.88
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Plant margins, healthcare subsidiary values, restaurant interests, reinvestment, leases, debt, and parent claims are not reconciled.",
+    "metric_basis": "0.10 FY2025 basic EPS + 0.05 1H2026 EPS - 0.04 prior 1H EPS",
+    "policy_rationale": "Shared finite P/E screening band for positive source-bounded per-share earnings; it numerically reuses a prior operating screen, not a peer study or intrinsic cash-flow valuation.",
+    "reliability": "Low",
+    "route_reason": "Pharmaceutical production and healthcare-service interests require separate SOTP/FCFF economics; P/E is a finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:EURO:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "2b091ab4fbab039a",
+      "form": "PSE quarterly financial summary",
+      "label": "EURO FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "2b091ab4fbab039aec2698fefa5c3a1b85bc5a4dc115e2e9d63da28051363db1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=219"
+    }
+  ],
+  "subsector": "Pharmaceutical manufacturing and healthcare services",
+  "ticker": "EURO",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, reinvestment and common-equity claims have not been reconciled.",
+    "Reported EPS includes multiple business interests and rounded cents; the P/E screen is not a segment valuation."
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "16ce9e116cb68950a9e91b3ab09792c0a37407fffd9085260378b55c90e3137a",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The PSE financial-summary page contains no fiscal period, equity or income figures; no reported financial base exists for a concession or per-share model."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": null,
+  "filing_published_at": null,
+  "input_hash": "5d382e972a018dc1c51212824046ed586dfda39be82ef05adcef6c7651036122",
+  "issuer": {
+    "issuer_id": "PSE:PNC",
+    "name": "Philippine National Construction Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The PSE financial-summary page contains no fiscal period, equity or income figures; no reported financial base exists for a concession or per-share model.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Infrastructure concessions require dated financials, concession life and parent-only claims.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-18"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "PNC",
+    "security_id": "PSE:PNC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9acd9d532235eea4",
+      "form": "PSE financial summary",
+      "label": "PNC reviewed PSE financial-summary page",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "9acd9d532235eea4b7cf1df5a005753eab9f4865ebfbad185a54220fe800aff5",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=7"
+    },
+    {
+      "document_id": "9acd9d532235eea4-support-1",
+      "form": "PSE common-stock data",
+      "label": "PNC quoted common stock data",
+      "period_end": "2026-09-18",
+      "published_at": null,
+      "sha256": "9acd9d532235eea4b7cf1df5a005753eab9f4865ebfbad185a54220fe800aff5",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=7"
+    },
+    {
+      "document_id": "9acd9d532235eea4-support-2",
+      "form": "PSE disclosure notice",
+      "label": "PNC continued trading suspension for missing 2Q2026 report",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "9acd9d532235eea4b7cf1df5a005753eab9f4865ebfbad185a54220fe800aff5",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1959707"
+    }
+  ],
+  "subsector": "Infrastructure and concession holding",
+  "ticker": "PNC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "The PSE common stock page shows 174,444,759 outstanding shares but only 75m listed and a suspended status. The financial-summary period, currency, equity and BVPS are blank; those critical fields remain null, not zero."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "da101ad93f4f6f965554c216ce03da250330eb4bfcaa99d5243eda377b81c74a",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Contract duration, license rights, recurring cash flows, capex and parent capital claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "c7b5f34c704e016dccd861db813c05f706bef87c0dd57698e2e5f41c94efab6d",
+  "issuer": {
+    "issuer_id": "PSE:LOTO",
+    "name": "Pacific Online Systems Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.635610859,
+      "high": 0.889855202,
+      "low": 0.381366515
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 1.271221717606084,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "42c347229a2beac0ec6cbfccd18545e068dad16278d5480a6bfbfb1c7377f263",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 0.889855202,
+    "low": 0.381366515
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Contract duration, license rights, recurring cash flows, capex and parent capital claims are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 895,330,946 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screening band while normalized FCFF, capital claims and terminal assumptions remain unreviewed; not a peer study or intrinsic model.",
+    "reliability": "Low",
+    "route_reason": "System contracts and lottery-license cash flows require finite-life FCFF; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:LOTO:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "42c347229a2beac0",
+      "form": "PSE financial summary",
+      "label": "LOTO FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "42c347229a2beac0ec6cbfccd18545e068dad16278d5480a6bfbfb1c7377f263",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=605"
+    },
+    {
+      "document_id": "42c347229a2beac0-support-1",
+      "form": "PSE common-stock data",
+      "label": "LOTO open ordinary-common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "42c347229a2beac0ec6cbfccd18545e068dad16278d5480a6bfbfb1c7377f263",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=605"
+    }
+  ],
+  "subsector": "Lottery systems and services",
+  "ticker": "LOTO",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE-reported PHP1.39 BVPS exceeds June parent equity / September outstanding common shares (about PHP1.271); the screen uses the dated arithmetic bridge. 1H2026 parent income declined."
+  ]
+}

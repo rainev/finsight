@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "420d33ef08a1c0ccdac0c453756d220bcdca4676e12eb6baad64e48d7dbbd0c6",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Subsidiary ownership, realizable asset values, debt and minority claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "7dde25f4561332767e73fdef6ac5e745a032ee37914285d1027a8cb81a37f2df",
+  "issuer": {
+    "issuer_id": "PSE:JOH",
+    "name": "Jolliville Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 4.171452232,
+      "high": 5.735746818,
+      "low": 2.607157645
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 10.428630579040853,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B21-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "76cedc047c2179e36d51d10b7240330263d66381639b82323abfa809eee73f02",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B21-1.0",
+  "numerical_range": {
+    "high": 5.735746818,
+    "low": 2.607157645
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Subsidiary ownership, realizable asset values, debt and minority claims are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 281,500,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/asset P/B screening band; no peer calibration, appraised NAV or completed attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Material subsidiaries and investments require attributable SOTP; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:JOH:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "76cedc047c2179e3",
+      "form": "PSE financial summary",
+      "label": "JOH FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "76cedc047c2179e36d51d10b7240330263d66381639b82323abfa809eee73f02",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=261"
+    },
+    {
+      "document_id": "76cedc047c2179e3-support-1",
+      "form": "PSE common-stock data",
+      "label": "JOH open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "76cedc047c2179e36d51d10b7240330263d66381639b82323abfa809eee73f02",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=261"
+    }
+  ],
+  "subsector": "Diversified investment holding",
+  "ticker": "JOH",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The screen uses PHP2.936bn parent equity, not PHP3.980bn consolidated total equity. 2Q2026 parent income was negative although 1H parent income remained positive."
+  ]
+}

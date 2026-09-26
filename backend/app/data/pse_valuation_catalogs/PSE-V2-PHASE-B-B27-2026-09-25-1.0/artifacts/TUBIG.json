@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "055340230563553725ee93c44c6e5f7e07e160d3d5f038b54d5f59a5e0f21694",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "1Q2026 parent equity is nearly exhausted with no revenue and an approximately PHP821m YTD loss; the COAL-to-TUBIG backdoor asset/share exchange is not underwritten into a post-transaction common residual."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-03-31",
+  "filing_published_at": null,
+  "input_hash": "c7c9ff47c8ffd4f23860944da94ae80e7d4173e30ec8fb56bb054660cfe68baa",
+  "issuer": {
+    "issuer_id": "PSE:TUBIG",
+    "name": "Tubig Pilipinas Holdings Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "1Q2026 parent equity is nearly exhausted with no revenue and an approximately PHP821m YTD loss; the COAL-to-TUBIG backdoor asset/share exchange is not underwritten into a post-transaction common residual.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "The water/business transition requires post-exchange attributable assets and common-claim NAV.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "TUBIG",
+    "security_id": "PSE:TUBIG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "72d219e45743b51b",
+      "form": "PSE financial summary",
+      "label": "TUBIG reviewed PSE financial-summary page",
+      "period_end": "2026-03-31",
+      "published_at": null,
+      "sha256": "72d219e45743b51b614a3901a37fa2f5ace37cb08fcdd8a940d8e4d4960cab9a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=637"
+    },
+    {
+      "document_id": "72d219e45743b51b-support-1",
+      "form": "PSE common-stock data",
+      "label": "TUBIG quoted common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "72d219e45743b51b614a3901a37fa2f5ace37cb08fcdd8a940d8e4d4960cab9a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=637"
+    },
+    {
+      "document_id": "72d219e45743b51b-support-2",
+      "form": "PSE issuer disclosure",
+      "label": "TUBIG predecessor COAL backdoor-listing asset and share exchange",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "72d219e45743b51b614a3901a37fa2f5ace37cb08fcdd8a940d8e4d4960cab9a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1874056"
+    }
+  ],
+  "subsector": "Water and resource holding",
+  "ticker": "TUBIG",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "PSE 1Q2026 parent equity is PHP3.359m across 40bn quoted shares and BVPS rounds to zero. The financial summary is from the predecessor transition; suspended trading and unreviewed post-exchange assets preclude a finite screen."
+  ]
+}

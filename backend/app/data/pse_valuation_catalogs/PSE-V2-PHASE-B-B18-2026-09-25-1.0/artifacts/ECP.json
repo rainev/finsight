@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "12e80dac1e18541bbdd6834ccc207bc23d12247a06dcb3fbda98f2dc6b77a861",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Recurring service margins, customer contracts, lease debt, capex, minority claims and terminal cash flows are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "fe1d528164c3f052744bb1dd09da7ad1790701bc9af5fd3e9069fae501089050",
+  "issuer": {
+    "issuer_id": "PSE:ECP",
+    "name": "EasyCall Communications Philippines, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.823951967,
+      "high": 1.153532753,
+      "low": 0.49437118
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 1.6479039333333334,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "15d1af1dda2cf863ada43a27c554037a66a0f81f68c763b49fe4a7caa17051e1",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 1.153532753,
+    "low": 0.49437118
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Recurring service margins, customer contracts, lease debt, capex, minority claims and terminal cash flows are not reconciled.",
+    "metric_basis": "PHP247,185,590 parent equity / 150,000,000 outstanding common shares; reported total BVPS PHP1.89 is not substituted",
+    "policy_rationale": "Reuse the finite Batch 17 filing-review P/B band while services cash flows and leases lack a complete FCFF bridge.",
+    "reliability": "Low",
+    "route_reason": "Managed connectivity and IT service cash flows require FCFF; parent book value is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ECP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "15d1af1dda2cf863",
+      "form": "PSE quarterly financial summary",
+      "label": "ECP FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "15d1af1dda2cf863ada43a27c554037a66a0f81f68c763b49fe4a7caa17051e1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=70"
+    },
+    {
+      "document_id": "15d1af1dda2cf863-support-1",
+      "form": "PSE common-stock data",
+      "label": "ECP open ordinary-common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "15d1af1dda2cf863ada43a27c554037a66a0f81f68c763b49fe4a7caa17051e1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=70&security_id=126"
+    }
+  ],
+  "subsector": "Managed connectivity and IT services",
+  "ticker": "ECP",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "Reported BVPS follows total equity; parent equity per common share is about PHP1.648. FY2025 was a loss even though 1H2026 income improved; do not extrapolate either period."
+  ]
+}

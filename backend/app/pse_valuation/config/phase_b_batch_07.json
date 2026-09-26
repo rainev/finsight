@@ -1,0 +1,142 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-7.0",
+  "batch_version": "PSE-V2-PHASE-B-B07-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B07-2026-09-23-1.0",
+  "universe_version": "PSE-V2-78-B07-1.0",
+  "valuation_date": "2026-09-23",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["ICT", "CEB", "PAL", "MAC", "ATI", "TUGS", "C", "LSC", "MWIDE", "EEI"],
+  "policies": {
+    "global_ports_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 12.0, "base": 15.0, "high": 18.0}, "version": "PSE-V2-PE-GLOBAL-PORTS-B07-1.0"},
+    "recovery_airline_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 1.2, "base": 1.6, "high": 2.0}, "version": "PSE-V2-PB-RECOVERY-AIRLINE-B07-1.0"},
+    "leveraged_airline_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.6, "base": 0.8, "high": 1.0}, "version": "PSE-V2-PB-LEVERAGED-AIRLINE-B07-1.0"},
+    "transport_services_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 8.0, "base": 10.0, "high": 12.0}, "version": "PSE-V2-PE-TRANSPORT-SERVICES-B07-1.0"},
+    "small_marine_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 6.0, "base": 8.0, "high": 10.0}, "version": "PSE-V2-PE-SMALL-MARINE-B07-1.0"},
+    "leveraged_shipping_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.3, "base": 0.4, "high": 0.5}, "version": "PSE-V2-PB-LEVERAGED-SHIPPING-B07-1.0"},
+    "distressed_shipping_sales": {"metric": "price_to_sales", "relation": "multiple", "assumptions": {"low": 0.2, "base": 0.3, "high": 0.4}, "version": "PSE-V2-PS-DISTRESSED-SHIPPING-B07-1.0"},
+    "construction_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.6, "base": 0.8, "high": 1.0}, "version": "PSE-V2-PB-CONSTRUCTION-B07-1.0"}
+  },
+  "issuers": {
+    "ICT": {
+      "issuer_name": "International Container Terminal Services, Inc.",
+      "subsector": "Global port terminals and concessions",
+      "primary_model": "sotp",
+      "policy": "global_ports_pe",
+      "source": {"label": "ICT FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "USD", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=83"},
+      "metric_value_per_share": 35.16744,
+      "metric_label": "TTM basic EPS converted to PHP at the 2026-09-22 BSP reference rate",
+      "normalization": {"formula": "(0.51 + 0.29 - 0.24) USD/share x 62.799 PHP/USD", "original_value": 0.56, "original_currency": "USD", "fx_rate": 62.799, "fx_rate_date": "2026-09-22", "fx_source_url": "https://www.bsp.gov.ph/Statistics/sdds/sdds.aspx", "normalized_value": 35.16744, "normalized_currency": "PHP"},
+      "route_reason": "Terminal-by-terminal concession-life SOTP remains primary; P/E is a finite screen while terminal cash flows, concession lives, debt, and minority claims remain unreconciled.",
+      "intrinsic_blocker": "A reviewed terminal-by-terminal SOTP with finite concession lives, capex, debt, and minority claims is not complete."
+    },
+    "CEB": {
+      "issuer_name": "Cebu Air, Inc.",
+      "subsector": "Air transportation",
+      "primary_model": "nav_sotp",
+      "policy": "recovery_airline_pb",
+      "source": {"label": "CEB FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=624"},
+      "metric_value_per_share": 15.13,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 15.13, "original_currency": "PHP", "normalized_value": 15.13, "normalized_currency": "PHP"},
+      "route_reason": "Fleet NAV and lease-adjusted operating valuation remain primary; P/B provides a finite recovery screen while 1H2026 earnings are negative.",
+      "intrinsic_blocker": "A reviewed fleet NAV/EV-EBITDAR bridge with leases, aircraft commitments, fuel sensitivity, and diluted claims is incomplete."
+    },
+    "PAL": {
+      "issuer_name": "PAL Holdings, Inc.",
+      "subsector": "Air transportation holding company",
+      "primary_model": "nav_sotp",
+      "policy": "leveraged_airline_pb",
+      "source": {"label": "PAL FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=20"},
+      "metric_value_per_share": 1.77,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 1.77, "original_currency": "PHP", "normalized_value": 1.77, "normalized_currency": "PHP"},
+      "route_reason": "Fleet NAV and holding-company SOTP remain primary; P/B provides a finite leveraged-airline screen while current earnings are negative.",
+      "intrinsic_blocker": "A reviewed fleet NAV/SOTP with leases, debt, parent ownership, aircraft commitments, and fuel and demand scenarios is incomplete."
+    },
+    "MAC": {
+      "issuer_name": "MacroAsia Corporation",
+      "subsector": "Aviation support and logistics",
+      "primary_model": "sotp",
+      "policy": "transport_services_pe",
+      "source": {"label": "MAC FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=106"},
+      "metric_value_per_share": 0.64,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "0.76 FY2025 EPS + 0.24 1H2026 EPS - 0.36 1H2025 EPS", "original_value": 0.64, "original_currency": "PHP", "normalized_value": 0.64, "normalized_currency": "PHP"},
+      "route_reason": "SOTP remains primary across aviation services and other interests; P/E is a finite screen while associate ownership, debt, and segment cash flows remain unreconciled.",
+      "intrinsic_blocker": "A reviewed SOTP separating catering, ground handling, logistics, water, associates, debt, and minority claims is incomplete."
+    },
+    "ATI": {
+      "issuer_name": "Asian Terminals, Inc.",
+      "subsector": "Port terminals and concessions",
+      "primary_model": "finite_life_dcf",
+      "policy": "transport_services_pe",
+      "source": {"label": "ATI FY2024 and 9M2025 PSE financial report", "form": "17-Q", "period_end": "2025-09-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=53"},
+      "metric_value_per_share": 2.82,
+      "metric_label": "TTM basic EPS through 9M2025",
+      "normalization": {"formula": "2.26 FY2024 EPS + 2.14 9M2025 EPS - 1.58 9M2024 EPS", "original_value": 2.82, "original_currency": "PHP", "normalized_value": 2.82, "normalized_currency": "PHP"},
+      "source_warning": "The latest PSE summary available for this review is for the period ended 2025-09-30; the screen is stale and must not be treated as current intrinsic value.",
+      "route_reason": "Concession-life terminal DCF remains primary; P/E is a finite screen while throughput, tariffs, capex, and concession cash flows remain unreconciled.",
+      "intrinsic_blocker": "A reviewed concession-life DCF with throughput, tariff, capex, concession tenor, and debt claims is incomplete."
+    },
+    "TUGS": {
+      "issuer_name": "Harbor Star Shipping Services, Inc.",
+      "subsector": "Marine services and towing",
+      "primary_model": "nav_sotp",
+      "policy": "small_marine_pe",
+      "source": {"label": "TUGS FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=644"},
+      "metric_value_per_share": 0.15,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "0.07 FY2025 EPS + 0.08 1H2026 EPS - 0.00 1H2025 EPS", "original_value": 0.15, "original_currency": "PHP", "normalized_value": 0.15, "normalized_currency": "PHP"},
+      "route_reason": "Fleet NAV/FCFF remains primary; P/E is a finite small-company screen while vessel values, utilization, debt, and maintenance capex remain unreconciled.",
+      "intrinsic_blocker": "A reviewed fleet NAV/FCFF bridge with vessel values, utilization, debt, maintenance capex, and minority claims is incomplete."
+    },
+    "C": {
+      "issuer_name": "Chelsea Logistics and Infrastructure Holdings Corp.",
+      "subsector": "Shipping and logistics holding company",
+      "primary_model": "sotp",
+      "policy": "leveraged_shipping_pb",
+      "source": {"label": "Chelsea FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=669"},
+      "metric_value_per_share": 1.95,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 1.95, "original_currency": "PHP", "normalized_value": 1.95, "normalized_currency": "PHP"},
+      "route_reason": "Fleet NAV and subsidiary SOTP remain primary; discounted P/B is a finite screen given high leverage and a large retained deficit.",
+      "intrinsic_blocker": "A reviewed fleet and subsidiary SOTP with debt, vessel values, leases, and parent-level claims is incomplete."
+    },
+    "LSC": {
+      "issuer_name": "Lorenzo Shipping Corporation",
+      "subsector": "Domestic container shipping",
+      "primary_model": "nav_sotp",
+      "policy": "distressed_shipping_sales",
+      "source": {"label": "LSC FY2025 PSE financial report and common-share record", "form": "17-A", "period_end": "2025-12-31", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=115", "supporting_url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=115"},
+      "metric_value_per_share": 1.503079809713323,
+      "metric_label": "FY2025 revenue per outstanding common share",
+      "normalization": {"formula": "PHP 1,488,310,546 revenue / 990,173,999 outstanding common shares", "original_value": 1.503079809713323, "original_currency": "PHP", "normalized_value": 1.503079809713323, "normalized_currency": "PHP"},
+      "route_reason": "Fleet NAV and restructuring analysis remain primary; P/S provides a finite screen because earnings are negative and 1H2026 equity is near zero.",
+      "intrinsic_blocker": "Continuing losses, near-zero equity, current-liability pressure, and unresolved fleet values and debt claims block a completed intrinsic NAV."
+    },
+    "MWIDE": {
+      "issuer_name": "Megawide Construction Corporation",
+      "subsector": "Construction and infrastructure concessions",
+      "primary_model": "sotp",
+      "policy": "construction_pb",
+      "source": {"label": "MWIDE FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=627"},
+      "metric_value_per_share": 4.61,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 4.61, "original_currency": "PHP", "normalized_value": 4.61, "normalized_currency": "PHP"},
+      "route_reason": "Builder-plus-concessions SOTP remains primary; P/B is a finite screen while backlog, concessions, preferred claims, debt, and working capital remain unreconciled.",
+      "intrinsic_blocker": "A reviewed SOTP separating construction, property, transport concessions, preferred shares, debt, and working-capital claims is incomplete."
+    },
+    "EEI": {
+      "issuer_name": "EEI Corporation",
+      "subsector": "Construction and engineering",
+      "primary_model": "fcff_dcf",
+      "policy": "construction_pb",
+      "source": {"label": "EEI FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=71"},
+      "metric_value_per_share": 5.06,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 5.06, "original_currency": "PHP", "normalized_value": 5.06, "normalized_currency": "PHP"},
+      "route_reason": "Normalized FCFF remains primary; P/B provides a finite screen while backlog conversion, working capital, capital claims, and normalized margins remain unreconciled.",
+      "intrinsic_blocker": "A reviewed FCFF bridge with backlog conversion, cash working capital, normalized margins, debt, and capital claims is incomplete."
+    }
+  }
+}

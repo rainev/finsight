@@ -1,0 +1,85 @@
+{
+  "artifact_hash": "54f1b928b615fe212840bbcc926352242e9728691b7d85929f5706810f3daf2c",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Series A convertible preferred conversion and resulting common dilution are unresolved; total equity cannot be assigned to present ordinary common holders."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "f3ae21142a64256857e16c5a6b0b5002ca4b4accd7dcc16f3c10cbcdfcc0a68a",
+  "issuer": {
+    "issuer_id": "PSE:PRIM",
+    "name": "Prime Media Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "metric_basis": "No defensible present ordinary-common per-share screen",
+    "reliability": "Unavailable",
+    "route_reason": "The media joint venture and parent capital structure require attributable SOTP."
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PRIM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "6d36ea7e4756d70b",
+      "form": "PSE financial summary",
+      "label": "PRIM FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "6d36ea7e4756d70bcd7331d2eb1ff4a07d02d9d3e11488f55e76566af61ca76a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=30"
+    },
+    {
+      "document_id": "6d36ea7e4756d70b-support-1",
+      "form": "PSE common-stock data",
+      "label": "PRIM ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "6d36ea7e4756d70bcd7331d2eb1ff4a07d02d9d3e11488f55e76566af61ca76a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=30"
+    },
+    {
+      "document_id": "6d36ea7e4756d70b-support-2",
+      "form": "PSE corporate disclosure",
+      "label": "PRIM Series A preferred conversion notice",
+      "period_end": "2026-07-15",
+      "published_at": null,
+      "sha256": "6d36ea7e4756d70bcd7331d2eb1ff4a07d02d9d3e11488f55e76566af61ca76a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1945403"
+    }
+  ],
+  "subsector": "Media investment holding",
+  "ticker": "PRIM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "Reported PHP0.51 BVPS reflects total equity; listed and outstanding common shares differ, and 1H2026 revenue is negligible."
+  ]
+}

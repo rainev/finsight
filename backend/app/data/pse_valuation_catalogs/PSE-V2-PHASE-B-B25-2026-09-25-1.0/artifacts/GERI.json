@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "57bdb9f4cd25ee32d97790bae293b597d67b2566e127131187e8f67c55bc0126",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Estate and hotel cash flows, property fair values, project commitments, minorities, debt and common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "b74333a824d87a950ac30ce90b0fb7157d9a8627d9e9171b58553bfae17de05a",
+  "issuer": {
+    "issuer_id": "PSE:GERI",
+    "name": "Global-Estate Resorts, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 1.791,
+      "high": 2.388,
+      "low": 1.194
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 3.98,
+    "note": "Finite analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B15-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "43562f2020e03a079f52be15780d9f2b7dbce0113fb5b6eaa3dac5e6e13d6d6d",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B15-1.0",
+  "numerical_range": {
+    "high": 2.388,
+    "low": 1.194
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Estate and hotel cash flows, property fair values, project commitments, minorities, debt and common claims are not reconciled.",
+    "metric_basis": "PSE-reported PHP book value per share; no property fair-value adjustment",
+    "policy_rationale": "Reuse the reviewed Batch 12 diversified-property P/B screening band for positive reported BVPS; this is not a peer study or a completed property RNAV/SOTP.",
+    "reliability": "Low",
+    "route_reason": "Tourism estates, hotels and residential projects require attributable property-level SOTP; P/B is separate."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:GERI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "43562f2020e03a07",
+      "form": "PSE quarterly financial summary",
+      "label": "GERI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "43562f2020e03a079f52be15780d9f2b7dbce0113fb5b6eaa3dac5e6e13d6d6d",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=193"
+    },
+    {
+      "document_id": "43562f2020e03a07-support",
+      "form": "PSE company information",
+      "label": "GERI PSE company information and MEG relationship",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "43562f2020e03a079f52be15780d9f2b7dbce0113fb5b6eaa3dac5e6e13d6d6d",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=193"
+    }
+  ],
+  "subsector": "Tourism-estate and mixed-use property development",
+  "ticker": "GERI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Reported book value is not a completed property RNAV or peer-calibrated target.",
+    "GERI is consolidated within MEG; their per-share screens overlap and must not be added."
+  ]
+}

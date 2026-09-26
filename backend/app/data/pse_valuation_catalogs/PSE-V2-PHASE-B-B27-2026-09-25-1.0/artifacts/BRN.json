@@ -1,0 +1,97 @@
+{
+  "artifact_hash": "1ea2819b1d4e8b14e37dba20f0a107942b80e4bb2763e6ad1bd02a7acb8f24ac",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property and non-property component values, preferred-share claims, debt, minority interests, and common shares are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "1963e6a7e54996f829ddad6986de64b50e55b61b9d73a56b9076f562a7bc951d",
+  "issuer": {
+    "issuer_id": "PSE:BRN",
+    "name": "A Brown Company, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 1.116,
+      "high": 1.5345000000000002,
+      "low": 0.6975
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 2.79,
+    "note": "Analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-HOLDCO-B12-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "fdcdf9b58d07739149848b39be20ab8cd39a7ebd173bdb576642902954428772",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B12-1.0",
+  "numerical_range": {
+    "high": 1.5345000000000002,
+    "low": 0.6975
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property and non-property component values, preferred-share claims, debt, minority interests, and common shares are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 11 layered-holding P/B screening band for mixed businesses and unresolved parent claims; not a peer study or SOTP.",
+    "reliability": "Low",
+    "route_reason": "Property plus power and other interests require attributable SOTP with preferred claims; P/B is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BRN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "fdcdf9b58d077391",
+      "form": "PSE quarterly financial summary",
+      "label": "BRN FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "fdcdf9b58d07739149848b39be20ab8cd39a7ebd173bdb576642902954428772",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=13"
+    },
+    {
+      "document_id": "fdcdf9b58d077391-support",
+      "form": "PSE company information",
+      "label": "BRN PSE company information and mixed interests",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "fdcdf9b58d07739149848b39be20ab8cd39a7ebd173bdb576642902954428772",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=13"
+    }
+  ],
+  "subsector": "Property development and mixed investments",
+  "ticker": "BRN",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "BRN has material non-property interests and preferred-share classes; reported BVPS is not a completed common-equity bridge."
+  ]
+}

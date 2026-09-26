@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "12768a5cd4433bba278892ac44c7d6dc1a9a3137174b93cd8f05109bf6080e70",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The 597.2 MW operating portfolio and development pipeline are not yet separated into attributable project values with allocated financing and parent-only claims."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "e459a570c39eddce5167e6672862f798ad468b22d2748e8b6f6d4229844ddcfc",
+  "issuer": {
+    "issuer_id": "PSE:CREC",
+    "name": "Citicore Renewable Energy Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 1.1,
+      "high": 1.4,
+      "low": 0.8
+    },
+    "estimates": {
+      "base": 2.387,
+      "high": 3.038,
+      "low": 1.736
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported book value per common share",
+    "metric_value_per_share": 2.17,
+    "note": "Transparent P/B screen while the asset-level FCFF or SOTP bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-GROWTH-RENEWABLE-B04-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "049f23e379d6e06e2074cd2458d76090dcd6bec39413cf64156d2cd8782dc69e",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B04-1.0",
+  "numerical_range": {
+    "high": 3.038,
+    "low": 1.736
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The 597.2 MW operating portfolio and development pipeline are not yet separated into attributable project values with allocated financing and parent-only claims.",
+    "policy_rationale": "P/B screen for a scaled renewable platform pending project-level operating, ownership, and financing reconciliation.",
+    "reliability": "Low",
+    "reported_equity_php_millions": 24251.151051,
+    "route_reason": "Project SOTP/FCFF remains primary; P/B provides a finite screen pending project ownership, operating status, and financing reconciliation.",
+    "source_currency": "PHP"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CREC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "049f23e379d6e06e",
+      "form": "17-A",
+      "label": "CREC FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "049f23e379d6e06e2074cd2458d76090dcd6bec39413cf64156d2cd8782dc69e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=703"
+    }
+  ],
+  "subsector": "Renewable power platform",
+  "ticker": "CREC",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved asset-level intrinsic valuation.",
+    "Reported book value is an accounting measure and may differ materially from project fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study."
+  ]
+}

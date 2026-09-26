@@ -1,0 +1,80 @@
+{
+  "artifact_hash": "65023345299bbefea6df40a12a820175f090c70cbab37e80e8d136c44a73fe33",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends June 2022, the line remains suspended and later operating/capital claims are not reviewed."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2022-06-30",
+  "filing_published_at": null,
+  "input_hash": "08ceecaef3f38910d11e7e0a4da6cd70fee96633dfafb8b78e2e5f21d4140566",
+  "issuer": {
+    "issuer_id": "PSE:BMM",
+    "name": "Bogo-Medellin Milling Company, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends June 2022, the line remains suspended and later operating/capital claims are not reviewed.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Sugar milling FCFF needs current crop-cycle, operating-cost and debt-service inputs.",
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-07-10"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "BMM",
+    "security_id": "PSE:BMM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "70f0c83765d24c15",
+      "form": "PSE financial summary",
+      "label": "BMM reviewed PSE financial-summary page",
+      "period_end": "2022-06-30",
+      "published_at": null,
+      "sha256": "70f0c83765d24c15f3d6a13fd344916d29122057d19d3d84e18351e639d1bb91",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=181"
+    },
+    {
+      "document_id": "70f0c83765d24c15-support-1",
+      "form": "PSE common-stock data",
+      "label": "BMM ordinary common stock data",
+      "period_end": "2026-07-10",
+      "published_at": null,
+      "sha256": "70f0c83765d24c15f3d6a13fd344916d29122057d19d3d84e18351e639d1bb91",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=181"
+    }
+  ],
+  "subsector": "Sugar milling",
+  "ticker": "BMM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "PSE June 2022 parent equity is PHP177,753 thousand and YTD income is negative. The last trade shown is December 2022; neither old book nor stale price is a current valuation."
+  ]
+}

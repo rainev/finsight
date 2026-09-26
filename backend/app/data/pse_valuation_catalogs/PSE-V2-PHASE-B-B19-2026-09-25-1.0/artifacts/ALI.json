@@ -1,0 +1,143 @@
+{
+  "artifact_hash": "a52877ccb67216aa9f77543f7361fb75e9d87570d2f3b751f1c670ac47f59dec",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Missing: none; needs review: shares_outstanding, ebit, capital_expenditure, total_debt, depreciation_amortization, land_inventory."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025 filing candidate",
+  "filing_published_at": null,
+  "input_hash": "27603f824e64888bf39d785fc60c53ff33d8ec6634a3de95a80e8458de38db8f",
+  "issuer": {
+    "issuer_id": "ALI",
+    "name": "Ayala Land, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 15.0,
+      "high": 18.0,
+      "low": 12.0
+    },
+    "estimates": {
+      "base": 40.5,
+      "high": 48.6,
+      "low": 32.400000000000006
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "Reported basic EPS candidate",
+    "metric_value_per_share": 2.7,
+    "note": "Initial screening conventions, not empirically validated issuer peer sets.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-MR-PILOT-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "14d7ca2bfa3802e931c768c1b91552fec7ab8f6a01ebe7ecb2607549278f310a",
+    "source_page": 22,
+    "source_status": "review_candidate"
+  },
+  "model_version": "PSE-V2-PILOT-1.1",
+  "numerical_range": {
+    "high": 48.6,
+    "low": 32.400000000000006
+  },
+  "price": null,
+  "primary_model": "normalized_fcff",
+  "public_assumptions": {},
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ALI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "3917d05712b11d85",
+      "form": "17-Q",
+      "label": "ALI SEC 17Q 1Q 2026_vF.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "3917d05712b11d85811471cb1b373f3f73bf90ffe034fd9a9c6f62cd114179a9",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "53e48ff2640b0ffc",
+      "form": "17-Q",
+      "label": "MSRD_Ayala Land, Inc._SEC Form 17-Q_13May2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "53e48ff2640b0ffcc7d2aeac7ddacaced40c3af54116f1a81c54065cf74599cc",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "5d521a7553963d0f",
+      "form": "17-Q",
+      "label": "ALI SEC17Q 1H 2025 (signed).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "5d521a7553963d0f7aef1bab18b2d0ad55b82fc6cd0c4e8390ee3a15aa1f539d",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "14d7ca2bfa3802e9",
+      "form": "17-A",
+      "label": "ALI SEC17-A 2025 vF.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "14d7ca2bfa3802e931c768c1b91552fec7ab8f6a01ebe7ecb2607549278f310a",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "a6246a0e4cc91c52",
+      "form": "17-Q",
+      "label": "MSRD_Ayala Land, Inc._SEC Form 17-Q_09August2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "a6246a0e4cc91c52e1847753f41485679026be75846048316df9d141a148f1d1",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "9117c4d970931534",
+      "form": "17-Q",
+      "label": "MSRD_Ayala Land, Inc._SEC Form 17-Q_12November2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "9117c4d970931534a4ebaa067026d8a4299abc868f232aea68564499e1b85813",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "e795dd45ce29baaf",
+      "form": "17-Q",
+      "label": "ALI SEC17-Q 9M 2025_consolidated.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "e795dd45ce29baafefa53afdfaa7963f310e9190ea2b0b21243ef8a59f77bf8c",
+      "source_page": null,
+      "url": null
+    }
+  ],
+  "subsector": "Property developer",
+  "ticker": "ALI",
+  "valuation_date": "2026-09-21",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the specialist intrinsic valuation.",
+    "Policy bands are initial conventions and are not presented as empirically validated issuer peer sets.",
+    "The selected per-share metric is a source candidate that still requires human review."
+  ]
+}

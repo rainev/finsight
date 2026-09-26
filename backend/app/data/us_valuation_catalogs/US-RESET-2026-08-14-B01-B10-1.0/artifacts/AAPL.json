@@ -1,0 +1,275 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
+      "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Enterprise-to-equity bridge uses source-bounded uncertainty; the joint intrinsic-value spread is 7.22% and requires review.",
+      "Revenue and FCFF growth tell materially different forecast stories.",
+      "Practical consolidated model uses material bounded assumptions and is capped at Low.",
+      "Model 'epv': EPV is a no-growth support value, not an independent growth forecast.",
+      "Model 'epv': It assumes normalized D&A approximates maintenance CapEx and normalized working capital is stable.",
+      "Model 'epv': Enterprise-to-equity bridge uses source-bounded uncertainty; the joint intrinsic-value spread is 7.22% and requires review.",
+      "Supporting model 'epv' is review_required.",
+      "Model 'fcff_dcf': Practical bounded-uncertainty scenario; reliability capped at Low.",
+      "Primary model 'fcff_dcf' is review_required.",
+      "Scenario 'base' model 'fcff_dcf': Practical bounded-uncertainty scenario; reliability capped at Low.",
+      "Scenario 'base' model 'fcff_dcf' is review_required.",
+      "Scenario 'bear' model 'fcff_dcf': Practical bounded-uncertainty scenario; reliability capped at Low.",
+      "Scenario 'bear' model 'fcff_dcf' is review_required.",
+      "Scenario 'bull' model 'fcff_dcf': Practical bounded-uncertainty scenario; reliability capped at Low.",
+      "Scenario 'bull' model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [
+      "finance_lease_total",
+      "noncontrolling_interests",
+      "preferred_equity"
+    ],
+    "complete": false,
+    "decision": "bounded_review",
+    "intrinsic_value_range": {
+      "high": 107.03082266272628,
+      "low": 99.62997273393711,
+      "midpoint": 103.3303976983317,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.07162316311213288
+    },
+    "reason_codes": [
+      "ANNUAL_COMPANY_FACT_CARRIED_FORWARD",
+      "REPORTED_AGGREGATE_REPLACEMENT"
+    ],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/AAPL/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "RD_LIFE_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "derived valuation outputs, governed assumptions, methodology, warnings, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {
+      "dcf_epv_dispersion": {
+        "review_threshold": 0.4,
+        "status": "pass",
+        "value": 0.10972589045865258
+      },
+      "forecast_horizon": {
+        "status": "pass",
+        "value": 5
+      },
+      "revenue_fcff_consistency": {
+        "fcff_cagr": -0.014748066462681453,
+        "revenue_cagr": 0.04529142826096577,
+        "status": "review_required"
+      },
+      "segment_evidence_automation": {
+        "status": "review_required",
+        "value": "consolidated_company_history_fallback"
+      },
+      "segment_forecast_required": {
+        "status": "pass",
+        "value": false
+      },
+      "terminal_growth_continuity": {
+        "status": "pass",
+        "target": 0.02,
+        "value": 0.02
+      }
+    },
+    "errors": [],
+    "policy_version": "US-FORECAST-QUALITY-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Revenue and FCFF growth tell materially different forecast stories."
+    ]
+  },
+  "issuer": {
+    "cik": "0000320193",
+    "classification_confidence": 0.98,
+    "classification_reason": "Apple combines mature hardware with a material services ecosystem; consolidated FCFF remains appropriate for the initial filing-only route.",
+    "finsight_sector": "Technology",
+    "issuer_name": "Apple Inc.",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "primary_archetype": "hardware_electronic_equipment",
+    "secondary_archetypes": [
+      "digital_services_ecosystem"
+    ],
+    "ticker": "AAPL"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
+    "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
+    "source_policy": "SEC Companyfacts, submissions and governed filing-specific Products/Services tables; no exchange prices"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "FCFF is the primary governed model for the hardware and services archetype; EPV is a separate no-growth support value.",
+    "supporting": [
+      "epv"
+    ]
+  },
+  "models": {
+    "epv": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 91.2855750166961,
+      "model": "epv",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "EPV is a no-growth support value, not an independent growth forecast.",
+        "It assumes normalized D&A approximates maintenance CapEx and normalized working capital is stable.",
+        "Enterprise-to-equity bridge uses source-bounded uncertainty; the joint intrinsic-value spread is 7.22% and requires review."
+      ]
+    },
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 103.3303976983317,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Practical bounded-uncertainty scenario; reliability capped at Low."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "discount_calibration_type": "policy_calibrated",
+    "discount_policy_version": "US-RATES-1.0",
+    "equity_risk_premium": 0.045,
+    "forecast_mode": "consolidated",
+    "forecast_policy_version": "US-FORECAST-1.0",
+    "forecast_years": 5,
+    "initial_revenue_growth": 0.08166084576940628,
+    "policy_wacc": 0.09118064378138147,
+    "risk_free_effective_date": "2026-07-30",
+    "risk_free_rate": 0.0468,
+    "risk_free_source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value_month=202607&type=daily_treasury_yield_curve",
+    "sales_to_capital": 3.125,
+    "segment_assumptions": {},
+    "target_operating_margin": 0.29129638542961456,
+    "terminal_growth": 0.02
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.03581158155606644,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "RD_LIFE_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Medium",
+    "scenario_movement_ratio": 0.22770738256433923,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "medium",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
+      "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "Enterprise-to-equity bridge uses source-bounded uncertainty; the joint intrinsic-value spread is 7.22% and requires review.",
+      "Revenue and FCFF growth tell materially different forecast stories.",
+      "Practical consolidated model uses material bounded assumptions and is capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 103.3303976983317,
+    "high": 123.1625608382377,
+    "label": "coupled practical bear/base/bull range",
+    "low": 79.80130329911236
+  },
+  "scenarios": {
+    "base": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 103.3303976983317,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical bounded-uncertainty scenario; reliability capped at Low."
+        ]
+      }
+    },
+    "bear": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 79.80130329911236,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical bounded-uncertainty scenario; reliability capped at Low."
+        ]
+      }
+    },
+    "bull": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 123.1625608382377,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical bounded-uncertainty scenario; reliability capped at Low."
+        ]
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "source_financial_statement": {
+    "accession": "0000320193-26-000020",
+    "filed_date": "2026-07-31",
+    "form": "10-Q",
+    "note": "Latest financial statement used; this does not claim to be the issuer's latest disclosure of every type.",
+    "period_end": "2026-06-27",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm"
+  },
+  "ticker": "AAPL",
+  "valuation_date": "2026-08-14"
+}

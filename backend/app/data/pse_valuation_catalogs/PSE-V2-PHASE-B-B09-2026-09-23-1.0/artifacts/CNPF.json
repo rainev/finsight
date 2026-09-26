@@ -1,0 +1,127 @@
+{
+  "artifact_hash": "3cb696ada6bc7a955108dd30a6c71978ea5c93cf1e02b04505957238b99585b1",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "06eeefccfecd8327d7748173e0a11b3f1d390270ef4939b1614ac45fd760223c",
+  "issuer": {
+    "issuer_id": "PSE:CNPF",
+    "name": "Century Pacific Food, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 32.014554043536336,
+    "low": 11.340301965607832
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "capital_bridge": {
+      "cash_php_millions": 2884.541289,
+      "debt_includes_lease_liabilities": true,
+      "debt_php_millions": 9666.524186,
+      "minority_value_php_millions": 0.0,
+      "nonoperating_assets_php_millions": 0.0,
+      "other_claims_php_millions": 0.0,
+      "preferred_claims_php_millions": 0.0,
+      "shares_millions": 3542.258595
+    },
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE additions",
+    "normalized_fcff_proxy_php_millions": 5672.433525,
+    "policy_version": "PSE-V2-FCFF-BRAND-B02-1.0",
+    "reliability": "Low",
+    "route_reason": "Branded operating cash flows and reinvestment economics drive enterprise value.",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.04,
+        "roic": 0.14,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.11,
+        "wacc": 0.115
+      },
+      "bear": {
+        "growth_rate": 0.01,
+        "roic": 0.1,
+        "terminal_growth": 0.015,
+        "terminal_roic": 0.09,
+        "wacc": 0.13
+      },
+      "bull": {
+        "growth_rate": 0.07,
+        "roic": 0.18,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.13,
+        "wacc": 0.1
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 65684.774670141,
+      "enterprise_value": 72466.757567141,
+      "value_per_share": 18.54319014508341
+    },
+    "bear": {
+      "common_equity_value": 40170.282107569736,
+      "enterprise_value": 46952.26500456974,
+      "value_per_share": 11.340301965607832
+    },
+    "bull": {
+      "common_equity_value": 113403.82922580857,
+      "enterprise_value": 120185.81212280857,
+      "value_per_share": 32.014554043536336
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CNPF:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "normalized_fcff",
+        "growth_rate",
+        "roic",
+        "wacc",
+        "terminal_growth",
+        "terminal_roic",
+        "capital_bridge"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "6e8d688b22bc7d55",
+      "form": "17-A",
+      "label": "CNPF FY2025 audited consolidated statements fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "6e8d688b22bc7d55ca0911c02e5d307b116ef58c545ce463b540482b4051ff8e",
+      "source_page": 13,
+      "url": "https://www.centurypacific.com.ph/wp-content/uploads/2026/04/04-ANNEX-C-CNPF-Consolidated-FS-2025.pdf"
+    }
+  ],
+  "subsector": "Branded food manufacturing",
+  "ticker": "CNPF",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate using a three-year median owner-cash proxy rather than a full issuer forecast.",
+    "Lease liabilities are included in debt; lease principal is not separately deducted from the owner-cash proxy.",
+    "Policy bands and terminal economics remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

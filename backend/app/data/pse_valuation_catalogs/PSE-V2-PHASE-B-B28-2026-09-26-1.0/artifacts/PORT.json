@@ -1,0 +1,80 @@
+{
+  "artifact_hash": "e890772620e2de07ca4bc0ccf2e01364571139c0dd21be35f4644977bf0be0b0",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 1H2020 with no revenue; only 54.212m of 2.335bn outstanding shares appear listed, and trading has been suspended for years."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2020-06-30",
+  "filing_published_at": null,
+  "input_hash": "bf4c7c3796f5d5b903d37c5b42415c87b87ffd3523e587749cdb2c89331b3e40",
+  "issuer": {
+    "issuer_id": "PSE:PORT",
+    "name": "Globalport 900, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 1H2020 with no revenue; only 54.212m of 2.335bn outstanding shares appear listed, and trading has been suspended for years.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Transport investments require current attributable SOTP and a settled common claim.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-06-24"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "PORT",
+    "security_id": "PSE:PORT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9813b4b27a9519f9",
+      "form": "PSE financial summary",
+      "label": "PORT reviewed PSE financial-summary page",
+      "period_end": "2020-06-30",
+      "published_at": null,
+      "sha256": "9813b4b27a9519f9717e2da1769f883fa2d61d1c01d569ab395ffb66ed0f852a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=129"
+    },
+    {
+      "document_id": "9813b4b27a9519f9-support-1",
+      "form": "PSE common-stock data",
+      "label": "PORT quoted common stock data",
+      "period_end": "2026-06-24",
+      "published_at": null,
+      "sha256": "9813b4b27a9519f9717e2da1769f883fa2d61d1c01d569ab395ffb66ed0f852a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=129"
+    }
+  ],
+  "subsector": "Transport and investment holding",
+  "ticker": "PORT",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "PSE 1H2020 parent equity is PHP150.092m against 2.335bn outstanding shares, but only 54.212m appear listed. The May 2014 last close is not a current price or valuation input."
+  ]
+}

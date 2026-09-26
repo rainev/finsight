@@ -9,6 +9,9 @@ class Company(BaseModel):
     name: str
     sector: str | None = None
     currency: str = "PHP"
+    market: str = "PH"
+    exchange: str | None = None
+    cik: str | None = None
 
 
 class CompanyCreate(BaseModel):
@@ -16,3 +19,6 @@ class CompanyCreate(BaseModel):
     name: str = Field(min_length=1)
     sector: str | None = None
     currency: str = "PHP"
+    market: str = "PH"
+    exchange: str | None = None
+    cik: str | None = None

@@ -1,0 +1,82 @@
+{
+  "artifact_hash": "e1de1deb7fd333a0ffe6098b23faa0c1474e56d45b5bb5f341dbf0e01c7a7a0b",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2025, trading is suspended and the stated BVPS does not reconcile with the current parent-equity/outstanding-common count."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "6a8b01614972a2aad6175c30dce17054f545244c036f0021984d13faf6b0d922",
+  "issuer": {
+    "issuer_id": "PSE:INFRA",
+    "name": "Philippine Infradev Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B26-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, trading is suspended and the stated BVPS does not reconcile with the current parent-equity/outstanding-common count.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Infrastructure development requires project/concession NAV, funding and parent/common claim review.",
+    "screen_time_basis": null,
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "INFRA",
+    "security_id": "PSE:INFRA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "87169d7bf4111907",
+      "form": "PSE financial summary",
+      "label": "INFRA reviewed PSE financial summary",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "87169d7bf41119079b1b4cbb2d84c7d2c5d0fbd655ff043aabd1ffd8e80b7cc1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=84"
+    },
+    {
+      "document_id": "87169d7bf4111907-support-1",
+      "form": "PSE common-stock data",
+      "label": "INFRA quoted common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "87169d7bf41119079b1b4cbb2d84c7d2c5d0fbd655ff043aabd1ffd8e80b7cc1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=84"
+    }
+  ],
+  "subsector": "Infrastructure and property interests",
+  "ticker": "INFRA",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No current market quote or upside is published for this suspended security.",
+    "PSE reports PHP100.923bn parent equity and PHP25.69 BVPS, but the stock snapshot shows 6.062bn outstanding versus only 1.327bn listed shares. No old denominator or project asset value is silently carried forward."
+  ]
+}

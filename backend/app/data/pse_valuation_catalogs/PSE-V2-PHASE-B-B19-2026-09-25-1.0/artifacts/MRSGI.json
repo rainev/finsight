@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "9cb0d95541a191bfee5ec0ee7a39dfc61ae0cfde3922ccb98603f99b27210881",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Same-store demand, margins, leases, inventory working capital, growth capex, and terminal assumptions are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "94e11aadb34c938fcdaad8822e59545a03925d4402930c05b1164601a9688a8f",
+  "issuer": {
+    "issuer_id": "PSE:MRSGI",
+    "name": "Metro Retail Stores Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 2.4,
+      "high": 2.88,
+      "low": 1.92
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.24,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-OPERATING-SERVICES-B14-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "d9dc6d9eeb931d00ed25af97b9bcd3d00e525afdd91bffedfeb60dfc371cf75e",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B14-1.0",
+  "numerical_range": {
+    "high": 2.88,
+    "low": 1.92
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Same-store demand, margins, leases, inventory working capital, growth capex, and terminal assumptions are not reconciled.",
+    "metric_basis": "0.21 FY2025 basic EPS + 0.07 1H2026 EPS - 0.04 prior 1H EPS",
+    "policy_rationale": "Shared finite P/E screening band for positive source-bounded per-share earnings; it numerically reuses a prior operating screen, not a peer study or intrinsic cash-flow valuation.",
+    "reliability": "Low",
+    "route_reason": "Store-level retail cash flows require normalized FCFF; P/E is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MRSGI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "d9dc6d9eeb931d00",
+      "form": "PSE quarterly financial summary",
+      "label": "MRSGI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "d9dc6d9eeb931d00ed25af97b9bcd3d00e525afdd91bffedfeb60dfc371cf75e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=659"
+    }
+  ],
+  "subsector": "Supermarket, department store, and hypermarket retail",
+  "ticker": "MRSGI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, reinvestment and common-equity claims have not been reconciled."
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "16aad35be3023aac202305837584daf0268e15e0e83c8225928328321e33c1c2",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Mineral permits and values, property interests, listed investee stakes, parent-only debt, and minority claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "88fc394004f3e6a56c15554d54d9437e28a76323969a99faaecb4dfba4acdd57",
+  "issuer": {
+    "issuer_id": "PSE:APO",
+    "name": "Anglo Philippine Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.6,
+      "high": 0.75,
+      "low": 0.45
+    },
+    "estimates": {
+      "base": 1.8299999999999998,
+      "high": 2.2874999999999996,
+      "low": 1.3725
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 3.05,
+    "note": "Analyst screening band; no peer study or attributable SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-HOLDCO-B11-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "1ea5091f8b8b590f10b73d594a05ae2f1ada70571e4c5a8c310d3ad6d8b07daa",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B11-1.0",
+  "numerical_range": {
+    "high": 2.2874999999999996,
+    "low": 1.3725
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Mineral permits and values, property interests, listed investee stakes, parent-only debt, and minority claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified holding-company screening band. It is an analyst band, not a peer study or SOTP.",
+    "reliability": "Low",
+    "route_reason": "Mineral, property, power, and investment SOTP remains primary; reported P/B is a finite screening fallback."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:APO:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "1ea5091f8b8b590f",
+      "form": "PSE quarterly financial summary",
+      "label": "APO FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "1ea5091f8b8b590f10b73d594a05ae2f1ada70571e4c5a8c310d3ad6d8b07daa",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=52"
+    }
+  ],
+  "subsector": "Natural resources, property, and infrastructure holding company",
+  "ticker": "APO",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; the component SOTP remains unresolved.",
+    "Reported P/B does not establish attributable subsidiary value, parent-only claims, or a justified holding-company discount.",
+    "APO has interests in listed resource companies including OV and AT. Their standalone screens are not additive with APO's screen."
+  ]
+}

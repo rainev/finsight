@@ -1,0 +1,201 @@
+{
+  "artifact_hash": "62f095a445f2c7f3e010b1d1fc82e0f0925afba2bef1c91fb63b4c890a04e7f2",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY2025 plus 1H2026 less 1H2025 (TTM to June 2026)",
+  "filing_published_at": "2026-08-14",
+  "input_hash": "79945155d9ddf140afe22ec3fe9325e3b33eab0df20ce5377bf01455ed3fe809",
+  "issuer": {
+    "issuer_id": "PSE:AP",
+    "name": "Aboitiz Power Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PILOT-1.1",
+  "numerical_range": {
+    "high": 65.58249250653303,
+    "low": 25.28555867271164
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "capital_bridge": {
+      "cash_php_millions": 62658.309,
+      "debt_php_millions": 325625.209,
+      "minority_value_php_millions": 21872.575,
+      "nonoperating_assets_php_millions": 138809.675,
+      "other_claims_php_millions": 3900.0,
+      "shares_millions": 7205.854307
+    },
+    "forecast_years": 5,
+    "interest_tax_shield_rate": 0.25,
+    "minority_discount_rate": 0.12,
+    "minority_distribution_growth": 0.0,
+    "normalized_fcff_proxy_php_millions": 35565.066875,
+    "proxy_receipt_sha256": "77faf0089b7726f5cc3e7a4af9a57d08728eb31ee6dca555d3b9d023c9c06a4a",
+    "reliability": "Low - calculation-only supervised test",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.035,
+        "roic": 0.12,
+        "terminal_growth": 0.03,
+        "terminal_roic": 0.11,
+        "wacc": 0.115
+      },
+      "bear": {
+        "growth_rate": 0.02,
+        "roic": 0.1,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.095,
+        "wacc": 0.125
+      },
+      "bull": {
+        "growth_rate": 0.05,
+        "roic": 0.14,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.125,
+        "wacc": 0.105
+      }
+    },
+    "starting_fcff_by_scenario_php_millions": {
+      "base": 35565.066875,
+      "bear": 34790.369,
+      "bull": 36339.76475
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 298039.71161549527,
+      "enterprise_value": 447969.51161549526,
+      "value_per_share": 41.36077402036423
+    },
+    "bear": {
+      "common_equity_value": 182204.05186666036,
+      "enterprise_value": 332133.85186666035,
+      "value_per_share": 25.28555867271164
+    },
+    "bull": {
+      "common_equity_value": 472577.8860919962,
+      "enterprise_value": 622507.6860919961,
+      "value_per_share": 65.58249250653303
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:AP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "jv_book_100_percent": 41.36077402,
+      "jv_book_120_percent": 45.213465709,
+      "jv_book_80_percent": 37.508082331,
+      "minority_equity_cost_10_percent": 40.753696107,
+      "minority_equity_cost_12_percent": 41.36077402,
+      "minority_equity_cost_15_percent": 41.967851934,
+      "tax_rate_20_percent": 42.92959586,
+      "tax_rate_25_percent": 41.36077402,
+      "type": "one_way_base_proxy_checks"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "AP-2026-1H-17Q-P3",
+      "form": "17-Q",
+      "label": "AP 1H2026 SEC Form 17-Q, PDF page 3",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-14",
+      "sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80",
+      "source_page": 3,
+      "url": "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/08/Disclosure-No.-2960-2026-Quarterly-Report-SEC-Form-17-Q.pdf"
+    },
+    {
+      "document_id": "AP-2026-1H-17Q-P12",
+      "form": "17-Q",
+      "label": "AP 1H2026 SEC Form 17-Q, PDF page 12",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-14",
+      "sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80",
+      "source_page": 12,
+      "url": "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/08/Disclosure-No.-2960-2026-Quarterly-Report-SEC-Form-17-Q.pdf"
+    },
+    {
+      "document_id": "AP-2026-1H-17Q-P14",
+      "form": "17-Q",
+      "label": "AP 1H2026 SEC Form 17-Q, PDF page 14",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-14",
+      "sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80",
+      "source_page": 14,
+      "url": "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/08/Disclosure-No.-2960-2026-Quarterly-Report-SEC-Form-17-Q.pdf"
+    },
+    {
+      "document_id": "AP-2026-1H-17Q-P17",
+      "form": "17-Q",
+      "label": "AP 1H2026 SEC Form 17-Q, PDF page 17",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-14",
+      "sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80",
+      "source_page": 17,
+      "url": "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/08/Disclosure-No.-2960-2026-Quarterly-Report-SEC-Form-17-Q.pdf"
+    },
+    {
+      "document_id": "AP-2026-1H-17Q-P28",
+      "form": "17-Q",
+      "label": "AP 1H2026 SEC Form 17-Q, PDF page 28",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-14",
+      "sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80",
+      "source_page": 28,
+      "url": "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/08/Disclosure-No.-2960-2026-Quarterly-Report-SEC-Form-17-Q.pdf"
+    },
+    {
+      "document_id": "AP-2026-1H-17Q-P46",
+      "form": "17-Q",
+      "label": "AP 1H2026 SEC Form 17-Q, PDF page 46",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-14",
+      "sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80",
+      "source_page": 46,
+      "url": "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/08/Disclosure-No.-2960-2026-Quarterly-Report-SEC-Form-17-Q.pdf"
+    },
+    {
+      "document_id": "AP-2025-17A-P291",
+      "form": "17-A",
+      "label": "AP FY2025 audited annual report, local original PDF page 291",
+      "period_end": "2025-12-31",
+      "published_at": "2026-04-15",
+      "sha256": "f1985fdc43ca7e8111d7915c9c3300ef2ca676922b43619b5659f8aface6f60b",
+      "source_page": 291,
+      "url": null
+    },
+    {
+      "document_id": "AP-2025-17A-P296",
+      "form": "17-A",
+      "label": "AP FY2025 audited annual report, local original PDF page 296",
+      "period_end": "2025-12-31",
+      "published_at": "2026-04-15",
+      "sha256": "f1985fdc43ca7e8111d7915c9c3300ef2ca676922b43619b5659f8aface6f60b",
+      "source_page": 296,
+      "url": null
+    }
+  ],
+  "subsector": "Power utility and generation",
+  "ticker": "AP",
+  "valuation_date": "2026-09-26",
+  "warnings": [
+    "Isolated calculation-only AP test; not analyst-approved, published, or active.",
+    "The 25% interest tax shield and 12% zero-growth minority-distribution hurdle are unapproved review hypotheses.",
+    "Equity-method investment book value is not independently assessed fair value; its three largest positions need economic review.",
+    "Cash-flow normalization, other claims, and the dated macro/WACC assumptions remain unapproved.",
+    "Scenario starting FCFF differs; the existing interactive calculator uses one base starting FCFF and will not replay bear/bull exactly.",
+    "Original AP filing bytes were verified temporarily; licensed durable source storage and public display rights remain unconfirmed."
+  ]
+}

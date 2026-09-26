@@ -1,0 +1,85 @@
+{
+  "artifact_hash": "8d41e4b1401c9c322a5425b9055c37964a323f003c6b483da055766c05108293",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property values, project cash flows, realization taxes, debt, and common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "1be06da3ce5e8838c09634c428eefc2b347b6f16b8b85ba5c8bb82fb99d0b3bf",
+  "issuer": {
+    "issuer_id": "PSE:PHES",
+    "name": "Philippine Estates Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.4545,
+      "high": 0.606,
+      "low": 0.303
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 1.01,
+    "note": "Analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B12-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "d229ed3c9ccd90f54b31e6b0d97f3776ffdb5e563de7bec814e822586563f6d6",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B12-1.0",
+  "numerical_range": {
+    "high": 0.606,
+    "low": 0.303
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property values, project cash flows, realization taxes, debt, and common claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified-property P/B screening band. This is not a peer study or a completed property RNAV.",
+    "reliability": "Low",
+    "route_reason": "Project and land economics require property-level RNAV/SOTP; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PHES:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "d229ed3c9ccd90f5",
+      "form": "PSE quarterly financial summary",
+      "label": "PHES FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "d229ed3c9ccd90f54b31e6b0d97f3776ffdb5e563de7bec814e822586563f6d6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=138"
+    }
+  ],
+  "subsector": "Residential and industrial property developer",
+  "ticker": "PHES",
+  "valuation_date": "2026-09-23",
+  "warnings": []
+}

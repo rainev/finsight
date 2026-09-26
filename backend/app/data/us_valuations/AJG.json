@@ -12,12 +12,12 @@
     "sec_sic_code": "6411",
     "sec_sic_label": "Insurance Agents, Brokers & Service",
     "finsight_sector": "Financials",
-    "primary_archetype": "us_insurance",
+    "primary_archetype": "insurance_brokerage",
     "secondary_archetypes": [],
-    "classification_confidence": 0.6,
-    "mapping_version": "US-ARCHETYPE-1.0",
+    "classification_confidence": 0.95,
+    "mapping_version": "US-ARCHETYPE-1.1",
     "override_applied": false,
-    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
+    "classification_reason": "Arthur J. Gallagher is a fee-based insurance broker and risk-management advisor, not a risk-bearing insurance carrier; enterprise FCFF is appropriate.",
     "source_accessions": [
       "0001628280-26-031592",
       "0001628280-26-008662",
@@ -27,7 +27,9 @@
       "0000950170-25-021775",
       "0000950170-24-118320",
       "0000950170-24-086937"
-    ]
+    ],
+    "model_route_eligible": true,
+    "model_route_reason": "Arthur J. Gallagher is a fee-based insurance broker and risk-management advisor, not a risk-bearing insurance carrier; enterprise FCFF is appropriate."
   },
   "source_financial_statement": {
     "form": "10-Q",
@@ -38,75 +40,46 @@
     "note": "Equity-level model (residual income / DDM); no enterprise-to-equity bridge."
   },
   "model_policy": {
-    "primary": "residual_income",
+    "primary": "fcff_dcf",
     "supporting": [
-      "justified_pb"
+      "epv"
     ],
     "blend_models": false,
-    "reason": "CANDIDATE (review_required) \u2014 insurance carriers/agents valued at equity level via residual income (book + excess return); FCFF does not apply. Refine with embedded-value/P&C-vs-life split."
+    "reason": "CANDIDATE (review_required) — fee-based insurance brokers and risk advisers use enterprise FCFF rather than carrier residual income; calibration remains a backtest task."
   },
   "methodology": {
     "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
     "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
     "source_policy": "SEC Companyfacts and submissions; no exchange prices"
   },
-  "public_assumptions": {
-    "cost_of_equity": 0.0873,
-    "risk_free_rate": 0.0468,
-    "equity_risk_premium": 0.045,
-    "policy_beta": 0.9,
-    "book_value_per_share": 92.54573764110549,
-    "current_roe": 0.0628391167192429,
-    "current_payout_ratio": 0.4464524765729585,
-    "terminal_roe": 0.1,
-    "terminal_growth": 0.02
-  },
+  "public_assumptions": {},
   "models": {
-    "residual_income": {
-      "model": "residual_income",
+    "fcff_dcf": {
+      "model": "fcff_dcf",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": 104.60074564925155,
-      "publication_state": "review_required",
-      "errors": [],
-      "warnings": [
-        "Single-period book/ROE snapshot; average-equity and preferred-stock refinements pending."
-      ]
+      "intrinsic_value_per_share": null,
+      "publication_state": "withheld",
+      "errors": [
+        "technical_error:ValueError:Missing annual fact for operating_income"
+      ],
+      "warnings": []
     }
   },
-  "scenarios": {
-    "bear": {
-      "residual_income": {
-        "intrinsic_value_per_share": 99.58393551714386,
-        "publication_state": "review_required"
-      }
-    },
-    "base": {
-      "residual_income": {
-        "intrinsic_value_per_share": 104.60074564925155,
-        "publication_state": "review_required"
-      }
-    },
-    "bull": {
-      "residual_income": {
-        "intrinsic_value_per_share": 131.89988155990955,
-        "publication_state": "review_required"
-      }
-    }
-  },
+  "scenarios": {},
   "scenario_range": {
-    "low": 99.58393551714386,
-    "base": 104.60074564925155,
-    "high": 131.89988155990955,
+    "low": null,
+    "base": null,
+    "high": null,
     "label": "assumption range, not a statistical confidence interval"
   },
   "review": {
-    "publication_state": "review_required",
-    "confidence_grade": "medium",
-    "errors": [],
-    "warnings": [
-      "Single-period book/ROE snapshot; average-equity and preferred-stock refinements pending."
+    "publication_state": "withheld",
+    "confidence_grade": "insufficient",
+    "errors": [
+      "technical_error:ValueError:Missing annual fact for operating_income"
     ],
+    "warnings": [],
     "prohibited_output_check": {
       "current_price": false,
       "upside_downside": false,

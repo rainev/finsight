@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "7573754966c50411a12eb46d3079e60e7906ff6ec36f6238726b91a6df0e26e7",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed property appraisal, occupancy, ADR, RevPAR, refurbishment capex, debt, and normalized margins are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "ef56cdea6de985a3c635a4e9f718326a9561155e757a0494ef3778aad481c24c",
+  "issuer": {
+    "issuer_id": "PSE:GPH",
+    "name": "Grand Plaza Hotel Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 5.575,
+      "high": 7.805,
+      "low": 3.345
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 11.15,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-ASSET-RICH-HOTEL-B10-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "9667b2d6be8df3d4c5d746c116e21bb0bc8761ef714bf89481f0b986a58bf90d",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B10-1.0",
+  "numerical_range": {
+    "high": 7.805,
+    "low": 3.345
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed property appraisal, occupancy, ADR, RevPAR, refurbishment capex, debt, and normalized margins are incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Hotel RNAV and normalized operating FCFF remain primary; P/B provides a finite asset-backed screen during current losses."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:GPH:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9667b2d6be8df3d4",
+      "form": "17-Q",
+      "label": "GPH FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "9667b2d6be8df3d4c5d746c116e21bb0bc8761ef714bf89481f0b986a58bf90d",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=221"
+    }
+  ],
+  "subsector": "Hotel ownership and operations",
+  "ticker": "GPH",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Gaming regulation, property values, ramp economics, debt, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

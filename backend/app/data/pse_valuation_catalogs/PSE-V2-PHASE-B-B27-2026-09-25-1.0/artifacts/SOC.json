@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "7a33ca5d14df83091dbcd6c769999dbdcafc03ee71004df8eba25079d39bc800",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The 1H2026 summary reports zero parent-attributable equity against positive total equity, while the 2025 annual report remains unfiled; a total-book shortcut is not a reviewed parent-common residual."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "61d929e6330caa8f4393d5c47cd61bdf586bc43663d58cf99f9ee7db9ea757e9",
+  "issuer": {
+    "issuer_id": "PSE:SOC",
+    "name": "SOCResources, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The 1H2026 summary reports zero parent-attributable equity against positive total equity, while the 2025 annual report remains unfiled; a total-book shortcut is not a reviewed parent-common residual.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Property assets require an attributable common-equity NAV and current audited base.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-08-05"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "SOC",
+    "security_id": "PSE:SOC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "2fabec767ebb9e4a",
+      "form": "PSE financial summary",
+      "label": "SOC reviewed PSE financial-summary page",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "2fabec767ebb9e4a44e8be6f077d97555a47682b264992415e0c66aeab829f31",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=161"
+    },
+    {
+      "document_id": "2fabec767ebb9e4a-support-1",
+      "form": "PSE common-stock data",
+      "label": "SOC quoted common stock data",
+      "period_end": "2026-08-05",
+      "published_at": null,
+      "sha256": "2fabec767ebb9e4a44e8be6f077d97555a47682b264992415e0c66aeab829f31",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=161&security_id=345"
+    },
+    {
+      "document_id": "2fabec767ebb9e4a-support-2",
+      "form": "PSE disclosure notice",
+      "label": "SOC continued suspension and unfiled 2025 annual report",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "2fabec767ebb9e4a44e8be6f077d97555a47682b264992415e0c66aeab829f31",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1960868"
+    }
+  ],
+  "subsector": "Property and investment holding",
+  "ticker": "SOC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "PSE 1H2026 total equity is PHP1.882bn and printed BVPS PHP2.07, but parent attribution is zero. The exchange notice says SOC remains suspended because FY2025 annual reporting is missing despite the 2Q2026 report."
+  ]
+}

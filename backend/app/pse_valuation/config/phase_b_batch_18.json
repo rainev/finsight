@@ -1,0 +1,102 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-18.0",
+  "batch_version": "PSE-V2-PHASE-B-B18-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B18-2026-09-25-1.0",
+  "universe_version": "PSE-V2-188-B18-1.0",
+  "valuation_date": "2026-09-25",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["PBC", "PTC", "V", "BKR", "APC", "IPM", "SGI", "CTS", "REG", "ECP"],
+  "policies": {
+    "bank_book": {"metric": "price_to_book", "assumptions": {"low": 0.60, "base": 0.80, "high": 1.00}, "version": "PSE-V2-PB-BANK-B18-1.0", "rationale": "Reuse the finite Batch 16 bank P/B band while regulatory capital, sustainable ROE and common-equity cost remain under review; not residual income."},
+    "layered_book": {"metric": "price_to_book", "assumptions": {"low": 0.25, "base": 0.40, "high": 0.55}, "version": "PSE-V2-PB-LAYERED-B18-1.0", "rationale": "Reuse the finite Batch 17 layered-holding P/B band on the reviewed parent-common basis where available; not appraised NAV or completed SOTP."},
+    "operating_book": {"metric": "price_to_book", "assumptions": {"low": 0.30, "base": 0.50, "high": 0.70}, "version": "PSE-V2-PB-OPERATING-B18-1.0", "rationale": "Reuse the finite Batch 17 filing-review P/B band while services cash flows and leases lack a complete FCFF bridge."}
+  },
+  "issuers": {
+    "PBC": {
+      "issuer_name": "Philippine Bank of Communications", "subsector": "Universal bank", "primary_model": "residual_income", "policy": "bank_book", "metric_kind": "reported_bvps",
+      "source": {"label": "PBC FY2025 and 1H2026 PSE financial summary, PHP thousands", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=208"},
+      "supporting_sources": [{"label": "PBC open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-10", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=208&security_id=110"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 44.74},
+      "metric_value_per_share": 44.74, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP44.74 BVPS; bank regulatory capital and sustainable ROE not inferred", "normalized_value": 44.74, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Bank common-equity economics require residual income; P/B is a separate finite screen.", "intrinsic_blocker": "Regulatory capital, loan losses, sustainable ROE, dividends and cost of equity are not reconciled.", "source_warning": "Bank assets and liabilities are not FCFF inputs; the P/B range is a low-reliability screen, not an approved residual-income model."
+    },
+    "PTC": {
+      "issuer_name": "Philippine Trust Company", "subsector": "Universal bank", "primary_model": "residual_income", "policy": "bank_book", "metric_kind": "reported_bvps",
+      "source": {"label": "PTC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=144"},
+      "supporting_sources": [{"label": "PTC open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=144"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 23.22},
+      "metric_value_per_share": 23.22, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP23.22 BVPS; zero parent fields treated as unavailable attribution", "normalized_value": 23.22, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Bank common-equity economics require residual income; P/B is a separate finite screen.", "intrinsic_blocker": "Parent-equity and parent-income fields display zero, so common attribution, capital quality, sustainable ROE and cost of equity are unresolved.", "source_warning": "The PSE summary displays zero parent-equity and parent-income fields despite positive total equity and BVPS; those zero fields are not treated as economic facts."
+    },
+    "V": {
+      "issuer_name": "Vantage Equities, Inc.", "subsector": "Financial and investment holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "V FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=65"},
+      "supporting_sources": [{"label": "V open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=65"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 2.47},
+      "metric_value_per_share": 2.47, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP2.47 BVPS; no extrapolation of investment gains", "normalized_value": 2.47, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Investments and financial subsidiaries require attributable SOTP; P/B is a separate screen.", "intrinsic_blocker": "Asset fair values, investment liquidity, ownership, debt and parent common claims are not reconciled.", "source_warning": "1H2026 parent-attributable income was far below prior 1H; P/B is not a normalized earnings estimate."
+    },
+    "BKR": {
+      "issuer_name": "Bright Kindle Resources & Investments Inc.", "subsector": "Investment holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "BKR FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=66"},
+      "supporting_sources": [{"label": "BKR open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-17", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=66"}, {"label": "BKR investment-holding company information", "form": "PSE company information", "period_end": null, "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=66"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 0.96},
+      "metric_value_per_share": 0.96, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP0.96 BVPS; investment value and distribution are not independently appraised", "normalized_value": 0.96, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Investment interests require attributable SOTP; P/B is a finite separate screen.", "intrinsic_blocker": "Associate value, investment liquidity, debt, distribution economics and parent common claims are not reconciled.", "source_warning": "PSE company information describes no operating segment and a 19.9% MARC interest. The 1H2026 reported EPS is negative despite positive attributed income; it is not used as an earnings input."
+    },
+    "APC": {
+      "issuer_name": "APC Group, Inc.", "subsector": "Renewable and investment holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "APC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=177"},
+      "supporting_sources": [{"label": "APC open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-21", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=177"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 0.02},
+      "metric_value_per_share": 0.02, "metric_label": "1H2026 PSE-reported rounded book value per share", "normalization": {"formula": "reported PHP0.02 rounded BVPS; not a funded project NAV", "normalized_value": 0.02, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Potential project and investment interests require attributable SOTP; P/B is only a preliminary screen.", "intrinsic_blocker": "Operating activity, asset rights, funding, share-listing gap and parent common claims are not reconciled.", "source_warning": "PSE FY2025 and 1H2026 summaries show zero gross revenue, losses and EPS rounded to zero. The PHP0.02 BVPS is rounded and the stock page has more outstanding than listed shares; a tiny P/B result is not an operating valuation."
+    },
+    "IPM": {
+      "issuer_name": "IPM Holdings, Inc.", "subsector": "Waste-management holding company", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "derived_parent_bvps",
+      "source": {"label": "IPM FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=4"},
+      "supporting_sources": [{"label": "IPM open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-23", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=4"}],
+      "reported_total_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 1.80},
+      "reported_parent_equity": {"period_end": "2026-06-30", "period_type": "interim", "unit_scale": "pesos", "value": 848022273},
+      "reported_shares": {"as_of": "2026-09-23", "value": 690000000, "security_type": "ordinary_common"},
+      "metric_value_per_share": 1.2290177869565217, "metric_label": "1H2026 parent equity per outstanding ordinary common share", "normalization": {"formula": "PHP848,022,273 parent equity / 690,000,000 outstanding common shares; reported total BVPS PHP1.80 is not substituted", "normalized_value": 1.2290177869565217, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Waste-management operations and ownership require attributable SOTP; parent book value is a separate screen.", "intrinsic_blocker": "Subsidiary cash flows, minority interests, debt, service contracts and parent common claims are not fully reconciled.", "source_warning": "The PSE-reported PHP1.80 BVPS follows consolidated total equity; parent equity per common share is about PHP1.229. The screen uses the parent basis and does not assume minority equity belongs to common holders."
+    },
+    "SGI": {
+      "issuer_name": "Solid Group, Inc.", "subsector": "Electronics, property and investment holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "SGI FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=160"},
+      "supporting_sources": [{"label": "SGI open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-18", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=160"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 7.16},
+      "metric_value_per_share": 7.16, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP7.16 BVPS; electronics and property components not separately valued", "normalized_value": 7.16, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Electronics, property and other investments need attributable SOTP; P/B is a finite separate screen.", "intrinsic_blocker": "Business-unit cash flows, property value, ownership, minorities, debt and parent common claims are not reconciled.", "source_warning": "1H2026 parent income declined from the prior half-year; the P/B range is not a normalized operating forecast."
+    },
+    "CTS": {
+      "issuer_name": "CTS Global Equity Group, Inc.", "subsector": "Brokerage and investment services", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "CTS FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=693"},
+      "supporting_sources": [{"label": "CTS open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=693"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 0.29},
+      "metric_value_per_share": 0.29, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP0.29 BVPS; EPS rounded to zero is not used", "normalized_value": 0.29, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Brokerage and proprietary-investment components require attributable asset/earnings review; P/B is a finite screen.", "intrinsic_blocker": "Trading-book marks, sustainable fee income, capital commitments and parent common claims are not reconciled.", "source_warning": "Reported EPS rounds to zero despite nonzero income; an EPS multiple would invent precision. P/B is preliminary and not a broker peer study."
+    },
+    "REG": {
+      "issuer_name": "Republic Glass Holdings Corporation", "subsector": "Investment and industrial-estate holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "derived_parent_bvps",
+      "source": {"label": "REG FY2025 and 1H2026 PSE financial summary, PHP thousands", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=153"},
+      "supporting_sources": [{"label": "REG open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-10", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=153"}],
+      "reported_total_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 4.00},
+      "reported_parent_equity": {"period_end": "2026-06-30", "period_type": "interim", "unit_scale": "thousands", "value": 2451235},
+      "reported_shares": {"as_of": "2026-09-10", "value": 682065632, "security_type": "ordinary_common"},
+      "metric_value_per_share": 3.5938403652040336, "metric_label": "1H2026 parent equity per outstanding ordinary common share", "normalization": {"formula": "PHP2,451,235 thousand parent equity × 1,000 / 682,065,632 outstanding common shares; reported total BVPS PHP4.00 is not substituted", "normalized_value": 3.5938403652040336, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Portfolio securities and industrial-estate interest require attributable SOTP; parent book value is a separate screen.", "intrinsic_blocker": "Investment marks, industrial-estate realizable value, minority interests and parent common claims are not reconciled.", "source_warning": "PSE-reported PHP4.00 BVPS follows total equity, while parent equity per common share is about PHP3.594. The parent basis avoids assigning minority equity to REG common holders."
+    },
+    "ECP": {
+      "issuer_name": "EasyCall Communications Philippines, Inc.", "subsector": "Managed connectivity and IT services", "primary_model": "fcff_dcf", "policy": "operating_book", "metric_kind": "derived_parent_bvps",
+      "source": {"label": "ECP FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=70"},
+      "supporting_sources": [{"label": "ECP open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=70&security_id=126"}],
+      "reported_total_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 1.89},
+      "reported_parent_equity": {"period_end": "2026-06-30", "period_type": "interim", "unit_scale": "pesos", "value": 247185590},
+      "reported_shares": {"as_of": "2026-09-11", "value": 150000000, "security_type": "ordinary_common"},
+      "metric_value_per_share": 1.6479039333333333, "metric_label": "1H2026 parent equity per outstanding ordinary common share", "normalization": {"formula": "PHP247,185,590 parent equity / 150,000,000 outstanding common shares; reported total BVPS PHP1.89 is not substituted", "normalized_value": 1.6479039333333333, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Managed connectivity and IT service cash flows require FCFF; parent book value is a separate screen.", "intrinsic_blocker": "Recurring service margins, customer contracts, lease debt, capex, minority claims and terminal cash flows are not reconciled.", "source_warning": "Reported BVPS follows total equity; parent equity per common share is about PHP1.648. FY2025 was a loss even though 1H2026 income improved; do not extrapolate either period."
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "978e25f5488da6236f2b5310dc09fc6fbc51db86a547d586e2d8cca304648d37",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property fair values, recurring cash flows, losses, debt, minority interests, and common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "cd4b53acfcf0e7e289f4db7aa2b4566610146c01d7bc33ae1eb6a77377b0eb04",
+  "issuer": {
+    "issuer_id": "PSE:RLT",
+    "name": "Philippine Realty and Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.324,
+      "high": 0.432,
+      "low": 0.216
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 0.72,
+    "note": "Analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B12-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "eb3b785d39219fab4c814e406a2a8316a86b743da9dc9513d982cbf4d4761862",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B12-1.0",
+  "numerical_range": {
+    "high": 0.432,
+    "low": 0.216
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property fair values, recurring cash flows, losses, debt, minority interests, and common claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified-property P/B screening band. This is not a peer study or a completed property RNAV.",
+    "reliability": "Low",
+    "route_reason": "Property assets and recurring rents require RNAV/SOTP; P/B is a separate finite screen during loss and claim review."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:RLT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "eb3b785d39219fab",
+      "form": "PSE quarterly financial summary",
+      "label": "RLT FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "eb3b785d39219fab4c814e406a2a8316a86b743da9dc9513d982cbf4d4761862",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=40"
+    }
+  ],
+  "subsector": "Property development and leasing",
+  "ticker": "RLT",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "FY2025 reported attributable income was negative. The P/B screen is not an earnings-based valuation."
+  ]
+}

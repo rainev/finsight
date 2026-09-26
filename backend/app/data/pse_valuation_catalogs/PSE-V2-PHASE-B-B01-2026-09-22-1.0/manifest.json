@@ -1,0 +1,180 @@
+{
+  "artifact_count": 18,
+  "availability_counts": {
+    "intrinsic_valuation": 11,
+    "market_relative_only": 7,
+    "not_available": 0
+  },
+  "batch": {
+    "active_parent_catalog": "PSE-V2-PILOT-2026-09-21-1.1",
+    "batch_version": "PSE-V2-PHASE-B-B01-1.0",
+    "frozen_tickers": [
+      "BPI",
+      "MBT",
+      "SECB",
+      "CBC",
+      "EW",
+      "RCR",
+      "MREIT",
+      "CREIT",
+      "FILRT",
+      "DDMPR"
+    ]
+  },
+  "catalog_status": "staged",
+  "catalog_version": "PSE-V2-PHASE-B-B01-2026-09-22-1.0",
+  "entries": [
+    {
+      "artifact_sha256": "e256cfacbfc1368a8b90a1af893cb0c47c4a69c7944d0f38b7250189e0207366",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AC-SOURCE-1.0",
+      "ticker": "AC"
+    },
+    {
+      "artifact_sha256": "03254d18373317999a3efa0cc436be21064aeaae4a6b832323b663860be42a2d",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-ACR-SOURCE-1.0",
+      "ticker": "ACR"
+    },
+    {
+      "artifact_sha256": "da21fa64cfeee94164f28a66fbcb6765fb24ea5adbfa7f45e1864b510c6b968a",
+      "availability_type": "market_relative_only",
+      "primary_model": "normalized_fcff",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-ALI-SOURCE-1.0",
+      "ticker": "ALI"
+    },
+    {
+      "artifact_sha256": "91f91c281bf64694388ca09283a7f6b89c582c6f8d2e3431ae98f259d537f894",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AP-SOURCE-1.0",
+      "ticker": "AP"
+    },
+    {
+      "artifact_sha256": "2ba42aac06f17fcba2c4faf10167de5fe8c7b1ff62b7934be4d43b720c4ad9d5",
+      "availability_type": "market_relative_only",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AREIT-SOURCE-1.0",
+      "ticker": "AREIT"
+    },
+    {
+      "artifact_sha256": "97bf7e854010a7b2ab9c2f23da2dc1ed5c8e4cdd26b3cbf42ca49b958bd0163c",
+      "availability_type": "market_relative_only",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-BDO-SOURCE-1.0",
+      "ticker": "BDO"
+    },
+    {
+      "artifact_sha256": "7e817c43750a7373611ea2ee651b17901685594fecdf85ee1bde272860014ce6",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-BPI-SOURCE-1.0",
+      "ticker": "BPI"
+    },
+    {
+      "artifact_sha256": "23f7f63f99ec60dd10fcf3a927e772c205f7a40e28b61f6e790bd88ab3ef297f",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-CBC-SOURCE-1.0",
+      "ticker": "CBC"
+    },
+    {
+      "artifact_sha256": "22d9c8afd9d595ece059f69b2805a5def78f43b2d46ce9dc784db6459e457002",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-CREIT-SOURCE-1.0",
+      "ticker": "CREIT"
+    },
+    {
+      "artifact_sha256": "13b561c2026db5e005c31ca52ab59092f31ac4582c0aad75da0f8a1c25a531af",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-DDMPR-SOURCE-1.0",
+      "ticker": "DDMPR"
+    },
+    {
+      "artifact_sha256": "80f91b9d9398621b5382700e759ec0f29b13d55f58c18382f6a730b5bca68445",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-EW-SOURCE-1.0",
+      "ticker": "EW"
+    },
+    {
+      "artifact_sha256": "6a3b824b0fd8354bde088954da470f069f2d0f298d6429af0a5362ebf6fc8449",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-FILRT-SOURCE-1.0",
+      "ticker": "FILRT"
+    },
+    {
+      "artifact_sha256": "529230bbcd420fabc138846e21feb409d6079b23990e995dabd2c2863365e483",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-MBT-SOURCE-1.0",
+      "ticker": "MBT"
+    },
+    {
+      "artifact_sha256": "4d4e9e3184441066006e915b1789688a83d5dedf3dd01b353e7512c2a9c02ac6",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-MREIT-SOURCE-1.0",
+      "ticker": "MREIT"
+    },
+    {
+      "artifact_sha256": "939d077ccc7dac294f5214fa495c70d8283af5270fc0136102b7fcef4cb471ec",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-PERC-SOURCE-1.0",
+      "ticker": "PERC"
+    },
+    {
+      "artifact_sha256": "51a4595c1e5355124ad4a361ac8bc901882d79ce9dc23643240aec507629675d",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-RCR-SOURCE-1.0",
+      "ticker": "RCR"
+    },
+    {
+      "artifact_sha256": "b7539a512d0c9f980d3ab3efe43da13249753fa66dfc3891e6308820d910b0db",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-SCC-SOURCE-1.0",
+      "ticker": "SCC"
+    },
+    {
+      "artifact_sha256": "5465a2be27981cf64e24f70121060587ad8b0e2e4baec1978d8aad90c8495166",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PHASE-B-B01-SECB-SOURCE-1.0",
+      "ticker": "SECB"
+    }
+  ],
+  "publication_counts": {
+    "approved": 0,
+    "blocked": 0,
+    "provisional": 18
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-CATALOG-1.0",
+  "universe_version": "PSE-V2-18-B01-1.0",
+  "valuation_date": "2026-09-22"
+}

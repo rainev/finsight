@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "5dfae38db0cacfcff4f181f7675d4a519ac7e58ae06b985bb78a897ff5f9b4c4",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Occupancy, lease terms, property fair value, maintenance capex, tax and common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "9844987f19774e9ba2dcaf093a5869f315c7575fca8bd9c21df02ae54ce71d46",
+  "issuer": {
+    "issuer_id": "PSE:KPPI",
+    "name": "Kepwealth Property Phils., Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 1.917,
+      "high": 2.556,
+      "low": 1.278
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 4.26,
+    "note": "Finite analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B15-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "567d912086fd7dd89c97b2c4311dc0f5d202bd417e23b8ef1a8ccd0974bcd5e0",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B15-1.0",
+  "numerical_range": {
+    "high": 2.556,
+    "low": 1.278
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Occupancy, lease terms, property fair value, maintenance capex, tax and common claims are not reconciled.",
+    "metric_basis": "PSE-reported PHP book value per share; no property fair-value adjustment",
+    "policy_rationale": "Reuse the reviewed Batch 12 diversified-property P/B screening band for positive reported BVPS; this is not a peer study or a completed property RNAV/SOTP.",
+    "reliability": "Low",
+    "route_reason": "Concentrated office property requires rental economics and asset NAV; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:KPPI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "567d912086fd7dd8",
+      "form": "PSE quarterly financial summary",
+      "label": "KPPI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "567d912086fd7dd89c97b2c4311dc0f5d202bd417e23b8ef1a8ccd0974bcd5e0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=672"
+    },
+    {
+      "document_id": "567d912086fd7dd8-support",
+      "form": "PSE company information",
+      "label": "KPPI PSE company information and Cebu office assets",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "567d912086fd7dd89c97b2c4311dc0f5d202bd417e23b8ef1a8ccd0974bcd5e0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=672"
+    }
+  ],
+  "subsector": "Office property ownership and leasing",
+  "ticker": "KPPI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Reported book value is not a completed property RNAV or peer-calibrated target.",
+    "KPPI is concentrated in one Cebu office building; this book-value screen is not an independent property appraisal."
+  ]
+}

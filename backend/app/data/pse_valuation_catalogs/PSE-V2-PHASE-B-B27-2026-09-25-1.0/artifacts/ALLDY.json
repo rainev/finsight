@@ -1,0 +1,81 @@
+{
+  "artifact_hash": "e1aaa461ab358bd383f0559a5b72352a3f0fc0e467eec49610443327f2266d75",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2025, the stock is suspended and 2025 YTD earnings are negative; current funding and operating economics are not source-bounded."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "18004dedf4a16a52686e27c64667bc70232041a804fad7c4e89f447db46f542d",
+  "issuer": {
+    "issuer_id": "PSE:ALLDY",
+    "name": "AllDay Marts, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, the stock is suspended and 2025 YTD earnings are negative; current funding and operating economics are not source-bounded.",
+    "metric_basis": "PHP parent equity (pesos) / 22,857,145,000 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Retail requires normalized operating cash flow and funding forecasts for FCFF.",
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-10"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "ALLDY",
+    "security_id": "PSE:ALLDY:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "eb92abe0793bb017",
+      "form": "PSE financial summary",
+      "label": "ALLDY reviewed PSE financial summary",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "eb92abe0793bb0178affbc94edf1ae843d3b87781fd16d0d79aee97f13b4e25f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=686"
+    },
+    {
+      "document_id": "eb92abe0793bb017-support-1",
+      "form": "PSE common-stock data",
+      "label": "ALLDY ordinary common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "eb92abe0793bb0178affbc94edf1ae843d3b87781fd16d0d79aee97f13b4e25f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=686"
+    }
+  ],
+  "subsector": "Retail",
+  "ticker": "ALLDY",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "PSE FY2024/3Q2025 summaries are historical. The September 2026 stock snapshot marks ordinary common shares suspended; no stale June 2026 close is treated as current."
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "artifact_hash": "abb8bc645dd5fe2479681ab4499115116280df30f64ac1964b32dd6faf0fdbf8",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "25acede247a3a0a4edf24c9c0f51c48bbc2e2d22076e2ce61ef25b252808c3c6",
+  "issuer": {
+    "issuer_id": "PSE:WLCON",
+    "name": "Wilcon Depot, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 13.493925401331442,
+    "low": 4.752872410833716
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "capital_bridge": {
+      "cash_php_millions": 2570.708527,
+      "debt_includes_lease_liabilities": true,
+      "debt_php_millions": 9800.298592,
+      "minority_value_php_millions": 0.0,
+      "nonoperating_assets_php_millions": 0.0,
+      "other_claims_php_millions": 0.0,
+      "preferred_claims_php_millions": 0.0,
+      "shares_millions": 4099.724116
+    },
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE additions",
+    "normalized_fcff_proxy_php_millions": 3362.892095,
+    "policy_version": "PSE-V2-FCFF-RETAIL-B02-1.0",
+    "reliability": "Low",
+    "route_reason": "Store economics, operating cash flow, and reinvestment drive enterprise value.",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.035,
+        "roic": 0.12,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.1,
+        "wacc": 0.12
+      },
+      "bear": {
+        "growth_rate": 0.01,
+        "roic": 0.09,
+        "terminal_growth": 0.015,
+        "terminal_roic": 0.085,
+        "wacc": 0.135
+      },
+      "bull": {
+        "growth_rate": 0.06,
+        "roic": 0.15,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.12,
+        "wacc": 0.105
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 32013.551169130893,
+      "enterprise_value": 39243.14123413089,
+      "value_per_share": 7.808708650465419
+    },
+    "bear": {
+      "common_equity_value": 19485.46564296605,
+      "enterprise_value": 26715.05570796605,
+      "value_per_share": 4.752872410833716
+    },
+    "bull": {
+      "common_equity_value": 55321.3713873435,
+      "enterprise_value": 62550.961452343494,
+      "value_per_share": 13.493925401331442
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:WLCON:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "normalized_fcff",
+        "growth_rate",
+        "roic",
+        "wacc",
+        "terminal_growth",
+        "terminal_roic",
+        "capital_bridge"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "7cfceb66c257c869",
+      "form": "17-A",
+      "label": "WLCON FY2025 annual report fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "7cfceb66c257c86951e725ad0b27bf8d37da485b3a3aa1547b5cb0146fcb556e",
+      "source_page": 57,
+      "url": "https://investor.wilcon.com.ph/wp-content/uploads/2026/04/WLCON-2025-17A-Annual-Report-with-Exhibits-PSE-submission_1.pdf"
+    }
+  ],
+  "subsector": "Home-improvement retail",
+  "ticker": "WLCON",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate using a three-year median owner-cash proxy rather than a full issuer forecast.",
+    "Lease liabilities are included in debt; lease principal is not separately deducted from the owner-cash proxy.",
+    "Policy bands and terminal economics remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

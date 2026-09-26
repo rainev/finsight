@@ -1,0 +1,79 @@
+{
+  "artifact_hash": "8517daa46100011b5c2683729d060aca03d7695971749e8824810e01a3a59039",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "No reviewer-approved dated CAD/PHP observation, insurer common-claim bridge, or sustainable ROE/capital case is available."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "c9be7c4ab76d48ad45beec8a4bd7786229c6b6a0ee180450553cc730453d374e",
+  "issuer": {
+    "issuer_id": "PSE:SLF",
+    "name": "Sun Life Financial Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "intrinsic_blocker": "No reviewer-approved dated CAD/PHP observation, insurer common-claim bridge, or sustainable ROE/capital case is available.",
+    "metric_basis": "CAD total equity (millions) / 556,714,560 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "A cross-listed insurer requires common-capital residual income and approved CAD/PHP translation.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "SLF",
+    "security_id": "PSE:SLF:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "47b7203df8a85ed8",
+      "form": "PSE financial summary",
+      "label": "SLF FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "47b7203df8a85ed8d9fb9e979f6233345f0be6ca751f02b6345cf232f218e38c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=78"
+    },
+    {
+      "document_id": "47b7203df8a85ed8-support-1",
+      "form": "PSE common-stock data",
+      "label": "SLF ordinary common common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "47b7203df8a85ed8d9fb9e979f6233345f0be6ca751f02b6345cf232f218e38c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=78"
+    }
+  ],
+  "subsector": "Cross-listed insurance",
+  "ticker": "SLF",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE summary reports equity in C$ millions and parent attribution is blank. Reported C$42.49 BVPS cannot be presented as PHP per share; cross-listed market price is not a substitute."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "6dbf1c18dd0e8b248c0768f0f2f2b84bff08176d57381930d37e7753842d1032",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Investment realizability, debt, parent claims and large minority interests are unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "d2a99e75215bd05280e910a7d57a0d35b670c68801f84055e743034212a79b9e",
+  "issuer": {
+    "issuer_id": "PSE:MHC",
+    "name": "Mabuhay Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.052841362,
+      "high": 0.072656872,
+      "low": 0.033025851
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.13210340416666666,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B21-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "7d9d533c66a98a273f25f843922d1da099013b50efba4964ff20749b3d6e17a3",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B21-1.0",
+  "numerical_range": {
+    "high": 0.072656872,
+    "low": 0.033025851
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Investment realizability, debt, parent claims and large minority interests are unresolved.",
+    "metric_basis": "PHP parent equity (pesos) / 1,200,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/asset P/B screening band; no peer calibration, appraised NAV or completed attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Investment subsidiaries and minority interests require attributable SOTP; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MHC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "7d9d533c66a98a27",
+      "form": "PSE financial summary",
+      "label": "MHC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "7d9d533c66a98a273f25f843922d1da099013b50efba4964ff20749b3d6e17a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=206"
+    },
+    {
+      "document_id": "7d9d533c66a98a27-support-1",
+      "form": "PSE common-stock data",
+      "label": "MHC open ordinary-common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "7d9d533c66a98a273f25f843922d1da099013b50efba4964ff20749b3d6e17a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=206"
+    }
+  ],
+  "subsector": "Investment holding",
+  "ticker": "MHC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE PHP0.34 BVPS follows PHP406.812m total equity; only PHP158.524m parent equity is screened across 1.2bn common shares. FY2025 and 1H2026 parent results were losses."
+  ]
+}

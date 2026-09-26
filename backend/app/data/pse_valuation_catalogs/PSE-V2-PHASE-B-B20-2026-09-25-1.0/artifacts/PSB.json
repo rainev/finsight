@@ -1,0 +1,114 @@
+{
+  "artifact_hash": "3ce5ec67d7d4d8fad44316d4b2fc75f4d9ec114a7f757ccedfd63df2464a2948",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "e6c7417108484096fabb66e662d10f3d05098c7d95254e48e640aadefdda1a5f",
+  "issuer": {
+    "issuer_id": "PSE:PSB",
+    "name": "Philippine Savings Bank"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B05-1.0",
+  "numerical_range": {
+    "high": 88.72933293404036,
+    "low": 50.92987411861971
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "book_value_per_share": 108.0,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalized_roe": 0.07763323746442885,
+    "policy_version": "PSE-V2-BANK-RI-B05-1.0",
+    "reliability": "Low",
+    "route_reason": "Book capital and returns above cost of equity drive common-equity value.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.12052,
+        "current_roe": 0.07763323746442885,
+        "payout_ratio": 0.3,
+        "terminal_growth": 0.03,
+        "terminal_roe": 0.09
+      },
+      "bear": {
+        "cost_of_equity": 0.13552,
+        "current_roe": 0.06598825184476452,
+        "payout_ratio": 0.25,
+        "terminal_growth": 0.02,
+        "terminal_roe": 0.08
+      },
+      "bull": {
+        "cost_of_equity": 0.11052,
+        "current_roe": 0.08539656121087175,
+        "payout_ratio": 0.35,
+        "terminal_growth": 0.04,
+        "terminal_roe": 0.1
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 28924.258061663626,
+      "enterprise_value": null,
+      "value_per_share": 67.76197512861248
+    },
+    "bear": {
+      "common_equity_value": 21739.46109538622,
+      "enterprise_value": null,
+      "value_per_share": 50.92987411861971
+    },
+    "bull": {
+      "common_equity_value": 37874.192990277494,
+      "enterprise_value": null,
+      "value_per_share": 88.72933293404036
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PSB:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_roe",
+        "terminal_roe",
+        "cost_of_equity",
+        "payout_ratio",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "b3123a2f67860d23",
+      "form": "17-A",
+      "label": "PSB FY2025 PSE financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "b3123a2f67860d23d883da236ad2d7fe7071a951bd2d3428735134dc9f36d13b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=142"
+    }
+  ],
+  "subsector": "Thrift and consumer bank",
+  "ticker": "PSB",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Provisional residual-income estimate based on reviewed FY2025 public filing facts and a versioned shared financial policy.",
+    "Capital quality, asset quality, underwriting quality, and market multiples remain challenge checks rather than direct model inputs.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed."
+  ]
+}

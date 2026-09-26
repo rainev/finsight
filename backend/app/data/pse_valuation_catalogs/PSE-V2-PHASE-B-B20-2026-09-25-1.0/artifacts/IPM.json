@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "9c10a683e8bc64762f75d00c397c909416030d5a9ec5659d10c6de3c4e4f8369",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Subsidiary cash flows, minority interests, debt, service contracts and parent common claims are not fully reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "2eb8e3d056a150b0ea287861448928ee465544c3e117b41de63f6cbffa22f503",
+  "issuer": {
+    "issuer_id": "PSE:IPM",
+    "name": "IPM Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.491607115,
+      "high": 0.675959783,
+      "low": 0.307254447
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 1.2290177869565218,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "7618f835e5644e4f3e7e75a008bdd740fa9e1e4dd8f018b2637cec95bc82c18b",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 0.675959783,
+    "low": 0.307254447
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Subsidiary cash flows, minority interests, debt, service contracts and parent common claims are not fully reconciled.",
+    "metric_basis": "PHP848,022,273 parent equity / 690,000,000 outstanding common shares; reported total BVPS PHP1.80 is not substituted",
+    "policy_rationale": "Reuse the finite Batch 17 layered-holding P/B band on the reviewed parent-common basis where available; not appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Waste-management operations and ownership require attributable SOTP; parent book value is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:IPM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "7618f835e5644e4f",
+      "form": "PSE quarterly financial summary",
+      "label": "IPM FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "7618f835e5644e4f3e7e75a008bdd740fa9e1e4dd8f018b2637cec95bc82c18b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=4"
+    },
+    {
+      "document_id": "7618f835e5644e4f-support-1",
+      "form": "PSE common-stock data",
+      "label": "IPM open ordinary-common stock data",
+      "period_end": "2026-09-23",
+      "published_at": null,
+      "sha256": "7618f835e5644e4f3e7e75a008bdd740fa9e1e4dd8f018b2637cec95bc82c18b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=4"
+    }
+  ],
+  "subsector": "Waste-management holding company",
+  "ticker": "IPM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "The PSE-reported PHP1.80 BVPS follows consolidated total equity; parent equity per common share is about PHP1.229. The screen uses the parent basis and does not assume minority equity belongs to common holders."
+  ]
+}

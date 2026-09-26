@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "2c5852a1c770c8d8dee9caaf182fb50979eec775e82f1f2a499db3297fa5dfe8",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A property-level RNAV with township fair values, REIT look-through, preferred claims, and net debt is not yet reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "e39e01e2a7dd30afe2ce7f278503c24f6d8ce4c9577a35a17a94e55813c14bcf",
+  "issuer": {
+    "issuer_id": "PSE:MEG",
+    "name": "Megaworld Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 3.7035000000000005,
+      "high": 4.938,
+      "low": 2.469
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported parent book value per common share",
+    "metric_value_per_share": 8.23,
+    "note": "Transparent P/B-to-reported-NAV screen while the component-level SOTP or property RNAV remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B03-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "32846ae70340644b2f1736d6a473194cefe402b7c3a7c69e928bb3ac19870125",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B03-1.0",
+  "numerical_range": {
+    "high": 4.938,
+    "low": 2.469
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A property-level RNAV with township fair values, REIT look-through, preferred claims, and net debt is not yet reconciled.",
+    "policy_rationale": "Shared P/B-to-reported-NAV screen for diversified property developers pending property-level RNAV reconciliation.",
+    "reliability": "Low",
+    "reported_parent_equity_php_millions": 267381.462132,
+    "route_reason": "Property RNAV remains primary; a P/B-to-reported-NAV screen provides a finite result while property-level fair values and claims are reconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MEG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "32846ae70340644b",
+      "form": "17-A",
+      "label": "MEG FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "32846ae70340644b2f1736d6a473194cefe402b7c3a7c69e928bb3ac19870125",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=127"
+    }
+  ],
+  "subsector": "Integrated property developer",
+  "ticker": "MEG",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved component SOTP or property RNAV.",
+    "Reported book value is an accounting measure and may differ materially from current asset fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

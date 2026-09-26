@@ -14,6 +14,7 @@ from .assumptions import (
     derive_forecast_assumptions,
     load_issuer_forecast_evidence,
 )
+from .automated_review import repair_provenance_from_submissions
 from .classification import classify_issuer
 from .eligibility import model_eligibility
 from .equity_models import build_equity_level_result
@@ -267,6 +268,8 @@ def _withheld_segment_evidence_result(
                 "mapping_version",
                 "override_applied",
                 "classification_reason",
+                "model_route_eligible",
+                "model_route_reason",
                 "source_accessions",
             )
         },
@@ -365,6 +368,8 @@ def _withheld_eligibility_result(
         "mapping_version",
         "override_applied",
         "classification_reason",
+        "model_route_eligible",
+        "model_route_reason",
         "source_accessions",
     )
     withheld_model = {
@@ -397,6 +402,11 @@ def _withheld_eligibility_result(
             "base": None,
             "high": None,
             "label": "assumption range, not a statistical confidence interval",
+        },
+        "methodology": {
+            "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
+            "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
+            "source_policy": "SEC Companyfacts and submissions; no exchange prices",
         },
         "review": {
             "publication_state": "withheld",
@@ -448,12 +458,13 @@ def build_us_valuation(
     # Dispatch archetypes FCFF cannot value (banks -> residual income, utilities
     # -> DDM) to the equity-level path before the enterprise FCFF normalization.
     if eligibility["model"] in ("residual_income", "ddm", "ffo"):
-        return build_equity_level_result(
+        equity_result = build_equity_level_result(
             classification=classification,
             companyfacts=companyfacts,
             valuation_date=valuation_date,
             source_manifest=source_manifest,
         )
+        return repair_provenance_from_submissions(equity_result, submissions)
     recent_filings = submissions.get("filings", {}).get("recent", {})
     filing_records = [
         {
@@ -590,6 +601,8 @@ def build_us_valuation(
                 "mapping_version",
                 "override_applied",
                 "classification_reason",
+                "model_route_eligible",
+                "model_route_reason",
                 "source_accessions",
             )
         },

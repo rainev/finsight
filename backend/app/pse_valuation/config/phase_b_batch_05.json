@@ -1,0 +1,64 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-5.0",
+  "batch_version": "PSE-V2-PHASE-B-B05-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B05-2026-09-23-1.0",
+  "universe_version": "PSE-V2-58-B05-1.0",
+  "valuation_date": "2026-09-23",
+  "review_status": "reviewed_public_fact_receipts",
+  "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+  "frozen_tickers": ["PNB", "RCB", "UBP", "AUB", "PBB", "PSB", "COL", "PSE", "NRCP", "MFIN"],
+  "residual_policies": {
+    "bank": {
+      "version": "PSE-V2-BANK-RI-B05-1.0",
+      "forecast_years": 5,
+      "scenarios": {
+        "bear": {"current_roe_factor": 0.85, "terminal_roe_factor": 0.75, "terminal_roe_floor": 0.08, "terminal_roe_cap": 0.11, "cost_of_equity": 0.13552, "payout_ratio": 0.25, "terminal_growth": 0.02},
+        "base": {"current_roe_factor": 1.0, "terminal_roe_factor": 0.85, "terminal_roe_floor": 0.09, "terminal_roe_cap": 0.13, "cost_of_equity": 0.12052, "payout_ratio": 0.30, "terminal_growth": 0.03},
+        "bull": {"current_roe_factor": 1.1, "terminal_roe_factor": 0.95, "terminal_roe_floor": 0.10, "terminal_roe_cap": 0.145, "cost_of_equity": 0.11052, "payout_ratio": 0.35, "terminal_growth": 0.04}
+      },
+      "rationale": "FY2025 attributable earnings are normalized against average FY2024-FY2025 common equity under the confirmed shared bank policy."
+    },
+    "other_financial": {
+      "version": "PSE-V2-OTHER-FIN-RI-B05-1.0",
+      "forecast_years": 5,
+      "scenarios": {
+        "bear": {"current_roe_factor": 0.80, "terminal_roe_factor": 0.70, "terminal_roe_floor": 0.05, "terminal_roe_cap": 0.10, "cost_of_equity": 0.14, "payout_ratio": 0.30, "terminal_growth": 0.015},
+        "base": {"current_roe_factor": 1.0, "terminal_roe_factor": 0.80, "terminal_roe_floor": 0.06, "terminal_roe_cap": 0.12, "cost_of_equity": 0.12, "payout_ratio": 0.45, "terminal_growth": 0.025},
+        "bull": {"current_roe_factor": 1.10, "terminal_roe_factor": 0.90, "terminal_roe_floor": 0.07, "terminal_roe_cap": 0.14, "cost_of_equity": 0.105, "payout_ratio": 0.55, "terminal_growth": 0.035}
+      },
+      "rationale": "Shared residual-income policy for fee-based, insurance, and lending financials with higher payout assumptions and wider profitability sensitivity."
+    }
+  },
+  "relative_policies": {
+    "lender_review": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "metric_value_key": "book_value_per_share",
+      "metric_label": "FY2025 reported book value per common share",
+      "assumptions": {"low": 0.60, "base": 0.80, "high": 1.00},
+      "policy_version": "PSE-V2-PB-LENDER-REVIEW-B05-1.0",
+      "rationale": "P/B screen while the latest interim loss prevents using FY2025 profitability as a current intrinsic baseline."
+    },
+    "fee_platform_review": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_value_key": "basic_eps",
+      "metric_label": "FY2025 reported basic earnings per share",
+      "assumptions": {"low": 10.0, "base": 12.0, "high": 14.0},
+      "policy_version": "PSE-V2-PE-FEE-PLATFORM-B05-1.0",
+      "rationale": "P/E screen while the reported parent-equity and BVPS bridge remains unresolved after the PDS transaction."
+    }
+  },
+  "issuers": {
+    "PNB": {"issuer_name": "Philippine National Bank", "subsector": "Commercial and universal bank", "primary_model": "residual_income", "route_reason": "Book capital and returns above cost of equity drive common-equity value.", "availability": "intrinsic_valuation", "policy": "bank", "source": {"label": "PNB FY2025 PSE financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=139"}, "facts": {"parent_common_equity_php_millions": 236353.917, "prior_parent_common_equity_php_millions": 212846.973, "net_income_to_parent_php_millions": 25255.162, "book_value_per_share": 154.91, "basic_eps": 16.55}},
+    "RCB": {"issuer_name": "Rizal Commercial Banking Corporation", "subsector": "Commercial and universal bank", "primary_model": "residual_income", "route_reason": "Book capital and returns above cost of equity drive common-equity value.", "availability": "intrinsic_valuation", "policy": "bank", "source": {"label": "RCB FY2025 PSE and audited financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1896992"}, "facts": {"parent_common_equity_php_millions": 151159.0, "prior_parent_common_equity_php_millions": 158482.0, "net_income_to_parent_php_millions": 10559.0, "book_value_per_share": 62.46, "basic_eps": 4.06}},
+    "UBP": {"issuer_name": "Union Bank of the Philippines", "subsector": "Commercial and universal bank", "primary_model": "residual_income", "route_reason": "Book capital and returns above cost of equity drive common-equity value.", "availability": "intrinsic_valuation", "policy": "bank", "source": {"label": "UBP FY2025 PSE financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=167"}, "facts": {"parent_common_equity_php_millions": 202060.759, "prior_parent_common_equity_php_millions": 195207.637, "net_income_to_parent_php_millions": 9940.961, "book_value_per_share": 60.93, "basic_eps": 3.00}},
+    "AUB": {"issuer_name": "Asia United Bank Corporation", "subsector": "Commercial and universal bank", "primary_model": "residual_income", "route_reason": "Book capital and returns above cost of equity drive common-equity value.", "availability": "intrinsic_valuation", "policy": "bank", "source": {"label": "AUB FY2025 PSE financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=641"}, "facts": {"parent_common_equity_php_millions": 69115.599, "prior_parent_common_equity_php_millions": 58146.849, "net_income_to_parent_php_millions": 12712.732, "book_value_per_share": 47.47, "basic_eps": 8.73}},
+    "PBB": {"issuer_name": "Philippine Business Bank", "subsector": "Thrift bank", "primary_model": "residual_income", "route_reason": "Book capital and returns above cost of equity drive common-equity value.", "availability": "intrinsic_valuation", "policy": "bank", "source": {"label": "PBB FY2025 PSE financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=640"}, "facts": {"parent_common_equity_php_millions": 21169.0, "prior_parent_common_equity_php_millions": 19360.0, "net_income_to_parent_php_millions": 1896.0, "book_value_per_share": 25.10, "basic_eps": 2.27}},
+    "PSB": {"issuer_name": "Philippine Savings Bank", "subsector": "Thrift and consumer bank", "primary_model": "residual_income", "route_reason": "Book capital and returns above cost of equity drive common-equity value.", "availability": "intrinsic_valuation", "policy": "bank", "source": {"label": "PSB FY2025 PSE financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=142"}, "facts": {"parent_common_equity_php_millions": 46099.894, "prior_parent_common_equity_php_millions": 44105.928, "net_income_to_parent_php_millions": 3501.485, "book_value_per_share": 108.0, "basic_eps": 8.20}},
+    "COL": {"issuer_name": "COL Financial Group, Inc.", "subsector": "Online brokerage and fund distribution", "primary_model": "residual_income", "route_reason": "Fee-based earnings and returns on common equity support a direct equity valuation.", "availability": "intrinsic_valuation", "policy": "other_financial", "source": {"label": "COL FY2025 PSE financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=601"}, "facts": {"parent_common_equity_php_millions": 2502.793618, "prior_parent_common_equity_php_millions": 2349.303418, "net_income_to_parent_php_millions": 514.752535, "book_value_per_share": 0.41, "basic_eps": 0.09}},
+    "PSE": {"issuer_name": "The Philippine Stock Exchange, Inc.", "subsector": "Securities exchange operator", "primary_model": "residual_income", "route_reason": "Residual income remains primary, but the reported parent-equity and per-share bridge requires reconciliation after the PDS transaction.", "availability": "market_relative_only", "policy": "fee_platform_review", "source": {"label": "PSE FY2025 financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=478"}, "facts": {"basic_eps": 14.11, "book_value_per_share": 67.35, "reported_equity_php_millions": 5516.739845, "intrinsic_blocker": "Reported parent equity exceeds consolidated equity and does not reconcile cleanly to reported BVPS and ordinary shares after the PDS transaction."}},
+    "NRCP": {"issuer_name": "National Reinsurance Corporation of the Philippines", "subsector": "Reinsurance", "primary_model": "residual_income", "route_reason": "Underwriting capital and returns on book equity drive common-equity value.", "availability": "intrinsic_valuation", "policy": "other_financial", "source": {"label": "NRCP FY2025 PSE financial report", "form": "17-A", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=606"}, "facts": {"parent_common_equity_php_millions": 7733.089, "prior_parent_common_equity_php_millions": 6864.473, "net_income_to_parent_php_millions": 829.490, "book_value_per_share": 3.64, "basic_eps": 0.39}},
+    "MFIN": {"issuer_name": "Makati Finance Corporation", "subsector": "Consumer and small-business finance", "primary_model": "residual_income", "route_reason": "Residual income remains primary, but the 2026 first-half loss makes FY2025 profitability unsuitable as a current intrinsic baseline.", "availability": "market_relative_only", "policy": "lender_review", "source": {"label": "MFIN FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2025-12-31", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=263"}, "facts": {"book_value_per_share": 2.16, "reported_equity_php_millions": 597.205933, "latest_interim_net_loss_php_millions": -61.919991, "intrinsic_blocker": "The 2026 first-half loss conflicts with FY2025 profitability, so a current residual-income baseline requires refreshed normalization."}}
+  }
+}

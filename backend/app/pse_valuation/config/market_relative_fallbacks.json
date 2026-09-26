@@ -1,0 +1,91 @@
+{
+  "schema_version": "PSE-V2-MARKET-RELATIVE-1.0",
+  "policy_version": "PSE-V2-MR-PILOT-1.0",
+  "note": "Initial screening conventions, not empirically validated issuer peer sets.",
+  "fallbacks": {
+    "AC": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_label": "Annual-report basic EPS candidate",
+      "metric_value_per_share": 64.77,
+      "assumptions": {"low": 8.0, "base": 10.0, "high": 12.0},
+      "filing_period": "FY 2024",
+      "period_end": "2024-12-31",
+      "source_document_sha256": "2daace8963d4c5513b702d5d755cfd542ab25c7061e8b67664cd356573e79c1c",
+      "source_page": 432,
+      "source_status": "review_candidate"
+    },
+    "ACR": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_label": "FY2025 EPS",
+      "metric_value_per_share": 0.126,
+      "assumptions": {"low": 8.5, "base": 10.0, "high": 11.5},
+      "filing_period": "FY 2025",
+      "period_end": "2025-12-31",
+      "source_document_sha256": "SOURCE_FROM_EXISTING_ARTIFACT",
+      "source_page": 63,
+      "source_status": "reviewed_legacy_snapshot"
+    },
+    "ALI": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_label": "Reported basic EPS candidate",
+      "metric_value_per_share": 2.7,
+      "assumptions": {"low": 12.0, "base": 15.0, "high": 18.0},
+      "filing_period": "FY 2025 filing candidate",
+      "period_end": "2025-12-31",
+      "source_document_sha256": "14d7ca2bfa3802e931c768c1b91552fec7ab8f6a01ebe7ecb2607549278f310a",
+      "source_page": 22,
+      "source_status": "review_candidate"
+    },
+    "AREIT": {
+      "metric": "distribution_yield",
+      "relation": "yield",
+      "metric_label": "Annualized quarterly DPS candidate (PHP 0.56 x 4)",
+      "metric_value_per_share": 2.24,
+      "assumptions": {"low": 0.08, "base": 0.07, "high": 0.06},
+      "filing_period": "Q1 2025",
+      "period_end": "2025-03-31",
+      "source_document_sha256": "d741c76a94b14732b631a6be1ce20d091f54d053db003f46d01ac1cf9ad7da66",
+      "source_page": 26,
+      "source_status": "review_candidate"
+    },
+    "BDO": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_label": "FY2025 basic EPS candidate",
+      "metric_value_per_share": 16.28,
+      "assumptions": {"low": 8.0, "base": 10.0, "high": 12.0},
+      "filing_period": "FY 2025",
+      "period_end": "2025-12-31",
+      "source_document_sha256": "6d68f44c66aacbc37e36fec4635adca485bf00d2e4b96b9d12c4d0641d6bfa1a",
+      "source_page": 84,
+      "source_status": "review_candidate"
+    },
+    "PERC": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_label": "FY2025 EPS",
+      "metric_value_per_share": 0.5,
+      "assumptions": {"low": 9.35, "base": 11.0, "high": 12.65},
+      "filing_period": "FY 2025",
+      "period_end": "2025-12-31",
+      "source_document_sha256": "SOURCE_FROM_EXISTING_ARTIFACT",
+      "source_page": 30,
+      "source_status": "reviewed_legacy_snapshot"
+    },
+    "SCC": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_label": "FY2025 EPS",
+      "metric_value_per_share": 3.07,
+      "assumptions": {"low": 7.65, "base": 9.0, "high": 10.35},
+      "filing_period": "FY 2025",
+      "period_end": "2025-12-31",
+      "source_document_sha256": "e441f64c4553d2632997240a89b2ad8688a01c86a62e28bf15d9e71081144a1b",
+      "source_page": 140,
+      "source_status": "reviewed_legacy_snapshot"
+    }
+  }
+}

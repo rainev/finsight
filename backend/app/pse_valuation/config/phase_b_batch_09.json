@@ -1,0 +1,142 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-9.0",
+  "batch_version": "PSE-V2-PHASE-B-B09-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B09-2026-09-23-1.0",
+  "universe_version": "PSE-V2-98-B09-1.0",
+  "valuation_date": "2026-09-23",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["FB", "EMI", "GSMI", "RFM", "MAXS", "PIZZA", "DELM", "VITA", "ANI", "CAT"],
+  "policies": {
+    "mature_staples_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 8.0, "base": 10.0, "high": 12.0}, "version": "PSE-V2-PE-MATURE-STAPLES-B09-1.0"},
+    "spirits_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 1.5, "base": 2.0, "high": 2.5}, "version": "PSE-V2-PB-GLOBAL-SPIRITS-B09-1.0"},
+    "restaurant_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 6.0, "base": 8.0, "high": 10.0}, "version": "PSE-V2-PE-RESTAURANT-B09-1.0"},
+    "growth_restaurant_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 10.0, "base": 13.0, "high": 16.0}, "version": "PSE-V2-PE-GROWTH-RESTAURANT-B09-1.0"},
+    "stressed_food_sales": {"metric": "price_to_sales", "relation": "multiple", "assumptions": {"low": 0.10, "base": 0.15, "high": 0.20}, "version": "PSE-V2-PS-STRESSED-FOOD-B09-1.0"},
+    "cyclical_food_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.5, "base": 0.7, "high": 0.9}, "version": "PSE-V2-PB-CYCLICAL-FOOD-B09-1.0"},
+    "distressed_agri_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.3, "base": 0.5, "high": 0.7}, "version": "PSE-V2-PB-DISTRESSED-AGRI-B09-1.0"}
+  },
+  "issuers": {
+    "FB": {
+      "issuer_name": "San Miguel Food and Beverage, Inc.",
+      "subsector": "Diversified food, beer, and spirits",
+      "primary_model": "sotp",
+      "policy": "mature_staples_pe",
+      "source": {"label": "FB FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=151"},
+      "metric_value_per_share": 5.04,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "5.10 FY2025 EPS + 2.47 1H2026 EPS - 2.53 1H2025 EPS", "original_value": 5.04, "original_currency": "PHP", "normalized_value": 5.04, "normalized_currency": "PHP"},
+      "route_reason": "Segment SOTP and normalized FCFF remain primary; P/E is a finite screen while food, beer, spirits, debt, and minority claims remain unreconciled.",
+      "intrinsic_blocker": "Reviewed segment cash flows, margins, reinvestment, debt, ownership, and minority claims are incomplete."
+    },
+    "EMI": {
+      "issuer_name": "Emperador Inc.",
+      "subsector": "Global spirits and brand portfolio",
+      "primary_model": "fcff_dcf",
+      "policy": "spirits_pb",
+      "source": {"label": "EMI FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=632"},
+      "metric_value_per_share": 7.04,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 7.04, "original_currency": "PHP", "normalized_value": 7.04, "normalized_currency": "PHP"},
+      "route_reason": "Brand-aware FCFF/SOTP remains primary; P/B provides a finite screen while earnings are below the prior year and overseas brand economics remain unreconciled.",
+      "intrinsic_blocker": "Reviewed brand and geography cash flows, working capital, maturation inventory, debt, FX, and terminal economics are incomplete."
+    },
+    "GSMI": {
+      "issuer_name": "Ginebra San Miguel, Inc.",
+      "subsector": "Spirits manufacturing and distribution",
+      "primary_model": "fcff_dcf",
+      "policy": "mature_staples_pe",
+      "source": {"label": "GSMI FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=94"},
+      "metric_value_per_share": 30.77,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "30.30 FY2025 EPS + 15.30 1H2026 EPS - 14.83 1H2025 EPS", "original_value": 30.77, "original_currency": "PHP", "normalized_value": 30.77, "normalized_currency": "PHP"},
+      "route_reason": "Normalized FCFF and distributions remain primary; P/E is a finite screen while brand, excise, volume, and capital-efficiency assumptions remain unreconciled.",
+      "intrinsic_blocker": "Reviewed volume and price mix, excise trajectory, margins, reinvestment, payout, and terminal economics are incomplete."
+    },
+    "RFM": {
+      "issuer_name": "RFM Corporation",
+      "subsector": "Branded and institutional food",
+      "primary_model": "fcff_dcf",
+      "policy": "mature_staples_pe",
+      "source": {"label": "RFM FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=77"},
+      "metric_value_per_share": 0.49,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "0.48 FY2025 EPS + 0.24 1H2026 EPS - 0.23 1H2025 EPS", "original_value": 0.49, "original_currency": "PHP", "normalized_value": 0.49, "normalized_currency": "PHP"},
+      "route_reason": "Normalized FCFF remains primary; P/E is a finite screen while branded, institutional, associate, and non-food cash flows remain unreconciled.",
+      "intrinsic_blocker": "Reviewed segment margins, associate economics, working capital, reinvestment, debt, and terminal assumptions are incomplete."
+    },
+    "MAXS": {
+      "issuer_name": "Max's Group, Inc.",
+      "subsector": "Restaurant and franchise portfolio",
+      "primary_model": "fcff_dcf",
+      "policy": "restaurant_pe",
+      "source": {"label": "MAXS FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=135"},
+      "metric_value_per_share": 0.45,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "0.47 FY2025 EPS + 0.17 1H2026 EPS - 0.19 1H2025 EPS", "original_value": 0.45, "original_currency": "PHP", "normalized_value": 0.45, "normalized_currency": "PHP"},
+      "route_reason": "Store and franchise FCFF remains primary; P/E is a finite screen while leases, store cohorts, franchise mix, debt, and reinvestment remain unreconciled.",
+      "intrinsic_blocker": "Reviewed store-level economics, franchise mix, leases, closures, growth capex, debt, and terminal assumptions are incomplete."
+    },
+    "PIZZA": {
+      "issuer_name": "Shakey's Pizza Asia Ventures, Inc.",
+      "subsector": "Restaurant, kiosk, and franchise brands",
+      "primary_model": "fcff_dcf",
+      "policy": "growth_restaurant_pe",
+      "source": {"label": "PIZZA FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=664"},
+      "metric_value_per_share": 0.41,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "0.48 FY2025 EPS + 0.14 1H2026 EPS - 0.21 1H2025 EPS", "original_value": 0.41, "original_currency": "PHP", "normalized_value": 0.41, "normalized_currency": "PHP"},
+      "route_reason": "Store-cohort and brand FCFF remains primary; P/E is a finite growth screen while same-store sales, rollout economics, leases, and restructuring remain unreconciled.",
+      "intrinsic_blocker": "Reviewed store cohorts, same-store sales, kiosk and international economics, leases, restructuring, growth capex, and terminal assumptions are incomplete."
+    },
+    "DELM": {
+      "issuer_name": "Del Monte Pacific Limited",
+      "subsector": "Packaged food holding company",
+      "primary_model": "sotp",
+      "policy": "stressed_food_sales",
+      "source": {"label": "DELM FY2025 PSE financial report and common-share record", "form": "17-A", "period_end": "2025-04-30", "currency": "USD", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=642", "supporting_url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=642"},
+      "metric_value_per_share": 25.50308850641262,
+      "metric_label": "FY2025 revenue per outstanding common share converted to PHP",
+      "normalization": {"formula": "USD 789,455,000 revenue / 1,943,960,024 shares x 62.799 PHP/USD", "original_value": 0.4061066021180691, "original_currency": "USD", "fx_rate": 62.799, "fx_rate_date": "2026-09-22", "fx_source_url": "https://www.bsp.gov.ph/Statistics/sdds/sdds.aspx", "normalized_value": 25.50308850641262, "normalized_currency": "PHP"},
+      "source_warning": "The screen uses the last clearly labeled annual PSE summary for FY2025; later interim data still show negative parent equity and require a full restructuring bridge.",
+      "route_reason": "Geographic and brand SOTP/restructuring analysis remains primary; P/S provides a finite screen because parent equity is negative.",
+      "intrinsic_blocker": "Negative parent equity and unresolved debt, geography and brand cash flows, asset sales, restructuring, FX, and capital claims block a completed intrinsic SOTP."
+    },
+    "VITA": {
+      "issuer_name": "Vitarich Corporation",
+      "subsector": "Integrated poultry, feed, and farm operations",
+      "primary_model": "fcff_dcf",
+      "policy": "cyclical_food_pb",
+      "source": {"label": "VITA FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=28"},
+      "metric_value_per_share": 0.66,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 0.66, "original_currency": "PHP", "normalized_value": 0.66, "normalized_currency": "PHP"},
+      "route_reason": "Normalized cyclical FCFF remains primary; P/B provides a finite screen after a sharp 1H2026 loss and equity decline.",
+      "intrinsic_blocker": "Reviewed feed and poultry cycles, biological and inventory accounting, margins, working capital, debt, and normalized cash flow are incomplete."
+    },
+    "ANI": {
+      "issuer_name": "AgriNurture, Inc.",
+      "subsector": "Agricultural trading and food distribution",
+      "primary_model": "sotp",
+      "policy": "distressed_agri_pb",
+      "source": {"label": "ANI 1H2026 PSE financial report with delayed FY2025 annual filing", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=619"},
+      "metric_value_per_share": 3.28,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 3.28, "original_currency": "PHP", "normalized_value": 3.28, "normalized_currency": "PHP"},
+      "source_warning": "The PSE notes that the FY2025 annual report remains unfiled; this interim P/B screen is provisional and filing-risk adjusted.",
+      "route_reason": "Subsidiary SOTP and normalized FCFF remain primary; discounted P/B provides a finite screen while losses continue and the FY2025 annual filing is delayed.",
+      "intrinsic_blocker": "Continuing losses, delayed audited reporting, preferred claims, subsidiary ownership, working capital, debt, and normalized cash flow remain unresolved."
+    },
+    "CAT": {
+      "issuer_name": "Central Azucarera de Tarlac, Inc.",
+      "subsector": "Sugar, alcohol, and property interests",
+      "primary_model": "sotp",
+      "policy": "cyclical_food_pb",
+      "source": {"label": "CAT FY2025 and 9M FY2026 PSE financial report", "form": "17-Q", "period_end": "2026-03-31", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=183"},
+      "metric_value_per_share": 18.64,
+      "metric_label": "9M FY2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share for the non-December fiscal year", "original_value": 18.64, "original_currency": "PHP", "normalized_value": 18.64, "normalized_currency": "PHP"},
+      "route_reason": "Sugar-cycle FCFF plus property SOTP remains primary; P/B provides a finite screen across the non-calendar fiscal year.",
+      "intrinsic_blocker": "Reviewed sugar volume and price cycles, feedstock, alcohol economics, property values, debt, working capital, and segment claims are incomplete."
+    }
+  }
+}

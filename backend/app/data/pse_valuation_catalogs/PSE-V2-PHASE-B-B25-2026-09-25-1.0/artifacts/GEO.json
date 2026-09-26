@@ -1,0 +1,79 @@
+{
+  "artifact_hash": "48f56a397f2d010d6a7e390941f3e2422bfcba1c0ca27610de788c5571eaf246",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Near-exhausted parent equity, zero operating revenue and absent reserve economics make a finite PHP per-share screen economically misleading."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a20eb9c1164f95625536af668c78735508ca2a1f6a431649ae95ccd092161d65",
+  "issuer": {
+    "issuer_id": "PSE:GEO",
+    "name": "GEOGRACE Resources Philippines, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Near-exhausted parent equity, zero operating revenue and absent reserve economics make a finite PHP per-share screen economically misleading.",
+    "metric_basis": "PHP parent equity (pesos) / 3,500,000,000 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Mineral interests need recoverable-reserve and common-equity underwriting, not a near-zero book extrapolation.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "GEO",
+    "security_id": "PSE:GEO:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f7eafcde96f5fcac",
+      "form": "PSE financial summary",
+      "label": "GEO FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f7eafcde96f5fcac32c092cb35dfc5243b8a86337ee40fea7aced9d3c79afce1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=198"
+    },
+    {
+      "document_id": "f7eafcde96f5fcac-support-1",
+      "form": "PSE common-stock data",
+      "label": "GEO ordinary common common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "f7eafcde96f5fcac32c092cb35dfc5243b8a86337ee40fea7aced9d3c79afce1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=198"
+    }
+  ],
+  "subsector": "Mining and resource holding",
+  "ticker": "GEO",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "Parent equity fell to PHP325,798 against 3.5bn shares; PSE prints BVPS as zero. A mechanically positive value below display precision is not published as an investment estimate."
+  ]
+}

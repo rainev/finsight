@@ -1,0 +1,127 @@
+{
+  "artifact_hash": "05d5ddcfbe7b5635f384cd10a342b36d993c7137e2e265cd7428848464e4a6ce",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "c81dc49afc78d22585f794a8bf229f6902d17a02aa91b614390eba78da7a383c",
+  "issuer": {
+    "issuer_id": "PSE:JFC",
+    "name": "Jollibee Foods Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 322.95373246150155,
+    "low": 68.92564111693721
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "capital_bridge": {
+      "cash_php_millions": 34944.224,
+      "debt_includes_lease_liabilities": true,
+      "debt_php_millions": 139327.077,
+      "minority_value_php_millions": 895.24,
+      "nonoperating_assets_php_millions": 0.0,
+      "other_claims_php_millions": 0.0,
+      "preferred_claims_php_millions": 0.0,
+      "shares_millions": 1120.700644
+    },
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE additions",
+    "normalized_fcff_proxy_php_millions": 22051.123,
+    "policy_version": "PSE-V2-FCFF-BRAND-B02-1.0",
+    "reliability": "Low",
+    "route_reason": "Global restaurant operating cash flows and reinvestment economics drive enterprise value.",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.04,
+        "roic": 0.14,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.11,
+        "wacc": 0.115
+      },
+      "bear": {
+        "growth_rate": 0.01,
+        "roic": 0.1,
+        "terminal_growth": 0.015,
+        "terminal_roic": 0.09,
+        "wacc": 0.13
+      },
+      "bull": {
+        "growth_rate": 0.07,
+        "roic": 0.18,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.13,
+        "wacc": 0.1
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 176430.52068079356,
+      "enterprise_value": 281708.61368079355,
+      "value_per_share": 157.42876710686852
+    },
+    "bear": {
+      "common_equity_value": 77245.01038786441,
+      "enterprise_value": 182523.1033878644,
+      "value_per_share": 68.92564111693721
+    },
+    "bull": {
+      "common_equity_value": 361934.4559518085,
+      "enterprise_value": 467212.5489518085,
+      "value_per_share": 322.95373246150155
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:JFC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "normalized_fcff",
+        "growth_rate",
+        "roic",
+        "wacc",
+        "terminal_growth",
+        "terminal_roic",
+        "capital_bridge"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "f21c300c4d780dee",
+      "form": "17-A",
+      "label": "JFC FY2025 annual report fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "f21c300c4d780dee54070d429ad1a8da676b58691024dc5d7c93840723a6c1b4",
+      "source_page": 76,
+      "url": "https://bucketeer-7d3e45fd-6c25-41b2-b572-f1a987947f0e.s3.amazonaws.com/Jollibee%20Group%20AR2025_w_Hyperlinks.pdf"
+    }
+  ],
+  "subsector": "Restaurants and food service",
+  "ticker": "JFC",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate using a three-year median owner-cash proxy rather than a full issuer forecast.",
+    "Lease liabilities are included in debt; lease principal is not separately deducted from the owner-cash proxy.",
+    "Policy bands and terminal economics remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "29a0876074dc5ccd6706b79bc84e0d3b35a92c746f19290159f1bdc0b3495822",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed reserve schedules, permitting, mine lives, costs, commodity decks, subsidiary ownership, and closure claims are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "9f99159379d0607746ceb50dc87957e3bb09572f47c479902c42e1fafd2ef935",
+  "issuer": {
+    "issuer_id": "PSE:MARC",
+    "name": "Marcventures Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 7.0,
+      "high": 9.0,
+      "low": 5.0
+    },
+    "estimates": {
+      "base": 1.61,
+      "high": 2.0700000000000003,
+      "low": 1.1500000000000001
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.23,
+    "note": "Transparent screening fallback while the reserve-aware intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-SMALL-MINER-B08-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e4babfb83b96109c951048bccbfbbc1ed36eada3db56379992a28b4e1139e810",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B08-1.0",
+  "numerical_range": {
+    "high": 2.0700000000000003,
+    "low": 1.1500000000000001
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed reserve schedules, permitting, mine lives, costs, commodity decks, subsidiary ownership, and closure claims are incomplete.",
+    "metric_basis": "0.16 FY2025 EPS + 0.12 1H2026 EPS - 0.05 1H2025 EPS",
+    "reliability": "Low",
+    "route_reason": "Risked mining NAV/SOTP remains primary; P/E is a finite small-company screen while reserve, permitting, subsidiary, and commodity assumptions remain incomplete."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MARC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e4babfb83b96109c",
+      "form": "17-Q",
+      "label": "MARC FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e4babfb83b96109c951048bccbfbbc1ed36eada3db56379992a28b4e1139e810",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=175"
+    }
+  ],
+  "subsector": "Nickel mining holding company",
+  "ticker": "MARC",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved reserve-aware intrinsic valuation.",
+    "Commodity prices, resource depletion, costs, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

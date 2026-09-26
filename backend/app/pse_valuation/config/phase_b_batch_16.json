@@ -1,0 +1,99 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-16.0",
+  "batch_version": "PSE-V2-PHASE-B-B16-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B16-2026-09-25-1.0",
+  "universe_version": "PSE-V2-168-B16-1.0",
+  "valuation_date": "2026-09-25",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["AXLM", "BALAI", "FCG", "FOOD", "SFI", "BCOR", "BNCOM", "BSC", "PMPC", "PPC"],
+  "fx_snapshot": {"version": "PSE-V2-B16-USD-PHP-2026-09-23-1.0", "pair": "USD/PHP", "rate_php_per_usd": 62.698, "observed_at": "2026-09-23", "source_label": "BSP Philippine peso per US dollar, 23 September 2026; reviewed Batch 13 observation carried forward explicitly", "source_url": "https://www.bsp.gov.ph/Statistics/sdds/sdds.aspx"},
+  "policies": {
+    "operating_earnings": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 8.0, "base": 10.0, "high": 12.0}, "version": "PSE-V2-PE-OPERATING-B16-1.0", "rationale": "Reuse the finite Batch 9 operating P/E screening band for positive aligned TTM EPS; not a peer study or intrinsic FCFF/SOTP."},
+    "review_book": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.30, "base": 0.50, "high": 0.70}, "version": "PSE-V2-PB-REVIEW-B16-1.0", "rationale": "Reuse the conservative Batch 14 filing-review P/B band when reported per-share book value is usable only as a preliminary screen."},
+    "layered_book": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.25, "base": 0.40, "high": 0.55}, "version": "PSE-V2-PB-LAYERED-B16-1.0", "rationale": "Reuse the Batch 12 layered-holding P/B band for mixed components and unresolved parent claims; not a completed SOTP."},
+    "bank_book": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.60, "base": 0.80, "high": 1.00}, "version": "PSE-V2-PB-BANK-REVIEW-B16-1.0", "rationale": "Reuse the Batch 5 lender-review P/B band while common-share/BVPS and interim parent-capital bases remain unreconciled."},
+    "industrial_book": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.50, "base": 0.70, "high": 0.90}, "version": "PSE-V2-PB-INDUSTRIAL-B16-1.0", "rationale": "Reuse the Batch 13 cyclical-industrial P/B band while current manufacturing cash flows and reinvestment remain unresolved."},
+    "stressed_sales": {"metric": "price_to_sales", "relation": "multiple", "assumptions": {"low": 0.10, "base": 0.15, "high": 0.20}, "version": "PSE-V2-PS-STRESSED-B16-1.0", "rationale": "Reuse the Batch 9 stressed-food finite P/S band when EPS and common-book claims are not usable; no peer calibration or intrinsic equity bridge."}
+  },
+  "issuers": {
+    "AXLM": {
+      "issuer_name": "Axelum Resources Corp.", "subsector": "Coconut-product manufacturing and export", "primary_model": "fcff_dcf", "policy": "operating_earnings", "metric_kind": "ttm_eps",
+      "source": {"label": "AXLM FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=673"},
+      "reported_eps": {"fy": {"period_end": "2025-12-31", "period_type": "annual", "value": 0.22}, "current_ytd": {"period_end": "2026-06-30", "period_type": "half_year_ytd", "value": 0.11}, "prior_ytd": {"period_end": "2025-06-30", "period_type": "half_year_ytd", "value": 0.06}},
+      "metric_value_per_share": 0.27, "metric_label": "TTM basic EPS through 1H2026", "normalization": {"formula": "0.22 FY2025 basic EPS + 0.11 1H2026 EPS - 0.06 prior 1H EPS", "normalized_value": 0.27, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Export manufacturing margins, working capital and reinvestment require FCFF; P/E is a finite separate screen.", "intrinsic_blocker": "Coconut-product volume and price mix, export FX, input costs, capex, debt, minority and terminal economics are not reconciled.", "source_warning": "The P/E band is not peer-calibrated and 1H2026 sales were below prior-year 1H despite higher earnings."
+    },
+    "BALAI": {
+      "issuer_name": "Balai Ni Fruitas Inc.", "subsector": "Baked goods and fruit-drink retail", "primary_model": "fcff_dcf", "policy": "review_book", "metric_kind": "reported_bvps",
+      "source": {"label": "BALAI FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=697"},
+      "supporting_sources": [{"label": "BALAI PSE company information and FRUIT relationship", "form": "PSE company information", "period_end": null, "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=697"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 0.42},
+      "metric_value_per_share": 0.42, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP book value per share; do not substitute zero parent-attribution fields", "normalized_value": 0.42, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Store cohorts, brand margins, leases and reinvestment require FCFF; reported BVPS supplies only a finite screen.", "intrinsic_blocker": "Store-level economics, parent attribution, FRUIT ownership, leases, capex, debt and terminal cash flows are not reconciled.", "source_warning": "PSE summary parent equity and income fields appear as zero while total equity and BVPS are positive; they are treated as unavailable, not economic zero. BALAI is FRUIT-related and per-share screens are non-additive."
+    },
+    "FCG": {
+      "issuer_name": "Figaro Culinary Group, Inc.", "subsector": "Coffee, restaurant and pizza brands", "primary_model": "fcff_dcf", "policy": "operating_earnings", "metric_kind": "ttm_eps",
+      "source": {"label": "FCG June FY2025 and 9M FY2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-03-31", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=689"},
+      "reported_eps": {"fy": {"period_end": "2025-06-30", "period_type": "annual", "value": 0.12}, "current_ytd": {"period_end": "2026-03-31", "period_type": "nine_month_ytd", "value": 0.08}, "prior_ytd": {"period_end": "2025-03-31", "period_type": "nine_month_ytd", "value": 0.08}},
+      "metric_value_per_share": 0.12, "metric_label": "TTM basic EPS through March 2026, June fiscal year", "normalization": {"formula": "0.12 FY2025 basic EPS + 0.08 9M FY2026 EPS - 0.08 prior 9M EPS", "normalized_value": 0.12, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Brand/store cash flows and leases require FCFF; P/E is a finite separate screen on aligned June fiscal periods.", "intrinsic_blocker": "Store cohorts, franchise mix, leases, restructuring, capital spending, debt and terminal economics are not reconciled.", "source_warning": "FCG uses a June fiscal year; the March 2026 nine-month report is not a completed June 2026 annual result, and the PSE summary omits parent-equity attribution."
+    },
+    "FOOD": {
+      "issuer_name": "Alliance Select Foods International, Inc.", "subsector": "Tuna processing and seafood exports", "primary_model": "sotp", "policy": "stressed_sales", "metric_kind": "ttm_revenue_per_share",
+      "source": {"label": "FOOD FY2025 and 1H2026 USD PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "USD", "units": "dollars", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=602"},
+      "supporting_sources": [{"label": "FOOD listed common-share stock data", "form": "PSE common-stock data", "period_end": "2026-09-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=602"}, {"label": "FOOD proposed September 2026 equity restructuring", "form": "PSE corporate-action disclosure", "period_end": "2026-09-02", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1963653"}],
+      "reported_revenue": {"fy": {"period_end": "2025-12-31", "period_type": "annual", "value": 78817556}, "current_ytd": {"period_end": "2026-06-30", "period_type": "half_year_ytd", "value": 22813840}, "prior_ytd": {"period_end": "2025-06-30", "period_type": "half_year_ytd", "value": 35552503}},
+      "reported_shares": {"as_of": "2026-09-24", "value": 2499712463, "security_type": "ordinary_common"},
+      "metric_value_per_share": 1.6573963984408875, "metric_label": "TTM USD revenue per outstanding common share translated to PHP", "normalization": {"formula": "(USD 78,817,556 FY2025 + 22,813,840 1H2026 - 35,552,503 prior 1H) / 2,499,712,463 common shares x 62.698 PHP/USD (23 Sep 2026)", "normalized_value": 1.6573963984408875, "original_currency": "USD", "normalized_currency": "PHP"},
+      "route_reason": "Seafood operating components and restructuring require SOTP/FCFF; a low finite sales multiple is a separate screen while losses and common claims are unresolved.", "intrinsic_blocker": "Operating cash flows, restructuring, dilution, debt, minority claims, FX and current common-equity capital bridge are not reconciled.", "source_warning": "FOOD reported losses, sharply lower 1H revenue and a proposed September equity restructuring; PSE BVPS is rounded to zero. This USD-to-PHP P/S screen uses a dated 23 September BSP observation and is not a price target."
+    },
+    "SFI": {
+      "issuer_name": "Swift Foods, Inc.", "subsector": "Poultry and feed operations", "primary_model": "fcff_dcf", "policy": "stressed_sales", "metric_kind": "ttm_revenue_per_share",
+      "source": {"label": "SFI FY2025 and 1H2026 PSE financial summary, PHP thousands", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "thousands", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=165"},
+      "supporting_sources": [{"label": "SFI listed common-share stock data, not preferred", "form": "PSE common-stock data", "period_end": "2026-09-22", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=165&security_id=402"}, {"label": "SFI convertible preferred class disclosure", "form": "PSE preferred-share disclosure", "period_end": "2026-06-30", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1940854"}],
+      "reported_revenue": {"fy": {"period_end": "2025-12-31", "period_type": "annual", "value": 33489}, "current_ytd": {"period_end": "2026-06-30", "period_type": "half_year_ytd", "value": 10290}, "prior_ytd": {"period_end": "2025-06-30", "period_type": "half_year_ytd", "value": 16241}},
+      "reported_shares": {"as_of": "2026-09-22", "value": 1818436953, "security_type": "ordinary_common"},
+      "metric_value_per_share": 0.015143774962650574, "metric_label": "TTM PHP revenue per outstanding ordinary common share", "normalization": {"formula": "(PHP 33,489k FY2025 + 10,290k 1H2026 - 16,241k prior 1H) x 1,000 / 1,818,436,953 common shares", "normalized_value": 0.015143774962650574, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Poultry cash flows and capacity/restructuring require FCFF; a finite P/S screen avoids unusable reported common-book and rounded negative EPS.", "intrinsic_blocker": "Common versus convertible-preferred capital claims, parent equity, negative operating earnings, maintenance spending, financing and terminal cash flows are not reconciled.", "source_warning": "SFI has convertible preferred shares, losses and very low revenue. Its reported BVPS of 1 does not reconcile to total equity divided by listed common shares; the tiny P/S screen is not intrinsic or an actionable price target."
+    },
+    "BCOR": {
+      "issuer_name": "Berjaya Philippines Inc.", "subsector": "Automotive retail, hotel and investment holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "BCOR June FY2025 and 9M FY2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-03-31", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=9"},
+      "supporting_sources": [{"label": "BCOR PSE company information and mixed interests", "form": "PSE company information", "period_end": null, "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=9"}],
+      "reported_bvps": {"period_end": "2026-03-31", "period_type": "interim", "value": 2.73},
+      "metric_value_per_share": 2.73, "metric_label": "March 2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP book value per share; March nine-month fiscal period", "normalized_value": 2.73, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Auto retail, hotels and investments require attributable SOTP; reported BVPS is a finite separate screen.", "intrinsic_blocker": "Component cash flows and fair values, ownership, minorities, debt and parent common claims are not reconciled.", "source_warning": "BCOR uses a June fiscal year and reported negative nine-month attributable earnings; the P/B screen is not an earnings valuation."
+    },
+    "BNCOM": {
+      "issuer_name": "Bank of Commerce", "subsector": "Universal bank", "primary_model": "residual_income", "policy": "bank_book", "metric_kind": "reported_bvps",
+      "source": {"label": "BNCOM FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=692"},
+      "supporting_sources": [{"label": "BNCOM listed common-share stock data", "form": "PSE common-stock data", "period_end": "2026-09-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=692"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 22.08},
+      "metric_value_per_share": 22.08, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP book value per share; not independently reconciled to ordinary shares", "normalized_value": 22.08, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Residual income remains the bank's primary intrinsic route; P/B is a separate finite screen pending common-capital reconciliation.", "intrinsic_blocker": "The PSE interim parent-equity field is blank and reported BVPS does not reconcile to 1,403,013,920 listed common shares; capital quality, dilution and cost-of-equity bridge remain unresolved.", "source_warning": "Reported 1H2026 equity of PHP36.373bn divided by listed common shares implies about PHP25.93, not the reported PHP22.08 BVPS. Do not infer missing parent equity or use this P/B screen as intrinsic residual income."
+    },
+    "BSC": {
+      "issuer_name": "Basic Energy Corporation", "subsector": "Fuel distribution and renewable-energy holding company", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "BSC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=60"},
+      "supporting_sources": [{"label": "BSC PSE company information and fuel/renewables mix", "form": "PSE company information", "period_end": null, "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=60"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 0.28},
+      "metric_value_per_share": 0.28, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP book value per share; no annual-column substitution", "normalized_value": 0.28, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Fuel and renewables have distinct economics and require attributable SOTP; P/B is a finite separate screen.", "intrinsic_blocker": "Fuel operations, renewable project funding, ownership, minority interests, debt, license lives and parent common claims are not reconciled.", "source_warning": "The FY2025 PSE annual BVPS column reads PHP0.02 while 1H2026 reads PHP0.28; the annual denominator/basis is unresolved. Negative 1H parent income prevents an earnings screen."
+    },
+    "PMPC": {
+      "issuer_name": "Panasonic Manufacturing Philippines Corporation", "subsector": "Appliance manufacturing and distribution", "primary_model": "fcff_dcf", "policy": "industrial_book", "metric_kind": "reported_bvps",
+      "source": {"label": "PMPC March FY2026 and June FY2027 Q1 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=104"},
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 12.68},
+      "metric_value_per_share": 12.68, "metric_label": "June 2026 PSE-reported book value per share, March fiscal year", "normalization": {"formula": "reported PHP book value per share; March fiscal year, June Q1", "normalized_value": 12.68, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Appliance cash flows, input costs, working capital and capex require FCFF; P/B is a separate finite screen.", "intrinsic_blocker": "Product-level margins, current earnings normalization, associates, leases, capex, debt and terminal economics are not reconciled.", "source_warning": "PMPC uses a March fiscal year; June 2026 is FY2027 Q1, not a calendar-year half-year. Q1 basic EPS fell from PHP0.93 prior-year to PHP0.21."
+    },
+    "PPC": {
+      "issuer_name": "Pryce Corporation", "subsector": "LPG distribution, memorial parks and pharmaceuticals", "primary_model": "sotp", "policy": "operating_earnings", "metric_kind": "ttm_eps",
+      "source": {"label": "PPC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=150"},
+      "supporting_sources": [{"label": "PPC PSE company information and LPG/property segments", "form": "PSE company information", "period_end": null, "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=150"}],
+      "reported_eps": {"fy": {"period_end": "2025-12-31", "period_type": "annual", "value": 1.97}, "current_ytd": {"period_end": "2026-06-30", "period_type": "half_year_ytd", "value": 0.93}, "prior_ytd": {"period_end": "2025-06-30", "period_type": "half_year_ytd", "value": 0.95}},
+      "metric_value_per_share": 1.95, "metric_label": "TTM basic EPS through 1H2026", "normalization": {"formula": "1.97 FY2025 basic EPS + 0.93 1H2026 EPS - 0.95 prior 1H EPS", "normalized_value": 1.95, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "LPG distribution and property interests require attributable SOTP; P/E is a separate finite screen.", "intrinsic_blocker": "LPG margins, property values, minority interests, debt, dilution, capex and parent-only claims are not reconciled.", "source_warning": "PPC has LPG, memorial-park and pharmaceutical interests; a consolidated P/E screen is not an attributable component valuation."
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "PSE-V2-ROUTING-1.0",
+  "version": "2026-09-21-pilot-1",
+  "routes": {
+    "AC": {"issuer_name": "Ayala Corporation", "subsector": "Diversified holding company", "primary_model": "sotp", "reason": "Attributable subsidiary equity values and parent-only claims drive common equity value."},
+    "ACR": {"issuer_name": "Alsons Consolidated Resources, Inc.", "subsector": "Power generation and property", "primary_model": "sotp", "reason": "Materially distinct power and property interests require separate component values."},
+    "ALI": {"issuer_name": "Ayala Land, Inc.", "subsector": "Property developer", "primary_model": "normalized_fcff", "reason": "Operating development cash flows are primary; RNAV remains a separate evidence-dependent check."},
+    "AP": {"issuer_name": "Aboitiz Power Corporation", "subsector": "Power generation and distribution", "primary_model": "fcff_dcf", "reason": "A reviewed utility/business FCFF route is used for the Phase A provisional estimate."},
+    "AREIT": {"issuer_name": "AREIT, Inc.", "subsector": "Real estate investment trust", "primary_model": "sustainable_distributions", "reason": "Sustainable distributions, funding, and dilution drive common-equity value."},
+    "BDO": {"issuer_name": "BDO Unibank, Inc.", "subsector": "Commercial and universal bank", "primary_model": "residual_income", "reason": "Book capital, excess returns, and regulatory retention drive common-equity value."},
+    "PERC": {"issuer_name": "PetroEnergy Resources Corporation", "subsector": "Renewables and upstream energy", "primary_model": "sotp", "reason": "Upstream finite-life assets and renewable interests require separately bounded component values."},
+    "SCC": {"issuer_name": "Semirara Mining and Power Corporation", "subsector": "Integrated coal and power", "primary_model": "sotp", "reason": "Finite-life coal economics and the continuing power business require separate component values."}
+  }
+}
+

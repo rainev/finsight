@@ -1,0 +1,86 @@
+{
+  "artifact_hash": "60e217485147b4a41561967772da942abb27b2d6f4c152997b78b0c1ce80f93d",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A reviewed FCFF/SOTP separating connectivity, data centers, towers, debt, leases, and minority claims is not complete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025 and latest review",
+  "filing_published_at": null,
+  "input_hash": "bfc687996068fe621558d29cd257b32c896980be0c03eb02f1360120a7ab6897",
+  "issuer": {
+    "issuer_id": "PSE:TEL",
+    "name": "PLDT Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 1277.8,
+      "high": 1533.3600000000001,
+      "low": 1022.24
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "Latest reported trailing-twelve-month basic EPS",
+    "metric_value_per_share": 127.78,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-MATURE-CONNECTIVITY-B06-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "2dd196db1f0288b4ed7fafad7f0b60b39eee8d45e121bef2fd81f4cf7f08ea69",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B06-1.0",
+  "numerical_range": {
+    "high": 1533.3600000000001,
+    "low": 1022.24
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "A reviewed FCFF/SOTP separating connectivity, data centers, towers, debt, leases, and minority claims is not complete.",
+    "reliability": "Low",
+    "route_reason": "FCFF/SOTP remains primary; P/E is a finite screen while capex, data-center, tower, and claim bridges remain incomplete."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:TEL:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "2dd196db1f0288b4",
+      "form": "17-Q",
+      "label": "TEL FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "2dd196db1f0288b4ed7fafad7f0b60b39eee8d45e121bef2fd81f4cf7f08ea69",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1957650"
+    }
+  ],
+  "subsector": "Telecommunications",
+  "ticker": "TEL",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

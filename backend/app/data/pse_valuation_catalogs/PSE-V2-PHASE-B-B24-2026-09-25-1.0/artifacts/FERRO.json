@@ -1,0 +1,110 @@
+{
+  "artifact_hash": "d4b3c1bf9965eee53a915f3d69f2b2594756dee9ef3e294effbd203df6fd912e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property transactions, final share issuance, debt and post-transaction dilution are not completed or underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "9d7e943ad533cd01341fd7f517151fffc8bf9f831fc0e770019efca8a183dd96",
+  "issuer": {
+    "issuer_id": "PSE:FERRO",
+    "name": "Ferronoux Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.184322577,
+      "high": 0.253443543,
+      "low": 0.11520161
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.4608064415558507,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B23-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "b6a229c948037638a248f1590a85f47aacf95b7615475e44eee1171d58886ded",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": 0.253443543,
+    "low": 0.11520161
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property transactions, final share issuance, debt and post-transaction dilution are not completed or underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 341,824,002 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, a proven reserve appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Proposed property-for-share transactions require attributable and diluted SOTP; current book is only a screen.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "FERRO",
+    "security_id": "PSE:FERRO:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "b6a229c948037638",
+      "form": "PSE financial summary",
+      "label": "FERRO FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "b6a229c948037638a248f1590a85f47aacf95b7615475e44eee1171d58886ded",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=643"
+    },
+    {
+      "document_id": "b6a229c948037638-support-1",
+      "form": "PSE common-stock data",
+      "label": "FERRO ordinary common common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "b6a229c948037638a248f1590a85f47aacf95b7615475e44eee1171d58886ded",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=643&security_id=586"
+    },
+    {
+      "document_id": "b6a229c948037638-support-2",
+      "form": "PSE issuer disclosure",
+      "label": "FERRO class or capital-claim disclosure",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "b6a229c948037638a248f1590a85f47aacf95b7615475e44eee1171d58886ded",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1636679"
+    }
+  ],
+  "subsector": "Property and investment holding",
+  "ticker": "FERRO",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The current 341.824m common-share count is not a pro-forma post-transaction denominator. A disclosed property-for-share transaction could materially dilute this screen; no current price/upside is published."
+  ]
+}

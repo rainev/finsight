@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "8993a531a14443d2b0058ee86d99199b2c3b6af7f39a6774a1c1e80865338205",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The 2025 sale and deconsolidation of 60% of the gas business require pro-forma owner-cash normalization and a complete debt, lease, minority, and preferred bridge."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "1dec72566759a3975a3ac833c063e5cd53e116e6f37921a5533a7781e601d635",
+  "issuer": {
+    "issuer_id": "PSE:FGEN",
+    "name": "First Gen Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 23.517,
+      "high": 31.355999999999998,
+      "low": 15.677999999999999
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported book value per common share",
+    "metric_value_per_share": 52.26,
+    "note": "Transparent P/B screen while the asset-level FCFF or SOTP bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-POWER-B04-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f1e2404bc8c655bec062d895b8e8fe12e17e6d040fb7b9e07887731d758a499d",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B04-1.0",
+  "numerical_range": {
+    "high": 31.355999999999998,
+    "low": 15.677999999999999
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The 2025 sale and deconsolidation of 60% of the gas business require pro-forma owner-cash normalization and a complete debt, lease, minority, and preferred bridge.",
+    "policy_rationale": "P/B screen pending a normalized post-transaction FCFF and complete capital bridge.",
+    "reliability": "Low",
+    "reported_equity_php_millions": 226729.0,
+    "route_reason": "FCFF remains primary, but the 2025 gas-business transaction prevents a normalized comparable cash-flow and capital bridge.",
+    "source_currency": "PHP"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:FGEN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f1e2404bc8c655be",
+      "form": "17-Q",
+      "label": "FGEN FY2025 audited value translated in issuer PSE filing",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "f1e2404bc8c655bec062d895b8e8fe12e17e6d040fb7b9e07887731d758a499d",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1956016"
+    }
+  ],
+  "subsector": "Diversified power generation",
+  "ticker": "FGEN",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved asset-level intrinsic valuation.",
+    "Reported book value is an accounting measure and may differ materially from project fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study."
+  ]
+}

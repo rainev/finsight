@@ -1,0 +1,100 @@
+{
+  "artifact_hash": "ed3a1907146e716ed6e4ce1fadd0205202c209e12767902b24cb5101fcc79bc3",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Investment fair value, reserve rights, future funding and minority claims are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "752a53ef033f7bc0f416bdbc181779b36bb681b63e542f8ce48679d0e8f41110",
+  "issuer": {
+    "issuer_id": "PSE:FPI",
+    "name": "Forum Pacific, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.056913846,
+      "high": 0.078256538,
+      "low": 0.035571154
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.14228461404077503,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B24-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a345c23531b9af9daa4d43c505779a52fa5ae394fe142f240d33e879107cded1",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": 0.078256538,
+    "low": 0.035571154
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Investment fair value, reserve rights, future funding and minority claims are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 1,838,943,246 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, an asset appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Investment and resource interests require attributable SOTP; parent book is a separate screen.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "FPI",
+    "security_id": "PSE:FPI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a345c23531b9af9d",
+      "form": "PSE financial summary",
+      "label": "FPI FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a345c23531b9af9daa4d43c505779a52fa5ae394fe142f240d33e879107cded1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=220"
+    },
+    {
+      "document_id": "a345c23531b9af9d-support-1",
+      "form": "PSE common-stock data",
+      "label": "FPI ordinary common common stock data",
+      "period_end": "2026-09-16",
+      "published_at": null,
+      "sha256": "a345c23531b9af9daa4d43c505779a52fa5ae394fe142f240d33e879107cded1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=220"
+    }
+  ],
+  "subsector": "Investment and resource holding",
+  "ticker": "FPI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE printed PHP0.22 BVPS exceeds PHP261.653m parent equity divided by 1.839bn outstanding shares. The screen uses the explicit parent/share bridge; FY2025 and 1H2026 gross revenue are zero."
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "artifact_hash": "563c05a3fcc43d00750a4a3d0dc12319e27d8fd5554739598b79561beddc90fc",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Sustainable margins, working capital, financing and the post-1Q2026 reporting/suspension outcome are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-03-31",
+  "filing_published_at": null,
+  "input_hash": "5159dc51f6ba97d62c5bd5ab67da6e71abc6a8bbab225b1a9ce212f70cefe8e2",
+  "issuer": {
+    "issuer_id": "PSE:MM",
+    "name": "MerryMart Consumer Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.158165952,
+      "high": 0.217478185,
+      "low": 0.09885372
+    },
+    "metric": "price_to_book",
+    "metric_label": "Historical 2026-03-31 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.3954148810010841,
+    "note": "Historical finite analyst P/B screen for a suspended line; no current quote or upside, no intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-HISTORICAL-B26-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "12cb2b8b9801029cfe99be1cc09583c046fb295387f3608442fde9cb45773937",
+    "source_page": null,
+    "source_status": "reviewed_historical_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B26-1.0",
+  "numerical_range": {
+    "high": 0.217478185,
+    "low": 0.09885372
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Sustainable margins, working capital, financing and the post-1Q2026 reporting/suspension outcome are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 7,594,936,709 reviewed ordinary-common shares",
+    "policy_rationale": "Finite analyst P/B sensitivity reused from the preceding reviewed batches. This is a historical parent-book screen, not peer-calibrated, intrinsic or a current-price target.",
+    "reliability": "Low",
+    "route_reason": "Retail intrinsic value needs normalized FCFF; the dated 1Q2026 parent-common book is a separate finite screen.",
+    "screen_time_basis": "historical_2026_q1",
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-10"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "MM",
+    "security_id": "PSE:MM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "12cb2b8b9801029c",
+      "form": "PSE financial summary",
+      "label": "MM reviewed PSE financial summary",
+      "period_end": "2026-03-31",
+      "published_at": null,
+      "sha256": "12cb2b8b9801029cfe99be1cc09583c046fb295387f3608442fde9cb45773937",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=677"
+    },
+    {
+      "document_id": "12cb2b8b9801029c-support-1",
+      "form": "PSE common-stock data",
+      "label": "MM ordinary common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "12cb2b8b9801029cfe99be1cc09583c046fb295387f3608442fde9cb45773937",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=677"
+    }
+  ],
+  "subsector": "Food and convenience retail",
+  "ticker": "MM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No current market quote or upside is published for this suspended security.",
+    "The PSE 1Q2026 PHP3.003bn parent equity / 7.595bn common-share bridge supports only a Low-reliability historical P/B screen. Trading was suspended in the September stock snapshot and public float was 1.37%; no current quote, upside or intrinsic value is published."
+  ]
+}

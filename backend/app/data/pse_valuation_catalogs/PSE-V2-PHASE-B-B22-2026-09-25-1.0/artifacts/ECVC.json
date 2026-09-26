@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "d8fe5aea9a0e2f0cb6e7f8d1d4f9222ddb6c44f8953abbecef69b93ca26bb214",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Parent attribution, asset rights and the large listed-versus-outstanding share difference remain unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a86ca7a3cfa81be822a9c60ce8a440a742a042e8ab84623ad292c6afa9c13bca",
+  "issuer": {
+    "issuer_id": "PSE:ECVC",
+    "name": "East Coast Vulcan Mining Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.077812894,
+      "high": 0.10699273,
+      "low": 0.048633059
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 total equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.19453223619909502,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "eabdbae62ed264b3b42217fdaa5d5dccfdf1b0c06cea1b0e5e9f6ac9c13cfb3b",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 0.10699273,
+    "low": 0.048633059
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Parent attribution, asset rights and the large listed-versus-outstanding share difference remain unresolved.",
+    "metric_basis": "PHP total equity (pesos) / 6,630,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; no peer calibration, proven reserve appraisal or attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Resource and investment interests require attributable SOTP; total book is only a tentative common-share screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ECVC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "eabdbae62ed264b3",
+      "form": "PSE financial summary",
+      "label": "ECVC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "eabdbae62ed264b3b42217fdaa5d5dccfdf1b0c06cea1b0e5e9f6ac9c13cfb3b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=46"
+    },
+    {
+      "document_id": "eabdbae62ed264b3-support-1",
+      "form": "PSE common-stock data",
+      "label": "ECVC open ordinary-common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "eabdbae62ed264b3b42217fdaa5d5dccfdf1b0c06cea1b0e5e9f6ac9c13cfb3b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=46&security_id=346"
+    }
+  ],
+  "subsector": "Mining and investment holding",
+  "ticker": "ECVC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The 1H2026 parent-equity field is zero, and FY2025 parent equity exceeds reported total equity; these fields are not treated as a reliable parent-common bridge. PHP1.290bn total equity / 6.63bn outstanding shares is a Low-reliability proxy, not an appraisal."
+  ]
+}

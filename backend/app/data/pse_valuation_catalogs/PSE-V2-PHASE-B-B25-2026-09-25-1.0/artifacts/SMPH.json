@@ -1,0 +1,109 @@
+{
+  "artifact_hash": "43b3a6855c3287797a83b110cefe89b90aadfc7776c8f9ccfc6633bb51b7e4d2",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "e7437d8acb4828a93e5bbd710c338f20bd2685f244f4c061f43c7628510fef89",
+  "issuer": {
+    "issuer_id": "PSE:SMPH",
+    "name": "SM Prime Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B03-1.0",
+  "numerical_range": {
+    "high": 54.13548915925787,
+    "low": 30.51643446938899
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "nav_bridge": {
+      "investment_property_carrying_value_php_millions": 665641.251,
+      "investment_property_fair_value_php_millions": 2505428.94,
+      "parent_equity_php_millions": 465557.625,
+      "preferred_claims_php_millions": 0.0,
+      "shares_millions": 28820.859
+    },
+    "policy_rationale": "Shared property RNAV policy that applies scenario-specific realization and tax leakage to the disclosed investment-property fair-value uplift.",
+    "policy_version": "PSE-V2-PROPERTY-RNAV-B03-1.0",
+    "reliability": "Low",
+    "route_reason": "Reported parent equity plus the disclosed investment-property fair-value uplift supports a provisional property RNAV.",
+    "scenario_assumptions": {
+      "base": {
+        "tax_leakage": 0.2,
+        "uplift_realization": 0.5
+      },
+      "bear": {
+        "tax_leakage": 0.25,
+        "uplift_realization": 0.3
+      },
+      "bull": {
+        "tax_leakage": 0.15,
+        "uplift_realization": 0.7
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 1201472.7006,
+      "enterprise_value": null,
+      "value_per_share": 41.68760898486752
+    },
+    "bear": {
+      "common_equity_value": 879509.8550249999,
+      "enterprise_value": null,
+      "value_per_share": 30.51643446938899
+    },
+    "bull": {
+      "common_equity_value": 1560231.2999549997,
+      "enterprise_value": null,
+      "value_per_share": 54.13548915925787
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SMPH:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "investment_property_fair_value",
+        "uplift_realization",
+        "tax_leakage",
+        "preferred_claims"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "371d657bdbbc17d0",
+      "form": "17-A",
+      "label": "SMPH FY2025 audited statements and investment-property fair-value disclosure",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "371d657bdbbc17d083d81404f1368d38af9d796169268723b151685b533a1408",
+      "source_page": null,
+      "url": "https://www.smprime.com/wp-content/uploads/2026/04/PSE-SM-Prime-Holdings-Inc-SEC-Form-17-A-FY2025-1-pdffile.pdf"
+    }
+  ],
+  "subsector": "Integrated property developer",
+  "ticker": "SMPH",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional property RNAV using reported parent equity plus a risk-adjusted investment-property fair-value uplift.",
+    "The fair-value uplift is Level 3 or otherwise appraisal-dependent and may not be realized at the reported amount.",
+    "The model does not separately revalue development inventory, associates, or assets outside the disclosed investment-property portfolio.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

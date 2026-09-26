@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "a8768644c94cfdae68506c4a9eb16ba8b9bd2d7292990bb7eff1a1c2d4839c73",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2020, parent attribution is reported as zero, and the suspended stock snapshot's outstanding shares exceed issued shares; current reserves and common claims are unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2020-09-30",
+  "filing_published_at": null,
+  "input_hash": "dd91422165ae573bb2fa6e691c6eb3389ac12c13f42da912fe39db2fab2d4d60",
+  "issuer": {
+    "issuer_id": "PSE:AR",
+    "name": "Abra Mining and Industrial Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2020, parent attribution is reported as zero, and the suspended stock snapshot's outstanding shares exceed issued shares; current reserves and common claims are unresolved.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Mineral claims require finite reserve economics and a reconciled attributable common-share bridge.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-18"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "AR",
+    "security_id": "PSE:AR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "233241520089a0c5",
+      "form": "PSE financial summary",
+      "label": "AR reviewed PSE financial-summary page",
+      "period_end": "2020-09-30",
+      "published_at": null,
+      "sha256": "233241520089a0c5a1b4c9231f59cefbcff20f97957fa97a0c77b4d482145ef0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=33"
+    },
+    {
+      "document_id": "233241520089a0c5-support-1",
+      "form": "PSE common-stock data",
+      "label": "AR quoted common stock data",
+      "period_end": "2026-09-18",
+      "published_at": null,
+      "sha256": "233241520089a0c5a1b4c9231f59cefbcff20f97957fa97a0c77b4d482145ef0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=33"
+    },
+    {
+      "document_id": "233241520089a0c5-support-2",
+      "form": "PSE disclosure notice",
+      "label": "AR continued trading suspension for missing 2Q2026 report",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "233241520089a0c5a1b4c9231f59cefbcff20f97957fa97a0c77b4d482145ef0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1959707"
+    }
+  ],
+  "subsector": "Mining and mineral interests",
+  "ticker": "AR",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "The 3Q2020 PSE currency label reads 'PES0' and total equity is PHP1.716bn while parent equity is printed zero. The 2026 stock page shows 199.295bn outstanding versus 99.295bn issued and 72.947bn listed shares. None is silently chosen for a per-share result."
+  ]
+}

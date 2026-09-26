@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "8e82cd9017a04f3319193f072a2ea92c4057b47a24dbe9edbadd6a2396054beb",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Product-level margins, current earnings normalization, associates, leases, capex, debt and terminal economics are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "2e334b671ae2e9af865fc439690d93f5a730ec72f42d477c219717fba106e666",
+  "issuer": {
+    "issuer_id": "PSE:PMPC",
+    "name": "Panasonic Manufacturing Philippines Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 8.876,
+      "high": 11.412,
+      "low": 6.34
+    },
+    "metric": "price_to_book",
+    "metric_label": "June 2026 PSE-reported book value per share, March fiscal year",
+    "metric_value_per_share": 12.68,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic FCFF, residual-income or SOTP valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-INDUSTRIAL-B16-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a01339d98f4dda3fe4c1907467d04b34e82814ef6af778e99972feb3d798c9a0",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B16-1.0",
+  "numerical_range": {
+    "high": 11.412,
+    "low": 6.34
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Product-level margins, current earnings normalization, associates, leases, capex, debt and terminal economics are not reconciled.",
+    "metric_basis": "reported PHP book value per share; March fiscal year, June Q1",
+    "policy_rationale": "Reuse the Batch 13 cyclical-industrial P/B band while current manufacturing cash flows and reinvestment remain unresolved.",
+    "reliability": "Low",
+    "route_reason": "Appliance cash flows, input costs, working capital and capex require FCFF; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PMPC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a01339d98f4dda3f",
+      "form": "PSE quarterly financial summary",
+      "label": "PMPC March FY2026 and June FY2027 Q1 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a01339d98f4dda3fe4c1907467d04b34e82814ef6af778e99972feb3d798c9a0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=104"
+    }
+  ],
+  "subsector": "Appliance manufacturing and distribution",
+  "ticker": "PMPC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, capital efficiency and common-equity claims have not been fully reconciled.",
+    "PMPC uses a March fiscal year; June 2026 is FY2027 Q1, not a calendar-year half-year. Q1 basic EPS fell from PHP0.93 prior-year to PHP0.21."
+  ]
+}

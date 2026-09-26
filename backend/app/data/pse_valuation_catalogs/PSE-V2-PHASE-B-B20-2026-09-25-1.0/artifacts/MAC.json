@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "8e4a0a36a5a7a0a9d972ca8f9e02ce6c6b460ddbef148c27b2b022663947341f",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A reviewed SOTP separating catering, ground handling, logistics, water, associates, debt, and minority claims is incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "eb2f5f3e3106f91d5f81a2f322b2e478f741118dc9b28258750b906c83b7dc21",
+  "issuer": {
+    "issuer_id": "PSE:MAC",
+    "name": "MacroAsia Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 6.4,
+      "high": 7.68,
+      "low": 5.12
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.64,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-TRANSPORT-SERVICES-B07-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "4bcec50dac761bd6a3105d1b9b269735a176517a20e3df63c98b20085dd48250",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B07-1.0",
+  "numerical_range": {
+    "high": 7.68,
+    "low": 5.12
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A reviewed SOTP separating catering, ground handling, logistics, water, associates, debt, and minority claims is incomplete.",
+    "metric_basis": "0.76 FY2025 EPS + 0.24 1H2026 EPS - 0.36 1H2025 EPS",
+    "reliability": "Low",
+    "route_reason": "SOTP remains primary across aviation services and other interests; P/E is a finite screen while associate ownership, debt, and segment cash flows remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MAC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "4bcec50dac761bd6",
+      "form": "17-Q",
+      "label": "MAC FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "4bcec50dac761bd6a3105d1b9b269735a176517a20e3df63c98b20085dd48250",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=106"
+    }
+  ],
+  "subsector": "Aviation support and logistics",
+  "ticker": "MAC",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

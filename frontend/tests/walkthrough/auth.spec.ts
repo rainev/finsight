@@ -1,0 +1,35 @@
+import { test, expect } from '@playwright/test'
+import { randomBytes } from 'node:crypto'
+
+// Opt-in because the genuine registration journey creates one local test account.
+test('real registration and password login finish in AAPL, never the tour',async({page})=>{
+  test.skip(process.env.FINSIGHT_TEST_REGISTRATION !== '1','Opt in to a real local registration with FINSIGHT_TEST_REGISTRATION=1')
+  const email=`walkthrough-uat-${Date.now()}@example.test`
+  const password=randomBytes(24).toString('base64url')
+  await page.goto('/register')
+  await page.getByLabel('Email',{exact:true}).fill(email)
+  await page.getByLabel('Password',{exact:true}).fill(password)
+  await page.getByRole('button',{name:'Create account',exact:true}).click()
+  await expect(page).toHaveURL(/\/valuation\/AAPL$/)
+  await expect(page.getByRole('heading',{name:'Apple Inc.',exact:true})).toBeVisible()
+  await page.getByRole('button',{name:'Open account menu',exact:true}).click()
+  await page.getByRole('button',{name:'Sign out',exact:true}).click()
+  await expect(page).toHaveURL(/\/login$/)
+  await page.getByLabel('Email',{exact:true}).fill(email)
+  await page.getByLabel('Password',{exact:true}).fill(password)
+  await page.getByRole('button',{name:'Sign in',exact:true}).click()
+  await expect(page).toHaveURL(/\/valuation\/AAPL$/)
+  await expect(page.getByRole('heading',{name:'Apple Inc.',exact:true})).toBeVisible()
+  await page.goto('/')
+  await page.getByRole('link',{name:'Skip to FinSight',exact:true}).click()
+  await expect(page).toHaveURL(/\/valuation\/AAPL$/)
+  await expect(page.getByRole('heading',{name:'Apple Inc.',exact:true})).toBeVisible()
+  await page.getByRole('link',{name:'News',exact:true}).click()
+  await expect(page).toHaveURL(/\/news$/)
+  await expect(page.locator('.finsight-app')).toBeVisible()
+  await page.getByRole('link',{name:'Portfolio',exact:true}).click()
+  await expect(page).toHaveURL(/\/portfolio$/)
+  await expect(page.locator('.finsight-app')).toBeVisible()
+  await page.screenshot({path:'../docs/audit/evidence/walkthrough/real-auth-portfolio.png'})
+  console.log(`Verified real registration/login/app entry. Local test account: ${email}; no holdings or saved runs created.`)
+})

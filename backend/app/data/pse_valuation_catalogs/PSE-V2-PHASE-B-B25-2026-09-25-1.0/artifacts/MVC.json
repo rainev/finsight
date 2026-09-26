@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "69b72316fd583ec9d7d6e9176d7c5e2e2361b29b4839f9348d378a8b9aaece6d",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Plant utilization, input costs, sustaining and expansion capex, debt, working capital, and terminal economics are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "4ccf19912937684606ac5bcebd3f7d30dc2c95676311a696efbc6fb3eef1752d",
+  "issuer": {
+    "issuer_id": "PSE:MVC",
+    "name": "Mabuhay Vinyl Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 4.781,
+      "high": 6.147,
+      "low": 3.415
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 6.83,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-INDUSTRIAL-B13-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a0b85dde45e51e698eb44e8af62dbfc0b1bce61682845efe7b7ca80348383a89",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B13-1.0",
+  "numerical_range": {
+    "high": 6.147,
+    "low": 3.415
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Plant utilization, input costs, sustaining and expansion capex, debt, working capital, and terminal economics are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "A shared P/B screening band for manufacturing and industrial supply while segment cash flows, reinvestment, and capital claims are unreconciled. The numerical band reuses the reviewed Batch 9 cyclical operating screen; it is not peer-calibrated.",
+    "reliability": "Low",
+    "route_reason": "Chemical-plant operating cash flow and sustaining capex require FCFF; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MVC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a0b85dde45e51e69",
+      "form": "PSE quarterly financial summary",
+      "label": "MVC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a0b85dde45e51e698eb44e8af62dbfc0b1bce61682845efe7b7ca80348383a89",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=100"
+    }
+  ],
+  "subsector": "Chlor-alkali chemicals manufacturing",
+  "ticker": "MVC",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative P/B; the operating FCFF or attributable SOTP remains unresolved.",
+    "Reported book value per share does not establish a common-equity claim bridge or a peer-calibrated multiple."
+  ]
+}

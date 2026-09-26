@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "40584aa19a511cc4aee5ee888e2363e48a481d4124b3e76aefea5c8ae0a71572",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Published market values cover core minority investments, but the operating-subsidiary values and parent-only claim bridge are not complete enough for an attributable SOTP."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "6d1edb33058aeb4bb8f72a7e61982ac8005527a011163f2c7ba95f94d497058b",
+  "issuer": {
+    "issuer_id": "PSE:JGS",
+    "name": "JG Summit Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.6,
+      "high": 0.75,
+      "low": 0.45
+    },
+    "estimates": {
+      "base": 22.386,
+      "high": 27.9825,
+      "low": 16.7895
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported parent book value per common share",
+    "metric_value_per_share": 37.31,
+    "note": "Transparent P/B-to-reported-NAV screen while the component-level SOTP or property RNAV remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-HOLDCO-B03-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "94c6ab5f63b1a7d7af3fbaa403830d46b791e21bc1182999f5f7418cafb4ffec",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B03-1.0",
+  "numerical_range": {
+    "high": 27.9825,
+    "low": 16.7895
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Published market values cover core minority investments, but the operating-subsidiary values and parent-only claim bridge are not complete enough for an attributable SOTP.",
+    "policy_rationale": "Shared P/B-to-reported-NAV screen with an explicit conglomerate discount while full component SOTP remains unresolved.",
+    "reliability": "Low",
+    "reported_parent_equity_php_millions": 280606.842,
+    "route_reason": "Component SOTP remains primary; a P/B-to-reported-NAV screen provides a finite result while operating subsidiaries and parent-only claims are reconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:JGS:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "94c6ab5f63b1a7d7",
+      "form": "17-A",
+      "label": "JGS FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "94c6ab5f63b1a7d7af3fbaa403830d46b791e21bc1182999f5f7418cafb4ffec",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=210"
+    }
+  ],
+  "subsector": "Diversified holding company",
+  "ticker": "JGS",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved component SOTP or property RNAV.",
+    "Reported book value is an accounting measure and may differ materially from current asset fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

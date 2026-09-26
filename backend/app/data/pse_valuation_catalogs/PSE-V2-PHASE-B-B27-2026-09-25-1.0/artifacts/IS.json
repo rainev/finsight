@@ -1,0 +1,75 @@
+{
+  "artifact_hash": "8454aba38b767d10bb5efd61c6d538d102a274e04b497a62fe2932af67ed8da4",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Negative equity, persistent losses and a large current-liability excess leave ordinary-common residual and financing unresolved; positive P/B cannot be applied."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-07-31",
+  "filing_published_at": null,
+  "input_hash": "ea488a44ee64c4d5f4168b98895214d604e87164250537f292c2ab4659b5807e",
+  "issuer": {
+    "issuer_id": "PSE:IS",
+    "name": "Island Information & Technology, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "metric_basis": "No defensible present ordinary-common per-share screen",
+    "reliability": "Unavailable",
+    "route_reason": "An operating cash-flow model would require a supportable going-concern and capital bridge."
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:IS:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "4c23d06f31cbc157",
+      "form": "PSE financial summary",
+      "label": "IS FY2025 and latest PSE financial summary",
+      "period_end": "2026-07-31",
+      "published_at": null,
+      "sha256": "4c23d06f31cbc15732b7f8a9d816c12c6a282d88d75224cc38686124c19220ae",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=204"
+    },
+    {
+      "document_id": "4c23d06f31cbc157-support-1",
+      "form": "PSE common-stock data",
+      "label": "IS ordinary-common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "4c23d06f31cbc15732b7f8a9d816c12c6a282d88d75224cc38686124c19220ae",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=204"
+    }
+  ],
+  "subsector": "Information technology",
+  "ticker": "IS",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "July fiscal interim is retained; zero parent fields are unavailable attribution, not zero economic claims."
+  ]
+}

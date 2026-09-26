@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "918f5f571054ae1011ab390203450738b979cc851020aa54ceae5c9f8cba9580",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "FY2023-FY2025 owner-cash observations do not provide a stable positive FCFF baseline after the Batangas expansion and working-capital cycle."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "9a1ebd6538a34194e9a97ddeb8179843bcfc01a6d9e6ecfbae4224c2b28ec286",
+  "issuer": {
+    "issuer_id": "PSE:DNL",
+    "name": "D&L Industries, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 3.5999999999999996,
+      "high": 4.32,
+      "low": 2.88
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "FY2025 reported basic EPS",
+    "metric_value_per_share": 0.36,
+    "note": "Transparent screening fallback while the specialist FCFF bridge remains unavailable.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-MR-B02-DNL-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "afb0f9cdc84d73f9f9f579ba2640906e947c7af3ef3ea1a11bc2027c62f897cb",
+    "source_page": 16,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 4.32,
+    "low": 2.88
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "FY2023-FY2025 owner-cash observations do not provide a stable positive FCFF baseline after the Batangas expansion and working-capital cycle.",
+    "reliability": "Low",
+    "route_reason": "Operating FCFF remains primary, but the current source period does not support a positive normalized owner-cash baseline."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:DNL:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "afb0f9cdc84d73f9",
+      "form": "17-A",
+      "label": "DNL FY2025 annual report fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "afb0f9cdc84d73f9f9f579ba2640906e947c7af3ef3ea1a11bc2027c62f897cb",
+      "source_page": 16,
+      "url": "https://dnl.com.ph/wp-content/uploads/2026/05/2025-Annual-Report.pdf"
+    }
+  ],
+  "subsector": "Specialty ingredients and chemicals",
+  "ticker": "DNL",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unavailable specialist intrinsic valuation.",
+    "The source-supported FCFF and lease-adjusted capital bridge remain unresolved.",
+    "Policy bands are initial conventions and are not presented as an empirically validated issuer peer study."
+  ]
+}

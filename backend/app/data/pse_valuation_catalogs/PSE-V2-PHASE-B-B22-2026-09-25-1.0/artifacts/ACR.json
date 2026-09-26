@@ -1,0 +1,83 @@
+{
+  "artifact_hash": "d52fb6e355025513990e9ee61a06ec2d3602a2ba53155fe148f40147e8608335",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The consolidated filing is captured, but attributable SOTP component values and ownership-scoped claims have not been reviewed.",
+    "The legacy single-company estimate is not promoted into the specialist V2 route."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "b2e775100d8535728ab02dda713d29378d75498496c7e66a0157ba5679a5a95e",
+  "issuer": {
+    "issuer_id": "ACR",
+    "name": "Alsons Consolidated Resources, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 11.5,
+      "low": 8.5
+    },
+    "estimates": {
+      "base": 1.26,
+      "high": 1.449,
+      "low": 1.071
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "FY2025 EPS",
+    "metric_value_per_share": 0.126,
+    "note": "Initial screening conventions, not empirically validated issuer peer sets.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-MR-PILOT-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "d718b654d1bab876b3da04b76eea373105fcb48411874728135289e82915acb8",
+    "source_page": 63,
+    "source_status": "reviewed_legacy_snapshot"
+  },
+  "model_version": "PSE-V2-PILOT-1.1",
+  "numerical_range": {
+    "high": 1.449,
+    "low": 1.071
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {},
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ACR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "d718b654d1bab876",
+      "form": "17-A",
+      "label": "2026-04-15 ACR 17A_2025_Final_compressed.pdf",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "d718b654d1bab876b3da04b76eea373105fcb48411874728135289e82915acb8",
+      "source_page": 63,
+      "url": null
+    }
+  ],
+  "subsector": "Power generation and property",
+  "ticker": "ACR",
+  "valuation_date": "2026-09-21",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the specialist intrinsic valuation.",
+    "Policy bands are initial conventions and are not presented as empirically validated issuer peer sets."
+  ]
+}

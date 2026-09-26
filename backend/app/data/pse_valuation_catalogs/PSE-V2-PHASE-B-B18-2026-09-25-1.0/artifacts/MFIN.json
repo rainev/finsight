@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "1e54010360fb5b21a9528050b62951a04bac0bbadcb7f8f3c7fe237286adaaa9",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The 2026 first-half loss conflicts with FY2025 profitability, so a current residual-income baseline requires refreshed normalization."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025 and latest review",
+  "filing_published_at": null,
+  "input_hash": "f8358ed0ed9046642e8bc8dd37dd56312c852fdf2d8b4a5d38493c0e134ac3bf",
+  "issuer": {
+    "issuer_id": "PSE:MFIN",
+    "name": "Makati Finance Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 1.7280000000000002,
+      "high": 2.16,
+      "low": 1.296
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported book value per common share",
+    "metric_value_per_share": 2.16,
+    "note": "Transparent market-relative screen while refreshed residual-income normalization remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LENDER-REVIEW-B05-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "9600a5b52c6048e98012a9b4c5a5b4b98efeeb40aa0114898bd07861c91523d1",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B05-1.0",
+  "numerical_range": {
+    "high": 2.16,
+    "low": 1.296
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "intrinsic_blocker": "The 2026 first-half loss conflicts with FY2025 profitability, so a current residual-income baseline requires refreshed normalization.",
+    "latest_interim_net_loss_php_millions": -61.919991,
+    "policy_rationale": "P/B screen while the latest interim loss prevents using FY2025 profitability as a current intrinsic baseline.",
+    "reliability": "Low",
+    "reported_equity_php_millions": 597.205933,
+    "route_reason": "Residual income remains primary, but the 2026 first-half loss makes FY2025 profitability unsuitable as a current intrinsic baseline."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MFIN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9600a5b52c6048e9",
+      "form": "17-Q",
+      "label": "MFIN FY2025 and 1H2026 PSE financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "9600a5b52c6048e98012a9b4c5a5b4b98efeeb40aa0114898bd07861c91523d1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=263"
+    }
+  ],
+  "subsector": "Consumer and small-business finance",
+  "ticker": "MFIN",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved residual-income valuation.",
+    "The disclosed bridge limitation is preserved rather than replaced with a fabricated intrinsic input."
+  ]
+}

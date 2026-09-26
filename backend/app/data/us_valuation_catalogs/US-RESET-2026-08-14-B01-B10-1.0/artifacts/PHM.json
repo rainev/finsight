@@ -1,0 +1,163 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Conditional Low normalized-equity-earnings estimate. It includes consolidated homebuilding and mortgage earnings rather than claiming mortgage cash separation.",
+      "Invalidate when consolidated earnings, mortgage contribution, debt, inventory, or shares leave the range.",
+      "Calculator directly varies normalized earnings and the earnings multiple around the published base.",
+      "Model 'conditional_estimate': Conditional Low normalized-equity-earnings estimate. It includes consolidated homebuilding and mortgage earnings rather than claiming mortgage cash separation.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/PHM/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, confidence reasons, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-05-HISTORY-REPAIR-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low normalized-equity-earnings estimate. It includes consolidated homebuilding and mortgage earnings rather than claiming mortgage cash separation."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000822416",
+    "classification_confidence": 0.75,
+    "classification_reason": "Frozen Batch 05 lane with launch-first issuer review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Discretionary",
+    "issuer_name": "PulteGroup",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_discretionary",
+    "sec_sic_code": null,
+    "sec_sic_label": "Homebuilding",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000822416-26-000036"
+    ],
+    "ticker": "PHM"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-05-HISTORY-REPAIR-1.0",
+    "sector_framework": "homebuilder_normalized_equity_earnings_baseline",
+    "source_policy": "Reported facts remain private and separate from governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "Launch-first Conditional Low baseline after primary route required refinements.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 105.792989726345,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low normalized-equity-earnings estimate. It includes consolidated homebuilding and mortgage earnings rather than claiming mortgage cash separation."
+      ]
+    }
+  },
+  "primary_valuation_method": "homebuilder_normalized_equity_earnings_baseline",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_history_and_finsight_policy",
+    "cash_conversion_margin": 0.1586127838988495,
+    "cash_conversion_margin_high": 0.15952367137203485,
+    "cash_conversion_margin_low": 0.135230067807329,
+    "diluted_shares": 196789750.0,
+    "diluted_shares_high": 201589500.0,
+    "diluted_shares_low": 191990000.0,
+    "earnings_multiple": 8.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "not applied",
+    "forecast_mode": "normalized_equity_earnings",
+    "forecast_policy_version": "BATCH-05-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 5,
+    "normalization_basis": "company_history_with_material_event_override",
+    "normalized_earnings_factor": 1.0
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.057555412427585245,
+    "accounting_label": "Medium",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.479824777347816,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low normalized-equity-earnings estimate. It includes consolidated homebuilding and mortgage earnings rather than claiming mortgage cash separation.",
+      "Invalidate when consolidated earnings, mortgage contribution, debt, inventory, or shares leave the range.",
+      "Calculator directly varies normalized earnings and the earnings multiple around the published base."
+    ]
+  },
+  "scenario_range": {
+    "base": 105.792989726345,
+    "high": 149.95826345122143,
+    "label": "conditional decision range; not a probability-weighted forecast or recommendation",
+    "low": 55.03089198594173
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0000822416-26-000036",
+    "filed_date": "2026-07-22",
+    "form": "10-Q",
+    "note": "Controlling filing anchors reported inputs; forecast states are FinSight assumptions.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/822416/000082241626000036/phm-20260630.htm"
+  },
+  "ticker": "PHM",
+  "valuation_date": "2026-08-14"
+}

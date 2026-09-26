@@ -1,0 +1,163 @@
+{
+  "artifact_hash": "25716adbc39548b8449edaefaf2117e90d8c6af14ee4dddfd63fb62cff0b3c15",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Missing: total_assets, shares_outstanding, parent_equity, book_value_per_share, cet1_ratio, capital_adequacy_ratio; needs review: cash, gross_loans, allowance_credit_losses."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "0e61d53f0cc3373e5f776e7283c738e23e3bb7107b8ac52989e4ca9611285517",
+  "issuer": {
+    "issuer_id": "BDO",
+    "name": "BDO Unibank, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 162.8,
+      "high": 195.36,
+      "low": 130.24
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "FY2025 basic EPS candidate",
+    "metric_value_per_share": 16.28,
+    "note": "Initial screening conventions, not empirically validated issuer peer sets.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-MR-PILOT-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "6d68f44c66aacbc37e36fec4635adca485bf00d2e4b96b9d12c4d0641d6bfa1a",
+    "source_page": 84,
+    "source_status": "review_candidate"
+  },
+  "model_version": "PSE-V2-PILOT-1.1",
+  "numerical_range": {
+    "high": 195.36,
+    "low": 130.24
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {},
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BDO:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "1026568c2549b761",
+      "form": null,
+      "label": "quarterly_17q_September 30, 2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "1026568c2549b761079e3c3cdf93882a76a27efe09eaaeaae52dba28eb971087",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "72c47fd9fbbe25b3",
+      "form": "17-Q",
+      "label": "BDO Unibank, Inc. - Quarterly_17Q_June 30, 2026.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "72c47fd9fbbe25b3dd45a8a8cc68e6cdee3130bfd3addcce1bcd1e1afa0aaecc",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "8fc27730ccb54513",
+      "form": null,
+      "label": "BDO Unibank, Inc. - quarterly_17q_June 30, 2025_Final.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "8fc27730ccb54513cc755cffa75dcfdf0d54cd08120988f0b96492c9b13a186e",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "c85cd849b7a14c50",
+      "form": "17-Q",
+      "label": "BDO Unibank, Inc._SEC 17-Q_September 2025 (3Q 2025 FS).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "c85cd849b7a14c50ac854e3756c6307254e3e42033e0382ff0ad6e3daefec53e",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "e25160a1884366a1",
+      "form": null,
+      "label": "quarterly_17q_June 30, 2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "e25160a1884366a1bdd54233de4dc7f834f4cbda1ee1294defe351c7a05ecdce",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "eb85ff2281a7e384",
+      "form": "17-Q",
+      "label": "BDO Unibank, Inc. - Quarterly_17Q_March 31, 2026.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "eb85ff2281a7e38471062221917151c4a293ce2208b9a479f9122a5cb1778adb",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "ec9564402d6aa652",
+      "form": null,
+      "label": "BDO Unibank, Inc. - Quarterly_17q_March 31, 2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "ec9564402d6aa652826cf3b87692c50c8cb8bd26922186c3a08e6ef9987bd0dd",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "6d68f44c66aacbc3",
+      "form": "17-A",
+      "label": "BDO 17-A Annual Report (31 December 2025).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "6d68f44c66aacbc37e36fec4635adca485bf00d2e4b96b9d12c4d0641d6bfa1a",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "8cac2d181bf70368",
+      "form": "17-A",
+      "label": "01 BDO 17-A Annual Report (31 December 2024).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "8cac2d181bf70368cd73cd13eae814874d8228e1c636fa28808266093f0d8c7e",
+      "source_page": null,
+      "url": null
+    }
+  ],
+  "subsector": "Commercial and universal bank",
+  "ticker": "BDO",
+  "valuation_date": "2026-09-21",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the specialist intrinsic valuation.",
+    "Policy bands are initial conventions and are not presented as empirically validated issuer peer sets.",
+    "The selected per-share metric is a source candidate that still requires human review."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "artifact_hash": "73f8b01e8f31826fbcbf0bb23c580c974380ef20bac181dfe25bf7f6a8ace65a",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2025 with no revenue; trading is suspended and 940m of 1.69bn outstanding shares appear listed."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "194dcfeee17840ad28ec213a37be9767088004e8a375fccc40777878b7772444",
+  "issuer": {
+    "issuer_id": "PSE:T",
+    "name": "TKC Metals Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2025 with no revenue; trading is suspended and 940m of 1.69bn outstanding shares appear listed.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Metals FCFF requires current operations, asset realization and financing claims.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-08-19"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "T",
+    "security_id": "PSE:T:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f8c696d7cf450f88",
+      "form": "PSE financial summary",
+      "label": "T reviewed PSE financial-summary page",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "f8c696d7cf450f886362dc88b1cdf94b7fb81b69f55f83476abf28ad492d9cb3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=163"
+    },
+    {
+      "document_id": "f8c696d7cf450f88-support-1",
+      "form": "PSE common-stock data",
+      "label": "T quoted common stock data",
+      "period_end": "2026-08-19",
+      "published_at": null,
+      "sha256": "f8c696d7cf450f886362dc88b1cdf94b7fb81b69f55f83476abf28ad492d9cb3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=163"
+    }
+  ],
+  "subsector": "Metals and industrial holding",
+  "ticker": "T",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "PSE 3Q2025 parent equity is PHP857.375m but revenue is zero. Listed and outstanding common shares diverge, and the June 2026 last close is not current."
+  ]
+}

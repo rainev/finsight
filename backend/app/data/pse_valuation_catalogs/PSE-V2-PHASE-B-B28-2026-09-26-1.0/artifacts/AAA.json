@@ -1,0 +1,82 @@
+{
+  "artifact_hash": "3f2459f05c4e12047a333d159e48fd283307c01a2964e330f6047e23892ed6f1",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest PSE summary ends 1H2014 with negative parent equity; no current investment-asset, liability or recovery bridge is reviewed for the suspended common line."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2014-06-30",
+  "filing_published_at": null,
+  "input_hash": "7f5b118140c81bac8c10c7f9659464ba7a60d99efa8895852d9d8bd415ec8fe1",
+  "issuer": {
+    "issuer_id": "PSE:AAA",
+    "name": "Asia Amalgamated Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B28-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest PSE summary ends 1H2014 with negative parent equity; no current investment-asset, liability or recovery bridge is reviewed for the suspended common line.",
+    "metric_basis": "PHP parent equity (pesos) / 799,999,981 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Investment interests need attributable subsidiary assets and parent-only claims for SOTP.",
+    "screen_time_basis": null,
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-16"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "AAA",
+    "security_id": "PSE:AAA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "fea5eb97b495f213",
+      "form": "PSE financial summary",
+      "label": "AAA reviewed PSE financial summary",
+      "period_end": "2014-06-30",
+      "published_at": null,
+      "sha256": "fea5eb97b495f213c2244d12e0d6b10c1c733dbb0259a62dfe5557f5148fb976",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=55"
+    },
+    {
+      "document_id": "fea5eb97b495f213-support-1",
+      "form": "PSE common-stock data",
+      "label": "AAA ordinary common stock data",
+      "period_end": "2026-09-16",
+      "published_at": null,
+      "sha256": "fea5eb97b495f213c2244d12e0d6b10c1c733dbb0259a62dfe5557f5148fb976",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=55&security_id=347"
+    }
+  ],
+  "subsector": "Investment holding",
+  "ticker": "AAA",
+  "valuation_date": "2026-09-26",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No licensed current market quote or upside is published.",
+    "PSE 1H2014 parent equity is negative PHP20.011m and printed BVPS is negative PHP0.02. The 2026 stock snapshot shows 799,999,981 outstanding versus 800m listed/issued shares; the May 2015 last close is not a current quote."
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "workpaper_id": "PSE-V2-RCR-SUPERVISED-REFRESH-2026-09-26-1",
+  "status": "staged_calculation_only",
+  "issuer": "PSE:RCR",
+  "valuation_date": "2026-09-26",
+  "distribution_period": "TTM to 2026-06-30",
+  "share_count_as_of": "2026-09-25",
+  "working_currency": "PHP",
+  "quarterly_reported_distributions_per_share": {
+    "2025_Q3": 0.106,
+    "2025_Q4": 0.1112,
+    "2026_Q1": 0.1115,
+    "2026_Q2": 0.1117
+  },
+  "ttm_distribution_per_share": 0.4404,
+  "shares_outstanding": 20836365310,
+  "q2_2026_distributable_income_php": 2552006054,
+  "q2_2026_declared_distribution_php": 2327422005.127,
+  "q2_declared_payout_fraction": 0.911997054818507,
+  "active_reference": {
+    "catalog": "PSE-V2-PHASE-B-B28-2026-09-26-1.0",
+    "distribution_per_share": 0.4268,
+    "shares_outstanding": 19548803008,
+    "bear_per_share": 3.413087907610259,
+    "base_per_share": 5.146705882352937,
+    "bull_per_share": 7.245650674738483,
+    "base_equity_value_php_millions": 100611.9394342324
+  },
+  "model": {
+    "name": "sustainable_distributions",
+    "existing_policy_version": "PSE-V2-REIT-STABLE-B01-1.0",
+    "forecast_years": 5,
+    "assumption_status": "carried_forward_for_isolated_test_only_not_reviewer_approved",
+    "scenario_assumptions": {
+      "bear": {"explicit_growth": -0.02, "cost_of_equity": 0.125, "terminal_growth": 0.015},
+      "base": {"explicit_growth": 0.025, "cost_of_equity": 0.11, "terminal_growth": 0.025},
+      "bull": {"explicit_growth": 0.05, "cost_of_equity": 0.1, "terminal_growth": 0.035}
+    }
+  },
+  "calculation_only_candidate": {
+    "bear": {"value_per_share": 3.521846097730924, "equity_value_php_millions": 73382.47185791949},
+    "base": {"value_per_share": 5.310705882352938, "equity_value_php_millions": 110655.8078186717},
+    "bull": {"value_per_share": 7.4765336390694195, "equity_value_php_millions": 155783.78615615412},
+    "numerical_low_per_share": 3.521846097730924,
+    "numerical_high_per_share": 7.4765336390694195
+  },
+  "diagnostics": {
+    "ttm_distribution_change_vs_active_fraction": 0.03186504217432051,
+    "share_count_change_vs_active_fraction": 0.06586399696559875,
+    "base_per_share_change_vs_active_fraction": 0.031865042174320735,
+    "base_equity_value_change_vs_active_fraction": 0.09982779818099763,
+    "base_pv_terminal_fraction": 0.6714357065163019,
+    "base_value_per_share_at_10pct_cost_of_equity": 6.0188,
+    "base_value_per_share_at_12pct_cost_of_equity": 4.7516842105263155
+  },
+  "sources": [
+    {"label": "RCR FY2025 Q4 fund manager report, dividend table", "url": "https://rlcommercialreit.com.ph/sites/default/files/2026-02/2025_4Q%20RCR%20FM.pdf", "source_byte_hash": null},
+    {"label": "RCR 2Q2026 fund manager report, financial performance and investment return", "url": "https://rlcommercialreit.com.ph/sites/default/files/2026-08/RL%20Fund%20Management%20Quarterly%20Report_Q2%202026.pdf", "source_byte_hash": null},
+    {"label": "RCR 2Q2026 PSE dividend disclosure", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1955573", "source_byte_hash": null},
+    {"label": "RCR PSE stock data as of 2026-09-25", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=684", "source_byte_hash": null}
+  ],
+  "source_capture_status": "primary_public_sources_read_online; original_bytes_not_stored_or_hashed",
+  "signoff_recommendation": "retain_provisional_not_approval_ready",
+  "signoff_reasons": [
+    "Post-July issuance shares are covered by one declared Q2 dividend, but Q2 income predates a full period from the six infused malls.",
+    "11 percent cost of equity and 2.5 percent perpetual distribution growth are carried-forward shared policy judgments without a dated RCR-specific approval.",
+    "The existing source receipt does not yet bind the refreshed issuer evidence or original-file hashes."
+  ],
+  "issuer_approved": false,
+  "activation_authorized": false,
+  "public_valuation_artifact_created": false
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "PSE-V2-INTERNAL-FILING-WATCH-1.0",
+  "sources": [
+    {
+      "id": "AP-issuer-filings",
+      "ticker": "AP",
+      "index_url": null,
+      "pdf_path_pattern": null,
+      "automated_metadata_access_allowed": false,
+      "rights_record": null
+    },
+    {
+      "id": "BPI-issuer-filings",
+      "ticker": "BPI",
+      "index_url": null,
+      "pdf_path_pattern": null,
+      "automated_metadata_access_allowed": false,
+      "rights_record": null
+    },
+    {
+      "id": "RCR-issuer-filings",
+      "ticker": "RCR",
+      "index_url": "https://rlcommercialreit.com.ph/disclosures/sec-and-pse-filings",
+      "pdf_path_pattern": "\\.pdf$",
+      "automated_metadata_access_allowed": false,
+      "rights_record": null
+    },
+    {
+      "id": "RLC-issuer-filings",
+      "ticker": "RLC",
+      "index_url": "https://robinsonsland.com/sec-17-q-reports",
+      "pdf_path_pattern": "\\.pdf$",
+      "automated_metadata_access_allowed": false,
+      "rights_record": null
+    }
+  ]
+}

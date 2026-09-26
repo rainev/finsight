@@ -1,0 +1,171 @@
+{
+  "automated_review": {
+    "blocking_reasons": [
+      "review_state_withheld",
+      "review_errors_present",
+      "model_errors:fcfe_dcf",
+      "model_not_pass:fcfe_dcf",
+      "missing_model_value:fcfe_dcf",
+      "scenario_not_pass:base:fcfe_dcf",
+      "scenario_not_pass:bear:fcfe_dcf",
+      "scenario_not_pass:bull:fcfe_dcf"
+    ],
+    "decision": "blocked",
+    "evidence_status": "complete",
+    "publication_state": "withheld",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model",
+      "rebuild_valuation_models"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold."
+    ]
+  },
+  "availability_type": "not_available",
+  "calculator_link": "/api/us-valuations/NEE/calculator",
+  "confidence": {
+    "label": null,
+    "reasons": [
+      "VALUATION_WITHHELD"
+    ]
+  },
+  "currency": "USD",
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000753308",
+    "classification_confidence": 0.65,
+    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Utilities",
+    "issuer_name": "NEXTERA ENERGY INC",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "override_applied": false,
+    "primary_archetype": "us_utility",
+    "sec_sic_code": "4911",
+    "sec_sic_label": "Electric Services",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000753308-26-000060",
+      "0000753308-26-000031",
+      "0000753308-26-000015",
+      "0000753308-25-000056",
+      "0000753308-25-000040",
+      "0000753308-25-000024",
+      "0000753308-25-000011",
+      "0000753308-24-000057"
+    ],
+    "ticker": "NEE"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
+    "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
+    "source_policy": "SEC Companyfacts and submissions; no exchange prices"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcfe_dcf",
+    "reason": "Provisional consolidated mixed-utility FCFE failed the positive-value gate.",
+    "supporting": []
+  },
+  "models": {
+    "fcfe_dcf": {
+      "currency": "USD",
+      "errors": [
+        "Complete interest-bearing funding produces nonpositive bear and base common FCFE."
+      ],
+      "intrinsic_value_per_share": null,
+      "model": "fcfe_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "withheld",
+      "warnings": []
+    }
+  },
+  "primary_valuation_method": "fcfe_dcf",
+  "public_assumptions": {
+    "cost_of_equity": 0.0738,
+    "equity_risk_premium": 0.045,
+    "high_dividend_growth": 0.05,
+    "high_growth_years": 5,
+    "last_dividend": 2.27,
+    "policy_beta": 0.6,
+    "risk_free_rate": 0.0468,
+    "terminal_growth": 0.025
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": null,
+    "accounting_label": "Low",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "VALUATION_WITHHELD"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": null,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "medium",
+    "errors": [
+      "Complete interest-bearing funding produces nonpositive bear and base common FCFE.",
+      "CONTROLLED_RESET_TARGET_MODEL: fcfe_dcf",
+      "CONTROLLED_RESET_MODEL_NOT_VALIDATED",
+      "NONFINITE_OR_NONPOSITIVE_VALUE"
+    ],
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "withheld",
+    "warnings": []
+  },
+  "scenario_range": {
+    "base": null,
+    "high": null,
+    "label": "assumption range, not a statistical confidence interval",
+    "low": null
+  },
+  "scenarios": {
+    "base": {
+      "fcfe_dcf": {
+        "intrinsic_value_per_share": null,
+        "model": "fcfe_dcf",
+        "publication_state": "withheld"
+      }
+    },
+    "bear": {
+      "fcfe_dcf": {
+        "intrinsic_value_per_share": null,
+        "model": "fcfe_dcf",
+        "publication_state": "withheld"
+      }
+    },
+    "bull": {
+      "fcfe_dcf": {
+        "intrinsic_value_per_share": null,
+        "model": "fcfe_dcf",
+        "publication_state": "withheld"
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "source_financial_statement": {
+    "accession": "0000753308-26-000060",
+    "filed_date": "2026-07-24",
+    "form": "10-Q",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000060/nee-20260630.htm"
+  },
+  "ticker": "NEE",
+  "valuation_date": "2026-08-14"
+}

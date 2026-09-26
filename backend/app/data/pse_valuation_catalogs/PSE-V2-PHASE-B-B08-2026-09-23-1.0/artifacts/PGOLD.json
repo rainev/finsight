@@ -1,0 +1,127 @@
+{
+  "artifact_hash": "28a095c2cc6f14ac62e1db3f92504b64c07fc02b4b340f5cbb05ac519d3b0578",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "aade3e60994b2e221baf8fc15ecc0c2e81f752182011c3080e27f51894a1f8de",
+  "issuer": {
+    "issuer_id": "PSE:PGOLD",
+    "name": "Puregold Price Club, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 60.24565100521666,
+    "low": 19.15065088924349
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "capital_bridge": {
+      "cash_php_millions": 28794.619379,
+      "debt_includes_lease_liabilities": true,
+      "debt_php_millions": 61872.913066,
+      "minority_value_php_millions": 0.0,
+      "nonoperating_assets_php_millions": 0.0,
+      "other_claims_php_millions": 0.0,
+      "preferred_claims_php_millions": 0.0,
+      "shares_millions": 2880.137615
+    },
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalization_method": "median of FY2023-FY2025 operating cash flow less reported CapEx",
+    "normalized_fcff_proxy_php_millions": 11107.0,
+    "policy_version": "PSE-V2-FCFF-RETAIL-B02-1.0",
+    "reliability": "Low",
+    "route_reason": "Store economics, operating cash flow, and reinvestment drive enterprise value.",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.035,
+        "roic": 0.12,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.1,
+        "wacc": 0.12
+      },
+      "bear": {
+        "growth_rate": 0.01,
+        "roic": 0.09,
+        "terminal_growth": 0.015,
+        "terminal_roic": 0.085,
+        "wacc": 0.135
+      },
+      "bull": {
+        "growth_rate": 0.06,
+        "roic": 0.15,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.12,
+        "wacc": 0.105
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 96534.41982692908,
+      "enterprise_value": 129612.71351392909,
+      "value_per_share": 33.51729421683522
+    },
+    "bear": {
+      "common_equity_value": 55156.50997784337,
+      "enterprise_value": 88234.80366484338,
+      "value_per_share": 19.15065088924349
+    },
+    "bull": {
+      "common_equity_value": 173515.76560028706,
+      "enterprise_value": 206594.05928728706,
+      "value_per_share": 60.24565100521666
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PGOLD:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "normalized_fcff",
+        "growth_rate",
+        "roic",
+        "wacc",
+        "terminal_growth",
+        "terminal_roic",
+        "capital_bridge"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "8ba72f0c0a117b2b",
+      "form": "17-A",
+      "label": "PGOLD FY2025 audited financial statements fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "8ba72f0c0a117b2b06ddd1d656d2c84bb31299e88750d419ec398b91594908ec",
+      "source_page": 12,
+      "url": "https://corporate.puregold.com.ph/files/corporate/sec-filings/sec-20-is/2026/Puregold_Price_Club_Inc_Definitive_Information_Statement.pdf"
+    }
+  ],
+  "subsector": "Food retail",
+  "ticker": "PGOLD",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate using a three-year median owner-cash proxy rather than a full issuer forecast.",
+    "Lease liabilities are included in debt; lease principal is not separately deducted from the owner-cash proxy.",
+    "Policy bands and terminal economics remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "decision_id": "PSE-V2-RCR-STAGED-ASSUMPTIONS-2026-09-26-1",
+  "decision_date": "2026-09-26",
+  "issuer": "PSE:RCR",
+  "status": "selected_for_isolated_staged_test_only",
+  "reviewer": "Codex analytical recommendation for user review",
+  "user_authorization_scope": "decide distribution and discount inputs for a staged test only",
+  "parent_workpaper": "docs/audit/evidence/pse-rcr-supervised-refresh-2026-09-26.json",
+  "parent_workpaper_sha256": "15155cad06e61bda054f19ef02c5d98869502a4589ec3a19a9b885778673a9f7",
+  "selected_reported_input": {
+    "trailing_four_quarter_distribution_per_share_php": 0.4404,
+    "distribution_period_end": "2026-06-30",
+    "shares_outstanding": 20836365310,
+    "shares_as_of": "2026-09-25",
+    "share_class": "ordinary_common_outstanding_not_only_listed"
+  },
+  "macro_observation_for_test": {
+    "source": "https://www.treasury.gov.ph/wp-content/uploads/2026/06/Treasury-Bonds-Auction-Result-on-23-June-2026-.pdf",
+    "observed_at": "2026-06-23",
+    "remaining_tenor_years_at_observation": 9.7,
+    "annual_average_yield": 0.07052,
+    "decision": "explicit_carry_forward_for_same_series_isolated_comparison_only",
+    "reviewed_current_market_yield": false,
+    "reason": "The newer checked 2026-09-08 auction has only 6.9 years remaining and is not a like-tenor replacement; a current near-ten-year yield has not been reviewed."
+  },
+  "selected_model_policy_for_test": {
+    "version": "PSE-V2-REIT-STABLE-B01-1.0",
+    "forecast_years": 5,
+    "bear": {"explicit_growth": -0.02, "cost_of_equity": 0.125, "terminal_growth": 0.015},
+    "base": {"explicit_growth": 0.025, "cost_of_equity": 0.11, "terminal_growth": 0.025},
+    "bull": {"explicit_growth": 0.05, "cost_of_equity": 0.1, "terminal_growth": 0.035},
+    "base_equity_risk_spread_over_observed_june_yield": 0.03948,
+    "equity_risk_spread_status": "shared_policy_hypothesis_not_RCR_specific_measurement",
+    "terminal_growth_status": "scenario_hypothesis_not_perpetual_cashflow_certification"
+  },
+  "expected_isolated_values_per_share_php": {
+    "bear": 3.521846097730924,
+    "base": 5.310705882352938,
+    "bull": 7.4765336390694195
+  },
+  "base_one_way_equity_cost_checks_per_share_php": {
+    "cost_10_percent": 6.0188,
+    "cost_11_percent": 5.310705882352938,
+    "cost_12_percent": 4.7516842105263155
+  },
+  "caveats": [
+    "The trailing distribution spans pre- and post-infusion declaration dates and is not a full-period pro forma payout from six new malls.",
+    "The June benchmark is 95 days old on the decision date and is not presented as a current yield.",
+    "The existing 11 percent cost of equity and 2.5 percent base and terminal growth are selected for testing, not reviewer-approved for publication.",
+    "Original issuer PDF bytes and source-use rights have not been pinned for an approved reader-facing artifact."
+  ],
+  "issuer_approved": false,
+  "assumptions_approved_for_publication": false,
+  "activation_authorized": false,
+  "automation_authorized": false,
+  "active_catalog_changed": false
+}

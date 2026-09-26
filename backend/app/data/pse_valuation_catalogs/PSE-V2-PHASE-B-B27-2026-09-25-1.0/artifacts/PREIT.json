@@ -1,0 +1,109 @@
+{
+  "artifact_hash": "b39ebd9f009439d8f743e15ddfe36c988699ddd085530c0e289c9ec1778c6ddc",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Lease suspension, ERC permit proceedings, asset impairment, payout sustainability and tenant credit are unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "7f55c813b8e351fc09eb320665dedfaf5e6cee2a47483e4494f59f6dbf56f207",
+  "issuer": {
+    "issuer_id": "PSE:PREIT",
+    "name": "Premiere Island Power REIT Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.76,
+      "high": 1.045,
+      "low": 0.475
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 1.9,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B17-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "80be7f3f1db7247f63a1e7c33a1e1245179696dcca68cb548745ad66b02bceec",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B17-1.0",
+  "numerical_range": {
+    "high": 1.045,
+    "low": 0.475
+  },
+  "price": null,
+  "primary_model": "sustainable_distributions",
+  "public_assumptions": {
+    "intrinsic_blocker": "Lease suspension, ERC permit proceedings, asset impairment, payout sustainability and tenant credit are unresolved.",
+    "metric_basis": "reported PHP1.90 BVPS; no automatic recovery of impaired leases",
+    "policy_rationale": "Finite layered-asset P/B screen; reuse the Batch 16 holding-company band without implying an appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Sustainable distributions require enforceable lease and counterparty cash flows; P/B is only a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PREIT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "80be7f3f1db7247f",
+      "form": "PSE quarterly financial summary",
+      "label": "PREIT FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "80be7f3f1db7247f63a1e7c33a1e1245179696dcca68cb548745ad66b02bceec",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=699"
+    },
+    {
+      "document_id": "80be7f3f1db7247f-support-1",
+      "form": "PSE common-stock data",
+      "label": "PREIT open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "80be7f3f1db7247f63a1e7c33a1e1245179696dcca68cb548745ad66b02bceec",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=699"
+    },
+    {
+      "document_id": "80be7f3f1db7247f-support-2",
+      "form": "PSE legal-proceedings disclosure",
+      "label": "PREIT lease and ERC proceedings update",
+      "period_end": "2026-08-20",
+      "published_at": null,
+      "sha256": "80be7f3f1db7247f63a1e7c33a1e1245179696dcca68cb548745ad66b02bceec",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1960555"
+    }
+  ],
+  "subsector": "Power-asset REIT",
+  "ticker": "PREIT",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Cash flows, attributable ownership and common-equity claims are not fully reconciled.",
+    "FY2025 reported a large loss and equity decline; the SIPCOR lease/permit proceedings remain material. A positive P/B screen is not a forecast of resumed distributions."
+  ]
+}

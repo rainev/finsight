@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "f07a187e8a13e6e2d9b25db614f4488e3d9999575c82a39016232f2b16bb1efb",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Volume, resin-price margins, working capital, capex, debt, and terminal economics are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "fac7ad543872aae3bf68cd13ade2b65d47b1f4def169e9a79825c12ec0edfa80",
+  "issuer": {
+    "issuer_id": "PSE:CROWN",
+    "name": "Crown Asia Chemicals Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 2.786,
+      "high": 3.582,
+      "low": 1.99
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 3.98,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-INDUSTRIAL-B13-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "1d531f59521662c971dff3e708557691b778bd1fa6d696d18ebb94e83a499434",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B13-1.0",
+  "numerical_range": {
+    "high": 3.582,
+    "low": 1.99
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Volume, resin-price margins, working capital, capex, debt, and terminal economics are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "A shared P/B screening band for manufacturing and industrial supply while segment cash flows, reinvestment, and capital claims are unreconciled. The numerical band reuses the reviewed Batch 9 cyclical operating screen; it is not peer-calibrated.",
+    "reliability": "Low",
+    "route_reason": "PVC and building-products cash flows require FCFF; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CROWN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "1d531f59521662c9",
+      "form": "PSE quarterly financial summary",
+      "label": "CROWN FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "1d531f59521662c971dff3e708557691b778bd1fa6d696d18ebb94e83a499434",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=657"
+    }
+  ],
+  "subsector": "PVC and plastic building products",
+  "ticker": "CROWN",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative P/B; the operating FCFF or attributable SOTP remains unresolved.",
+    "Reported book value per share does not establish a common-equity claim bridge or a peer-calibrated multiple."
+  ]
+}

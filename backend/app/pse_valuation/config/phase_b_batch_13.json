@@ -1,0 +1,166 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-13.0",
+  "batch_version": "PSE-V2-PHASE-B-B13-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B13-2026-09-23-1.0",
+  "universe_version": "PSE-V2-138-B13-1.0",
+  "valuation_date": "2026-09-23",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["IMI", "TECH", "ION", "CIC", "MVC", "CROWN", "STN", "LFM", "VMC", "SBS"],
+  "fx_snapshot": {
+    "version": "PSE-V2-B13-USD-PHP-2026-09-23-1.0",
+    "pair": "USD/PHP",
+    "rate_php_per_usd": 62.698,
+    "observed_at": "2026-09-23",
+    "source_label": "BSP Philippine peso per US dollar, 23 September 2026",
+    "source_url": "https://www.bsp.gov.ph/Statistics/sdds/sdds.aspx"
+  },
+  "policies": {
+    "electronics_recovery": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.30, "base": 0.50, "high": 0.70},
+      "version": "PSE-V2-PB-ELECTRONICS-RECOVERY-B13-1.0",
+      "rationale": "A conservative shared P/B screening band for export electronics with rounded USD per-share facts, cyclical cash flows, and unresolved common claims. The numerical band reuses the prior lower-risk-adjusted screening range; it is not peer-calibrated."
+    },
+    "cyclical_industrial": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.50, "base": 0.70, "high": 0.90},
+      "version": "PSE-V2-PB-CYCLICAL-INDUSTRIAL-B13-1.0",
+      "rationale": "A shared P/B screening band for manufacturing and industrial supply while segment cash flows, reinvestment, and capital claims are unreconciled. The numerical band reuses the reviewed Batch 9 cyclical operating screen; it is not peer-calibrated."
+    }
+  },
+  "issuers": {
+    "IMI": {
+      "issuer_name": "Integrated Micro-Electronics, Inc.",
+      "subsector": "Electronics manufacturing services",
+      "primary_model": "fcff_dcf",
+      "policy": "electronics_recovery",
+      "source": {"label": "IMI FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "USD", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=622"},
+      "metric_value_per_share": 7.52376,
+      "metric_label": "1H2026 PSE-reported USD book value per share translated to PHP",
+      "normalization": {"formula": "0.12 USD/share x 62.698 PHP/USD", "original_value": 0.12, "original_currency": "USD", "original_units": "USD per share", "fx_rate": 62.698, "fx_rate_date": "2026-09-23", "normalized_value": 7.52376, "normalized_currency": "PHP"},
+      "route_reason": "Operating electronics cash flows and reinvestment require FCFF; a translated P/B range is a separate finite screen.",
+      "intrinsic_blocker": "Reviewed customer and geography cash flows, margins, working capital, capex, leases, debt, and terminal economics are incomplete.",
+      "source_warning": "PSE USD book value per share is rounded to cents before PHP conversion; this screen inherits material rounding and FX sensitivity."
+    },
+    "TECH": {
+      "issuer_name": "Cirtek Holdings Philippines Corporation",
+      "subsector": "Semiconductor packaging and wireless technology holding company",
+      "primary_model": "sotp",
+      "policy": "electronics_recovery",
+      "source": {"label": "TECH FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "USD", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=630"},
+      "supporting_source": {"label": "TECH listed common and preferred share classes", "form": "PSE information statement", "period_end": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1903522"},
+      "metric_value_per_share": 19.43638,
+      "metric_label": "1H2026 PSE-reported USD book value per share translated to PHP",
+      "normalization": {"formula": "0.31 USD/share x 62.698 PHP/USD", "original_value": 0.31, "original_currency": "USD", "original_units": "USD per share", "fx_rate": 62.698, "fx_rate_date": "2026-09-23", "normalized_value": 19.43638, "normalized_currency": "PHP"},
+      "route_reason": "Semiconductor and wireless businesses require attributable SOTP after parent capital claims; a translated P/B range is a separate screen.",
+      "intrinsic_blocker": "Business-component values, preferred-share claims, debt, minority interests, dilution, and parent-only cash flows are not reconciled.",
+      "source_warning": "TECH lists preferred as well as common shares and reported a 1H2026 loss; rounded USD BVPS is not a completed common-equity bridge."
+    },
+    "ION": {
+      "issuer_name": "Ionics, Inc.",
+      "subsector": "Electronics manufacturing holding company",
+      "primary_model": "sotp",
+      "policy": "electronics_recovery",
+      "source": {"label": "ION FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "USD", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=203"},
+      "metric_value_per_share": 5.01584,
+      "metric_label": "1H2026 PSE-reported USD book value per share translated to PHP",
+      "normalization": {"formula": "0.08 USD/share x 62.698 PHP/USD", "original_value": 0.08, "original_currency": "USD", "original_units": "USD per share", "fx_rate": 62.698, "fx_rate_date": "2026-09-23", "normalized_value": 5.01584, "normalized_currency": "PHP"},
+      "route_reason": "Majority-owned electronics operations and parent claims require attributable SOTP; P/B is a separate translated screen.",
+      "intrinsic_blocker": "Subsidiary cash flows, ownership, minority interests, working capital, reinvestment, and parent-only claims are not reconciled.",
+      "source_warning": "Parent equity is materially below total equity because of minority interests; rounded USD BVPS and FX conversion limit precision."
+    },
+    "CIC": {
+      "issuer_name": "Concepcion Industrial Corporation",
+      "subsector": "Appliances, HVAC, and elevators",
+      "primary_model": "fcff_dcf",
+      "policy": "cyclical_industrial",
+      "source": {"label": "CIC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=648"},
+      "metric_value_per_share": 14.10,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 14.10, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 14.10, "normalized_currency": "PHP"},
+      "route_reason": "Appliance, HVAC, and elevator operating cash flows require FCFF; P/B is a separate finite screen.",
+      "intrinsic_blocker": "Brand and segment margins, working capital, capex, associate/minority interests, debt, and terminal cash flows are not reconciled.",
+      "source_warning": "Reported parent equity differs from consolidated equity; the P/B screen does not value minority or associate interests."
+    },
+    "MVC": {
+      "issuer_name": "Mabuhay Vinyl Corporation",
+      "subsector": "Chlor-alkali chemicals manufacturing",
+      "primary_model": "fcff_dcf",
+      "policy": "cyclical_industrial",
+      "source": {"label": "MVC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=100"},
+      "metric_value_per_share": 6.83,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 6.83, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 6.83, "normalized_currency": "PHP"},
+      "route_reason": "Chemical-plant operating cash flow and sustaining capex require FCFF; P/B is a separate finite screen.",
+      "intrinsic_blocker": "Plant utilization, input costs, sustaining and expansion capex, debt, working capital, and terminal economics are not reconciled."
+    },
+    "CROWN": {
+      "issuer_name": "Crown Asia Chemicals Corporation",
+      "subsector": "PVC and plastic building products",
+      "primary_model": "fcff_dcf",
+      "policy": "cyclical_industrial",
+      "source": {"label": "CROWN FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=657"},
+      "metric_value_per_share": 3.98,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 3.98, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 3.98, "normalized_currency": "PHP"},
+      "route_reason": "PVC and building-products cash flows require FCFF; P/B is a separate finite screen.",
+      "intrinsic_blocker": "Volume, resin-price margins, working capital, capex, debt, and terminal economics are not reconciled."
+    },
+    "STN": {
+      "issuer_name": "Steniel Manufacturing Corporation",
+      "subsector": "Paper packaging manufacturing",
+      "primary_model": "fcff_dcf",
+      "policy": "cyclical_industrial",
+      "source": {"label": "STN FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=164"},
+      "metric_value_per_share": 0.90,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 0.90, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 0.90, "normalized_currency": "PHP"},
+      "route_reason": "Packaging volumes, margins, and reinvestment require FCFF; P/B is a separate finite screen.",
+      "intrinsic_blocker": "Plant cash flows, capital spending, financing, minority interests, and terminal economics are not reconciled.",
+      "source_warning": "STN has negative retained earnings and material minority interests; its book-value screen is not an earnings or common-claim bridge."
+    },
+    "LFM": {
+      "issuer_name": "Liberty Flour Mills, Inc.",
+      "subsector": "Flour milling, distribution, and property leasing",
+      "primary_model": "sotp",
+      "policy": "cyclical_industrial",
+      "source": {"label": "LFM FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=227"},
+      "supporting_source": {"label": "LFM July 2026 direct-distribution change", "form": "PSE corporate-action disclosure", "period_end": "2026-07-01", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1931896"},
+      "metric_value_per_share": 14.65,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 14.65, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 14.65, "normalized_currency": "PHP"},
+      "route_reason": "Flour milling and property interests need separately reviewed SOTP values; P/B is a finite screen while distribution economics are reset.",
+      "intrinsic_blocker": "Recurring flour economics after the July distribution shift, property values, non-operating gains, debt, and common claims are not reconciled.",
+      "source_warning": "LFM assumed direct distribution after the 30 June report. FY2025 reported attributable income exceeded gross revenue and should not be extrapolated as recurring earnings."
+    },
+    "VMC": {
+      "issuer_name": "Victorias Milling Company, Inc.",
+      "subsector": "Sugar milling, refining, and related businesses",
+      "primary_model": "fcff_dcf",
+      "policy": "cyclical_industrial",
+      "source": {"label": "VMC August FY2025 and May2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-05-31", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=123"},
+      "metric_value_per_share": 2.60,
+      "metric_label": "May2026 PSE-reported book value per share, August fiscal year",
+      "normalization": {"formula": "reported PHP book value per share; August year-end", "original_value": 2.60, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 2.60, "normalized_currency": "PHP"},
+      "route_reason": "Sugar and related operating cash flows require normalized FCFF; P/B is a separate finite screen.",
+      "intrinsic_blocker": "Crop-cycle margins, ethanol and energy interests, maintenance capex, financing, share changes, and terminal economics are not reconciled.",
+      "source_warning": "VMC uses an August fiscal year and this May report is not a calendar-half-year observation; year-on-year per-share comparisons require a share-count review."
+    },
+    "SBS": {
+      "issuer_name": "SBS Philippines Corporation",
+      "subsector": "Industrial chemical distribution and property interests",
+      "primary_model": "sotp",
+      "policy": "cyclical_industrial",
+      "source": {"label": "SBS FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=658"},
+      "supporting_source": {"label": "SBS 2025 employee stock-option plan listing approval", "form": "PSE corporate-action disclosure", "period_end": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1906186"},
+      "metric_value_per_share": 3.11,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 3.11, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 3.11, "normalized_currency": "PHP"},
+      "route_reason": "Chemical distribution and property interests require attributable SOTP; P/B is a separate finite screen.",
+      "intrinsic_blocker": "Distribution cash flows, property values, minority interests, ESOP dilution, debt, and common claims are not reconciled.",
+      "source_warning": "SBS has an approved employee stock-option share listing; possible dilution is not modeled into the reported BVPS screen."
+    }
+  }
+}

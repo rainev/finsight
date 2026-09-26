@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "0ca04511e46746a55ee6dc51eda421619a2037f69b4ec1cab07034eb17ded78a",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Commissioning, generation, concession life, project finance and dilution are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "d974ccf8fdfc45daa628be764ca39d33b9095e05b53b4999bcfca54ec4c01799",
+  "issuer": {
+    "issuer_id": "PSE:XG",
+    "name": "NexGen Energy Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.179686955,
+      "high": 0.247069563,
+      "low": 0.112304347
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.4492173876861395,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "29f4468a773b61da2f1a016949cb25b0b2cc4c2a5f731628436b70a393063a44",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 0.247069563,
+    "low": 0.112304347
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Commissioning, generation, concession life, project finance and dilution are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 1,490,000,003 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite layered-holding/asset P/B screening band; concession values, ownership claims and funding are not independently underwritten.",
+    "reliability": "Low",
+    "route_reason": "Renewable projects require finite-life, funded asset DCF within attributable SOTP."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:XG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "29f4468a773b61da",
+      "form": "PSE financial summary",
+      "label": "XG FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "29f4468a773b61da2f1a016949cb25b0b2cc4c2a5f731628436b70a393063a44",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=705"
+    },
+    {
+      "document_id": "29f4468a773b61da-support-1",
+      "form": "PSE common-stock data",
+      "label": "XG open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "29f4468a773b61da2f1a016949cb25b0b2cc4c2a5f731628436b70a393063a44",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=705"
+    }
+  ],
+  "subsector": "Renewable energy development",
+  "ticker": "XG",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE PHP0.51 BVPS follows total equity; the screen uses PHP669.3m parent equity. FY2025 parent loss conflicts with a positive displayed basic EPS, so EPS is not used."
+  ]
+}

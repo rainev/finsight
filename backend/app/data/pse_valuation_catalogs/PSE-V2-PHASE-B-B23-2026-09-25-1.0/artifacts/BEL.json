@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "6fccb00b38c7439db3675f340000eb8825b89cc0f55ab24edc1b13562606922d",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed gaming cash flows, land and property values, subsidiary ownership, debt, and minority claims are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a8974e65c5813f1cfdaec380913699e947567e8511a39650a3e901b059355c93",
+  "issuer": {
+    "issuer_id": "PSE:BEL",
+    "name": "Belle Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.6,
+      "high": 0.8,
+      "low": 0.4
+    },
+    "estimates": {
+      "base": 2.394,
+      "high": 3.192,
+      "low": 1.596
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 3.99,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-INTEGRATED-RESORT-B10-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "2d2729e6f058d3a7833afdef4e80ac73993b4f1861d0f3923c8ad0c13936a5dc",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B10-1.0",
+  "numerical_range": {
+    "high": 3.192,
+    "low": 1.596
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed gaming cash flows, land and property values, subsidiary ownership, debt, and minority claims are incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Gaming and property SOTP/RNAV remains primary; P/B provides a finite screen while subsidiary ownership and property values remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BEL:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "2d2729e6f058d3a7",
+      "form": "17-Q",
+      "label": "BEL FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "2d2729e6f058d3a7833afdef4e80ac73993b4f1861d0f3923c8ad0c13936a5dc",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=21"
+    }
+  ],
+  "subsector": "Gaming, leisure property, and investments",
+  "ticker": "BEL",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Gaming regulation, property values, ramp economics, debt, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

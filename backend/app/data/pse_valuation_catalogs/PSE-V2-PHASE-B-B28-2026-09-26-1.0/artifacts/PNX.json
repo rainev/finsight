@@ -1,0 +1,82 @@
+{
+  "artifact_hash": "0d0ec39517f86fdbe7399f7a320cae99d17e87c68f002fe773c8d2d21c329f3d",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2023, trading remains suspended and current debt/preferred/common claims are unquantified."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2023-09-30",
+  "filing_published_at": null,
+  "input_hash": "9e24732253937d1501027cd9898279839fa082730789eb5e3b61baf2b5f1da91",
+  "issuer": {
+    "issuer_id": "PSE:PNX",
+    "name": "Phoenix Petroleum Philippines, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B26-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2023, trading remains suspended and current debt/preferred/common claims are unquantified.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Fuel distribution FCFF needs current debt-service, working-capital and senior-claim underwriting.",
+    "screen_time_basis": null,
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-17"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "PNX",
+    "security_id": "PSE:PNX:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "27566a0d864c38df",
+      "form": "PSE financial summary",
+      "label": "PNX reviewed PSE financial summary",
+      "period_end": "2023-09-30",
+      "published_at": null,
+      "sha256": "27566a0d864c38dfc54c0e1090ab57f7e1c00d939366c2cc9830c476438480fc",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=608"
+    },
+    {
+      "document_id": "27566a0d864c38df-support-1",
+      "form": "PSE common-stock data",
+      "label": "PNX ordinary common stock data",
+      "period_end": "2026-09-17",
+      "published_at": null,
+      "sha256": "27566a0d864c38dfc54c0e1090ab57f7e1c00d939366c2cc9830c476438480fc",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=608"
+    }
+  ],
+  "subsector": "Fuel distribution",
+  "ticker": "PNX",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No current market quote or upside is published for this suspended security.",
+    "PSE FY2022/3Q2023 summaries are stale and loss-making. The company also has separately listed preferred series; none is silently deducted as zero or treated as ordinary common."
+  ]
+}

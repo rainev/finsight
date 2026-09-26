@@ -1,0 +1,103 @@
+{
+  "artifact_hash": "def3da45fb4deb21635475f9de28b07f5e8407196eefb9231fe97a8bc4db3000",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Project-level generation, development capex, funding, concession or land rights and parent claims are not sufficiently reconciled for intrinsic SOTP."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "b2c1a70ab54d7ba6de6237e9e34483a0810f02fcb63512d61f48f69bb1bc9da9",
+  "issuer": {
+    "issuer_id": "PSE:NXGEN",
+    "name": "NexGen Energy Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.179686955,
+      "high": 0.247069563,
+      "low": 0.112304347
+    },
+    "metric": "price_to_book",
+    "metric_label": "Dated 2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.4492173876861395,
+    "note": "Finite analyst P/B screen from reported parent book; no peer-calibrated or intrinsic value, licensed current quote or upside.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-RENEWABLE-ASSET-B28-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "bc8fb46b9218fd2aa31bf9e29e9df685c9f3fd77414ed4a7ad664dbb9392e660",
+    "source_page": null,
+    "source_status": "reviewed_dated_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B28-1.0",
+  "numerical_range": {
+    "high": 0.247069563,
+    "low": 0.112304347
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Project-level generation, development capex, funding, concession or land rights and parent claims are not sufficiently reconciled for intrinsic SOTP.",
+    "metric_basis": "PHP parent equity (pesos) / 1,490,000,003 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite renewable-asset P/B sensitivity applied to REDC. This is an analyst screen, not peer calibration, an appraised renewable-project NAV or a completed intrinsic SOTP.",
+    "reliability": "Low",
+    "route_reason": "Renewable project interests require attributable plant-level SOTP and finite asset-life economics.",
+    "screen_time_basis": "reported_2026_h1_parent_book",
+    "share_bridge_type": "single_class",
+    "trading_status": "open",
+    "trading_status_as_of": "2026-09-24"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "NXGEN",
+    "security_id": "PSE:NXGEN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "bc8fb46b9218fd2a",
+      "form": "PSE financial summary",
+      "label": "NXGEN reviewed PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "bc8fb46b9218fd2aa31bf9e29e9df685c9f3fd77414ed4a7ad664dbb9392e660",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=705"
+    },
+    {
+      "document_id": "bc8fb46b9218fd2a-support-1",
+      "form": "PSE common-stock data",
+      "label": "NXGEN ordinary common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "bc8fb46b9218fd2aa31bf9e29e9df685c9f3fd77414ed4a7ad664dbb9392e660",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=705"
+    }
+  ],
+  "subsector": "Renewable power development",
+  "ticker": "NXGEN",
+  "valuation_date": "2026-09-26",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No licensed current market quote or upside is published.",
+    "PSE 1H2026 parent equity is PHP669.334m versus PHP753.275m total equity. Printed BVPS PHP0.51 follows total book; this separate low-reliability screen derives parent book per 1.49bn ordinary common shares instead. A licensed current price and peer calibration were not acquired."
+  ]
+}

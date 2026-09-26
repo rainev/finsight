@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "09157aa3f3d38e7d15fedd8f8152a658066fb55eb49c8aac46eb8e94c55b2ee2",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed store cohorts, same-store sales, kiosk and international economics, leases, restructuring, growth capex, and terminal assumptions are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "92ab39fcc9ccc0fb021d7fe39ca8155a70e1c7349463c15fb5db4df26477d27c",
+  "issuer": {
+    "issuer_id": "PSE:PIZZA",
+    "name": "Shakey's Pizza Asia Ventures, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 13.0,
+      "high": 16.0,
+      "low": 10.0
+    },
+    "estimates": {
+      "base": 5.33,
+      "high": 6.56,
+      "low": 4.1
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.41,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-GROWTH-RESTAURANT-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "6c64bcae4b0fa8583e6ed52e068ce613443f039cdcd4e24f76415db3d13f5c7a",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 6.56,
+    "low": 4.1
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed store cohorts, same-store sales, kiosk and international economics, leases, restructuring, growth capex, and terminal assumptions are incomplete.",
+    "metric_basis": "0.48 FY2025 EPS + 0.14 1H2026 EPS - 0.21 1H2025 EPS",
+    "reliability": "Low",
+    "route_reason": "Store-cohort and brand FCFF remains primary; P/E is a finite growth screen while same-store sales, rollout economics, leases, and restructuring remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PIZZA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "6c64bcae4b0fa858",
+      "form": "17-Q",
+      "label": "PIZZA FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "6c64bcae4b0fa8583e6ed52e068ce613443f039cdcd4e24f76415db3d13f5c7a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=664"
+    }
+  ],
+  "subsector": "Restaurant, kiosk, and franchise brands",
+  "ticker": "PIZZA",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

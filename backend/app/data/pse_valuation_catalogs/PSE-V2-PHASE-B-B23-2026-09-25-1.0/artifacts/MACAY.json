@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "7d2497f883cdfcd7743b9a9b3a1351bb6fdb040f7efd7efa283bf2bb9f04362a",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Recurring margins, capex, working capital, subsidiary minorities and a sustainable terminal bridge are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "b4b561c902dd917339efad82b7fe511f0bcf26019f2106c8f62dbe742cf6f0e8",
+  "issuer": {
+    "issuer_id": "PSE:MACAY",
+    "name": "Macay Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 1.483662808,
+      "high": 2.077127932,
+      "low": 0.890197685
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 2.967325616952524,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "835277da66073324e61cf31144fca18fd63b3dbedf1d7907b22d203f1ef8a28e",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 2.077127932,
+    "low": 0.890197685
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Recurring margins, capex, working capital, subsidiary minorities and a sustainable terminal bridge are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 1,292,755,794 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screening band while normalized FCFF, capital claims and terminal assumptions remain unreviewed; not a peer study or intrinsic model.",
+    "reliability": "Low",
+    "route_reason": "Core beverage cash flows require FCFF; parent book is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MACAY:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "835277da66073324",
+      "form": "PSE financial summary",
+      "label": "MACAY FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "835277da66073324e61cf31144fca18fd63b3dbedf1d7907b22d203f1ef8a28e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=145"
+    },
+    {
+      "document_id": "835277da66073324-support-1",
+      "form": "PSE common-stock data",
+      "label": "MACAY open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "835277da66073324e61cf31144fca18fd63b3dbedf1d7907b22d203f1ef8a28e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=145&security_id=221"
+    }
+  ],
+  "subsector": "Beverage and investment holding",
+  "ticker": "MACAY",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE PHP4.83 printed BVPS follows consolidated total equity; PHP3.836bn parent equity, not PHP6.239bn total equity, is the book-screen numerator."
+  ]
+}

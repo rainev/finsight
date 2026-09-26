@@ -1,0 +1,109 @@
+{
+  "artifact_hash": "dd8982d9758b1aef9f823159cb7180e6429d832c214a9cb319203ba05873e157",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Common versus convertible-preferred capital claims, parent equity, negative operating earnings, maintenance spending, financing and terminal cash flows are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "ac30ad88adf0e2763f56c56195e747810b6a15f28eef81692960f3425136b981",
+  "issuer": {
+    "issuer_id": "PSE:SFI",
+    "name": "Swift Foods, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.15,
+      "high": 0.2,
+      "low": 0.1
+    },
+    "estimates": {
+      "base": 0.002271566,
+      "high": 0.003028755,
+      "low": 0.001514377
+    },
+    "metric": "price_to_sales",
+    "metric_label": "TTM PHP revenue per outstanding ordinary common share",
+    "metric_value_per_share": 0.015143774962650574,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic FCFF, residual-income or SOTP valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PS-STRESSED-B16-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "2e5bb032148bad4bc36312245c409c97ce5d7dabb83590b9aa5b961514e5b0a5",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B16-1.0",
+  "numerical_range": {
+    "high": 0.003028755,
+    "low": 0.001514377
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Common versus convertible-preferred capital claims, parent equity, negative operating earnings, maintenance spending, financing and terminal cash flows are not reconciled.",
+    "metric_basis": "(PHP 33,489k FY2025 + 10,290k 1H2026 - 16,241k prior 1H) x 1,000 / 1,818,436,953 common shares",
+    "policy_rationale": "Reuse the Batch 9 stressed-food finite P/S band when EPS and common-book claims are not usable; no peer calibration or intrinsic equity bridge.",
+    "reliability": "Low",
+    "route_reason": "Poultry cash flows and capacity/restructuring require FCFF; a finite P/S screen avoids unusable reported common-book and rounded negative EPS."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SFI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "2e5bb032148bad4b",
+      "form": "PSE quarterly financial summary",
+      "label": "SFI FY2025 and 1H2026 PSE financial summary, PHP thousands",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "2e5bb032148bad4bc36312245c409c97ce5d7dabb83590b9aa5b961514e5b0a5",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=165"
+    },
+    {
+      "document_id": "2e5bb032148bad4b-support-1",
+      "form": "PSE common-stock data",
+      "label": "SFI listed common-share stock data, not preferred",
+      "period_end": "2026-09-22",
+      "published_at": null,
+      "sha256": "2e5bb032148bad4bc36312245c409c97ce5d7dabb83590b9aa5b961514e5b0a5",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=165&security_id=402"
+    },
+    {
+      "document_id": "2e5bb032148bad4b-support-2",
+      "form": "PSE preferred-share disclosure",
+      "label": "SFI convertible preferred class disclosure",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "2e5bb032148bad4bc36312245c409c97ce5d7dabb83590b9aa5b961514e5b0a5",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1940854"
+    }
+  ],
+  "subsector": "Poultry and feed operations",
+  "ticker": "SFI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, capital efficiency and common-equity claims have not been fully reconciled.",
+    "SFI has convertible preferred shares, losses and very low revenue. Its reported BVPS of 1 does not reconcile to total equity divided by listed common shares; the tiny P/S screen is not intrinsic or an actionable price target."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-28.0",
+  "batch_version": "PSE-V2-PHASE-B-B28-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B28-2026-09-26-1.0",
+  "universe_version": "PSE-V2-282-B28-1.0",
+  "valuation_date": "2026-09-26",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["AAA", "EG", "NXGEN", "PTT"],
+  "policies": {
+    "renewable_asset_book": {
+      "metric": "price_to_book",
+      "assumptions": {"low": 0.25, "base": 0.40, "high": 0.55},
+      "version": "PSE-V2-PB-RENEWABLE-ASSET-B28-1.0",
+      "rationale": "Reuse the finite renewable-asset P/B sensitivity applied to REDC. This is an analyst screen, not peer calibration, an appraised renewable-project NAV or a completed intrinsic SOTP."
+    }
+  },
+  "issuers": {
+    "AAA": {
+      "issuer_name": "Asia Amalgamated Holdings Corporation", "subsector": "Investment holding", "primary_model": "sotp",
+      "period_end": "2014-06-30", "currency": "PHP", "source_currency_label": "Php", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": -20011318, "reported_bvps": -0.02,
+      "shares_outstanding": 799999981, "share_as_of": "2026-09-16", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-09-16",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=55",
+      "share_classes": [{"class": "ordinary common", "shares": 799999981, "as_of": "2026-09-16", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=55&security_id=347"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Investment interests need attributable subsidiary assets and parent-only claims for SOTP.",
+      "intrinsic_blocker": "The latest PSE summary ends 1H2014 with negative parent equity; no current investment-asset, liability or recovery bridge is reviewed for the suspended common line.",
+      "source_warning": "PSE 1H2014 parent equity is negative PHP20.011m and printed BVPS is negative PHP0.02. The 2026 stock snapshot shows 799,999,981 outstanding versus 800m listed/issued shares; the May 2015 last close is not a current quote."
+    },
+    "EG": {
+      "issuer_name": "IP E-Game Ventures, Inc.", "subsector": "Gaming and investment holding", "primary_model": "nav_sotp",
+      "period_end": "2019-09-30", "currency": "PHP", "source_currency_label": "Php", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 2658824951, "reported_bvps": 0.01,
+      "shares_outstanding": 30000000000, "share_as_of": "2026-09-25", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-25",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=623",
+      "share_classes": [{"class": "quoted common", "shares": 30000000000, "as_of": "2026-09-25", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=623&security_id=552"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Gaming and investment interests need current realizable NAV and a period-matched common claim.",
+      "intrinsic_blocker": "The latest PSE summary ends 3Q2019 with zero revenue. Its historical PHP2.659bn parent book is not reconciled to the 2026 30bn-share common line or current asset realization, so no current per-share screen is supported.",
+      "source_warning": "PSE 3Q2019 printed BVPS PHP0.01 is not consistent with dividing the reported parent equity by the September 2026 share count. The line is suspended and last traded in May 2017; neither stale book nor quote is promoted to value."
+    },
+    "NXGEN": {
+      "issuer_name": "NexGen Energy Corp.", "subsector": "Renewable power development", "primary_model": "sotp",
+      "period_end": "2026-06-30", "currency": "PHP", "source_currency_label": "Philippine Peso", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 669333909, "reported_bvps": 0.51,
+      "shares_outstanding": 1490000003, "share_as_of": "2026-09-24", "share_bridge_type": "single_class", "trading_status": "open", "status_as_of": "2026-09-24",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=705",
+      "share_classes": [{"class": "ordinary common", "shares": 1490000003, "as_of": "2026-09-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=705"}],
+      "availability": "market_relative_only", "policy": "renewable_asset_book", "screen_time_basis": "reported_2026_h1_parent_book",
+      "route_reason": "Renewable project interests require attributable plant-level SOTP and finite asset-life economics.",
+      "intrinsic_blocker": "Project-level generation, development capex, funding, concession or land rights and parent claims are not sufficiently reconciled for intrinsic SOTP.",
+      "source_warning": "PSE 1H2026 parent equity is PHP669.334m versus PHP753.275m total equity. Printed BVPS PHP0.51 follows total book; this separate low-reliability screen derives parent book per 1.49bn ordinary common shares instead. A licensed current price and peer calibration were not acquired."
+    },
+    "PTT": {
+      "issuer_name": "PT&T Corp.", "subsector": "Telecommunications", "primary_model": "fcff_dcf",
+      "period_end": "2026-06-30", "currency": "PHP", "source_currency_label": "In thousand pesos", "equity_unit_scale": "thousands", "equity_basis": "total", "equity_value": 173718, "reported_bvps": 0.12,
+      "shares_outstanding": 1500000000, "share_as_of": "2026-09-25", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-25",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=76",
+      "share_classes": [{"class": "quoted common", "shares": 1500000000, "as_of": "2026-09-25", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=76&security_id=132"}],
+      "supporting_sources": [{"label": "PTT disclosed authorized common and preferred share classes; issued senior claims remain to be reconciled", "form": "PSE issuer disclosure", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1397316", "published_at": null}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Telecom FCFF needs current operating cash flow, capex, financing and parent-common claims.",
+      "intrinsic_blocker": "The 1H2026 summary reports positive total equity but zero parent-attributable equity. Only 800m of 1.5bn outstanding common shares appear listed, and senior capital and financing claims are not reconciled for the suspended line.",
+      "source_warning": "PSE 1H2026 total equity is PHP173,718 thousand with printed BVPS PHP0.12, but parent-attributable equity is zero in the summary. The December 2004 last close is not a current price; no total-book shortcut is applied to common value."
+    }
+  }
+}

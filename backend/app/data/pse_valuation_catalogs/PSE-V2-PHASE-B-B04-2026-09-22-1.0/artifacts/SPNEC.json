@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "6205f241d8be7c7fa391a022c7ff99ea61709f42bd2103c637bec098918b3f41",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Large development-stage assets and 2025 losses require project-by-project operating status, ownership, financing, and parent-claim reconciliation before intrinsic value."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "96fa22bff65913bc047c1076c68c92ce8caf61e3373d4645dade717fe85a31b0",
+  "issuer": {
+    "issuer_id": "PSE:SPNEC",
+    "name": "SP New Energy Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.75,
+      "high": 1.0,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 1.455,
+      "high": 1.94,
+      "low": 0.97
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported book value per common share",
+    "metric_value_per_share": 1.94,
+    "note": "Transparent P/B screen while the asset-level FCFF or SOTP bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-EARLY-RENEWABLE-B04-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "9e8705f0c5970a2909b0ea1b6edbbc54d07c04b57a7486115865ddab5255c85f",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B04-1.0",
+  "numerical_range": {
+    "high": 1.94,
+    "low": 0.97
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Large development-stage assets and 2025 losses require project-by-project operating status, ownership, financing, and parent-claim reconciliation before intrinsic value.",
+    "policy_rationale": "P/B screen for a development-heavy renewable platform while announced and operating projects cannot yet be valued separately.",
+    "reliability": "Low",
+    "reported_equity_php_millions": 75974.077193,
+    "route_reason": "Project SOTP/finite-life DCF remains primary; P/B provides a finite screen while development assets and claims remain incomplete.",
+    "source_currency": "PHP"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SPNEC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9e8705f0c5970a29",
+      "form": "17-A",
+      "label": "SPNEC FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "9e8705f0c5970a2909b0ea1b6edbbc54d07c04b57a7486115865ddab5255c85f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=688"
+    }
+  ],
+  "subsector": "Renewable project developer",
+  "ticker": "SPNEC",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved asset-level intrinsic valuation.",
+    "Reported book value is an accounting measure and may differ materially from project fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study."
+  ]
+}

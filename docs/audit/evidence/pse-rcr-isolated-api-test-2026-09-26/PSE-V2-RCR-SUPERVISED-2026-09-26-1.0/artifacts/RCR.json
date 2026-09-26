@@ -1,0 +1,162 @@
+{
+  "artifact_hash": "e4258f3cd3cc76a8010b4daf4600fdc77112519619a6b5ceba3ddbe59ed89e48",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "TTM 2025Q3-2026Q2; latest shares as of 2026-09-25",
+  "filing_published_at": "2026-08-11",
+  "input_hash": "373eb0dc1ebc61d91c3a867f45dec7f6ccf3d21c444551ff0dd26d889ab538fb",
+  "issuer": {
+    "issuer_id": "PSE:RCR",
+    "name": "RL Commercial REIT, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B01-1.0",
+  "numerical_range": {
+    "high": 7.4765336390694195,
+    "low": 3.521846097730924
+  },
+  "price": null,
+  "primary_model": "sustainable_distributions",
+  "public_assumptions": {
+    "assumption_decision_sha256": "8e0723b9b1296ad306cc1f2a40fdb9440f4fa9ebadb4dd51832b982ebfbeb923",
+    "benchmark_carry_forward_scope": "isolated_staged_test_only",
+    "benchmark_observed_at": "2026-06-23",
+    "benchmark_yield_at_observation": 0.07052,
+    "book_value_per_share_check": 8.32,
+    "current_distribution_per_share": 0.4404,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "policy_version": "PSE-V2-REIT-STABLE-B01-1.0",
+    "reliability": "Low - calculation-only supervised test",
+    "route_reason": "Sustainable distributions are primary; NAV remains a separate evidence-dependent check.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.11,
+        "explicit_growth": 0.025,
+        "terminal_growth": 0.025
+      },
+      "bear": {
+        "cost_of_equity": 0.125,
+        "explicit_growth": -0.02,
+        "terminal_growth": 0.015
+      },
+      "bull": {
+        "cost_of_equity": 0.1,
+        "explicit_growth": 0.05,
+        "terminal_growth": 0.035
+      }
+    },
+    "share_count_as_of": "2026-09-25",
+    "shares_outstanding_millions": 20836.36531
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 110655.8078186717,
+      "enterprise_value": null,
+      "value_per_share": 5.310705882352938
+    },
+    "bear": {
+      "common_equity_value": 73382.47185791949,
+      "enterprise_value": null,
+      "value_per_share": 3.521846097730924
+    },
+    "bull": {
+      "common_equity_value": 155783.78615615412,
+      "enterprise_value": null,
+      "value_per_share": 7.4765336390694195
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:RCR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_distribution_per_share",
+        "explicit_growth",
+        "cost_of_equity",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    },
+    {
+      "cost_10_percent": 6.0188,
+      "cost_11_percent": 5.310705882352938,
+      "cost_12_percent": 4.7516842105263155,
+      "type": "one_way_base_equity_cost"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "RCR-fy2025-manager-ab2b17f1",
+      "form": "fund_manager_report",
+      "label": "RCR FY2025 Q4 fund-manager reviewed fact receipt; original PDF not hashed",
+      "period_end": "2025-12-31",
+      "published_at": "2026-02-11",
+      "sha256": "ab2b17f16322d745f563b21bee957093e7825648de01270934f830d74c28d3d4",
+      "source_page": null,
+      "url": "https://rlcommercialreit.com.ph/sites/default/files/2026-02/2025_4Q%20RCR%20FM.pdf"
+    },
+    {
+      "document_id": "RCR-2026q2-manager-30db67ce",
+      "form": "fund_manager_report",
+      "label": "RCR 2Q2026 fund-manager reviewed fact receipt; original PDF not hashed",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-11",
+      "sha256": "30db67ce3cc4fe2aa3008695217eec592b4f7c9081f6f224dc932db9910f2bb9",
+      "source_page": 15,
+      "url": "https://rlcommercialreit.com.ph/sites/default/files/2026-08/RL%20Fund%20Management%20Quarterly%20Report_Q2%202026.pdf"
+    },
+    {
+      "document_id": "RCR-2026q2-dividend-b5eaeb3f",
+      "form": "17-C",
+      "label": "RCR 2Q2026 PSE dividend reviewed fact receipt; original HTML not hashed",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-11",
+      "sha256": "b5eaeb3f0a198c4cc90a2a32e4b5506db640ac48b34949a3493a6259657a06f0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1955573"
+    },
+    {
+      "document_id": "RCR-2026-stock-d789d579",
+      "form": "stock_data",
+      "label": "RCR 25 Sep 2026 PSE stock reviewed fact receipt; original HTML not hashed",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "d789d5798c780087ee92ca8250a4f1e69009e1d9ee97ac0e27fd787bbe24d52a",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=684"
+    },
+    {
+      "document_id": "RCR-macro-choice-9fbd42f7",
+      "form": "BTr_auction",
+      "label": "RCR June benchmark carry-forward reviewed decision receipt; original PDF not hashed",
+      "period_end": "2026-06-23",
+      "published_at": "2026-06-23",
+      "sha256": "9fbd42f7721017975a5a98c9a5d086537d43e728bf9864a5f9bb5475a245dcdb",
+      "source_page": 2,
+      "url": "https://www.treasury.gov.ph/wp-content/uploads/2026/06/Treasury-Bonds-Auction-Result-on-23-June-2026-.pdf"
+    }
+  ],
+  "subsector": "Real estate investment trust",
+  "ticker": "RCR",
+  "valuation_date": "2026-09-26",
+  "warnings": [
+    "Isolated provisional RCR calculation only; not analyst-approved, active, or published.",
+    "Trailing declared DPU is not a full-period pro forma payout from the six newly infused malls.",
+    "The June near-ten-year yield is 95 days old and carried forward only for this isolated test; 11% equity cost is not an approved current RCR discount rate.",
+    "The 2.5% terminal distribution growth is an unapproved scenario hypothesis; most base value is terminal.",
+    "Source SHA-256 values bind reviewed fact receipts, not original PDF or HTML bytes; source-storage and display rights remain unconfirmed.",
+    "No dated price or current-upside comparison is supplied."
+  ]
+}

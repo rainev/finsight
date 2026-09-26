@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "b21e39743bf80b7e36a89ac8f4edd46809ecde0f19f14df87c83b324b8fa0a8d",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed feed and poultry cycles, biological and inventory accounting, margins, working capital, debt, and normalized cash flow are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "68dabc9f192f99a150cae1381f357d6af7f59eef1fb5167656443b0283df0741",
+  "issuer": {
+    "issuer_id": "PSE:VITA",
+    "name": "Vitarich Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 0.46199999999999997,
+      "high": 0.5940000000000001,
+      "low": 0.33
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 0.66,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-FOOD-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "158e9178b540765b0df4db3bf67bf002339d744429096fd4b6e0dd66c3c97dcc",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 0.5940000000000001,
+    "low": 0.33
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed feed and poultry cycles, biological and inventory accounting, margins, working capital, debt, and normalized cash flow are incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Normalized cyclical FCFF remains primary; P/B provides a finite screen after a sharp 1H2026 loss and equity decline."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:VITA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "158e9178b540765b",
+      "form": "17-Q",
+      "label": "VITA FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "158e9178b540765b0df4db3bf67bf002339d744429096fd4b6e0dd66c3c97dcc",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=28"
+    }
+  ],
+  "subsector": "Integrated poultry, feed, and farm operations",
+  "ticker": "VITA",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

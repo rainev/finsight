@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "d72fc680c06bd8598ec57e71021db71b56c38eefb40c1c90e45d3ceeb0368c03",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Negative equity and unresolved asset transfers, consideration, liabilities, parent advances, project status, and post-transaction economics block intrinsic SOTP."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-09-07",
+  "filing_published_at": null,
+  "input_hash": "1586a60c433f65e06af23c37909b085369194227f4bcdb233696e324958f6dfd",
+  "issuer": {
+    "issuer_id": "PSE:PHR",
+    "name": "PH Resorts Group Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 1.0,
+      "high": 1.5,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 0.003278074730049653,
+      "high": 0.004917112095074479,
+      "low": 0.0016390373650248264
+    },
+    "metric": "price_to_sales",
+    "metric_label": "TTM revenue per outstanding common share through 1H2026",
+    "metric_value_per_share": 0.003278074730049653,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PS-DISTRESSED-RESORT-B10-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "33eb63698cad05167e1af983013ea61c1b51bbed5a6c2a4bbc115735ced8bb8b",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B10-1.0",
+  "numerical_range": {
+    "high": 0.004917112095074479,
+    "low": 0.0016390373650248264
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Negative equity and unresolved asset transfers, consideration, liabilities, parent advances, project status, and post-transaction economics block intrinsic SOTP.",
+    "metric_basis": "(PHP 27,947,932 FY2025 + 13,336,354 1H2026 - 17,413,290 1H2025) / 7,282,017,027 shares",
+    "reliability": "Low",
+    "route_reason": "Post-restructuring SOTP remains primary; P/S provides a finite historical screen because equity and earnings are negative."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PHR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "33eb63698cad0516",
+      "form": "17-C",
+      "label": "PHR FY2025 and 1H2026 PSE financial report with September 2026 restructuring review",
+      "period_end": "2026-09-07",
+      "published_at": null,
+      "sha256": "33eb63698cad05167e1af983013ea61c1b51bbed5a6c2a4bbc115735ced8bb8b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1965287"
+    }
+  ],
+  "subsector": "Resort holding company under restructuring",
+  "ticker": "PHR",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Gaming regulation, property values, ramp economics, debt, and capital claims can materially change value and are not replaced by this screening band.",
+    "The September 2026 proposed restructuring would transfer substantially all consolidated operating assets and liabilities; this historical revenue screen is highly provisional."
+  ]
+}

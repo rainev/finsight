@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "US-RESET-2026-08-14-B01-B10-1.0",
+  "manifestSha256": "3773c700af7404ff7056e3d4f38ff4ea8a30536e9e39130ffcdd0e342905d441",
+  "artifactSha256": "babf83cf120857b09a645ba9daf6151fcb6f3898848962f412c26809adf49df9",
+  "valuationDate": "2026-08-14",
+  "company": {
+    "name": "Apple Inc.",
+    "ticker": "AAPL",
+    "sector": "Technology",
+    "logo": "/logos/apple.svg"
+  },
+  "scenarios": {
+    "low": 79.80130329911236,
+    "base": 103.3303976983317,
+    "high": 123.1625608382377
+  },
+  "assumptions": {
+    "initial_growth": 0.08166084576940628,
+    "discount_rate": 0.09118064378138147,
+    "terminal_growth": 0.02,
+    "cash_conversion": 1.0,
+    "forecast_years": 5
+  },
+  "assumptionFields": [
+    {
+      "key": "initial_growth",
+      "label": "Initial growth",
+      "value": 0.08166084576940628,
+      "min": -0.2,
+      "max": 0.4,
+      "step": 0.005,
+      "unit": "percent"
+    },
+    {
+      "key": "discount_rate",
+      "label": "Discount rate",
+      "value": 0.09118064378138147,
+      "min": 0.05,
+      "max": 0.25,
+      "step": 0.0025,
+      "unit": "percent"
+    },
+    {
+      "key": "terminal_growth",
+      "label": "Terminal growth",
+      "value": 0.02,
+      "min": -0.02,
+      "max": 0.04,
+      "step": 0.0025,
+      "unit": "percent"
+    },
+    {
+      "key": "cash_conversion",
+      "label": "Normalized cash conversion",
+      "value": 1.0,
+      "min": 0.25,
+      "max": 2.0,
+      "step": 0.025,
+      "unit": "number"
+    },
+    {
+      "key": "forecast_years",
+      "label": "Forecast years",
+      "value": 5,
+      "min": 2,
+      "max": 15,
+      "step": 1,
+      "unit": "years"
+    }
+  ],
+  "model": "fcff_dcf",
+  "filing": {
+    "accession": "0000320193-26-000020",
+    "filed_date": "2026-07-31",
+    "form": "10-Q",
+    "note": "Latest financial statement used; this does not claim to be the issuer's latest disclosure of every type.",
+    "period_end": "2026-06-27",
+    "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.03581158155606644,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "RD_LIFE_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Medium",
+    "scenario_movement_ratio": 0.22770738256433923,
+    "source_cap": "High"
+  },
+  "reviewState": "review_required",
+  "calculatorDescription": "Baseline-calibrated sensitivity preview; not a full model rerun. Filing facts and the capital bridge stay locked.",
+  "calculatorSamples": [
+    {
+      "growth": 0.08166084576940628,
+      "values": {
+        "low": 79.80130329911236,
+        "base": 103.3303976983317,
+        "high": 123.1625608382377
+      }
+    },
+    {
+      "growth": 0.08325831052901436,
+      "values": {
+        "low": 80.08258370211563,
+        "base": 103.69461250066561,
+        "high": 123.59667924627477
+      }
+    },
+    {
+      "growth": 0.08485577528862243,
+      "values": {
+        "low": 80.3645625442809,
+        "base": 104.0597316741488,
+        "high": 124.03187560106491
+      }
+    },
+    {
+      "growth": 0.0864532400482305,
+      "values": {
+        "low": 80.64724091232715,
+        "base": 104.42575662591494,
+        "high": 124.46815157981244
+      }
+    },
+    {
+      "growth": 0.08805070480783857,
+      "values": {
+        "low": 80.93061989374121,
+        "base": 104.79268876409205,
+        "high": 124.9055088609068
+      }
+    },
+    {
+      "growth": 0.08964816956744665,
+      "values": {
+        "low": 81.21470057677823,
+        "base": 105.16052949780291,
+        "high": 125.34394912392322
+      }
+    },
+    {
+      "growth": 0.09124563432705471,
+      "values": {
+        "low": 81.49948405046119,
+        "base": 105.52928023716458,
+        "high": 125.78347404962193
+      }
+    },
+    {
+      "growth": 0.09284309908666279,
+      "values": {
+        "low": 81.78497140458127,
+        "base": 105.8989423932888,
+        "high": 126.2240853199488
+      }
+    },
+    {
+      "growth": 0.09444056384627085,
+      "values": {
+        "low": 82.07116372969763,
+        "base": 106.26951737828173,
+        "high": 126.66578461803499
+      }
+    },
+    {
+      "growth": 0.09603802860587893,
+      "values": {
+        "low": 82.35806211713765,
+        "base": 106.64100660524421,
+        "high": 127.10857362819726
+      }
+    },
+    {
+      "growth": 0.09763549336548699,
+      "values": {
+        "low": 82.6456676589965,
+        "base": 107.01341148827136,
+        "high": 127.5524540359374
+      }
+    },
+    {
+      "growth": 0.09923295812509507,
+      "values": {
+        "low": 82.93398144813763,
+        "base": 107.38673344245301,
+        "high": 127.99742752794293
+      }
+    },
+    {
+      "growth": 0.10083042288470315,
+      "values": {
+        "low": 83.22300457819249,
+        "base": 107.76097388387342,
+        "high": 128.4434957920866
+      }
+    },
+    {
+      "growth": 0.10242788764431121,
+      "values": {
+        "low": 83.51273814356053,
+        "base": 108.13613422961137,
+        "high": 128.8906605174266
+      }
+    },
+    {
+      "growth": 0.10402535240391929,
+      "values": {
+        "low": 83.80318323940932,
+        "base": 108.51221589774022,
+        "high": 129.3389233942065
+      }
+    },
+    {
+      "growth": 0.10562281716352735,
+      "values": {
+        "low": 84.09434096167448,
+        "base": 108.88922030732778,
+        "high": 129.78828611385526
+      }
+    },
+    {
+      "growth": 0.10722028192313543,
+      "values": {
+        "low": 84.3862124070597,
+        "base": 109.26714887843643,
+        "high": 130.23875036898733
+      }
+    },
+    {
+      "growth": 0.1088177466827435,
+      "values": {
+        "low": 84.67879867303661,
+        "base": 109.64600303212292,
+        "high": 130.69031785340226
+      }
+    },
+    {
+      "growth": 0.11041521144235157,
+      "values": {
+        "low": 84.97210085784509,
+        "base": 110.02578419043876,
+        "high": 131.1429902620854
+      }
+    },
+    {
+      "growth": 0.11201267620195964,
+      "values": {
+        "low": 85.26612006049295,
+        "base": 110.40649377642978,
+        "high": 131.5967692912072
+      }
+    },
+    {
+      "growth": 0.11361014096156771,
+      "values": {
+        "low": 85.56085738075616,
+        "base": 110.78813321413652,
+        "high": 132.05165663812377
+      }
+    },
+    {
+      "growth": 0.11520760572117578,
+      "values": {
+        "low": 85.85631391917855,
+        "base": 111.17070392859374,
+        "high": 132.5076540013762
+      }
+    },
+    {
+      "growth": 0.11680507048078385,
+      "values": {
+        "low": 86.15249077707225,
+        "base": 111.554207345831,
+        "high": 132.9647630806914
+      }
+    },
+    {
+      "growth": 0.11840253524039193,
+      "values": {
+        "low": 86.44938905651729,
+        "base": 111.93864489287228,
+        "high": 133.42298557698146
+      }
+    },
+    {
+      "growth": 0.12,
+      "values": {
+        "low": 86.74700986036183,
+        "base": 112.32401799773604,
+        "high": 133.88232319234388
+      }
+    }
+  ]
+}

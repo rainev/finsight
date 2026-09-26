@@ -1,0 +1,86 @@
+{
+  "review_id": "PSE-V2-AP-RLC-SOURCE-PROXY-2026-09-26-1",
+  "status": "staged_unapproved_not_served",
+  "retrieval": "supervised_temporary_original_pdf_reads_only",
+  "source_storage": "not_written_to_postgres_minio_or_public_catalog",
+  "rights_clearance": "not_confirmed_for_automated_acquisition_storage_or_redistribution",
+  "sources": {
+    "ap_2026_1h_17q": {
+      "url": "https://pdswordpressbucket.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2026/08/Disclosure-No.-2960-2026-Quarterly-Report-SEC-Form-17-Q.pdf",
+      "sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80",
+      "bytes": 1471001,
+      "pdf_pages": 48,
+      "fact_text_checks_passed": 13,
+      "fact_text_checks_total": 13,
+      "visually_checked_pdf_pages": [3, 12, 13, 17, 28, 29, 42]
+    },
+    "ap_2025_17a_existing_local": {
+      "sha256": "f1985fdc43ca7e8111d7915c9c3300ef2ca676922b43619b5659f8aface6f60b",
+      "visually_checked_pdf_pages": [296]
+    },
+    "rlc_2025_group_17a": {
+      "url": "https://robinsonsland.com/sites/default/files/2026-04/RLC_SEC%2017-A_December%2031%202025.pdf",
+      "sha256": "88407785c018b8e0845833476ef52ea32a9eedbea8bb9e40e69fd1465950f6c8",
+      "bytes": 8241007,
+      "pdf_pages": 343,
+      "fact_text_checks_passed": 6,
+      "fact_text_checks_total": 6,
+      "visually_checked_pdf_pages": [229, 246, 270, 271, 338]
+    },
+    "rlc_2025_parent_20is": {
+      "url": "https://robinsonsland.com/sites/default/files/2026-04/Robinsons%20Land%20Corporation_%20SEC%20Form%2020-IS%20%28Definitive%20Information%20Statement%29%20Clean%20%28redacted%29_compressed.pdf",
+      "sha256": "1e1c092c59339903cf52137ef6d83c87b1cf3f66fdef4e0f598b61d64f257157",
+      "bytes": 7031993,
+      "pdf_pages": 491,
+      "fact_text_checks_passed": 4,
+      "fact_text_checks_total": 4,
+      "visually_checked_pdf_pages": [431, 432, 478]
+    },
+    "rcr_2025_17a": {
+      "url": "https://rlcommercialreit.com.ph/sites/default/files/2026-03/RCR%20SEC%2017A%20122025_to%20file.pdf",
+      "sha256": "6e1403d1a6128768d3609e1008c2eb38268224aaed77e0970c0850d066757e2f",
+      "bytes": 3689651,
+      "pdf_pages": 148,
+      "fact_text_checks_passed": 2,
+      "fact_text_checks_total": 2,
+      "visually_checked_pdf_pages": [85, 89]
+    }
+  },
+  "ap_proxy_challenge": {
+    "reported_2026_1h_effective_tax_rate": 0.14814129496132683,
+    "reported_2025_1h_effective_tax_rate": 0.17068539469053978,
+    "candidate_tax_shield_rate": 0.25,
+    "tax_shield_verdict": "general_statutory_rate_not_verified_for_AP_interest_deductibility",
+    "equity_method_investments_book_php_millions": 138809.675,
+    "book_proxy_per_share_effect_php": 19.2634584444978,
+    "joint_venture_value_verdict": "reported_carrying_value_not_independently_appraised_equity_value",
+    "noncontrolling_interest_book_php_millions": 14103.045,
+    "minority_value_verdict": "reported_book_not_economic_claim_value",
+    "base_value_per_share_tax_shield_sensitivity": {
+      "rate_0_15": 45.576642,
+      "rate_0_25": 42.438999,
+      "rate_0_35": 39.301355
+    },
+    "base_value_per_share_without_book_jv_asset_diagnostic": 23.17554,
+    "base_value_per_share_double_book_minority_diagnostic": 40.481834,
+    "publication_candidate_values": null
+  },
+  "rlc_consolidation_bridge": {
+    "group_property_carrying_php_millions": 143427.865325,
+    "group_property_fair_value_php_millions": 447175.301821,
+    "parent_standalone_property_carrying_php_millions": 115836.052226,
+    "parent_standalone_property_fair_value_php_millions": 319521.030102,
+    "group_less_parent_diagnostic_carrying_php_millions": 27591.813099,
+    "group_less_parent_diagnostic_fair_value_php_millions": 127654.271719,
+    "rcr_standalone_property_fair_value_php_millions": 161470.01049,
+    "parent_2025_swap_investment_increase_php_millions": 30675.0,
+    "parent_2025_swap_property_book_decrease_php_millions": 7606.0,
+    "parent_2025_swap_ppe_book_decrease_php_millions": 187.0,
+    "rcr_parent_ownership_at_2025_12_31": 0.6051,
+    "group_accounting_basis": "cost_less_depreciation_and_impairment_except_land_at_cost",
+    "rcr_standalone_accounting_basis": "fair_value_model",
+    "owner_by_owner_post_elimination_schedule_obtained": false,
+    "full_attributable_property_uplift": null,
+    "publication_candidate_values": null
+  }
+}

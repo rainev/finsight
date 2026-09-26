@@ -1,0 +1,81 @@
+{
+  "artifact_hash": "4e3448224f757bf1a4336f5d327d2f48e13118e304ba72550ee87c739ffa5a77",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The listing directory identifies LTL on 2026-09-25, but no issuer financial-summary equity, period, ordinary-common denominator or property-level appraisal was reviewed for this batch."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": null,
+  "filing_published_at": null,
+  "input_hash": "0fe957fd67c93a185c61da7d74493678dc3b0d93187a05dceee9ed35dcbd22a6",
+  "issuer": {
+    "issuer_id": "PSE:LTL",
+    "name": "PNB Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The listing directory identifies LTL on 2026-09-25, but no issuer financial-summary equity, period, ordinary-common denominator or property-level appraisal was reviewed for this batch.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "The just-listed property holding company needs property-level NAV, parent claims and a verified public common-share denominator.",
+    "share_bridge_type": "missing",
+    "trading_status": "new_listing_unverified",
+    "trading_status_as_of": "2026-09-25"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "LTL",
+    "security_id": "PSE:LTL:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "3a9952fe07782eb6",
+      "form": "PSE company directory",
+      "label": "LTL PSE listing directory",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "3a9952fe07782eb6017030fb5a3a7ae8587b453f6d77b520d8dd03076aea4f90",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyDirectory/form.do"
+    },
+    {
+      "document_id": "3a9952fe07782eb6-support-1",
+      "form": "PSE listing notice index",
+      "label": "LTL listing-date and trading-symbol notice index",
+      "period_end": null,
+      "published_at": "2026-09-24",
+      "sha256": "3a9952fe07782eb6017030fb5a3a7ae8587b453f6d77b520d8dd03076aea4f90",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyDisclosures/search.ax"
+    }
+  ],
+  "subsector": "Property holding",
+  "ticker": "LTL",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "A listing-date entry is not a reviewed financial statement or a share-count bridge. No value or calculator is published for LTL."
+  ]
+}

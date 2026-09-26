@@ -1,0 +1,79 @@
+{
+  "artifact_hash": "d6be4d9507d13fe2971e14d89e194891f6765b0d767fcda0c7521efb77f7631a",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Negative parent equity, large consolidated liabilities and unresolved minority/capital claims prevent a positive common-equity book screen."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "c37e80b0cf19581e9873ab5f3d7ee352d3abb24df00cde26621013c4c58b34c1",
+  "issuer": {
+    "issuer_id": "PSE:FAF",
+    "name": "First Abacus Financial Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Negative parent equity, large consolidated liabilities and unresolved minority/capital claims prevent a positive common-equity book screen.",
+    "metric_basis": "PHP parent equity (pesos) / 1,193,200,000 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Subsidiary financial and investment interests require an attributable common-equity SOTP.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "FAF",
+    "security_id": "PSE:FAF:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "3560bace132d51e6",
+      "form": "PSE financial summary",
+      "label": "FAF FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "3560bace132d51e659e05036f74177d9289e4fae4fe07f0146790445e568e0d0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=81"
+    },
+    {
+      "document_id": "3560bace132d51e6-support-1",
+      "form": "PSE common-stock data",
+      "label": "FAF ordinary common common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "3560bace132d51e659e05036f74177d9289e4fae4fe07f0146790445e568e0d0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=81"
+    }
+  ],
+  "subsector": "Financial and investment holding",
+  "ticker": "FAF",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "1H2026 parent equity is negative PHP684.616m; PHP20.009m positive total equity and printed PHP0.02 BVPS are not a parent-common residual. A total-book proxy would misstate the claim."
+  ]
+}

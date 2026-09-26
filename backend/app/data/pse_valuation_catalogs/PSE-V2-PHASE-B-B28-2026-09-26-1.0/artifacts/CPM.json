@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "cc2463f834bdf2c5174fa358e98a1e2d59212b75e0c44b7f3a5edab7c0950a22",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reserve life, project economics, debt, funding and restoration claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "7bc964d35c8319eebcfcf57e23cf4e98319e089ad7ed68e920b922342b48ebdd",
+  "issuer": {
+    "issuer_id": "PSE:CPM",
+    "name": "Century Peak Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.269429471,
+      "high": 0.370465522,
+      "low": 0.168393419
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding common share",
+    "metric_value_per_share": 0.673573676800887,
+    "note": "Finite analyst book-value screen; no peer calibration or complete intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B19-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "4918fc526a2d6d4787069f2cf62b2b29a70904e837000893b63365a487d40299",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": 0.370465522,
+    "low": 0.168393419
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reserve life, project economics, debt, funding and restoration claims are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 2,820,330,450 outstanding common shares",
+    "policy_rationale": "Reuse the finite holding and asset-company P/B screen; not appraised NAV, proven-resource value, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Distinct mineral and industrial assets require finite-life attributable SOTP; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CPM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "4918fc526a2d6d47",
+      "form": "PSE financial summary",
+      "label": "CPM FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "4918fc526a2d6d4787069f2cf62b2b29a70904e837000893b63365a487d40299",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=621"
+    },
+    {
+      "document_id": "4918fc526a2d6d47-support-1",
+      "form": "PSE common-stock data",
+      "label": "CPM ordinary-common stock data",
+      "period_end": "2026-09-09",
+      "published_at": null,
+      "sha256": "4918fc526a2d6d4787069f2cf62b2b29a70904e837000893b63365a487d40299",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=621"
+    }
+  ],
+  "subsector": "Mining and industrial assets",
+  "ticker": "CPM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "FY2025 and 1H2026 losses accompany a material decline in parent equity; the PSE's whole-peso BVPS display is too coarse for this screen."
+  ]
+}

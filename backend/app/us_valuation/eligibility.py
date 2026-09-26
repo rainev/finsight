@@ -7,6 +7,9 @@ from typing import Any
 from .classification import load_archetype_config
 
 
+IMPLEMENTED_PRIMARY_MODELS = frozenset({"fcff_dcf", "residual_income", "ddm", "ffo"})
+
+
 def _governed_models() -> dict[str, str]:
     """Read the primary model registry from the classification configuration."""
     config = load_archetype_config()
@@ -36,6 +39,15 @@ def model_eligibility(classification: dict[str, Any]) -> dict[str, Any]:
     raw_model = policy.get("primary_model") if isinstance(policy, dict) else None
     archetype = raw_archetype if isinstance(raw_archetype, str) else ""
     model = raw_model if isinstance(raw_model, str) and raw_model else "unknown"
+    if classification.get("model_route_eligible") is False:
+        return {
+            "eligible": False,
+            "model": model,
+            "reason": str(
+                classification.get("model_route_reason")
+                or "Issuer-level evidence has not approved this model route."
+            ),
+        }
     expected_model = _governed_models().get(archetype)
     if expected_model is None:
         return {
@@ -44,6 +56,15 @@ def model_eligibility(classification: dict[str, Any]) -> dict[str, Any]:
             "reason": (
                 f"{archetype or 'unknown'} is not a governed U.S. valuation archetype; "
                 f"{model} is ineligible."
+            ),
+        }
+    if expected_model not in IMPLEMENTED_PRIMARY_MODELS:
+        return {
+            "eligible": False,
+            "model": model,
+            "reason": (
+                f"{archetype} configures {expected_model}, but that primary model "
+                "is not implemented by the U.S. valuation pipeline."
             ),
         }
     if model == expected_model:

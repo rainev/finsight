@@ -1,0 +1,80 @@
+{
+  "artifact_hash": "932f67fcffc0431c9403eb1e00706de12f989bd21bbba547a69d6ea1390b9274",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2025 with no revenue, only 299.85m of 2.75bn outstanding shares appear listed and trading has been suspended for years."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "c1e8e9af09b5e7e00e2f9389773eb0c6a3927de02af58666a4c6bc1b94bdb983",
+  "issuer": {
+    "issuer_id": "PSE:MGH",
+    "name": "Metro Global Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2025 with no revenue, only 299.85m of 2.75bn outstanding shares appear listed and trading has been suspended for years.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Investment holdings need attributable subsidiary values and a settled quoted/common-capital structure.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-06-24"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "MGH",
+    "security_id": "PSE:MGH:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "94ffb183db46b18a",
+      "form": "PSE financial summary",
+      "label": "MGH reviewed PSE financial-summary page",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "94ffb183db46b18a1de9e934835cdbe1388de696e4ce89212de0f604b1adcd10",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=192"
+    },
+    {
+      "document_id": "94ffb183db46b18a-support-1",
+      "form": "PSE common-stock data",
+      "label": "MGH quoted common stock data",
+      "period_end": "2026-06-24",
+      "published_at": null,
+      "sha256": "94ffb183db46b18a1de9e934835cdbe1388de696e4ce89212de0f604b1adcd10",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=192"
+    }
+  ],
+  "subsector": "Infrastructure and investment holding",
+  "ticker": "MGH",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "PSE 3Q2025 parent equity is PHP3.518bn, but the stock page shows 2.75bn outstanding versus 299.85m listed shares. The historical last close is February 2007, not a current price."
+  ]
+}

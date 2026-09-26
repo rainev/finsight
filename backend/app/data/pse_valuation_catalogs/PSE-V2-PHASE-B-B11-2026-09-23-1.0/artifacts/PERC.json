@@ -1,0 +1,83 @@
+{
+  "artifact_hash": "2836b8d0b27d2da50dcafe25cb4897ac7cc5de68a41b1945ed2ff988e312be60",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The consolidated filing is captured, but attributable SOTP component values and ownership-scoped claims have not been reviewed.",
+    "The legacy single-company estimate is not promoted into the specialist V2 route."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "1a2808c69ef95fe1067fea2d68d8803feb29672d08e54c00d66a1cc8781b0559",
+  "issuer": {
+    "issuer_id": "PERC",
+    "name": "PetroEnergy Resources Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 11.0,
+      "high": 12.65,
+      "low": 9.35
+    },
+    "estimates": {
+      "base": 5.5,
+      "high": 6.325,
+      "low": 4.675
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "FY2025 EPS",
+    "metric_value_per_share": 0.5,
+    "note": "Initial screening conventions, not empirically validated issuer peer sets.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-MR-PILOT-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "ebca8b376be12a58b0ddb48b9b4c18a4bca991aa31eae973d59f3316fe746425",
+    "source_page": 30,
+    "source_status": "reviewed_legacy_snapshot"
+  },
+  "model_version": "PSE-V2-PILOT-1.1",
+  "numerical_range": {
+    "high": 6.325,
+    "low": 4.675
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {},
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PERC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ebca8b376be12a58",
+      "form": "17-A",
+      "label": "PERC SEC 17-A 2025.pdf",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "ebca8b376be12a58b0ddb48b9b4c18a4bca991aa31eae973d59f3316fe746425",
+      "source_page": 30,
+      "url": null
+    }
+  ],
+  "subsector": "Renewables and upstream energy",
+  "ticker": "PERC",
+  "valuation_date": "2026-09-21",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the specialist intrinsic valuation.",
+    "Policy bands are initial conventions and are not presented as empirically validated issuer peer sets."
+  ]
+}

@@ -1,0 +1,286 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-1.0",
+  "batch_version": "PSE-V2-PHASE-B-B01-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B01-2026-09-22-1.0",
+  "universe_version": "PSE-V2-18-B01-1.0",
+  "valuation_date": "2026-09-22",
+  "review_status": "reviewed_public_fact_receipts",
+  "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+  "frozen_tickers": [
+    "BPI",
+    "MBT",
+    "SECB",
+    "CBC",
+    "EW",
+    "RCR",
+    "MREIT",
+    "CREIT",
+    "FILRT",
+    "DDMPR"
+  ],
+  "bank_policy": {
+    "version": "PSE-V2-BANK-RI-B01-1.0",
+    "forecast_years": 5,
+    "scenarios": {
+      "bear": {
+        "current_roe_factor": 0.85,
+        "terminal_roe_factor": 0.75,
+        "terminal_roe_floor": 0.08,
+        "terminal_roe_cap": 0.11,
+        "cost_of_equity": 0.13552,
+        "payout_ratio": 0.25,
+        "terminal_growth": 0.02
+      },
+      "base": {
+        "current_roe_factor": 1.0,
+        "terminal_roe_factor": 0.85,
+        "terminal_roe_floor": 0.09,
+        "terminal_roe_cap": 0.13,
+        "cost_of_equity": 0.12052,
+        "payout_ratio": 0.3,
+        "terminal_growth": 0.03
+      },
+      "bull": {
+        "current_roe_factor": 1.1,
+        "terminal_roe_factor": 0.95,
+        "terminal_roe_floor": 0.1,
+        "terminal_roe_cap": 0.145,
+        "cost_of_equity": 0.11052,
+        "payout_ratio": 0.35,
+        "terminal_growth": 0.04
+      }
+    },
+    "rationale": "FY2025 attributable earnings are normalized against average FY2024-FY2025 parent equity. Scenario ROE fades through a shared policy; discount rates equal the reviewed benchmark plus explicit equity-risk premiums."
+  },
+  "reit_policies": {
+    "stable_growth": {
+      "version": "PSE-V2-REIT-STABLE-B01-1.0",
+      "forecast_years": 5,
+      "scenarios": {
+        "bear": {"explicit_growth": -0.02, "cost_of_equity": 0.125, "terminal_growth": 0.015},
+        "base": {"explicit_growth": 0.025, "cost_of_equity": 0.11, "terminal_growth": 0.025},
+        "bull": {"explicit_growth": 0.05, "cost_of_equity": 0.1, "terminal_growth": 0.035}
+      },
+      "rationale": "A shared established-REIT policy applies modest distribution growth and a required return above the reviewed ten-year benchmark."
+    },
+    "recovery_income": {
+      "version": "PSE-V2-REIT-RECOVERY-B01-1.0",
+      "forecast_years": 5,
+      "scenarios": {
+        "bear": {"explicit_growth": -0.05, "cost_of_equity": 0.13, "terminal_growth": 0.01},
+        "base": {"explicit_growth": 0.01, "cost_of_equity": 0.115, "terminal_growth": 0.02},
+        "bull": {"explicit_growth": 0.04, "cost_of_equity": 0.105, "terminal_growth": 0.03}
+      },
+      "rationale": "A shared recovery-income policy allows near-term distribution pressure and uses a wider required-return range."
+    }
+  },
+  "issuers": {
+    "BPI": {
+      "issuer_name": "Bank of the Philippine Islands",
+      "subsector": "Commercial and universal bank",
+      "primary_model": "residual_income",
+      "route_reason": "Book capital and returns above the cost of equity drive common-equity value.",
+      "source": {
+        "label": "BPI FY2025 PSE EDGE financial-report fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=234"
+      },
+      "facts": {
+        "parent_common_equity_php_millions": 476553.0,
+        "prior_parent_common_equity_php_millions": 430469.0,
+        "net_income_to_parent_php_millions": 66615.0,
+        "book_value_per_share": 90.19,
+        "basic_eps": 12.61
+      }
+    },
+    "MBT": {
+      "issuer_name": "Metropolitan Bank & Trust Company",
+      "subsector": "Commercial and universal bank",
+      "primary_model": "residual_income",
+      "route_reason": "Book capital and returns above the cost of equity drive common-equity value.",
+      "source": {
+        "label": "Metrobank FY2025 PSE EDGE financial-report fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=128"
+      },
+      "facts": {
+        "parent_common_equity_php_millions": 421705.0,
+        "prior_parent_common_equity_php_millions": 385502.0,
+        "net_income_to_parent_php_millions": 49720.0,
+        "book_value_per_share": 93.77,
+        "basic_eps": 11.06
+      }
+    },
+    "SECB": {
+      "issuer_name": "Security Bank Corporation",
+      "subsector": "Commercial bank",
+      "primary_model": "residual_income",
+      "route_reason": "Book capital and returns above the cost of equity drive common-equity value.",
+      "source": {
+        "label": "Security Bank FY2025 PSE EDGE financial-report fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=32"
+      },
+      "facts": {
+        "parent_common_equity_php_millions": 154229.828,
+        "prior_parent_common_equity_php_millions": 141137.552,
+        "net_income_to_parent_php_millions": 11627.592,
+        "book_value_per_share": 204.54,
+        "basic_eps": 15.42
+      }
+    },
+    "CBC": {
+      "issuer_name": "China Banking Corporation",
+      "subsector": "Commercial and universal bank",
+      "primary_model": "residual_income",
+      "route_reason": "Book capital and returns above the cost of equity drive common-equity value.",
+      "source": {
+        "label": "Chinabank FY2025 PSE EDGE financial-report fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=184"
+      },
+      "facts": {
+        "parent_common_equity_php_millions": 191205.305,
+        "prior_parent_common_equity_php_millions": 168495.343,
+        "net_income_to_parent_php_millions": 27977.951,
+        "book_value_per_share": 71.04,
+        "basic_eps": 10.4
+      }
+    },
+    "EW": {
+      "issuer_name": "East West Banking Corporation",
+      "subsector": "Commercial bank",
+      "primary_model": "residual_income",
+      "route_reason": "Book capital and returns above the cost of equity drive common-equity value.",
+      "source": {
+        "label": "EastWest FY2025 PSE EDGE financial-report fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=634"
+      },
+      "facts": {
+        "parent_common_equity_php_millions": 81545.244,
+        "prior_parent_common_equity_php_millions": 73067.027,
+        "net_income_to_parent_php_millions": 9220.56,
+        "book_value_per_share": 36.24,
+        "basic_eps": 4.1
+      }
+    },
+    "RCR": {
+      "issuer_name": "RL Commercial REIT, Inc.",
+      "subsector": "Real estate investment trust",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "Sustainable distributions are primary; NAV remains a separate evidence-dependent check.",
+      "policy": "stable_growth",
+      "source": {
+        "label": "RCR FY2025 PSE EDGE financial-report fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=684"
+      },
+      "distribution_sources": [
+        "https://rlcommercialreit.com.ph/sites/default/files/2026-02/2025_4Q%20RCR%20FM.pdf"
+      ],
+      "facts": {
+        "distribution_per_share": 0.4268,
+        "book_value_per_share": 8.3,
+        "shares_millions": 19548.803008,
+        "distribution_period": "FY 2025"
+      }
+    },
+    "MREIT": {
+      "issuer_name": "MREIT, Inc.",
+      "subsector": "Real estate investment trust",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "Sustainable distributions are primary; NAV remains a separate evidence-dependent check.",
+      "policy": "stable_growth",
+      "source": {
+        "label": "MREIT FY2025 audited-financial-statement fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://mreit.com.ph/assets/genericpage/files/frame-2/1.-2026-0415-MREIT-Inc.-2025-AFS%2BFinal.pdf"
+      },
+      "distribution_sources": [
+        "https://mreit.com.ph/assets/Uploads/2026-Definitive-Information-Statement-with-Annexes.pdf"
+      ],
+      "facts": {
+        "distribution_per_share": 1.001912,
+        "book_value_per_share": 18.0,
+        "shares_millions": 3721.983381,
+        "distribution_period": "FY 2025"
+      }
+    },
+    "CREIT": {
+      "issuer_name": "Citicore Energy REIT Corp.",
+      "subsector": "Renewable-energy real estate investment trust",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "Long-term lease distributions are primary; NAV remains a separate evidence-dependent check.",
+      "policy": "stable_growth",
+      "source": {
+        "label": "CREIT FY2025 PSE EDGE financial-report fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=691"
+      },
+      "distribution_sources": [
+        "https://creit.com.ph/press-room/press-releases/"
+      ],
+      "facts": {
+        "distribution_per_share": 0.203,
+        "book_value_per_share": 0.72,
+        "shares_millions": 6512.016868,
+        "distribution_period": "FY 2025"
+      }
+    },
+    "FILRT": {
+      "issuer_name": "Filinvest REIT Corp.",
+      "subsector": "Real estate investment trust",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "Sustainable distributions are primary; NAV remains a separate evidence-dependent check.",
+      "policy": "recovery_income",
+      "source": {
+        "label": "FILRT FY2025 audited-financial-statement fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://www.filinvestreit.com/sites/default/files/2026-04/filrt_integrated_report_2025.pdf"
+      },
+      "distribution_sources": [
+        "https://www.filinvestreit.com/sites/default/files/2026-05/filrt_quarterly_report_17-q_as_of_march_31_2026.pdf"
+      ],
+      "facts": {
+        "distribution_per_share": 0.241,
+        "book_value_per_share": 7.33,
+        "shares_millions": 6518.78131,
+        "distribution_period": "FY 2025 operating quarters"
+      }
+    },
+    "DDMPR": {
+      "issuer_name": "DDMP REIT, Inc.",
+      "subsector": "Real estate investment trust",
+      "primary_model": "sustainable_distributions",
+      "route_reason": "Sustainable distributions are primary; NAV remains a separate evidence-dependent check.",
+      "policy": "recovery_income",
+      "source": {
+        "label": "DDMPR FY2025 PSE EDGE financial-report fact receipt",
+        "form": "17-A",
+        "period_end": "2025-12-31",
+        "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=681"
+      },
+      "distribution_sources": [
+        "https://edge.pse.com.ph/downloadHtml.do?file_id=1850356",
+        "https://edge.pse.com.ph/downloadHtml.do?file_id=1908812",
+        "https://www.ddmpreit.com/asm2025/DDMPR%202025%20Definitive%20Information%20Statement.pdf"
+      ],
+      "facts": {
+        "distribution_per_share": 0.095021,
+        "book_value_per_share": 3.54,
+        "shares_millions": 17827.465406,
+        "distribution_period": "FY 2025 operating quarters"
+      }
+    }
+  }
+}

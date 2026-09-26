@@ -1,0 +1,110 @@
+{
+  "artifact_hash": "70908f64f29303e71a5b753c4bac408cf1fa9d59605888b8bccb4bb5edefbcd9",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Operating cash conversion, maintenance capital needs and the declassification record have not been fully underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "306e2f7e3c042d024631eef86b1c8860a4adae9588bff4f6343b5e738fd745d4",
+  "issuer": {
+    "issuer_id": "PSE:CA",
+    "name": "Concrete Aggregates Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 5.704970198,
+      "high": 7.986958278,
+      "low": 3.422982119
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 11.409940396736397,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B23-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a74b1a0aee0e823a8fbc2320065c8902fee86d5f8344e1ec029bd2106fe0c6a3",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": 7.986958278,
+    "low": 3.422982119
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Operating cash conversion, maintenance capital needs and the declassification record have not been fully underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 27,466,449 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screen while cash flow, leases, financing and normalization are not fully underwritten; not FCFF.",
+    "reliability": "Low",
+    "route_reason": "Operating assets require normalized FCFF; reported combined common book is only a separate screen.",
+    "share_bridge_type": "reported_total_declassification"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "CA",
+    "security_id": "PSE:CA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a74b1a0aee0e823a",
+      "form": "PSE financial summary",
+      "label": "CA FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a74b1a0aee0e823a8fbc2320065c8902fee86d5f8344e1ec029bd2106fe0c6a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=213"
+    },
+    {
+      "document_id": "a74b1a0aee0e823a-support-1",
+      "form": "PSE common-stock data",
+      "label": "CA reported combined A/B common common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "a74b1a0aee0e823a8fbc2320065c8902fee86d5f8344e1ec029bd2106fe0c6a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=213"
+    },
+    {
+      "document_id": "a74b1a0aee0e823a-support-2",
+      "form": "PSE issuer disclosure",
+      "label": "CA class or capital-claim disclosure",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "a74b1a0aee0e823a8fbc2320065c8902fee86d5f8344e1ec029bd2106fe0c6a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1878408"
+    }
+  ],
+  "subsector": "Construction materials",
+  "ticker": "CA",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE PHP11.41 BVPS and the March 2026 equal A/B per-share dividend reconcile to 27,466,449 combined economic common shares. A separately displayed older B stock page is not added again; declassification completion remains under review."
+  ]
+}

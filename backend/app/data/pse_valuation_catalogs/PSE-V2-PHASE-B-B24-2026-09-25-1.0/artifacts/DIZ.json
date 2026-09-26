@@ -1,0 +1,100 @@
+{
+  "artifact_hash": "2ca75970280de6fd5ce025e0b8477900e1e7847b0d5697f27581bf8614633f7a",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Economic reserve estimates, license life, reclamation and financing are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "4b259812465f6801687da5979c68a39edd5b77caaff904b5b782d5d672275703",
+  "issuer": {
+    "issuer_id": "PSE:DIZ",
+    "name": "Dizon Copper-Silver Mines, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.13095659,
+      "high": 0.180065311,
+      "low": 0.081847869
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.3273914747095201,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B23-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "bbd226d125aa332d5bec32dae3c1d26612947efa88b9fc5b35050b2099289e5e",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": 0.180065311,
+    "low": 0.081847869
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Economic reserve estimates, license life, reclamation and financing are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 79,087,487 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, a proven reserve appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Mineral rights require finite-life asset valuation; parent book is only a screen.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "DIZ",
+    "security_id": "PSE:DIZ:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "bbd226d125aa332d",
+      "form": "PSE financial summary",
+      "label": "DIZ FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "bbd226d125aa332d5bec32dae3c1d26612947efa88b9fc5b35050b2099289e5e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=68"
+    },
+    {
+      "document_id": "bbd226d125aa332d-support-1",
+      "form": "PSE common-stock data",
+      "label": "DIZ ordinary common common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "bbd226d125aa332d5bec32dae3c1d26612947efa88b9fc5b35050b2099289e5e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=68"
+    }
+  ],
+  "subsector": "Mining",
+  "ticker": "DIZ",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "FY2025 and 1H2026 revenue are zero. Parent book of PHP25.893m is not a proven-reserve value; the PSE PHP0.33 BVPS is rounded."
+  ]
+}

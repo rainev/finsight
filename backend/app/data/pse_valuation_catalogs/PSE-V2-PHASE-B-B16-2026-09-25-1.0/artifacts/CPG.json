@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "9101890f49a30dfcfa8060a2c0afb1a0a5e30635f4d81e188b912d9eded0118f",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property-level fair values, realization taxes, project cash flows, preferred claims, and common shares are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "6bf8dc5f891a117b6b8ea63a4dcacf89ba4ba1d2834626281ced4e8df0aeb4f1",
+  "issuer": {
+    "issuer_id": "PSE:CPG",
+    "name": "Century Properties Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.9720000000000001,
+      "high": 1.296,
+      "low": 0.648
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 2.16,
+    "note": "Analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B12-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "423bf43d9214c50ea96b2dd45755f3e0cda6e42ab6ceeee0d165f01ef2cbdcca",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B12-1.0",
+  "numerical_range": {
+    "high": 1.296,
+    "low": 0.648
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property-level fair values, realization taxes, project cash flows, preferred claims, and common shares are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified-property P/B screening band. This is not a peer study or a completed property RNAV.",
+    "reliability": "Low",
+    "route_reason": "Residential projects and leasing property require property-level RNAV/SOTP; P/B is a finite screen until the fair-value and common-claim bridge is reviewed."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CPG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "423bf43d9214c50e",
+      "form": "PSE quarterly financial summary",
+      "label": "CPG FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "423bf43d9214c50ea96b2dd45755f3e0cda6e42ab6ceeee0d165f01ef2cbdcca",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=189"
+    }
+  ],
+  "subsector": "Residential development and commercial leasing",
+  "ticker": "CPG",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "The financial summary reports book value, not an independently appraised property RNAV; preferred-share claims are not fully bridged."
+  ]
+}

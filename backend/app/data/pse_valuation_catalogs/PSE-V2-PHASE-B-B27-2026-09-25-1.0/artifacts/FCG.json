@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "738cde4ddaae257d9d8e1deaa91a83b2bd34fa0e9938af3e92d5152885e319f7",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Store cohorts, franchise mix, leases, restructuring, capital spending, debt and terminal economics are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-03-31",
+  "filing_published_at": null,
+  "input_hash": "56c6a5b2315986a8a406a1d69f65770673dc2b8914fd560094ec6c4519a29f76",
+  "issuer": {
+    "issuer_id": "PSE:FCG",
+    "name": "Figaro Culinary Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 1.2,
+      "high": 1.44,
+      "low": 0.96
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through March 2026, June fiscal year",
+    "metric_value_per_share": 0.12,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic FCFF, residual-income or SOTP valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-OPERATING-B16-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "89dae72aa9957cf47d757444ecefa134f185b7f6f04df4f8485cfd1e9ffef436",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B16-1.0",
+  "numerical_range": {
+    "high": 1.44,
+    "low": 0.96
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Store cohorts, franchise mix, leases, restructuring, capital spending, debt and terminal economics are not reconciled.",
+    "metric_basis": "0.12 FY2025 basic EPS + 0.08 9M FY2026 EPS - 0.08 prior 9M EPS",
+    "policy_rationale": "Reuse the finite Batch 9 operating P/E screening band for positive aligned TTM EPS; not a peer study or intrinsic FCFF/SOTP.",
+    "reliability": "Low",
+    "route_reason": "Brand/store cash flows and leases require FCFF; P/E is a finite separate screen on aligned June fiscal periods."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:FCG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "89dae72aa9957cf4",
+      "form": "PSE quarterly financial summary",
+      "label": "FCG June FY2025 and 9M FY2026 PSE financial summary",
+      "period_end": "2026-03-31",
+      "published_at": null,
+      "sha256": "89dae72aa9957cf47d757444ecefa134f185b7f6f04df4f8485cfd1e9ffef436",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=689"
+    }
+  ],
+  "subsector": "Coffee, restaurant and pizza brands",
+  "ticker": "FCG",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, capital efficiency and common-equity claims have not been fully reconciled.",
+    "FCG uses a June fiscal year; the March 2026 nine-month report is not a completed June 2026 annual result, and the PSE summary omits parent-equity attribution."
+  ]
+}

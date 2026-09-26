@@ -1,0 +1,85 @@
+{
+  "artifact_hash": "07e53b8daa901c6ea3175b2ff79dab8e300fbf4af712ad07ffb803380e74980a",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Reported interim BVPS PHP5.97 does not reconcile to parent equity PHP1.265bn / 1.149bn reported outstanding common shares; treasury or other ownership rights and operating income require review."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "0ce49e7235a27c4a18950f222820990e8e39cf44f727dfda16f424e5e721513b",
+  "issuer": {
+    "issuer_id": "PSE:PAX",
+    "name": "Paxys, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "metric_basis": "No defensible present ordinary-common per-share screen",
+    "reliability": "Unavailable",
+    "route_reason": "Investment holdings and the BPO subsidiary require attributable SOTP."
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PAX:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a2c307caf715b5ee",
+      "form": "PSE financial summary",
+      "label": "PAX FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a2c307caf715b5eeab3d709e002a2a7c0abb344205eacf6964ab0cd01f38aac2",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=194"
+    },
+    {
+      "document_id": "a2c307caf715b5ee-support-1",
+      "form": "PSE common-stock data",
+      "label": "PAX ordinary-common stock data",
+      "period_end": "2026-09-18",
+      "published_at": null,
+      "sha256": "a2c307caf715b5eeab3d709e002a2a7c0abb344205eacf6964ab0cd01f38aac2",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=194"
+    },
+    {
+      "document_id": "a2c307caf715b5ee-support-2",
+      "form": "PSE company information",
+      "label": "PAX company description and ownership",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "a2c307caf715b5eeab3d709e002a2a7c0abb344205eacf6964ab0cd01f38aac2",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=194"
+    }
+  ],
+  "subsector": "BPO and investment holding",
+  "ticker": "PAX",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "The total-equity and parent-equity bases diverge materially; no P/B result is published until the share bridge is understood."
+  ]
+}

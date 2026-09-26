@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "eb367b91795e87e9d206cebd7ce772474b37f1ca432fa62d13b77e0558554e3e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Finite-life mining values, power and property values, and the parent-only claim bridge are not yet reconciled into one attributable SOTP."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "fb6cabbe8e96eae3f1e3ccc5a08715096a99b0a1223257497cf419f7041203fd",
+  "issuer": {
+    "issuer_id": "PSE:DMC",
+    "name": "DMCI Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 1.25,
+      "high": 1.5,
+      "low": 1.0
+    },
+    "estimates": {
+      "base": 11.3375,
+      "high": 13.605,
+      "low": 9.07
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported parent book value per common share",
+    "metric_value_per_share": 9.07,
+    "note": "Transparent P/B-to-reported-NAV screen while the component-level SOTP or property RNAV remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-INCOME-HOLDCO-B03-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "d75ec0c18c8e5d26663371b1c7565945b9f094022101678f7238c5be0ff38648",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B03-1.0",
+  "numerical_range": {
+    "high": 13.605,
+    "low": 9.07
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Finite-life mining values, power and property values, and the parent-only claim bridge are not yet reconciled into one attributable SOTP.",
+    "policy_rationale": "Shared P/B-to-reported-NAV screen for an income-oriented holding company with material commodity and cyclical exposure.",
+    "reliability": "Low",
+    "reported_parent_equity_php_millions": 120410.287,
+    "route_reason": "Component SOTP remains primary; a P/B-to-reported-NAV screen provides a finite result while mining, power, property, and construction values are reconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:DMC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "d75ec0c18c8e5d26",
+      "form": "17-A",
+      "label": "DMC FY2025 annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": "2026-04-15",
+      "sha256": "d75ec0c18c8e5d26663371b1c7565945b9f094022101678f7238c5be0ff38648",
+      "source_page": null,
+      "url": "https://www.dmciholdings.com/investor-relations/financial-report"
+    }
+  ],
+  "subsector": "Diversified holding company",
+  "ticker": "DMC",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved component SOTP or property RNAV.",
+    "Reported book value is an accounting measure and may differ materially from current asset fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

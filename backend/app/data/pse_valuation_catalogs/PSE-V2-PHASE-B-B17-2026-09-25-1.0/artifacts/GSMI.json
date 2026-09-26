@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "d89ebb72874e5fd2af671b74fc9477b9979e93fb187cd298105c27c65d91ae8f",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed volume and price mix, excise trajectory, margins, reinvestment, payout, and terminal economics are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "1710dc90be94b33f86f20211fbce304705d7b55eb8f2f2fcc6b9287c497628e3",
+  "issuer": {
+    "issuer_id": "PSE:GSMI",
+    "name": "Ginebra San Miguel, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 307.7,
+      "high": 369.24,
+      "low": 246.16
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 30.77,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-MATURE-STAPLES-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "65991cf1ee053f4fc30fc16588db2f0f708ab98fdeccb477dbc8d94fd2a5f8c5",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 369.24,
+    "low": 246.16
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed volume and price mix, excise trajectory, margins, reinvestment, payout, and terminal economics are incomplete.",
+    "metric_basis": "30.30 FY2025 EPS + 15.30 1H2026 EPS - 14.83 1H2025 EPS",
+    "reliability": "Low",
+    "route_reason": "Normalized FCFF and distributions remain primary; P/E is a finite screen while brand, excise, volume, and capital-efficiency assumptions remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:GSMI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "65991cf1ee053f4f",
+      "form": "17-Q",
+      "label": "GSMI FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "65991cf1ee053f4fc30fc16588db2f0f708ab98fdeccb477dbc8d94fd2a5f8c5",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=94"
+    }
+  ],
+  "subsector": "Spirits manufacturing and distribution",
+  "ticker": "GSMI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

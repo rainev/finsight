@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "fb87603e07da97d64a6bd59075958f78722e5cdf17f38aa1fb8eec93530e1cd2",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The four operating solar plants and development projects lack a completed project-level FCFF, remaining-life, and debt-allocation bridge."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "25f936bf8517c63744a276d5a888478050c760a97365c892714685d2a6b9b799",
+  "issuer": {
+    "issuer_id": "PSE:ASLAG",
+    "name": "Raslag Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.9,
+      "high": 1.1,
+      "low": 0.7
+    },
+    "estimates": {
+      "base": 1.9800000000000002,
+      "high": 2.4200000000000004,
+      "low": 1.54
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported book value per common share",
+    "metric_value_per_share": 2.2,
+    "note": "Transparent P/B screen while the asset-level FCFF or SOTP bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-SOLAR-B04-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "195ee24cd8485ab749ac87897956ee1de7514b7ce202713a7b8f113bd9ebb185",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B04-1.0",
+  "numerical_range": {
+    "high": 2.4200000000000004,
+    "low": 1.54
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The four operating solar plants and development projects lack a completed project-level FCFF, remaining-life, and debt-allocation bridge.",
+    "policy_rationale": "P/B screen for an operating solar platform pending project-level FCFF and debt allocation.",
+    "reliability": "Low",
+    "reported_equity_php_millions": 3306.097171,
+    "route_reason": "Project FCFF remains primary; P/B provides a finite screen pending project-level cash flow and debt allocation.",
+    "source_currency": "PHP"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ASLAG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "195ee24cd8485ab7",
+      "form": "17-A",
+      "label": "ASLAG FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "195ee24cd8485ab749ac87897956ee1de7514b7ce202713a7b8f113bd9ebb185",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=694"
+    }
+  ],
+  "subsector": "Solar power generation",
+  "ticker": "ASLAG",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved asset-level intrinsic valuation.",
+    "Reported book value is an accounting measure and may differ materially from project fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study."
+  ]
+}

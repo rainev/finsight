@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "bc356a76a785cf66fe72fa03a118181680bf6f95d176a0bd0d5c07a847de581a",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Property values, healthcare cash flows, minorities, debt and parent common-equity claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "3aa01ecd5decf0fe8c719fd19ca1a9b85443dd31f136567e40ae7955397fb088",
+  "issuer": {
+    "issuer_id": "PSE:CEI",
+    "name": "Crown Equities, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.0675,
+      "high": 0.09,
+      "low": 0.045
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 0.15,
+    "note": "Finite analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B15-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f5224e354ace55436e7ac1f9f2bcb3180ea7055f6ac0b8bc5cd719d83430bfea",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B15-1.0",
+  "numerical_range": {
+    "high": 0.09,
+    "low": 0.045
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Property values, healthcare cash flows, minorities, debt and parent common-equity claims are not reconciled.",
+    "metric_basis": "PSE-reported PHP book value per share; no property fair-value adjustment",
+    "policy_rationale": "Reuse the reviewed Batch 12 diversified-property P/B screening band for positive reported BVPS; this is not a peer study or a completed property RNAV/SOTP.",
+    "reliability": "Low",
+    "route_reason": "Property and healthcare components require attributable SOTP; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CEI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f5224e354ace5543",
+      "form": "PSE quarterly financial summary",
+      "label": "CEI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f5224e354ace55436e7ac1f9f2bcb3180ea7055f6ac0b8bc5cd719d83430bfea",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=186"
+    },
+    {
+      "document_id": "f5224e354ace5543-support",
+      "form": "PSE company information",
+      "label": "CEI PSE company information and healthcare interests",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "f5224e354ace55436e7ac1f9f2bcb3180ea7055f6ac0b8bc5cd719d83430bfea",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=186"
+    }
+  ],
+  "subsector": "Property investment and healthcare services",
+  "ticker": "CEI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Reported book value is not a completed property RNAV or peer-calibrated target.",
+    "CEI mixes property and medical-services interests; rounded zero EPS is not used for this P/B screen."
+  ]
+}

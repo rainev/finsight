@@ -67,7 +67,7 @@ export function GoogleSignInButton({ onError }: { onError?: (message: string) =>
             if (!res.credential) return
             try {
               await googleLogin(res.credential)
-              navigate('/')
+              navigate('/valuation/AAPL')
             } catch (err) {
               onError?.(err instanceof Error ? err.message : 'Google sign-in failed.')
             }

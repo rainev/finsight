@@ -1,0 +1,110 @@
+{
+  "artifact_hash": "72ebc319c6c5af5e10ecc335f808dd91f077e0365fadc469e8a30634cae267c2",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Project cash flow, reserve rights, funding and class-transition details are not fully underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "d06c515659acece08bf47b65322b5d24560d2e2ef5ab4dd8621b7ba2e29e8717",
+  "issuer": {
+    "issuer_id": "PSE:ATN",
+    "name": "ATN Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.15051876,
+      "high": 0.206963295,
+      "low": 0.094074225
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.3762969006943724,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B23-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f42dec38bd13b9e30d56865605e468b6ed34aef5c40dfc48e9758fa85ca4917e",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": 0.206963295,
+    "low": 0.094074225
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Project cash flow, reserve rights, funding and class-transition details are not fully underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 6,825,055,429 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, a proven reserve appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Land, quarry and operating interests require attributable SOTP; pooled book is a separate screen.",
+    "share_bridge_type": "class_sum"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "ATN",
+    "security_id": "PSE:ATN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f42dec38bd13b9e3",
+      "form": "PSE financial summary",
+      "label": "ATN FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f42dec38bd13b9e30d56865605e468b6ed34aef5c40dfc48e9758fa85ca4917e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=56"
+    },
+    {
+      "document_id": "f42dec38bd13b9e3-support-1",
+      "form": "PSE common-stock data",
+      "label": "ATN A common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "f42dec38bd13b9e30d56865605e468b6ed34aef5c40dfc48e9758fa85ca4917e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=56&security_id=176"
+    },
+    {
+      "document_id": "f42dec38bd13b9e3-support-2",
+      "form": "PSE common-stock data",
+      "label": "ATN B common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "f42dec38bd13b9e30d56865605e468b6ed34aef5c40dfc48e9758fa85ca4917e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=56&security_id=175"
+    }
+  ],
+  "subsector": "Construction materials and assets",
+  "ticker": "ATN",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "ATN's financial year ends March 31, not December. PHP0.37 reported BVPS roughly reconciles to the 6.825bn pooled A+B outstanding shares, not the A line alone."
+  ]
+}

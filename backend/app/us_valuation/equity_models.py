@@ -22,7 +22,8 @@ _ISSUER_KEYS = (
     "cik", "ticker", "issuer_name", "filing_regime", "accounting_standard",
     "sec_sic_code", "sec_sic_label", "finsight_sector", "primary_archetype",
     "secondary_archetypes", "classification_confidence", "mapping_version",
-    "override_applied", "classification_reason", "source_accessions",
+    "override_applied", "classification_reason", "model_route_eligible",
+    "model_route_reason", "source_accessions",
 )
 
 _METHODOLOGY = {

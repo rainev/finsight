@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "1a1a69cf0ab19f0b63148417e0bf4e610c79e84e9a174fbbaacd1a0fba0b9722",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A complete attributable component valuation and parent-only cash, debt, preferred, and other-claim bridge is not yet reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "d3d0c93ed4989ee7989f337e2f340d84fd7f9ece04ee8add87ef5085c252c82b",
+  "issuer": {
+    "issuer_id": "PSE:SM",
+    "name": "SM Investments Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 1.1,
+      "high": 1.3,
+      "low": 0.9
+    },
+    "estimates": {
+      "base": 629.53,
+      "high": 743.99,
+      "low": 515.0699999999999
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported parent book value per common share",
+    "metric_value_per_share": 572.3,
+    "note": "Transparent P/B-to-reported-NAV screen while the component-level SOTP or property RNAV remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-PREMIUM-HOLDCO-B03-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "5e1d3ec6c24a2b109b1f35f6745f8e0150140b91d57a3f0d6aa119b08dd6b1b3",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B03-1.0",
+  "numerical_range": {
+    "high": 743.99,
+    "low": 515.0699999999999
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A complete attributable component valuation and parent-only cash, debt, preferred, and other-claim bridge is not yet reconciled.",
+    "policy_rationale": "Shared P/B-to-reported-NAV screen for a large, liquid holding company with diversified recurring earnings.",
+    "reliability": "Low",
+    "reported_parent_equity_php_millions": 695258.0,
+    "route_reason": "Component SOTP remains primary; a P/B-to-reported-NAV screen provides a finite result while subsidiary values and parent-only claims are reconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "5e1d3ec6c24a2b10",
+      "form": "17-A",
+      "label": "SM FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": "2026-04-24",
+      "sha256": "5e1d3ec6c24a2b109b1f35f6745f8e0150140b91d57a3f0d6aa119b08dd6b1b3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=599"
+    }
+  ],
+  "subsector": "Diversified holding company",
+  "ticker": "SM",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved component SOTP or property RNAV.",
+    "Reported book value is an accounting measure and may differ materially from current asset fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

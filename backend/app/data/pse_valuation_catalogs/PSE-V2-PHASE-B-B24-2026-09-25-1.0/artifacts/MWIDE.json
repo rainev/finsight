@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "879cb748a07576012b1ff0b725555d60635199847a8e6c75f2499edfba23ff55",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A reviewed SOTP separating construction, property, transport concessions, preferred shares, debt, and working-capital claims is incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "120f3009c67bac73b83a9b90026a977123b8e7d5a311579b5529f9e6a1342d04",
+  "issuer": {
+    "issuer_id": "PSE:MWIDE",
+    "name": "Megawide Construction Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 3.6880000000000006,
+      "high": 4.61,
+      "low": 2.766
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 4.61,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CONSTRUCTION-B07-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e8aa6e0afefb746fcacbea7f3d7ddbc08170d2da3bc00d641fdf381089935025",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B07-1.0",
+  "numerical_range": {
+    "high": 4.61,
+    "low": 2.766
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A reviewed SOTP separating construction, property, transport concessions, preferred shares, debt, and working-capital claims is incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Builder-plus-concessions SOTP remains primary; P/B is a finite screen while backlog, concessions, preferred claims, debt, and working capital remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MWIDE:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e8aa6e0afefb746f",
+      "form": "17-Q",
+      "label": "MWIDE FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e8aa6e0afefb746fcacbea7f3d7ddbc08170d2da3bc00d641fdf381089935025",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=627"
+    }
+  ],
+  "subsector": "Construction and infrastructure concessions",
+  "ticker": "MWIDE",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

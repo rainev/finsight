@@ -1,0 +1,82 @@
+{
+  "artifact_hash": "2bf5b410c6d4f9b8005f071fc1f1caf1d16dba1d6f7b25f3f31976cf52b8294d",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "3Q2025 parent equity is negative, losses persist and the common line is suspended; a positive common-equity screen is unsupported."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "b2fdf32614b69bd164fbb082e88d836529d70b650f2c8ad8a03bb5d0e2aa7ab8",
+  "issuer": {
+    "issuer_id": "PSE:I",
+    "name": "I-Remit, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B26-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "3Q2025 parent equity is negative, losses persist and the common line is suspended; a positive common-equity screen is unsupported.",
+    "metric_basis": "PHP parent equity (pesos) / 611,639,122 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Remittance operating FCFF needs a viable parent-common bridge and sustainable operating cash flow.",
+    "screen_time_basis": null,
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "I",
+    "security_id": "PSE:I:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e552ecfc9730a359",
+      "form": "PSE financial summary",
+      "label": "I reviewed PSE financial summary",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "e552ecfc9730a359a8d73f7a1a20ef7f10d9be66010918782dfd83b3edda2308",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=613"
+    },
+    {
+      "document_id": "e552ecfc9730a359-support-1",
+      "form": "PSE common-stock data",
+      "label": "I ordinary common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "e552ecfc9730a359a8d73f7a1a20ef7f10d9be66010918782dfd83b3edda2308",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=613"
+    }
+  ],
+  "subsector": "Remittance services",
+  "ticker": "I",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No current market quote or upside is published for this suspended security.",
+    "PSE 3Q2025 parent equity is negative PHP29.942m and printed BVPS is negative PHP0.05. The last traded price is stale and is not used for current upside."
+  ]
+}

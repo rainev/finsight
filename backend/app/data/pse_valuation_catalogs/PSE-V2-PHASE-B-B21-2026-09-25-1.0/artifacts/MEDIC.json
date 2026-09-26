@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "6e86e66d451dd6189622b9a67950a4e2c7b3fe3f4e199256de7175b23fe87fec",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Audited-filing reconciliation, government and private order economics, working capital, debt, capex, and terminal cash flows are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "46c670e665111b3c587a54590e0fd50ba545b736e9b61e6a82f46196a2b895b1",
+  "issuer": {
+    "issuer_id": "PSE:MEDIC",
+    "name": "Medilines Distributors Incorporated"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.425,
+      "high": 0.595,
+      "low": 0.255
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 0.85,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-FILING-REVIEW-B14-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e7ee9087363bb893857701f1316c2a132504c736a97c6891e3bdca66d99c3cf2",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B14-1.0",
+  "numerical_range": {
+    "high": 0.595,
+    "low": 0.255
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Audited-filing reconciliation, government and private order economics, working capital, debt, capex, and terminal cash flows are incomplete.",
+    "metric_basis": "reported PHP book value per share; no earnings extrapolation",
+    "policy_rationale": "Conservative finite P/B screen while reported earnings are thin and an originally delayed audited filing needs specialist review; not a peer study or intrinsic value.",
+    "reliability": "Low",
+    "route_reason": "Medical-device distribution cash flows require FCFF; reported book value provides only a finite screen while filing and earnings quality are reviewed."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MEDIC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e7ee9087363bb893",
+      "form": "PSE quarterly financial summary",
+      "label": "MEDIC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e7ee9087363bb893857701f1316c2a132504c736a97c6891e3bdca66d99c3cf2",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=687"
+    },
+    {
+      "document_id": "e7ee9087363bb893-support",
+      "form": "PSE filing-extension disclosure",
+      "label": "MEDIC FY2025 audit-filing extension disclosure",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "e7ee9087363bb893857701f1316c2a132504c736a97c6891e3bdca66d99c3cf2",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1914083"
+    }
+  ],
+  "subsector": "Medical-device distribution",
+  "ticker": "MEDIC",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, reinvestment and common-equity claims have not been reconciled.",
+    "The FY2025 audit filing was delayed; PSE summary earnings are thin and rounded, so no P/E or intrinsic estimate is inferred from them."
+  ]
+}

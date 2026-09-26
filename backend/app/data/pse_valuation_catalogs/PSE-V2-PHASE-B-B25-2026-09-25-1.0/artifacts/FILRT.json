@@ -1,0 +1,107 @@
+{
+  "artifact_hash": "7cdd1ac222bf3f8ec1f6be7eb66428658b742cabe6ceaa0afe96d27e92d23ec2",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025 operating quarters",
+  "filing_published_at": null,
+  "input_hash": "aa9320d38a1a09f3a2b7b6d362dc80c2f71a694a0f6d5a2f32c8b925f5c46dcd",
+  "issuer": {
+    "issuer_id": "PSE:FILRT",
+    "name": "Filinvest REIT Corp."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B01-1.0",
+  "numerical_range": {
+    "high": 3.4525776016411047,
+    "low": 1.5896455998936205
+  },
+  "price": null,
+  "primary_model": "sustainable_distributions",
+  "public_assumptions": {
+    "book_value_per_share_check": 7.33,
+    "current_distribution_per_share": 0.241,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "policy_version": "PSE-V2-REIT-RECOVERY-B01-1.0",
+    "reliability": "Low",
+    "route_reason": "Sustainable distributions are primary; NAV remains a separate evidence-dependent check.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.115,
+        "explicit_growth": 0.01,
+        "terminal_growth": 0.02
+      },
+      "bear": {
+        "cost_of_equity": 0.13,
+        "explicit_growth": -0.05,
+        "terminal_growth": 0.01
+      },
+      "bull": {
+        "cost_of_equity": 0.105,
+        "explicit_growth": 0.04,
+        "terminal_growth": 0.03
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 16182.748336709223,
+      "enterprise_value": null,
+      "value_per_share": 2.4824806305258953
+    },
+    "bear": {
+      "common_equity_value": 10362.552026110272,
+      "enterprise_value": null,
+      "value_per_share": 1.5896455998936205
+    },
+    "bull": {
+      "common_equity_value": 22506.59834090266,
+      "enterprise_value": null,
+      "value_per_share": 3.4525776016411047
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:FILRT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_distribution_per_share",
+        "explicit_growth",
+        "cost_of_equity",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "06a1887e4ee331eb",
+      "form": "17-A",
+      "label": "FILRT FY2025 audited-financial-statement fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "06a1887e4ee331eb6c95b21285eed03a46ed866ce51d30deb4ad61d41c51e24b",
+      "source_page": null,
+      "url": "https://www.filinvestreit.com/sites/default/files/2026-04/filrt_integrated_report_2025.pdf"
+    }
+  ],
+  "subsector": "Real estate investment trust",
+  "ticker": "FILRT",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate based on reviewed FY2025 distributions and a versioned shared REIT policy.",
+    "NAV is shown only as a reported book-value check; a property-level appraisal NAV has not been substituted or silently inferred.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

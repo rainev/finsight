@@ -1,0 +1,232 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-2.0",
+  "batch_version": "PSE-V2-PHASE-B-B02-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B02-2026-09-22-1.0",
+  "universe_version": "PSE-V2-28-B02-1.0",
+  "valuation_date": "2026-09-22",
+  "review_status": "reviewed_public_fact_receipts",
+  "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+  "frozen_tickers": ["URC", "CNPF", "MONDE", "JFC", "DNL", "PGOLD", "RRHI", "WLCON", "SEVN", "SSI"],
+  "fcff_policies": {
+    "brand_operating": {
+      "version": "PSE-V2-FCFF-BRAND-B02-1.0",
+      "forecast_years": 5,
+      "scenarios": {
+        "bear": {"growth_rate": 0.01, "roic": 0.10, "wacc": 0.13, "terminal_growth": 0.015, "terminal_roic": 0.09},
+        "base": {"growth_rate": 0.04, "roic": 0.14, "wacc": 0.115, "terminal_growth": 0.025, "terminal_roic": 0.11},
+        "bull": {"growth_rate": 0.07, "roic": 0.18, "wacc": 0.10, "terminal_growth": 0.035, "terminal_roic": 0.13}
+      },
+      "rationale": "Shared consumer-brand FCFF policy with explicit growth reinvestment and independently specified terminal ROIC."
+    },
+    "retail_operating": {
+      "version": "PSE-V2-FCFF-RETAIL-B02-1.0",
+      "forecast_years": 5,
+      "scenarios": {
+        "bear": {"growth_rate": 0.01, "roic": 0.09, "wacc": 0.135, "terminal_growth": 0.015, "terminal_roic": 0.085},
+        "base": {"growth_rate": 0.035, "roic": 0.12, "wacc": 0.12, "terminal_growth": 0.025, "terminal_roic": 0.10},
+        "bull": {"growth_rate": 0.06, "roic": 0.15, "wacc": 0.105, "terminal_growth": 0.035, "terminal_roic": 0.12}
+      },
+      "rationale": "Shared lease-aware retail FCFF policy with explicit growth reinvestment and independently specified terminal ROIC."
+    }
+  },
+  "relative_policies": {
+    "DNL": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_label": "FY2025 reported basic EPS",
+      "metric_value_per_share": 0.36,
+      "assumptions": {"low": 8.0, "base": 10.0, "high": 12.0},
+      "policy_version": "PSE-V2-MR-B02-DNL-1.0"
+    },
+    "SSI": {
+      "metric": "price_to_earnings",
+      "relation": "multiple",
+      "metric_label": "FY2025 reported basic EPS",
+      "metric_value_per_share": 0.40,
+      "assumptions": {"low": 6.0, "base": 8.0, "high": 10.0},
+      "policy_version": "PSE-V2-MR-B02-SSI-1.0"
+    }
+  },
+  "issuers": {
+    "URC": {
+      "issuer_name": "Universal Robina Corporation",
+      "subsector": "Food and beverage",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Branded operating cash flows and reinvestment economics drive enterprise value.",
+      "availability": "intrinsic_valuation",
+      "policy": "brand_operating",
+      "source": {"label": "URC FY2025 audited financial statements fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": 54, "url": "https://www.urc.com.ph/uploads/downloadables/2026/05/URC%20Definitive%20Information%20Statement%202026.pdf"},
+      "facts": {
+        "operating_cash_flow_php_millions": {"2023": 9086.944867, "2024": 18981.221689, "2025": 11273.616582},
+        "capital_expenditures_php_millions": {"2023": 8454.217169, "2024": 5976.573447, "2025": 6383.361995},
+        "normalized_fcff_proxy_php_millions": 4890.254587,
+        "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE additions",
+        "cash_php_millions": 11226.608279,
+        "debt_php_millions": 26146.155317,
+        "shares_millions": 2137.091088,
+        "minority_value_php_millions": 1487.009472,
+        "debt_includes_lease_liabilities": true
+      }
+    },
+    "CNPF": {
+      "issuer_name": "Century Pacific Food, Inc.",
+      "subsector": "Branded food manufacturing",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Branded operating cash flows and reinvestment economics drive enterprise value.",
+      "availability": "intrinsic_valuation",
+      "policy": "brand_operating",
+      "source": {"label": "CNPF FY2025 audited consolidated statements fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": 13, "url": "https://www.centurypacific.com.ph/wp-content/uploads/2026/04/04-ANNEX-C-CNPF-Consolidated-FS-2025.pdf"},
+      "facts": {
+        "operating_cash_flow_php_millions": {"2023": 8310.741282, "2024": 7995.633241, "2025": 4530.790163},
+        "capital_expenditures_php_millions": {"2023": 1516.430323, "2024": 2323.199716, "2025": 4083.463118},
+        "normalized_fcff_proxy_php_millions": 5672.433525,
+        "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE additions",
+        "cash_php_millions": 2884.541289,
+        "debt_php_millions": 9666.524186,
+        "shares_millions": 3542.258595,
+        "minority_value_php_millions": 0.0,
+        "debt_includes_lease_liabilities": true
+      }
+    },
+    "MONDE": {
+      "issuer_name": "Monde Nissin Corporation",
+      "subsector": "Branded food manufacturing",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Branded operating cash flows and reinvestment economics drive enterprise value.",
+      "availability": "intrinsic_valuation",
+      "policy": "brand_operating",
+      "source": {"label": "MONDE FY2025 annual report fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": 42, "url": "https://mondenissin.com/wp-content/uploads/2026/04/Monde-Nissin-Corporation_2025-Annual-Report-17A-with-Annexes_14April2026.pdf"},
+      "facts": {
+        "operating_cash_flow_php_millions": {"2023": 13291.0, "2024": 13037.0, "2025": 11332.0},
+        "capital_expenditures_php_millions": {"2023": 3641.0, "2024": 4823.0, "2025": 4719.0},
+        "normalized_fcff_proxy_php_millions": 8214.0,
+        "normalization_method": "median of FY2023-FY2025 operating cash flow less reported CapEx",
+        "cash_php_millions": 15398.0,
+        "debt_php_millions": 4196.0,
+        "shares_millions": 17968.611496,
+        "minority_value_php_millions": 155.574,
+        "debt_includes_lease_liabilities": true
+      }
+    },
+    "JFC": {
+      "issuer_name": "Jollibee Foods Corporation",
+      "subsector": "Restaurants and food service",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Global restaurant operating cash flows and reinvestment economics drive enterprise value.",
+      "availability": "intrinsic_valuation",
+      "policy": "brand_operating",
+      "source": {"label": "JFC FY2025 annual report fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": 76, "url": "https://bucketeer-7d3e45fd-6c25-41b2-b572-f1a987947f0e.s3.amazonaws.com/Jollibee%20Group%20AR2025_w_Hyperlinks.pdf"},
+      "facts": {
+        "operating_cash_flow_php_millions": {"2023": 37813.100, "2024": 34030.920, "2025": 36747.037},
+        "capital_expenditures_php_millions": {"2023": 11272.203, "2024": 11979.797, "2025": 15472.220},
+        "normalized_fcff_proxy_php_millions": 22051.123,
+        "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE additions",
+        "cash_php_millions": 34944.224,
+        "debt_php_millions": 139327.077,
+        "shares_millions": 1120.700644,
+        "minority_value_php_millions": 895.240,
+        "debt_includes_lease_liabilities": true
+      }
+    },
+    "DNL": {
+      "issuer_name": "D&L Industries, Inc.",
+      "subsector": "Specialty ingredients and chemicals",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Operating FCFF remains primary, but the current source period does not support a positive normalized owner-cash baseline.",
+      "availability": "market_relative_only",
+      "source": {"label": "DNL FY2025 annual report fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": 16, "url": "https://dnl.com.ph/wp-content/uploads/2026/05/2025-Annual-Report.pdf"},
+      "facts": {"eps_basic": 0.36, "intrinsic_blocker": "FY2023-FY2025 owner-cash observations do not provide a stable positive FCFF baseline after the Batangas expansion and working-capital cycle."}
+    },
+    "PGOLD": {
+      "issuer_name": "Puregold Price Club, Inc.",
+      "subsector": "Food retail",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Store economics, operating cash flow, and reinvestment drive enterprise value.",
+      "availability": "intrinsic_valuation",
+      "policy": "retail_operating",
+      "source": {"label": "PGOLD FY2025 audited financial statements fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": 12, "url": "https://corporate.puregold.com.ph/files/corporate/sec-filings/sec-20-is/2026/Puregold_Price_Club_Inc_Definitive_Information_Statement.pdf"},
+      "facts": {
+        "operating_cash_flow_php_millions": {"2023": 18739.0, "2024": 17398.0, "2025": 27641.0},
+        "capital_expenditures_php_millions": {"2023": 7632.0, "2024": 7650.0, "2025": 6091.0},
+        "normalized_fcff_proxy_php_millions": 11107.0,
+        "normalization_method": "median of FY2023-FY2025 operating cash flow less reported CapEx",
+        "cash_php_millions": 28794.619379,
+        "debt_php_millions": 61872.913066,
+        "shares_millions": 2880.137615,
+        "minority_value_php_millions": 0.0,
+        "debt_includes_lease_liabilities": true
+      }
+    },
+    "RRHI": {
+      "issuer_name": "Robinsons Retail Holdings, Inc.",
+      "subsector": "Diversified retail",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Store economics, operating cash flow, and reinvestment drive enterprise value.",
+      "availability": "intrinsic_valuation",
+      "policy": "retail_operating",
+      "source": {"label": "RRHI FY2025 audited financial statements fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": null, "url": "https://www.robinsonsretailholdings.com.ph/wp-content/uploads/2026/04/RRHI-SEC-17-A-2025-Audited-Financial-Statements.pdf"},
+      "facts": {
+        "operating_cash_flow_php_millions": {"2023": 14964.722094, "2024": 12426.703228, "2025": 14849.744050},
+        "capital_expenditures_php_millions": {"2023": 6517.046012, "2024": 4755.727422, "2025": 5594.701118},
+        "normalized_fcff_proxy_php_millions": 8447.676082,
+        "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE acquisitions",
+        "cash_php_millions": 15280.475444,
+        "debt_php_millions": 65577.407236,
+        "shares_millions": 1065.618535,
+        "minority_value_php_millions": 3261.544627,
+        "debt_includes_lease_liabilities": true
+      }
+    },
+    "WLCON": {
+      "issuer_name": "Wilcon Depot, Inc.",
+      "subsector": "Home-improvement retail",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Store economics, operating cash flow, and reinvestment drive enterprise value.",
+      "availability": "intrinsic_valuation",
+      "policy": "retail_operating",
+      "source": {"label": "WLCON FY2025 annual report fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": 57, "url": "https://investor.wilcon.com.ph/wp-content/uploads/2026/04/WLCON-2025-17A-Annual-Report-with-Exhibits-PSE-submission_1.pdf"},
+      "facts": {
+        "operating_cash_flow_php_millions": {"2023": 4993.138964, "2024": 6120.230169, "2025": 6250.302473},
+        "capital_expenditures_php_millions": {"2023": 2317.576471, "2024": 2757.338074, "2025": 2243.605136},
+        "normalized_fcff_proxy_php_millions": 3362.892095,
+        "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE additions",
+        "cash_php_millions": 2570.708527,
+        "debt_php_millions": 9800.298592,
+        "shares_millions": 4099.724116,
+        "minority_value_php_millions": 0.0,
+        "debt_includes_lease_liabilities": true,
+        "cash_includes_short_term_investments": true
+      }
+    },
+    "SEVN": {
+      "issuer_name": "Philippine Seven Corporation",
+      "subsector": "Convenience-store retail",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Store economics, operating cash flow, and reinvestment drive enterprise value.",
+      "availability": "intrinsic_valuation",
+      "policy": "retail_operating",
+      "source": {"label": "SEVN FY2025 audited financial statements fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": 13, "url": "https://www.7-eleven.com.ph/annual-reports/"},
+      "facts": {
+        "operating_cash_flow_php_millions": {"2023": 10829.562591, "2024": 12677.494396, "2025": 8158.170270},
+        "capital_expenditures_php_millions": {"2023": 3492.498229, "2024": 3930.553820, "2025": 4399.360404},
+        "normalized_fcff_proxy_php_millions": 7337.064362,
+        "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE and software additions",
+        "cash_php_millions": 10256.770647,
+        "debt_php_millions": 13995.408235,
+        "shares_millions": 1512.836566,
+        "preferred_claims_php_millions": 6.0,
+        "minority_value_php_millions": 0.0,
+        "debt_includes_lease_liabilities": true
+      }
+    },
+    "SSI": {
+      "issuer_name": "SSI Group, Inc.",
+      "subsector": "Specialty retail",
+      "primary_model": "fcff_dcf",
+      "route_reason": "Operating FCFF remains primary, but the full lease-adjusted cash-flow bridge is not reconciled for the current source period.",
+      "availability": "market_relative_only",
+      "source": {"label": "SSI FY2025 PSE annual-report fact receipt", "form": "17-A", "period_end": "2025-12-31", "source_page": null, "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1901258"},
+      "facts": {"eps_basic": 0.40, "intrinsic_blocker": "The FY2025 source package does not yet provide a reviewed lease-adjusted FCFF and capital bridge suitable for publication."}
+    }
+  }
+}

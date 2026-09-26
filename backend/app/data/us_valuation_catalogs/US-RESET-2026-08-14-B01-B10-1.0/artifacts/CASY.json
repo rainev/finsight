@@ -1,0 +1,167 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "History-backed source-bounded estimate. Ordinary business and scenario uncertainty may materially affect the range.",
+      "Model 'fcff_dcf': History-backed source-bounded estimate; ordinary scenario uncertainty remains.",
+      "Primary model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 325.711247615564,
+      "low": 325.711247615564,
+      "midpoint": 325.711247615564,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/CASY/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": []
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, confidence reasons, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-05-HISTORY-REPAIR-1.0",
+    "status": "review_required",
+    "warnings": [
+      "History-backed normalized cash-FCFF; scenario assumptions require review."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000726958",
+    "classification_confidence": 0.75,
+    "classification_reason": "Frozen Batch 05 lane with launch-first issuer review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Staples",
+    "issuer_name": "Casey's",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_staples",
+    "sec_sic_code": null,
+    "sec_sic_label": "Food Retail",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000726958-26-000046"
+    ],
+    "ticker": "CASY"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-05-HISTORY-REPAIR-1.0",
+    "sector_framework": "food_fuel_retail_normalized_cash_fcff",
+    "source_policy": "Reported facts remain private and separate from governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "History-backed source-bounded normalized cash-FCFF with a usable current claims bridge.",
+    "supporting": []
+  },
+  "models": {
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 325.711247615564,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "History-backed source-bounded estimate; ordinary scenario uncertainty remains."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_and_company_history",
+    "cash_conversion_margin": 0.03916388331171347,
+    "cash_conversion_margin_high": 0.0408352935427293,
+    "cash_conversion_margin_low": 0.029568226122471963,
+    "diluted_shares": 38213694.0,
+    "diluted_shares_high": 39145736.0,
+    "diluted_shares_low": 37281653.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "not applied",
+    "forecast_mode": "normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-05-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 5,
+    "normalization_basis": "company_history_median_and_percentiles"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "High",
+    "reasons": [],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.6451749271427734,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "History-backed source-bounded estimate. Ordinary business and scenario uncertainty may materially affect the range."
+    ]
+  },
+  "scenario_range": {
+    "base": 325.711247615564,
+    "high": 535.8519780655173,
+    "label": "assumption range, not a statistical confidence interval",
+    "low": 138.0396824852646
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0000726958-26-000046",
+    "filed_date": "2026-06-22",
+    "form": "10-K",
+    "note": "Controlling filing anchors reported inputs; forecast states are FinSight assumptions.",
+    "period_end": "2026-04-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/726958/000072695826000046/casy-20260430.htm"
+  },
+  "ticker": "CASY",
+  "valuation_date": "2026-08-14"
+}

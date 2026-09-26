@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "59993825228a5f1cc1366c6491bacf685c6019a82077cde8d2ef8a5a2f6a34d7",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Asset realizable value, ownership and parent-only claims are not established; zero revenue provides no operating cash-flow basis."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "4c4a966c126d7b5ee3c3e696701c82513d2ed0de911f74fb6af41d05a8354ad2",
+  "issuer": {
+    "issuer_id": "PSE:LODE",
+    "name": "Lodestar Investment Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.030048951,
+      "high": 0.041317307,
+      "low": 0.018780594
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 total equity per outstanding common share",
+    "metric_value_per_share": 0.07512237633333334,
+    "note": "Finite analyst book-value screen; no peer calibration or complete intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B19-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "acb3bd978ea97509ed0f459bf5df856e32f9f12dd24bb915e93d5299fa922113",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": 0.041317307,
+    "low": 0.018780594
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Asset realizable value, ownership and parent-only claims are not established; zero revenue provides no operating cash-flow basis.",
+    "metric_basis": "PHP total equity (pesos) / 3,000,000,000 outstanding common shares",
+    "policy_rationale": "Reuse the finite holding and asset-company P/B screen; not appraised NAV, proven-resource value, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Investment assets require attributable SOTP; total book per common share is only a tentative screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:LODE:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "acb3bd978ea97509",
+      "form": "PSE financial summary",
+      "label": "LODE FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "acb3bd978ea97509ed0f459bf5df856e32f9f12dd24bb915e93d5299fa922113",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=37"
+    },
+    {
+      "document_id": "acb3bd978ea97509-support-1",
+      "form": "PSE common-stock data",
+      "label": "LODE ordinary-common stock data",
+      "period_end": "2026-09-22",
+      "published_at": null,
+      "sha256": "acb3bd978ea97509ed0f459bf5df856e32f9f12dd24bb915e93d5299fa922113",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=37"
+    }
+  ],
+  "subsector": "Investment holding",
+  "ticker": "LODE",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "The interim summary prints PHP0.80 BVPS, but PHP225.37m total equity / 3bn shares is PHP0.0751. This screen uses the arithmetic total-book proxy, not the unreconciled printed figure; parent attribution remains unresolved."
+  ]
+}

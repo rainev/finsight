@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "e00ccce2126f0564fc740063c5ab84d55788d39acba8301e0aea2cfca0e184e2",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Unit margins, network capex, working capital and post-IPO capital structure are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "03f1e60d0e96c351b15fb81a03dc589ed68f53459499e8f5cf74cab8ae53d09c",
+  "issuer": {
+    "issuer_id": "PSE:TOP",
+    "name": "Top Line Business Development Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.149457144,
+      "high": 0.209240001,
+      "low": 0.089674286
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.298914287147885,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "7a12c39896a7ff5192cd817fe5cc9dbc90b1a465f04d46651c1bf371588cc334",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 0.209240001,
+    "low": 0.089674286
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Unit margins, network capex, working capital and post-IPO capital structure are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 10,742,193,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screening band while normalized FCFF, capital claims and terminal assumptions remain unreviewed; not a peer study or intrinsic model.",
+    "reliability": "Low",
+    "route_reason": "Fuel-distribution margin, working capital and expansion economics require FCFF; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:TOP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "7a12c39896a7ff51",
+      "form": "PSE financial summary",
+      "label": "TOP FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "7a12c39896a7ff5192cd817fe5cc9dbc90b1a465f04d46651c1bf371588cc334",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=706"
+    },
+    {
+      "document_id": "7a12c39896a7ff51-support-1",
+      "form": "PSE common-stock data",
+      "label": "TOP open ordinary-common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "7a12c39896a7ff5192cd817fe5cc9dbc90b1a465f04d46651c1bf371588cc334",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=706"
+    }
+  ],
+  "subsector": "Fuel distribution and retail",
+  "ticker": "TOP",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "Printed PHP0.38 BVPS does not reconcile to June parent equity / September outstanding shares (about PHP0.299); the screen uses that explicit arithmetic bridge. The PSE stock page leaves ISIN blank."
+  ]
+}

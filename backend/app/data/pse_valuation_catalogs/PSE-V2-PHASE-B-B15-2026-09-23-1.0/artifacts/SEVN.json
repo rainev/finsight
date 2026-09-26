@@ -1,0 +1,127 @@
+{
+  "artifact_hash": "fcbcc68f91ecf6489dd6e68e0bf3446c04fe9f7b86aae30ca88169fe6f064840",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "2c6e5afc4e6fc482491c47fdf4cf642c70038d984f2843804f68ec2d915d206d",
+  "issuer": {
+    "issuer_id": "PSE:SEVN",
+    "name": "Philippine Seven Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 87.73406982416627,
+    "low": 36.052491412463084
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "capital_bridge": {
+      "cash_php_millions": 10256.770647,
+      "debt_includes_lease_liabilities": true,
+      "debt_php_millions": 13995.408235,
+      "minority_value_php_millions": 0.0,
+      "nonoperating_assets_php_millions": 0.0,
+      "other_claims_php_millions": 0.0,
+      "preferred_claims_php_millions": 6.0,
+      "shares_millions": 1512.836566
+    },
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalization_method": "median of FY2023-FY2025 operating cash flow less PPE and software additions",
+    "normalized_fcff_proxy_php_millions": 7337.064362,
+    "policy_version": "PSE-V2-FCFF-RETAIL-B02-1.0",
+    "reliability": "Low",
+    "route_reason": "Store economics, operating cash flow, and reinvestment drive enterprise value.",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.035,
+        "roic": 0.12,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.1,
+        "wacc": 0.12
+      },
+      "bear": {
+        "growth_rate": 0.01,
+        "roic": 0.09,
+        "terminal_growth": 0.015,
+        "terminal_roic": 0.085,
+        "wacc": 0.135
+      },
+      "bull": {
+        "growth_rate": 0.06,
+        "roic": 0.15,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.12,
+        "wacc": 0.105
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 81874.95556813263,
+      "enterprise_value": 85619.59315613263,
+      "value_per_share": 54.12015904970705
+    },
+    "bear": {
+      "common_equity_value": 54541.52730417514,
+      "enterprise_value": 58286.16489217515,
+      "value_per_share": 36.052491412463084
+    },
+    "bull": {
+      "common_equity_value": 132727.30891399592,
+      "enterprise_value": 136471.94650199593,
+      "value_per_share": 87.73406982416627
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SEVN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "normalized_fcff",
+        "growth_rate",
+        "roic",
+        "wacc",
+        "terminal_growth",
+        "terminal_roic",
+        "capital_bridge"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "1c492986346dfc3c",
+      "form": "17-A",
+      "label": "SEVN FY2025 audited financial statements fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "1c492986346dfc3c308638cc9fae2bff08635382e64eda2b228013c2ef575bca",
+      "source_page": 13,
+      "url": "https://www.7-eleven.com.ph/annual-reports/"
+    }
+  ],
+  "subsector": "Convenience-store retail",
+  "ticker": "SEVN",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate using a three-year median owner-cash proxy rather than a full issuer forecast.",
+    "Lease liabilities are included in debt; lease principal is not separately deducted from the owner-cash proxy.",
+    "Policy bands and terminal economics remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

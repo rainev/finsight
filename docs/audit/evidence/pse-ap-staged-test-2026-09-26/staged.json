@@ -1,0 +1,7 @@
+{
+  "catalog_path": "PSE-V2-AP-SUPERVISED-2026-09-26-1.0",
+  "catalog_version": "PSE-V2-AP-SUPERVISED-2026-09-26-1.0",
+  "manifest_sha256": "1988b45dd71f3edc3dbddeb382f17506bce8ce150721964a37b293d15b920436",
+  "schema_version": "FINSIGHT-PSE-VALUATION-POINTER-1.0",
+  "status": "staged"
+}

@@ -1,0 +1,114 @@
+{
+  "artifact_hash": "1a7cdf6deb0bee9aaadd5b54a14ac4967ea337884036aa0dd6a39c2b1b18fac7",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "f12a325c9d76d909acb69a29fa8b6fe1468b00793dc751eb2e3eed7c3488eaba",
+  "issuer": {
+    "issuer_id": "PSE:EW",
+    "name": "East West Banking Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B01-1.0",
+  "numerical_range": {
+    "high": 38.90783842628291,
+    "low": 21.225182139891476
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "book_value_per_share": 36.24,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalized_roe": 0.11927332727684983,
+    "policy_version": "PSE-V2-BANK-RI-B01-1.0",
+    "reliability": "Low",
+    "route_reason": "Book capital and returns above the cost of equity drive common-equity value.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.12052,
+        "current_roe": 0.11927332727684983,
+        "payout_ratio": 0.3,
+        "terminal_growth": 0.03,
+        "terminal_roe": 0.10138232818532236
+      },
+      "bear": {
+        "cost_of_equity": 0.13552,
+        "current_roe": 0.10138232818532236,
+        "payout_ratio": 0.25,
+        "terminal_growth": 0.02,
+        "terminal_roe": 0.08945499545763738
+      },
+      "bull": {
+        "cost_of_equity": 0.11052,
+        "current_roe": 0.1312006600045348,
+        "payout_ratio": 0.35,
+        "terminal_growth": 0.04,
+        "terminal_roe": 0.11330966091300734
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 65300.2597514086,
+      "enterprise_value": null,
+      "value_per_share": 29.020471302913112
+    },
+    "bear": {
+      "common_equity_value": 47759.7311407807,
+      "enterprise_value": null,
+      "value_per_share": 21.225182139891476
+    },
+    "bull": {
+      "common_equity_value": 87548.26650065718,
+      "enterprise_value": null,
+      "value_per_share": 38.90783842628291
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:EW:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_roe",
+        "terminal_roe",
+        "cost_of_equity",
+        "payout_ratio",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "3281cc898f226f23",
+      "form": "17-A",
+      "label": "EastWest FY2025 PSE EDGE financial-report fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "3281cc898f226f23efe98d281d0b96aa53c71deef27e08ba82a2e04077b25442",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=634"
+    }
+  ],
+  "subsector": "Commercial bank",
+  "ticker": "EW",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate based on reviewed FY2025 public filing facts and a versioned shared bank policy.",
+    "Regulatory capital, asset quality, and current market multiples remain challenge checks rather than direct numerical model inputs.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

@@ -1,0 +1,24 @@
+- [US valuation bridge missing fields is authoritative](us-valuation-bridge-missing-fields-is-authoritative.md) — use the nested bridge status and missing-field list when auditing completeness.
+- [Explain valuation problems simply](explain-valuation-problems-simply.md) — translate each issue plainly and always define the denominator and selection rule behind reported counts.
+- [Valuation data within one year](valuation-data-within-one-year.md) — do not heavily penalize trustworthy company data up to 12 months old unless the business changed materially.
+- [US website publishes confirmed Batches 01–10](us-website-publishes-confirmed-batches-01-10.md) — serve the immutable 100-company batch catalog, never the loose 206-artifact folder.
+- [PSE V2 corpus blockers are authoritative](pse-v2-corpus-blockers-are-authoritative.md) — source-rich corpora remain blocked until route-specific specialist inputs complete review.
+- [PSE market-relative fallback is a separate product](pse-market-relative-fallback-is-a-separate-product.md) — publish useful relative ranges without relabeling them as specialist intrinsic values.
+- [PSE/US parity is a complete journey](pse-us-parity-is-a-complete-journey.md) — verify routing, calendar, calculator, holdings, saves, search, and return links together.
+- [PSE staged catalogs must not enter the serving root](pse-staged-catalogs-must-not-enter-serving-root.md) — keep unconfirmed candidates outside the history-scanned catalog directory.
+- [PSE company page does not prove current listing](pse-company-page-does-not-prove-current-listing.md) — cross-check PSE status/notices before freezing a listed-common batch; stale company pages can survive delisting.
+- [PSE historical batch tests follow active successors](pse-historical-batch-tests-follow-active-successors.md) — after activation, advance historical builder guards and active-list expectations without changing pinned parent hashes.
+- [PSE bulk API verification respects shared rate limit](pse-bulk-api-verification-respects-shared-rate-limit.md) — pace 168-record HTTP parity scans or respect `Retry-After`; transient 429s can affect the signed-in PH page.
+- [PSE staged UI origin must match CORS](pse-staged-ui-origin-must-match-cors.md) — use one hostname for staged browser, `CLIENT_URL` and `VITE_API_URL`; direct API success does not prove browser CORS.
+- [PSE list validates catalog once](pse-list-validates-catalog-once.md) — reuse one validated catalog per list request; repeated full validation caused a 30-second timeout and empty PH search.
+- [PSE staged HTTP tests isolate auth overrides](pse-staged-http-tests-isolate-auth-overrides.md) — clear leaked FastAPI dependency overrides before asserting real staged API authentication.
+- [PSE evidence replay verification needs a fresh process](pse-evidence-replay-verification-needs-fresh-process.md) — a closed shared psycopg pool cannot reopen in the same interpreter; verify after replay in a new process.
+- [Docker Desktop disk-full error can outlive free space](docker-desktop-disk-full-error-can-outlive-free-space.md) — preserve Docker.raw and named volumes; verify engine, container health, and stored evidence after a process-only recovery.
+- [PSE blocked artifacts need a disabled calculator and page](pse-blocked-artifacts-need-disabled-calculator-and-page.md) — contract-valid null results still need an API/UI path that exposes reasons and sources.
+- [PSE currency display rounds after removing float noise](pse-currency-display-rounds-after-removing-float-noise.md) — half-cent per-share products can display one cent low unless the formatter removes binary noise first.
+- [PSE FCFF calculators require issuer-bound bridges](pse-fcff-calculators-require-issuer-bound-bridges.md) — never let a non-AP issuer recalculate with AP's cash, debt, claims, or shares.
+- [PSE relative calculators must support sub-one book and sales multiples](pse-relative-calculators-must-support-sub-one-book-multiples.md) — let reviewed P/B and P/S controls go below 1.0 and reproduce their published baselines.
+- [PSE non-monetary share facts need a currency label](pse-nonmonetary-share-facts-need-currency-label.md) — store common-share counts with `unit_scale=shares` and `currency=N/A`; verify source scope and period.
+- [PSE reported BVPS needs a common-share bridge](pse-reported-bvps-needs-common-share-bridge.md) — reconcile equity scope, units and dated ordinary shares before a per-share screen.
+- [PSE concession distributions must end at expiry](pse-concession-distributions-must-end-at-expiry.md) — finite franchise and concession payouts get zero terminal value and no terminal-growth control.
+- [Accepted date/news swipe](date-news-swipe-approved.md) — preserve independent news dates and valuation tabs; newest-first seven-day timeline with teal/ivory styling.

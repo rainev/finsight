@@ -1,0 +1,293 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Practical source-linked cash-FCFF valuation; reliability is capped at Low.",
+      "Model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Primary model 'fcff_dcf' is review_required.",
+      "Scenario 'base' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'base' model 'fcff_dcf' is review_required.",
+      "Scenario 'bear' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'bear' model 'fcff_dcf' is review_required.",
+      "Scenario 'bull' model 'fcff_dcf': Practical cash-FCFF model; source-linked cash conversion and scenarios require review.",
+      "Scenario 'bull' model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 230.6811805685071,
+      "low": 230.6811805685071,
+      "midpoint": 230.6811805685071,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/TMUS/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "derived range, governed assumptions, warnings, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {
+      "normalized_period": {
+        "normalized_period_end": "2026-06-30",
+        "status": "pass"
+      }
+    },
+    "errors": [],
+    "policy_version": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Cash conversion and company-history scenarios are provisional; reliability is capped at Low."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001283699",
+    "classification_confidence": 0.55,
+    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "T-Mobile US, Inc.",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "override_applied": false,
+    "primary_archetype": "telecom",
+    "sec_sic_code": "4812",
+    "sec_sic_label": "Radiotelephone Communications",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001283699-26-000101",
+      "0001283699-26-000063",
+      "0001283699-26-000010",
+      "0001283699-25-000154",
+      "0001283699-25-000117",
+      "0001283699-25-000079",
+      "0001283699-25-000012",
+      "0001283699-24-000142"
+    ],
+    "ticker": "TMUS"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "sector_framework": "source-linked economic archetype with company-history scenarios",
+    "source_policy": "SEC filings filed on or before 2026-08-14; no stock price or analyst target"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "fcff_dcf",
+    "reason": "Wireless enterprise cash FCFF captures network reinvestment and reconciles current short-term debt, long-term debt, and finance leases exactly once.",
+    "supporting": []
+  },
+  "models": {
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 230.6811805685071,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+      ]
+    }
+  },
+  "primary_valuation_method": "fcff_dcf",
+  "public_assumptions": {
+    "adjusted_fcf_base": 18331825152.30026,
+    "adjusted_fcf_high": 22236263832.245785,
+    "adjusted_fcf_low": 10719320014.274061,
+    "bridge_claims_basis": "Current reported cash/investments less interest-bearing debt, preferred equity, and NCI exactly once.",
+    "diluted_shares": 1092356249.0,
+    "diluted_shares_high": 1146974061.45,
+    "diluted_shares_low": 1070509124.02,
+    "discount_calibration_type": "policy_calibrated",
+    "discount_policy_version": "US-RATES-1.0",
+    "equity_risk_premium": 0.045,
+    "forecast_mode": "consolidated_cash_fcff",
+    "forecast_policy_version": "BATCH-02-PRACTICAL-CASH-FCFF-1.0",
+    "forecast_years": 8,
+    "initial_revenue_growth": 0.05,
+    "normalized_tax_rate": 0.22926862425231104,
+    "policy_wacc": 0.08113092424551388,
+    "risk_free_effective_date": "2026-07-30",
+    "risk_free_rate": 0.0468,
+    "risk_free_source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value_month=202607&type=daily_treasury_yield_curve",
+    "terminal_growth": 0.02
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "CONSOLIDATED_MODEL_FALLBACK",
+      "CAPEX_CASH_CONVERSION_SENSITIVITY",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.9509235022964354,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Practical source-linked cash-FCFF valuation; reliability is capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 230.6811805685071,
+    "high": 450.0413367085883,
+    "label": "practical source-linked cash-FCFF range",
+    "low": 54.82950341059357
+  },
+  "scenarios": {
+    "base": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 230.6811805685071,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    },
+    "bear": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 54.82950341059357,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    },
+    "bull": {
+      "fcff_dcf": {
+        "currency": "USD",
+        "errors": [],
+        "intrinsic_value_per_share": 450.0413367085883,
+        "model": "fcff_dcf",
+        "output_type": "intrinsic_value_per_share",
+        "publication_state": "review_required",
+        "warnings": [
+          "Practical cash-FCFF model; source-linked cash conversion and scenarios require review."
+        ]
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [
+    {
+      "delta": -0.01,
+      "field": "wacc",
+      "intrinsic_value_per_share": 292.13078340946026,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "wacc",
+      "intrinsic_value_per_share": 230.6811805685071,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.01,
+      "field": "wacc",
+      "intrinsic_value_per_share": 186.52835057541665,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": -7612505138.026197,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 101.60350540460995,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 230.6811805685071,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 3904438679.945526,
+      "field": "cash_fcff",
+      "intrinsic_value_per_share": 296.88486233811136,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": -21847124.98000002,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 235.38895976378276,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 0.0,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 230.6811805685071,
+      "publication_state": "review_required"
+    },
+    {
+      "delta": 54617812.45000005,
+      "field": "diluted_shares",
+      "intrinsic_value_per_share": 219.69636244619724,
+      "publication_state": "review_required"
+    }
+  ],
+  "source_financial_statement": {
+    "accession": "0001283699-26-000101",
+    "filed_date": "2026-07-23",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing used for the cash-FCFF result.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000101/tmus-20260630.htm"
+  },
+  "ticker": "TMUS",
+  "valuation_date": "2026-08-14"
+}

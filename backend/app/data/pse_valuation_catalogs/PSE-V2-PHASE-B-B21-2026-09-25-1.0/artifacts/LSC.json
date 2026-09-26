@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "fa251398d11768b201d058abce4dce12980e9a97a473aea129791ea485869c35",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Continuing losses, near-zero equity, current-liability pressure, and unresolved fleet values and debt claims block a completed intrinsic NAV."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-12-31",
+  "filing_published_at": null,
+  "input_hash": "b09f1e1ee77914c3076377373378447a5de4999c1d1abd0f65a0fa599dc33edb",
+  "issuer": {
+    "issuer_id": "PSE:LSC",
+    "name": "Lorenzo Shipping Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.3,
+      "high": 0.4,
+      "low": 0.2
+    },
+    "estimates": {
+      "base": 0.45092394291399684,
+      "high": 0.6012319238853292,
+      "low": 0.3006159619426646
+    },
+    "metric": "price_to_sales",
+    "metric_label": "FY2025 revenue per outstanding common share",
+    "metric_value_per_share": 1.503079809713323,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PS-DISTRESSED-SHIPPING-B07-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "3da18e6217986d9216cfcf15983d1a08ba2d77a4002efcfe82c1774ba08cc0de",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B07-1.0",
+  "numerical_range": {
+    "high": 0.6012319238853292,
+    "low": 0.3006159619426646
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Continuing losses, near-zero equity, current-liability pressure, and unresolved fleet values and debt claims block a completed intrinsic NAV.",
+    "metric_basis": "PHP 1,488,310,546 revenue / 990,173,999 outstanding common shares",
+    "reliability": "Low",
+    "route_reason": "Fleet NAV and restructuring analysis remain primary; P/S provides a finite screen because earnings are negative and 1H2026 equity is near zero."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:LSC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "3da18e6217986d92",
+      "form": "17-A",
+      "label": "LSC FY2025 PSE financial report and common-share record",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "3da18e6217986d9216cfcf15983d1a08ba2d77a4002efcfe82c1774ba08cc0de",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=115"
+    }
+  ],
+  "subsector": "Domestic container shipping",
+  "ticker": "LSC",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

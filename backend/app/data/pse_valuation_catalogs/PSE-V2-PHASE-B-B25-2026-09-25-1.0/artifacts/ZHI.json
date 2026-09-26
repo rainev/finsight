@@ -1,0 +1,81 @@
+{
+  "artifact_hash": "474a254042b518785d112a6b3e18959df43427280a287747b2a81da2a3cfb983",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Parent equity is nearly exhausted, reported BVPS rounds to zero, and no operating revenue or recoverable investment NAV is established."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a568bcffbd12a8f809ea5b30a98b3b44edb807011eaae3e11e6edc4562bc9091",
+  "issuer": {
+    "issuer_id": "PSE:ZHI",
+    "name": "Zeus Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Parent equity is nearly exhausted, reported BVPS rounds to zero, and no operating revenue or recoverable investment NAV is established.",
+    "metric_basis": "PHP parent equity (pesos) / 2,737,044,807 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Investment assets and any funding obligations require an attributable SOTP, not a near-zero book extrapolation.",
+    "share_bridge_type": "single_class",
+    "trading_status": "open",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "ZHI",
+    "security_id": "PSE:ZHI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9a138dd9dcfaef1f",
+      "form": "PSE financial summary",
+      "label": "ZHI reviewed PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "9a138dd9dcfaef1f5469ce53163cfe1c12fff43b68a83af1837fe377260d8f92",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=89"
+    },
+    {
+      "document_id": "9a138dd9dcfaef1f-support-1",
+      "form": "PSE common-stock data",
+      "label": "ZHI ordinary common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "9a138dd9dcfaef1f5469ce53163cfe1c12fff43b68a83af1837fe377260d8f92",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=89"
+    }
+  ],
+  "subsector": "Investment holding",
+  "ticker": "ZHI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "PSE 1H2026 parent equity is only PHP710,546 against 2.737bn common shares, with blank revenue. A mechanically positive per-share figure below display precision is not published."
+  ]
+}

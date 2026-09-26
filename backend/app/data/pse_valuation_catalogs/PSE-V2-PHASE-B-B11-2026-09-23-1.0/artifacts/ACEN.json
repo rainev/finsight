@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "8236024ec84f81a8716343399511b17a9a29edbac89dce22ab5156c7b80ebc30",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Operating, construction, and committed renewable projects are not yet separated into attributable project values with allocated financing and parent-only claims."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "7a365bf690f36b98c73cf056cfb9f7d23b33845c82d8c8cb3dccd41c4a8cb0f7",
+  "issuer": {
+    "issuer_id": "PSE:ACEN",
+    "name": "ACEN Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 1.1,
+      "high": 1.4,
+      "low": 0.8
+    },
+    "estimates": {
+      "base": 3.5090000000000003,
+      "high": 4.465999999999999,
+      "low": 2.552
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported book value per common share",
+    "metric_value_per_share": 3.19,
+    "note": "Transparent P/B screen while the asset-level FCFF or SOTP bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-GROWTH-RENEWABLE-B04-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "8af889ae619975e95db28f346a74c8189816a3f3bdc2ee5c1fd2d60cae332885",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B04-1.0",
+  "numerical_range": {
+    "high": 4.465999999999999,
+    "low": 2.552
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Operating, construction, and committed renewable projects are not yet separated into attributable project values with allocated financing and parent-only claims.",
+    "policy_rationale": "P/B screen for a scaled renewable platform pending project-level operating, ownership, and financing reconciliation.",
+    "reliability": "Low",
+    "reported_equity_php_millions": 152127.614,
+    "route_reason": "Project SOTP/FCFF remains primary; P/B provides a finite screen pending project ownership, operating status, and financing reconciliation.",
+    "source_currency": "PHP"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ACEN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "8af889ae619975e9",
+      "form": "17-A",
+      "label": "ACEN FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "8af889ae619975e95db28f346a74c8189816a3f3bdc2ee5c1fd2d60cae332885",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=233"
+    }
+  ],
+  "subsector": "Renewable power platform",
+  "ticker": "ACEN",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved asset-level intrinsic valuation.",
+    "Reported book value is an accounting measure and may differ materially from project fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study."
+  ]
+}

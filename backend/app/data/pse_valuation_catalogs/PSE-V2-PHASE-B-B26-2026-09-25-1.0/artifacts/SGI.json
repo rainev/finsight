@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "372fc9859fb58cb446af06e500862c47883a4822948d56ea6902a9d1bd80931e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Business-unit cash flows, property value, ownership, minorities, debt and parent common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "8b4b19cdb2cbe027cf31d13df82bc72f28681d44d72744f0f0a3882a89c7f411",
+  "issuer": {
+    "issuer_id": "PSE:SGI",
+    "name": "Solid Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 2.864,
+      "high": 3.938,
+      "low": 1.79
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 7.16,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f32063baeff6ab644128a106dc012e23e624b3d58ed88db6b51a8d0af6a8ebc1",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 3.938,
+    "low": 1.79
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Business-unit cash flows, property value, ownership, minorities, debt and parent common claims are not reconciled.",
+    "metric_basis": "reported PHP7.16 BVPS; electronics and property components not separately valued",
+    "policy_rationale": "Reuse the finite Batch 17 layered-holding P/B band on the reviewed parent-common basis where available; not appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Electronics, property and other investments need attributable SOTP; P/B is a finite separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SGI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f32063baeff6ab64",
+      "form": "PSE quarterly financial summary",
+      "label": "SGI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f32063baeff6ab644128a106dc012e23e624b3d58ed88db6b51a8d0af6a8ebc1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=160"
+    },
+    {
+      "document_id": "f32063baeff6ab64-support-1",
+      "form": "PSE common-stock data",
+      "label": "SGI open ordinary-common stock data",
+      "period_end": "2026-09-18",
+      "published_at": null,
+      "sha256": "f32063baeff6ab644128a106dc012e23e624b3d58ed88db6b51a8d0af6a8ebc1",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=160"
+    }
+  ],
+  "subsector": "Electronics, property and investment holding",
+  "ticker": "SGI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "1H2026 parent income declined from the prior half-year; the P/B range is not a normalized operating forecast."
+  ]
+}

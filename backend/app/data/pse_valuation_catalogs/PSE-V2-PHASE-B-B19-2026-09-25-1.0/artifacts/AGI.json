@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "5067eaec46a90a98c2ced081983a51e58d641dc8edde199a499ab4f329f15abc",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Ownership in EMI and MEG, unlisted resort and restaurant values, parent-only debt, and minority claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "ea2b61f8970a09b0b77fe8688f28b8c9b5eeeca0d7b75170c2b822a2a190802c",
+  "issuer": {
+    "issuer_id": "PSE:AGI",
+    "name": "Alliance Global Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.6,
+      "high": 0.75,
+      "low": 0.45
+    },
+    "estimates": {
+      "base": 24.197999999999997,
+      "high": 30.2475,
+      "low": 18.1485
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 40.33,
+    "note": "Analyst screening band; no peer study or attributable SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-HOLDCO-B11-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f4d22fd95a035d5e8fa0114607f9ca9ee67a1ec8fb4e9c664af6041e6a87a103",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B11-1.0",
+  "numerical_range": {
+    "high": 30.2475,
+    "low": 18.1485
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Ownership in EMI and MEG, unlisted resort and restaurant values, parent-only debt, and minority claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified holding-company screening band. It is an analyst band, not a peer study or SOTP.",
+    "reliability": "Low",
+    "route_reason": "Attributable spirits, property, resorts, and restaurant SOTP remains primary; reported P/B is a finite screening fallback."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:AGI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f4d22fd95a035d5e",
+      "form": "PSE quarterly financial summary",
+      "label": "AGI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f4d22fd95a035d5e8fa0114607f9ca9ee67a1ec8fb4e9c664af6041e6a87a103",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=212"
+    }
+  ],
+  "subsector": "Spirits, property, resorts, and restaurants holding company",
+  "ticker": "AGI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; the component SOTP remains unresolved.",
+    "Reported P/B does not establish attributable subsidiary value, parent-only claims, or a justified holding-company discount.",
+    "AGI owns listed EMI and MEG interests; their standalone per-share screens cannot be added to AGI's screen."
+  ]
+}

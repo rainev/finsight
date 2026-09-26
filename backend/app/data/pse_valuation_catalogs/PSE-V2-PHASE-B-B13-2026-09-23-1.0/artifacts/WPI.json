@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "831dd83685c4b9ffa6a2f175a53599db2685c6137c60eca322c8ddae8853ec63",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed hotel property values, occupancy, ADR, renovation capex, subsidiary ownership, debt, and minority claims are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "1c198adf829be5d566f3a737e3664cfd3bd852d0a7c996768aae5173a1daad16",
+  "issuer": {
+    "issuer_id": "PSE:WPI",
+    "name": "Waterfront Philippines, Incorporated"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.2,
+      "high": 0.3,
+      "low": 0.1
+    },
+    "estimates": {
+      "base": 1.102,
+      "high": 1.6529999999999998,
+      "low": 0.551
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 5.51,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-HOTEL-HOLDCO-B10-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "2abce05caaa7ea6974e5b411c6d42bf30496e01700985a85064f76d5b8c4a95f",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B10-1.0",
+  "numerical_range": {
+    "high": 1.6529999999999998,
+    "low": 0.551
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed hotel property values, occupancy, ADR, renovation capex, subsidiary ownership, debt, and minority claims are incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Hotel-by-hotel RNAV/SOTP remains primary; discounted P/B provides a finite screen while operating earnings are weak."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:WPI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "2abce05caaa7ea69",
+      "form": "17-Q",
+      "label": "WPI FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "2abce05caaa7ea6974e5b411c6d42bf30496e01700985a85064f76d5b8c4a95f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=173"
+    }
+  ],
+  "subsector": "Hotel and leisure holding company",
+  "ticker": "WPI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Gaming regulation, property values, ramp economics, debt, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

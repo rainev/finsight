@@ -1,0 +1,169 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "History-backed global snacks-and-beverages cash-FCFF with short investments, current debt, long-term debt, and NCI reconciled.",
+      "Invalidate if acquisition integration, cash/investments, debt, NCI, supplier finance, or shares changes.",
+      "Calculator is calibrated to the published base; private history and bridge remain fixed.",
+      "Model 'fcff_dcf': History-backed global snacks-and-beverages cash-FCFF with short investments, current debt, long-term debt, and NCI reconciled.",
+      "Primary model 'fcff_dcf' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "bridge_quality": {
+    "blocking_fields": [],
+    "bounded_fields": [],
+    "complete": true,
+    "decision": "complete",
+    "intrinsic_value_range": {
+      "high": 67.43121877349405,
+      "low": 67.43121877349405,
+      "midpoint": 67.43121877349405,
+      "spread_limit": 0.01,
+      "spread_ratio": 0.0
+    },
+    "reason_codes": [],
+    "usable": true
+  },
+  "calculator_link": "/api/us-valuations/PEP/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": []
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "value range, reliability, warnings, historical-policy summary, assumptions and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-10-HISTORY-LAUNCH-FIRST-1.0",
+    "status": "review_required",
+    "warnings": [
+      "History-backed global snacks-and-beverages cash-FCFF with short investments, current debt, long-term debt, and NCI reconciled."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000077476",
+    "classification_confidence": 0.8,
+    "classification_reason": "Frozen Batch 10 lane plus issuer-specific history and event review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Consumer Staples",
+    "issuer_name": "PepsiCo",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "consumer_staples",
+    "sec_sic_code": null,
+    "sec_sic_label": "Soft Drinks & Non-alcoholic Beverages",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0000077476-26-000035"
+    ],
+    "ticker": "PEP"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-10-HISTORY-LAUNCH-FIRST-1.0",
+    "sector_framework": "global_snacks_beverages_cash_fcff",
+    "source_policy": "Reported facts remain private and separate from historical summaries and governed assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": null,
+    "primary": "fcff_dcf",
+    "reason": "History-backed source-bounded normalized cash-FCFF.",
+    "supporting": []
+  },
+  "models": {
+    "fcff_dcf": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 67.43121877349405,
+      "model": "fcff_dcf",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "History-backed global snacks-and-beverages cash-FCFF with short investments, current debt, long-term debt, and NCI reconciled."
+      ]
+    }
+  },
+  "primary_valuation_method": "global_snacks_beverages_cash_fcff",
+  "public_assumptions": {
+    "assumption_source_mix": "reported_and_company_history",
+    "cash_conversion_margin": 0.09257738462088036,
+    "cash_conversion_margin_high": 0.10232600823280669,
+    "cash_conversion_margin_low": 0.08758223116848798,
+    "diluted_shares": 1370000000.0,
+    "diluted_shares_high": 1404249999.9999998,
+    "diluted_shares_low": 1335750000.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "not applied",
+    "forecast_mode": "history_backed_normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-10-HISTORY-LAUNCH-FIRST-1.0",
+    "forecast_years": 5,
+    "history_policy_version": "US-COMPANY-HISTORY-1.0",
+    "history_years_used": 5,
+    "normalization_basis": "company_history_median_and_percentiles"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "High",
+    "reasons": [],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.6581164594185752,
+    "source_cap": "High"
+  },
+  "review": {
+    "confidence_grade": "source_bounded",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "History-backed global snacks-and-beverages cash-FCFF with short investments, current debt, long-term debt, and NCI reconciled.",
+      "Invalidate if acquisition integration, cash/investments, debt, NCI, supplier finance, or shares changes.",
+      "Calculator is calibrated to the published base; private history and bridge remain fixed."
+    ]
+  },
+  "scenario_range": {
+    "base": 67.43121877349405,
+    "high": 111.80881372698532,
+    "label": "assumption range, not a statistical confidence interval or recommendation",
+    "low": 31.5895523008517
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0000077476-26-000035",
+    "filed_date": "2026-07-09",
+    "form": "10-Q",
+    "note": "Controlling filing anchors current inputs; company history or explicit comparative evidence anchors normalized assumptions.",
+    "period_end": "2026-06-13",
+    "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000035/pep-20260613.htm"
+  },
+  "ticker": "PEP",
+  "valuation_date": "2026-08-14"
+}

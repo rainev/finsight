@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "a4013cb7ec471d01dbe1a00d1ead7df10df00f1a2f0cd62755dc17eebb88f9b3",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "No reported gross revenue in FY2025 or 1H2026; investment income, asset liquidity and future operations are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "e8a962823301734b58c0a7aa43278b6485b3deb5d1ec0e9775af9a01949f2b03",
+  "issuer": {
+    "issuer_id": "PSE:LMG",
+    "name": "LMG Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.087431833,
+      "high": 0.122404567,
+      "low": 0.0524591
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding common share",
+    "metric_value_per_share": 0.17486366678375276,
+    "note": "Finite analyst book-value screen; no peer calibration or complete intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B19-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "5747d94e5823674a2c026e485b3ca41b74528513e2a33e8d4fbe4eac65001008",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": 0.122404567,
+    "low": 0.0524591
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "No reported gross revenue in FY2025 or 1H2026; investment income, asset liquidity and future operations are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 1,935,441,760 outstanding common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screen while normalized cash flows and capital claims are not underwritten; not a peer study or FCFF result.",
+    "reliability": "Low",
+    "route_reason": "Current investment assets and any resumed operations need source-specific valuation; parent book is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:LMG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "5747d94e5823674a",
+      "form": "PSE financial summary",
+      "label": "LMG FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "5747d94e5823674a2c026e485b3ca41b74528513e2a33e8d4fbe4eac65001008",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=205"
+    },
+    {
+      "document_id": "5747d94e5823674a-support-1",
+      "form": "PSE common-stock data",
+      "label": "LMG ordinary-common stock data",
+      "period_end": "2026-09-16",
+      "published_at": null,
+      "sha256": "5747d94e5823674a2c026e485b3ca41b74528513e2a33e8d4fbe4eac65001008",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=205"
+    }
+  ],
+  "subsector": "Investment and chemicals",
+  "ticker": "LMG",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "The PSE company description of chemicals is not evidence of current operating sales; this is an asset-book screen only."
+  ]
+}

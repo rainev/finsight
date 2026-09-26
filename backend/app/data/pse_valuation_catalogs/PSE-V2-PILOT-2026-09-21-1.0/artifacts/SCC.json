@@ -1,0 +1,128 @@
+{
+  "artifact_hash": "91e8704db182e803ee4ec8c311d5eba111ddd54229ebd397f2352bcc238ff864",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Missing: coal_reserves, segment_ebitda; needs review: total_assets, total_equity, shares_outstanding, revenue, tax_expense, capital_expenditure, depreciation_amortization, interest_expense, closure_provision."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": null,
+  "filing_published_at": null,
+  "input_hash": "56b1ad880d30fcb678cf2b70cafcc413230d37b1007f4dab84fab0a674fe02a8",
+  "issuer": {
+    "issuer_id": "SCC",
+    "name": "Semirara Mining and Power Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PILOT-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {},
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SCC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "0e336c62f6491f99",
+      "form": "17-Q",
+      "label": "MSRD_Semirara Mining and Power Corp SEC Form 17Q Q2 2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "0e336c62f6491f991fce79b008ebcf41863a6de8036dd348560449559e0927fb",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "3ea0a4f149b7375a",
+      "form": "17-Q",
+      "label": "MSRD Semirara Mining and Power Corporation SEC 17Q_Q3 and 9M2025 signed10312025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "3ea0a4f149b7375a46179cc578440e16516e8e04e112a48b76c1fc54330b3ece",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "34807efe3b4be4c3",
+      "form": "17-A",
+      "label": "MSRD_SEC Form 17-A_Semirara Mining and Power Corp.15April2025 (1).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "34807efe3b4be4c3035f90ac39c0f519dddc2ccae0b1de54cb463ffffc362cd4",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "a7dabf33cfeb9973",
+      "form": "17-Q",
+      "label": "MSRD_Semirara Mining and Power Corp._SEC Form17Q_Q12025_04302025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "a7dabf33cfeb9973c8a6ccdc366464407f87d31058fdb60b52af593baabc2dce",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "b9c63cc9bd35c2f2",
+      "form": "17-Q",
+      "label": "MSRD_Semirara Mining and Power Corp._SEC Form 17-Q_02Aug.2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "b9c63cc9bd35c2f27fba7946eca0e5af18d09be766947642c50710b5b1d8b428",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "d809321c26f1f7cf",
+      "form": "17-Q",
+      "label": "MSRD_Semirara Mining and Power Corporation_SEC Form 17Q_Q3_30Oct2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "d809321c26f1f7cf82f4829370a19bd7d3d6299ab8236df44356db86186ad4ba",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "fb30473234d70759",
+      "form": "17-Q",
+      "label": "MSRD Semirara Mining and Power Corporation SEC17Q Q1 2026.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "fb30473234d70759969e71867745c5cce05a487e6bdcfc8c2b37ef7e0985ccbc",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "e441f64c4553d263",
+      "form": "17-A",
+      "label": "MSRD SEC Form 17A 2025 Amended Semirara Mining and Power Corporation 20April2026.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "e441f64c4553d2632997240a89b2ad8688a01c86a62e28bf15d9e71081144a1b",
+      "source_page": null,
+      "url": null
+    }
+  ],
+  "subsector": "Integrated coal and power",
+  "ticker": "SCC",
+  "valuation_date": "2026-09-21",
+  "warnings": []
+}

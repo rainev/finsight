@@ -1,0 +1,109 @@
+{
+  "artifact_hash": "ddc18cdfd4258f276cc25e0beaa3b4522289340cbc60a01dc29f28d61cf31830",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "074b6ece2fb4e5bac661974a33bb6a15f24ac9f424cec05086bbde260df9179d",
+  "issuer": {
+    "issuer_id": "PSE:RLC",
+    "name": "Robinsons Land Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B03-1.0",
+  "numerical_range": {
+    "high": 74.14232214075057,
+    "low": 50.753333811152906
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "nav_bridge": {
+      "investment_property_carrying_value_php_millions": 143427.865325,
+      "investment_property_fair_value_php_millions": 447175.301821,
+      "parent_equity_php_millions": 175531.939468,
+      "preferred_claims_php_millions": 0.0,
+      "shares_millions": 4805.105288
+    },
+    "policy_rationale": "Shared property RNAV policy that applies scenario-specific realization and tax leakage to the disclosed investment-property fair-value uplift.",
+    "policy_version": "PSE-V2-PROPERTY-RNAV-B03-1.0",
+    "reliability": "Low",
+    "route_reason": "Reported parent equity plus independently appraised investment-property fair-value uplift supports a provisional property RNAV.",
+    "scenario_assumptions": {
+      "base": {
+        "tax_leakage": 0.2,
+        "uplift_realization": 0.5
+      },
+      "bear": {
+        "tax_leakage": 0.25,
+        "uplift_realization": 0.3
+      },
+      "bull": {
+        "tax_leakage": 0.15,
+        "uplift_realization": 0.7
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 297030.91406640003,
+      "enterprise_value": null,
+      "value_per_share": 61.81569315623288
+    },
+    "bear": {
+      "common_equity_value": 243875.11267960002,
+      "enterprise_value": null,
+      "value_per_share": 50.753333811152906
+    },
+    "bull": {
+      "common_equity_value": 356261.66418312,
+      "enterprise_value": null,
+      "value_per_share": 74.14232214075057
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:RLC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "investment_property_fair_value",
+        "uplift_realization",
+        "tax_leakage",
+        "preferred_claims"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "a4cc85dcba6c4bf5",
+      "form": "17-A",
+      "label": "RLC FY2025 audited statements and investment-property fair-value disclosure",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "a4cc85dcba6c4bf5be9b73140faf52ee2e95f4658265321bea96eadb3deb2b22",
+      "source_page": 270,
+      "url": "https://robinsonsland.com/sites/default/files/2026-04/RLC_SEC%2017-A_December%2031%202025.pdf"
+    }
+  ],
+  "subsector": "Integrated property developer",
+  "ticker": "RLC",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional property RNAV using reported parent equity plus a risk-adjusted investment-property fair-value uplift.",
+    "The fair-value uplift is Level 3 or otherwise appraisal-dependent and may not be realized at the reported amount.",
+    "The model does not separately revalue development inventory, associates, or assets outside the disclosed investment-property portfolio.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

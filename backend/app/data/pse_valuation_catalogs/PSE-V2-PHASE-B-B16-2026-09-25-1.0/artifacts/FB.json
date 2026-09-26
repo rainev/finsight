@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "e734443b35571d0ed9ff5c7ab8ba8ece3aa6a93651c330c4db269de8e954d833",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reviewed segment cash flows, margins, reinvestment, debt, ownership, and minority claims are incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "4611edbd9a8886948f30467ab259b2a556dd59524868a7fd0a23bbe42c003c2a",
+  "issuer": {
+    "issuer_id": "PSE:FB",
+    "name": "San Miguel Food and Beverage, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 50.4,
+      "high": 60.480000000000004,
+      "low": 40.32
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 5.04,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-MATURE-STAPLES-B09-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "0128e202aef044f14a1cbfc77fe8a074fd5e3f9e6aa5d60973da5ab919878f5b",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B09-1.0",
+  "numerical_range": {
+    "high": 60.480000000000004,
+    "low": 40.32
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reviewed segment cash flows, margins, reinvestment, debt, ownership, and minority claims are incomplete.",
+    "metric_basis": "5.10 FY2025 EPS + 2.47 1H2026 EPS - 2.53 1H2025 EPS",
+    "reliability": "Low",
+    "route_reason": "Segment SOTP and normalized FCFF remain primary; P/E is a finite screen while food, beer, spirits, debt, and minority claims remain unreconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:FB:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "0128e202aef044f1",
+      "form": "17-Q",
+      "label": "FB FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "0128e202aef044f14a1cbfc77fe8a074fd5e3f9e6aa5d60973da5ab919878f5b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=151"
+    }
+  ],
+  "subsector": "Diversified food, beer, and spirits",
+  "ticker": "FB",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "Input costs, consumer demand, margins, working capital, and capital claims can materially change value and are not replaced by this screening band."
+  ]
+}

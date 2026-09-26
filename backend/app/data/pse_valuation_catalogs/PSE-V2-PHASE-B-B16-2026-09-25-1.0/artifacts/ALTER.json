@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "4069484b8df9ef5c86c8600014b80d8a0515cfae245b265f01adf5f26448f8c5",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The operating and development projects cannot yet be valued separately with source-bounded ownership, remaining life, cash flows, and allocated project debt."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "7d3cec844ab48e6df4ee71d08edd103f0fc1180834c9599bb1952fc8ccf9de09",
+  "issuer": {
+    "issuer_id": "PSE:ALTER",
+    "name": "Alternergy Holdings Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.75,
+      "high": 1.0,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 0.6900000000000001,
+      "high": 0.92,
+      "low": 0.46
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported book value per common share",
+    "metric_value_per_share": 0.92,
+    "note": "Transparent P/B screen while the asset-level FCFF or SOTP bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-EARLY-RENEWABLE-B04-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "9904c859c8614e0270ce636cdf6a1f9619467b14e692c69a8caed010b51d66ce",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B04-1.0",
+  "numerical_range": {
+    "high": 0.92,
+    "low": 0.46
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The operating and development projects cannot yet be valued separately with source-bounded ownership, remaining life, cash flows, and allocated project debt.",
+    "policy_rationale": "P/B screen for a development-heavy renewable platform while announced and operating projects cannot yet be valued separately.",
+    "reliability": "Low",
+    "reported_equity_php_millions": 3627.34213,
+    "route_reason": "Project SOTP/finite-life DCF remains primary; P/B provides a finite screen while project ownership and financing remain incomplete.",
+    "source_currency": "PHP"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ALTER:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "9904c859c8614e02",
+      "form": "17-A",
+      "label": "ALTER FY2025 PSE annual financial report",
+      "period_end": "2025-06-30",
+      "published_at": null,
+      "sha256": "9904c859c8614e0270ce636cdf6a1f9619467b14e692c69a8caed010b51d66ce",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=701"
+    }
+  ],
+  "subsector": "Renewable project developer",
+  "ticker": "ALTER",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved asset-level intrinsic valuation.",
+    "Reported book value is an accounting measure and may differ materially from project fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study."
+  ]
+}

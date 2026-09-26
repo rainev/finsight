@@ -1,0 +1,82 @@
+{
+  "artifact_hash": "cfe6b9a27376a47bca1b1e769cdd73ac38caae7730c520f28b7970308f2636eb",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest PSE summary ends 3Q2019 with zero revenue. Its historical PHP2.659bn parent book is not reconciled to the 2026 30bn-share common line or current asset realization, so no current per-share screen is supported."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2019-09-30",
+  "filing_published_at": null,
+  "input_hash": "95daa6028458178c8b0941960e3a793209eeefaf8874b9f74831784752c254eb",
+  "issuer": {
+    "issuer_id": "PSE:EG",
+    "name": "IP E-Game Ventures, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B28-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest PSE summary ends 3Q2019 with zero revenue. Its historical PHP2.659bn parent book is not reconciled to the 2026 30bn-share common line or current asset realization, so no current per-share screen is supported.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Gaming and investment interests need current realizable NAV and a period-matched common claim.",
+    "screen_time_basis": null,
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-25"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "EG",
+    "security_id": "PSE:EG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "8a680528fd38cfb1",
+      "form": "PSE financial summary",
+      "label": "EG reviewed PSE financial summary",
+      "period_end": "2019-09-30",
+      "published_at": null,
+      "sha256": "8a680528fd38cfb14fbe71a755088d7cfc05373872649efb4cf209ac58d1df35",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=623"
+    },
+    {
+      "document_id": "8a680528fd38cfb1-support-1",
+      "form": "PSE common-stock data",
+      "label": "EG quoted common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "8a680528fd38cfb14fbe71a755088d7cfc05373872649efb4cf209ac58d1df35",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=623&security_id=552"
+    }
+  ],
+  "subsector": "Gaming and investment holding",
+  "ticker": "EG",
+  "valuation_date": "2026-09-26",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No licensed current market quote or upside is published.",
+    "PSE 3Q2019 printed BVPS PHP0.01 is not consistent with dividing the reported parent equity by the September 2026 share count. The line is suspended and last traded in May 2017; neither stale book nor quote is promoted to value."
+  ]
+}

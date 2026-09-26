@@ -53,8 +53,8 @@
       "model": "fcff_dcf",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": null,
-      "publication_state": "withheld",
+      "intrinsic_value_per_share": 60.897074218305505,
+      "publication_state": "pass",
       "errors": [],
       "warnings": []
     },
@@ -62,8 +62,8 @@
       "model": "epv",
       "output_type": "intrinsic_value_per_share",
       "currency": "USD",
-      "intrinsic_value_per_share": null,
-      "publication_state": "withheld",
+      "intrinsic_value_per_share": 30.868621069665743,
+      "publication_state": "review_required",
       "errors": [],
       "warnings": [
         "EPV is a no-growth support value, not an independent growth forecast.",
@@ -77,8 +77,8 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld",
+        "intrinsic_value_per_share": 46.22585104713719,
+        "publication_state": "pass",
         "errors": [],
         "warnings": []
       }
@@ -88,8 +88,8 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld",
+        "intrinsic_value_per_share": 60.897074218305505,
+        "publication_state": "pass",
         "errors": [],
         "warnings": []
       }
@@ -99,8 +99,8 @@
         "model": "fcff_dcf",
         "output_type": "intrinsic_value_per_share",
         "currency": "USD",
-        "intrinsic_value_per_share": null,
-        "publication_state": "withheld",
+        "intrinsic_value_per_share": 80.55438666814914,
+        "publication_state": "review_required",
         "errors": [],
         "warnings": [
           "Present value of terminal value exceeds 75% of enterprise value."
@@ -109,9 +109,9 @@
     }
   },
   "scenario_range": {
-    "low": null,
-    "base": null,
-    "high": null,
+    "low": 46.22585104713719,
+    "base": 60.897074218305505,
+    "high": 80.55438666814914,
     "label": "assumption range, not a statistical confidence interval"
   },
   "forecast_quality": {
@@ -153,7 +153,7 @@
     }
   },
   "review": {
-    "publication_state": "withheld",
+    "publication_state": "review_required",
     "confidence_grade": "medium",
     "errors": [],
     "warnings": [
@@ -183,30 +183,17 @@
   },
   "automated_review": {
     "review_version": "US-AUTO-REVIEW-1.0",
-    "decision": "blocked",
-    "publication_state": "withheld",
+    "decision": "approved_with_caveat",
+    "publication_state": "review_required",
     "evidence_status": "complete",
-    "blocking_reasons": [
-      "hard_warning:DCF and EPV differ by more than 40%; the growth thesis requires review.",
-      "hard_warning:Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
-    ],
-    "repair_actions": [
-      "resolve_model_warnings"
-    ],
+    "blocking_reasons": [],
+    "repair_actions": [],
     "warnings": [
       "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
       "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
-      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported."
-    ],
-    "repair_attempts": [
-      {
-        "attempt": 1,
-        "status": "no_progress",
-        "blocking_reasons": [
-          "hard_warning:DCF and EPV differ by more than 40%; the growth thesis requires review.",
-          "hard_warning:Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
-        ]
-      }
+      "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+      "DCF and EPV differ by more than 40%; the growth thesis requires review.",
+      "Segment evidence is governed filing-table transcription; automated filing-specific inline-XBRL extraction is not yet implemented."
     ]
   }
 }

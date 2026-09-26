@@ -1,0 +1,117 @@
+{
+  "artifact_hash": "32348461e4b772e22fcc5669c8da4be6c5d5b1aaf7b1b2c693e7a7b0e4875f3b",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "4940c62996128df85cbfcd183f26751d1ea92e24ce8030d67ed73bccb1268551",
+  "issuer": {
+    "issuer_id": "PSE:MWC",
+    "name": "Manila Water Company, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B04-1.0",
+  "numerical_range": {
+    "high": 23.44202931005598,
+    "low": 12.083097841919663
+  },
+  "price": null,
+  "primary_model": "sustainable_distributions",
+  "public_assumptions": {
+    "current_distribution_per_share": 1.772,
+    "distribution_derivation": "FY2025 regular common dividend; the PHP0.254 special dividend is excluded",
+    "expiry_date": "2047-01-21",
+    "finite_life_years": 20,
+    "forecast_years": 20,
+    "policy_rationale": "Finite-life common-distribution policy ending at the documented franchise or concession expiry with no terminal value.",
+    "policy_version": "PSE-V2-DIST-REGULATED-B04-1.0",
+    "reliability": "Low",
+    "route_reason": "A reviewed common payout and extended East Zone concession support a finite-life distribution valuation without value beyond January 2047.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.11,
+        "explicit_growth": 0.025
+      },
+      "bear": {
+        "cost_of_equity": 0.135,
+        "explicit_growth": 0.0
+      },
+      "bull": {
+        "cost_of_equity": 0.09,
+        "explicit_growth": 0.045
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 44328.47577623199,
+      "enterprise_value": null,
+      "value_per_share": 17.025269694732497
+    },
+    "bear": {
+      "common_equity_value": 31460.606474451077,
+      "enterprise_value": null,
+      "value_per_share": 12.083097841919663
+    },
+    "bull": {
+      "common_equity_value": 61035.71027353785,
+      "enterprise_value": null,
+      "value_per_share": 23.44202931005598
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:MWC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_distribution_per_share",
+        "explicit_growth",
+        "cost_of_equity",
+        "documented_expiry"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "cf68e24439b60088",
+      "form": "17-A",
+      "label": "MWC FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "cf68e24439b60088152d4930899be20f0219c0992f5952627de5127299019abd",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=270"
+    },
+    {
+      "document_id": "a94c043f09e042e2",
+      "form": "17-C",
+      "label": "MWC FY2025 common dividend declaration",
+      "period_end": "2025-12-31",
+      "published_at": "2026-02-27",
+      "sha256": "a94c043f09e042e2547c57d88a23847fed5b95818f4bc6f2d3b72a507f7437a5",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1873134"
+    }
+  ],
+  "subsector": "Regulated water utility",
+  "ticker": "MWC",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional common-distribution valuation; it is not a substitute for the unresolved asset-level or regulated FCFF model.",
+    "The current payout and growth policy remain Low-reliability analyst assumptions pending a real filing refresh.",
+    "The source hashes bind reviewed fact receipts; remote filings are referenced but not redistributed in the candidate catalog.",
+    "No terminal value is assigned beyond the documented franchise or concession expiry."
+  ]
+}

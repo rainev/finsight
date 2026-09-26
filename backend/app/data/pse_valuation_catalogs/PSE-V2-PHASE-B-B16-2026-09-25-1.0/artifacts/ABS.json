@@ -1,0 +1,86 @@
+{
+  "artifact_hash": "81158e777c02747148316305d103b856eb1ec559e1717fbdcea213f9dba41e6f",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Continuing losses, negative 1H2026 equity, content and real-estate value, and the 2026 share issuance require a refreshed post-money SOTP."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025 and latest review",
+  "filing_published_at": null,
+  "input_hash": "c8043221990f8499b7e2afae308025e24d1cb90b94d173b50cd987547fed3b94",
+  "issuer": {
+    "issuer_id": "PSE:ABS",
+    "name": "ABS-CBN Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 3.1160477679936034,
+      "high": 4.3624668751910445,
+      "low": 1.8696286607961619
+    },
+    "metric": "price_to_sales",
+    "metric_label": "FY2025 revenue per post-recapitalization common share",
+    "metric_value_per_share": 6.232095535987207,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PS-RESTRUCTURING-B06-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "ac9a09c86e1acf9fd150a7cb52502cb30de8f24d81c6a4010db8477727a71baa",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B06-1.0",
+  "numerical_range": {
+    "high": 4.3624668751910445,
+    "low": 1.8696286607961619
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Continuing losses, negative 1H2026 equity, content and real-estate value, and the 2026 share issuance require a refreshed post-money SOTP.",
+    "reliability": "Low",
+    "route_reason": "NAV/SOTP remains primary; P/S provides a finite diluted screen during restructuring."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ABS:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ac9a09c86e1acf9f",
+      "form": "17-C",
+      "label": "ABS FY2025 PSE financial report and 2026 recapitalization review",
+      "period_end": "2026-09-04",
+      "published_at": null,
+      "sha256": "ac9a09c86e1acf9fd150a7cb52502cb30de8f24d81c6a4010db8477727a71baa",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1965658"
+    }
+  ],
+  "subsector": "Media and entertainment",
+  "ticker": "ABS",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

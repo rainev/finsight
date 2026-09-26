@@ -1,0 +1,138 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-8.0",
+  "batch_version": "PSE-V2-PHASE-B-B08-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B08-2026-09-23-1.0",
+  "universe_version": "PSE-V2-88-B08-1.0",
+  "valuation_date": "2026-09-23",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["NIKL", "PX", "APX", "FNI", "AT", "MARC", "OGP", "PCOR", "PXP", "OV"],
+  "policies": {
+    "producing_miner_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 6.0, "base": 8.0, "high": 10.0}, "version": "PSE-V2-PE-PRODUCING-MINER-B08-1.0"},
+    "growth_miner_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 8.0, "base": 10.0, "high": 12.0}, "version": "PSE-V2-PE-GROWTH-MINER-B08-1.0"},
+    "small_miner_pe": {"metric": "price_to_earnings", "relation": "multiple", "assumptions": {"low": 5.0, "base": 7.0, "high": 9.0}, "version": "PSE-V2-PE-SMALL-MINER-B08-1.0"},
+    "development_miner_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.8, "base": 1.0, "high": 1.2}, "version": "PSE-V2-PB-DEVELOPMENT-MINER-B08-1.0"},
+    "cyclical_resource_pb": {"metric": "price_to_book", "relation": "multiple", "assumptions": {"low": 0.6, "base": 0.8, "high": 1.0}, "version": "PSE-V2-PB-CYCLICAL-RESOURCE-B08-1.0"}
+  },
+  "issuers": {
+    "NIKL": {
+      "issuer_name": "Nickel Asia Corporation",
+      "subsector": "Nickel mining and renewable interests",
+      "primary_model": "sotp",
+      "policy": "producing_miner_pe",
+      "source": {"label": "NIKL FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=625"},
+      "metric_value_per_share": 0.59,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "0.45 FY2025 EPS + 0.29 1H2026 EPS - 0.15 1H2025 EPS", "original_value": 0.59, "original_currency": "PHP", "normalized_value": 0.59, "normalized_currency": "PHP"},
+      "route_reason": "Reserve-based mine NAV plus renewable SOTP remains primary; P/E is a finite screen while mine plans, reserves, costs, ownership, and energy claims remain unreconciled.",
+      "intrinsic_blocker": "Reviewed life-of-mine schedules, reserve grades, costs, commodity decks, renewable values, debt, and minority claims are incomplete."
+    },
+    "PX": {
+      "issuer_name": "Philex Mining Corporation",
+      "subsector": "Copper and gold mining",
+      "primary_model": "nav_sotp",
+      "policy": "development_miner_pb",
+      "source": {"label": "PX FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=137"},
+      "metric_value_per_share": 5.70,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 5.70, "original_currency": "PHP", "normalized_value": 5.70, "normalized_currency": "PHP"},
+      "route_reason": "Padcal and Silangan reserve NAV/SOTP remains primary; P/B provides a finite screen while 1H2026 earnings are negative and project funding remains material.",
+      "intrinsic_blocker": "Reviewed reserve schedules, mine lives, Silangan funding and ramp, commodity decks, costs, debt, and closure claims are incomplete."
+    },
+    "APX": {
+      "issuer_name": "Apex Mining Co., Inc.",
+      "subsector": "Gold and silver mining",
+      "primary_model": "finite_life_dcf",
+      "policy": "producing_miner_pe",
+      "source": {"label": "APX FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=178"},
+      "metric_value_per_share": 1.74,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "1.35 FY2025 EPS + 0.95 1H2026 EPS - 0.56 1H2025 EPS", "original_value": 1.74, "original_currency": "PHP", "normalized_value": 1.74, "normalized_currency": "PHP"},
+      "route_reason": "Life-of-mine DCF remains primary; P/E is a finite screen while reserve depletion, grades, AISC, capex, and reclamation remain unreconciled.",
+      "intrinsic_blocker": "Reviewed reserves, production schedules, grades, AISC, sustaining capex, commodity decks, and closure obligations are incomplete."
+    },
+    "FNI": {
+      "issuer_name": "Global Ferronickel Holdings, Inc.",
+      "subsector": "Nickel mining and diversified industrial interests",
+      "primary_model": "sotp",
+      "policy": "producing_miner_pe",
+      "source": {"label": "FNI FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=224"},
+      "metric_value_per_share": 0.40,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "0.28 FY2025 EPS + 0.24 1H2026 EPS - 0.12 1H2025 EPS", "original_value": 0.40, "original_currency": "PHP", "normalized_value": 0.40, "normalized_currency": "PHP"},
+      "route_reason": "Mining NAV plus industrial and logistics SOTP remains primary; P/E is a finite screen while reserves, costs, ownership, and non-mining claims remain unreconciled.",
+      "intrinsic_blocker": "Reviewed mine plans, reserves, grades, costs, commodity decks, industrial subsidiaries, debt, and minority claims are incomplete."
+    },
+    "AT": {
+      "issuer_name": "Atlas Consolidated Mining and Development Corporation",
+      "subsector": "Copper and gold mining",
+      "primary_model": "finite_life_dcf",
+      "policy": "cyclical_resource_pb",
+      "source": {"label": "AT FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=34"},
+      "metric_value_per_share": 14.73,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 14.73, "original_currency": "PHP", "normalized_value": 14.73, "normalized_currency": "PHP"},
+      "route_reason": "Life-of-mine DCF remains primary; P/B provides a finite cyclical screen after a sharp earnings turnaround.",
+      "intrinsic_blocker": "Reviewed reserve depletion, grades, production, costs, commodity decks, debt, and reclamation obligations are incomplete."
+    },
+    "MARC": {
+      "issuer_name": "Marcventures Holdings, Inc.",
+      "subsector": "Nickel mining holding company",
+      "primary_model": "nav_sotp",
+      "policy": "small_miner_pe",
+      "source": {"label": "MARC FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=175"},
+      "metric_value_per_share": 0.23,
+      "metric_label": "TTM basic EPS through 1H2026",
+      "normalization": {"formula": "0.16 FY2025 EPS + 0.12 1H2026 EPS - 0.05 1H2025 EPS", "original_value": 0.23, "original_currency": "PHP", "normalized_value": 0.23, "normalized_currency": "PHP"},
+      "route_reason": "Risked mining NAV/SOTP remains primary; P/E is a finite small-company screen while reserve, permitting, subsidiary, and commodity assumptions remain incomplete.",
+      "intrinsic_blocker": "Reviewed reserve schedules, permitting, mine lives, costs, commodity decks, subsidiary ownership, and closure claims are incomplete."
+    },
+    "OGP": {
+      "issuer_name": "OceanaGold (Philippines), Inc.",
+      "subsector": "Gold and copper mining",
+      "primary_model": "finite_life_dcf",
+      "policy": "growth_miner_pe",
+      "source": {"label": "OGP FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "USD", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=704"},
+      "metric_value_per_share": 3.13995,
+      "metric_label": "TTM basic EPS converted to PHP at the 2026-09-22 BSP reference rate",
+      "normalization": {"formula": "(0.03 + 0.03 - 0.01) USD/share x 62.799 PHP/USD", "original_value": 0.05, "original_currency": "USD", "fx_rate": 62.799, "fx_rate_date": "2026-09-22", "fx_source_url": "https://www.bsp.gov.ph/Statistics/sdds/sdds.aspx", "normalized_value": 3.13995, "normalized_currency": "PHP"},
+      "route_reason": "Didipio life-of-mine DCF remains primary; P/E is a finite screen while FTAA sharing, reserves, grades, costs, capex, and closure obligations remain unreconciled.",
+      "intrinsic_blocker": "Reviewed reserves, production schedules, FTAA sharing, AISC, sustaining capex, commodity decks, and closure obligations are incomplete."
+    },
+    "PCOR": {
+      "issuer_name": "Petron Corporation",
+      "subsector": "Downstream refining and fuel marketing",
+      "primary_model": "fcff_dcf",
+      "policy": "cyclical_resource_pb",
+      "source": {"label": "PCOR FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=136"},
+      "metric_value_per_share": 3.68,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 3.68, "original_currency": "PHP", "normalized_value": 3.68, "normalized_currency": "PHP"},
+      "route_reason": "Normalized downstream FCFF remains primary; P/B provides a finite screen while refining margins, inventory effects, debt, leases, and preferred claims remain unreconciled.",
+      "intrinsic_blocker": "A reviewed FCFF bridge with mid-cycle refining margins, throughput, inventory normalization, debt, leases, and all preferred-share claims is incomplete."
+    },
+    "PXP": {
+      "issuer_name": "PXP Energy Corporation",
+      "subsector": "Upstream oil and gas exploration",
+      "primary_model": "nav_sotp",
+      "policy": "cyclical_resource_pb",
+      "source": {"label": "PXP FY2025 and 1H2026 PSE financial report", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=628"},
+      "metric_value_per_share": 1.08,
+      "metric_label": "1H2026 reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 1.08, "original_currency": "PHP", "normalized_value": 1.08, "normalized_currency": "PHP"},
+      "route_reason": "Risked option/reserve NAV remains primary; P/B provides a finite screen while earnings are negative and resource commercialization is unresolved.",
+      "intrinsic_blocker": "Reviewed recoverable resources, ownership, development probability, timing, capex, fiscal terms, and political risk adjustments are incomplete."
+    },
+    "OV": {
+      "issuer_name": "The Philodrill Corporation",
+      "subsector": "Upstream petroleum interests",
+      "primary_model": "nav_sotp",
+      "policy": "cyclical_resource_pb",
+      "source": {"label": "OV FY2025 and 1H2026 PSE financial report and common-share record", "form": "17-Q", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=45", "supporting_url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=45"},
+      "metric_value_per_share": 0.012917331784995456,
+      "metric_label": "1H2026 parent equity per outstanding common share",
+      "normalization": {"formula": "PHP 2,478,433,018 parent equity / 191,868,805,358 outstanding common shares", "original_value": 0.012917331784995456, "original_currency": "PHP", "normalized_value": 0.012917331784995456, "normalized_currency": "PHP"},
+      "route_reason": "Risked reserve and investment SOTP remains primary; P/B provides a finite screen because rounded reported per-share metrics obscure the small absolute value.",
+      "intrinsic_blocker": "Reviewed reserves, participating interests, production economics, new service-contract work programs, investment values, and risk adjustments are incomplete."
+    }
+  }
+}

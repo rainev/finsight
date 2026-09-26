@@ -1,0 +1,885 @@
+{
+  "artifact_count": 100,
+  "artifact_tree_sha256": "f02e62d3f76ff78d09a70ff2a19301f6166cb6d9793e2ef153bbd23695a65faa",
+  "availability_counts": {
+    "available": 45,
+    "conditional_estimate": 51,
+    "not_available": 4
+  },
+  "catalog_kind": "reset",
+  "catalog_version": "US-RESET-2026-08-14-B01-B10-1.0",
+  "created_at": "2026-08-26",
+  "entries": [
+    {
+      "artifact_sha256": "babf83cf120857b09a645ba9daf6151fcb6f3898848962f412c26809adf49df9",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0000320193",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "AAPL"
+    },
+    {
+      "artifact_sha256": "4f7a421710cab73779686ede15b52791b59f8a8428ba62b15824f6a77872bd0c",
+      "availability_type": "conditional_estimate",
+      "batch": 8,
+      "cik": "0001559720",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "ABNB"
+    },
+    {
+      "artifact_sha256": "15a7c9c32146dc12a917417186f4fa92835ff3d88c78dee9d6217d4c1f52ce63",
+      "availability_type": "conditional_estimate",
+      "batch": 9,
+      "cik": "0000007084",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "ADM"
+    },
+    {
+      "artifact_sha256": "38a8dd8782da605c230575cad5719136b8e856181475f39534257aa49d60f43a",
+      "availability_type": "conditional_estimate",
+      "batch": 6,
+      "cik": "0001018724",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "AMZN"
+    },
+    {
+      "artifact_sha256": "c279c555043e94f0e6bdc4106475f56d8f3e706280cda2fd7dc0286ef10112af",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0001596532",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "ANET"
+    },
+    {
+      "artifact_sha256": "0d00cbed366c6fc447f4d8b0c2b8ce62608f661df608514cb6c2926e5f04df8e",
+      "availability_type": "conditional_estimate",
+      "batch": 3,
+      "cik": "0001751008",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "APP"
+    },
+    {
+      "artifact_sha256": "cc5bc67e2deb5909fe7bb99ad467faf9781054972a0f62246e2fa5d1f30736c3",
+      "availability_type": "conditional_estimate",
+      "batch": 8,
+      "cik": "0001521332",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "APTV"
+    },
+    {
+      "artifact_sha256": "867e17fb0b7f1e9e46ab4f51d67547b47251cc7ea7b542874e9c7a4c531954a1",
+      "availability_type": "available",
+      "batch": 5,
+      "cik": "0000866787",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "AZO"
+    },
+    {
+      "artifact_sha256": "7b06602b8c9db3e7f886f6c9cc4dc90b1af7847200dbfac575804ae133415c9a",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0000070858",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "BAC"
+    },
+    {
+      "artifact_sha256": "bc2b63fcff15b3493a8490eb51e4a87bdb7847be33d0bec0401dc88da34b2194",
+      "availability_type": "available",
+      "batch": 6,
+      "cik": "0000764478",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "BBY"
+    },
+    {
+      "artifact_sha256": "a2fc7c806ad1e9458333aa2e3d98efdfc14823b4a16d19728e11273eee86858e",
+      "availability_type": "available",
+      "batch": 9,
+      "cik": "0000014693",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "BF.B"
+    },
+    {
+      "artifact_sha256": "37acd7f633e96eb9ca7cf9fc5b48c15311f31e0b1266533444aad833442d7538",
+      "availability_type": "conditional_estimate",
+      "batch": 7,
+      "cik": "0001075531",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "BKNG"
+    },
+    {
+      "artifact_sha256": "891e5c6a69924b45a9c95b22734113553232e91834f523d3bd2f9e6e2abe06f0",
+      "availability_type": "available",
+      "batch": 5,
+      "cik": "0000726958",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "CASY"
+    },
+    {
+      "artifact_sha256": "2b5b1838b0bdd2da9b62f32eaac698208496369b24912daf7d63b7daa5187f8c",
+      "availability_type": "conditional_estimate",
+      "batch": 5,
+      "cik": "0000815097",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "CCL"
+    },
+    {
+      "artifact_sha256": "8b51d079252ded867a6e162751e018e66f54bad71f2fcf5b8cbd3350f82dfadc",
+      "availability_type": "conditional_estimate",
+      "batch": 2,
+      "cik": "0001091667",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "CHTR"
+    },
+    {
+      "artifact_sha256": "20e25e470e86075bc875a271655c2bdd169759a0ac6dca6e776089b1ed74be2c",
+      "availability_type": "available",
+      "batch": 9,
+      "cik": "0000021665",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "CL"
+    },
+    {
+      "artifact_sha256": "671c499752c6e91495ee4bb4499d5fa85092ab36692d57bb4111bc2dca4224a0",
+      "availability_type": "conditional_estimate",
+      "batch": 9,
+      "cik": "0000021076",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "CLX"
+    },
+    {
+      "artifact_sha256": "30866d71d4d901723f0c023c786df60e0f274b75740e811235901879bf957555",
+      "availability_type": "conditional_estimate",
+      "batch": 2,
+      "cik": "0001166691",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "CMCSA"
+    },
+    {
+      "artifact_sha256": "e23dd4bdebc83fc5021b10fc13af59e0ee40de1a4cbbf2cc661e12dac7ba6615",
+      "availability_type": "available",
+      "batch": 6,
+      "cik": "0001058090",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "CMG"
+    },
+    {
+      "artifact_sha256": "cf67b1b3fd28e5217267aa9f6bb5ff8aa2f92d85c23e14296585c7599daf138a",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0001108524",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "CRM"
+    },
+    {
+      "artifact_sha256": "763d23cb524aba5b1159807ec1455aa844ec1b910c9e16cd7301ede93849b3ca",
+      "availability_type": "conditional_estimate",
+      "batch": 8,
+      "cik": "0001690820",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "CVNA"
+    },
+    {
+      "artifact_sha256": "7b36d0244e157af090aea161a58a0689899b15d30776b28ef38b7d20e70557b9",
+      "availability_type": "conditional_estimate",
+      "batch": 8,
+      "cik": "0001792789",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "DASH"
+    },
+    {
+      "artifact_sha256": "f2dbc6f78f8d09c19861fc5e5a77afac360b2a8b5233689ff33931c389d272d8",
+      "availability_type": "available",
+      "batch": 6,
+      "cik": "0000910521",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "DECK"
+    },
+    {
+      "artifact_sha256": "a7278852459510f6d49ddfb7e3bef15990c9be0c51fb898a5e18ea1b9e98791f",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0001571996",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "DELL"
+    },
+    {
+      "artifact_sha256": "e0f8719ee76b4c76a80199b4e373d7f320dc07cedf34f12d2539deed2ae66524",
+      "availability_type": "conditional_estimate",
+      "batch": 9,
+      "cik": "0000029534",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "DG"
+    },
+    {
+      "artifact_sha256": "5c0cb7061a9c1a3f81dcc8d6db25d1b163e376885f661d7ad7861186ef1f9900",
+      "availability_type": "conditional_estimate",
+      "batch": 5,
+      "cik": "0000882184",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "DHI"
+    },
+    {
+      "artifact_sha256": "c6d1321391d015d7d221411500236f390c6c305745dfe0c8e0aeaaebaf3b8c2d",
+      "availability_type": "available",
+      "batch": 3,
+      "cik": "0001744489",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "DIS"
+    },
+    {
+      "artifact_sha256": "dc458e1e0cebd14cc81b672b8e93df6051c2d06cf4038452a5bb9f92078bb001",
+      "availability_type": "available",
+      "batch": 7,
+      "cik": "0001286681",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "DPZ"
+    },
+    {
+      "artifact_sha256": "e2b21f249508f1296b2c127d67794ba9b37900e84fd61a4259a5a994bb681dfb",
+      "availability_type": "available",
+      "batch": 6,
+      "cik": "0000940944",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "DRI"
+    },
+    {
+      "artifact_sha256": "c5a7d42f109cd0347b89276a505ce4deb46c06cb2f749cb54704808faf397835",
+      "availability_type": "available",
+      "batch": 7,
+      "cik": "0001065088",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "EBAY"
+    },
+    {
+      "artifact_sha256": "929653b7daba01e40260b323de368c24f7b5e1bd6b863f7d5d9076f9c28ae53b",
+      "availability_type": "not_available",
+      "batch": 3,
+      "cik": "0001415404",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "ECHO"
+    },
+    {
+      "artifact_sha256": "f4b8056325d1286edaffb933a46db825a2696a1366d3de6f986ed68018f3578a",
+      "availability_type": "conditional_estimate",
+      "batch": 7,
+      "cik": "0001001250",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "EL"
+    },
+    {
+      "artifact_sha256": "c3d1b5f0eaee11774abe16c19e332aaddff8a87544e130747fb82d81403d77e8",
+      "availability_type": "conditional_estimate",
+      "batch": 7,
+      "cik": "0001324424",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "EXPE"
+    },
+    {
+      "artifact_sha256": "9d7bac68bd2c388d4136ccea9035b9e18bc10c365633598771bd93736a7bc60d",
+      "availability_type": "conditional_estimate",
+      "batch": 4,
+      "cik": "0000037996",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "F"
+    },
+    {
+      "artifact_sha256": "528a6023b8ecc1b9b83212bd3eedf34f7ac93a4a01a0b7c4e971a73f0f1395b7",
+      "availability_type": "conditional_estimate",
+      "batch": 3,
+      "cik": "0001754301",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "FOXA"
+    },
+    {
+      "artifact_sha256": "cb3e5f91af50afe7826a5e0cf70e64e57a3a6e7a252d735ab9e54ecac19ddd1b",
+      "availability_type": "conditional_estimate",
+      "batch": 9,
+      "cik": "0000040704",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "GIS"
+    },
+    {
+      "artifact_sha256": "4cd297663811730688a2e0a2f71311af19107b299360c080d4ea417c42c7b03e",
+      "availability_type": "conditional_estimate",
+      "batch": 8,
+      "cik": "0001467858",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "GM"
+    },
+    {
+      "artifact_sha256": "484eda5cf7954dc3f2300a6f5fb582ef0bd27889b5a2569b5f191cf7b5b5711c",
+      "availability_type": "conditional_estimate",
+      "batch": 3,
+      "cik": "0001652044",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "GOOGL"
+    },
+    {
+      "artifact_sha256": "a1ca57659b3934e26c2e2e05a03f69ed2ddcc62199aaf2974ab9f7b027af19f0",
+      "availability_type": "conditional_estimate",
+      "batch": 4,
+      "cik": "0000040987",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "GPC"
+    },
+    {
+      "artifact_sha256": "2356aa6d3305958936f98142e1d09ec7f7a64be75cdd0715ff4335b28108e585",
+      "availability_type": "available",
+      "batch": 7,
+      "cik": "0001121788",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "GRMN"
+    },
+    {
+      "artifact_sha256": "12c3f787fee501505cf444b42025d7e51b10814b0010d6545def308a6fb389a6",
+      "availability_type": "conditional_estimate",
+      "batch": 4,
+      "cik": "0000046080",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "HAS"
+    },
+    {
+      "artifact_sha256": "c9a34f73fbccac29ae024df47606ae820feab57e0c7168f3e770f241e0336b0e",
+      "availability_type": "available",
+      "batch": 4,
+      "cik": "0000354950",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "HD"
+    },
+    {
+      "artifact_sha256": "b2f8d4079c86d705cb142ec820822e5a4670048f3d1ed81faf050df04ce5c5aa",
+      "availability_type": "available",
+      "batch": 8,
+      "cik": "0001585689",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "HLT"
+    },
+    {
+      "artifact_sha256": "8a2290ea6de4116651a09704fc63291d7c92bc4455170b4662a8eab0db63ccb3",
+      "availability_type": "available",
+      "batch": 10,
+      "cik": "0000048465",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "HRL"
+    },
+    {
+      "artifact_sha256": "8532d90c37cc676b7275cc27f9c1a6c27415d22427e4a242b8d83fcaa8be3a62",
+      "availability_type": "available",
+      "batch": 10,
+      "cik": "0000047111",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "HSY"
+    },
+    {
+      "artifact_sha256": "753a72e791732d4290ed10913e86a01aaf036ba6e41ee6cc4d8429d51bc01d54",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0000019617",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "JPM"
+    },
+    {
+      "artifact_sha256": "6e2df7f0d4cc9782955285ab461eba19e50b30557fff756c257da71fad230618",
+      "availability_type": "conditional_estimate",
+      "batch": 8,
+      "cik": "0001418135",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "KDP"
+    },
+    {
+      "artifact_sha256": "ad432c449cda504f01c3b442a29fac8c4c6e0f8f4d97733868ea3a65e3ea2d51",
+      "availability_type": "conditional_estimate",
+      "batch": 10,
+      "cik": "0000055785",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "KMB"
+    },
+    {
+      "artifact_sha256": "37faaf50a43084729a1c7ee81e8908c37d45e6ce4d22bcfa0771fabc5260aa04",
+      "availability_type": "conditional_estimate",
+      "batch": 9,
+      "cik": "0000021344",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "KO"
+    },
+    {
+      "artifact_sha256": "ede8f92e57c9337108b3face65de631dc4b7f9b30efead8435ad0e69504059a3",
+      "availability_type": "available",
+      "batch": 10,
+      "cik": "0000056873",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "KR"
+    },
+    {
+      "artifact_sha256": "e968ff77d345ca0b7b42c78f759347476056f586f6e18d0d6612408303029519",
+      "availability_type": "conditional_estimate",
+      "batch": 6,
+      "cik": "0000920760",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "LEN"
+    },
+    {
+      "artifact_sha256": "deaed144e39fffd2371f0c25e239f2727933fe67c7e954660a33fd38d777f00b",
+      "availability_type": "conditional_estimate",
+      "batch": 4,
+      "cik": "0000060667",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "LOW"
+    },
+    {
+      "artifact_sha256": "5914360912c7b33b4cbba0f6b442e461d333f855c5782b45613f9e9d02948e72",
+      "availability_type": "conditional_estimate",
+      "batch": 8,
+      "cik": "0001397187",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "LULU"
+    },
+    {
+      "artifact_sha256": "bed1704b638c4e1e3b7d2cab21524abb4a678188c6b69456c5eb200794b5dc6e",
+      "availability_type": "conditional_estimate",
+      "batch": 7,
+      "cik": "0001300514",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "LVS"
+    },
+    {
+      "artifact_sha256": "47ace71fde40dca260e640f9dc570b6adbf4760873b0fbb0165983d0e1c2be8a",
+      "availability_type": "conditional_estimate",
+      "batch": 3,
+      "cik": "0001335258",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "LYV"
+    },
+    {
+      "artifact_sha256": "213f4604ae6086afe2a614305975e2d2ddc0e93c18625fb8a535086f0338e438",
+      "availability_type": "available",
+      "batch": 6,
+      "cik": "0001048286",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "MAR"
+    },
+    {
+      "artifact_sha256": "225f889bf67769004c387597c00fe1225cba7687a67a024dc296eb6c50274735",
+      "availability_type": "available",
+      "batch": 4,
+      "cik": "0000063908",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "MCD"
+    },
+    {
+      "artifact_sha256": "0481466feb6a32812216230ed28665d7cbfdba5d8d2cd93fbd0683d00f8dc012",
+      "availability_type": "conditional_estimate",
+      "batch": 2,
+      "cik": "0001326801",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "META"
+    },
+    {
+      "artifact_sha256": "6b59f2d2daae35c4419f801f279df62cda3d37d1e75ffef3770337cd4e24daae",
+      "availability_type": "conditional_estimate",
+      "batch": 4,
+      "cik": "0000789570",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "MGM"
+    },
+    {
+      "artifact_sha256": "e0d2eebfc201662c6b2016fe9a0a16b5ed689f28c3f8e305d1d56cd241fe1148",
+      "availability_type": "conditional_estimate",
+      "batch": 10,
+      "cik": "0000063754",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "MKC"
+    },
+    {
+      "artifact_sha256": "eb855c0e9cfc130b7a9118c5cc9690daa94b426baace79052dea9c4a82a295df",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0000789019",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "MSFT"
+    },
+    {
+      "artifact_sha256": "122067409dd97cc63992245c410c19f5b32c1973dfdf12e742eeb218c049dda2",
+      "availability_type": "not_available",
+      "batch": 8,
+      "cik": "0001513761",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "NCLH"
+    },
+    {
+      "artifact_sha256": "1ae4751072e7fa1391652c3fd6b4ed786c6c2491e35a3164c224e1bc769f3f0d",
+      "availability_type": "not_available",
+      "batch": 1,
+      "cik": "0000753308",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "NEE"
+    },
+    {
+      "artifact_sha256": "2881bd06add9a33e7fd209591130055a1d85eecaa900bd2a71568f19db90e3f5",
+      "availability_type": "available",
+      "batch": 2,
+      "cik": "0001065280",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "NFLX"
+    },
+    {
+      "artifact_sha256": "2df32370e970eacf9b3d64a5d4c0028b05e3ee2fb89a23fbb2871d76c106483b",
+      "availability_type": "conditional_estimate",
+      "batch": 4,
+      "cik": "0000320187",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "NKE"
+    },
+    {
+      "artifact_sha256": "8cced15334ede80d33bb06db3ecfc97ecc506b1fcdf25318a0e286a8db2d48ce",
+      "availability_type": "conditional_estimate",
+      "batch": 5,
+      "cik": "0000906163",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "NVR"
+    },
+    {
+      "artifact_sha256": "1f9329e29cf3357440abd6827bb4c8f3576a0b3ba23a88d0479e70ceafc1acc7",
+      "availability_type": "available",
+      "batch": 3,
+      "cik": "0001564708",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "NWSA"
+    },
+    {
+      "artifact_sha256": "231582e2e0d53b24f823c3fb3484931fa74aa7fd999bddc4a854f16b2729742c",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0000726728",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "O"
+    },
+    {
+      "artifact_sha256": "23c876fb6d8ec8fc3941dc9dd99d13aa451332501e041a22a70cb8f4997a82a6",
+      "availability_type": "conditional_estimate",
+      "batch": 2,
+      "cik": "0000029989",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "OMC"
+    },
+    {
+      "artifact_sha256": "c2c56902af8bdb6fd9ede5291a18e756707b6dae205fdd7af4a8ee9e0f3da80d",
+      "availability_type": "available",
+      "batch": 5,
+      "cik": "0000898173",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "ORLY"
+    },
+    {
+      "artifact_sha256": "106caa618eda38b15b46792885fbe0db9c279e5f4cbf383d578d5cde90ca6e62",
+      "availability_type": "available",
+      "batch": 10,
+      "cik": "0000077476",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "PEP"
+    },
+    {
+      "artifact_sha256": "d9fb73294f32f8eefb619ca108ae9d9aefa44b2c16513f64b5f11bd46aa25f11",
+      "availability_type": "available",
+      "batch": 10,
+      "cik": "0000080424",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "PG"
+    },
+    {
+      "artifact_sha256": "172e2250f16bebde96b14f2d8901e1b035cb37849ed65d1f56ce7161ccfaae59",
+      "availability_type": "conditional_estimate",
+      "batch": 5,
+      "cik": "0000822416",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "PHM"
+    },
+    {
+      "artifact_sha256": "fe1b563bf2721b60c8195039229fc3806f4881db6c29c6fe1829131c3b0d80a7",
+      "availability_type": "not_available",
+      "batch": 3,
+      "cik": "0002041610",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "PSKY"
+    },
+    {
+      "artifact_sha256": "875713a914d6f81143f54effa9d0f8011661dc9133db80afef5cb0e38c472e2b",
+      "availability_type": "conditional_estimate",
+      "batch": 5,
+      "cik": "0000884887",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "RCL"
+    },
+    {
+      "artifact_sha256": "713da74eb09b16276bd618552a59961391b2b814197fa3c8e57b341bb56ebc81",
+      "availability_type": "available",
+      "batch": 6,
+      "cik": "0001037038",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "RL"
+    },
+    {
+      "artifact_sha256": "f880b8cb23c1763adb48f0ab71e73ab7281d5d6fea014ce6bc29f21d9165770f",
+      "availability_type": "available",
+      "batch": 4,
+      "cik": "0000745732",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "ROST"
+    },
+    {
+      "artifact_sha256": "a39b7172da5431b5630e5cecfde101217e80e246a81ef112beeb9cdfdfc9d109",
+      "availability_type": "conditional_estimate",
+      "batch": 5,
+      "cik": "0000829224",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "SBUX"
+    },
+    {
+      "artifact_sha256": "9e4c7b0e1acf3ce4d41cc75b2a72a73865cf2e805ed0d098e14594148093c85d",
+      "availability_type": "conditional_estimate",
+      "batch": 10,
+      "cik": "0000091419",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "SJM"
+    },
+    {
+      "artifact_sha256": "09ca0a7ee30287db6cebdf7828967d9ecde1dc3ff8ca719aad337cb0c84cddb2",
+      "availability_type": "conditional_estimate",
+      "batch": 9,
+      "cik": "0000016918",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "STZ"
+    },
+    {
+      "artifact_sha256": "bfec69d703e75987a167b7aba486f5d78077ec6f02b006242fa74ef19176af00",
+      "availability_type": "available",
+      "batch": 2,
+      "cik": "0000732717",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "T"
+    },
+    {
+      "artifact_sha256": "8e4be643cb8a142276b470501ee838a788254eb61e741935d7ff4e4ae2ed2019",
+      "availability_type": "conditional_estimate",
+      "batch": 9,
+      "cik": "0000024545",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "TAP"
+    },
+    {
+      "artifact_sha256": "480cf93e6a26355dbf740b368a0bbbe70937d4ce7ff8e131a385850ace6723db",
+      "availability_type": "conditional_estimate",
+      "batch": 9,
+      "cik": "0000027419",
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "ticker": "TGT"
+    },
+    {
+      "artifact_sha256": "f00681cc6f173545e4f022361188e9b0f1fbc6982810dc49a3b85ea822ea87a9",
+      "availability_type": "available",
+      "batch": 4,
+      "cik": "0000109198",
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "ticker": "TJX"
+    },
+    {
+      "artifact_sha256": "7fd53aa3cf00f6de3f6d6ab019333ad1977d7f655d5fc6e60d66f8ac392b6e42",
+      "availability_type": "conditional_estimate",
+      "batch": 3,
+      "cik": "0001973266",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "TKO"
+    },
+    {
+      "artifact_sha256": "f6f3c4bb3d393d992300a7e93098aeed57d7a8018077d2f0d8f4a320942bd0f6",
+      "availability_type": "available",
+      "batch": 2,
+      "cik": "0001283699",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "TMUS"
+    },
+    {
+      "artifact_sha256": "1f5a6433334d3d05c3bb53707180df9d1dc05dffb3f470bf8e13e2f7ffd228e2",
+      "availability_type": "available",
+      "batch": 7,
+      "cik": "0001116132",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "TPR"
+    },
+    {
+      "artifact_sha256": "91ed7f49d3b1f9f0103f05c1a810d83b923ddf84c29068da21c1eda5b5c3a274",
+      "availability_type": "available",
+      "batch": 6,
+      "cik": "0000916365",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "TSCO"
+    },
+    {
+      "artifact_sha256": "4deac4a76fa49050ba829bf748f0f377ae9420379da4be62d3711157147e1f4a",
+      "availability_type": "conditional_estimate",
+      "batch": 7,
+      "cik": "0001318605",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "TSLA"
+    },
+    {
+      "artifact_sha256": "c8abdac9c894e2dc59967a89200750f0777b0840a61218d50def2da5a10c3a75",
+      "availability_type": "conditional_estimate",
+      "batch": 10,
+      "cik": "0000100493",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "TSN"
+    },
+    {
+      "artifact_sha256": "8fe430fd738a7b8af9b0ca82d18ae680a6f5026450eefdbe537a4b338db39428",
+      "availability_type": "available",
+      "batch": 3,
+      "cik": "0001671933",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "TTD"
+    },
+    {
+      "artifact_sha256": "c9016eb55406fb14c1369cc05c314e0ae712c4a2194993d294686e0544eccfde",
+      "availability_type": "conditional_estimate",
+      "batch": 2,
+      "cik": "0000946581",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "TTWO"
+    },
+    {
+      "artifact_sha256": "5ae0826cb22b2fd03796f685d6bc846a4f2e6cae28591b9060f6afc266ea8345",
+      "availability_type": "available",
+      "batch": 8,
+      "cik": "0001403568",
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "ticker": "ULTA"
+    },
+    {
+      "artifact_sha256": "9cd22534c86e4981a137f6bd04826ec74f465fda98073b5dfe1f74805148f4a4",
+      "availability_type": "available",
+      "batch": 2,
+      "cik": "0000732712",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "VZ"
+    },
+    {
+      "artifact_sha256": "f63c79b259567a05ea36eb1d97a7fc2662c7bd5bc6b441aa1942aa76caac1f8c",
+      "availability_type": "conditional_estimate",
+      "batch": 2,
+      "cik": "0001437107",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "WBD"
+    },
+    {
+      "artifact_sha256": "9d9494419b2da3eb1a6545a02027642c335c2b5abb68807848c5b5e2b3789a0f",
+      "availability_type": "available",
+      "batch": 1,
+      "cik": "0000106040",
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "ticker": "WDC"
+    },
+    {
+      "artifact_sha256": "1ecd8f819a6f2310fcbda9d5b282cdde86d9bf41d15a178caa5dcd0ba3270066",
+      "availability_type": "available",
+      "batch": 10,
+      "cik": "0000104169",
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "ticker": "WMT"
+    },
+    {
+      "artifact_sha256": "07740c81543b872f7d9f9d16682953532960fd072f2e0ad36471f906d6967e27",
+      "availability_type": "available",
+      "batch": 5,
+      "cik": "0000719955",
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "ticker": "WSM"
+    },
+    {
+      "artifact_sha256": "13c1b0d8727c183b1777e21424af0cff125de7cc6416176fa66d535512e6ae56",
+      "availability_type": "conditional_estimate",
+      "batch": 7,
+      "cik": "0001174922",
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "ticker": "WYNN"
+    },
+    {
+      "artifact_sha256": "a92e901c04fffe2c8b08d483df3035a56b4ac18cf138b4a7a7706f4b33a01a61",
+      "availability_type": "conditional_estimate",
+      "batch": 6,
+      "cik": "0001041061",
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "ticker": "YUM"
+    }
+  ],
+  "included_batches": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "publication_counts": {
+    "review_required": 96,
+    "withheld": 4
+  },
+  "schema_version": "FINSIGHT-US-VALUATION-CATALOG-1.0",
+  "source_batches": {
+    "01": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "source_root": "output/launch-first/replay-h/public/batch-01"
+    },
+    "02": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "source_root": "output/launch-first/replay-h/public/batch-02"
+    },
+    "03": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/44-launch-first-staged-confirmation.md",
+      "source_root": "output/launch-first/replay-h/public/batch-03"
+    },
+    "04": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/53-batch04-history-promotion.md",
+      "source_root": "output/batch-04-history-shadow/run-e/staged-public"
+    },
+    "05": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/53-batch-05-history-repair-result.md",
+      "source_root": "output/batch-05-history-repair/candidate-d/staged-public"
+    },
+    "06": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/54-batch-06-history-repair-result.md",
+      "source_root": "output/batch-06-history-repair/candidate-b/staged-public"
+    },
+    "07": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/55-controlled-batch-07-result.md",
+      "source_root": "output/batch-07-history/candidate-h/staged-public"
+    },
+    "08": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/57-batch-08-recovery-result.md",
+      "source_root": "output/batch-08-recovery/candidate-d/staged-public"
+    },
+    "09": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/60-batch-09-recovery-result.md",
+      "source_root": "output/batch-09-recovery/candidate-e/staged-public"
+    },
+    "10": {
+      "artifact_count": 10,
+      "source_audit": "docs/audit/62-batch-10-kmb-recovery-result.md",
+      "source_root": "output/batch-10-recovery/candidate-h/staged-public"
+    }
+  },
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

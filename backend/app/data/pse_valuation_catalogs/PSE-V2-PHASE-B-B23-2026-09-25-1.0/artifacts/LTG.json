@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "4aca487c8f5d38dfc990c1d8ec0854562d2f71cb6648a135cf2f5d2e7ade0a64",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The bank equity value, tobacco cash flows, property interests, ownership percentages, parent-only debt, and minority claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "21e923e15ba789a36b0833157a5b3b3601915bc9ff00bbab449045456e5c3d08",
+  "issuer": {
+    "issuer_id": "PSE:LTG",
+    "name": "LT Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.6,
+      "high": 0.75,
+      "low": 0.45
+    },
+    "estimates": {
+      "base": 14.399999999999999,
+      "high": 18.0,
+      "low": 10.8
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 24.0,
+    "note": "Analyst screening band; no peer study or attributable SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-HOLDCO-B11-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "c1e836c3ec6e0c1981d0c275a752959afc452b4f9586f815e877d27d4f09aa8b",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B11-1.0",
+  "numerical_range": {
+    "high": 18.0,
+    "low": 10.8
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The bank equity value, tobacco cash flows, property interests, ownership percentages, parent-only debt, and minority claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified holding-company screening band. It is an analyst band, not a peer study or SOTP.",
+    "reliability": "Low",
+    "route_reason": "Banking, tobacco, beverage, and property component SOTP remains primary; reported P/B is a finite screening fallback."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:LTG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "c1e836c3ec6e0c19",
+      "form": "PSE quarterly financial summary",
+      "label": "LTG FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "c1e836c3ec6e0c1981d0c275a752959afc452b4f9586f815e877d27d4f09aa8b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=12"
+    }
+  ],
+  "subsector": "Banking, tobacco, beverage, and property holding company",
+  "ticker": "LTG",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; the component SOTP remains unresolved.",
+    "Reported P/B does not establish attributable subsidiary value, parent-only claims, or a justified holding-company discount."
+  ]
+}

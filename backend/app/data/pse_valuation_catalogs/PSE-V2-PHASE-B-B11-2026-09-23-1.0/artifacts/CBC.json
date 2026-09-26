@@ -1,0 +1,114 @@
+{
+  "artifact_hash": "c15b7608afa033e9c6cbc38642fe92b3f9bdea2ee8a037ba5a0d8c058838cf1d",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "dde6f753461cb17b0c00dfd907684479208fb3b9db03152f0f27ea9fbebca101",
+  "issuer": {
+    "issuer_id": "PSE:CBC",
+    "name": "China Banking Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B01-1.0",
+  "numerical_range": {
+    "high": 113.178652983914,
+    "low": 56.03571554890494
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "book_value_per_share": 71.04,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalized_roe": 0.15556241644579968,
+    "policy_version": "PSE-V2-BANK-RI-B01-1.0",
+    "reliability": "Low",
+    "route_reason": "Book capital and returns above the cost of equity drive common-equity value.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.12052,
+        "current_roe": 0.15556241644579968,
+        "payout_ratio": 0.3,
+        "terminal_growth": 0.03,
+        "terminal_roe": 0.13
+      },
+      "bear": {
+        "cost_of_equity": 0.13552,
+        "current_roe": 0.13222805397892973,
+        "payout_ratio": 0.25,
+        "terminal_growth": 0.02,
+        "terminal_roe": 0.11
+      },
+      "bull": {
+        "cost_of_equity": 0.11052,
+        "current_roe": 0.17111865809037966,
+        "payout_ratio": 0.35,
+        "terminal_growth": 0.04,
+        "terminal_roe": 0.145
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 222231.53567704168,
+      "enterprise_value": null,
+      "value_per_share": 82.56741775285494
+    },
+    "bear": {
+      "common_equity_value": 150821.03156561952,
+      "enterprise_value": null,
+      "value_per_share": 56.03571554890494
+    },
+    "bull": {
+      "common_equity_value": 304622.1686835365,
+      "enterprise_value": null,
+      "value_per_share": 113.178652983914
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CBC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_roe",
+        "terminal_roe",
+        "cost_of_equity",
+        "payout_ratio",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "26202a6d5da892e0",
+      "form": "17-A",
+      "label": "Chinabank FY2025 PSE EDGE financial-report fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "26202a6d5da892e0df0214bf2459d2583e48769a5156076bb8f028d93e724c59",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=184"
+    }
+  ],
+  "subsector": "Commercial and universal bank",
+  "ticker": "CBC",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate based on reviewed FY2025 public filing facts and a versioned shared bank policy.",
+    "Regulatory capital, asset quality, and current market multiples remain challenge checks rather than direct numerical model inputs.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

@@ -13,6 +13,7 @@ from urllib.request import Request, urlopen
 
 
 SEC_DATA_ROOT = "https://data.sec.gov"
+SEC_ARCHIVES_ROOT = "https://www.sec.gov/Archives/edgar/data"
 
 
 def normalize_cik(cik: str | int) -> str:
@@ -66,21 +67,77 @@ class SecClient:
             refresh=refresh,
         )
 
+    def filing_document(
+        self,
+        cik: str | int,
+        accession: str,
+        primary_document: str,
+        *,
+        refresh: bool = False,
+    ) -> str:
+        """Retrieve one primary SEC filing document with durable provenance."""
+        normalized = normalize_cik(cik)
+        document_path = Path(primary_document)
+        if (
+            not primary_document
+            or document_path.name != primary_document
+            or document_path.is_absolute()
+        ):
+            raise ValueError("SEC primary document must be a safe file name")
+        accession_digits = "".join(
+            character for character in accession if character.isdigit()
+        )
+        if not accession_digits:
+            raise ValueError("SEC accession must contain digits")
+        cik_path = str(int(normalized))
+        url = (
+            f"{SEC_ARCHIVES_ROOT}/{cik_path}/{accession_digits}/"
+            f"{primary_document}"
+        )
+        raw = self._get_bytes(
+            url,
+            cache_name=(
+                f"filings/CIK{normalized}-{accession_digits}-{primary_document}"
+            ),
+            refresh=refresh,
+            accept="text/html,application/xhtml+xml,text/plain",
+        )
+        return raw.decode("utf-8", errors="replace")
+
     def _get_json(self, url: str, *, cache_name: str, refresh: bool) -> dict[str, Any]:
+        raw = self._get_bytes(
+            url,
+            cache_name=cache_name,
+            refresh=refresh,
+            accept="application/json",
+        )
+        try:
+            return json.loads(raw.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise RuntimeError(f"Invalid SEC cache file: {Path(cache_name).name}") from exc
+
+    def _get_bytes(
+        self,
+        url: str,
+        *,
+        cache_name: str,
+        refresh: bool,
+        accept: str,
+    ) -> bytes:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         path = self.cache_dir / cache_name
+        path.parent.mkdir(parents=True, exist_ok=True)
         if path.exists() and not refresh:
             try:
                 raw = path.read_bytes()
-                payload = json.loads(raw.decode("utf-8"))
                 self._write_cache_metadata(
                     path,
                     url=url,
                     raw=raw,
                     fetched_at_epoch=None,
                 )
-                return payload
-            except (OSError, json.JSONDecodeError) as exc:
+                return raw
+            except OSError as exc:
                 raise RuntimeError(f"Invalid SEC cache file: {path.name}") from exc
         if not self.user_agent or "@" not in self.user_agent:
             raise ValueError(
@@ -100,13 +157,12 @@ class SecClient:
                         url,
                         headers={
                             "User-Agent": self.user_agent,
-                            "Accept": "application/json",
+                            "Accept": accept,
                         },
                     )
                     type(self)._process_last_request_at = time.monotonic()
                     with urlopen(request, timeout=self.timeout_seconds) as response:
                         raw = response.read()
-                payload = json.loads(raw.decode("utf-8"))
                 path.write_bytes(raw)
                 self._write_cache_metadata(
                     path,
@@ -114,8 +170,8 @@ class SecClient:
                     raw=raw,
                     fetched_at_epoch=time.time(),
                 )
-                return payload
-            except (HTTPError, URLError, TimeoutError, json.JSONDecodeError) as exc:
+                return raw
+            except (HTTPError, URLError, TimeoutError) as exc:
                 last_error = exc
                 if attempt == self.max_retries:
                     break

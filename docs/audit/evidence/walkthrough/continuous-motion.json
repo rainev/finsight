@@ -1,0 +1,141 @@
+{
+  "desktopScrollDistance": 4617,
+  "incrementPx": 12,
+  "observations": [
+    {
+      "chapter": "intro",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "intro",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "intro",
+      "fraction": 0.85,
+      "moved": true
+    },
+    {
+      "chapter": "discover",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "discover",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "discover",
+      "fraction": 0.85,
+      "moved": true
+    },
+    {
+      "chapter": "scenarios",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "scenarios",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "scenarios",
+      "fraction": 0.85,
+      "moved": true
+    },
+    {
+      "chapter": "assumptions",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "assumptions",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "assumptions",
+      "fraction": 0.85,
+      "moved": true
+    },
+    {
+      "chapter": "news",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "news",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "news",
+      "fraction": 0.85,
+      "moved": true
+    },
+    {
+      "chapter": "evidence",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "evidence",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "evidence",
+      "fraction": 0.85,
+      "moved": true
+    },
+    {
+      "chapter": "portfolio",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "portfolio",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "portfolio",
+      "fraction": 0.85,
+      "moved": true
+    },
+    {
+      "chapter": "insights",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "insights",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "insights",
+      "fraction": 0.85,
+      "moved": true
+    },
+    {
+      "chapter": "continue",
+      "fraction": 0.05,
+      "moved": true
+    },
+    {
+      "chapter": "continue",
+      "fraction": 0.45,
+      "moved": true
+    },
+    {
+      "chapter": "continue",
+      "fraction": 0.85,
+      "moved": true
+    }
+  ]
+}

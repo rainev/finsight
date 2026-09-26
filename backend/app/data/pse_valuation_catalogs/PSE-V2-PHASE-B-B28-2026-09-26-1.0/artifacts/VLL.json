@@ -1,0 +1,81 @@
+{
+  "artifact_hash": "997c31340eb1ac3a35db30fc789743cdf12b3aced4e43afbc8dd4b9e4182f4f1",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2025, the common line is suspended, and updated financing, preferred and subsidiary claims are unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "fb9fc143d89733732cd51043976cdc04cb59740092526ca2790cbdc86953533e",
+  "issuer": {
+    "issuer_id": "PSE:VLL",
+    "name": "Vista Land & Lifescapes, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, the common line is suspended, and updated financing, preferred and subsidiary claims are unresolved.",
+    "metric_basis": "No completed parent/common claim bridge",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Development inventory, net debt, preferred claims and controlled subsidiaries require RNAV or SOTP underwriting.",
+    "share_bridge_type": "unresolved_claims",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "VLL",
+    "security_id": "PSE:VLL:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "206edf3db1b8d72d",
+      "form": "PSE financial summary",
+      "label": "VLL reviewed PSE financial summary",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "206edf3db1b8d72d45ff173382d0b6dddafeaf275ff1d5b739a4c7e24913b151",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=607"
+    },
+    {
+      "document_id": "206edf3db1b8d72d-support-1",
+      "form": "PSE common-stock data",
+      "label": "VLL ordinary common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "206edf3db1b8d72d45ff173382d0b6dddafeaf275ff1d5b739a4c7e24913b151",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=607"
+    }
+  ],
+  "subsector": "Property development",
+  "ticker": "VLL",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "PSE FY2024/3Q2025 summaries are historical. The 2026-09-11 stock snapshot marks common shares suspended; its June 2026 last close is not a current price or upside input."
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "artifact_hash": "1966be89d321c6b8009064bddad98e8b0c4e5879e9c798e2c401e700cef842a5",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The latest reviewed summary ends 3Q2025 and trading is suspended; current property cash flows, debt and parent claims are not reviewed."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2025-09-30",
+  "filing_published_at": null,
+  "input_hash": "1e5a37b561eec15479100774154628d76063339cc2e97c5dfc849203a056024f",
+  "issuer": {
+    "issuer_id": "PSE:STR",
+    "name": "Vistamalls, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B26-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The latest reviewed summary ends 3Q2025 and trading is suspended; current property cash flows, debt and parent claims are not reviewed.",
+    "metric_basis": "PHP parent equity (millions) / 8,425,981,156 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Commercial property requires lease, asset-level value and refinancing review for NAV/SOTP.",
+    "screen_time_basis": null,
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-09-11"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "STR",
+    "security_id": "PSE:STR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "27960a97fe65cc8c",
+      "form": "PSE financial summary",
+      "label": "STR reviewed PSE financial summary",
+      "period_end": "2025-09-30",
+      "published_at": null,
+      "sha256": "27960a97fe65cc8cdccc972e0def5f56d1e6620e09dfa476b08dd88b43b294a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=147"
+    },
+    {
+      "document_id": "27960a97fe65cc8c-support-1",
+      "form": "PSE common-stock data",
+      "label": "STR ordinary common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "27960a97fe65cc8cdccc972e0def5f56d1e6620e09dfa476b08dd88b43b294a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=147"
+    }
+  ],
+  "subsector": "Commercial property",
+  "ticker": "STR",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. No current market quote or upside is published for this suspended security.",
+    "PSE 3Q2025 PHP58.499bn parent equity is expressed in PHP millions. Its September 2026 common stock snapshot is suspended; no old price or summary book value is promoted to current valuation."
+  ]
+}

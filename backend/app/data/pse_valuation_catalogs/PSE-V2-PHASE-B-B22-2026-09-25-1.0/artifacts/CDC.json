@@ -1,0 +1,74 @@
+{
+  "artifact_hash": "2df379e1695df467818a66d215e80884d771038e0558c32a3a70633a1bed9868",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "The July 2026 CDC-LAND merger changed the share denominator and ownership claims after the 30 June financial report; post-merger parent common equity, issued and treasury shares, and merger accounting are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "044708a3240764a4091cc726871a014044ff1f221d1d6337dba85329a49b5d43",
+  "issuer": {
+    "issuer_id": "PSE:CDC",
+    "name": "Cityland Development Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B12-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "metric_basis": "reported pre-merger PHP book value per share; not usable for current shares",
+    "reliability": "Unavailable",
+    "route_reason": "Post-merger CDC common equity and property interests require a reconciled SOTP/RNAV before a current per-share estimate."
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CDC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "7d75c24ac26c946d",
+      "form": "PSE quarterly financial summary",
+      "label": "CDC FY2025 and 1H2026 PSE financial summary, pre-merger",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "7d75c24ac26c946dd2c49e1e21af6e942099aa940d018b63173dc850fd6c4094",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=39"
+    },
+    {
+      "document_id": "7d75c24ac26c946d-support",
+      "form": "PSE corporate-action disclosure",
+      "label": "CDC and LAND merger disclosure",
+      "period_end": "2026-07-01",
+      "published_at": null,
+      "sha256": "7d75c24ac26c946dd2c49e1e21af6e942099aa940d018b63173dc850fd6c4094",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1934958"
+    }
+  ],
+  "subsector": "Residential and commercial property developer after merger",
+  "ticker": "CDC",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "The 30 June PSE book value per share is pre-merger and is not presented as a current valuation."
+  ]
+}

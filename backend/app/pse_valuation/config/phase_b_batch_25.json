@@ -1,0 +1,131 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-25.0",
+  "batch_version": "PSE-V2-PHASE-B-B25-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B25-2026-09-25-1.0",
+  "universe_version": "PSE-V2-258-B25-1.0",
+  "valuation_date": "2026-09-25",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["FFI", "FYN", "MAH", "MED", "MG", "ZHI", "LTL", "VLL", "VREIT", "ALLDY"],
+  "policies": {
+    "layered_book": {
+      "metric": "price_to_book",
+      "assumptions": {"low": 0.25, "base": 0.40, "high": 0.55},
+      "version": "PSE-V2-PB-LAYERED-B25-1.0",
+      "rationale": "Finite analyst P/B screening band reused from Batch 24; not peer-calibrated, appraised NAV or intrinsic value."
+    }
+  },
+  "issuers": {
+    "FFI": {
+      "issuer_name": "Filipino Fund, Inc.", "subsector": "Investment fund", "primary_model": "nav_sotp",
+      "period_end": "2026-06-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "total", "equity_value": 233909191, "reported_bvps": 4.66,
+      "shares_outstanding": 50167397, "share_as_of": "2026-09-11", "share_bridge_type": "single_class", "trading_status": "open", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=196",
+      "share_classes": [{"class": "ordinary common", "shares": 50167397, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=196"}],
+      "availability": "market_relative_only", "policy": "layered_book",
+      "route_reason": "An investment fund needs reviewed underlying-asset NAV and fees; book per ordinary common share is only a finite market-relative screen.",
+      "intrinsic_blocker": "Holdings-level fair values, liquidity and realization costs are not underwritten into an intrinsic NAV.",
+      "source_warning": "PSE's 1H2026 parent-attributable equity is blank. The screen uses PHP233.909m reported total fund equity and 50.167m outstanding common shares; verify minority or other senior claims before relying on it. No dated current price is used."
+    },
+    "FYN": {
+      "issuer_name": "Filsyn Corporation", "subsector": "Industrial manufacturing", "primary_model": "fcff_dcf",
+      "period_end": "2026-06-30", "currency": "PHP", "equity_unit_scale": "thousands", "equity_basis": "parent", "equity_value": 1034724, "reported_bvps": 4.36,
+      "shares_outstanding": 172819683, "share_as_of": "2026-09-23", "share_bridge_type": "unresolved_claims", "trading_status": "open", "status_as_of": "2026-09-23",
+      "preferred_shares_outstanding": 33426498, "preferred_shares_as_of": "2026-08-19",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=80",
+      "share_classes": [{"class": "declassified common", "shares": 172819683, "as_of": "2026-09-23", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=80"}],
+      "supporting_sources": [{"label": "FYN common-share declassification and preferred shares", "form": "PSE issuer disclosure", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1959806", "published_at": null}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Operating FCFF requires a completed equity bridge after the common A/B declassification and senior preferred claims.",
+      "intrinsic_blocker": "The reviewed common line excludes an outstanding preferred class whose economic claim has not been reconciled; a parent-equity-per-common-share screen would overstate the residual.",
+      "source_warning": "PSE reports PHP1.034724bn 1H2026 parent equity in thousands. The declassification disclosure reports 172,819,683 resulting common shares and 33,426,498 preferred shares; the preferred claim is not treated as zero."
+    },
+    "MAH": {
+      "issuer_name": "Metro Alliance Holdings & Equities Corp.", "subsector": "Holding and services", "primary_model": "sotp",
+      "period_end": "2026-06-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": -25605905, "reported_bvps": 0.15,
+      "shares_outstanding": 306122449, "share_as_of": "2026-09-22", "share_bridge_type": "unresolved_claims", "trading_status": "open", "status_as_of": "2026-09-22",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=3",
+      "share_classes": [{"class": "quoted common line", "shares": 306122449, "as_of": "2026-09-22", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=3"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Attributable subsidiary values and all outstanding common lines require reconciliation before SOTP.",
+      "intrinsic_blocker": "1H2026 parent equity is negative despite positive consolidated equity, and multiple quoted common lines remain unresolved.",
+      "source_warning": "PSE reports negative PHP25.606m parent equity versus positive PHP44.768m total equity; printed PHP0.15 BVPS is not a positive parent-common residual. The 306.122m shares are one quoted line, not an issuer-wide denominator."
+    },
+    "MED": {
+      "issuer_name": "MEDCO Holdings, Inc.", "subsector": "Financial holding", "primary_model": "residual_income",
+      "period_end": "2026-06-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 36942978, "reported_bvps": 0.01,
+      "shares_outstanding": 3159292441, "share_as_of": "2026-09-23", "share_bridge_type": "single_class", "trading_status": "open", "status_as_of": "2026-09-23",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=126",
+      "share_classes": [{"class": "ordinary common", "shares": 3159292441, "as_of": "2026-09-23", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=126"}],
+      "availability": "market_relative_only", "policy": "layered_book",
+      "route_reason": "A financial holding company requires sustainable returns and capital-claim analysis for residual income; a small parent-book screen is separate.",
+      "intrinsic_blocker": "Recurring losses and unresolved asset realizability preclude a supported sustainable ROE or intrinsic residual-income case.",
+      "source_warning": "PSE 1H2026 parent equity is only PHP36.943m against 3.159bn common shares, and YTD income is negative. This is a sub-cent Low-reliability book screen, not an operating forecast or current-upside claim."
+    },
+    "MG": {
+      "issuer_name": "Millennium Global Holdings, Inc.", "subsector": "Food and operating holding", "primary_model": "fcff_dcf",
+      "period_end": "2026-06-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 134915911, "reported_bvps": 0.15,
+      "shares_outstanding": 2369684619, "share_as_of": "2026-09-10", "share_bridge_type": "single_class", "trading_status": "open", "status_as_of": "2026-09-10",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=105",
+      "share_classes": [{"class": "ordinary common", "shares": 2369684619, "as_of": "2026-09-10", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=105"}],
+      "availability": "market_relative_only", "policy": "layered_book",
+      "route_reason": "The operating businesses require normalized FCFF; parent common book is only a finite cross-check.",
+      "intrinsic_blocker": "Normalized cash conversion, debt service, working capital and minority claims are not underwritten.",
+      "source_warning": "PSE 1H2026 parent equity is PHP134.916m, but reported PHP0.15 BVPS approximately follows PHP364.833m total equity, not parent equity. The interim FY2025 comparative parent equity also conflicts with the annual summary; the screen uses the dated current parent/share bridge and flags the discrepancy."
+    },
+    "ZHI": {
+      "issuer_name": "Zeus Holdings, Inc.", "subsector": "Investment holding", "primary_model": "sotp",
+      "period_end": "2026-06-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 710546, "reported_bvps": 0,
+      "shares_outstanding": 2737044807, "share_as_of": "2026-09-11", "share_bridge_type": "single_class", "trading_status": "open", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=89",
+      "share_classes": [{"class": "ordinary common", "shares": 2737044807, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=89"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Investment assets and any funding obligations require an attributable SOTP, not a near-zero book extrapolation.",
+      "intrinsic_blocker": "Parent equity is nearly exhausted, reported BVPS rounds to zero, and no operating revenue or recoverable investment NAV is established.",
+      "source_warning": "PSE 1H2026 parent equity is only PHP710,546 against 2.737bn common shares, with blank revenue. A mechanically positive per-share figure below display precision is not published."
+    },
+    "LTL": {
+      "issuer_name": "PNB Holdings Corporation", "subsector": "Property holding", "primary_model": "nav_sotp",
+      "period_end": null, "currency": "PHP", "equity_unit_scale": null, "equity_basis": null, "equity_value": null, "reported_bvps": null,
+      "shares_outstanding": null, "share_as_of": null, "share_bridge_type": "missing", "trading_status": "new_listing_unverified", "status_as_of": "2026-09-25",
+      "financial_source_url": "https://edge.pse.com.ph/companyDirectory/form.do", "share_classes": [],
+      "supporting_sources": [{"label": "LTL listing-date and trading-symbol notice index", "form": "PSE listing notice index", "url": "https://edge.pse.com.ph/companyDisclosures/search.ax", "published_at": "2026-09-24"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "The just-listed property holding company needs property-level NAV, parent claims and a verified public common-share denominator.",
+      "intrinsic_blocker": "The listing directory identifies LTL on 2026-09-25, but no issuer financial-summary equity, period, ordinary-common denominator or property-level appraisal was reviewed for this batch.",
+      "source_warning": "A listing-date entry is not a reviewed financial statement or a share-count bridge. No value or calculator is published for LTL."
+    },
+    "VLL": {
+      "issuer_name": "Vista Land & Lifescapes, Inc.", "subsector": "Property development", "primary_model": "nav_sotp",
+      "period_end": "2025-09-30", "currency": "PHP", "equity_unit_scale": "millions", "equity_basis": "parent", "equity_value": 132676, "reported_bvps": 12.14,
+      "shares_outstanding": 12698007676, "share_as_of": "2026-09-11", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=607",
+      "share_classes": [{"class": "ordinary common", "shares": 12698007676, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=607"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Development inventory, net debt, preferred claims and controlled subsidiaries require RNAV or SOTP underwriting.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, the common line is suspended, and updated financing, preferred and subsidiary claims are unresolved.",
+      "source_warning": "PSE FY2024/3Q2025 summaries are historical. The 2026-09-11 stock snapshot marks common shares suspended; its June 2026 last close is not a current price or upside input."
+    },
+    "VREIT": {
+      "issuer_name": "VistaREIT, Inc.", "subsector": "Real estate investment trust", "primary_model": "sustainable_distributions",
+      "period_end": "2025-09-30", "currency": "PHP", "equity_unit_scale": "thousands", "equity_basis": "total", "equity_value": 31082499, "reported_bvps": 4.14,
+      "shares_outstanding": 7500000000, "share_as_of": "2026-09-11", "share_bridge_type": "unresolved_claims", "trading_status": "suspended", "status_as_of": "2026-09-11",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=695",
+      "share_classes": [{"class": "ordinary common", "shares": 7500000000, "as_of": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=695"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "A REIT needs distributable income, leases, financing and sponsor-claim review for sustainable distributions.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, the line is suspended, and current distributable income, debt and lease coverage are not established.",
+      "source_warning": "PSE 3Q2025 summary reports zero parent-attributable equity despite PHP31.082bn total equity; no total-book shortcut or stale June 2026 close is used for an intrinsic or current-upside estimate."
+    },
+    "ALLDY": {
+      "issuer_name": "AllDay Marts, Inc.", "subsector": "Retail", "primary_model": "fcff_dcf",
+      "period_end": "2025-09-30", "currency": "PHP", "equity_unit_scale": "pesos", "equity_basis": "parent", "equity_value": 7011208592, "reported_bvps": 0.31,
+      "shares_outstanding": 22857145000, "share_as_of": "2026-09-10", "share_bridge_type": "single_class", "trading_status": "suspended", "status_as_of": "2026-09-10",
+      "financial_source_url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=686",
+      "share_classes": [{"class": "ordinary common", "shares": 22857145000, "as_of": "2026-09-10", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=686"}],
+      "availability": "not_available", "policy": null,
+      "route_reason": "Retail requires normalized operating cash flow and funding forecasts for FCFF.",
+      "intrinsic_blocker": "The latest reviewed summary ends 3Q2025, the stock is suspended and 2025 YTD earnings are negative; current funding and operating economics are not source-bounded.",
+      "source_warning": "PSE FY2024/3Q2025 summaries are historical. The September 2026 stock snapshot marks ordinary common shares suspended; no stale June 2026 close is treated as current."
+    }
+  }
+}

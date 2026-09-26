@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "cd60299920ac81a8ccd56cc1178558613ee29e8a5542e672d17bb83527217252",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "NGCP ownership, regulated asset and concession economics, minority interests, debt and parent-only claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "da531b135a1d7fc106bbc48593671aaac853333f546b366a757f881bca05d313",
+  "issuer": {
+    "issuer_id": "PSE:SGP",
+    "name": "Synergy Grid & Development Phils., Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 19.313,
+      "high": 24.831,
+      "low": 13.795
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 27.59,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-UTILITY-B17-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "44841d6994dbf0e1975d5c6cd569914202c3f237d926c85e59d2ce071bb5e4f6",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B17-1.0",
+  "numerical_range": {
+    "high": 24.831,
+    "low": 13.795
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "NGCP ownership, regulated asset and concession economics, minority interests, debt and parent-only claims are not reconciled.",
+    "metric_basis": "reported PHP27.59 BVPS; parent-equity and minority claims require separate review",
+    "policy_rationale": "Finite industrial/utility book-value screen on reported common BVPS; reuse the Batch 16 industrial band, not a grid or water-company intrinsic model.",
+    "reliability": "Low",
+    "route_reason": "Grid interests and minority ownership require attributable SOTP; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SGP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "44841d6994dbf0e1",
+      "form": "PSE quarterly financial summary",
+      "label": "SGP FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "44841d6994dbf0e1975d5c6cd569914202c3f237d926c85e59d2ce071bb5e4f6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=166"
+    },
+    {
+      "document_id": "44841d6994dbf0e1-support-1",
+      "form": "PSE common-stock data",
+      "label": "SGP open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "44841d6994dbf0e1975d5c6cd569914202c3f237d926c85e59d2ce071bb5e4f6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=166"
+    }
+  ],
+  "subsector": "Power-grid holding company",
+  "ticker": "SGP",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Cash flows, attributable ownership and common-equity claims are not fully reconciled.",
+    "Consolidated equity includes large non-controlling interests; reported BVPS is not a direct grid-asset NAV."
+  ]
+}

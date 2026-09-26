@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "b7033708c2800758f7dc13efd98a7aaa44ae6c5db0eaaa310c392358fe92d40a",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A reviewed fleet and subsidiary SOTP with debt, vessel values, leases, and parent-level claims is incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "f651a1ac4768986399801fc724173f9bdbd8fde0955cc6ca710b59b6f148a608",
+  "issuer": {
+    "issuer_id": "PSE:C",
+    "name": "Chelsea Logistics and Infrastructure Holdings Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.5,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.78,
+      "high": 0.975,
+      "low": 0.585
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 1.95,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LEVERAGED-SHIPPING-B07-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "b5f05e3df2d45ceb28e5f8cd07d67beb7e39983afc9347ae69b3d5073050657d",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B07-1.0",
+  "numerical_range": {
+    "high": 0.975,
+    "low": 0.585
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A reviewed fleet and subsidiary SOTP with debt, vessel values, leases, and parent-level claims is incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Fleet NAV and subsidiary SOTP remain primary; discounted P/B is a finite screen given high leverage and a large retained deficit."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:C:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "b5f05e3df2d45ceb",
+      "form": "17-Q",
+      "label": "Chelsea FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "b5f05e3df2d45ceb28e5f8cd07d67beb7e39983afc9347ae69b3d5073050657d",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=669"
+    }
+  ],
+  "subsector": "Shipping and logistics holding company",
+  "ticker": "C",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

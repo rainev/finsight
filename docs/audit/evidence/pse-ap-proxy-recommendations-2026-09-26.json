@@ -1,0 +1,75 @@
+{
+  "review_id": "PSE-V2-AP-PROXY-RECOMMENDATIONS-2026-09-26-1",
+  "status": "staged_recommendations_unapproved_not_served",
+  "scope": ["AP"],
+  "rlc_status": "pending_user_supplied_consolidation_property_bridge",
+  "currency": "PHP",
+  "working_values_unit": "PHP millions",
+  "source_hashes": {
+    "ap_2026_1h_17q_sha256": "0ea6d0d9fed540408f05c2ea8e6fb0c12fb691ee240aaf431e1f5fd3f6c24b80",
+    "ap_2025_17a_sha256": "f1985fdc43ca7e8111d7915c9c3300ef2ca676922b43619b5659f8aface6f60b"
+  },
+  "tax": {
+    "provisional_choice": "25_percent_assumed_marginal_rate_for_interest_addback_only",
+    "rate": 0.25,
+    "basis": "BIR_general_corporate_rate_not_issuer_specific_tax_opinion",
+    "reported_1h2026_effective_rate": 0.14814129496132683,
+    "reported_1h2025_effective_rate": 0.17068539469053978,
+    "review_warning": "Actual borrowing-entity deductibility, incentives and timing have not been reconciled. Effective book tax rate is not marginal interest tax rate."
+  },
+  "equity_method_investments": {
+    "provisional_choice": "separate_reported_carrying_value_proxy_do_not_also_add_dividends_to_core_fcff",
+    "value": 138809.675,
+    "largest_three": {
+      "GNPD_direct": 46389.217,
+      "AA_Thermal": 41780.142,
+      "CGHI": 32555.132,
+      "total": 120724.491,
+      "fraction_of_investment_book": 0.869712366951367
+    },
+    "review_warning": "Equity-method book is not independent fair value. Confirm top-three ownership, cash return, impairments and no cash-flow overlap before issuer approval."
+  },
+  "minority_claim": {
+    "provisional_choice": "zero_growth_capitalization_of_ttm_cash_distributions_as_review_proxy",
+    "fy2025_distributions": 2622.297,
+    "h1_2025_distributions": 1921.738,
+    "h1_2026_distributions": 1924.150,
+    "ttm_distributions": 2624.709,
+    "fy2025_minority_net_income": 3010.865,
+    "h1_2025_minority_net_income": 1374.569,
+    "h1_2026_minority_net_income": 1719.638,
+    "ttm_minority_net_income": 3355.934,
+    "ttm_payout_ratio": 0.7821098388704903,
+    "book_value": 14103.045,
+    "assumed_cost_of_equity": 0.12,
+    "growth_rate": 0.0,
+    "proposed_claim": 21872.575,
+    "review_warning": "12 percent cost of equity and perpetual level cash distribution are analyst hypotheses, not source facts. Subsidiary-level claims and concession lives remain unreviewed."
+  },
+  "model_inputs_unchanged_from_prior_candidate_except_minority": {
+    "cash": 62658.309,
+    "borrowings_plus_leases": 325625.209,
+    "equity_method_investment_proxy": 138809.675,
+    "other_claims": 3900.0,
+    "shares_millions": 7205.854307,
+    "starting_fcff": {"bear": 34790.369, "base": 35565.066875, "bull": 36339.76475}
+  },
+  "calculation_only_scenarios": {
+    "bear": {"common_equity_value": 182204.051867, "value_per_share": 25.285558673},
+    "base": {"common_equity_value": 298039.711615, "value_per_share": 41.360774020},
+    "bull": {"common_equity_value": 472577.886092, "value_per_share": 65.582492507}
+  },
+  "one_way_base_per_share_checks": {
+    "tax_rate_20_percent": 42.929595860,
+    "tax_rate_25_percent": 41.360774020,
+    "jv_book_80_percent": 37.508082331,
+    "jv_book_100_percent": 41.360774020,
+    "jv_book_120_percent": 45.213465709,
+    "minority_equity_cost_10_percent": 40.753696107,
+    "minority_equity_cost_12_percent": 41.360774020,
+    "minority_equity_cost_15_percent": 41.967851934
+  },
+  "publication_candidate_values": null,
+  "approval": false,
+  "activation": false
+}

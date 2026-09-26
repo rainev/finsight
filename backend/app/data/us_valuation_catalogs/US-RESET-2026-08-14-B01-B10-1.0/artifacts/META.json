@@ -1,0 +1,139 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Conditional estimate. META's value depends heavily on AI infrastructure spending, future cash conversion, and large uncommenced commitments; the obligations are not deducted twice.",
+      "Conditional Low-reliability estimate. Uses reported facts plus hypothetical future-event assumptions; actual value may fall materially outside this range. Not a reported fact or recommendation.",
+      "Model 'conditional_estimate': Conditional estimate. META's value depends heavily on AI infrastructure spending, future cash conversion, and large uncommenced commitments; the obligations are not deducted twice.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/META/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, Low reliability, short warning, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-02-CONDITIONAL-ESTIMATE-1.0",
+    "status": "review_required",
+    "warnings": [
+      "Conditional estimate. META's value depends heavily on AI infrastructure spending, future cash conversion, and large uncommenced commitments; the obligations are not deducted twice."
+    ]
+  },
+  "issuer": {
+    "cik": "0001326801",
+    "classification_confidence": 0.5,
+    "classification_reason": " routes via SEC SIC to a supported archetype; issuer-level economic review is still required. Bridge overrides record fields absent from the controlling filing.",
+    "finsight_sector": "Technology",
+    "issuer_name": "Meta Platforms, Inc.",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "primary_archetype": "internet_digital_services",
+    "secondary_archetypes": [],
+    "ticker": "META"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-02-CONDITIONAL-ESTIMATE-1.0",
+    "sector_framework": "issuer-specific conditional decision states",
+    "source_policy": "Reported SEC facts remain separate from governed hypothetical assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "conditional_estimate",
+    "reason": "Conditional decision-support estimate; not an ordinary source-bounded intrinsic value.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 415.7813971742543,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional estimate. META's value depends heavily on AI infrastructure spending, future cash conversion, and large uncommenced commitments; the obligations are not deducted twice."
+      ]
+    }
+  },
+  "primary_valuation_method": "conditional_estimate",
+  "public_assumptions": {
+    "forecast_mode": "conditional_scenarios",
+    "forecast_policy_version": "BATCH-02-CONDITIONAL-ESTIMATE-1.0"
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.7082271468780946,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional estimate. META's value depends heavily on AI infrastructure spending, future cash conversion, and large uncommenced commitments; the obligations are not deducted twice.",
+      "Conditional Low-reliability estimate. Uses reported facts plus hypothetical future-event assumptions; actual value may fall materially outside this range. Not a reported fact or recommendation."
+    ]
+  },
+  "scenario_range": {
+    "base": 415.7813971742543,
+    "high": 710.2490698199643,
+    "label": "conditional event envelope, not a statistical confidence interval or expected value",
+    "low": 169.1141326918095
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001628280-26-050705",
+    "filed_date": "2026-07-30",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing anchors reported facts; forward states are governed assumptions.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm"
+  },
+  "ticker": "META",
+  "valuation_date": "2026-08-14"
+}

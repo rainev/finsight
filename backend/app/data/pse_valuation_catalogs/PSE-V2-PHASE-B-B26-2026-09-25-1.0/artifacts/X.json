@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "0f9c37e5379e92df6b3b79194eab57b8323d117e47ff7f8214f59f68b2af1c91",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Negative parent/common equity and a disclosed recovery plan leave recapitalization, claims and sustainable cash flow unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "045277bb9158a0b64ae2ccb69f7b6ba73f3816aba79f1c45f2edd3f828e7dd72",
+  "issuer": {
+    "issuer_id": "PSE:X",
+    "name": "Xurpas Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Negative parent/common equity and a disclosed recovery plan leave recapitalization, claims and sustainable cash flow unresolved.",
+    "metric_basis": "PHP parent equity (pesos) / 2,713,603,812 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "A going-concern FCFF case needs supported recapitalization and normalized operating economics.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "X",
+    "security_id": "PSE:X:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "7eddb1650c48e00d",
+      "form": "PSE financial summary",
+      "label": "X FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "7eddb1650c48e00d25371ce09b03037d6c1dd27ad64a508257ec1ce6df7f4bf6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=656"
+    },
+    {
+      "document_id": "7eddb1650c48e00d-support-1",
+      "form": "PSE common-stock data",
+      "label": "X ordinary common common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "7eddb1650c48e00d25371ce09b03037d6c1dd27ad64a508257ec1ce6df7f4bf6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=656"
+    },
+    {
+      "document_id": "7eddb1650c48e00d-support-2",
+      "form": "PSE issuer disclosure",
+      "label": "X class or capital-claim disclosure",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "7eddb1650c48e00d25371ce09b03037d6c1dd27ad64a508257ec1ce6df7f4bf6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1966030"
+    }
+  ],
+  "subsector": "Information technology",
+  "ticker": "X",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "1H2026 parent equity is negative PHP213.214m, total equity negative PHP364.473m and operating losses persist. No positive book multiple or current-upside claim is published."
+  ]
+}

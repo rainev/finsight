@@ -1,0 +1,161 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-11.0",
+  "batch_version": "PSE-V2-PHASE-B-B11-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B11-2026-09-23-1.0",
+  "universe_version": "PSE-V2-118-B11-1.0",
+  "valuation_date": "2026-09-23",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["SMC", "LTG", "AGI", "COSCO", "FDC", "FPH", "ANS", "LPZ", "APO", "TFHI"],
+  "policies": {
+    "diversified_holdco": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.45, "base": 0.6, "high": 0.75},
+      "version": "PSE-V2-PB-DIVERSIFIED-HOLDCO-B11-1.0",
+      "rationale": "Carry forward the reviewed Batch 3 diversified holding-company screening band. It is an analyst band, not a peer study or SOTP."
+    },
+    "layered_holdco": {
+      "metric": "price_to_book",
+      "relation": "multiple",
+      "assumptions": {"low": 0.25, "base": 0.4, "high": 0.55},
+      "version": "PSE-V2-PB-LAYERED-HOLDCO-B11-1.0",
+      "rationale": "A wider holding-company discount for layered listed stakes and unresolved parent capital claims. It is an analyst band, not a peer study or SOTP."
+    }
+  },
+  "issuers": {
+    "SMC": {
+      "issuer_name": "San Miguel Corporation",
+      "subsector": "Diversified food, power, fuel, and infrastructure holding company",
+      "primary_model": "sotp",
+      "policy": "layered_holdco",
+      "source": {"label": "SMC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=154"},
+      "metric_value_per_share": 88.10,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 88.10, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 88.10, "normalized_currency": "PHP"},
+      "route_reason": "Food, power, fuel, and infrastructure component SOTP remains primary; reported P/B is a finite screen during the parent claim review.",
+      "intrinsic_blocker": "Attributable subsidiary values, parent-only debt, preferred shares, leases, minority interests, and corporate overhead are not reconciled.",
+      "source_warning": "SMC is also held by TFHI in this batch. The two per-share screens must not be added, and reported book value is not a completed common-equity bridge.",
+      "relationship_source_url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=650"
+    },
+    "LTG": {
+      "issuer_name": "LT Group, Inc.",
+      "subsector": "Banking, tobacco, beverage, and property holding company",
+      "primary_model": "sotp",
+      "policy": "diversified_holdco",
+      "source": {"label": "LTG FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=12"},
+      "metric_value_per_share": 24.00,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 24.00, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 24.00, "normalized_currency": "PHP"},
+      "route_reason": "Banking, tobacco, beverage, and property component SOTP remains primary; reported P/B is a finite screening fallback.",
+      "intrinsic_blocker": "The bank equity value, tobacco cash flows, property interests, ownership percentages, parent-only debt, and minority claims are not reconciled."
+    },
+    "AGI": {
+      "issuer_name": "Alliance Global Group, Inc.",
+      "subsector": "Spirits, property, resorts, and restaurants holding company",
+      "primary_model": "sotp",
+      "policy": "diversified_holdco",
+      "source": {"label": "AGI FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=212"},
+      "metric_value_per_share": 40.33,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 40.33, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 40.33, "normalized_currency": "PHP"},
+      "route_reason": "Attributable spirits, property, resorts, and restaurant SOTP remains primary; reported P/B is a finite screening fallback.",
+      "intrinsic_blocker": "Ownership in EMI and MEG, unlisted resort and restaurant values, parent-only debt, and minority claims are not reconciled.",
+      "source_warning": "AGI owns listed EMI and MEG interests; their standalone per-share screens cannot be added to AGI's screen.",
+      "relationship_source_url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=212"
+    },
+    "COSCO": {
+      "issuer_name": "Cosco Capital, Inc.",
+      "subsector": "Retail, liquor, property, and energy holding company",
+      "primary_model": "sotp",
+      "policy": "diversified_holdco",
+      "source": {"label": "COSCO FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=50"},
+      "metric_value_per_share": 24.63,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 24.63, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 24.63, "normalized_currency": "PHP"},
+      "route_reason": "Attributable retail, liquor, property, and energy SOTP remains primary; reported P/B is a finite screening fallback.",
+      "intrinsic_blocker": "Ownership in listed PGOLD and KEEPR, unlisted subsidiaries, parent-only debt, and minority claims are not reconciled.",
+      "source_warning": "COSCO owns listed PGOLD and KEEPR interests; standalone subsidiary screens must not be added to COSCO's screen.",
+      "relationship_source_url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=50"
+    },
+    "FDC": {
+      "issuer_name": "Filinvest Development Corporation",
+      "subsector": "Property, banking, power, and hospitality holding company",
+      "primary_model": "sotp",
+      "policy": "diversified_holdco",
+      "source": {"label": "FDC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=75"},
+      "metric_value_per_share": 25.07,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 25.07, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 25.07, "normalized_currency": "PHP"},
+      "route_reason": "Property, banking, power, and hospitality SOTP remains primary; reported P/B is a finite screening fallback.",
+      "intrinsic_blocker": "Attributable property and bank values, unlisted power and hospitality interests, parent-only debt, and minority claims are not reconciled."
+    },
+    "FPH": {
+      "issuer_name": "First Philippine Holdings Corporation",
+      "subsector": "Power, property, and manufacturing holding company",
+      "primary_model": "sotp",
+      "policy": "layered_holdco",
+      "source": {"label": "FPH FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=197"},
+      "metric_value_per_share": 477.04,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 477.04, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 477.04, "normalized_currency": "PHP"},
+      "route_reason": "Power, property, and manufacturing SOTP remains primary; reported P/B is a finite screen during ownership and capital claim review.",
+      "intrinsic_blocker": "Ownership in listed FGEN, unlisted assets, parent-only debt, minority interests, and capital claims are not reconciled.",
+      "source_warning": "FPH is owned through LPZ and owns listed FGEN; these per-share screens describe overlapping equity interests and are not additive.",
+      "relationship_source_url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=197"
+    },
+    "ANS": {
+      "issuer_name": "A. Soriano Corporation",
+      "subsector": "Cable, leisure, and investment holding company",
+      "primary_model": "sotp",
+      "policy": "diversified_holdco",
+      "source": {"label": "ANS FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=14"},
+      "metric_value_per_share": 31.31,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 31.31, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 31.31, "normalized_currency": "PHP"},
+      "route_reason": "Cable, leisure, and other investment SOTP remains primary; reported P/B is a finite screening fallback.",
+      "intrinsic_blocker": "Cable and resort asset values, other holdings, parent-only debt, ownership, and minority claims are not reconciled."
+    },
+    "LPZ": {
+      "issuer_name": "Lopez Holdings Corporation",
+      "subsector": "Power and media holding company",
+      "primary_model": "sotp",
+      "policy": "layered_holdco",
+      "source": {"label": "LPZ FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=61"},
+      "metric_value_per_share": 25.67,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 25.67, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 25.67, "normalized_currency": "PHP"},
+      "route_reason": "Look-through FPH and ABS interests and parent-only claims require SOTP; reported P/B is a finite screen.",
+      "intrinsic_blocker": "Ownership and value of listed FPH and ABS, parent-only debt, structural claims, and minority interests are not reconciled.",
+      "source_warning": "LPZ holds FPH and ABS interests. Their standalone screens cannot be added to LPZ's screen.",
+      "relationship_source_url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=61"
+    },
+    "APO": {
+      "issuer_name": "Anglo Philippine Holdings Corporation",
+      "subsector": "Natural resources, property, and infrastructure holding company",
+      "primary_model": "sotp",
+      "policy": "diversified_holdco",
+      "source": {"label": "APO FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=52"},
+      "metric_value_per_share": 3.05,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 3.05, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 3.05, "normalized_currency": "PHP"},
+      "route_reason": "Mineral, property, power, and investment SOTP remains primary; reported P/B is a finite screening fallback.",
+      "intrinsic_blocker": "Mineral permits and values, property interests, listed investee stakes, parent-only debt, and minority claims are not reconciled.",
+      "source_warning": "APO has interests in listed resource companies including OV and AT. Their standalone screens are not additive with APO's screen.",
+      "relationship_source_url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=52"
+    },
+    "TFHI": {
+      "issuer_name": "Top Frontier Investment Holdings, Inc.",
+      "subsector": "San Miguel and mining investment holding company",
+      "primary_model": "sotp",
+      "policy": "layered_holdco",
+      "source": {"label": "TFHI FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=650"},
+      "metric_value_per_share": 437.57,
+      "metric_label": "1H2026 PSE-reported book value per share",
+      "normalization": {"formula": "reported PHP book value per share", "original_value": 437.57, "original_currency": "PHP", "original_units": "PHP per share", "normalized_value": 437.57, "normalized_currency": "PHP"},
+      "route_reason": "TFHI's SMC stake and mining interests require attributable SOTP after parent-only claims; reported P/B is a finite screen.",
+      "intrinsic_blocker": "SMC stake attribution, mining options, parent-only debt, preferred shares, minority interests, and corporate costs are not reconciled.",
+      "source_warning": "TFHI holds a controlling SMC stake. TFHI and SMC screens overlap and must not be added; reported book value is not a completed common-equity bridge.",
+      "relationship_source_url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=650"
+    }
+  }
+}

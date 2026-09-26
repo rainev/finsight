@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "2adcb48e784fa92aaeb10b572834e778b97f35f36be1ab2b5895f1fca903eeac",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Plant-level generation, concession life, maintenance capex, debt and parent claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "d8189bfc404fba75bedfbeb6422ea36470f1545a7e607a4fd21de91320a25925",
+  "issuer": {
+    "issuer_id": "PSE:REDC",
+    "name": "Repower Energy Development Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 1.551492478,
+      "high": 2.133302157,
+      "low": 0.969682799
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 3.878731194219289,
+    "note": "Finite analyst book-value screen; no peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B20-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "d523450a3fa00ea4131a04873086944afd878bb91348e0ae324fe4935ff9f90c",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B20-1.0",
+  "numerical_range": {
+    "high": 2.133302157,
+    "low": 0.969682799
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Plant-level generation, concession life, maintenance capex, debt and parent claims are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 650,000,002 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite layered-holding/asset P/B screening band; concession values, ownership claims and funding are not independently underwritten.",
+    "reliability": "Low",
+    "route_reason": "Hydropower interests require finite concession or asset-life DCF within attributable SOTP."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:REDC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "d523450a3fa00ea4",
+      "form": "PSE financial summary",
+      "label": "REDC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "d523450a3fa00ea4131a04873086944afd878bb91348e0ae324fe4935ff9f90c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=702"
+    },
+    {
+      "document_id": "d523450a3fa00ea4-support-1",
+      "form": "PSE common-stock data",
+      "label": "REDC open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "d523450a3fa00ea4131a04873086944afd878bb91348e0ae324fe4935ff9f90c",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=702&security_id=702"
+    }
+  ],
+  "subsector": "Renewable hydropower",
+  "ticker": "REDC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE PHP4.21 BVPS follows total equity; the separate screen uses PHP2.521bn parent equity, not PHP2.737bn total equity."
+  ]
+}

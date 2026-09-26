@@ -1,0 +1,168 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Conditional Low-reliability estimate. Current capex is not reported; cash margins use company-history bounds and do not copy the stale 2024 capex amount into 2026. Unresolved NCI is reserved at 5%/2.5%/0% of assets across bear/base/bull.",
+      "Invalidate when a current capex disclosure or a complete post-disposal year falls outside the governed cash-margin range.",
+      "Model 'conditional_estimate': Conditional Low-reliability estimate. Current capex is not reported; cash margins use company-history bounds and do not copy the stale 2024 capex amount into 2026. Unresolved NCI is reserved at 5%/2.5%/0% of assets across bear/base/bull.",
+      "Primary model 'conditional_estimate' is review_required."
+    ]
+  },
+  "availability_type": "conditional_estimate",
+  "calculator_link": "/api/us-valuations/APP/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ]
+  },
+  "currency": "USD",
+  "data_boundary": {
+    "public_payload_contains": "conditional range, confidence reasons, warnings, assumptions, and filing attribution",
+    "raw_financial_statement_values_included": false,
+    "stock_prices_used": false
+  },
+  "forecast_quality": {
+    "checks": {},
+    "errors": [],
+    "policy_version": "BATCH-03-LAUNCH-FIRST-1.1",
+    "status": "review_required",
+    "warnings": [
+      "Conditional Low-reliability estimate. Current capex is not reported; cash margins use company-history bounds and do not copy the stale 2024 capex amount into 2026. Unresolved NCI is reserved at 5%/2.5%/0% of assets across bear/base/bull."
+    ]
+  },
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0001751008",
+    "classification_confidence": 0.65,
+    "classification_reason": "Frozen Batch 03 economic lane with issuer-specific source/model review.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Communication Services",
+    "issuer_name": "AppLovin",
+    "mapping_version": "US-RESET-PARTITION-2026-08-14-2.0",
+    "override_applied": true,
+    "primary_archetype": "communication_services",
+    "sec_sic_code": null,
+    "sec_sic_label": "Advertising",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001751008-26-000059"
+    ],
+    "ticker": "APP"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "BATCH-03-LAUNCH-FIRST-1.1",
+    "sector_framework": "normalized_cash_fcff",
+    "source_policy": "Reported SEC facts remain private and separate from governed FinSight assumptions."
+  },
+  "model_policy": {
+    "blend_models": false,
+    "fallback_from": "fcff_dcf",
+    "primary": "conditional_estimate",
+    "reason": "Launch-first current-legal-state conditional baseline after the source-bounded primary route failed.",
+    "supporting": []
+  },
+  "models": {
+    "conditional_estimate": {
+      "conditional_value_per_share": 246.40944865855178,
+      "currency": "USD",
+      "errors": [],
+      "model": "conditional_estimate",
+      "output_type": "conditional_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Conditional Low-reliability estimate. Current capex is not reported; cash margins use company-history bounds and do not copy the stale 2024 capex amount into 2026. Unresolved NCI is reserved at 5%/2.5%/0% of assets across bear/base/bull."
+      ]
+    }
+  },
+  "primary_valuation_method": "normalized_cash_fcff",
+  "public_assumptions": {
+    "bridge_claims_basis": "Current capex is estimated from company history; unresolved NCI is reserved at 5%/2.5%/0% of assets rather than treated as zero.",
+    "cash_conversion_margin": 0.6870933812315944,
+    "cash_conversion_margin_high": 0.7672986435107557,
+    "cash_conversion_margin_low": 0.15859520109277125,
+    "diluted_shares": 335291000.0,
+    "diluted_shares_high": 352000000.0,
+    "diluted_shares_low": 325000000.0,
+    "equity_floor_applied": false,
+    "equity_floor_basis": "The bear scenario reaches a limited-liability common-equity floor of zero; its negative raw residual is retained privately and is not used as an ordinary value.",
+    "forecast_mode": "normalized_cash_conversion",
+    "forecast_policy_version": "BATCH-03-LAUNCH-FIRST-1.1",
+    "forecast_years": 5,
+    "initial_revenue_growth": 0.1,
+    "policy_wacc": 0.1,
+    "policy_wacc_high": 0.12,
+    "policy_wacc_low": 0.09,
+    "terminal_growth": 0.02,
+    "terminal_growth_high": 0.025,
+    "terminal_growth_low": 0.01,
+    "unresolved_claims_reserve_base": 206728275.0,
+    "unresolved_claims_reserve_bear": 413456550.0,
+    "unresolved_claims_reserve_bull": 0.0
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "SPECIALIST_MODEL_UNCERTAINTY",
+      "CONDITIONAL_EVENT_MODEL"
+    ],
+    "scenario_label": "Low",
+    "scenario_movement_ratio": 0.8754006494051252,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "conditional_low",
+    "errors": [],
+    "price_dependent_inputs_used": false,
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Conditional Low-reliability estimate. Current capex is not reported; cash margins use company-history bounds and do not copy the stale 2024 capex amount into 2026. Unresolved NCI is reserved at 5%/2.5%/0% of assets across bear/base/bull.",
+      "Invalidate when a current capex disclosure or a complete post-disposal year falls outside the governed cash-margin range."
+    ]
+  },
+  "scenario_range": {
+    "base": 246.40944865855178,
+    "high": 425.88857367995416,
+    "label": "conditional current-state range; not a probability-weighted forecast or recommendation",
+    "low": 30.70245728329668
+  },
+  "scenarios": {},
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "sensitivities": [],
+  "source_financial_statement": {
+    "accession": "0001751008-26-000059",
+    "filed_date": "2026-08-05",
+    "form": "10-Q",
+    "note": "Controlling cutoff-eligible SEC filing used for the Batch 03 initial decision.",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000059/app-20260630.htm"
+  },
+  "ticker": "APP",
+  "valuation_date": "2026-08-14"
+}

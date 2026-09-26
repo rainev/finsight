@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "773f1faea19dc0a381009bd447d3467180459479c0520d5878f08889f414a779",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Parent-equity and parent-income fields display zero, so common attribution, capital quality, sustainable ROE and cost of equity are unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "8f851a13368208c22ba0df3c980647de3dc4dd2e3373fd8bfd2ddb6269ade92c",
+  "issuer": {
+    "issuer_id": "PSE:PTC",
+    "name": "Philippine Trust Company"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 18.576,
+      "high": 23.22,
+      "low": 13.932
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 23.22,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-BANK-B18-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "61e27fd758dcdf055065a62c3879bf6595f099fd049d0d50810127cfe4aadb51",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B18-1.0",
+  "numerical_range": {
+    "high": 23.22,
+    "low": 13.932
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "intrinsic_blocker": "Parent-equity and parent-income fields display zero, so common attribution, capital quality, sustainable ROE and cost of equity are unresolved.",
+    "metric_basis": "reported PHP23.22 BVPS; zero parent fields treated as unavailable attribution",
+    "policy_rationale": "Reuse the finite Batch 16 bank P/B band while regulatory capital, sustainable ROE and common-equity cost remain under review; not residual income.",
+    "reliability": "Low",
+    "route_reason": "Bank common-equity economics require residual income; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PTC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "61e27fd758dcdf05",
+      "form": "PSE quarterly financial summary",
+      "label": "PTC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "61e27fd758dcdf055065a62c3879bf6595f099fd049d0d50810127cfe4aadb51",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=144"
+    },
+    {
+      "document_id": "61e27fd758dcdf05-support-1",
+      "form": "PSE common-stock data",
+      "label": "PTC open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "61e27fd758dcdf055065a62c3879bf6595f099fd049d0d50810127cfe4aadb51",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=144"
+    }
+  ],
+  "subsector": "Universal bank",
+  "ticker": "PTC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Common-equity claims, normalized earnings and asset or cash-flow economics are not fully reconciled.",
+    "The PSE summary displays zero parent-equity and parent-income fields despite positive total equity and BVPS; those zero fields are not treated as economic facts."
+  ]
+}

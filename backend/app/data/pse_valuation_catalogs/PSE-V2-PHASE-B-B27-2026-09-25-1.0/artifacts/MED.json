@@ -1,0 +1,102 @@
+{
+  "artifact_hash": "ee053d9a0d04fb6fe231e938d66493a335420ba5af6c305647fa15468da1ae42",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Recurring losses and unresolved asset realizability preclude a supported sustainable ROE or intrinsic residual-income case."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "9feeb798d19248fa87ae93e08f08c8d7f0aec251001db94e94f709f2a4347d56",
+  "issuer": {
+    "issuer_id": "PSE:MED",
+    "name": "MEDCO Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.004677374,
+      "high": 0.006431389,
+      "low": 0.002923359
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.011693434112198416,
+    "note": "Finite Low-reliability analyst P/B screen; not peer-calibrated, intrinsic or a current-price comparison.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B25-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f843e801cdf9ff250e25ca9a70e47e973916f9dd471c7f6a4546ac232424ce65",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B25-1.0",
+  "numerical_range": {
+    "high": 0.006431389,
+    "low": 0.002923359
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "intrinsic_blocker": "Recurring losses and unresolved asset realizability preclude a supported sustainable ROE or intrinsic residual-income case.",
+    "metric_basis": "PHP parent equity (pesos) / 3,159,292,441 reviewed ordinary-common shares",
+    "policy_rationale": "Finite analyst P/B screening band reused from Batch 24; not peer-calibrated, appraised NAV or intrinsic value.",
+    "reliability": "Low",
+    "route_reason": "A financial holding company requires sustainable returns and capital-claim analysis for residual income; a small parent-book screen is separate.",
+    "share_bridge_type": "single_class",
+    "trading_status": "open",
+    "trading_status_as_of": "2026-09-23"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "MED",
+    "security_id": "PSE:MED:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f843e801cdf9ff25",
+      "form": "PSE financial summary",
+      "label": "MED reviewed PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f843e801cdf9ff250e25ca9a70e47e973916f9dd471c7f6a4546ac232424ce65",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=126"
+    },
+    {
+      "document_id": "f843e801cdf9ff25-support-1",
+      "form": "PSE common-stock data",
+      "label": "MED ordinary common stock data",
+      "period_end": "2026-09-23",
+      "published_at": null,
+      "sha256": "f843e801cdf9ff250e25ca9a70e47e973916f9dd471c7f6a4546ac232424ce65",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=126"
+    }
+  ],
+  "subsector": "Financial holding",
+  "ticker": "MED",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured.",
+    "PSE 1H2026 parent equity is only PHP36.943m against 3.159bn common shares, and YTD income is negative. This is a sub-cent Low-reliability book screen, not an operating forecast or current-upside claim."
+  ]
+}

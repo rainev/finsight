@@ -1,0 +1,90 @@
+{
+  "artifact_hash": "bd1bb9534cf86e33ea27ba1e2c94ab32183017f8da0e0151794280ce40cb138e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A project-level RNAV with regional development fair values and complete debt and minority claims is not yet reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "5eef8f42c640681b00c6fcbbbf540957f5e286390d3b04436662035ffe61c0c7",
+  "issuer": {
+    "issuer_id": "PSE:CLI",
+    "name": "Cebu Landmasters, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.55,
+      "high": 0.7,
+      "low": 0.4
+    },
+    "estimates": {
+      "base": 2.8765000000000005,
+      "high": 3.661,
+      "low": 2.092
+    },
+    "metric": "price_to_book",
+    "metric_label": "FY2025 reported parent book value per common share",
+    "metric_value_per_share": 5.23,
+    "note": "Transparent P/B-to-reported-NAV screen while the component-level SOTP or property RNAV remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-GROWTH-PROPERTY-B03-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a4ec8568ba29ab211e0845eea646d6d47afca2474a96938d34ca8c93051fac99",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B03-1.0",
+  "numerical_range": {
+    "high": 3.661,
+    "low": 2.092
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A project-level RNAV with regional development fair values and complete debt and minority claims is not yet reconciled.",
+    "policy_rationale": "Shared P/B-to-reported-NAV screen for a regional growth property platform pending property-level RNAV reconciliation.",
+    "reliability": "Low",
+    "reported_parent_equity_php_millions": 22411.230806,
+    "route_reason": "Property RNAV remains primary; a P/B-to-reported-NAV screen provides a finite result while project-level fair values and claims are reconciled."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CLI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a4ec8568ba29ab21",
+      "form": "17-A",
+      "label": "CLI FY2025 PSE annual financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "a4ec8568ba29ab211e0845eea646d6d47afca2474a96938d34ca8c93051fac99",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=668"
+    }
+  ],
+  "subsector": "Regional property developer",
+  "ticker": "CLI",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved component SOTP or property RNAV.",
+    "Reported book value is an accounting measure and may differ materially from current asset fair value.",
+    "The policy band is a transparent initial convention, not a completed issuer peer study.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

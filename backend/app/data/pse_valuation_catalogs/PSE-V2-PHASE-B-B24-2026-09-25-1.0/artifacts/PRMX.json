@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "6c099f250b769d9e9decfde98344d35a3cafef079a1efff94ebebc546abab488",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Project economics, parent/minority equity reconciliation, debt, tax and common share claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "2132ef8249d64349cade97be01a47fe971c723838388255eef679cf8057a122e",
+  "issuer": {
+    "issuer_id": "PSE:PRMX",
+    "name": "Primex Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.387,
+      "high": 0.516,
+      "low": 0.258
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 0.86,
+    "note": "Finite analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B15-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "1d52571188657ad8b2b056b730fb70eedda79ed7b8063f43d807eb54dc253a35",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B15-1.0",
+  "numerical_range": {
+    "high": 0.516,
+    "low": 0.258
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Project economics, parent/minority equity reconciliation, debt, tax and common share claims are not reconciled.",
+    "metric_basis": "PSE-reported PHP book value per share; no property fair-value adjustment",
+    "policy_rationale": "Reuse the reviewed Batch 12 diversified-property P/B screening band for positive reported BVPS; this is not a peer study or a completed property RNAV/SOTP.",
+    "reliability": "Low",
+    "route_reason": "Development projects and property interests require RNAV/SOTP; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PRMX:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "1d52571188657ad8",
+      "form": "PSE quarterly financial summary",
+      "label": "PRMX FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "1d52571188657ad8b2b056b730fb70eedda79ed7b8063f43d807eb54dc253a35",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=214"
+    }
+  ],
+  "subsector": "Residential development and property investment",
+  "ticker": "PRMX",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Reported book value is not a completed property RNAV or peer-calibrated target.",
+    "Parent equity and BVPS bases shift between the annual and interim columns; the reported interim figure is a screening input, not a completed common-equity bridge."
+  ]
+}

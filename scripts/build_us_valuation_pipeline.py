@@ -120,6 +120,7 @@ def build_issuer_artifacts(
         filing_evidence=filing_evidence,
     )
     public = public_result(result, submissions)
+    primary_model = result["model_policy"]["primary"]
     frontend = frontend_company(
         result,
         public,
@@ -129,7 +130,7 @@ def build_issuer_artifacts(
             "subsector": subsector,
             "insight": (
                 f"{short_name} is valued from SEC filings with a governed, "
-                "price-free FCFF and EPV framework."
+                f"price-free {primary_model} framework."
             ),
             **(issuer_metadata or {}),
         },

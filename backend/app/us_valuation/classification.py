@@ -3,15 +3,37 @@
 from __future__ import annotations
 
 import json
+from functools import lru_cache
 from importlib.resources import files
 from typing import Any
 
 from .sec_client import normalize_cik
 
 
+@lru_cache(maxsize=1)
 def load_archetype_config() -> dict[str, Any]:
     path = files(__package__).joinpath("config/archetypes.json")
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _model_routing_override(
+    config: dict[str, Any], cik: str
+) -> dict[str, Any] | None:
+    matches = [
+        group
+        for group in config.get("model_routing_groups", [])
+        if cik in group.get("issuers", {})
+    ]
+    if len(matches) > 1:
+        raise ValueError(f"Multiple model-routing groups configured for CIK {cik}")
+    if not matches:
+        return None
+    group = matches[0]
+    return {
+        key: value
+        for key, value in group.items()
+        if key not in {"issuers", "evidence"}
+    }
 
 
 def classify_issuer(
@@ -20,7 +42,9 @@ def classify_issuer(
 ) -> dict[str, Any]:
     config = config or load_archetype_config()
     cik = normalize_cik(submissions.get("cik", ""))
-    override = config.get("issuer_overrides", {}).get(cik)
+    route_override = _model_routing_override(config, cik) or {}
+    issuer_override = config.get("issuer_overrides", {}).get(cik) or {}
+    override = {**route_override, **issuer_override} or None
     raw_sic = str(submissions.get("sic") or "").zfill(4)
     match = next(
         (
@@ -61,10 +85,18 @@ def classify_issuer(
             "Mapped from SEC SIC; issuer-level economic review is still required.",
         )
         secondary = list(override.get("secondary_archetypes", []))
-        verified_zero_bridge_fields = dict(
-            override.get("verified_zero_bridge_fields", {})
-        )
+        verified_zero_bridge_fields = {
+            field: dict(evidence)
+            for field, evidence in override.get(
+                "verified_zero_bridge_fields", {}
+            ).items()
+            if not str(evidence.get("verification_version") or "").startswith(
+                "US-BRIDGE-ZERO-AUTO"
+            )
+        }
         governed_bridge_fields = dict(override.get("governed_bridge_fields", {}))
+        model_route_eligible = bool(override.get("model_route_eligible", True))
+        model_route_reason = override.get("model_route_reason", reason)
         override_applied = True
     else:
         sector = match["sector"]
@@ -74,6 +106,11 @@ def classify_issuer(
         secondary = []
         verified_zero_bridge_fields = {}
         governed_bridge_fields = {}
+        model_route_eligible = bool(match.get("model_route_eligible", True))
+        model_route_reason = match.get(
+            "model_route_reason",
+            "The SEC SIC route is eligible for its governed primary model.",
+        )
         override_applied = False
 
     policy = config.get("valuation_policies", {}).get(archetype)
@@ -106,6 +143,8 @@ def classify_issuer(
         "override_applied": override_applied,
         "override_reason": reason if override_applied else None,
         "classification_reason": reason,
+        "model_route_eligible": model_route_eligible,
+        "model_route_reason": model_route_reason,
         "source_accessions": accessions,
         "valuation_policy": policy,
         "verified_zero_bridge_fields": verified_zero_bridge_fields,

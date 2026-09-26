@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "912ffb65e49253dff20ebbfb178c2a79cfcf88a77c763f5e3e64e15d68b02c35",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The FY2025 source package does not yet provide a reviewed lease-adjusted FCFF and capital bridge suitable for publication."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "4c62b54b195917c937e6749d3db726f242cf62b2923ed923af6b0f724c8a09cc",
+  "issuer": {
+    "issuer_id": "PSE:SSI",
+    "name": "SSI Group, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 8.0,
+      "high": 10.0,
+      "low": 6.0
+    },
+    "estimates": {
+      "base": 3.2,
+      "high": 4.0,
+      "low": 2.4000000000000004
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "FY2025 reported basic EPS",
+    "metric_value_per_share": 0.4,
+    "note": "Transparent screening fallback while the specialist FCFF bridge remains unavailable.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-MR-B02-SSI-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "492ac500ff58011a53f926f2bdf1e4d2663a13200708d8528963190f44ca0800",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B02-1.0",
+  "numerical_range": {
+    "high": 4.0,
+    "low": 2.4000000000000004
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "The FY2025 source package does not yet provide a reviewed lease-adjusted FCFF and capital bridge suitable for publication.",
+    "reliability": "Low",
+    "route_reason": "Operating FCFF remains primary, but the full lease-adjusted cash-flow bridge is not reconciled for the current source period."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SSI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "492ac500ff58011a",
+      "form": "17-A",
+      "label": "SSI FY2025 PSE annual-report fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "492ac500ff58011a53f926f2bdf1e4d2663a13200708d8528963190f44ca0800",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1901258"
+    }
+  ],
+  "subsector": "Specialty retail",
+  "ticker": "SSI",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unavailable specialist intrinsic valuation.",
+    "The source-supported FCFF and lease-adjusted capital bridge remain unresolved.",
+    "Policy bands are initial conventions and are not presented as an empirically validated issuer peer study."
+  ]
+}

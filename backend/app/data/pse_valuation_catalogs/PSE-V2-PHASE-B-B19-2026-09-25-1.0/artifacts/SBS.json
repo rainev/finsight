@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "082d92bfe0c7969cbe9dcdcf4a32243a5aa5283aed3f3804946a8b10d578e867",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Distribution cash flows, property values, minority interests, ESOP dilution, debt, and common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "9b17f451066f0b10afce7d95e0222d9ef4f389adcb12fe3675506668f4268819",
+  "issuer": {
+    "issuer_id": "PSE:SBS",
+    "name": "SBS Philippines Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 2.1769999999999996,
+      "high": 2.799,
+      "low": 1.555
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 3.11,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-INDUSTRIAL-B13-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "8faeb190e0177d6efca335305f39ba0e2641346e629e3bdf3e31b88e063e1253",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B13-1.0",
+  "numerical_range": {
+    "high": 2.799,
+    "low": 1.555
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Distribution cash flows, property values, minority interests, ESOP dilution, debt, and common claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "A shared P/B screening band for manufacturing and industrial supply while segment cash flows, reinvestment, and capital claims are unreconciled. The numerical band reuses the reviewed Batch 9 cyclical operating screen; it is not peer-calibrated.",
+    "reliability": "Low",
+    "route_reason": "Chemical distribution and property interests require attributable SOTP; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SBS:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "8faeb190e0177d6e",
+      "form": "PSE quarterly financial summary",
+      "label": "SBS FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "8faeb190e0177d6efca335305f39ba0e2641346e629e3bdf3e31b88e063e1253",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=658"
+    },
+    {
+      "document_id": "8faeb190e0177d6e-support",
+      "form": "PSE corporate-action disclosure",
+      "label": "SBS 2025 employee stock-option plan listing approval",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "8faeb190e0177d6efca335305f39ba0e2641346e629e3bdf3e31b88e063e1253",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1906186"
+    }
+  ],
+  "subsector": "Industrial chemical distribution and property interests",
+  "ticker": "SBS",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative P/B; the operating FCFF or attributable SOTP remains unresolved.",
+    "Reported book value per share does not establish a common-equity claim bridge or a peer-calibrated multiple.",
+    "SBS has an approved employee stock-option share listing; possible dilution is not modeled into the reported BVPS screen."
+  ]
+}

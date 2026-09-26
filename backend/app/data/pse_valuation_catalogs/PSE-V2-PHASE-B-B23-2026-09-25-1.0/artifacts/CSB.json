@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "d41efee03b2e983322e561e83125123c6479e2da1ede0d1f6695e7f3da57eadf",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Regulatory capital, normalized ROE, cost of equity and common-only claims have not been reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "3221b252870f85b21bffdcf90af2b7308e4e0188837f0c37851cfc48da690b59",
+  "issuer": {
+    "issuer_id": "PSE:CSB",
+    "name": "Citystate Savings Bank, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 6.745865723,
+      "high": 8.432332154,
+      "low": 5.059399293
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 total equity per outstanding ordinary common share",
+    "metric_value_per_share": 8.432332154257614,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-BANK-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "5506377d4013784c11e6f7c60b967d0fbb8df3dec4c388e90be1c3d425e3ac0e",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 8.432332154,
+    "low": 5.059399293
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "intrinsic_blocker": "Regulatory capital, normalized ROE, cost of equity and common-only claims have not been reconciled.",
+    "metric_basis": "PHP total equity (pesos) / 173,865,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite bank P/B screening band; regulatory capital, sustainable ROE and cost of equity remain unreviewed, so this is not residual income.",
+    "reliability": "Low",
+    "route_reason": "A bank requires sustainable residual income and a cost-of-equity capital bridge; book is only a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:CSB:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "5506377d4013784c",
+      "form": "PSE financial summary",
+      "label": "CSB FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "5506377d4013784c11e6f7c60b967d0fbb8df3dec4c388e90be1c3d425e3ac0e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=228"
+    },
+    {
+      "document_id": "5506377d4013784c-support-1",
+      "form": "PSE common-stock data",
+      "label": "CSB open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "5506377d4013784c11e6f7c60b967d0fbb8df3dec4c388e90be1c3d425e3ac0e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=228"
+    }
+  ],
+  "subsector": "Banking",
+  "ticker": "CSB",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The PSE parent-equity field is zero; PHP1.466bn total equity is an explicitly labeled proxy. Reported PHP8.66 BVPS does not exactly equal total equity divided by 173.865m outstanding shares, so the denominator and claims need review."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "7036f4385ad9ef7dcadf10e2dc8c6b92d4a83cb2eac391db1d99797e08281125",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Project values, completion costs, realization taxes, minority claims, debt and common equity are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a5b2ee41a35f49a489b1ad6541c679a9f2198b1cf9b9daf285095abcae4d373e",
+  "issuer": {
+    "issuer_id": "PSE:ELI",
+    "name": "Empire East Land Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.909,
+      "high": 1.212,
+      "low": 0.606
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 2.02,
+    "note": "Finite analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B15-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "51250dc2388df652d4135f018402c1a2dce4ba3683195d78f1f3bc21a01fd493",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B15-1.0",
+  "numerical_range": {
+    "high": 1.212,
+    "low": 0.606
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Project values, completion costs, realization taxes, minority claims, debt and common equity are not reconciled.",
+    "metric_basis": "PSE-reported PHP book value per share; no property fair-value adjustment",
+    "policy_rationale": "Reuse the reviewed Batch 12 diversified-property P/B screening band for positive reported BVPS; this is not a peer study or a completed property RNAV/SOTP.",
+    "reliability": "Low",
+    "route_reason": "Residential projects and minority interests require attributable SOTP/RNAV; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ELI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "51250dc2388df652",
+      "form": "PSE quarterly financial summary",
+      "label": "ELI FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "51250dc2388df652d4135f018402c1a2dce4ba3683195d78f1f3bc21a01fd493",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=190"
+    },
+    {
+      "document_id": "51250dc2388df652-support",
+      "form": "PSE company information",
+      "label": "ELI PSE company information and MEG relationship",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "51250dc2388df652d4135f018402c1a2dce4ba3683195d78f1f3bc21a01fd493",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=190"
+    }
+  ],
+  "subsector": "Mid-cost residential development",
+  "ticker": "ELI",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Reported book value is not a completed property RNAV or peer-calibrated target.",
+    "ELI is MEG-related; parent and subsidiary per-share screens overlap and must not be added."
+  ]
+}

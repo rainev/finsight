@@ -36,13 +36,17 @@ CREATE TABLE IF NOT EXISTS files (
 -- PSE-listed companies. Seeded from the PH-Stocks/ sector folders.
 CREATE TABLE IF NOT EXISTS companies (
   id         SERIAL PRIMARY KEY,
-  ticker     TEXT NOT NULL UNIQUE,
+  ticker     TEXT NOT NULL,
   name       TEXT NOT NULL,
   sector     TEXT,
   currency   TEXT NOT NULL DEFAULT 'PHP',
+  market     TEXT NOT NULL DEFAULT 'PH',
+  exchange   TEXT,
+  cik        TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_companies_sector ON companies (sector);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_companies_market_ticker ON companies (market, ticker);
 
 -- Market-wide valuation assumptions (PH defaults). Keyed so multiple regimes can
 -- coexist; the app reads the 'PH' row. Editable by an admin later.
@@ -68,10 +72,15 @@ CREATE TABLE IF NOT EXISTS valuations (
   inputs      JSONB NOT NULL,
   assumptions JSONB NOT NULL DEFAULT '{}'::jsonb,
   result      JSONB NOT NULL,
+  us_company  BOOLEAN NOT NULL DEFAULT FALSE,
+  ticker      TEXT,
+  model_version TEXT,
+  user_price  NUMERIC,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_valuations_user ON valuations (user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_valuations_company ON valuations (company_id);
+CREATE INDEX IF NOT EXISTS idx_valuations_us_ticker ON valuations (ticker) WHERE us_company;
 
 -- ---------------------------------------------------------------------------
 -- Portfolio-aware insights (see docs/architecture.md)
@@ -150,4 +159,96 @@ CREATE TABLE IF NOT EXISTS company_financials (
   period     TEXT,
   data       JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- ---------------------------------------------------------------------------
+-- Governed PSE valuation V2 evidence store
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS pse_securities (
+  security_id TEXT PRIMARY KEY,
+  issuer_id TEXT NOT NULL,
+  ticker TEXT NOT NULL,
+  issuer_name TEXT NOT NULL,
+  security_type TEXT NOT NULL DEFAULT 'ordinary_common',
+  subsector TEXT,
+  listing_status TEXT,
+  source_as_of DATE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (ticker, security_type)
+);
+
+CREATE TABLE IF NOT EXISTS pse_documents (
+  id BIGSERIAL PRIMARY KEY,
+  issuer_id TEXT NOT NULL,
+  security_id TEXT NOT NULL REFERENCES pse_securities (security_id),
+  source_url TEXT,
+  published_at DATE,
+  retrieved_at TIMESTAMPTZ NOT NULL,
+  sha256 TEXT NOT NULL UNIQUE,
+  object_key TEXT NOT NULL,
+  content_type TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_pse_documents_issuer ON pse_documents (issuer_id, published_at);
+
+CREATE TABLE IF NOT EXISTS pse_reported_facts (
+  id BIGSERIAL PRIMARY KEY,
+  document_id BIGINT NOT NULL REFERENCES pse_documents (id) ON DELETE CASCADE,
+  metric TEXT NOT NULL,
+  value NUMERIC NOT NULL,
+  currency TEXT NOT NULL,
+  unit_scale TEXT NOT NULL,
+  period_start DATE,
+  period_end DATE NOT NULL,
+  period_type TEXT NOT NULL,
+  measurement_type TEXT NOT NULL,
+  consolidation_scope TEXT NOT NULL,
+  source_page INTEGER,
+  restatement_version INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_pse_facts_metric_period ON pse_reported_facts (metric, period_end);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_pse_facts_identity
+  ON pse_reported_facts (document_id, metric, period_end, measurement_type, consolidation_scope, restatement_version);
+
+CREATE TABLE IF NOT EXISTS pse_assumptions (
+  id BIGSERIAL PRIMARY KEY,
+  version TEXT NOT NULL,
+  scope TEXT NOT NULL,
+  metric TEXT NOT NULL,
+  scenario TEXT NOT NULL DEFAULT 'all',
+  value JSONB NOT NULL,
+  unit TEXT,
+  effective_date DATE NOT NULL,
+  source_or_rationale TEXT NOT NULL,
+  reviewer TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (version, scope, metric, scenario)
+);
+
+CREATE TABLE IF NOT EXISTS pse_valuation_runs (
+  id BIGSERIAL PRIMARY KEY,
+  security_id TEXT NOT NULL REFERENCES pse_securities (security_id),
+  valuation_date DATE NOT NULL,
+  model_version TEXT NOT NULL,
+  input_hash TEXT NOT NULL,
+  assumptions JSONB NOT NULL,
+  private_result JSONB NOT NULL,
+  availability_type TEXT NOT NULL,
+  publication_state TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (security_id, valuation_date, model_version, input_hash)
+);
+
+CREATE TABLE IF NOT EXISTS pse_adjustments (
+  id BIGSERIAL PRIMARY KEY,
+  run_id BIGINT NOT NULL REFERENCES pse_valuation_runs (id) ON DELETE CASCADE,
+  metric TEXT NOT NULL,
+  amount NUMERIC NOT NULL,
+  reason TEXT NOT NULL,
+  evidence TEXT NOT NULL,
+  author TEXT NOT NULL,
+  effective_date DATE NOT NULL,
+  review_date DATE NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );

@@ -1,0 +1,171 @@
+{
+  "artifact_hash": "17b515215a163d173bd91cfcf6b959b57ac0a6f58f341f14f83d9bc296b51d32",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": "2026-04-15",
+  "input_hash": "c35bced5c6c7202d44d10ea3884ae9b29496b2baab7c48d1c6559a9c71abd1bf",
+  "issuer": {
+    "issuer_id": "PSE:AP",
+    "name": "Aboitiz Power Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PILOT-1.0",
+  "numerical_range": {
+    "high": 53.07395689365769,
+    "low": 13.070828684544006
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalized_fcff_proxy_php_millions": 38000.0,
+    "risk_free_rate": 0.07052,
+    "route_reason": "A reviewed utility/business FCFF route is used for the Phase A provisional estimate.",
+    "scenario_assumptions": {
+      "base": {
+        "growth_rate": 0.035,
+        "roic": 0.12,
+        "terminal_growth": 0.03,
+        "terminal_roic": 0.11,
+        "wacc": 0.115
+      },
+      "bear": {
+        "growth_rate": 0.02,
+        "roic": 0.1,
+        "terminal_growth": 0.025,
+        "terminal_roic": 0.095,
+        "wacc": 0.125
+      },
+      "bull": {
+        "growth_rate": 0.05,
+        "roic": 0.14,
+        "terminal_growth": 0.035,
+        "terminal_roic": 0.125,
+        "wacc": 0.105
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 210023.07370126544,
+      "enterprise_value": 478639.37670126546,
+      "value_per_share": 29.154683615845205
+    },
+    "bear": {
+      "common_equity_value": 94158.99182176794,
+      "enterprise_value": 362775.29482176795,
+      "value_per_share": 13.070828684544006
+    },
+    "bull": {
+      "common_equity_value": 382331.5563004886,
+      "enterprise_value": 650947.8593004886,
+      "value_per_share": 53.07395689365769
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:AP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "0b4b90f8bc3f9c1d",
+      "form": "17-Q",
+      "label": "(11.15.24) AP SEC FORM 17-Q re Third Quarter Report (Consolidated).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "0b4b90f8bc3f9c1d0452d0fe0df797a1dee555273042039da1e3a5f524aa35bd",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "25bac47ee15fa97d",
+      "form": "17-Q",
+      "label": "AP SEC FORM 17-Q re 2026 Fist Quarter Report_redacted.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "25bac47ee15fa97dba0c883348d174ed33e124949bc134035bdd35368f95fe30",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "2b12cd3163086923",
+      "form": "17-Q",
+      "label": "(08.13.24) AP SEC FORM 17-Q re Second Quarter Report (Consolidated).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "2b12cd3163086923dec8f06c252800d31da96623e0182d9f1bf8ca1c5b36208a",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "2ceca428415383db",
+      "form": "17-Q",
+      "label": "(11.14.25) AP SEC FORM 17-Q re Third Quarter Report.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "2ceca428415383dbed9f84808a9d3ba2401103ba1058e238bbe3e523780b1b15",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "72d1fbb3c3abf189",
+      "form": "17-Q",
+      "label": "(08.14.25) AP SEC FORM 17-Q re Second Quarter Report_.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "72d1fbb3c3abf189c322baac8821b496eee7417596a4b12b194ee1203382526a",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "a057aa16d3bcad51",
+      "form": "17-Q",
+      "label": "(05.15.25) AP SEC FORM 17-Q re First Quarter Report.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "a057aa16d3bcad518aa738d65fc4c6b998d0f393c6d2fddd55b03de35570454f",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "7e89e510432474b5",
+      "form": "17-A",
+      "label": "AP SEC FORM 17-A - 2024 Annual Report (Final) (Redacted).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "7e89e510432474b510fc74805cc397874d7f2365c8133bbe3b78496d29863e6e",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "f1985fdc43ca7e81",
+      "form": "17-A",
+      "label": "AP SEC FORM 17-A - 2025 Annual Report_(04.15.2026)_redacted.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "f1985fdc43ca7e8111d7915c9c3300ef2ca676922b43619b5659f8aface6f60b",
+      "source_page": null,
+      "url": null
+    }
+  ],
+  "subsector": "Power generation and distribution",
+  "ticker": "AP",
+  "valuation_date": "2026-09-21",
+  "warnings": [
+    "Provisional Phase A estimate: normalized FCFF is a reviewed analyst proxy, not a fully rebuilt segment forecast.",
+    "The dated benchmark observation is not represented as a current market rate.",
+    "Segment revenue and segment capex remain incomplete in the automated corpus review."
+  ]
+}

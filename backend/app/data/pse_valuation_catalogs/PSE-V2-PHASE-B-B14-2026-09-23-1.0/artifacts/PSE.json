@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "c3f55cf10615b8ac886aa15ccf80901afc5579c2b6fc1520a6ccb8114525cd82",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Reported parent equity exceeds consolidated equity and does not reconcile cleanly to reported BVPS and ordinary shares after the PDS transaction."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025 and latest review",
+  "filing_published_at": null,
+  "input_hash": "5db2bfc4091efee03a4b1d06c1c143d0b72ea4b6a7808a9fc98b59f19f61af09",
+  "issuer": {
+    "issuer_id": "PSE:PSE",
+    "name": "The Philippine Stock Exchange, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 12.0,
+      "high": 14.0,
+      "low": 10.0
+    },
+    "estimates": {
+      "base": 169.32,
+      "high": 197.54,
+      "low": 141.1
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "FY2025 reported basic earnings per share",
+    "metric_value_per_share": 14.11,
+    "note": "Transparent market-relative screen while refreshed residual-income normalization remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-FEE-PLATFORM-B05-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "06c984cd099dfa58fd0076a27174485aec3733bd845a56d28c1d0031d9e46f25",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B05-1.0",
+  "numerical_range": {
+    "high": 197.54,
+    "low": 141.1
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "intrinsic_blocker": "Reported parent equity exceeds consolidated equity and does not reconcile cleanly to reported BVPS and ordinary shares after the PDS transaction.",
+    "policy_rationale": "P/E screen while the reported parent-equity and BVPS bridge remains unresolved after the PDS transaction.",
+    "reliability": "Low",
+    "reported_equity_php_millions": 5516.739845,
+    "route_reason": "Residual income remains primary, but the reported parent-equity and per-share bridge requires reconciliation after the PDS transaction."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PSE:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "06c984cd099dfa58",
+      "form": "17-A",
+      "label": "PSE FY2025 financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "06c984cd099dfa58fd0076a27174485aec3733bd845a56d28c1d0031d9e46f25",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=478"
+    }
+  ],
+  "subsector": "Securities exchange operator",
+  "ticker": "PSE",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved residual-income valuation.",
+    "The disclosed bridge limitation is preserved rather than replaced with a fabricated intrinsic input."
+  ]
+}

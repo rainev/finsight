@@ -1,0 +1,100 @@
+{
+  "artifact_hash": "4a46394421991e190137e722e4f8f962d9045f15059db8524631fa19f228209a",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Potential asset infusion, execution, financing and minority claims are not completed or appraised."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "7ad458cf22247851519619d3189f998381e5748c99893f52b7913ae5d6e21f6d",
+  "issuer": {
+    "issuer_id": "PSE:ABG",
+    "name": "Asiabest Group International Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.328457193,
+      "high": 0.451628641,
+      "low": 0.205285746
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 total equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.8211429833333334,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B23-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "76c3f4f39e1de68ee1e81a36906f6055a5a5bd61c6638c3e7f683578b7d9b52f",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": 0.451628641,
+    "low": 0.205285746
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Potential asset infusion, execution, financing and minority claims are not completed or appraised.",
+    "metric_basis": "PHP total equity (pesos) / 300,000,000 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, a proven reserve appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Prospective investments require attributable SOTP; existing total book is only a tentative screen.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "ABG",
+    "security_id": "PSE:ABG:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "76c3f4f39e1de68e",
+      "form": "PSE financial summary",
+      "label": "ABG FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "76c3f4f39e1de68ee1e81a36906f6055a5a5bd61c6638c3e7f683578b7d9b52f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=176"
+    },
+    {
+      "document_id": "76c3f4f39e1de68e-support-1",
+      "form": "PSE common-stock data",
+      "label": "ABG ordinary common common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "76c3f4f39e1de68ee1e81a36906f6055a5a5bd61c6638c3e7f683578b7d9b52f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=176"
+    }
+  ],
+  "subsector": "Investment holding",
+  "ticker": "ABG",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE parent-equity field is blank and revenue absent; PHP246.343m total book / 300m shares is a Low-reliability proxy. The screen does not value proposed future business assets or explain current trading levels."
+  ]
+}

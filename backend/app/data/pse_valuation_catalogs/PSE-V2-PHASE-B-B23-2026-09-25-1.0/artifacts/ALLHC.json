@@ -1,0 +1,97 @@
+{
+  "artifact_hash": "7a6e278e00e3b1594fb89dfab44d9aa139854b5db74427c0d4629fb496f18d90",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Industrial property values, land realization, recurring lease economics, debt, minority interests, and common claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "3fda725cace17714300304408b1dd8c8c71ded25510c07b4f56adb1b5b508d8f",
+  "issuer": {
+    "issuer_id": "PSE:ALLHC",
+    "name": "AyalaLand Logistics Holdings Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 1.08,
+      "high": 1.44,
+      "low": 0.72
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 2.4,
+    "note": "Analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B12-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "6c0131e4d3d38630e9249e3ba7aa8a5fca57da682e8f0b31efefa12af88745da",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B12-1.0",
+  "numerical_range": {
+    "high": 1.44,
+    "low": 0.72
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Industrial property values, land realization, recurring lease economics, debt, minority interests, and common claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified-property P/B screening band. This is not a peer study or a completed property RNAV.",
+    "reliability": "Low",
+    "route_reason": "Industrial land and recurring logistics assets need asset-level RNAV/SOTP; P/B remains a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ALLHC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "6c0131e4d3d38630",
+      "form": "PSE quarterly financial summary",
+      "label": "ALLHC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "6c0131e4d3d38630e9249e3ba7aa8a5fca57da682e8f0b31efefa12af88745da",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=26"
+    },
+    {
+      "document_id": "6c0131e4d3d38630-support",
+      "form": "PSE company information",
+      "label": "ALLHC PSE company information and ALI ownership",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "6c0131e4d3d38630e9249e3ba7aa8a5fca57da682e8f0b31efefa12af88745da",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=26"
+    }
+  ],
+  "subsector": "Industrial parks, warehouses, cold storage, and commercial property",
+  "ticker": "ALLHC",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "ALI owns a controlling ALLHC stake; the two per-share screens are overlapping equity interests and are not additive."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "artifact_hash": "c8b2d98633b060cd4ae1c4bb5a62f9db8fb443829c80282d135d06c80ab36624",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "A reviewed fleet NAV/SOTP with leases, debt, parent ownership, aircraft commitments, and fuel and demand scenarios is incomplete."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "d0b29ae88f4d3a0537a359f29b56a3d4ab83b0372c00b7e6f964b615a6f9f378",
+  "issuer": {
+    "issuer_id": "PSE:PAL",
+    "name": "PAL Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.8,
+      "high": 1.0,
+      "low": 0.6
+    },
+    "estimates": {
+      "base": 1.4160000000000001,
+      "high": 1.77,
+      "low": 1.062
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 reported book value per share",
+    "metric_value_per_share": 1.77,
+    "note": "Transparent screening fallback while the specialist intrinsic bridge remains incomplete.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LEVERAGED-AIRLINE-B07-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "2834a2cada76527f1db079e020630f9b850e38b04ce72e4ec71e040fd1311444",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B07-1.0",
+  "numerical_range": {
+    "high": 1.77,
+    "low": 1.062
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "A reviewed fleet NAV/SOTP with leases, debt, parent ownership, aircraft commitments, and fuel and demand scenarios is incomplete.",
+    "metric_basis": "reported PHP book value per share",
+    "reliability": "Low",
+    "route_reason": "Fleet NAV and holding-company SOTP remain primary; P/B provides a finite leveraged-airline screen while current earnings are negative."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PAL:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "2834a2cada76527f",
+      "form": "17-Q",
+      "label": "PAL FY2025 and 1H2026 PSE financial report",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "2834a2cada76527f1db079e020630f9b850e38b04ce72e4ec71e040fd1311444",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=20"
+    }
+  ],
+  "subsector": "Air transportation holding company",
+  "ticker": "PAL",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative estimate; this is not the unresolved specialist intrinsic valuation.",
+    "The selected source metric and policy band are explicit and are not presented as a completed peer study."
+  ]
+}

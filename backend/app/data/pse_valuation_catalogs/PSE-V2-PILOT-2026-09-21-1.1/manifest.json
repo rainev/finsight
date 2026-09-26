@@ -1,0 +1,84 @@
+{
+  "artifact_count": 8,
+  "availability_counts": {
+    "intrinsic_valuation": 1,
+    "market_relative_only": 7,
+    "not_available": 0
+  },
+  "catalog_status": "staged",
+  "catalog_version": "PSE-V2-PILOT-2026-09-21-1.1",
+  "entries": [
+    {
+      "artifact_sha256": "e256cfacbfc1368a8b90a1af893cb0c47c4a69c7944d0f38b7250189e0207366",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AC-SOURCE-1.0",
+      "ticker": "AC"
+    },
+    {
+      "artifact_sha256": "03254d18373317999a3efa0cc436be21064aeaae4a6b832323b663860be42a2d",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-ACR-SOURCE-1.0",
+      "ticker": "ACR"
+    },
+    {
+      "artifact_sha256": "da21fa64cfeee94164f28a66fbcb6765fb24ea5adbfa7f45e1864b510c6b968a",
+      "availability_type": "market_relative_only",
+      "primary_model": "normalized_fcff",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-ALI-SOURCE-1.0",
+      "ticker": "ALI"
+    },
+    {
+      "artifact_sha256": "91f91c281bf64694388ca09283a7f6b89c582c6f8d2e3431ae98f259d537f894",
+      "availability_type": "intrinsic_valuation",
+      "primary_model": "fcff_dcf",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AP-SOURCE-1.0",
+      "ticker": "AP"
+    },
+    {
+      "artifact_sha256": "2ba42aac06f17fcba2c4faf10167de5fe8c7b1ff62b7934be4d43b720c4ad9d5",
+      "availability_type": "market_relative_only",
+      "primary_model": "sustainable_distributions",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-AREIT-SOURCE-1.0",
+      "ticker": "AREIT"
+    },
+    {
+      "artifact_sha256": "97bf7e854010a7b2ab9c2f23da2dc1ed5c8e4cdd26b3cbf42ca49b958bd0163c",
+      "availability_type": "market_relative_only",
+      "primary_model": "residual_income",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-BDO-SOURCE-1.0",
+      "ticker": "BDO"
+    },
+    {
+      "artifact_sha256": "939d077ccc7dac294f5214fa495c70d8283af5270fc0136102b7fcef4cb471ec",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-PERC-SOURCE-1.0",
+      "ticker": "PERC"
+    },
+    {
+      "artifact_sha256": "b7539a512d0c9f980d3ab3efe43da13249753fa66dfc3891e6308820d910b0db",
+      "availability_type": "market_relative_only",
+      "primary_model": "sotp",
+      "publication_state": "provisional",
+      "source_audit": "PSE-V2-PILOT-SCC-SOURCE-1.0",
+      "ticker": "SCC"
+    }
+  ],
+  "publication_counts": {
+    "approved": 0,
+    "blocked": 0,
+    "provisional": 8
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-CATALOG-1.0",
+  "universe_version": "PSE-V2-PILOT-8-1.0",
+  "valuation_date": "2026-09-21"
+}

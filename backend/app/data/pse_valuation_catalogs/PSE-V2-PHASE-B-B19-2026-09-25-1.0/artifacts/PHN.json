@@ -1,0 +1,109 @@
+{
+  "artifact_hash": "018140af6cb9043822b436f1d67b3287a3dc753c24766e05c6eb9d1770196746",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Subsidiary economics, ownership, minority interests, debt, capital needs and parent-only claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "5b969f54afeea4cbbe9dbbdf92b9e5a81f57597480b9c712f52a243f0de6bf45",
+  "issuer": {
+    "issuer_id": "PSE:PHN",
+    "name": "Phinma Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 11.224,
+      "high": 15.433,
+      "low": 7.015
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 28.06,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B17-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "a6eb951b016bad9a4e35f51be41df7ab764ec740e2eddc08675f2d2ffd505429",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B17-1.0",
+  "numerical_range": {
+    "high": 15.433,
+    "low": 7.015
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Subsidiary economics, ownership, minority interests, debt, capital needs and parent-only claims are not reconciled.",
+    "metric_basis": "reported PHP28.06 BVPS; parent-attributable equity must not be replaced with total equity",
+    "policy_rationale": "Finite layered-asset P/B screen; reuse the Batch 16 holding-company band without implying an appraised NAV or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Education, materials, housing and hospitality require attributable SOTP; P/B is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PHN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "a6eb951b016bad9a",
+      "form": "PSE quarterly financial summary",
+      "label": "PHN FY2025 and 1H2026 PSE financial summary, PHP thousands",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "a6eb951b016bad9a4e35f51be41df7ab764ec740e2eddc08675f2d2ffd505429",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=107"
+    },
+    {
+      "document_id": "a6eb951b016bad9a-support-1",
+      "form": "PSE common-stock data",
+      "label": "PHN open ordinary-common stock data",
+      "period_end": "2026-09-16",
+      "published_at": null,
+      "sha256": "a6eb951b016bad9a4e35f51be41df7ab764ec740e2eddc08675f2d2ffd505429",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=107"
+    },
+    {
+      "document_id": "a6eb951b016bad9a-support-2",
+      "form": "PSE company information",
+      "label": "PHN PSE company information and segment mix",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "a6eb951b016bad9a4e35f51be41df7ab764ec740e2eddc08675f2d2ffd505429",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=107"
+    }
+  ],
+  "subsector": "Education, materials and property holding",
+  "ticker": "PHN",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Cash flows, attributable ownership and common-equity claims are not fully reconciled.",
+    "Consolidated equity materially exceeds parent equity; using total equity for common-share value would overstate attribution."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "24458d9bc06c159781b00b17d80ab1d9e2b71337e1eb97a72eac036c36dd6551",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Commercial reserves, permits, development funding and project ownership are not independently supported."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "1fc6661c51a468a5f56591ec8a8603f55b6b963e0961a91f3a4079c9141edbb6",
+  "issuer": {
+    "issuer_id": "PSE:ENEX",
+    "name": "ENEX Energy Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.037676857,
+      "high": 0.051805679,
+      "low": 0.023548036
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.09419214362323143,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "420285ff0ca7d4c8ab07b003be10c391ef0042a305e28f21badf96f5e7faef66",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 0.051805679,
+    "low": 0.023548036
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Commercial reserves, permits, development funding and project ownership are not independently supported.",
+    "metric_basis": "PHP parent equity (pesos) / 250,000,001 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; no peer calibration, proven reserve appraisal or attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Exploration and energy interests require finite-life, risked asset DCF/SOTP; book is only a screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ENEX:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "420285ff0ca7d4c8",
+      "form": "PSE financial summary",
+      "label": "ENEX FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "420285ff0ca7d4c8ab07b003be10c391ef0042a305e28f21badf96f5e7faef66",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=653"
+    },
+    {
+      "document_id": "420285ff0ca7d4c8-support-1",
+      "form": "PSE common-stock data",
+      "label": "ENEX open ordinary-common stock data",
+      "period_end": "2026-09-22",
+      "published_at": null,
+      "sha256": "420285ff0ca7d4c8ab07b003be10c391ef0042a305e28f21badf96f5e7faef66",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=653"
+    }
+  ],
+  "subsector": "Upstream energy",
+  "ticker": "ENEX",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The PSE summary reports no revenue and a large FY2025 loss; the small positive 1H2026 parent book does not establish an economically viable producing asset."
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "artifact_hash": "e65cc9ec1029877195e043c54f4e6fad92600027d0dad5b32e0fcea5cfee6060",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "The economic object, asset rights, cash recovery and financing have not been underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "38e409199fdabd64db4034eb4e749e65b3877ab69ef7a64932c7a585bd4a58d8",
+  "issuer": {
+    "issuer_id": "PSE:IMP",
+    "name": "Imperial Resources, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.606471526,
+      "high": 0.833898348,
+      "low": 0.379044704
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 1.5161788153256706,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B23-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "b37ace08f50d7950be080a9b77c85f505fccb947a5ceda723a32ace9ecd294a3",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B23-1.0",
+  "numerical_range": {
+    "high": 0.833898348,
+    "low": 0.379044704
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "The economic object, asset rights, cash recovery and financing have not been underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 652,500,000 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, a proven reserve appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Resource and investment rights require attributable SOTP; parent book is a finite screen.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "IMP",
+    "security_id": "PSE:IMP:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "b37ace08f50d7950",
+      "form": "PSE financial summary",
+      "label": "IMP FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "b37ace08f50d7950be080a9b77c85f505fccb947a5ceda723a32ace9ecd294a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=201"
+    },
+    {
+      "document_id": "b37ace08f50d7950-support-1",
+      "form": "PSE common-stock data",
+      "label": "IMP ordinary common common stock data",
+      "period_end": "2026-09-10",
+      "published_at": null,
+      "sha256": "b37ace08f50d7950be080a9b77c85f505fccb947a5ceda723a32ace9ecd294a3",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=201"
+    }
+  ],
+  "subsector": "Resource and investment holding",
+  "ticker": "IMP",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "Only 100m of 652.5m outstanding common shares appear listed; 1H2026 revenue is minimal and parent income negative. Printed BVPS roughly reconciles to all outstanding common shares."
+  ]
+}

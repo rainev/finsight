@@ -1,0 +1,79 @@
+{
+  "artifact_hash": "1c9325ac6add917a9220aee9869264b013d7db8a77d75adc5b8300e94a796a94",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "No reviewer-approved dated CAD/PHP observation, preferred/common claim bridge, or sustainable insurer ROE/capital case is available."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "a2e8dad4e3c7b8b8eadd535073b4b7609442cf13ea43d794274cca3e9c33f7e7",
+  "issuer": {
+    "issuer_id": "PSE:MFC",
+    "name": "Manulife Financial Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "intrinsic_blocker": "No reviewer-approved dated CAD/PHP observation, preferred/common claim bridge, or sustainable insurer ROE/capital case is available.",
+    "metric_basis": "CAD total equity (millions) / 1,656,816,042 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "A cross-listed insurer requires common-capital residual income and approved CAD/PHP translation.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "MFC",
+    "security_id": "PSE:MFC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "b962a017a841138d",
+      "form": "PSE financial summary",
+      "label": "MFC FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "b962a017a841138d1775e5cc6a52039578e90d29d644ef7aa81ddd6f679f5e22",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=120"
+    },
+    {
+      "document_id": "b962a017a841138d-support-1",
+      "form": "PSE common-stock data",
+      "label": "MFC ordinary common common stock data",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "b962a017a841138d1775e5cc6a52039578e90d29d644ef7aa81ddd6f679f5e22",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=120"
+    }
+  ],
+  "subsector": "Cross-listed insurance",
+  "ticker": "MFC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE summary reports equity in C$ millions and parent attribution is blank. Reported C$27.48 BVPS cannot be presented as PHP per share; cross-listed price alone is not an intrinsic input."
+  ]
+}

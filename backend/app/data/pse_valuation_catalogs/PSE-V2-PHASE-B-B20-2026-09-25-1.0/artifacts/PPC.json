@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "33e156abcfd994188e2780d395e0f27edde84160d764bf8404903b3c7ae1f402",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "LPG margins, property values, minority interests, debt, dilution, capex and parent-only claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "ff891c3f22f30636aac48edc0de78ee757e253de922a1463aedb9b4be1b3717b",
+  "issuer": {
+    "issuer_id": "PSE:PPC",
+    "name": "Pryce Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 19.5,
+      "high": 23.4,
+      "low": 15.6
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 1.95,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic FCFF, residual-income or SOTP valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-OPERATING-B16-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "e784563af864cf411c129bdc3b5cd42ca38796ef4cb84f8c4f8e1a2c87b64356",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B16-1.0",
+  "numerical_range": {
+    "high": 23.4,
+    "low": 15.6
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "LPG margins, property values, minority interests, debt, dilution, capex and parent-only claims are not reconciled.",
+    "metric_basis": "1.97 FY2025 basic EPS + 0.93 1H2026 EPS - 0.95 prior 1H EPS",
+    "policy_rationale": "Reuse the finite Batch 9 operating P/E screening band for positive aligned TTM EPS; not a peer study or intrinsic FCFF/SOTP.",
+    "reliability": "Low",
+    "route_reason": "LPG distribution and property interests require attributable SOTP; P/E is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:PPC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "e784563af864cf41",
+      "form": "PSE quarterly financial summary",
+      "label": "PPC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "e784563af864cf411c129bdc3b5cd42ca38796ef4cb84f8c4f8e1a2c87b64356",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=150"
+    },
+    {
+      "document_id": "e784563af864cf41-support-1",
+      "form": "PSE company information",
+      "label": "PPC PSE company information and LPG/property segments",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "e784563af864cf411c129bdc3b5cd42ca38796ef4cb84f8c4f8e1a2c87b64356",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=150"
+    }
+  ],
+  "subsector": "LPG distribution, memorial parks and pharmaceuticals",
+  "ticker": "PPC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, capital efficiency and common-equity claims have not been fully reconciled.",
+    "PPC has LPG, memorial-park and pharmaceutical interests; a consolidated P/E screen is not an attributable component valuation."
+  ]
+}

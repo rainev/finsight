@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "eb05e385a5a0d2c7f82c5468207e84958aecf6415bfe772d6c8f39121258dd5c",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Subsidiary ownership, project cash flows, water concessions, debt, minority interests and parent claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "db36698a1de10f7fa1cd3276059992cf27b1e218e6f36b7c740b1305bc9a83e0",
+  "issuer": {
+    "issuer_id": "PSE:VVT",
+    "name": "Vivant Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 15.267,
+      "high": 19.629,
+      "low": 10.905
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 21.81,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-UTILITY-B17-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "b2245e9882a853504a9c642659bc9e84aae96ac92f7cfef8aa60b268a93f3f9b",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B17-1.0",
+  "numerical_range": {
+    "high": 19.629,
+    "low": 10.905
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Subsidiary ownership, project cash flows, water concessions, debt, minority interests and parent claims are not reconciled.",
+    "metric_basis": "reported PHP21.81 BVPS; power and water interests not separately valued",
+    "policy_rationale": "Finite industrial/utility book-value screen on reported common BVPS; reuse the Batch 16 industrial band, not a grid or water-company intrinsic model.",
+    "reliability": "Low",
+    "route_reason": "Power and water interests have distinct funding and concession economics requiring SOTP."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:VVT:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "b2245e9882a85350",
+      "form": "PSE quarterly financial summary",
+      "label": "VVT FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "b2245e9882a853504a9c642659bc9e84aae96ac92f7cfef8aa60b268a93f3f9b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=79"
+    },
+    {
+      "document_id": "b2245e9882a85350-support-1",
+      "form": "PSE common-stock data",
+      "label": "VVT open ordinary-common stock data",
+      "period_end": "2026-09-21",
+      "published_at": null,
+      "sha256": "b2245e9882a853504a9c642659bc9e84aae96ac92f7cfef8aa60b268a93f3f9b",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=79"
+    }
+  ],
+  "subsector": "Power and water holding company",
+  "ticker": "VVT",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Cash flows, attributable ownership and common-equity claims are not fully reconciled.",
+    "1H2026 parent-attributable earnings fell from the prior half-year; the book-value band is not a normalized earnings estimate."
+  ]
+}

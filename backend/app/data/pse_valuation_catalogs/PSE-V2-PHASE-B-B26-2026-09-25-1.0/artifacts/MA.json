@@ -1,0 +1,110 @@
+{
+  "artifact_hash": "2c09bb5d5ab0585ec710041153f3fe07e1491c20cec803cc18db5b2cd9ec575e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Recoverable reserves, license life, reclamation, cash funding and class transition are not underwritten."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "13b06b43c4f6eb6e7b79d81389d8a2ec3634b9231bb3ee2ab391043081dc0986",
+  "issuer": {
+    "issuer_id": "PSE:MA",
+    "name": "Manila Mining Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.004315264,
+      "high": 0.005933488,
+      "low": 0.00269704
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per reviewed ordinary-common denominator",
+    "metric_value_per_share": 0.010788160447857555,
+    "note": "Finite analyst book screen with explicit class/claim caveats; no peer calibration or intrinsic value.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B24-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "042bc2c4739f0a02f7799444d25744194348522f672595e85df86932dfe95745",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": 0.005933488,
+    "low": 0.00269704
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Recoverable reserves, license life, reclamation, cash funding and class transition are not underwritten.",
+    "metric_basis": "PHP parent equity (pesos) / 311,504,146,443 reviewed ordinary-common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; not peer-calibrated, an asset appraisal, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Mining rights require finite-life reserve SOTP; pooled common book is a separate screen.",
+    "share_bridge_type": "class_sum"
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "MA",
+    "security_id": "PSE:MA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "042bc2c4739f0a02",
+      "form": "PSE financial summary",
+      "label": "MA FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "042bc2c4739f0a02f7799444d25744194348522f672595e85df86932dfe95745",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=119"
+    },
+    {
+      "document_id": "042bc2c4739f0a02-support-1",
+      "form": "PSE common-stock data",
+      "label": "MA A common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "042bc2c4739f0a02f7799444d25744194348522f672595e85df86932dfe95745",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=119"
+    },
+    {
+      "document_id": "042bc2c4739f0a02-support-2",
+      "form": "PSE common-stock data",
+      "label": "MA B common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "042bc2c4739f0a02f7799444d25744194348522f672595e85df86932dfe95745",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=119&security_id=329"
+    }
+  ],
+  "subsector": "Mining and mineral assets",
+  "ticker": "MA",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "PSE reported PHP0.01 BVPS approximately reconciles to PHP3.361bn parent equity divided by both outstanding A and B common classes (311.504bn), not the MA line alone. Gross revenue is blank and interim parent income negative."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "artifact_hash": "50cd329d2eaa87f8465370353e78de38dd95c0312f5c18d7771b1a2f12fc6864",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "1H2026 parent equity is negative, operations report no revenue and the common line remains suspended; no positive book or asset realization case is reviewed."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "3884b84b44baf1053d17770556926cd1fa7ea34abd8a71183c457230e214e869",
+  "issuer": {
+    "issuer_id": "PSE:CYBR",
+    "name": "Cyber Bay Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B27-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "nav_sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "1H2026 parent equity is negative, operations report no revenue and the common line remains suspended; no positive book or asset realization case is reviewed.",
+    "metric_basis": "No published valuation: financial period or parent/common economic claims are unresolved",
+    "reliability": "Unavailable",
+    "route_reason": "Property/investment rights need recoverable NAV and a positive parent-common residual.",
+    "share_bridge_type": "single_class",
+    "trading_status": "suspended",
+    "trading_status_as_of": "2026-06-30"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "CYBR",
+    "security_id": "PSE:CYBR:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "28b089ac43583ff6",
+      "form": "PSE financial summary",
+      "label": "CYBR reviewed PSE financial-summary page",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "28b089ac43583ff6f473d90fd4e3b3b965a647d55c02562a4d5e4c191dd58a73",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=67"
+    },
+    {
+      "document_id": "28b089ac43583ff6-support-1",
+      "form": "PSE common-stock data",
+      "label": "CYBR ordinary common stock data",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "28b089ac43583ff6f473d90fd4e3b3b965a647d55c02562a4d5e4c191dd58a73",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=67"
+    }
+  ],
+  "subsector": "Property and investment holding",
+  "ticker": "CYBR",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and summary publication date were not captured. Suspended stock has no current market quote or upside claim.",
+    "PSE 1H2026 parent equity is negative PHP1,520,397 thousand and printed BVPS is negative PHP0.21. The summary's 2025 annual parent-equity field appears in a different scale; no cross-period proxy is applied."
+  ]
+}

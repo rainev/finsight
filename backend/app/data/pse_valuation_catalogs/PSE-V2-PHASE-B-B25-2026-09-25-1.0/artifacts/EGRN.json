@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "3d364fdeb1e23bc8d8a9746f8f5c6915ea7bf16e889050ed5492fda37894b036",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Asset realizability, rights, financing and parent-only capital claims have not been appraised."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "28b8e95b3fcf40c141fc3155e535bf6843ca8e9d22c5abca4faa5eb7612a3de6",
+  "issuer": {
+    "issuer_id": "PSE:EGRN",
+    "name": "Everwoods Green Resources and Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.057078825,
+      "high": 0.078483384,
+      "low": 0.035674266
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding ordinary common share",
+    "metric_value_per_share": 0.14269706244,
+    "note": "Finite analyst book-value screen; total-equity bases are tentative common-share proxies. No peer calibration or completed intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B22-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "8c4aa055ff73c5fa5f7f7aef47a08d7fee0477dbac18d185a10fece964fa2925",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B22-1.0",
+  "numerical_range": {
+    "high": 0.078483384,
+    "low": 0.035674266
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Asset realizability, rights, financing and parent-only capital claims have not been appraised.",
+    "metric_basis": "PHP parent equity (pesos) / 25,000,000,000 dated outstanding common shares",
+    "policy_rationale": "Reuse the finite holding/resource-asset P/B screening band; no peer calibration, proven reserve appraisal or attributable SOTP is implied.",
+    "reliability": "Low",
+    "route_reason": "Land and investment interests require attributable SOTP; parent book is a finite screening input."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:EGRN:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "8c4aa055ff73c5fa",
+      "form": "PSE financial summary",
+      "label": "EGRN FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "8c4aa055ff73c5fa5f7f7aef47a08d7fee0477dbac18d185a10fece964fa2925",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=191"
+    },
+    {
+      "document_id": "8c4aa055ff73c5fa-support-1",
+      "form": "PSE common-stock data",
+      "label": "EGRN open ordinary-common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "8c4aa055ff73c5fa5f7f7aef47a08d7fee0477dbac18d185a10fece964fa2925",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=191"
+    }
+  ],
+  "subsector": "Resource and investment holding",
+  "ticker": "EGRN",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "The interim retained-earnings presentation differs sharply from the FY2025 line; no recurring earnings or asset fair value is inferred. Twenty-five billion outstanding common shares are used, not a rounded BVPS."
+  ]
+}

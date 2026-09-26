@@ -22,7 +22,7 @@ export default function Register() {
     setSubmitting(true)
     try {
       await register(email, password)
-      navigate('/')
+      navigate('/valuation/AAPL')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Try again.')
     } finally {

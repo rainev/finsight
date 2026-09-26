@@ -1,0 +1,73 @@
+{
+  "review_id": "PSE-V2-AP-APPROVAL-READINESS-2026-09-26-1",
+  "status": "staged_decision_only",
+  "issuer": "PSE:AP",
+  "overall_decision": "not_approval_ready",
+  "issuer_approved": false,
+  "activation_authorized": false,
+  "rlc_status": "pending_consolidation_property_bridge",
+  "staged_test": {
+    "artifact_sha256": "e9c3326bc8256f30f2611e43fb1d9b077c54511563375e212ddea7b030cad930",
+    "valuation_date": "2026-09-26",
+    "bear_php_per_share": 26.31192168996843,
+    "base_php_per_share": 41.36077402036423,
+    "bull_php_per_share": 63.74083234255536,
+    "publication_state": "provisional",
+    "reliability": "Low - calculation-only supervised test"
+  },
+  "assumptions": {
+    "tax": {
+      "readiness": "conditional_not_signed_off",
+      "severity": "P1",
+      "working_rate": 0.25,
+      "alternate_rate_check": 0.20,
+      "base_value_at_alternate_rate": 42.92959586,
+      "minimum_review": "Confirm borrowing-entity interest deductibility and whether 25% is an acceptable conservative working rate."
+    },
+    "joint_ventures": {
+      "readiness": "not_ready",
+      "severity": "P0",
+      "equity_method_book_php_millions": 138809.675,
+      "contribution_php_per_share": 19.2634584444978,
+      "fraction_of_staged_common_equity": 0.46574221350435363,
+      "top_three_fraction_of_book": 0.869712366951367,
+      "ttm_equity_method_income_php_millions": 20377.286,
+      "ttm_cash_dividends_php_millions": 11528.280,
+      "minimum_review": "Check GNPD direct, AA Thermal and CGHI ownership, earnings/cash conversion and impairment; explicitly accept or adjust their book proxy without double counting."
+    },
+    "minority_claim": {
+      "readiness": "conditional_not_signed_off",
+      "severity": "P1",
+      "claim_php_millions": 21872.575,
+      "ttm_cash_distributions_php_millions": 2624.709,
+      "assumed_cost_of_equity": 0.12,
+      "assumed_growth": 0.0,
+      "base_value_at_10_percent_cost": 40.753696107,
+      "base_value_at_15_percent_cost": 41.967851934,
+      "minimum_review": "Confirm payout durability, the zero-growth case and a reasonable minority equity hurdle, especially for VECO/SPI."
+    },
+    "discount_and_terminal": {
+      "readiness": "not_ready",
+      "severity": "P0",
+      "base_wacc": 0.115,
+      "wacc_10_5_percent_base_value": 49.73140756902451,
+      "wacc_11_5_percent_base_value": 41.36077402036423,
+      "wacc_12_5_percent_base_value": 34.75541723614597,
+      "present_value_terminal_fraction_of_enterprise": 0.680738801233987,
+      "risk_free_snapshot_date": "2026-06-23",
+      "risk_free_snapshot_rate": 0.07052,
+      "snapshot_age_days_at_review": 95,
+      "minimum_review": "Pin a dated comparable ten-year yield or explicitly approve a same-series carry-forward, then document the WACC and terminal ROIC/growth case. Do not substitute a coupon or policy rate."
+    }
+  },
+  "other_approval_gaps": [
+    "Starting FCFF is a mechanical FY2025/TTM average, not analyst-normalized maintenance/growth reinvestment.",
+    "The 41.9 percent change from active AP needs economic attribution beyond its mechanical bridge.",
+    "Durable original-source storage and public-display rights have not been cleared for publication."
+  ],
+  "minimum_next_packet": [
+    "One review of the three largest JV positions and their cash/earnings quality.",
+    "One dated macro/WACC and terminal-assumption sign-off.",
+    "One explicit tax/minority/normalized-FCFF judgment record."
+  ]
+}

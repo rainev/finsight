@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "3e29c06039dc7d8ef410ccc433b0fb7b81ba388aea8e0a66587437bb848abba4",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Mid-cycle fuel margins, inventory gains/losses, leases, capex, debt and terminal cash flows are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "9ae5fdef8cad26e567000b60e801768f74ee602237d292404a9c3872aa2536f3",
+  "issuer": {
+    "issuer_id": "PSE:SHLPH",
+    "name": "Shell Pilipinas Corporation"
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 9.79,
+      "high": 13.706,
+      "low": 5.874
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 19.58,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-CYCLICAL-B17-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "4d77c9332c84ad77903b9c9b7dfd1c16947b765865209ba4f95d1d4001e92b64",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B17-1.0",
+  "numerical_range": {
+    "high": 13.706,
+    "low": 5.874
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Mid-cycle fuel margins, inventory gains/losses, leases, capex, debt and terminal cash flows are not reconciled.",
+    "metric_basis": "reported PHP19.58 BVPS from PHP-thousands source; per-share amount is PHP",
+    "policy_rationale": "Finite filing-review P/B screen on reported common BVPS; reuse the Batch 16 review band for operating-cycle and claim uncertainty.",
+    "reliability": "Low",
+    "route_reason": "Fuel margins, inventories, leases and working capital require FCFF; P/B is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:SHLPH:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "4d77c9332c84ad77",
+      "form": "PSE quarterly financial summary",
+      "label": "SHLPH FY2025 and 1H2026 PSE financial summary, PHP thousands",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "4d77c9332c84ad77903b9c9b7dfd1c16947b765865209ba4f95d1d4001e92b64",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=663"
+    },
+    {
+      "document_id": "4d77c9332c84ad77-support-1",
+      "form": "PSE common-stock data",
+      "label": "SHLPH open ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "4d77c9332c84ad77903b9c9b7dfd1c16947b765865209ba4f95d1d4001e92b64",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=663"
+    }
+  ],
+  "subsector": "Downstream fuel distribution and retail",
+  "ticker": "SHLPH",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Cash flows, attributable ownership and common-equity claims are not fully reconciled.",
+    "1H2026 attributable earnings were negative despite positive book value; no earnings multiple is inferred."
+  ]
+}

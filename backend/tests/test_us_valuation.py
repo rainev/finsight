@@ -277,6 +277,25 @@ def test_microsoft_sic_routes_to_enterprise_software_cloud() -> None:
     assert result["valuation_policy"]["primary_model"] == "fcff_dcf"
 
 
+def test_vertiv_issuer_review_routes_to_hardware_not_semiconductors() -> None:
+    submission = {
+        "cik": "1674101",
+        "tickers": ["VRT"],
+        "name": "Vertiv Holdings Co",
+        "sic": "3679",
+        "sicDescription": "Electronic Components, NEC",
+        "filings": {"recent": {"accessionNumber": [], "form": []}},
+    }
+
+    result = classify_issuer(submission)
+
+    assert result["finsight_sector"] == "Technology"
+    assert result["primary_archetype"] == "hardware_electronic_equipment"
+    assert result["classification_confidence"] >= 0.8
+    assert "data-center" in result["classification_reason"].lower()
+    assert result["valuation_policy"]["primary_model"] == "fcff_dcf"
+
+
 def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
     """Catch public payloads that expose private SEC statement inputs or values."""
     result = build_us_valuation(
@@ -297,7 +316,8 @@ def test_microsoft_public_artifact_contains_no_raw_financial_amounts() -> None:
     }
     assert public["data_boundary"]["stock_prices_used"] is False
     assert public["automated_review"]["review_version"] == "US-AUTO-REVIEW-1.0"
-    assert public["automated_review"]["decision"] == "blocked"
+    assert public["automated_review"]["decision"] == "approved_with_caveat"
+    assert public["review"]["publication_state"] == "review_required"
     assert set(public) == {
         "schema_version",
         "valuation_date",
@@ -364,6 +384,7 @@ def test_withheld_public_artifact_scrubs_post_model_values() -> None:
 
     public = public_result(private, load_fixture("aapl-submissions.json"))
 
+    assert private["review"]["publication_state"] == "withheld"
     assert all(
         model["intrinsic_value_per_share"] is None
         for model in public["models"].values()
@@ -378,6 +399,21 @@ def test_withheld_public_artifact_scrubs_post_model_values() -> None:
         "high": None,
         "label": "assumption range, not a statistical confidence interval",
     }
+
+
+def test_nested_withheld_model_forces_top_level_withholding_and_scrubbing() -> None:
+    artifact = json.loads(
+        Path("backend/app/data/us_valuations/AAPL.json").read_text(encoding="utf-8")
+    )
+    artifact["review"]["publication_state"] = "review_required"
+    artifact["models"]["fcff_dcf"]["publication_state"] = "withheld"
+    artifact["models"]["fcff_dcf"]["intrinsic_value_per_share"] = 999.0
+
+    sanitized = sanitize_public_artifact(artifact)
+
+    assert sanitized["review"]["publication_state"] == "withheld"
+    assert sanitized["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
+    assert sanitized["scenario_range"]["base"] is None
 
 
 def test_api_loader_scrubs_adversarial_withheld_stored_artifact(
@@ -414,7 +450,30 @@ def test_api_loader_fails_closed_for_legacy_publication_state(
     assert load_generated_result("AAPL")["review"]["publication_state"] == "withheld"
 
 
-def test_legacy_fcff_fallback_artifact_is_withheld_and_scrubbed() -> None:
+def test_api_list_returns_rebuilt_route_summary(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    artifact = json.loads(
+        Path("backend/app/data/us_valuations/KMI.json").read_text(encoding="utf-8")
+    )
+    (tmp_path / "KMI.json").write_text(json.dumps(artifact), encoding="utf-8")
+    monkeypatch.setattr(us_valuations_router, "DATA_ROOT", tmp_path)
+
+    response = us_valuations_router.list_us_valuations()
+
+    assert response["items"] == [
+        {
+            "ticker": "KMI",
+            "name": "KINDER MORGAN, INC.",
+            "sector": "Energy",
+            "model": "fcff_dcf",
+            "base": None,
+            "publication_state": "withheld",
+        }
+    ]
+
+
+def test_rebuilt_incomplete_fcff_artifact_is_withheld_and_scrubbed() -> None:
     artifact = json.loads(
         Path("backend/app/data/us_valuations/LOW.json").read_text(encoding="utf-8")
     )
@@ -422,12 +481,11 @@ def test_legacy_fcff_fallback_artifact_is_withheld_and_scrubbed() -> None:
     sanitized = sanitize_public_artifact(artifact)
 
     assert sanitized["review"]["publication_state"] == "withheld"
-    assert sanitized["models"]["ddm"]["intrinsic_value_per_share"] is None
+    assert "fallback_from" not in sanitized["model_policy"]
+    assert sanitized["model_policy"]["primary"] == "fcff_dcf"
+    assert sanitized["models"]["fcff_dcf"]["intrinsic_value_per_share"] is None
     assert sanitized["scenario_range"]["base"] is None
-    assert any(
-        "legacy fcff fallback" in error.lower()
-        for error in sanitized["review"]["errors"]
-    )
+    assert sanitized["review"]["errors"]
 
 
 @pytest.mark.parametrize("ticker", ["WFC", "SO"])
@@ -722,8 +780,13 @@ def test_wdc_stale_instant_bridge_facts_do_not_clear_current_bridge() -> None:
     )
 
     balance_sheet = financials["balance_sheet"]
-    assert balance_sheet["bridge_complete"] is True
-    assert balance_sheet["bridge_missing_fields"] == []
+    assert balance_sheet["bridge_complete"] is False
+    assert set(balance_sheet["bridge_missing_fields"]) == {
+        "commercial_paper",
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+        "noncontrolling_interests",
+    }
     assert balance_sheet["values"]["marketable_securities_current"] == 0
     assert balance_sheet["values"]["marketable_securities_noncurrent"] == 0
     assert balance_sheet["values"]["preferred_equity"] == 0
@@ -749,7 +812,14 @@ def test_wdc_bridge_evidence_is_available_from_filing_date_not_review_date() -> 
         governed_bridge_fields=classification["governed_bridge_fields"],
     )
 
-    assert financials["balance_sheet"]["bridge_complete"] is True
+    balance_sheet = financials["balance_sheet"]
+    assert balance_sheet["bridge_complete"] is False
+    assert set(balance_sheet["bridge_missing_fields"]) == {
+        "commercial_paper",
+        "finance_lease_current",
+        "finance_lease_noncurrent",
+        "noncontrolling_interests",
+    }
 
 
 def test_crm_stale_lease_and_nonoperating_facts_do_not_clear_current_bridge() -> None:
@@ -904,6 +974,68 @@ def test_sec_refresh_cache_replay_preserves_bytes_hash_and_provenance(
     replay_client.companyfacts("0000789019")
 
     assert sec_cache_manifest(tmp_path, "0000789019") == captured_manifest
+
+
+def test_sec_filing_document_fetches_and_replays_from_durable_cache(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    body = b"<html><body>controlling filing</body></html>"
+    requests: list[Any] = []
+
+    class Response:
+        def __enter__(self) -> "Response":
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def read(self) -> bytes:
+            return body
+
+    def fake_urlopen(request: Any, *, timeout: int) -> Response:
+        requests.append(request)
+        return Response()
+
+    monkeypatch.setattr("app.us_valuation.sec_client.urlopen", fake_urlopen)
+    captured = SecClient(
+        user_agent="FinSight contact@example.com",
+        cache_dir=tmp_path,
+        requests_per_second=5,
+    )
+
+    html = captured.filing_document(
+        "0000796343",
+        "0000796343-26-000112",
+        "adbe-20260529.htm",
+        refresh=True,
+    )
+
+    assert html == body.decode("utf-8")
+    assert requests[0].full_url == (
+        "https://www.sec.gov/Archives/edgar/data/796343/"
+        "000079634326000112/adbe-20260529.htm"
+    )
+    replay = SecClient(user_agent=None, cache_dir=tmp_path)
+    assert replay.filing_document(
+        "0000796343",
+        "0000796343-26-000112",
+        "adbe-20260529.htm",
+    ) == html
+
+
+@pytest.mark.parametrize("primary_document", ["../secret", "/absolute.htm", ""])
+def test_sec_filing_document_rejects_unsafe_primary_document(
+    tmp_path: Path, primary_document: str
+) -> None:
+    client = SecClient(user_agent=None, cache_dir=tmp_path)
+
+    with pytest.raises(ValueError, match="primary document"):
+        client.filing_document(
+            "0000796343",
+            "0000796343-26-000112",
+            primary_document,
+        )
 
 
 def test_apple_frontend_artifact_retains_form_in_source_label(result: dict) -> None:
@@ -1286,6 +1418,44 @@ def test_partial_override_without_matching_sic_is_rejected() -> None:
         classify_issuer(submission, config)
 
 
+def test_automated_absence_zero_is_not_treated_as_verified_bridge_evidence() -> None:
+    config = {
+        "version": "test",
+        "sic_ranges": [],
+        "issuer_overrides": {
+            "0000123456": {
+                "ticker": "TEST",
+                "sector": "Test sector",
+                "archetype": "test_archetype",
+                "confidence": 1.0,
+                "verified_zero_bridge_fields": {
+                    "noncontrolling_interests": {
+                        "rationale": "Tag absent; pending human confirmation.",
+                        "verification_version": "US-BRIDGE-ZERO-AUTO-1.0",
+                    },
+                    "preferred_equity": {
+                        "rationale": "Explicitly no preferred shares outstanding.",
+                        "verification_version": "US-FILING-EVIDENCE-1.0",
+                    },
+                },
+            }
+        },
+        "valuation_policies": {"test_archetype": {"primary_model": "fcff_dcf"}},
+    }
+    submission = {
+        "cik": "123456",
+        "tickers": ["TEST"],
+        "name": "TEST CORP",
+        "sic": "9999",
+        "filings": {"recent": {"accessionNumber": [], "form": []}},
+    }
+
+    result = classify_issuer(submission, config)
+
+    assert "noncontrolling_interests" not in result["verified_zero_bridge_fields"]
+    assert "preferred_equity" in result["verified_zero_bridge_fields"]
+
+
 def test_apple_ttm_reconciliation_and_history(result: dict):
     ttm = result["financials"]["ttm"]
     assert ttm["period_end"] == "2026-03-28"
@@ -1415,7 +1585,7 @@ def test_public_api_artifact_excludes_raw_financials():
     assert "discount_rate" not in public
     assert "forecast_assumptions" not in public
     assert public["models"]["fcff_dcf"]["intrinsic_value_per_share"] == pytest.approx(
-        137.8839487,
+        103.3303977,
         abs=0.001,
     )
 

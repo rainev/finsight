@@ -1,0 +1,157 @@
+{
+  "automated_review": {
+    "blocking_reasons": [],
+    "decision": "approved_with_caveat",
+    "evidence_status": "complete",
+    "publication_state": "review_required",
+    "repair_actions": [
+      "reclassify_issuer_or_switch_model"
+    ],
+    "review_version": "US-AUTO-REVIEW-1.0",
+    "warnings": [
+      "Classification confidence is below the 0.80 review threshold.",
+      "Provisional common-equity and regulatory-capital range; reliability capped at Low.",
+      "Model 'residual_income': Provisional common-equity and regulatory-capital range; reliability capped at Low.",
+      "Primary model 'residual_income' is review_required.",
+      "Scenario 'base' model 'residual_income' is review_required.",
+      "Scenario 'bear' model 'residual_income' is review_required.",
+      "Scenario 'bull' model 'residual_income' is review_required."
+    ]
+  },
+  "availability_type": "available",
+  "calculator_link": "/api/us-valuations/JPM/calculator",
+  "confidence": {
+    "label": "Low",
+    "reasons": [
+      "PROVISIONAL_BANK_CAPITAL_RANGE",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ]
+  },
+  "currency": "USD",
+  "issuer": {
+    "accounting_standard": "US-GAAP",
+    "cik": "0000019617",
+    "classification_confidence": 0.7,
+    "classification_reason": "Mapped from SEC SIC; issuer-level economic review is still required.",
+    "filing_regime": "10-K_10-Q",
+    "finsight_sector": "Financials",
+    "issuer_name": "JPMORGAN CHASE & CO",
+    "mapping_version": "US-ARCHETYPE-1.0",
+    "override_applied": false,
+    "primary_archetype": "us_bank",
+    "sec_sic_code": "6021",
+    "sec_sic_label": "National Commercial Banks",
+    "secondary_archetypes": [],
+    "source_accessions": [
+      "0001628280-26-054343",
+      "0001628280-26-029344",
+      "0001628280-26-008131",
+      "0001628280-25-048859"
+    ],
+    "ticker": "JPM"
+  },
+  "market": "US",
+  "market_comparison": {
+    "reason": "approved_eod_record_unavailable",
+    "status": "unavailable"
+  },
+  "methodology": {
+    "forecast_policy": "docs/methodology/united-states/forecast-discount-validation-policy.md",
+    "sector_framework": "docs/methodology/united-states/equity-valuation-engine-framework.md",
+    "source_policy": "SEC Companyfacts and submissions; no exchange prices"
+  },
+  "model_policy": {
+    "blend_models": false,
+    "primary": "residual_income",
+    "reason": "CANDIDATE (review_required) — depository banks valued at the equity level via residual income; deposits are operating funding, not an EV->equity debt bridge. Cross-checks: clean-surplus DDM + justified P/B.",
+    "supporting": [
+      "justified_pb",
+      "clean_surplus_ddm"
+    ]
+  },
+  "models": {
+    "residual_income": {
+      "currency": "USD",
+      "errors": [],
+      "intrinsic_value_per_share": 190.14453033174448,
+      "model": "residual_income",
+      "output_type": "intrinsic_value_per_share",
+      "publication_state": "review_required",
+      "warnings": [
+        "Provisional common-equity and regulatory-capital range; reliability capped at Low."
+      ]
+    }
+  },
+  "primary_valuation_method": "residual_income",
+  "public_assumptions": {
+    "cost_of_equity": 0.09179999999999999,
+    "terminal_growth": 0.02,
+    "terminal_roe": 0.11
+  },
+  "relative_value_summary": {
+    "status": "unavailable"
+  },
+  "reliability": {
+    "accounting_impact_ratio": 0.0,
+    "accounting_label": "High",
+    "label": "Low",
+    "model_cap": "Low",
+    "reasons": [
+      "PROVISIONAL_BANK_CAPITAL_RANGE",
+      "SPECIALIST_MODEL_UNCERTAINTY"
+    ],
+    "scenario_label": "Medium",
+    "scenario_movement_ratio": 0.3463491710906399,
+    "source_cap": "Low"
+  },
+  "review": {
+    "confidence_grade": "medium",
+    "errors": [],
+    "prohibited_output_check": {
+      "buy_hold_sell": false,
+      "current_price": false,
+      "trading_multiples": false,
+      "upside_downside": false
+    },
+    "publication_state": "review_required",
+    "warnings": [
+      "Provisional common-equity and regulatory-capital range; reliability capped at Low."
+    ]
+  },
+  "scenario_range": {
+    "base": 190.14453033174448,
+    "high": 226.65528952100226,
+    "label": "provisional bank-capital range",
+    "low": 124.28812986392575
+  },
+  "scenarios": {
+    "base": {
+      "residual_income": {
+        "intrinsic_value_per_share": 190.14453033174448,
+        "publication_state": "review_required"
+      }
+    },
+    "bear": {
+      "residual_income": {
+        "intrinsic_value_per_share": 124.28812986392575,
+        "publication_state": "review_required"
+      }
+    },
+    "bull": {
+      "residual_income": {
+        "intrinsic_value_per_share": 226.65528952100226,
+        "publication_state": "review_required"
+      }
+    }
+  },
+  "schema_version": "US-PUBLIC-VALUATION-1.2",
+  "source_financial_statement": {
+    "accession": "0001628280-26-054343",
+    "filed_date": "2026-08-06",
+    "form": "10-Q",
+    "period_end": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+  },
+  "ticker": "JPM",
+  "valuation_date": "2026-08-14"
+}

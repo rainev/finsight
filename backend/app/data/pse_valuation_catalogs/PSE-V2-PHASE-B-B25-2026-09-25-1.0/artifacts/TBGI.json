@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "8c34663470f8fa7419553759d67ae78d1b3aed96d32cc480454d9dc44cee91a7",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Spectrum and license life, recurring cash flows, network capex, funding and terminal reinvestment are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "740585498b8c6e325b00f59a18d7ae1818ab00d064b3907babb7a2517de76c58",
+  "issuer": {
+    "issuer_id": "PSE:TBGI",
+    "name": "Transpacific Broadband Group International, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.5,
+      "high": 0.7,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.078659043,
+      "high": 0.11012266,
+      "low": 0.047195426
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding common share",
+    "metric_value_per_share": 0.1573180856787109,
+    "note": "Finite analyst book-value screen; no peer calibration or complete intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-OPERATING-B19-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "1eb307364fe0c5012fe17e5ba298c06db97dde55efee122e9a8e26d8d61713b0",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": 0.11012266,
+    "low": 0.047195426
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Spectrum and license life, recurring cash flows, network capex, funding and terminal reinvestment are not reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 3,795,622,000 outstanding common shares",
+    "policy_rationale": "Reuse the finite operating-company P/B screen while normalized cash flows and capital claims are not underwritten; not a peer study or FCFF result.",
+    "reliability": "Low",
+    "route_reason": "Connectivity operating economics require FCFF; parent book value is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:TBGI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "1eb307364fe0c501",
+      "form": "PSE financial summary",
+      "label": "TBGI FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "1eb307364fe0c5012fe17e5ba298c06db97dde55efee122e9a8e26d8d61713b0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=269"
+    },
+    {
+      "document_id": "1eb307364fe0c501-support-1",
+      "form": "PSE common-stock data",
+      "label": "TBGI ordinary-common stock data",
+      "period_end": "2026-09-25",
+      "published_at": null,
+      "sha256": "1eb307364fe0c5012fe17e5ba298c06db97dde55efee122e9a8e26d8d61713b0",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=269"
+    }
+  ],
+  "subsector": "Telecommunications",
+  "ticker": "TBGI",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "PSE-reported EPS rounds to zero; the book screen is not a cash-flow forecast."
+  ]
+}

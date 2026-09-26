@@ -1,0 +1,89 @@
+{
+  "artifact_hash": "ea3ee19abe1b10e8eba6ccd5f777a915e53827969c239f149b9973ef395901d5",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Parent equity is negative and a disclosed debt-to-equity conversion could issue 40bn additional common shares; final capitalization and asset economics are unresolved."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "930c649ac99add8910e1d81b4fcdb536cb84ba6061d8737a56d18f279e904b19",
+  "issuer": {
+    "issuer_id": "PSE:UPM",
+    "name": "United Paragon Mining Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B24-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Parent equity is negative and a disclosed debt-to-equity conversion could issue 40bn additional common shares; final capitalization and asset economics are unresolved.",
+    "metric_basis": "PHP parent equity (pesos) / 273,836,982,480 reviewed ordinary-common shares",
+    "policy_rationale": null,
+    "reliability": "Unavailable",
+    "route_reason": "Mining claims require finite-life asset valuation and a post-recapitalization common-equity bridge.",
+    "share_bridge_type": "single_class"
+  },
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "quoted_line": "UPM",
+    "security_id": "PSE:UPM:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "c4fe75fccb577214",
+      "form": "PSE financial summary",
+      "label": "UPM FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "c4fe75fccb577214b4d0473a002188f2098c2e1133ddb26c24dbb6b0ef03e49f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=168"
+    },
+    {
+      "document_id": "c4fe75fccb577214-support-1",
+      "form": "PSE common-stock data",
+      "label": "UPM ordinary common common stock data",
+      "period_end": "2026-09-22",
+      "published_at": null,
+      "sha256": "c4fe75fccb577214b4d0473a002188f2098c2e1133ddb26c24dbb6b0ef03e49f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=168"
+    },
+    {
+      "document_id": "c4fe75fccb577214-support-2",
+      "form": "PSE issuer disclosure",
+      "label": "UPM class or capital-claim disclosure",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "c4fe75fccb577214b4d0473a002188f2098c2e1133ddb26c24dbb6b0ef03e49f",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1861941"
+    }
+  ],
+  "subsector": "Mining",
+  "ticker": "UPM",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and publication date were not captured.",
+    "1H2026 parent equity is negative PHP336.438m and reported EPS/BVPS round to zero. The proposed 40bn-share debt conversion is not silently treated as completed or ignored in a finite value."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "artifact_hash": "8c2780be2210d13c15f390af2efaf69bb7416fc9848aa1badcdb24c0f0ae04ef",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Land fair values, development costs, permitting, taxes, debt, and common share claims are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "fd4b90de575c21aeef99c89fbdb5bb6e10c71dfedda4c8622d7e267e1b554c3e",
+  "issuer": {
+    "issuer_id": "PSE:ARA",
+    "name": "Araneta Properties, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.45,
+      "high": 0.6,
+      "low": 0.3
+    },
+    "estimates": {
+      "base": 0.5265,
+      "high": 0.702,
+      "low": 0.351
+    },
+    "metric": "price_to_book",
+    "metric_label": "1H2026 PSE-reported book value per share",
+    "metric_value_per_share": 1.17,
+    "note": "Analyst screening band; no peer study or property-level RNAV has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-DIVERSIFIED-PROPERTY-B12-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "70dd398ad773e2c6ff85c1cc3dd106d8fd0124ab7987bb1ef620a89e3c6f5fd6",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B12-1.0",
+  "numerical_range": {
+    "high": 0.702,
+    "low": 0.351
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Land fair values, development costs, permitting, taxes, debt, and common share claims are not reconciled.",
+    "metric_basis": "reported PHP book value per share",
+    "policy_rationale": "Carry forward the reviewed Batch 3 diversified-property P/B screening band. This is not a peer study or a completed property RNAV.",
+    "reliability": "Low",
+    "route_reason": "Land inventory and future development economics require RNAV/SOTP; P/B is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ARA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "70dd398ad773e2c6",
+      "form": "PSE quarterly financial summary",
+      "label": "ARA FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "70dd398ad773e2c6ff85c1cc3dd106d8fd0124ab7987bb1ef620a89e3c6f5fd6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=38"
+    }
+  ],
+  "subsector": "Land banking and residential development",
+  "ticker": "ARA",
+  "valuation_date": "2026-09-23",
+  "warnings": []
+}

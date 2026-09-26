@@ -1,0 +1,98 @@
+{
+  "artifact_hash": "dc1fb9d6a37b74f549fe5b8d95a9b9d96652e0ac61a7da5ec8f41c96d5f932a8",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Asset marks, realization, minority claims, debt and non-listed common-share rights are not fully reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "64a4f4e7574edc028dd560e6f79f619b05aed25c036905db44d569a24cc5c266",
+  "issuer": {
+    "issuer_id": "PSE:ABA",
+    "name": "AbaCore Capital Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.4,
+      "high": 0.55,
+      "low": 0.25
+    },
+    "estimates": {
+      "base": 0.548063532,
+      "high": 0.753587356,
+      "low": 0.342539707
+    },
+    "metric": "price_to_book",
+    "metric_label": "2026-06-30 parent equity per outstanding common share",
+    "metric_value_per_share": 1.3701588290031987,
+    "note": "Finite analyst book-value screen; no peer calibration or complete intrinsic valuation.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PB-LAYERED-B19-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "ee6655977720fa131f8c71e5df7db475fe167e765a23b1cbc8be9b2b871cecb2",
+    "source_page": null,
+    "source_status": "reviewed_public_summary_receipt"
+  },
+  "model_version": "PSE-V2-PHASE-B-B19-1.0",
+  "numerical_range": {
+    "high": 0.753587356,
+    "low": 0.342539707
+  },
+  "price": null,
+  "primary_model": "sotp",
+  "public_assumptions": {
+    "intrinsic_blocker": "Asset marks, realization, minority claims, debt and non-listed common-share rights are not fully reconciled.",
+    "metric_basis": "PHP parent equity (pesos) / 4,504,527,420 outstanding common shares",
+    "policy_rationale": "Reuse the finite holding and asset-company P/B screen; not appraised NAV, proven-resource value, or completed SOTP.",
+    "reliability": "Low",
+    "route_reason": "Property and investment interests require attributable SOTP; parent equity per common share is a separate screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:ABA:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "ee6655977720fa13",
+      "form": "PSE financial summary",
+      "label": "ABA FY2025 and latest PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "ee6655977720fa131f8c71e5df7db475fe167e765a23b1cbc8be9b2b871cecb2",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=174"
+    },
+    {
+      "document_id": "ee6655977720fa13-support-1",
+      "form": "PSE common-stock data",
+      "label": "ABA ordinary-common stock data",
+      "period_end": "2026-09-24",
+      "published_at": null,
+      "sha256": "ee6655977720fa131f8c71e5df7db475fe167e765a23b1cbc8be9b2b871cecb2",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=174"
+    }
+  ],
+  "subsector": "Diversified asset holding",
+  "ticker": "ABA",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Reviewed public-summary receipt only; original filing and source publication date were not captured.",
+    "PSE total equity PHP23.57bn greatly exceeds parent equity PHP6.17bn; reported PHP3.06 BVPS is not substituted for parent equity / 4.50bn outstanding shares. Listed shares are fewer than outstanding."
+  ]
+}

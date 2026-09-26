@@ -1,0 +1,99 @@
+{
+  "schema_version": "PSE-V2-PHASE-B-BATCH-17.0",
+  "batch_version": "PSE-V2-PHASE-B-B17-1.0",
+  "catalog_version": "PSE-V2-PHASE-B-B17-2026-09-25-1.0",
+  "universe_version": "PSE-V2-178-B17-1.0",
+  "valuation_date": "2026-09-25",
+  "review_status": "reviewed_public_fact_receipts",
+  "frozen_tickers": ["SGP", "VVT", "PREIT", "SHLPH", "CHP", "PHN", "RCI", "TFC", "LBC", "MRC"],
+  "policies": {
+    "utility_book": {"metric": "price_to_book", "assumptions": {"low": 0.50, "base": 0.70, "high": 0.90}, "version": "PSE-V2-PB-UTILITY-B17-1.0", "rationale": "Finite industrial/utility book-value screen on reported common BVPS; reuse the Batch 16 industrial band, not a grid or water-company intrinsic model."},
+    "cyclical_book": {"metric": "price_to_book", "assumptions": {"low": 0.30, "base": 0.50, "high": 0.70}, "version": "PSE-V2-PB-CYCLICAL-B17-1.0", "rationale": "Finite filing-review P/B screen on reported common BVPS; reuse the Batch 16 review band for operating-cycle and claim uncertainty."},
+    "layered_book": {"metric": "price_to_book", "assumptions": {"low": 0.25, "base": 0.40, "high": 0.55}, "version": "PSE-V2-PB-LAYERED-B17-1.0", "rationale": "Finite layered-asset P/B screen; reuse the Batch 16 holding-company band without implying an appraised NAV or completed SOTP."},
+    "operating_earnings": {"metric": "price_to_earnings", "assumptions": {"low": 8.0, "base": 10.0, "high": 12.0}, "version": "PSE-V2-PE-OPERATING-B17-1.0", "rationale": "Reuse the finite Batch 16 operating P/E screen for positive aligned TTM basic EPS; not a peer study or intrinsic property valuation."},
+    "logistics_sales": {"metric": "price_to_sales", "assumptions": {"low": 0.50, "base": 0.70, "high": 0.90}, "version": "PSE-V2-PS-LOGISTICS-B17-1.0", "rationale": "Finite low-multiple sales screen for a thin-margin logistics operator; not a peer-calibrated target or an equity cash-flow bridge."}
+  },
+  "issuers": {
+    "SGP": {
+      "issuer_name": "Synergy Grid & Development Phils., Inc.", "subsector": "Power-grid holding company", "primary_model": "sotp", "policy": "utility_book", "metric_kind": "reported_bvps",
+      "source": {"label": "SGP FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=166"},
+      "supporting_sources": [{"label": "SGP open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=166"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 27.59},
+      "metric_value_per_share": 27.59, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP27.59 BVPS; parent-equity and minority claims require separate review", "normalized_value": 27.59, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Grid interests and minority ownership require attributable SOTP; P/B is a separate finite screen.", "intrinsic_blocker": "NGCP ownership, regulated asset and concession economics, minority interests, debt and parent-only claims are not reconciled.", "source_warning": "Consolidated equity includes large non-controlling interests; reported BVPS is not a direct grid-asset NAV."
+    },
+    "VVT": {
+      "issuer_name": "Vivant Corporation", "subsector": "Power and water holding company", "primary_model": "sotp", "policy": "utility_book", "metric_kind": "reported_bvps",
+      "source": {"label": "VVT FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=79"},
+      "supporting_sources": [{"label": "VVT open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-21", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=79"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 21.81},
+      "metric_value_per_share": 21.81, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP21.81 BVPS; power and water interests not separately valued", "normalized_value": 21.81, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Power and water interests have distinct funding and concession economics requiring SOTP.", "intrinsic_blocker": "Subsidiary ownership, project cash flows, water concessions, debt, minority interests and parent claims are not reconciled.", "source_warning": "1H2026 parent-attributable earnings fell from the prior half-year; the book-value band is not a normalized earnings estimate."
+    },
+    "PREIT": {
+      "issuer_name": "Premiere Island Power REIT Corporation", "subsector": "Power-asset REIT", "primary_model": "sustainable_distributions", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "PREIT FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=699"},
+      "supporting_sources": [{"label": "PREIT open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=699"}, {"label": "PREIT lease and ERC proceedings update", "form": "PSE legal-proceedings disclosure", "period_end": "2026-08-20", "url": "https://edge.pse.com.ph/downloadHtml.do?file_id=1960555"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 1.90},
+      "metric_value_per_share": 1.90, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP1.90 BVPS; no automatic recovery of impaired leases", "normalized_value": 1.90, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Sustainable distributions require enforceable lease and counterparty cash flows; P/B is only a separate screen.", "intrinsic_blocker": "Lease suspension, ERC permit proceedings, asset impairment, payout sustainability and tenant credit are unresolved.", "source_warning": "FY2025 reported a large loss and equity decline; the SIPCOR lease/permit proceedings remain material. A positive P/B screen is not a forecast of resumed distributions."
+    },
+    "SHLPH": {
+      "issuer_name": "Shell Pilipinas Corporation", "subsector": "Downstream fuel distribution and retail", "primary_model": "fcff_dcf", "policy": "cyclical_book", "metric_kind": "reported_bvps",
+      "source": {"label": "SHLPH FY2025 and 1H2026 PSE financial summary, PHP thousands", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=663"},
+      "supporting_sources": [{"label": "SHLPH open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=663"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 19.58},
+      "metric_value_per_share": 19.58, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP19.58 BVPS from PHP-thousands source; per-share amount is PHP", "normalized_value": 19.58, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Fuel margins, inventories, leases and working capital require FCFF; P/B is a separate screen.", "intrinsic_blocker": "Mid-cycle fuel margins, inventory gains/losses, leases, capex, debt and terminal cash flows are not reconciled.", "source_warning": "1H2026 attributable earnings were negative despite positive book value; no earnings multiple is inferred."
+    },
+    "CHP": {
+      "issuer_name": "Concreat Holdings Philippines, Inc.", "subsector": "Cement manufacturing", "primary_model": "fcff_dcf", "policy": "cyclical_book", "metric_kind": "reported_bvps",
+      "source": {"label": "CHP FY2025 and 1H2026 PSE financial summary, PHP thousands", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=662"},
+      "supporting_sources": [{"label": "CHP open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-23", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=662"}, {"label": "CHP PSE company information and controlling interests", "form": "PSE company information", "period_end": null, "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=662"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 0.95},
+      "metric_value_per_share": 0.95, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP0.95 BVPS from PHP-thousands source; per-share amount is PHP", "normalized_value": 0.95, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Cement capacity, demand, fuel inputs and reinvestment require FCFF; P/B is a separate screen.", "intrinsic_blocker": "Plant utilization, normalized margins, maintenance capex, liabilities, ownership and terminal economics are not reconciled.", "source_warning": "FY2025 and 1H2026 parent results were losses. CHP is controlled by a group including DMC/SCC, so their per-share screens are not additive."
+    },
+    "PHN": {
+      "issuer_name": "Phinma Corporation", "subsector": "Education, materials and property holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "PHN FY2025 and 1H2026 PSE financial summary, PHP thousands", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=107"},
+      "supporting_sources": [{"label": "PHN open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-16", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=107"}, {"label": "PHN PSE company information and segment mix", "form": "PSE company information", "period_end": null, "url": "https://edge.pse.com.ph/companyInformation/form.do?cmpy_id=107"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 28.06},
+      "metric_value_per_share": 28.06, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP28.06 BVPS; parent-attributable equity must not be replaced with total equity", "normalized_value": 28.06, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Education, materials, housing and hospitality require attributable SOTP; P/B is a separate screen.", "intrinsic_blocker": "Subsidiary economics, ownership, minority interests, debt, capital needs and parent-only claims are not reconciled.", "source_warning": "Consolidated equity materially exceeds parent equity; using total equity for common-share value would overstate attribution."
+    },
+    "RCI": {
+      "issuer_name": "Roxas and Company, Inc.", "subsector": "Land, property and investment holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "RCI FY2025 and 1H2026 PSE financial summary, PHP thousands", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=54"},
+      "supporting_sources": [{"label": "RCI open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-24", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=54"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 9.18},
+      "metric_value_per_share": 9.18, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP9.18 BVPS; no extrapolation of prior gains", "normalized_value": 9.18, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Land and operating interests require appraised attributable SOTP; P/B is a separate screen.", "intrinsic_blocker": "Realizable land values, recurring earnings, disposal gains, debt and parent common claims are not reconciled.", "source_warning": "FY2025 gains are not assumed recurring; 1H2026 parent result was a loss. Reported BVPS has not been reconciled to the latest ordinary-common denominator."
+    },
+    "TFC": {
+      "issuer_name": "PTFC Redevelopment Corporation", "subsector": "Property redevelopment and operating assets", "primary_model": "sotp", "policy": "operating_earnings", "metric_kind": "ttm_eps",
+      "source": {"label": "TFC August FY2025 and nine-month May 2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-05-31", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=8"},
+      "supporting_sources": [{"label": "TFC open ordinary-common stock data", "form": "PSE common-stock data", "period_end": "2026-09-07", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=8"}],
+      "reported_eps": {"fy": {"period_end": "2025-08-31", "period_type": "annual", "value": 3.52}, "current_ytd": {"period_end": "2026-05-31", "period_type": "nine_month_ytd", "value": 2.81}, "prior_ytd": {"period_end": "2025-05-31", "period_type": "nine_month_ytd", "value": 2.58}},
+      "metric_value_per_share": 3.75, "metric_label": "TTM basic EPS through May 2026, August fiscal year", "normalization": {"formula": "PHP3.52 FY2025 basic EPS + PHP2.81 nine-month FY2026 EPS - PHP2.58 prior nine-month EPS", "normalized_value": 3.75, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Redevelopment and property claims require SOTP; aligned P/E is a finite separate earnings screen.", "intrinsic_blocker": "Property-level cash flows, asset values, non-controlling interests and parent common claims are not reconciled.", "source_warning": "TFC has an August fiscal year. The annual BVPS column differs from annual parent equity divided by common shares; this P/E screen does not rely on that book figure."
+    },
+    "LBC": {
+      "issuer_name": "LBC Express Holdings, Inc.", "subsector": "Logistics and parcel delivery", "primary_model": "fcff_dcf", "policy": "logistics_sales", "metric_kind": "ttm_revenue_per_share",
+      "source": {"label": "LBC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "pesos", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=236"},
+      "supporting_sources": [{"label": "LBC open ordinary-common stock data and share counts", "form": "PSE common-stock data", "period_end": "2026-09-11", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=236&security_id=469"}],
+      "reported_revenue": {"fy": {"period_end": "2025-12-31", "period_type": "annual", "value": 14025956097}, "current_ytd": {"period_end": "2026-06-30", "period_type": "half_year_ytd", "value": 7220274354}, "prior_ytd": {"period_end": "2025-06-30", "period_type": "half_year_ytd", "value": 6978435899}},
+      "reported_shares": {"as_of": "2026-09-11", "value": 1425865471, "security_type": "ordinary_common"},
+      "metric_value_per_share": 10.006410031090514, "metric_label": "TTM PHP revenue per outstanding ordinary common share", "normalization": {"formula": "(PHP14,025,956,097 FY2025 + 7,220,274,354 1H2026 - 6,978,435,899 prior 1H) / 1,425,865,471 outstanding common shares", "normalized_value": 10.006410031090514, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Parcel margins, fleet, leases and working capital require FCFF; P/S is a separate finite screen.", "intrinsic_blocker": "Recurring margins, fuel exposure, lease debt, capex, minority claims and common-equity financing are not reconciled.", "source_warning": "The PSE stock-data page reports 1,425,865,471 outstanding common shares but only 40,899,000 listed shares. The sales-per-share screen uses outstanding shares; listing status and full economic rights must be confirmed before intrinsic use."
+    },
+    "MRC": {
+      "issuer_name": "MRC Allied, Inc.", "subsector": "Renewable and investment holding", "primary_model": "sotp", "policy": "layered_book", "metric_kind": "reported_bvps",
+      "source": {"label": "MRC FY2025 and 1H2026 PSE financial summary", "form": "PSE quarterly financial summary", "period_end": "2026-06-30", "currency": "PHP", "units": "per_share", "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=131"},
+      "supporting_sources": [{"label": "MRC open ordinary-common stock data and placement shares", "form": "PSE common-stock data", "period_end": "2026-09-23", "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=131"}],
+      "reported_bvps": {"period_end": "2026-06-30", "period_type": "interim", "value": 1.17},
+      "metric_value_per_share": 1.17, "metric_label": "1H2026 PSE-reported book value per share", "normalization": {"formula": "reported PHP1.17 BVPS; do not infer missing parent income or unlisted-share conversion", "normalized_value": 1.17, "original_currency": "PHP", "normalized_currency": "PHP"},
+      "route_reason": "Investments and potential renewables require attributable SOTP; P/B is only a preliminary separate screen.", "intrinsic_blocker": "Placement-share status, parent versus total equity, project ownership, funding and common-equity claims are unresolved.", "source_warning": "Reported parent equity exceeds consolidated total equity, parent income is blank, and BVPS does not reconcile to reported outstanding common shares. Recent private-placement shares also exceed listed shares; treat this P/B result as low-reliability only."
+    }
+  }
+}

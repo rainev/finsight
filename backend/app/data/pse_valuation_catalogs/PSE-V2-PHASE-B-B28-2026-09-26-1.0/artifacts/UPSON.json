@@ -1,0 +1,88 @@
+{
+  "artifact_hash": "b244281651a4d09876d1f07ff4c583e12a07a5d30b6cd23842a03f8336c2a989",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Store cohorts, inventory, leases, margins, capex, cash/debt, and terminal economics are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "72c53a7c4323318983c28ce78ad7eedc9efeab1996c91819646ffa34562f8454",
+  "issuer": {
+    "issuer_id": "PSE:UPSON",
+    "name": "Upson International Corp."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 10.0,
+      "high": 12.0,
+      "low": 8.0
+    },
+    "estimates": {
+      "base": 1.5,
+      "high": 1.8,
+      "low": 1.2
+    },
+    "metric": "price_to_earnings",
+    "metric_label": "TTM basic EPS through 1H2026",
+    "metric_value_per_share": 0.15,
+    "note": "Analyst screening band; no peer study or complete intrinsic FCFF/SOTP has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PE-OPERATING-SERVICES-B14-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "b2dcef55f9746e10561526ca54079b7be28bee8342a17d90d2de4a99107b9e54",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B14-1.0",
+  "numerical_range": {
+    "high": 1.8,
+    "low": 1.2
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Store cohorts, inventory, leases, margins, capex, cash/debt, and terminal economics are not reconciled.",
+    "metric_basis": "0.13 FY2025 basic EPS + 0.08 1H2026 EPS - 0.06 prior 1H EPS",
+    "policy_rationale": "Shared finite P/E screening band for positive source-bounded per-share earnings; it numerically reuses a prior operating screen, not a peer study or intrinsic cash-flow valuation.",
+    "reliability": "Low",
+    "route_reason": "Store productivity, working capital, and reinvestment require FCFF; P/E is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:UPSON:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "b2dcef55f9746e10",
+      "form": "PSE quarterly financial summary",
+      "label": "UPSON FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "b2dcef55f9746e10561526ca54079b7be28bee8342a17d90d2de4a99107b9e54",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=700"
+    }
+  ],
+  "subsector": "IT and consumer-electronics retail",
+  "ticker": "UPSON",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Operating cash flows, reinvestment and common-equity claims have not been reconciled."
+  ]
+}

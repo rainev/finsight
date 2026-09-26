@@ -1,0 +1,114 @@
+{
+  "artifact_hash": "c34bb0914dee521f489d6df77d6a4ed0a4b7251365127d7618c1b31ba66686db",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "090f3c52b793036b0dc26ba46fb22de8be8853c6831e9c0440d94498bf867152",
+  "issuer": {
+    "issuer_id": "PSE:AUB",
+    "name": "Asia United Bank Corporation"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B05-1.0",
+  "numerical_range": {
+    "high": 80.86950239234363,
+    "low": 40.11543948927631
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "book_value_per_share": 47.47,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalized_roe": 0.1997876388484999,
+    "policy_version": "PSE-V2-BANK-RI-B05-1.0",
+    "reliability": "Low",
+    "route_reason": "Book capital and returns above cost of equity drive common-equity value.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.12052,
+        "current_roe": 0.1997876388484999,
+        "payout_ratio": 0.3,
+        "terminal_growth": 0.03,
+        "terminal_roe": 0.13
+      },
+      "bear": {
+        "cost_of_equity": 0.13552,
+        "current_roe": 0.1698194930212249,
+        "payout_ratio": 0.25,
+        "terminal_growth": 0.02,
+        "terminal_roe": 0.11
+      },
+      "bull": {
+        "cost_of_equity": 0.11052,
+        "current_roe": 0.2197664027333499,
+        "payout_ratio": 0.35,
+        "terminal_growth": 0.04,
+        "terminal_roe": 0.145
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 86042.33234154753,
+      "enterprise_value": null,
+      "value_per_share": 59.09562494355668
+    },
+    "bear": {
+      "common_equity_value": 58407.470601423774,
+      "enterprise_value": null,
+      "value_per_share": 40.11543948927631
+    },
+    "bull": {
+      "common_equity_value": 117744.7671935699,
+      "enterprise_value": null,
+      "value_per_share": 80.86950239234363
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:AUB:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_roe",
+        "terminal_roe",
+        "cost_of_equity",
+        "payout_ratio",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "516f75f2cf3f48f7",
+      "form": "17-A",
+      "label": "AUB FY2025 PSE financial report",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "516f75f2cf3f48f7e2fc777950e91ca5ed25d2f53cf255a8af9ee7fbedbb7570",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=641"
+    }
+  ],
+  "subsector": "Commercial and universal bank",
+  "ticker": "AUB",
+  "valuation_date": "2026-09-23",
+  "warnings": [
+    "Provisional residual-income estimate based on reviewed FY2025 public filing facts and a versioned shared financial policy.",
+    "Capital quality, asset quality, underwriting quality, and market multiples remain challenge checks rather than direct model inputs.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed."
+  ]
+}

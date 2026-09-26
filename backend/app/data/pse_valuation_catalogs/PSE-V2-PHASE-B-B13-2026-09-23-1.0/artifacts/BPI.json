@@ -1,0 +1,114 @@
+{
+  "artifact_hash": "07c27c71ea4ee055a4e7fda96947a655c51c6c51f31e6d111ada0cc335b415ee",
+  "availability_type": "intrinsic_valuation",
+  "blocking_reasons": [],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "FY 2025",
+  "filing_published_at": null,
+  "input_hash": "78c0eb1c194313dc7b99d76454a0ff238f59052a95b6497c3121e63225800808",
+  "issuer": {
+    "issuer_id": "PSE:BPI",
+    "name": "Bank of the Philippine Islands"
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PHASE-B-B01-1.0",
+  "numerical_range": {
+    "high": 134.84108831292946,
+    "low": 70.16205523563028
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {
+    "book_value_per_share": 90.19,
+    "forecast_years": 5,
+    "macro_snapshot_version": "PH-MACRO-2026-06-23-REVIEWED-1",
+    "normalized_roe": 0.14688728608567378,
+    "policy_version": "PSE-V2-BANK-RI-B01-1.0",
+    "reliability": "Low",
+    "route_reason": "Book capital and returns above the cost of equity drive common-equity value.",
+    "scenario_assumptions": {
+      "base": {
+        "cost_of_equity": 0.12052,
+        "current_roe": 0.14688728608567378,
+        "payout_ratio": 0.3,
+        "terminal_growth": 0.03,
+        "terminal_roe": 0.1248541931728227
+      },
+      "bear": {
+        "cost_of_equity": 0.13552,
+        "current_roe": 0.1248541931728227,
+        "payout_ratio": 0.25,
+        "terminal_growth": 0.02,
+        "terminal_roe": 0.11
+      },
+      "bull": {
+        "cost_of_equity": 0.11052,
+        "current_roe": 0.16157601469424118,
+        "payout_ratio": 0.35,
+        "terminal_growth": 0.04,
+        "terminal_roe": 0.13954292178139008
+      }
+    }
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": {
+      "common_equity_value": 520136.00302587944,
+      "enterprise_value": null,
+      "value_per_share": 98.43829776101308
+    },
+    "bear": {
+      "common_equity_value": 370727.77368561167,
+      "enterprise_value": null,
+      "value_per_share": 70.16205523563028
+    },
+    "bull": {
+      "common_equity_value": 712483.9245902149,
+      "enterprise_value": null,
+      "value_per_share": 134.84108831292946
+    }
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BPI:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [
+    {
+      "drivers": [
+        "current_roe",
+        "terminal_roe",
+        "cost_of_equity",
+        "payout_ratio",
+        "terminal_growth"
+      ],
+      "type": "scenario_range"
+    }
+  ],
+  "sources": [
+    {
+      "document_id": "36acf943b1cd622e",
+      "form": "17-A",
+      "label": "BPI FY2025 PSE EDGE financial-report fact receipt",
+      "period_end": "2025-12-31",
+      "published_at": null,
+      "sha256": "36acf943b1cd622e574916927a6db1ee3c9bdb7fc11390a233fdb2df4481288e",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=234"
+    }
+  ],
+  "subsector": "Commercial and universal bank",
+  "ticker": "BPI",
+  "valuation_date": "2026-09-22",
+  "warnings": [
+    "Provisional Phase B estimate based on reviewed FY2025 public filing facts and a versioned shared bank policy.",
+    "Regulatory capital, asset quality, and current market multiples remain challenge checks rather than direct numerical model inputs.",
+    "The source hash binds the reviewed fact receipt; the remote filing is referenced but not redistributed in the candidate catalog."
+  ]
+}

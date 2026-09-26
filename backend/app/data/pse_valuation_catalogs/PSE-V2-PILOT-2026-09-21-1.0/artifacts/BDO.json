@@ -1,0 +1,118 @@
+{
+  "artifact_hash": "6071663eaecb06c1b27ea28e6ef100979a73f0edf892b989c979ced637732cdb",
+  "availability_type": "not_available",
+  "blocking_reasons": [
+    "Missing: total_assets, shares_outstanding, parent_equity, book_value_per_share, cet1_ratio, capital_adequacy_ratio; needs review: cash, gross_loans, allowance_credit_losses."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": null,
+  "filing_published_at": null,
+  "input_hash": "af4b378880f0fdde23cc402df682ddb835bdc4be219a061e206ff627c80d3f32",
+  "issuer": {
+    "issuer_id": "BDO",
+    "name": "BDO Unibank, Inc."
+  },
+  "market": "PH",
+  "market_relative": null,
+  "model_version": "PSE-V2-PILOT-1.0",
+  "numerical_range": {
+    "high": null,
+    "low": null
+  },
+  "price": null,
+  "primary_model": "residual_income",
+  "public_assumptions": {},
+  "publication_state": "blocked",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:BDO:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "1026568c2549b761",
+      "form": null,
+      "label": "quarterly_17q_September 30, 2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "1026568c2549b761079e3c3cdf93882a76a27efe09eaaeaae52dba28eb971087",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "72c47fd9fbbe25b3",
+      "form": "17-Q",
+      "label": "BDO Unibank, Inc. - Quarterly_17Q_June 30, 2026.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "72c47fd9fbbe25b3dd45a8a8cc68e6cdee3130bfd3addcce1bcd1e1afa0aaecc",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "8fc27730ccb54513",
+      "form": null,
+      "label": "BDO Unibank, Inc. - quarterly_17q_June 30, 2025_Final.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "8fc27730ccb54513cc755cffa75dcfdf0d54cd08120988f0b96492c9b13a186e",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "c85cd849b7a14c50",
+      "form": "17-Q",
+      "label": "BDO Unibank, Inc._SEC 17-Q_September 2025 (3Q 2025 FS).pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "c85cd849b7a14c50ac854e3756c6307254e3e42033e0382ff0ad6e3daefec53e",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "e25160a1884366a1",
+      "form": null,
+      "label": "quarterly_17q_June 30, 2024.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "e25160a1884366a1bdd54233de4dc7f834f4cbda1ee1294defe351c7a05ecdce",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "ec9564402d6aa652",
+      "form": null,
+      "label": "BDO Unibank, Inc. - Quarterly_17q_March 31, 2025.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "ec9564402d6aa652826cf3b87692c50c8cb8bd26922186c3a08e6ef9987bd0dd",
+      "source_page": null,
+      "url": null
+    },
+    {
+      "document_id": "eb85ff2281a7e384",
+      "form": "17-Q",
+      "label": "BDO Unibank, Inc. - Quarterly_17Q_March 31, 2026.pdf",
+      "period_end": null,
+      "published_at": null,
+      "sha256": "eb85ff2281a7e38471062221917151c4a293ce2208b9a479f9122a5cb1778adb",
+      "source_page": null,
+      "url": null
+    }
+  ],
+  "subsector": "Commercial and universal bank",
+  "ticker": "BDO",
+  "valuation_date": "2026-09-21",
+  "warnings": []
+}

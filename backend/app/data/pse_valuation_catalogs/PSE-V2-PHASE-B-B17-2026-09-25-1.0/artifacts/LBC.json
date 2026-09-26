@@ -1,0 +1,99 @@
+{
+  "artifact_hash": "fda4584b4920b3c3e1a525b28c561ad141407f0ee07232d29507e810418c652e",
+  "availability_type": "market_relative_only",
+  "blocking_reasons": [
+    "Recurring margins, fuel exposure, lease debt, capex, minority claims and common-equity financing are not reconciled."
+  ],
+  "currency": "PHP",
+  "data_boundary": {
+    "derived_outputs_public": true,
+    "reported_facts_public": false,
+    "source_references_public": true
+  },
+  "filing_period": "2026-06-30",
+  "filing_published_at": null,
+  "input_hash": "db10e3b81307818d7fb7f8281c952d3dc8f46cd99f65304d25401d26bc65719c",
+  "issuer": {
+    "issuer_id": "PSE:LBC",
+    "name": "LBC Express Holdings, Inc."
+  },
+  "market": "PH",
+  "market_relative": {
+    "assumptions": {
+      "base": 0.7,
+      "high": 0.9,
+      "low": 0.5
+    },
+    "estimates": {
+      "base": 7.004487022,
+      "high": 9.005769028,
+      "low": 5.003205016
+    },
+    "metric": "price_to_sales",
+    "metric_label": "TTM PHP revenue per outstanding ordinary common share",
+    "metric_value_per_share": 10.006410031090514,
+    "note": "Finite analyst screening band; no peer study or complete intrinsic valuation has been completed.",
+    "output_type": "market_relative_only",
+    "policy_version": "PSE-V2-PS-LOGISTICS-B17-1.0",
+    "relation": "multiple",
+    "source_document_sha256": "f51a2670801ccd08fe1f20a7d9466f3c397a1ca368703ebf1afa34b0ba2f89f6",
+    "source_page": null,
+    "source_status": "reviewed_public_fact"
+  },
+  "model_version": "PSE-V2-PHASE-B-B17-1.0",
+  "numerical_range": {
+    "high": 9.005769028,
+    "low": 5.003205016
+  },
+  "price": null,
+  "primary_model": "fcff_dcf",
+  "public_assumptions": {
+    "intrinsic_blocker": "Recurring margins, fuel exposure, lease debt, capex, minority claims and common-equity financing are not reconciled.",
+    "metric_basis": "(PHP14,025,956,097 FY2025 + 7,220,274,354 1H2026 - 6,978,435,899 prior 1H) / 1,425,865,471 outstanding common shares",
+    "policy_rationale": "Finite low-multiple sales screen for a thin-margin logistics operator; not a peer-calibrated target or an equity cash-flow bridge.",
+    "reliability": "Low",
+    "route_reason": "Parcel margins, fleet, leases and working capital require FCFF; P/S is a separate finite screen."
+  },
+  "publication_state": "provisional",
+  "scenarios": {
+    "base": null,
+    "bear": null,
+    "bull": null
+  },
+  "schema_version": "FINSIGHT-PSE-VALUATION-2.0",
+  "security": {
+    "security_id": "PSE:LBC:COMMON",
+    "type": "ordinary_common"
+  },
+  "sensitivities": [],
+  "sources": [
+    {
+      "document_id": "f51a2670801ccd08",
+      "form": "PSE quarterly financial summary",
+      "label": "LBC FY2025 and 1H2026 PSE financial summary",
+      "period_end": "2026-06-30",
+      "published_at": null,
+      "sha256": "f51a2670801ccd08fe1f20a7d9466f3c397a1ca368703ebf1afa34b0ba2f89f6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=236"
+    },
+    {
+      "document_id": "f51a2670801ccd08-support-1",
+      "form": "PSE common-stock data",
+      "label": "LBC open ordinary-common stock data and share counts",
+      "period_end": "2026-09-11",
+      "published_at": null,
+      "sha256": "f51a2670801ccd08fe1f20a7d9466f3c397a1ca368703ebf1afa34b0ba2f89f6",
+      "source_page": null,
+      "url": "https://edge.pse.com.ph/companyPage/stockData.do?cmpy_id=236&security_id=469"
+    }
+  ],
+  "subsector": "Logistics and parcel delivery",
+  "ticker": "LBC",
+  "valuation_date": "2026-09-25",
+  "warnings": [
+    "Screening-grade market-relative result, not intrinsic value or a peer-calibrated target.",
+    "Cash flows, attributable ownership and common-equity claims are not fully reconciled.",
+    "The PSE stock-data page reports 1,425,865,471 outstanding common shares but only 40,899,000 listed shares. The sales-per-share screen uses outstanding shares; listing status and full economic rights must be confirmed before intrinsic use."
+  ]
+}
