@@ -171,7 +171,20 @@ def assess_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
             _add_reason(blocking, f"review_error:{error}")
         for warning in review.get("warnings", []) or []:
             warning_text = str(warning)
-            if any(marker in warning_text.lower() for marker in _HARD_WARNING_MARKERS):
+            source_bound_negated_owner = False
+            if artifact.get('model_version') == 'US-B06-B10-PUBLIC-COMMON-RI-1':
+                try:
+                    from .staged_batches0610_inheritance import source_bound_negated_owner_warning
+                    source_bound_negated_owner = source_bound_negated_owner_warning(artifact,warning_text)
+                except (ImportError,ValueError,KeyError,TypeError):
+                    source_bound_negated_owner = False
+            elif artifact.get('model_version') == 'US-B11-B15-PUBLIC-COMMON-RI-1':
+                try:
+                    from .staged_batches1115_inheritance import source_bound_negated_owner_warning
+                    source_bound_negated_owner = source_bound_negated_owner_warning(artifact,warning_text)
+                except (ImportError,ValueError,KeyError,TypeError):
+                    source_bound_negated_owner = False
+            if any(marker in warning_text.lower() for marker in _HARD_WARNING_MARKERS) and not source_bound_negated_owner:
                 _add_reason(blocking, f"hard_warning:{warning_text}")
             else:
                 warnings.append(warning_text)

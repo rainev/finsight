@@ -1,0 +1,124 @@
+{
+  "batch": 25,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "industrials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001659166",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "Fortive",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "FTV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001666700",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Conglomerates",
+      "issuer_name": "DuPont",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "DD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001699150",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "Ingersoll Rand",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "IR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001781335",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "Otis Worldwide",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "OTIS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001783180",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "issuer_name": "Carrier Global",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "CARR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001967680",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Environmental & Facilities Services",
+      "issuer_name": "Veralto",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "VLTO"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001996810",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Heavy Electrical Equipment",
+      "issuer_name": "GE Vernova",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "GEV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0002011641",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "issuer_name": "Ferguson Enterprises",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "FERG"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0002082247",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Cargo Ground Transportation",
+      "issuer_name": "FedEx Freight",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "FDXF"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0002089271",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "Honeywell Aerospace",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "HONA"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

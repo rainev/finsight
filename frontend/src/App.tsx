@@ -10,6 +10,7 @@ import Portfolio from './pages/Portfolio'
 import News from './pages/News'
 import ValuationLab from './pages/ValuationLab'
 import PseValuationsV2 from './pages/PseValuationsV2'
+import UsRefreshControl from './pages/UsRefreshControl'
 import UsValuations from './pages/UsValuations'
 import AiInsights from './pages/AiInsights'
 
@@ -40,6 +41,7 @@ export default function App() {
               <Route path="/pse/:ticker" element={<PseValuationsV2 />} />
               <Route path="/pse-v2" element={<Navigate to="/pse/AP" replace />} />
               <Route path="/pse-legacy" element={<ValuationLab />} />
+              <Route path="/us-refresh" element={<UsRefreshControl />} />
               <Route path="/us-valuations" element={<Navigate to="/valuation/AAPL" replace />} />
               <Route path="/health" element={<Navigate to="/valuation/AAPL" replace />} />
               <Route path="/rankings" element={<Navigate to="/valuation/AAPL" replace />} />

@@ -438,7 +438,7 @@ export default function UsValuations() {
             <h2 className="text-lg font-semibold tracking-[-.025em]">Key assumptions <span className="ml-2 text-xs font-medium text-[var(--app-muted)]">{scenarioLabel}</span></h2>
             <Info className="h-4 w-4 text-[var(--app-muted)]" />
           </div>
-          <p className="mt-2 max-w-xl text-xs leading-5 text-[var(--app-muted)]">{calculator?.scenario_preset_note ?? 'Adjust governed inputs; filing facts and the capital bridge stay locked.'}</p>
+          <p className="mt-2 max-w-xl text-xs leading-5 text-[var(--app-muted)]">{data.freshness?.outcome === 'provisional_recovery' ? 'Reference-case inputs are under review; filing facts stay locked.' : calculator?.scenario_preset_note ?? 'Adjust governed inputs; filing facts and the capital bridge stay locked.'}</p>
         </div>
         <button type="button" onClick={reset} disabled={!canEditCase} className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-[var(--app-muted)] hover:bg-[var(--app-subtle)] hover:text-[var(--app-text)] disabled:opacity-40">
           <RotateCcw className="h-4 w-4" /> Reset
@@ -527,13 +527,21 @@ export default function UsValuations() {
         </div>
       </section>
 
-      {data.freshness?.outcome === 'acquisition_failed' && <p role="status" className="rounded-2xl border border-[#ecd9a7] bg-[#fff9e8] p-4 text-sm text-[#805c13]">The latest filing refresh failed. This is the previous dated estimate, not a successfully refreshed valuation.</p>}
+      {data.freshness && <p role="status" className={cn(
+        'rounded-2xl border p-4 text-sm',
+        data.freshness.outcome === 'source_bound' ? 'border-[#cfe9da] bg-[#eef8f2] text-[#16794b]' : 'border-[#ecd9a7] bg-[#fff9e8] text-[#805c13]',
+      )}>
+        <strong>{data.freshness.outcome === 'provisional_recovery' ? 'Provisional estimate staged for review.' : data.freshness.outcome === 'historical_security' ? 'Historical security record.' : data.freshness.outcome === 'source_bound' ? 'Refreshed from a new filing.' : data.freshness.outcome === 'verified_unchanged' ? 'Checked; dated valuation unchanged.' : data.availability_type === 'not_available' ? 'Valuation unavailable.' : 'Historical-only estimate.'}</strong>{' '}
+        {data.freshness.outcome === 'source_bound'
+          ? `Source filed ${data.freshness.new_source_date ?? 'on a recorded date'}; valuation dated ${data.valuation_date}.`
+          : data.freshness.recommendation ?? data.freshness.reason ?? 'A current intrinsic refresh is not supported yet.'}
+      </p>}
       {overlappingCases && <p role="status" className="rounded-2xl border border-[#ecd9a7] bg-[#fff9e8] p-4 text-sm text-[#805c13]">Your separately edited cases now overlap. Adjust or reset their assumptions before treating them as a bear-to-bull range.</p>}
       {unavailable ? (
         <section className="rounded-[26px] border border-[var(--app-border)] bg-white p-7 shadow-[0_16px_45px_rgba(15,23,42,.05)]">
           <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#f1f2f4]"><AlertCircle className="h-5 w-5" /></span>
-          <p className="mt-6 text-[10px] font-bold uppercase tracking-[.14em] text-[var(--app-muted)]">No reliable numeric baseline</p>
-          <h2 className="mt-2 max-w-2xl text-3xl font-semibold tracking-[-.04em]">FinSight withheld this value instead of filling the gap with a guess.</h2>
+          <p className="mt-6 text-[10px] font-bold uppercase tracking-[.14em] text-[var(--app-muted)]">{data.freshness?.outcome === 'historical_security' ? 'Historical security record' : 'No reliable numeric baseline'}</p>
+          <h2 className="mt-2 max-w-2xl text-3xl font-semibold tracking-[-.04em]">{data.freshness?.outcome === 'historical_security' ? 'This company’s stock changed after a merger.' : 'FinSight withheld this value instead of filling the gap with a guess.'}</h2>
           <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--app-muted)]">{explanation}</p>
         </section>
       ) : (
@@ -641,7 +649,7 @@ export default function UsValuations() {
             <section className="grid gap-5 md:grid-cols-[1.05fr_.95fr]">
               {assumptionsPanel}
               <article className="rounded-[24px] border border-[var(--app-border)] bg-white p-6 shadow-[0_12px_34px_rgba(15,23,42,.04)]">
-                <p className="text-[10px] font-bold uppercase tracking-[.14em] text-[var(--app-muted)]">Governed baseline</p>
+                <p className="text-[10px] font-bold uppercase tracking-[.14em] text-[var(--app-muted)]">{data.freshness?.outcome === 'provisional_recovery' ? 'Proposed baseline assumptions' : 'Governed baseline'}</p>
                 <div className="mt-4 divide-y divide-[var(--app-border)]">
                   {Object.entries(data.public_assumptions ?? {}).filter(([, value]) => typeof value === 'number' || typeof value === 'string').slice(0, 10).map(([key, value]) => (
                     <div key={key} className="flex items-center justify-between gap-4 py-3 text-xs">
@@ -651,6 +659,14 @@ export default function UsValuations() {
                   ))}
                 </div>
               </article>
+              {data.freshness?.outcome === 'provisional_recovery' && (data.review?.warnings?.length ?? 0) > 0 && (
+                <article className="rounded-[24px] border border-[var(--app-border)] bg-white p-6 md:col-span-2">
+                  <h3 className="text-sm font-semibold">Assumptions and limitations</h3>
+                  <ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--app-muted)]">
+                    {(data.review?.warnings ?? []).map((warning, index) => <li key={index}>{warning}</li>)}
+                  </ul>
+                </article>
+              )}
             </section>
           <section className="rounded-[24px] border border-[var(--app-border)] bg-white p-6 shadow-[0_12px_34px_rgba(15,23,42,.04)]">
             <p className="text-[10px] font-bold uppercase tracking-[.14em] text-[var(--app-muted)]">Source filing</p>

@@ -1,0 +1,124 @@
+{
+  "batch": 22,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "industrials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000773840",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Conglomerates",
+      "issuer_name": "Honeywell Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "HON"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000823768",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Environmental & Facilities Services",
+      "issuer_name": "Waste Management",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "WM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000832101",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "IDEX Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "IEX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000833444",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "issuer_name": "Johnson Controls",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "JCI"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000878927",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Cargo Ground Transportation",
+      "issuer_name": "Old Dominion",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "ODFL"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000900075",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Diversified Support Services",
+      "issuer_name": "Copart",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "CPRT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000936468",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "Lockheed Martin",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "LMT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000943452",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction Machinery & Heavy Transportation Equipment",
+      "issuer_name": "Wabtec",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "WAB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001024478",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "issuer_name": "Rockwell Automation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "ROK"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001035983",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction & Engineering",
+      "issuer_name": "Comfort Systems USA",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "FIX"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

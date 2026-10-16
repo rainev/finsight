@@ -1,0 +1,124 @@
+{
+  "batch": 42,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "resource_cycle",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000079879",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "issuer_name": "PPG Industries",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "PPG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000087347",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Equipment & Services",
+      "issuer_name": "Schlumberger",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "core",
+      "ticker": "SLB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000089800",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "issuer_name": "Sherwin-Williams",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "SHW"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000093410",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Integrated Oil & Gas",
+      "issuer_name": "Chevron Corporation",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "boundary",
+      "ticker": "CVX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000797468",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "issuer_name": "Occidental Petroleum",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "core",
+      "ticker": "OXY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000821189",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "issuer_name": "EOG Resources",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "core",
+      "ticker": "EOG"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000831259",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Copper",
+      "issuer_name": "Freeport-McMoRan",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "boundary",
+      "ticker": "FCX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000849395",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Construction Materials",
+      "issuer_name": "CRH plc",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "CRH"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000895126",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "issuer_name": "Expand Energy",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "core",
+      "ticker": "EXE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000915913",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "issuer_name": "Albemarle Corporation",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "ALB"
+    }
+  ],
+  "partition_families": [
+    "resource_cycle_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

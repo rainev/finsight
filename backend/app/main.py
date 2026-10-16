@@ -18,6 +18,7 @@ from .db_migrate import run_migrations
 from .env import env
 from .errors import AppError
 from .routers import api_router
+from .routers.us_valuations import REVIEW_ONLY
 from .security.headers import add_security_headers
 from .storage import ensure_bucket
 
@@ -26,6 +27,11 @@ log = logging.getLogger("uvicorn.error")
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
+    if REVIEW_ONLY:
+        # The authenticated immutable review is not a deployment: no DB/storage
+        # startup, migrations, jobs, or saved valuations may be triggered.
+        yield
+        return
     pool.open()
     # Ensure the schema exists before serving. Essential for a managed DB
     # (Supabase, Neon, …) that never runs infrastructure/postgres/init/*.sql.
@@ -41,6 +47,32 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(title="PSE Valuation API", lifespan=lifespan)
+
+if REVIEW_ONLY:
+    from .security.jwt import verify_access_token,TokenError
+    @app.middleware("http")
+    async def read_only_catalog_boundary(request: Request, call_next):
+        header=request.headers.get('authorization','')
+        try:
+            if not header.startswith('Bearer '):raise ValueError('missing authentication')
+            verify_access_token(header[7:])
+        except (ValueError,TokenError):
+            return JSONResponse(status_code=401,content={'error':'Authenticated read-only review only'})
+        path=request.url.path
+        allowed = (path=='/api/us-valuations' or path.startswith('/api/us-valuations/')) and (
+            request.method == 'GET' or (request.method == 'POST' and request.url.path.endswith('/calculator')))
+        if not allowed:
+            return JSONResponse(status_code=403, content={'error':'Read-only catalog review only'})
+        from .routers.us_valuations import CATALOG
+        private700 = CATALOG.manifest.get('private_review', {}).get('profile') == 'B16-B20-FROZEN-PRIVATE-1' or CATALOG.manifest.get('staged_review', {}).get('profile') == 'B16-B20-STAGED-PUBLIC-1'
+        if private700 and request.method == 'POST':
+            body = await request.json()
+            if body.get('save') or body.get('manual_price') is not None:
+                return JSONResponse(status_code=403, content={'error':'Private700 cannot save or add market price inputs'})
+        response = await call_next(request)
+        if private700:
+            response.headers['Cache-Control'] = 'no-store'
+        return response
 
 # Secure response headers (Helmet-equivalent). Added first so it wraps every
 # response, including CORS preflights and error responses.

@@ -1,0 +1,124 @@
+{
+  "batch": 4,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "consumer_discretionary",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000037996",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automobile Manufacturers",
+      "issuer_name": "Ford Motor Company",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "F"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000040987",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Distributors",
+      "issuer_name": "Genuine Parts Company",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "boundary",
+      "ticker": "GPC"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000046080",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Leisure Products",
+      "issuer_name": "Hasbro",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "boundary",
+      "ticker": "HAS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000060667",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Home Improvement Retail",
+      "issuer_name": "Lowe's",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "LOW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000063908",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "issuer_name": "McDonald's",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "MCD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000109198",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel Retail",
+      "issuer_name": "TJX Companies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "TJX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000320187",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel, Accessories & Luxury Goods",
+      "issuer_name": "Nike, Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "NKE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000354950",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Home Improvement Retail",
+      "issuer_name": "Home Depot (The)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "HD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000745732",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel Retail",
+      "issuer_name": "Ross Stores",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "ROST"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000789570",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Casinos & Gaming",
+      "issuer_name": "MGM Resorts",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "consumer_discretionary",
+      "role": "core",
+      "ticker": "MGM"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

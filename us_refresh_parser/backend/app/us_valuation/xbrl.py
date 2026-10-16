@@ -1,0 +1,1510 @@
+"""SEC Companyfacts selection and canonical U.S.-GAAP normalization."""
+
+from __future__ import annotations
+
+import json
+from dataclasses import dataclass, replace
+from datetime import date
+from importlib.resources import files
+from statistics import median
+from typing import Any, Iterable, Mapping
+
+from .bridge_policy import reconcile_bridge
+from .bridge_evidence_merge import merge_bridge_evidence
+from .field_availability import FieldAvailability, availability_from_normalized_field
+from .filing_evidence import governed_bridge_fields_from_evidence
+from .period_fallbacks import (
+    FallbackDecision,
+    annual_carried_forward_decision,
+    company_history_decision,
+)
+
+
+# Fallback effective tax rate for issuers with no year in the normal 0-40% band
+# (persistent pretax losses). The US federal statutory corporate rate.
+_STATUTORY_TAX_FALLBACK = 0.21
+
+
+def _estimate_ttm_flow_from_annual_history(
+    *,
+    field: str,
+    ttm_revenue: float,
+    annual_periods: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Scale a lagging flow from company history instead of copying an annual value."""
+
+    observations: list[tuple[float, dict[str, Any], dict[str, Any]]] = []
+    for row in annual_periods[-3:]:
+        revenue = row.get("values", {}).get("revenue")
+        value = row.get("values", {}).get(field)
+        if (
+            not isinstance(revenue, (int, float))
+            or isinstance(revenue, bool)
+            or revenue == 0
+            or not isinstance(value, (int, float))
+            or isinstance(value, bool)
+        ):
+            continue
+        observations.append(
+            (
+                float(value) / float(revenue),
+                row.get("sources", {}).get(field),
+                row.get("sources", {}).get("revenue"),
+            )
+        )
+    if len(observations) < 2:
+        raise ValueError(
+            f"TTM flow input {field} has no current reconstruction and fewer "
+            "than two comparable annual history points"
+        )
+    ratios = [item[0] for item in observations]
+    estimates = sorted(float(ttm_revenue) * ratio for ratio in ratios)
+    return {
+        "value": float(ttm_revenue) * median(ratios),
+        "method": "company_history_ratio_to_ttm_revenue",
+        "estimated_range": {
+            "low": estimates[0],
+            "base": float(ttm_revenue) * median(ratios),
+            "high": estimates[-1],
+            "basis": f"{field} divided by revenue for {len(ratios)} recent annual periods",
+        },
+        "sources": [
+            source
+            for _, field_source, revenue_source in observations
+            for source in (field_source, revenue_source)
+            if isinstance(source, dict)
+        ],
+    }
+
+
+@dataclass(frozen=True)
+class SelectedFact:
+    field: str
+    namespace: str
+    concept: str
+    unit: str
+    value: float
+    start: str | None
+    end: str
+    accession: str
+    form: str
+    filed: str
+    fiscal_year: int | None
+    fiscal_period: str | None
+    frame: str | None
+    selection_reason: str
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "field": self.field,
+            "namespace": self.namespace,
+            "concept": self.concept,
+            "unit": self.unit,
+            "value": self.value,
+            "start": self.start,
+            "end": self.end,
+            "accession": self.accession,
+            "form": self.form,
+            "filed": self.filed,
+            "fiscal_year": self.fiscal_year,
+            "fiscal_period": self.fiscal_period,
+            "frame": self.frame,
+            "dimensions": [],
+            "taxonomy_type": "standard",
+            "value_status": "reported",
+            "selection_reason": self.selection_reason,
+        }
+
+
+def load_concept_config() -> dict[str, Any]:
+    path = files(__package__).joinpath("config/concept_aliases.json")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _days(start: str, end: str) -> int:
+    return (date.fromisoformat(end) - date.fromisoformat(start)).days + 1
+
+
+class CompanyFactsNormalizer:
+    def __init__(
+        self,
+        companyfacts: dict[str, Any],
+        concept_config: dict[str, Any] | None = None,
+        *,
+        fiscal_year_end: str | None = None,
+        as_of_date: str | None = None,
+        filing_records: Iterable[Mapping[str, Any]] = (),
+    ) -> None:
+        self.companyfacts = companyfacts
+        self.config = concept_config or load_concept_config()
+        self.namespaces = companyfacts.get("facts", {})
+        self.us_gaap = self.namespaces.get("us-gaap", {})
+        self.fiscal_year_end = (
+            fiscal_year_end
+            if fiscal_year_end
+            and len(fiscal_year_end) == 4
+            and fiscal_year_end.isdigit()
+            else None
+        )
+        self.as_of_date = as_of_date
+        self.filing_records = [dict(record) for record in filing_records]
+        if as_of_date:
+            date.fromisoformat(as_of_date)
+        if not self.us_gaap:
+            raise ValueError("SEC Companyfacts payload has no us-gaap facts")
+
+    def _concept_facts(
+        self,
+        concept_references: Iterable[str],
+        unit: str,
+    ) -> list[tuple[str, str, str, dict[str, Any]]]:
+        facts: list[tuple[str, str, str, dict[str, Any]]] = []
+        for concept_reference in concept_references:
+            if ":" in concept_reference:
+                namespace, concept = concept_reference.split(":", 1)
+            else:
+                namespace, concept = "us-gaap", concept_reference
+            units = (
+                self.namespaces.get(namespace, {})
+                .get(concept, {})
+                .get("units", {})
+            )
+            if unit in units and units[unit]:
+                facts.extend(
+                    (namespace, concept, unit, fact)
+                    for fact in units[unit]
+                    if not self.as_of_date
+                    or fact.get("filed", "") <= self.as_of_date
+                )
+        return facts
+
+    def _derived_sum_facts(
+        self,
+        spec: Mapping[str, Any],
+        unit: str,
+        covered_periods: set[tuple[str | None, str]],
+    ) -> list[tuple[str, str, str, dict[str, Any]]]:
+        """Synthesize a field value as the sum of component concepts.
+
+        Some issuers never tag a consolidated total but do report its parts
+        (e.g. pretax income disclosed only as Domestic + Foreign). For each
+        period where every component is present, emit one summed fact. Periods
+        already covered by a direct concept are skipped, so issuers that tag the
+        total keep their reported value untouched.
+        """
+        if spec.get("op") != "sum":
+            return []
+        per_component: list[dict[tuple[str | None, str], dict[str, Any]]] = []
+        labels: list[str] = []
+        for component in spec["components"]:
+            latest: dict[tuple[str | None, str], dict[str, Any]] = {}
+            for _, _, _, fact in self._concept_facts(component, unit):
+                key = (fact.get("start"), fact["end"])
+                if key not in latest or fact.get("filed", "") > latest[key].get(
+                    "filed", ""
+                ):
+                    latest[key] = fact
+            if not latest:
+                return []
+            per_component.append(latest)
+            labels.append("+".join(ref.split(":")[-1] for ref in component))
+        label = "sum(" + ", ".join(labels) + ")"
+        shared = set(per_component[0])
+        for latest in per_component[1:]:
+            shared &= set(latest)
+        synthesized: list[tuple[str, str, str, dict[str, Any]]] = []
+        for key in shared:
+            if key in covered_periods:
+                continue
+            parts = [latest[key] for latest in per_component]
+            lead = max(parts, key=lambda fact: fact.get("filed", ""))
+            synthesized.append(
+                (
+                    "derived",
+                    label,
+                    unit,
+                    {
+                        "val": sum(float(fact["val"]) for fact in parts),
+                        "start": key[0],
+                        "end": key[1],
+                        "form": lead.get("form"),
+                        "accn": lead.get("accn"),
+                        "filed": lead.get("filed"),
+                        "fy": lead.get("fy"),
+                        "fp": lead.get("fp"),
+                    },
+                )
+            )
+        return synthesized
+
+    def _candidates(
+        self,
+        field: str,
+    ) -> list[tuple[str, str, str, dict[str, Any]]]:
+        definition = self.config["fields"][field]
+        unit = definition["unit"]
+        candidates = self._concept_facts(definition["concepts"], unit)
+        derivations = definition.get("derivations")
+        if derivations:
+            covered = {(fact.get("start"), fact["end"]) for *_, fact in candidates}
+            for spec in derivations:
+                candidates.extend(self._derived_sum_facts(spec, unit, covered))
+        return candidates
+
+    @staticmethod
+    def _select_latest_duplicate(
+        facts: Iterable[tuple[str, str, str, dict[str, Any]]],
+    ) -> list[tuple[str, str, str, dict[str, Any]]]:
+        chosen: dict[
+            tuple[str | None, str, str],
+            tuple[str, str, str, dict[str, Any]],
+        ] = {}
+        for namespace, concept, unit, fact in facts:
+            form = fact.get("form", "")
+            form_family = form[:-2] if form.endswith("/A") else form
+            key = (fact.get("start"), fact["end"], form_family)
+            current = chosen.get(key)
+            if current is None or (
+                fact.get("filed", ""),
+                form.endswith("/A"),
+                fact.get("accn", ""),
+            ) > (
+                current[3].get("filed", ""),
+                current[3].get("form", "").endswith("/A"),
+                current[3].get("accn", ""),
+            ):
+                chosen[key] = (namespace, concept, unit, fact)
+        return list(chosen.values())
+
+    def _fiscal_year_for_start(self, fiscal_start: str) -> int:
+        """Label a fiscal period from the issuer's declared fiscal-year end."""
+        start_year = int(fiscal_start[:4])
+        if not self.fiscal_year_end:
+            raise ValueError(
+                "SEC submissions fiscalYearEnd is required to label reconstructed quarters"
+            )
+        start_month_day = fiscal_start[5:7] + fiscal_start[8:10]
+        return start_year + (1 if start_month_day > self.fiscal_year_end else 0)
+
+    @staticmethod
+    def _selected(
+        field: str,
+        item: tuple[str, str, str, dict[str, Any]],
+        reason: str,
+    ) -> SelectedFact:
+        namespace, concept, unit, fact = item
+        return SelectedFact(
+            field=field,
+            namespace=namespace,
+            concept=concept,
+            unit=unit,
+            value=float(fact["val"]),
+            start=fact.get("start"),
+            end=fact["end"],
+            accession=fact.get("accn", ""),
+            form=fact.get("form", ""),
+            filed=fact.get("filed", ""),
+            fiscal_year=fact.get("fy"),
+            fiscal_period=fact.get("fp"),
+            frame=fact.get("frame"),
+            selection_reason=reason,
+        )
+
+    def annual_series(self, field: str, count: int = 5) -> list[SelectedFact]:
+        candidates = [
+            item
+            for item in self._candidates(field)
+            if item[3].get("form") in {"10-K", "10-K/A"}
+            and item[3].get("fp") == "FY"
+            and item[3].get("start")
+            and 330 <= _days(item[3]["start"], item[3]["end"]) <= 385
+        ]
+        deduped = self._select_latest_duplicate(candidates)
+        deduped.sort(key=lambda item: item[3]["end"])
+        return [
+            self._selected(
+                field,
+                item,
+                "Latest filed 10-K fact for the annual start/end context; later comparative facts supersede duplicates.",
+            )
+            for item in deduped[-count:]
+        ]
+
+    def annual_at_end(self, field: str, end: str) -> SelectedFact | None:
+        rows = [row for row in self.annual_series(field, 20) if row.end == end]
+        return rows[-1] if rows else None
+
+    def latest_ytd_pair(
+        self,
+        field: str,
+        *,
+        after_end: str,
+    ) -> tuple[SelectedFact, SelectedFact] | None:
+        candidates = [
+            item
+            for item in self._candidates(field)
+            if item[3].get("form") in {"10-Q", "10-Q/A"}
+            and item[3].get("start")
+            and item[3]["end"] > after_end
+            and 70 <= _days(item[3]["start"], item[3]["end"]) <= 310
+        ]
+        if not candidates:
+            return None
+        current_item = max(
+            candidates,
+            key=lambda item: (
+                item[3]["end"],
+                item[3].get("filed", ""),
+                _days(item[3]["start"], item[3]["end"]),
+            ),
+        )
+        current_days = _days(current_item[3]["start"], current_item[3]["end"])
+        comparison_candidates = [
+            item
+            for item in self._candidates(field)
+            if item[3].get("accn") == current_item[3].get("accn")
+            and item[3].get("start")
+            and item[3]["end"] < current_item[3]["end"]
+            and abs(_days(item[3]["start"], item[3]["end"]) - current_days) <= 8
+        ]
+        if not comparison_candidates:
+            return None
+        prior_item = max(comparison_candidates, key=lambda item: item[3]["end"])
+        return (
+            self._selected(
+                field,
+                current_item,
+                "Latest post-fiscal-year cumulative 10-Q fact.",
+            ),
+            self._selected(
+                field,
+                prior_item,
+                "Prior-year comparable cumulative fact from the same 10-Q accession.",
+            ),
+        )
+
+    def ttm_flow(self, field: str) -> dict[str, Any]:
+        annual = self.annual_series(field, 1)
+        if not annual:
+            raise ValueError(f"Missing annual fact for {field}")
+        fiscal_year = annual[-1]
+        pair = self.latest_ytd_pair(field, after_end=fiscal_year.end)
+        if pair is None:
+            return {
+                "value": fiscal_year.value,
+                "period_end": fiscal_year.end,
+                "method": "latest_fiscal_year",
+                "sources": [fiscal_year.as_dict()],
+            }
+        current, prior = pair
+        return {
+            "value": fiscal_year.value + current.value - prior.value,
+            "period_end": current.end,
+            "method": "latest_fy_plus_current_ytd_minus_prior_ytd",
+            "sources": [
+                fiscal_year.as_dict(),
+                current.as_dict(),
+                prior.as_dict(),
+            ],
+            "current_ytd": current.as_dict(),
+            "prior_ytd": prior.as_dict(),
+        }
+
+    def ttm_history(self, field: str, count: int = 4) -> list[dict[str, Any]]:
+        """Build non-overlapping TTM observations from FY + YTD - prior YTD."""
+        annual = self.annual_series(field, 12)
+        annual_by_end = {fact.end: fact for fact in annual}
+        by_accession: dict[str, list[tuple[str, str, str, dict[str, Any]]]] = {}
+        for item in self._candidates(field):
+            fact = item[3]
+            if (
+                fact.get("form") in {"10-Q", "10-Q/A"}
+                and fact.get("start")
+                and 70 <= _days(fact["start"], fact["end"]) <= 310
+            ):
+                by_accession.setdefault(fact.get("accn", ""), []).append(item)
+
+        observations: dict[str, dict[str, Any]] = {}
+        for accession_items in by_accession.values():
+            current_item = max(
+                accession_items,
+                key=lambda item: (
+                    item[3]["end"],
+                    _days(item[3]["start"], item[3]["end"]),
+                ),
+            )
+            current = current_item[3]
+            current_days = _days(current["start"], current["end"])
+            prior_items = [
+                item
+                for item in accession_items
+                if item[3]["end"] < current["end"]
+                and abs(_days(item[3]["start"], item[3]["end"]) - current_days) <= 8
+            ]
+            if not prior_items:
+                continue
+            prior_item = max(prior_items, key=lambda item: item[3]["end"])
+            prior = prior_item[3]
+            matching_fy = [
+                fact
+                for fact in annual_by_end.values()
+                if fact.end < current["start"]
+                and 0 <= (date.fromisoformat(current["start"]) - date.fromisoformat(fact.end)).days <= 8
+            ]
+            if not matching_fy:
+                continue
+            fiscal_year = max(matching_fy, key=lambda fact: fact.end)
+            selected_current = self._selected(
+                field,
+                current_item,
+                "Current cumulative interim fact used in a reconstructed TTM value.",
+            )
+            selected_prior = self._selected(
+                field,
+                prior_item,
+                "Prior-year comparable cumulative fact used in a reconstructed TTM value.",
+            )
+            candidate = {
+                "period_end": selected_current.end,
+                "value": fiscal_year.value + selected_current.value - selected_prior.value,
+                "method": "latest_fy_plus_current_ytd_minus_prior_ytd",
+                "sources": [
+                    fiscal_year.as_dict(),
+                    selected_current.as_dict(),
+                    selected_prior.as_dict(),
+                ],
+                "filed": selected_current.filed,
+            }
+            existing = observations.get(selected_current.end)
+            if existing is None or candidate["filed"] > existing["filed"]:
+                observations[selected_current.end] = candidate
+        return sorted(observations.values(), key=lambda row: row["period_end"])[-count:]
+
+    def standalone_quarters(
+        self,
+        field: str,
+        count: int = 8,
+    ) -> list[dict[str, Any]]:
+        """Reconstruct stand-alone quarters from Q1/YTD/FY duration facts."""
+        candidates = [
+            item
+            for item in self._candidates(field)
+            if item[3].get("form") in {"10-K", "10-K/A", "10-Q", "10-Q/A"}
+            and item[3].get("start")
+            and 70 <= _days(item[3]["start"], item[3]["end"]) <= 385
+        ]
+        deduped = self._select_latest_duplicate(candidates)
+        valid_fiscal_starts = {
+            item[3]["start"]
+            for item in deduped
+            if (
+                item[3].get("form") in {"10-K", "10-K/A"}
+                and 330 <= _days(item[3]["start"], item[3]["end"]) <= 385
+            )
+            or (
+                item[3].get("form") in {"10-Q", "10-Q/A"}
+                and item[3].get("fp") == "Q1"
+                and 70 <= _days(item[3]["start"], item[3]["end"]) <= 115
+            )
+        }
+        by_start: dict[str, list[tuple[str, str, str, dict[str, Any]]]] = {}
+        for item in deduped:
+            if item[3]["start"] in valid_fiscal_starts:
+                by_start.setdefault(item[3]["start"], []).append(item)
+
+        quarters: dict[str, dict[str, Any]] = {}
+        for fiscal_start, items in by_start.items():
+            by_duration = {
+                "q1": [
+                    item
+                    for item in items
+                    if 70 <= _days(fiscal_start, item[3]["end"]) <= 115
+                ],
+                "q2_ytd": [
+                    item
+                    for item in items
+                    if 150 <= _days(fiscal_start, item[3]["end"]) <= 215
+                ],
+                "q3_ytd": [
+                    item
+                    for item in items
+                    if 240 <= _days(fiscal_start, item[3]["end"]) <= 310
+                ],
+                "fy": [
+                    item
+                    for item in items
+                    if 330 <= _days(fiscal_start, item[3]["end"]) <= 385
+                ],
+            }
+            selected = {
+                key: (
+                    max(
+                        values,
+                        key=lambda item: (
+                            item[3]["end"],
+                            item[3].get("filed", ""),
+                            item[3].get("accn", ""),
+                        ),
+                    )
+                    if values
+                    else None
+                )
+                for key, values in by_duration.items()
+            }
+
+            def add_quarter(
+                quarter: int,
+                end: str,
+                value: float,
+                source_items: list[tuple[str, str, str, dict[str, Any]]],
+                formula: str,
+            ) -> None:
+                row = {
+                    "fiscal_start": fiscal_start,
+                    "fiscal_year": self._fiscal_year_for_start(fiscal_start),
+                    "fiscal_quarter": quarter,
+                    "period_end": end,
+                    "value": value,
+                    "formula": formula,
+                    "sources": [
+                        self._selected(
+                            field,
+                            item,
+                            "Source fact used to reconstruct a stand-alone quarter.",
+                        ).as_dict()
+                        for item in source_items
+                    ],
+                    "filed": max(item[3].get("filed", "") for item in source_items),
+                }
+                current = quarters.get(end)
+                if current is None or row["filed"] > current["filed"]:
+                    quarters[end] = row
+
+            q1 = selected["q1"]
+            q2_ytd = selected["q2_ytd"]
+            q3_ytd = selected["q3_ytd"]
+            fy = selected["fy"]
+            if q1:
+                add_quarter(1, q1[3]["end"], float(q1[3]["val"]), [q1], "reported Q1")
+            if q1 and q2_ytd:
+                add_quarter(
+                    2,
+                    q2_ytd[3]["end"],
+                    float(q2_ytd[3]["val"]) - float(q1[3]["val"]),
+                    [q2_ytd, q1],
+                    "Q2 YTD - Q1",
+                )
+            if q2_ytd and q3_ytd:
+                add_quarter(
+                    3,
+                    q3_ytd[3]["end"],
+                    float(q3_ytd[3]["val"]) - float(q2_ytd[3]["val"]),
+                    [q3_ytd, q2_ytd],
+                    "Q3 YTD - Q2 YTD",
+                )
+            if q3_ytd and fy:
+                add_quarter(
+                    4,
+                    fy[3]["end"],
+                    float(fy[3]["val"]) - float(q3_ytd[3]["val"]),
+                    [fy, q3_ytd],
+                    "FY - Q3 YTD",
+                )
+        return sorted(quarters.values(), key=lambda row: row["period_end"])[-count:]
+
+    def instant(
+        self,
+        field: str,
+        *,
+        end: str | None = None,
+        at_or_before: str | None = None,
+    ) -> SelectedFact | None:
+        candidates = [
+            item
+            for item in self._candidates(field)
+            if not item[3].get("start")
+            and item[3].get("form") in {"10-K", "10-K/A", "10-Q", "10-Q/A"}
+            and (end is None or item[3]["end"] == end)
+            and (at_or_before is None or item[3]["end"] <= at_or_before)
+        ]
+        if not candidates:
+            return None
+        item = max(
+            candidates,
+            key=lambda candidate: (
+                candidate[3]["end"],
+                candidate[3].get("filed", ""),
+                candidate[3].get("accn", ""),
+            ),
+        )
+        return self._selected(
+            field,
+            item,
+            "Latest filed point-in-time fact for the requested balance-sheet date.",
+        )
+
+    def annual_instant_series(
+        self,
+        field: str,
+        count: int = 3,
+    ) -> list[SelectedFact]:
+        """Return annual point-in-time facts, one latest-filed value per period."""
+
+        candidates = [
+            item
+            for item in self._candidates(field)
+            if not item[3].get("start")
+            and item[3].get("form") in {"10-K", "10-K/A"}
+        ]
+        deduped = self._select_latest_duplicate(candidates)
+        deduped.sort(key=lambda item: item[3]["end"])
+        return [
+            self._selected(
+                field,
+                item,
+                "Latest filed annual point-in-time fact for the balance-sheet period.",
+            )
+            for item in deduped[-count:]
+        ]
+
+    def _controlling_filing(self, period_end: str) -> dict[str, Any] | None:
+        """Return the latest eligible filing that controls a balance-sheet date."""
+        candidates = [
+            record
+            for record in self.filing_records
+            if record.get("reportDate") == period_end
+            and record.get("form") in {"10-K", "10-K/A", "10-Q", "10-Q/A"}
+            and (
+                not self.as_of_date
+                or record.get("filingDate", "") <= self.as_of_date
+            )
+        ]
+        return (
+            max(
+                candidates,
+                key=lambda record: (
+                    record.get("filingDate", ""),
+                    record.get("form", "").endswith("/A"),
+                    record.get("accessionNumber", ""),
+                ),
+            )
+            if candidates
+            else None
+        )
+
+    def _accession_has_period_fact(self, accession: str, period_end: str) -> bool:
+        """Confirm an evidence accession is represented in the SEC fact payload."""
+        for namespace in self.namespaces.values():
+            for concept in namespace.values():
+                for facts in concept.get("units", {}).values():
+                    if any(
+                        fact.get("accn") == accession
+                        and fact.get("end") == period_end
+                        and (
+                            not self.as_of_date
+                            or fact.get("filed", "") <= self.as_of_date
+                        )
+                        for fact in facts
+                    ):
+                        return True
+        return False
+
+    @staticmethod
+    def _evidence_available_as_of(
+        evidence: Mapping[str, Any], as_of_date: str | None
+    ) -> bool:
+        """Use filing availability for point-in-time evidence, not audit timing."""
+        if not as_of_date:
+            return True
+        available_on = evidence.get("filing_date") or evidence.get("reviewed_on")
+        return bool(available_on) and str(available_on) <= as_of_date
+
+    def _bridge_instant(
+        self,
+        field: str,
+        *,
+        period_end: str,
+        controlling_accession: str | None,
+        allow_cover_page_date: bool = False,
+    ) -> SelectedFact | None:
+        """Select a bridge fact from the current controlling filing only."""
+        controlling_filing = self._controlling_filing(period_end)
+        filing_date = (
+            controlling_filing.get("filingDate") if controlling_filing else None
+        )
+        candidates = []
+        for item in self._candidates(field):
+            fact = item[3]
+            if fact.get("start") or fact.get("form") not in {
+                "10-K",
+                "10-K/A",
+                "10-Q",
+                "10-Q/A",
+            }:
+                continue
+            if controlling_accession and fact.get("accn") != controlling_accession:
+                continue
+            if allow_cover_page_date:
+                if not filing_date or fact.get("end", "") < period_end:
+                    continue
+                if fact.get("end", "") > filing_date:
+                    continue
+            elif fact.get("end") != period_end:
+                continue
+            candidates.append(item)
+        if not candidates:
+            return None
+        item = max(
+            candidates,
+            key=lambda candidate: (
+                candidate[3].get("end", ""),
+                candidate[3].get("filed", ""),
+                candidate[3].get("form", "").endswith("/A"),
+                candidate[3].get("accn", ""),
+            ),
+        )
+        reason = (
+            "Current controlling filing fact used for the enterprise-to-equity bridge."
+            if not allow_cover_page_date
+            else "Current controlling filing cover-page share fact used for the bridge denominator."
+        )
+        return self._selected(field, item, reason)
+
+    def operating_nwc(self, end: str) -> dict[str, Any]:
+        # Accounts receivable anchors the operating-capital proxy. Some issuers
+        # report the balance sheet only at fiscal-year ends, not at an interim
+        # TTM anchor, so AR is absent at the exact `end`. Fall back to the most
+        # recent balance-sheet date at or before the anchor and build ALL four
+        # accounts there, keeping them internally consistent rather than mixing
+        # dates or blocking the valuation.
+        anchor_ar = self.instant("accounts_receivable", end=end)
+        nwc_end = end
+        anchor_fallback = False
+        if anchor_ar is None:
+            anchor_ar = self.instant("accounts_receivable", at_or_before=end)
+            if anchor_ar is None:
+                raise ValueError(
+                    f"Operating NWC cannot be built at {end}; missing accounts_receivable"
+                )
+            nwc_end = anchor_ar.end
+            anchor_fallback = True
+        components = {
+            "accounts_receivable": anchor_ar,
+            "inventory": self.instant("inventory", end=nwc_end),
+            "accounts_payable": self.instant("accounts_payable", end=nwc_end),
+            "deferred_revenue_current": self.instant("deferred_revenue_current", end=nwc_end),
+        }
+        # The other three accounts are legitimately absent for whole sectors
+        # (software/services carry no inventory; some issuers net payables into
+        # accrued liabilities), so treat an absent one as zero and record it.
+        absent = [field for field, fact in components.items() if fact is None]
+
+        def _value(field: str) -> float:
+            fact = components[field]
+            return fact.value if fact else 0.0
+
+        value = (
+            _value("accounts_receivable")
+            + _value("inventory")
+            - _value("accounts_payable")
+            - _value("deferred_revenue_current")
+        )
+        return {
+            "value": value,
+            "period_end": nwc_end,
+            "anchor_fallback": anchor_fallback,
+            "requested_end": end,
+            "definition": "accounts receivable + inventory - accounts payable - current deferred revenue",
+            "absent_components": absent,
+            "sources": [fact.as_dict() for fact in components.values() if fact],
+        }
+
+    def normalize(
+        self,
+        annual_count: int = 5,
+        *,
+        verified_zero_bridge_fields: Mapping[str, dict[str, Any]]
+        | Iterable[str] = (),
+        governed_bridge_fields: Mapping[str, dict[str, Any]] | None = None,
+        filing_evidence: Iterable[Mapping[str, Any]] | None = None,
+        bridge_evidence: Iterable[FieldAvailability] = (),
+        sector_estimates: Mapping[str, FallbackDecision] | None = None,
+        major_changes: Mapping[str, Mapping[str, Any]] | None = None,
+    ) -> dict[str, Any]:
+        if isinstance(verified_zero_bridge_fields, Mapping):
+            verified_zero_evidence = dict(verified_zero_bridge_fields)
+        else:
+            verified_zero_evidence = {
+                field: {
+                    "rationale": "Caller marked this bridge field as verified zero.",
+                    "verification_version": "legacy-caller",
+                }
+                for field in verified_zero_bridge_fields
+            }
+        governed_bridge_evidence = dict(governed_bridge_fields or {})
+        recovered_bridge_evidence = governed_bridge_fields_from_evidence(
+            filing_evidence or (),
+            as_of_date=self.as_of_date,
+        )
+        for field, evidence in recovered_bridge_evidence.items():
+            existing = governed_bridge_evidence.get(field)
+            if existing and existing.get("value") not in (None, evidence["value"]):
+                raise ValueError(f"Conflicting bridge evidence for {field}")
+            governed_bridge_evidence.setdefault(field, evidence)
+        annual_revenue = self.annual_series("revenue", annual_count)
+        if len(annual_revenue) < 3:
+            raise ValueError("At least three annual revenue facts are required")
+        annual_periods: list[dict[str, Any]] = []
+        for revenue in annual_revenue:
+            row: dict[str, Any] = {
+                "period_end": revenue.end,
+                "fiscal_year": int(revenue.end[:4]),
+                "source_filing_fiscal_year": revenue.fiscal_year,
+                "values": {},
+                "sources": {},
+            }
+            for field in (
+                "revenue",
+                "operating_income",
+                "pretax_income",
+                "income_tax",
+                "depreciation_amortization",
+                "capital_expenditures",
+            ):
+                fact = self.annual_at_end(field, revenue.end)
+                row["values"][field] = fact.value if fact else None
+                row["sources"][field] = fact.as_dict() if fact else None
+            pretax = row["values"]["pretax_income"]
+            taxes = row["values"]["income_tax"]
+            row["values"]["effective_tax_rate"] = (
+                taxes / pretax if pretax and taxes is not None and pretax > 0 else None
+            )
+            annual_periods.append(row)
+
+        ttm_fields = {
+            field: self.ttm_flow(field)
+            for field in (
+                "revenue",
+                "operating_income",
+                "pretax_income",
+                "income_tax",
+                "depreciation_amortization",
+                "capital_expenditures",
+            )
+        }
+        # Quarterly/YTD facts define current operating performance. A lagging flow
+        # must be scaled from company history; an annual flow is never copied as if
+        # it were already a trailing-twelve-month amount.
+        ttm_end = max(fact["period_end"] for fact in ttm_fields.values())
+        lagging_ttm_fields: list[str] = []
+        if ttm_fields["revenue"]["period_end"] != ttm_end:
+            raise ValueError("Current TTM revenue is required to scale lagging flows")
+        for field, fact in list(ttm_fields.items()):
+            if fact["period_end"] == ttm_end:
+                continue
+            estimate = _estimate_ttm_flow_from_annual_history(
+                field=field,
+                ttm_revenue=ttm_fields["revenue"]["value"],
+                annual_periods=annual_periods,
+            )
+            ttm_fields[field] = {
+                **estimate,
+                "period_end": ttm_end,
+                "period_role": "operating_ttm",
+            }
+            lagging_ttm_fields.append(field)
+        for fact in ttm_fields.values():
+            fact["period_role"] = "operating_ttm"
+        controlling_filings = [
+            record
+            for record in self.filing_records
+            if record.get("reportDate") == ttm_end
+            and record.get("form") in {"10-Q", "10-Q/A", "10-K", "10-K/A"}
+            and (
+                not self.as_of_date
+                or record.get("filingDate", "") <= self.as_of_date
+            )
+        ]
+        controlling_filing = (
+            max(
+                controlling_filings,
+                key=lambda record: (
+                    record.get("filingDate", ""),
+                    record.get("form", "").endswith("/A"),
+                    record.get("accessionNumber", ""),
+                ),
+            )
+            if controlling_filings
+            else None
+        )
+        controlling_accession = (
+            controlling_filing.get("accessionNumber")
+            if controlling_filing
+            else None
+        )
+        prior_end = ttm_fields["revenue"].get("prior_ytd", {}).get("end")
+        if not prior_end:
+            prior_end = annual_periods[-2]["period_end"]
+        nwc_current = self.operating_nwc(ttm_end)
+        nwc_prior = self.operating_nwc(prior_end)
+        change_nwc = nwc_current["value"] - nwc_prior["value"]
+        pretax = ttm_fields["pretax_income"]["value"]
+        tax = ttm_fields["income_tax"]["value"]
+        effective_tax = tax / pretax if pretax > 0 else None
+        # A loss-making TTM yields no meaningful effective rate (negative or zero
+        # pretax). Tax a negative operating base at zero for the reported-FCFF
+        # diagnostic so growth issuers normalize instead of raising; the forecast
+        # model applies its own governed tax rate downstream.
+        fcff_tax_rate = effective_tax if effective_tax is not None else 0.0
+        reported_fcff = (
+            ttm_fields["operating_income"]["value"] * (1 - fcff_tax_rate)
+            + ttm_fields["depreciation_amortization"]["value"]
+            - ttm_fields["capital_expenditures"]["value"]
+            - change_nwc
+        )
+
+        balance_result = self._normalize_balance_sheet(
+            period_end=ttm_end, latest_annual_end=annual_periods[-1]["period_end"],
+            governed_bridge_evidence=governed_bridge_evidence,
+            verified_zero_evidence=verified_zero_evidence,
+            bridge_evidence=bridge_evidence, sector_estimates=sector_estimates,
+            major_changes=major_changes,
+        )
+
+        tax_rates = [
+            row["values"]["effective_tax_rate"]
+            for row in annual_periods
+            if row["values"]["effective_tax_rate"] is not None
+            and 0 <= row["values"]["effective_tax_rate"] <= 0.4
+        ]
+        if effective_tax is not None and 0 <= effective_tax <= 0.4:
+            tax_rates.append(effective_tax)
+        # Persistently loss-making issuers report no year in the normal 0-40%
+        # band. Fall back to the US statutory rate and label the method so the
+        # forecast layer and reviewers see the estimate, rather than raising.
+        if tax_rates:
+            tax_rate = median(tax_rates)
+            tax_rate_method = "median of valid annual and TTM effective tax rates"
+        else:
+            tax_rate = _STATUTORY_TAX_FALLBACK
+            tax_rate_method = (
+                "US statutory fallback; no annual or TTM effective rate fell in "
+                "the 0-40% band (persistent pretax loss)"
+            )
+
+        return {
+            "mapping_version": self.config["version"],
+            "entity_name": self.companyfacts.get("entityName"),
+            "cik": str(self.companyfacts.get("cik", "")).zfill(10),
+            "currency": "USD",
+            "annual": annual_periods,
+            "ttm": {
+                "period_role": "operating_ttm",
+                "period_end": ttm_end,
+                "method": ttm_fields["revenue"]["method"],
+                "source_cutoff_date": self.as_of_date,
+                "controlling_filing": (
+                    {
+                        "accession": controlling_filing.get("accessionNumber"),
+                        "form": controlling_filing.get("form"),
+                        "report_date": controlling_filing.get("reportDate"),
+                        "filing_date": controlling_filing.get("filingDate"),
+                        "primary_document": controlling_filing.get(
+                            "primaryDocument"
+                        ),
+                    }
+                    if controlling_filing
+                    else None
+                ),
+                "values": {
+                    **{field: fact["value"] for field, fact in ttm_fields.items()},
+                    "effective_tax_rate": effective_tax,
+                    "operating_nwc": nwc_current["value"],
+                    "change_in_operating_nwc": change_nwc,
+                    "reported_fcff": reported_fcff,
+                },
+                "sources": ttm_fields,
+                "nwc_sources": {
+                    "current": nwc_current,
+                    "prior": nwc_prior,
+                },
+            },
+            "balance_sheet": balance_result["balance_sheet"],
+            "normalized": {
+                "tax_rate": tax_rate,
+                "tax_rate_method": tax_rate_method,
+                "revenue_ttm_history": self.ttm_history("revenue", 4),
+            },
+            "quarterly": {
+                "revenue": self.standalone_quarters("revenue", 8),
+                "operating_income": self.standalone_quarters(
+                    "operating_income",
+                    8,
+                ),
+            },
+            "warnings": [
+                *balance_result["warnings"],
+                *(
+                    [
+                        "TTM inputs "
+                        + ", ".join(lagging_ttm_fields)
+                        + f" were unavailable at {ttm_end} and estimated from company-history ratios to current TTM revenue; review the trailing-twelve-month range."
+                    ]
+                    if lagging_ttm_fields
+                    else []
+                ),
+                "Operating NWC uses a consistent four-account public-data definition and may omit issuer-specific operating accruals.",
+                "Operating leases remain in operating expense and are not added to debt; finance leases are included when separately reported.",
+            ],
+        }
+
+    def normalize_balance_sheet(
+        self, *, period_end: str,
+        filing_evidence: Iterable[Mapping[str, Any]] = (),
+        bridge_evidence: Iterable[FieldAvailability] = (),
+    ) -> dict[str, Any]:
+        """Resolve current cash, claims and shares without unrelated EBIT flows."""
+        date.fromisoformat(period_end)
+        if self.as_of_date and period_end > self.as_of_date:
+            raise ValueError("Balance sheet period is after source cutoff")
+        annual = self.annual_series("revenue", 1)
+        if not annual or annual[-1].end > period_end:
+            raise ValueError("Eligible annual anchor required for share selection")
+        return self._normalize_balance_sheet(
+            period_end=period_end, latest_annual_end=annual[-1].end,
+            governed_bridge_evidence=governed_bridge_fields_from_evidence(
+                filing_evidence, as_of_date=self.as_of_date,
+            ),
+            verified_zero_evidence={}, bridge_evidence=bridge_evidence,
+            sector_estimates=None, major_changes=None,
+        )
+
+    def _normalize_balance_sheet(
+        self, *, period_end, latest_annual_end, governed_bridge_evidence,
+        verified_zero_evidence, bridge_evidence, sector_estimates, major_changes,
+    ) -> dict[str, Any]:
+        ttm_end = period_end
+        controlling_filing = self._controlling_filing(ttm_end)
+        controlling_accession = controlling_filing.get("accessionNumber") if controlling_filing else None
+        current_governed_bridge_fields = {
+            field
+            for field, evidence in governed_bridge_evidence.items()
+            if evidence.get("controlled_period_end") == ttm_end
+            and evidence.get("source_accession") == controlling_accession
+            and controlling_accession is not None
+            and self._accession_has_period_fact(controlling_accession, ttm_end)
+            and isinstance(evidence.get("value"), (int, float))
+            and not isinstance(evidence.get("value"), bool)
+            and evidence["value"] >= 0
+            and (
+                self._evidence_available_as_of(evidence, self.as_of_date)
+            )
+        }
+        verified_zero_fields = {
+            field
+            for field, evidence in verified_zero_evidence.items()
+            if evidence.get("controlled_period_end") == ttm_end
+            and evidence.get("source_accession") == controlling_accession
+            and controlling_accession is not None
+            and self._accession_has_period_fact(controlling_accession, ttm_end)
+            and (
+                self._evidence_available_as_of(evidence, self.as_of_date)
+            )
+        }
+        controlling_bridge_filing = self._controlling_filing(ttm_end)
+        controlling_bridge_accession = (
+            controlling_bridge_filing.get("accessionNumber")
+            if controlling_bridge_filing
+            else None
+        )
+        balance_fields = {}
+        balance_field_names = (
+            "cash",
+            "total_assets",
+            "marketable_securities_current",
+            "marketable_securities_noncurrent",
+            "marketable_securities_total",
+            "commercial_paper",
+            "current_debt",
+            "noncurrent_debt",
+            "finance_lease_current",
+            "finance_lease_noncurrent",
+            "finance_lease_total",
+            "preferred_equity",
+            "noncontrolling_interests",
+            "common_shares_outstanding",
+            "diluted_weighted_average_shares",
+            "incremental_dilutive_shares",
+        )
+        annual_instant_history = {
+            field: self.annual_instant_series(field, 3)
+            for field in balance_field_names
+            if self.config["fields"][field]["kind"] == "instant"
+        }
+        for field in balance_field_names:
+            if field in {
+                "diluted_weighted_average_shares",
+                "incremental_dilutive_shares",
+            }:
+                latest_diluted = self.latest_ytd_pair(
+                    field,
+                    after_end=latest_annual_end,
+                )
+                fact = latest_diluted[0] if latest_diluted else self.annual_at_end(
+                    field,
+                    latest_annual_end,
+                )
+            elif field == "common_shares_outstanding":
+                fact = self._bridge_instant(
+                    field,
+                    period_end=ttm_end,
+                    controlling_accession=controlling_bridge_accession,
+                    allow_cover_page_date=True,
+                )
+                if fact is None and controlling_bridge_filing is None:
+                    # Direct normalizer callers may omit submissions metadata. Keep
+                    # their share-count proxy usable, while production pipeline runs
+                    # remain governed by the controlling filing above.
+                    fact = self.instant(field)
+            else:
+                fact = self._bridge_instant(
+                    field,
+                    period_end=ttm_end,
+                    controlling_accession=controlling_bridge_accession,
+                )
+            stale_fact = (
+                self.instant(field, at_or_before=ttm_end)
+                if fact is None and field not in {
+                    "diluted_weighted_average_shares",
+                    "incremental_dilutive_shares",
+                    "common_shares_outstanding",
+                }
+                else None
+            )
+            balance_fields[field] = {
+                "value": (
+                    fact.value
+                    if fact
+                    else float(governed_bridge_evidence[field]["value"])
+                    if field in current_governed_bridge_fields
+                    else 0.0
+                    if field in verified_zero_fields
+                    else None
+                ),
+                "source": (
+                    fact.as_dict()
+                    if fact
+                    else {
+                        "value_status": "governed_filing_fact",
+                        **governed_bridge_evidence[field],
+                    }
+                    if field in current_governed_bridge_fields
+                    else {
+                        "value_status": "policy_verified_zero",
+                        **verified_zero_evidence[field],
+                    }
+                    if field in verified_zero_fields
+                    else {
+                        **stale_fact.as_dict(),
+                        "source_kind": "companyfacts",
+                        "authority": "production",
+                        "evidence_class": "reported",
+                        "value_status": "stale_reported_fact",
+                    }
+                    if stale_fact
+                    else None
+                ),
+                "state": (
+                    "reported"
+                    if fact
+                    else "governed_filing_fact"
+                    if field in current_governed_bridge_fields
+                    else "policy_verified_zero"
+                    if field in verified_zero_fields
+                    else "verification_stale"
+                    if stale_fact
+                    else "verification_stale"
+                    if field in governed_bridge_evidence
+                    or field in verified_zero_evidence
+                    else "missing"
+                ),
+                "annual_history": annual_instant_history.get(field, []),
+            }
+
+        # Some issuers (often multi-class) tag no cover-page common-share count in
+        # their SEC facts. Fall back to the latest weighted-average diluted share
+        # count as the per-share denominator, flagged so review sees the proxy.
+        shares_from_weighted_average = False
+        if balance_fields["common_shares_outstanding"]["value"] is None:
+            weighted = balance_fields["diluted_weighted_average_shares"]
+            if weighted["value"] is None:
+                raise ValueError("Latest common shares outstanding are required")
+            balance_fields["common_shares_outstanding"] = {
+                "value": weighted["value"],
+                "source": {
+                    "value_status": "weighted_average_diluted_proxy",
+                    **(weighted["source"] or {}),
+                },
+                "state": "weighted_average_diluted_proxy",
+            }
+            shares_from_weighted_average = True
+        availability = {}
+        for field, item in balance_fields.items():
+            source = item["source"]
+            if (
+                field == "marketable_securities_total"
+                and isinstance(source, dict)
+                and item["state"] in {"reported", "governed_filing_fact"}
+            ):
+                source = {
+                    **source,
+                    "source_kind": source.get("source_kind") or "companyfacts",
+                    "evidence_class": source.get("evidence_class")
+                    or "reported",
+                    "authority": "production",
+                }
+                item["source"] = source
+            record = availability_from_normalized_field(
+                field=field,
+                value=item["value"],
+                source=source,
+                legacy_state=item["state"],
+                period_end=ttm_end,
+                covered_fields=(
+                    ("finance_lease_current", "finance_lease_noncurrent")
+                    if field == "finance_lease_total"
+                    else ()
+                ),
+                reference_date=self.as_of_date or ttm_end,
+            )
+            availability[field] = record
+        evidence_merge = merge_bridge_evidence(availability, bridge_evidence)
+        availability = evidence_merge.availability
+        bridge_evidence_diagnostics = list(evidence_merge.diagnostics)
+        for diagnostic in evidence_merge.diagnostics:
+            field = diagnostic["field"]
+            decision = diagnostic["decision"]
+            record = availability[field]
+            if field not in balance_fields:
+                balance_fields[field] = {
+                    "value": None,
+                    "source": None,
+                    "state": "missing",
+                    "annual_history": [],
+                }
+            if decision in {
+                "structural_added",
+                "structural_replaced_unusable_detail",
+                "newer_official_period_replaced_stale_current",
+            }:
+                balance_fields[field]["value"] = record.value
+                balance_fields[field]["state"] = "governed_filing_fact"
+                balance_fields[field]["source"] = {
+                    "value_status": "governed_filing_fact",
+                    "value": record.value,
+                    "source_accession": record.source_accession,
+                    "controlled_period_end": record.period_end,
+                    "source_kind": record.source_kind,
+                    "evidence_class": record.evidence_class,
+                    "fallback_level": record.fallback_level,
+                    "authority": record.authority,
+                    "reason_code": record.reason_code,
+                }
+            elif decision == "conflict":
+                balance_fields[field]["value"] = None
+                balance_fields[field]["state"] = "conflict"
+                balance_fields[field]["source"] = dict(diagnostic)
+        fallback_decisions: dict[str, FallbackDecision] = {}
+        total_assets_record = availability["total_assets"]
+        current_total_assets = (
+            total_assets_record.value
+            if total_assets_record.value is not None
+            else None
+        )
+        annual_assets_by_end = {
+            fact.end: fact
+            for fact in annual_instant_history.get("total_assets", [])
+        }
+        range_fields = {
+            "cash",
+            "marketable_securities_current",
+            "marketable_securities_noncurrent",
+            "marketable_securities_total",
+            "commercial_paper",
+            "current_debt",
+            "noncurrent_debt",
+            "finance_lease_current",
+            "finance_lease_noncurrent",
+            "finance_lease_total",
+            "preferred_equity",
+            "noncontrolling_interests",
+        }
+        for field in sorted(range_fields):
+            record = availability[field]
+            history = annual_instant_history.get(field, [])
+            if record.fallback_level == "annual_carried_forward":
+                if record.state == "bounded_unresolved" and record.uncertainty is not None:
+                    fallback_decisions[field] = FallbackDecision(
+                        field=field,
+                        low=record.uncertainty.low,
+                        base=(record.uncertainty.low + record.uncertainty.high) / 2,
+                        high=record.uncertainty.high,
+                        period_role="balance_sheet_snapshot",
+                        fallback_level="annual_carried_forward",
+                        source_age_days=record.source_age_days,
+                        source_accessions=record.uncertainty.source_accessions,
+                        basis=record.uncertainty.basis,
+                        reliability_cap="Low",
+                    )
+                    continue
+                event = (major_changes or {}).get(field, {})
+                flags = event.get("flags", ())
+                quantified_change = event.get("quantified_change")
+                try:
+                    decision = annual_carried_forward_decision(
+                        field=field,
+                        base=record.value,
+                        annual_values=[fact.value for fact in history],
+                        source_age_days=record.source_age_days,
+                        source_accessions=[fact.accession for fact in history],
+                        major_change_flags=flags,
+                        quantified_change=quantified_change,
+                    )
+                except ValueError as error:
+                    if "unquantified" not in str(error):
+                        raise
+                    availability[field] = replace(
+                        record,
+                        value=None,
+                        state="unresolved",
+                        reason_code="MAJOR_EVENT_UNBOUNDED",
+                        freshness="unknown",
+                        fallback_level="current_reported",
+                        source_age_days=None,
+                        uncertainty=None,
+                    )
+                    continue
+                availability[field] = replace(
+                    record,
+                    uncertainty=decision.uncertainty(),
+                )
+                fallback_decisions[field] = decision
+                continue
+            if record.state not in {"stale", "unresolved", "not_disclosed"}:
+                continue
+            observations = [
+                (fact.value, annual_assets_by_end[fact.end].value, fact.accession)
+                for fact in history
+                if fact.end in annual_assets_by_end
+            ]
+            decision = None
+            if current_total_assets is not None and len(observations) >= 2:
+                latest_end = history[-1].end
+                source_age_days = (
+                    date.fromisoformat(self.as_of_date or ttm_end)
+                    - date.fromisoformat(latest_end)
+                ).days
+                decision = company_history_decision(
+                    field=field,
+                    observations=observations,
+                    current_total_assets=current_total_assets,
+                    source_age_days=source_age_days,
+                )
+            elif field in (sector_estimates or {}):
+                candidate = (sector_estimates or {})[field]
+                if candidate.field != field or candidate.fallback_level != (
+                    "sector_estimate"
+                ):
+                    raise ValueError("sector estimate does not match requested field")
+                decision = candidate
+            if decision is None:
+                continue
+            availability[field] = replace(
+                record,
+                state="bounded_unresolved",
+                reason_code=(
+                    "COMPANY_HISTORY_RANGE"
+                    if decision.fallback_level == "company_history"
+                    else "SECTOR_ESTIMATE_RANGE"
+                ),
+                source_accession=decision.source_accessions[-1],
+                source_kind=decision.fallback_level,
+                evidence_class="estimated_range",
+                freshness="current",
+                fallback_level=decision.fallback_level,
+                source_age_days=decision.source_age_days,
+                uncertainty=decision.uncertainty(),
+                authority=(
+                    "shadow"
+                    if decision.fallback_level == "sector_estimate"
+                    else "production"
+                ),
+            )
+            fallback_decisions[field] = decision
+        incremental_dilution = (
+            balance_fields["incremental_dilutive_shares"]["value"] or 0.0
+        )
+        incremental_dilution_missing = (
+            balance_fields["incremental_dilutive_shares"]["state"] == "missing"
+        )
+        # A weighted-average diluted fallback already embeds option/RSU dilution,
+        # so do not layer incremental dilutive shares on top of it.
+        diluted_proxy = balance_fields["common_shares_outstanding"]["value"] + (
+            0.0 if shares_from_weighted_average else incremental_dilution
+        )
+        bridge_resolution = reconcile_bridge(
+            availability,
+            fully_diluted_shares=diluted_proxy,
+        )
+
+        return {
+            "balance_sheet": {
+                "period_role": "balance_sheet_snapshot",
+                "period_end": ttm_end,
+                "values": {
+                    field: item["value"] for field, item in balance_fields.items()
+                },
+                "sources": {
+                    field: item["source"] for field, item in balance_fields.items()
+                },
+                "field_states": {
+                    field: item["state"] for field, item in balance_fields.items()
+                },
+                "availability": {
+                    field: item.as_dict() for field, item in availability.items()
+                },
+                "bridge_evidence_diagnostics": bridge_evidence_diagnostics,
+                "fallback_decisions": {
+                    field: decision.as_dict()
+                    for field, decision in sorted(fallback_decisions.items())
+                },
+                **bridge_resolution.as_balance_sheet_fields(),
+                "fully_diluted_shares_proxy": diluted_proxy,
+                "dilution_proxy_state": (
+                    "cover_only_incremental_dilution_missing"
+                    if incremental_dilution_missing
+                    else "cover_plus_reported_incremental_dilution"
+                ),
+                "proxy_fields": [
+                    "fully_diluted_shares_proxy",
+                    "operating_nwc",
+                ],
+            },
+            "warnings": [
+                "Fully diluted shares are proxied by the latest SEC cover-page/common share count plus the latest reported incremental shares from share-based awards; a complete award roll-forward is not yet modeled.",
+                *(
+                    [
+                        "Incremental dilutive shares were not available; the per-share denominator uses cover-page/common shares only and requires review."
+                    ]
+                    if incremental_dilution_missing
+                    else []
+                ),
+                *(
+                    [
+                        "No cover-page common-share count was tagged; the per-share denominator uses the latest weighted-average diluted share count as a proxy and requires review."
+                    ]
+                    if shares_from_weighted_average
+                    else []
+                ),
+            ],
+        }

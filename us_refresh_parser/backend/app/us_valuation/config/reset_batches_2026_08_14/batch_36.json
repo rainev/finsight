@@ -1,0 +1,125 @@
+{
+  "batch": 36,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "financials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000798354",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "Fiserv",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "FISV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000820027",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "Ameriprise Financial",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "AMP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000831001",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "issuer_name": "Citigroup",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "C"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000874766",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "issuer_name": "Hartford (The)",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "HIG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000886982",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "issuer_name": "Goldman Sachs",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "GS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000895421",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "issuer_name": "Morgan Stanley",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "MS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000896159",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "issuer_name": "Chubb Limited",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "CB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000899051",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "issuer_name": "Allstate",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "ALL"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000927628",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Consumer Finance",
+      "issuer_name": "Capital One",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "COF"
+    },
+    {
+      "boundary_reason": "asset_backed_capital_structure_boundary",
+      "cik": "0001035002",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Refining & Marketing",
+      "issuer_name": "Valero Energy",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "boundary",
+      "ticker": "VLO"
+    }
+  ],
+  "partition_families": [
+    "financial_equity",
+    "resource_cycle_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

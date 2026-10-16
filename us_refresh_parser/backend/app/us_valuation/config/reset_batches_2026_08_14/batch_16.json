@@ -1,0 +1,124 @@
+{
+  "batch": 16,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "health_care",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001090872",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "issuer_name": "Agilent Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "A"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001093557",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Dexcom",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "DXCM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001099800",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Edwards Lifesciences",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "EW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001100682",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "issuer_name": "Charles River Laboratories",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "CRL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001136869",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Zimmer Biomet",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "ZBH"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001140859",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Distributors",
+      "issuer_name": "Cencora",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "COR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001145197",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Insulet Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "PODD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001156039",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Managed Health Care",
+      "issuer_name": "Elevance Health",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "ELV"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001393052",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Technology",
+      "issuer_name": "Veeva Systems",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "VEEV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001478242",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "issuer_name": "IQVIA",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "IQV"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

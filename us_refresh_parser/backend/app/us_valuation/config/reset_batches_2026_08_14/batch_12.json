@@ -1,0 +1,124 @@
+{
+  "batch": 12,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "health_care",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000001800",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Abbott Laboratories",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "ABT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000010456",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Baxter International",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "BAX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000010795",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Becton Dickinson",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "BDX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000014272",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "issuer_name": "Bristol Myers Squibb",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "BMY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000031791",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Revvity",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "RVTY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000049071",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Managed Health Care",
+      "issuer_name": "Humana",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "HUM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000059478",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "issuer_name": "Lilly (Eli)",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "LLY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000064803",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "issuer_name": "CVS Health",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "CVS"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000105770",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Supplies",
+      "issuer_name": "West Pharmaceutical Services",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "WST"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000352915",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Facilities",
+      "issuer_name": "Universal Health Services",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "UHS"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

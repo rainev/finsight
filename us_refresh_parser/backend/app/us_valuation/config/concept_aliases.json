@@ -1,0 +1,265 @@
+{
+  "version": "US-GAAP-MAP-1.0",
+  "fields": {
+    "revenue": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "RevenueFromContractWithCustomerIncludingAssessedTax",
+        "SalesRevenueNet",
+        "Revenues"
+      ]
+    },
+    "operating_income": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "OperatingIncomeLoss"
+      ]
+    },
+    "pretax_income": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+        "IncomeLossFromContinuingOperationsBeforeIncomeTaxes"
+      ],
+      "derivations": [
+        {
+          "op": "sum",
+          "components": [
+            ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic"],
+            ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesForeign"]
+          ]
+        }
+      ]
+    },
+    "income_tax": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "IncomeTaxExpenseBenefit"
+      ]
+    },
+    "depreciation_amortization": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "DepreciationDepletionAndAmortization",
+        "DepreciationDepletionAndAmortizationPropertyPlantAndEquipment",
+        "DepreciationAndAmortization",
+        "DepreciationAmortizationAndAccretionNet",
+        "Depreciation",
+        "msft:DepreciationAmortizationAndOther"
+      ]
+    },
+    "capital_expenditures": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "PaymentsToAcquirePropertyPlantAndEquipment",
+        "PaymentsToAcquireProductiveAssets",
+        "PaymentsToAcquireOtherProductiveAssets"
+      ]
+    },
+    "software_development": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "PaymentsToDevelopSoftware",
+        "CapitalizedComputerSoftwareAdditions"
+      ]
+    },
+    "operating_cash_flow": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations",
+        "NetCashProvidedByUsedInOperatingActivities"
+      ]
+    },
+    "interest_expense": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "InterestExpenseNonoperating",
+        "InterestExpenseDebt",
+        "InterestExpense",
+        "InterestIncomeExpenseNonoperatingNet"
+      ]
+    },
+    "intangible_asset_purchases": {
+      "unit": "USD",
+      "kind": "flow",
+      "concepts": [
+        "PaymentsToAcquireIntangibleAssets"
+      ]
+    },
+    "accounts_receivable": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "AccountsReceivableNetCurrent",
+        "AccountsAndNotesReceivableNet",
+        "AccountsAndOtherReceivablesNetCurrent",
+        "ReceivablesNetCurrent",
+        "AccountsNotesAndLoansReceivableNetCurrent",
+        "OtherReceivablesNetCurrent"
+      ]
+    },
+    "inventory": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "InventoryNet"
+      ]
+    },
+    "accounts_payable": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "AccountsPayableCurrent",
+        "AccountsPayable"
+      ]
+    },
+    "deferred_revenue_current": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "ContractWithCustomerLiabilityCurrent",
+        "DeferredRevenueCurrent"
+      ]
+    },
+    "cash": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "CashAndCashEquivalentsAtCarryingValue"
+      ]
+    },
+    "total_assets": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "Assets"
+      ]
+    },
+    "marketable_securities_current": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "MarketableSecuritiesCurrent",
+        "AvailableForSaleSecuritiesCurrent",
+        "ShortTermInvestments",
+        "AvailableForSaleSecuritiesDebtSecuritiesCurrent"
+      ]
+    },
+    "marketable_securities_noncurrent": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "MarketableSecuritiesNoncurrent",
+        "AvailableForSaleSecuritiesNoncurrent",
+        "LongTermInvestments",
+        "AvailableForSaleSecuritiesDebtSecuritiesNoncurrent"
+      ]
+    },
+    "marketable_securities_total": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "MarketableSecurities"
+      ]
+    },
+    "commercial_paper": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "CommercialPaper",
+        "CommercialPaperAtCarryingValue"
+      ]
+    },
+    "current_debt": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "LongTermDebtCurrent",
+        "DebtCurrent",
+        "NotesPayableCurrent",
+        "ConvertibleDebtCurrent",
+        "ShortTermBorrowings"
+      ]
+    },
+    "noncurrent_debt": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "LongTermDebtNoncurrent",
+        "LongTermDebt",
+        "ConvertibleDebtNoncurrent"
+      ]
+    },
+    "finance_lease_current": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "FinanceLeaseLiabilityCurrent"
+      ]
+    },
+    "finance_lease_noncurrent": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "FinanceLeaseLiabilityNoncurrent"
+      ]
+    },
+    "finance_lease_total": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "FinanceLeaseLiability"
+      ]
+    },
+    "preferred_equity": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "PreferredStocksIncludingAdditionalPaidInCapitalParOrStatedValue",
+        "PreferredStockValue",
+        "PreferredStockValueOutstanding",
+        "TemporaryEquityCarryingAmountAttributableToParent"
+      ]
+    },
+    "noncontrolling_interests": {
+      "unit": "USD",
+      "kind": "instant",
+      "concepts": [
+        "MinorityInterest"
+      ]
+    },
+    "common_shares_outstanding": {
+      "unit": "shares",
+      "kind": "instant",
+      "concepts": [
+        "dei:EntityCommonStockSharesOutstanding",
+        "us-gaap:CommonStockSharesOutstanding"
+      ]
+    },
+    "diluted_weighted_average_shares": {
+      "unit": "shares",
+      "kind": "flow",
+      "concepts": [
+        "WeightedAverageNumberOfDilutedSharesOutstanding"
+      ]
+    },
+    "incremental_dilutive_shares": {
+      "unit": "shares",
+      "kind": "flow",
+      "concepts": [
+        "IncrementalCommonSharesAttributableToShareBasedPaymentArrangements"
+      ]
+    }
+  }
+}

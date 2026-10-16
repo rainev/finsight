@@ -28,6 +28,7 @@ import type {
   UsCalculatorView,
   UsValuationList,
   UsValuationHistory,
+  UsRefreshControlStatus,
   ValuationResult,
 } from './types'
 
@@ -192,6 +193,26 @@ export function getBrief(ticker: string, risk: number, sentiment: Sentiment): Pr
 // --- Governed PSE V2 catalog ---
 export function listPseValuations(): Promise<PseValuationList> {
   return request<PseValuationList>('/pse-valuations')
+}
+
+export function getUsRefreshControl(): Promise<UsRefreshControlStatus> {
+  return request<UsRefreshControlStatus>('/us-refresh-control/status')
+}
+
+export function startUsStagedRefresh(): Promise<{ id: number; status: 'queued'; requested_at: string }> {
+  return request('/us-refresh-control/run', { method: 'POST' })
+}
+
+export function startUsManualRefresh(): Promise<{ id: number; status: 'queued'; requested_at: string }> {
+  return request('/us-refresh-control/run-now', { method: 'POST' })
+}
+
+export function inviteUsRefreshUser(email: string): Promise<{ user_id: number; email: string; granted_at: string }> {
+  return request('/us-refresh-control/invites', { method: 'POST', body: JSON.stringify({ email }) })
+}
+
+export function revokeUsRefreshUser(userId: number): Promise<null> {
+  return request(`/us-refresh-control/invites/${userId}`, { method: 'DELETE' })
 }
 
 export function getPseValuation(ticker: string): Promise<PseValuation> {

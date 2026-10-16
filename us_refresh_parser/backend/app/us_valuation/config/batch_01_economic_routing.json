@@ -1,0 +1,325 @@
+{
+  "version": "US-ECONOMIC-ROUTING-1.1",
+  "records": [
+    {
+      "ticker": "AAPL",
+      "economic_profile": {
+        "business_type": "operating",
+        "material_segments": ["Products", "Services"],
+        "lifecycle": "mature",
+        "cyclical_exposure": true,
+        "commodity_exposure": false,
+        "regulatory_capital_dependence": false,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": false,
+        "primary_model_candidate": "mature_operating_fcff",
+        "secondary_model_candidates": ["sum_of_parts"],
+        "routing_explanation": "Apple is a mature operating company with economically distinct hardware and services segments; consolidated FCFF is the initial hypothesis, subject to source-packet confirmation of segment and reinvestment treatment.",
+        "source_accessions": ["0000320193-26-000020"]
+      },
+      "model_decision": {
+        "economic_lane": "mature_hardware_services",
+        "model_family": "mature_operating_fcff",
+        "model_version": "FCFF-DCF-1.0",
+        "required_inputs": ["current_ttm_operating_performance", "annual_segment_history", "governed_rd_intangible_treatment", "enterprise_to_equity_bridge", "diluted_shares"],
+        "rejected_models": [
+          {"model_family": "ddm", "reason": "Dividends do not represent the full distributable economics of the operating business."},
+          {"model_family": "residual_income", "reason": "Apple is not a regulated financial institution valued primarily on common-equity economics."}
+        ],
+        "maturity": "provisional",
+        "reliability_cap": "Withhold",
+        "source_accessions": ["0000320193-26-000020"],
+        "routing_status": "hypothesis",
+        "decision_reason": "The route is economically plausible but has not yet passed the controlled-reset source and model challenge."
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "economic_profile": {
+        "business_type": "operating",
+        "material_segments": ["Productivity and Business Processes", "Intelligent Cloud", "More Personal Computing"],
+        "lifecycle": "growth",
+        "cyclical_exposure": false,
+        "commodity_exposure": false,
+        "regulatory_capital_dependence": false,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": false,
+        "primary_model_candidate": "intangible_investment_fcff",
+        "secondary_model_candidates": ["sum_of_parts"],
+        "routing_explanation": "Microsoft is a profitable research-heavy software and cloud platform whose reported R&D and segment economics require governed intangible-investment treatment before FCFF is trusted.",
+        "source_accessions": ["0001193125-26-323660"]
+      },
+      "model_decision": {
+        "economic_lane": "research_heavy_software_platform",
+        "model_family": "intangible_investment_fcff",
+        "model_version": "EXPERIMENTAL-UNIMPLEMENTED",
+        "required_inputs": ["current_ttm_segment_performance", "annual_rd_history", "intangible_reinvestment_policy", "enterprise_to_equity_bridge", "diluted_shares"],
+        "rejected_models": [
+          {"model_family": "plain_fcff", "reason": "Unadjusted R&D expense may misstate reinvestment and operating returns for a research-heavy platform."},
+          {"model_family": "ddm", "reason": "Dividends omit retained cash flows and reinvestment economics."}
+        ],
+        "maturity": "experimental",
+        "reliability_cap": "Withhold",
+        "source_accessions": ["0001193125-26-323660"],
+        "routing_status": "hypothesis",
+        "decision_reason": "The controlled reset requires an intangible-investment adapter that the current generic FCFF route has not proven."
+      }
+    },
+    {
+      "ticker": "CRM",
+      "economic_profile": {
+        "business_type": "operating",
+        "material_segments": ["Subscription and support", "Professional services and other"],
+        "lifecycle": "growth",
+        "cyclical_exposure": false,
+        "commodity_exposure": false,
+        "regulatory_capital_dependence": false,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": false,
+        "primary_model_candidate": "intangible_investment_fcff",
+        "secondary_model_candidates": ["revenue_to_margin_scenario_dcf"],
+        "routing_explanation": "Salesforce is a profitable software platform with material research and sales investment; FCFF requires governed intangible and dilution treatment rather than an unadjusted operating-company route.",
+        "source_accessions": ["0001108524-26-000127"]
+      },
+      "model_decision": {
+        "economic_lane": "research_heavy_software_platform",
+        "model_family": "intangible_investment_fcff",
+        "model_version": "EXPERIMENTAL-UNIMPLEMENTED",
+        "required_inputs": ["current_ttm_revenue_and_margin", "annual_rd_history", "stock_compensation_and_dilution", "enterprise_to_equity_bridge"],
+        "rejected_models": [
+          {"model_family": "plain_fcff", "reason": "Unadjusted intangible investment and dilution can distort reinvestment and per-share value."},
+          {"model_family": "ddm", "reason": "Dividend policy does not represent the operating cash-flow claim."}
+        ],
+        "maturity": "experimental",
+        "reliability_cap": "Withhold",
+        "source_accessions": ["0001108524-26-000127"],
+        "routing_status": "hypothesis",
+        "decision_reason": "The required software-specific investment treatment is not yet a validated model lane."
+      }
+    },
+    {
+      "ticker": "ANET",
+      "economic_profile": {
+        "business_type": "operating",
+        "material_segments": ["Cloud networking products", "Services"],
+        "lifecycle": "growth",
+        "cyclical_exposure": true,
+        "commodity_exposure": false,
+        "regulatory_capital_dependence": false,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": false,
+        "primary_model_candidate": "growth_operating_fcff",
+        "secondary_model_candidates": ["epv_support"],
+        "routing_explanation": "Arista is a profitable growth operating company; FCFF is plausible, but securities, reinvestment, and growth persistence must be bounded from issuer evidence.",
+        "source_accessions": ["0001596532-26-000175"]
+      },
+      "model_decision": {
+        "economic_lane": "profitable_growth_hardware",
+        "model_family": "growth_operating_fcff",
+        "model_version": "FCFF-DCF-1.0",
+        "required_inputs": ["current_ttm_operating_performance", "annual_growth_and_margin_history", "rd_capitalization_sensitivity", "reinvestment", "enterprise_to_equity_bridge", "diluted_shares"],
+        "rejected_models": [
+          {"model_family": "revenue_to_margin_scenario_dcf", "reason": "Arista is already profitable and has operating-history evidence for an FCFF route."},
+          {"model_family": "ddm", "reason": "Dividend policy is not the primary operating-value claim."}
+        ],
+        "maturity": "provisional",
+        "reliability_cap": "Withhold",
+        "source_accessions": ["0001596532-26-000175"],
+        "routing_status": "hypothesis",
+        "decision_reason": "The route still requires controlled-reset source verification and growth limiting-case checks."
+      }
+    },
+    {
+      "ticker": "WDC",
+      "economic_profile": {
+        "business_type": "operating",
+        "material_segments": ["Data storage devices and solutions"],
+        "lifecycle": "mature",
+        "cyclical_exposure": true,
+        "commodity_exposure": true,
+        "regulatory_capital_dependence": false,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": false,
+        "primary_model_candidate": "normalized_cyclical_fcff",
+        "secondary_model_candidates": ["epv_support"],
+        "routing_explanation": "Western Digital's latest cutoff-date filing reports one continuing segment after the flash-business spin; the continuing storage business remains cyclical, so peak or trough margins cannot be made permanent and FCFF must normalize a complete cycle.",
+        "source_accessions": ["0001628280-26-057139", "0001137789-26-000159"]
+      },
+      "model_decision": {
+        "economic_lane": "cyclical_storage_hardware",
+        "model_family": "normalized_cyclical_fcff",
+        "model_version": "PRACTICAL-CYCLICAL-FCFF-1.1",
+        "required_inputs": ["complete_cycle_revenue", "complete_cycle_margins", "normalized_reinvestment", "enterprise_to_equity_bridge", "diluted_shares"],
+        "rejected_models": [
+          {"model_family": "plain_fcff", "reason": "A current-period margin can represent a cyclical peak or trough and is not a safe steady-state base."},
+          {"model_family": "ddm", "reason": "Distributions do not define the operating claim through a storage cycle."}
+        ],
+        "maturity": "provisional",
+        "reliability_cap": "Low",
+        "source_accessions": ["0001628280-26-057139", "0001137789-26-000159"],
+        "routing_status": "selected",
+        "decision_reason": "Issuer-balanced WDC/Seagate states, spin corrections, normalized tax, current share bounds, and a complete bridge passed independent challenge; limited cohort evidence keeps the route Provisional and capped at Low."
+      }
+    },
+    {
+      "ticker": "DELL",
+      "economic_profile": {
+        "business_type": "mixed",
+        "material_segments": ["Infrastructure Solutions Group", "Client Solutions Group"],
+        "lifecycle": "mature",
+        "cyclical_exposure": true,
+        "commodity_exposure": false,
+        "regulatory_capital_dependence": false,
+        "captive_finance_activity": true,
+        "property_or_reserve_assets": false,
+        "primary_model_candidate": "captive_finance_fcfe",
+        "secondary_model_candidates": ["captive_finance_sotp", "normalized_cyclical_fcff"],
+        "routing_explanation": "Dell reports two operating segments and also conducts material captive-finance activity through Dell Financial Services; a single undifferentiated FCFF bridge risks treating finance funding as ordinary operating debt.",
+        "source_accessions": ["0001571996-26-000030", "0001571996-26-000008"]
+      },
+      "model_decision": {
+        "economic_lane": "industrial_with_captive_finance",
+        "model_family": "captive_finance_fcfe",
+        "model_version": "PRACTICAL-CAPTIVE-FINANCE-FCFE-1.0",
+        "required_inputs": ["reported_adjusted_free_cash_flow", "dfs_owned_assets", "dfs_debt_to_equity", "dfs_structured_debt", "diluted_shares"],
+        "rejected_models": [
+          {"model_family": "plain_fcff", "reason": "Treating finance-business funding as an industrial EV-to-equity debt bridge can double count or misclassify operating finance liabilities."},
+          {"model_family": "residual_income", "reason": "An equity-only financial model does not value Dell's industrial operating segments."}
+        ],
+        "maturity": "provisional",
+        "reliability_cap": "Low",
+        "source_accessions": ["0001571996-26-000030", "0001571996-26-000008"],
+        "routing_status": "selected",
+        "decision_reason": "Dell-reported adjusted FCF and the equity-funded share of DFS asset growth reconcile without a second debt bridge; independent challenge passed, but limited validation keeps the route Provisional and capped at Low."
+      }
+    },
+    {
+      "ticker": "JPM",
+      "economic_profile": {
+        "business_type": "financial",
+        "material_segments": ["Consumer and Community Banking", "Commercial and Investment Bank", "Asset and Wealth Management"],
+        "lifecycle": "mature",
+        "cyclical_exposure": true,
+        "commodity_exposure": false,
+        "regulatory_capital_dependence": true,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": false,
+        "primary_model_candidate": "bank_residual_income",
+        "secondary_model_candidates": ["bank_excess_return_sotp"],
+        "routing_explanation": "JPMorgan is a regulated bank whose deposits and wholesale funding are operating inputs; common-equity residual income is the primary hypothesis rather than enterprise FCFF.",
+        "source_accessions": ["0001628280-26-054343"]
+      },
+      "model_decision": {
+        "economic_lane": "regulated_diversified_bank",
+        "model_family": "bank_residual_income",
+        "model_version": "BANK-RI-1.0",
+        "required_inputs": ["average_common_equity", "common_net_income", "regulatory_capital", "preferred_equity", "diluted_shares", "cost_of_equity"],
+        "rejected_models": [
+          {"model_family": "fcff_dcf", "reason": "Deposits and financial funding are operating inputs, so an industrial enterprise-value debt bridge is inappropriate."},
+          {"model_family": "plain_ddm", "reason": "Observed dividends need not equal sustainable distributions under regulatory-capital constraints."}
+        ],
+        "maturity": "provisional",
+        "reliability_cap": "Withhold",
+        "source_accessions": ["0001628280-26-054343"],
+        "routing_status": "hypothesis",
+        "decision_reason": "The family is appropriate, but the current single-period ROE implementation has not yet proven average common equity and regulatory-capital treatment."
+      }
+    },
+    {
+      "ticker": "BAC",
+      "economic_profile": {
+        "business_type": "financial",
+        "material_segments": ["Consumer Banking", "Global Wealth and Investment Management", "Global Banking", "Global Markets"],
+        "lifecycle": "mature",
+        "cyclical_exposure": true,
+        "commodity_exposure": false,
+        "regulatory_capital_dependence": true,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": false,
+        "primary_model_candidate": "bank_residual_income",
+        "secondary_model_candidates": ["bank_excess_return_sotp"],
+        "routing_explanation": "Bank of America is a regulated bank whose value is tied to common equity, sustainable returns, and regulatory-capital economics rather than an industrial EV bridge.",
+        "source_accessions": ["0000070858-26-000394"]
+      },
+      "model_decision": {
+        "economic_lane": "regulated_diversified_bank",
+        "model_family": "bank_residual_income",
+        "model_version": "BANK-RI-1.0",
+        "required_inputs": ["average_common_equity", "common_net_income", "regulatory_capital", "preferred_equity", "diluted_shares", "cost_of_equity"],
+        "rejected_models": [
+          {"model_family": "fcff_dcf", "reason": "Bank funding is operational and does not fit an industrial enterprise-value bridge."},
+          {"model_family": "plain_ddm", "reason": "Current payout can differ from sustainable regulatory-capital distributions."}
+        ],
+        "maturity": "provisional",
+        "reliability_cap": "Withhold",
+        "source_accessions": ["0000070858-26-000394"],
+        "routing_status": "hypothesis",
+        "decision_reason": "The model family is plausible but average common-equity and regulatory-capital treatment require controlled-reset validation."
+      }
+    },
+    {
+      "ticker": "NEE",
+      "economic_profile": {
+        "business_type": "mixed",
+        "material_segments": ["Florida Power & Light", "NextEra Energy Resources"],
+        "lifecycle": "mature",
+        "cyclical_exposure": false,
+        "commodity_exposure": true,
+        "regulatory_capital_dependence": true,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": true,
+        "primary_model_candidate": "mixed_utility_fcfe",
+        "secondary_model_candidates": ["mixed_utility_sotp", "regulated_utility_ddm", "rate_base_valuation"],
+        "routing_explanation": "NextEra combines a regulated utility with a competitive energy-resources business; a whole-company DDM can obscure distinct rate-base, merchant, and development economics.",
+        "source_accessions": ["0000753308-26-000060", "0000753308-26-000031", "0000753308-26-000015"]
+      },
+      "model_decision": {
+        "economic_lane": "mixed_regulated_and_energy_resources_utility",
+        "model_family": "mixed_utility_fcfe",
+        "model_version": "PRACTICAL-MIXED-UTILITY-FCFE-1.1",
+        "required_inputs": ["current_consolidated_cash_flow", "capital_expenditures", "all_interest_bearing_borrowing", "parent_and_nci_equity", "diluted_shares"],
+        "rejected_models": [
+          {"model_family": "regulated_utility_ddm", "reason": "A whole-company DDM does not separately value the competitive energy-resources business."},
+          {"model_family": "fcff_dcf", "reason": "An undifferentiated industrial FCFF route does not encode regulated rate-base and payout economics."}
+        ],
+        "maturity": "provisional",
+        "reliability_cap": "Low",
+        "source_accessions": ["0000753308-26-000060", "0000753308-26-000031", "0000753308-26-000015"],
+        "routing_status": "selected",
+        "decision_reason": "Direct Q2 extraction and complete borrowing make the consolidated FCFE route mechanically supportable, but NEE's bear and base results are nonpositive; the model remains Provisional while this issuer stays withheld."
+      }
+    },
+    {
+      "ticker": "O",
+      "economic_profile": {
+        "business_type": "asset_based",
+        "material_segments": ["Single-client net-leased properties", "Development and other real estate"],
+        "lifecycle": "mature",
+        "cyclical_exposure": true,
+        "commodity_exposure": false,
+        "regulatory_capital_dependence": false,
+        "captive_finance_activity": false,
+        "property_or_reserve_assets": true,
+        "primary_model_candidate": "equity_reit_affo_nav",
+        "secondary_model_candidates": ["ffo_multiple_support"],
+        "routing_explanation": "Realty Income is an equity REIT whose recurring cash earnings and property value require normalized AFFO plus property NAV; an interim FFO multiple is support, not a validated primary model.",
+        "source_accessions": ["0000726728-26-000048"]
+      },
+      "model_decision": {
+        "economic_lane": "equity_reit_net_lease",
+        "model_family": "equity_reit_affo_nav",
+        "model_version": "EXPERIMENTAL-UNIMPLEMENTED",
+        "required_inputs": ["normalized_affo", "maintenance_capex", "straight_line_rent_adjustments", "property_nav", "net_debt_and_preferred", "diluted_shares"],
+        "rejected_models": [
+          {"model_family": "ffo_multiple", "reason": "An FFO multiple omits AFFO adjustments and property NAV and remains only an interim support route."},
+          {"model_family": "ddm", "reason": "REIT payout requirements do not make current dividends a complete property-value measure."}
+        ],
+        "maturity": "experimental",
+        "reliability_cap": "Withhold",
+        "source_accessions": ["0000726728-26-000048"],
+        "routing_status": "hypothesis",
+        "decision_reason": "The current FFO route can substitute zero for missing sale gains and does not satisfy the controlled-reset AFFO/NAV model requirement."
+      }
+    }
+  ]
+}

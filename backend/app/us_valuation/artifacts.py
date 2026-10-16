@@ -180,6 +180,10 @@ def _legacy_fcff_fallback_reason(artifact: dict[str, Any]) -> str | None:
 
 
 def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
+    if artifact.get('model_version') == 'US-B1620-PUBLIC-SOURCE-BOUNDED-CASH-1' or str(artifact.get('issuer', {}).get('primary_archetype', '')).startswith('b1620_'):
+        from .staged_batches1620 import is_exact_public_override, rejected_leaf
+        if not is_exact_public_override(artifact):
+            return rejected_leaf(artifact)
     """Validate public state vocabulary and fail closed at every serving boundary."""
     public = deepcopy(artifact)
     review = public.get("review")
@@ -205,10 +209,40 @@ def sanitize_public_artifact(artifact: dict[str, Any]) -> dict[str, Any]:
         actual_archetype = issuer.get("primary_archetype")
         actual_model = public.get("model_policy", {}).get("primary")
         route_eligible = routing_group.get("model_route_eligible", True)
+        q04_override = False
+        if actual_archetype == "quality04_reported_common_income" or actual_archetype == "quality04_net_compensation_cash":
+            try:
+                from .quality04_staged import is_exact_public_override
+                q04_override = is_exact_public_override(public)
+            except (ImportError, OSError, TypeError, ValueError):
+                q04_override = False
+        q05_override = False
+        if actual_archetype in {"quality05_reported_common_income", "quality05_net_compensation_cash"}:
+            try:
+                from .quality05_staged import is_exact_public_override as quality05_override
+                q05_override = quality05_override(public)
+            except (ImportError, OSError, TypeError, ValueError):
+                q05_override = False
+        q06_override = False
+        # The Q06 escape hatch is deliberately narrower than a model-version
+        # allowlist: it applies only to the authenticated Q06 family and only
+        # after quality06_staged has verified its immutable artifact pin.
+        try:
+            from .quality06_staged import TARGETS as Q06_TARGETS, MODEL_VERSION as Q06_MODEL_VERSION, is_exact_public_override as quality06_override
+            q06_override = (
+                public.get("model_version") == Q06_MODEL_VERSION
+                and issuer.get("ticker") in Q06_TARGETS
+                and quality06_override(public)
+            )
+        except (ImportError, OSError, TypeError, ValueError):
+            q06_override = False
         if (
-            not route_eligible
-            or actual_archetype != expected_archetype
-            or actual_model != expected_model
+            not (q04_override or q05_override or q06_override)
+            and (
+                not route_eligible
+                or actual_archetype != expected_archetype
+                or actual_model != expected_model
+            )
         ):
             review["publication_state"] = "withheld"
             review.setdefault("errors", []).append(

@@ -14,6 +14,7 @@ from . import (
     pse_valuations,
     research,
     us_valuations,
+    us_refresh_control,
     valuations,
 )
 
@@ -34,4 +35,5 @@ api_router.include_router(news.router, dependencies=_limited)
 api_router.include_router(pse_valuations.router, dependencies=_limited)
 api_router.include_router(research.router, dependencies=_limited)
 api_router.include_router(us_valuations.router, dependencies=_limited)
+api_router.include_router(us_refresh_control.router, dependencies=_limited)
 api_router.include_router(valuations.router, dependencies=_limited)

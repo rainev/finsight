@@ -1,0 +1,124 @@
+{
+  "batch": 34,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "financials",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000036104",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "issuer_name": "U.S. Bancorp",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "USB"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000060086",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Multi-line Insurance",
+      "issuer_name": "Loews Corporation",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "L"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000064040",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "issuer_name": "S&P Global",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "SPGI"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000073124",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "Northern Trust",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "NTRS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000079282",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "issuer_name": "Brown & Brown",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "BRO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000080661",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "issuer_name": "Progressive Corporation",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "PGR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000086312",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "issuer_name": "Travelers Companies (The)",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "TRV"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000091576",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "issuer_name": "KeyCorp",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "KEY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000092230",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "issuer_name": "Truist Financial",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "TFC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000093751",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "issuer_name": "State Street Corporation",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "STT"
+    }
+  ],
+  "partition_families": [
+    "financial_equity"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

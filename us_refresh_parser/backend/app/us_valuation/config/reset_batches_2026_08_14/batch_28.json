@@ -1,0 +1,124 @@
+{
+  "batch": 28,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "information_technology",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000804328",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Qualcomm",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "QCOM"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000813672",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Cadence Design Systems",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "CDNS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000814547",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Fair Isaac",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "FICO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000827054",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Microchip Technology",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "MCHP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000849399",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "issuer_name": "Gen Digital",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "GEN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000857005",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "PTC Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "PTC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000858877",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "issuer_name": "Cisco",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "CSCO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000860731",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Tyler Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "TYL"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000877212",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Equipment & Instruments",
+      "issuer_name": "Zebra Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "ZBRA"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000898293",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Manufacturing Services",
+      "issuer_name": "Jabil",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "JBL"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

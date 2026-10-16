@@ -1,0 +1,124 @@
+{
+  "batch": 29,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "information_technology",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000864749",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Trimble Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "TRMB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000882835",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Equipment & Instruments",
+      "issuer_name": "Roper Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "ROP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000883241",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Synopsys",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "SNPS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000896878",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Intuit",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "INTU"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000936395",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "issuer_name": "Ciena",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "CIEN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001002047",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "issuer_name": "NetApp",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "NTAP"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001014473",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Internet Services & Infrastructure",
+      "issuer_name": "Verisign",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "VRSN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001045810",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Nvidia",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "NVDA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001048695",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "issuer_name": "F5, Inc.",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "FFIV"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001086222",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Internet Services & Infrastructure",
+      "issuer_name": "Akamai Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "AKAM"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

@@ -1,0 +1,161 @@
+{
+  "version": "FINSIGHT-EVIDENCE-FIELD-1.0",
+  "fields": {
+    "cash": {
+      "accounting_meaning": "Unrestricted cash and cash equivalents attributable to the consolidated public parent.",
+      "economic_class": "nonoperating_asset",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["restricted_cash", "customer_cash", "fiduciary_cash"]
+    },
+    "marketable_securities_current": {
+      "accounting_meaning": "Current issuer-owned marketable investment securities available to common equity.",
+      "economic_class": "nonoperating_asset",
+      "custom_aliases": ["fsi:MarketableInvestmentSecuritiesCurrent"],
+      "statement_roles": ["balance_sheet", "investment_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [{"field": "marketable_securities_total", "covered_fields": ["marketable_securities_current", "marketable_securities_noncurrent"], "coverage_basis": "direct_issuer_total"}],
+      "double_count_exclusions": ["cash", "restricted_cash", "equity_method_investments"]
+    },
+    "marketable_securities_noncurrent": {
+      "accounting_meaning": "Noncurrent issuer-owned marketable investment securities available to common equity.",
+      "economic_class": "nonoperating_asset",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "investment_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [{"field": "marketable_securities_total", "covered_fields": ["marketable_securities_current", "marketable_securities_noncurrent"], "coverage_basis": "direct_issuer_total"}],
+      "double_count_exclusions": ["cash", "strategic_equity_investments"]
+    },
+    "marketable_securities_total": {
+      "accounting_meaning": "Complete current and noncurrent issuer-owned marketable-securities aggregate.",
+      "economic_class": "nonoperating_asset_aggregate",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "investment_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["marketable_securities_current", "marketable_securities_noncurrent"]
+    },
+    "commercial_paper": {
+      "accounting_meaning": "Issuer borrowing outstanding under commercial-paper programs.",
+      "economic_class": "financing_claim",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "debt_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": ["us-gaap:FinancialInstrumentAxis=us-gaap:CommercialPaperMember"],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["current_debt", "noncurrent_debt"]
+    },
+    "current_debt": {
+      "accounting_meaning": "Current interest-bearing borrowings and current maturities, excluding duplicated commercial paper.",
+      "economic_class": "financing_claim",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "debt_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["commercial_paper", "finance_lease_current"]
+    },
+    "noncurrent_debt": {
+      "accounting_meaning": "Noncurrent interest-bearing borrowings excluding lease liabilities separately counted.",
+      "economic_class": "financing_claim",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "debt_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["current_debt", "finance_lease_noncurrent"]
+    },
+    "finance_lease_current": {
+      "accounting_meaning": "Current carrying amount of finance-lease obligations.",
+      "economic_class": "interest_bearing_lease_claim",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "lease_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [{"field": "finance_lease_total", "covered_fields": ["finance_lease_current", "finance_lease_noncurrent"], "coverage_basis": "direct_issuer_total"}],
+      "double_count_exclusions": ["current_debt"]
+    },
+    "finance_lease_noncurrent": {
+      "accounting_meaning": "Noncurrent carrying amount of finance-lease obligations.",
+      "economic_class": "interest_bearing_lease_claim",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "lease_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [{"field": "finance_lease_total", "covered_fields": ["finance_lease_current", "finance_lease_noncurrent"], "coverage_basis": "direct_issuer_total"}],
+      "double_count_exclusions": ["noncurrent_debt"]
+    },
+    "finance_lease_total": {
+      "accounting_meaning": "Complete current and noncurrent finance-lease carrying amount.",
+      "economic_class": "interest_bearing_lease_claim_aggregate",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "lease_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["finance_lease_current", "finance_lease_noncurrent"]
+    },
+    "preferred_equity": {
+      "accounting_meaning": "Preferred or temporary-equity ownership claim attributable to the public parent.",
+      "economic_class": "senior_equity_claim",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "equity_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["preferred_share_count", "liquidation_preference"]
+    },
+    "noncontrolling_interests": {
+      "accounting_meaning": "Equity attributable to owners outside the consolidated public parent.",
+      "economic_class": "noncontrolling_equity_claim",
+      "custom_aliases": [],
+      "statement_roles": ["balance_sheet", "equity_note"],
+      "period_roles": ["balance_sheet_snapshot"],
+      "units": ["USD"],
+      "allowed_dimensions": ["us-gaap:StatementEquityComponentsAxis=us-gaap:NoncontrollingInterestMember"],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["consolidated_total_equity"]
+    },
+    "reit_affo": {
+      "accounting_meaning": "Issuer-defined adjusted funds from operations retaining the filed reconciliation definition.",
+      "economic_class": "reit_non_gaap_cash_flow",
+      "custom_aliases": ["custom"],
+      "statement_roles": ["earnings_supplement", "reit_reconciliation"],
+      "period_roles": ["operating_ttm"],
+      "units": ["USD", "USD/shares"],
+      "allowed_dimensions": [],
+      "consolidation_scopes": ["consolidated_parent"],
+      "aggregate_replacements": [],
+      "double_count_exclusions": ["reit_ffo", "straight_line_rent_adjustment", "recurring_capital_expenditures"]
+    }
+  }
+}

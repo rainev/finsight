@@ -4,6 +4,7 @@ another's holdings.
 """
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -14,7 +15,8 @@ from . import company_service
 
 
 _CATALOG = load_active_catalog(
-    Path(__file__).resolve().parents[1] / "data" / "us_valuation_catalogs"
+    Path(os.environ.get("FINSIGHT_US_VALUATION_CATALOG_ROOT") or
+         Path(__file__).resolve().parents[1] / "data" / "us_valuation_catalogs")
 )
 
 # The client-facing shape: the holding joined to its company.

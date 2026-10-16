@@ -106,6 +106,8 @@ class SavedValuation(BaseModel):
 
 
 class UsCalculatorInput(BaseModel):
+    baseline_version: str | None = None
+    recipe_version: str | None = None
     scenario: Literal["low", "base", "high"] = "base"
     overrides: dict[str, float | int] = Field(default_factory=dict)
     manual_price: float | None = Field(default=None, gt=0)

@@ -1,0 +1,124 @@
+{
+  "batch": 14,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "health_care",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000842023",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "issuer_name": "Bio-Techne",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "TECH"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000860730",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Facilities",
+      "issuer_name": "HCA Healthcare",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "HCA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000872589",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "issuer_name": "Regeneron Pharmaceuticals",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "REGN"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000874716",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Idexx Laboratories",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "IDXX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000875045",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "issuer_name": "Biogen",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "BIIB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000875320",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "issuer_name": "Vertex Pharmaceuticals",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "VRTX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000879169",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "issuer_name": "Incyte",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "INCY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000882095",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "issuer_name": "Gilead Sciences",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "GILD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000885725",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "issuer_name": "Boston Scientific",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "core",
+      "ticker": "BSX"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000927653",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Distributors",
+      "issuer_name": "McKesson Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "health_care",
+      "role": "boundary",
+      "ticker": "MCK"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

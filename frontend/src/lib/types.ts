@@ -370,8 +370,43 @@ export interface UsSegmentAssumption {
   target_gross_margin?: number | null
 }
 
+export interface UsRefreshJob {
+  id: number
+  kind: 'weekly' | 'manual'
+  status: 'queued' | 'running' | 'succeeded' | 'failed'
+  requested_by: number
+  requested_at: string
+  started_at: string | null
+  finished_at: string | null
+  error: string | null
+  result: {
+    selected_count: number
+    catalog_count: number
+    changed_regular_count: number
+    summary_checks: Record<string, number>
+    staged_intrinsic_count: number
+    held_count: number
+    held_tickers_preview: string[]
+    candidate: { version: string; manifest_sha256: string } | null
+    active_changed: boolean
+  } | null
+}
+
+export interface UsRefreshControlStatus {
+  owner: boolean
+  ready: boolean
+  timezone: 'Asia/Manila'
+  next_due_at: string
+  following_friday_at: string
+  active_job: number | null
+  manual_ready: boolean
+  manual_next_at: string | null
+  latest_job: UsRefreshJob | null
+  invites?: Array<{ user_id: number; email: string; granted_at: string }>
+}
+
 export interface UsValuation {
-  freshness?: { outcome: string; checked_as_of?: string; reason?: string | null }
+  freshness?: { outcome: string; checked_as_of?: string; reason?: string | null; recommendation?: string | null; new_source_date?: string | null }
   normalization_explanation?: string
   model_version?: string
   assumption_date?: string

@@ -1,0 +1,124 @@
+{
+  "batch": 41,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "resource_cycle",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000002969",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Industrial Gases",
+      "issuer_name": "Air Products",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "boundary",
+      "ticker": "APD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000008818",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Paper & Plastic Packaging Products & Materials",
+      "issuer_name": "Avery Dennison",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "AVY"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000009389",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Metal, Glass & Plastic Containers",
+      "issuer_name": "Ball Corporation",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "boundary",
+      "ticker": "BALL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000031462",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "issuer_name": "Ecolab",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "ECL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000033213",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "issuer_name": "EQT Corporation",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "core",
+      "ticker": "EQT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000045012",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Equipment & Services",
+      "issuer_name": "Halliburton",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "core",
+      "ticker": "HAL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000051253",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "issuer_name": "International Flavors & Fragrances",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "IFF"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000051434",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Paper & Plastic Packaging Products & Materials",
+      "issuer_name": "International Paper",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "IP"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000073309",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Steel",
+      "issuer_name": "Nucor",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "NUE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000075677",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Paper & Plastic Packaging Products & Materials",
+      "issuer_name": "Packaging Corporation of America",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "materials",
+      "role": "core",
+      "ticker": "PKG"
+    }
+  ],
+  "partition_families": [
+    "resource_cycle_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

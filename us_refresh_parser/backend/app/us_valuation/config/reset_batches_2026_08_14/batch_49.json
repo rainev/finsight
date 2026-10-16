@@ -1,0 +1,124 @@
+{
+  "batch": 49,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "real_estate_reit",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000910606",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "issuer_name": "Regency Centers",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "REG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000912595",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "issuer_name": "Mid-America Apartment Communities",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "MAA"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000915912",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "issuer_name": "AvalonBay Communities",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "AVB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000920522",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "issuer_name": "Essex Property Trust",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "ESS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001034054",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Telecom Tower REITs",
+      "issuer_name": "SBA Communications",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "SBAC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001035443",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Office REITs",
+      "issuer_name": "Alexandria Real Estate Equities",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "ARE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001037540",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Office REITs",
+      "issuer_name": "BXP, Inc.",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "BXP"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001045609",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Industrial REITs",
+      "issuer_name": "Prologis",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "boundary",
+      "ticker": "PLD"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001051470",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Telecom Tower REITs",
+      "issuer_name": "Crown Castle",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "core",
+      "ticker": "CCI"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001101239",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Data Center REITs",
+      "issuer_name": "Equinix",
+      "partition_family_id": "reit_affo",
+      "primary_lane_id": "real_estate",
+      "role": "boundary",
+      "ticker": "EQIX"
+    }
+  ],
+  "partition_families": [
+    "reit_affo"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

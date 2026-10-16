@@ -1,0 +1,124 @@
+{
+  "batch": 46,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "utilities",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000731802",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Gas Utilities",
+      "issuer_name": "Atmos Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "boundary",
+      "ticker": "ATO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000811156",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "CMS Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "CMS"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000827052",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "Edison International",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "EIX"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000874761",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Independent Power Producers & Energy Traders",
+      "issuer_name": "AES Corporation",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "boundary",
+      "ticker": "AES"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000922224",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "PPL Corporation",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "PPL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000936340",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "DTE Energy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "DTE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001002910",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "Ameren",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "AEE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001004980",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "PG&E Corporation",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "PCG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001031296",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "issuer_name": "FirstEnergy",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "FE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001032208",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "issuer_name": "Sempra",
+      "partition_family_id": "utility_fcfe",
+      "primary_lane_id": "utilities",
+      "role": "core",
+      "ticker": "SRE"
+    }
+  ],
+  "partition_families": [
+    "utility_fcfe"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

@@ -1,0 +1,124 @@
+{
+  "batch": 32,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "information_technology",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001561550",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Datadog",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "DDOG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001601046",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Equipment & Instruments",
+      "issuer_name": "Keysight Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "KEYS"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001609711",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Internet Services & Infrastructure",
+      "issuer_name": "GoDaddy",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "GDDY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001633978",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "issuer_name": "Lumentum",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "LITE"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001645590",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "issuer_name": "Hewlett Packard Enterprise",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "HPE"
+    },
+    {
+      "boundary_reason": "data_center_infrastructure_boundary",
+      "cik": "0001674101",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "issuer_name": "Vertiv",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "VRT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001730168",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Broadcom",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "AVGO"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001835632",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Marvell Technology",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "MRVL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0002023554",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "issuer_name": "Sandisk",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "SNDK"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0002058873",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductor Materials & Equipment",
+      "issuer_name": "Qnity Electronics",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "Q"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

@@ -58,3 +58,14 @@ docs/generated/
 tools/**/out/
 docs/marketing/*.pdf
 docs/marketing/*.html
+
+# Server-only US700 runtime/config; supplied through private handoff, never Git.
+frontend/node_modules
+output/
+us700-private/
+backend/app/us_valuation/config/*anchors*.json
+backend/app/us_valuation/config/*pins*.json
+backend/app/us_valuation/config/us_expansion_batch_*.json
+us_refresh_parser/backend/app/us_valuation/config/*anchors*.json
+us_refresh_parser/backend/app/us_valuation/config/*pins*.json
+us_refresh_parser/backend/app/us_valuation/config/us_expansion_batch_*.json

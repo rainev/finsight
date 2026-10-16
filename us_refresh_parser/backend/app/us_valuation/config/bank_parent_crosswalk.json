@@ -1,0 +1,31 @@
+{
+  "version": "FINSIGHT-BANK-IDENTITY-1",
+  "entities": [
+    {
+      "ticker": "JPM",
+      "cik": "0000019617",
+      "rssd": "1039502",
+      "lei": "8I5DZWZKVSZI1NUHU748",
+      "legal_name": "JPMORGAN CHASE & CO.",
+      "entity_kind": "holding_company",
+      "sources": {
+        "sec": "https://data.sec.gov/submissions/CIK0000019617.json",
+        "rssd": "https://www.ffiec.gov/npw/Institution/Profile/1039502",
+        "lei": "https://api.gleif.org/api/v1/lei-records/8I5DZWZKVSZI1NUHU748"
+      }
+    },
+    {
+      "ticker": "BAC",
+      "cik": "0000070858",
+      "rssd": "1073757",
+      "lei": "9DJT3UXIJIZJI4WXO774",
+      "legal_name": "BANK OF AMERICA CORPORATION",
+      "entity_kind": "holding_company",
+      "sources": {
+        "sec": "https://data.sec.gov/submissions/CIK0000070858.json",
+        "rssd": "https://www.ffiec.gov/npw/Institution/Profile/1073757",
+        "lei": "https://api.gleif.org/api/v1/lei-records/9DJT3UXIJIZJI4WXO774"
+      }
+    }
+  ]
+}

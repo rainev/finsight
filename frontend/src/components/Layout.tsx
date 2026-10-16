@@ -37,14 +37,17 @@ export function Layout() {
 
   useEffect(() => {
     let current = true
-    listUsValuations()
-      .then(result => { if (current) setUsCompanies(result.items) })
-      .catch(() => { if (current) setUsCompanies([]) })
-    listPseValuations()
-      .then(result => { if (current) setPseCompanies(result.items) })
-      .catch(() => { if (current) setPseCompanies([]) })
+    if (isPse) {
+      listPseValuations()
+        .then(result => { if (current) setPseCompanies(result.items) })
+        .catch(() => { if (current) setPseCompanies([]) })
+    } else {
+      listUsValuations()
+        .then(result => { if (current) setUsCompanies(result.items) })
+        .catch(() => { if (current) setUsCompanies([]) })
+    }
     return () => { current = false }
-  }, [])
+  }, [isPse])
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -120,7 +123,7 @@ export function Layout() {
               >
                 <div className="flex shrink-0 items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[.12em] text-[var(--app-muted)]">
                   <span>{isPse ? 'Confirmed PH valuations' : 'Confirmed US valuations'}</span>
-                  <span>{isPse ? `${pseCompanies.length} · PSE V2` : '100 · Batches 01–10'}</span>
+                  <span>{isPse ? `${pseCompanies.length} · PSE V2` : `${usCompanies.length} · US catalog`}</span>
                 </div>
                 <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain" aria-label="Company search results">
                   {results.length === 0 ? (

@@ -1,0 +1,55 @@
+{
+  "version": "BATCH-01-MODEL-BLOCKERS-1.0",
+  "blockers": {
+    "AAPL": [
+      "Latest Products/Services segment revenue and margin evidence is not extracted from accession 0000320193-26-000020.",
+      "Current preferred-equity and noncontrolling-interest bridge evidence remains unresolved.",
+      "The R&D intangible-investment treatment has no approved asset-life policy."
+    ],
+    "MSFT": [
+      "The R&D intangible-investment treatment has no approved asset-life and amortization policy.",
+      "AI infrastructure PP&E, depreciation, finance-lease, and capacity-utilization treatment is not governed for the target lane.",
+      "The generic FCFF diagnostic is not the selected research-heavy software model."
+    ],
+    "CRM": [
+      "Current subscription/support and professional-services segment economics are not extracted from accession 0001108524-26-000127.",
+      "R&D, sales investment, stock compensation, option dilution, and repurchase treatment is not governed for the target lane.",
+      "The April 2026 debt step-up requires source-backed acquisition/refinancing classification."
+    ],
+    "ANET": [
+      "Current debt, leases, noncurrent securities, noncontrolling interests, and related absence claims remain unresolved or rejected.",
+      "R&D capitalization sensitivity and growth-persistence limiting cases have not passed.",
+      "The current filing reports one segment; supplemental product/services economics are not extracted."
+    ],
+    "WDC": [
+      "Three restated continuing-operation years do not prove a complete storage cycle.",
+      "Commercial paper, lease, securities, and noncontrolling-interest bridge evidence remains unresolved or rejected.",
+      "The normalized-cycle preprocessor is mechanically implemented but has no complete-cycle evidence input."
+    ],
+    "DELL": [
+      "Dell Financial Services common equity, attributable earnings, credit losses, and assigned funding are not available from consolidated Companyfacts.",
+      "Industrial versus finance debt and corporate-claim allocation is not proven.",
+      "The captive-finance sum-of-parts lane remains experimental."
+    ],
+    "JPM": [
+      "Current CET1 capital, risk-weighted assets, required buffers, and distributable-capital constraints are not available from Companyfacts.",
+      "Average common-equity and aligned preferred-equity treatment has not passed issuer-level verification.",
+      "The legacy single-period residual-income diagnostic is not the governed target model."
+    ],
+    "BAC": [
+      "Current preferred equity plus CET1 capital, risk-weighted assets, required buffers, and distributable-capital constraints are missing.",
+      "Average common-equity treatment has not passed issuer-level verification.",
+      "The legacy single-period residual-income diagnostic is not the governed target model."
+    ],
+    "NEE": [
+      "The latest permissible Q2 filing has no captured Companyfacts observations.",
+      "FPL rate base, allowed ROE, equity ratio, and segment financing are not source-linked.",
+      "Energy Resources cash flows, project capital, assigned debt, and corporate claims are not source-linked."
+    ],
+    "O": [
+      "Normalized recurring maintenance capital expenditure is missing.",
+      "Property NOI and an approved source-backed cap-rate policy are missing; book value is not NAV.",
+      "Current complete net-debt, preferred-equity, and noncontrolling-interest claims are not proven for AFFO/NAV."
+    ]
+  }
+}

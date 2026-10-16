@@ -1,0 +1,3506 @@
+{
+  "family_taxonomy_version": "US-PARTITION-COHORT-2.0",
+  "purpose": "partition-only preflight; final source-backed model routing may change without swapping batch membership",
+  "records": [
+    {
+      "cik": "0000001800",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ABT"
+    },
+    {
+      "cik": "0000002488",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AMD"
+    },
+    {
+      "cik": "0000002969",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Industrial Gases",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "APD"
+    },
+    {
+      "cik": "0000004127",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SWKS"
+    },
+    {
+      "cik": "0000004281",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HWM"
+    },
+    {
+      "cik": "0000004904",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "AEP"
+    },
+    {
+      "cik": "0000004962",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Consumer Finance",
+      "partition_model_family": "financial_equity",
+      "ticker": "AXP"
+    },
+    {
+      "cik": "0000004977",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "AFL"
+    },
+    {
+      "cik": "0000005272",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Multi-line Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "AIG"
+    },
+    {
+      "cik": "0000006281",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ADI"
+    },
+    {
+      "cik": "0000006951",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductor Materials & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AMAT"
+    },
+    {
+      "cik": "0000007084",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Agricultural Products & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ADM"
+    },
+    {
+      "cik": "0000008670",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Human Resource & Employment Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ADP"
+    },
+    {
+      "cik": "0000008818",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Paper & Plastic Packaging Products & Materials",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "AVY"
+    },
+    {
+      "cik": "0000009389",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Metal, Glass & Plastic Containers",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "BALL"
+    },
+    {
+      "cik": "0000010456",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BAX"
+    },
+    {
+      "cik": "0000010795",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BDX"
+    },
+    {
+      "cik": "0000011544",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "WRB"
+    },
+    {
+      "cik": "0000012927",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BA"
+    },
+    {
+      "cik": "0000014272",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BMY"
+    },
+    {
+      "cik": "0000014693",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Distillers & Vintners",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BF.B"
+    },
+    {
+      "cik": "0000016918",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Distillers & Vintners",
+      "partition_model_family": "operating_fcff",
+      "ticker": "STZ"
+    },
+    {
+      "cik": "0000018230",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction Machinery & Heavy Transportation Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CAT"
+    },
+    {
+      "cik": "0000019617",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "JPM"
+    },
+    {
+      "cik": "0000020286",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "CINF"
+    },
+    {
+      "cik": "0000021076",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Household Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CLX"
+    },
+    {
+      "cik": "0000021344",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Soft Drinks & Non-alcoholic Beverages",
+      "partition_model_family": "operating_fcff",
+      "ticker": "KO"
+    },
+    {
+      "cik": "0000021665",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Household Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CL"
+    },
+    {
+      "cik": "0000024545",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Brewers",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TAP"
+    },
+    {
+      "cik": "0000024741",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GLW"
+    },
+    {
+      "cik": "0000026172",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction Machinery & Heavy Transportation Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CMI"
+    },
+    {
+      "cik": "0000027419",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Consumer Staples Merchandise Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TGT"
+    },
+    {
+      "cik": "0000027904",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Passenger Airlines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DAL"
+    },
+    {
+      "cik": "0000029534",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Consumer Staples Merchandise Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DG"
+    },
+    {
+      "cik": "0000029905",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DOV"
+    },
+    {
+      "cik": "0000029989",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Advertising",
+      "partition_model_family": "operating_fcff",
+      "ticker": "OMC"
+    },
+    {
+      "cik": "0000031462",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "ECL"
+    },
+    {
+      "cik": "0000031791",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "RVTY"
+    },
+    {
+      "cik": "0000032604",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "EMR"
+    },
+    {
+      "cik": "0000033185",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Research & Consulting Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "EFX"
+    },
+    {
+      "cik": "0000033213",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "EQT"
+    },
+    {
+      "cik": "0000034903",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "FRT"
+    },
+    {
+      "cik": "0000035527",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "FITB"
+    },
+    {
+      "cik": "0000036104",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "USB"
+    },
+    {
+      "cik": "0000036270",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "MTB"
+    },
+    {
+      "cik": "0000037996",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automobile Manufacturers",
+      "partition_model_family": "operating_fcff",
+      "ticker": "F"
+    },
+    {
+      "cik": "0000038777",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "BEN"
+    },
+    {
+      "cik": "0000040533",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GD"
+    },
+    {
+      "cik": "0000040545",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GE"
+    },
+    {
+      "cik": "0000040704",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GIS"
+    },
+    {
+      "cik": "0000040987",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GPC"
+    },
+    {
+      "cik": "0000045012",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Equipment & Services",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "HAL"
+    },
+    {
+      "cik": "0000046080",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Leisure Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HAS"
+    },
+    {
+      "cik": "0000047111",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HSY"
+    },
+    {
+      "cik": "0000047217",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HPQ"
+    },
+    {
+      "cik": "0000048465",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HRL"
+    },
+    {
+      "cik": "0000048898",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HUBB"
+    },
+    {
+      "cik": "0000049071",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Managed Health Care",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HUM"
+    },
+    {
+      "cik": "0000049196",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "HBAN"
+    },
+    {
+      "cik": "0000049826",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ITW"
+    },
+    {
+      "cik": "0000050863",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "INTC"
+    },
+    {
+      "cik": "0000051143",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "IT Consulting & Other Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "IBM"
+    },
+    {
+      "cik": "0000051253",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "IFF"
+    },
+    {
+      "cik": "0000051434",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Paper & Plastic Packaging Products & Materials",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "IP"
+    },
+    {
+      "cik": "0000052988",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction & Engineering",
+      "partition_model_family": "operating_fcff",
+      "ticker": "J"
+    },
+    {
+      "cik": "0000055785",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Household Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "KMB"
+    },
+    {
+      "cik": "0000056873",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Food Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "KR"
+    },
+    {
+      "cik": "0000059478",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LLY"
+    },
+    {
+      "cik": "0000060086",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Multi-line Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "L"
+    },
+    {
+      "cik": "0000060667",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Home Improvement Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LOW"
+    },
+    {
+      "cik": "0000062709",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "partition_model_family": "financial_equity",
+      "ticker": "MRSH"
+    },
+    {
+      "cik": "0000062996",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MAS"
+    },
+    {
+      "cik": "0000063754",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MKC"
+    },
+    {
+      "cik": "0000063908",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MCD"
+    },
+    {
+      "cik": "0000064040",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "SPGI"
+    },
+    {
+      "cik": "0000064803",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CVS"
+    },
+    {
+      "cik": "0000065984",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "ETR"
+    },
+    {
+      "cik": "0000066740",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Conglomerates",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MMM"
+    },
+    {
+      "cik": "0000068505",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MSI"
+    },
+    {
+      "cik": "0000070858",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "BAC"
+    },
+    {
+      "cik": "0000072331",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NDSN"
+    },
+    {
+      "cik": "0000072741",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "ES"
+    },
+    {
+      "cik": "0000072903",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "XEL"
+    },
+    {
+      "cik": "0000072971",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "WFC"
+    },
+    {
+      "cik": "0000073124",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "NTRS"
+    },
+    {
+      "cik": "0000073309",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Steel",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "NUE"
+    },
+    {
+      "cik": "0000074208",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "UDR"
+    },
+    {
+      "cik": "0000075362",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction Machinery & Heavy Transportation Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PCAR"
+    },
+    {
+      "cik": "0000075677",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Paper & Plastic Packaging Products & Materials",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "PKG"
+    },
+    {
+      "cik": "0000076334",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PH"
+    },
+    {
+      "cik": "0000077360",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PNR"
+    },
+    {
+      "cik": "0000077476",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Soft Drinks & Non-alcoholic Beverages",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PEP"
+    },
+    {
+      "cik": "0000078003",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PFE"
+    },
+    {
+      "cik": "0000079282",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "partition_model_family": "financial_equity",
+      "ticker": "BRO"
+    },
+    {
+      "cik": "0000079879",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "PPG"
+    },
+    {
+      "cik": "0000080424",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Personal Care Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PG"
+    },
+    {
+      "cik": "0000080661",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "PGR"
+    },
+    {
+      "cik": "0000084839",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Environmental & Facilities Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ROL"
+    },
+    {
+      "cik": "0000086312",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "TRV"
+    },
+    {
+      "cik": "0000087347",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Equipment & Services",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "SLB"
+    },
+    {
+      "cik": "0000089800",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "SHW"
+    },
+    {
+      "cik": "0000091142",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AOS"
+    },
+    {
+      "cik": "0000091419",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SJM"
+    },
+    {
+      "cik": "0000091440",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SNA"
+    },
+    {
+      "cik": "0000091576",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "KEY"
+    },
+    {
+      "cik": "0000092122",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "SO"
+    },
+    {
+      "cik": "0000092230",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "TFC"
+    },
+    {
+      "cik": "0000092380",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Passenger Airlines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LUV"
+    },
+    {
+      "cik": "0000093410",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Integrated Oil & Gas",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "CVX"
+    },
+    {
+      "cik": "0000093556",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SWK"
+    },
+    {
+      "cik": "0000093751",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "STT"
+    },
+    {
+      "cik": "0000096021",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Food Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SYY"
+    },
+    {
+      "cik": "0000097210",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductor Materials & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TER"
+    },
+    {
+      "cik": "0000097476",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TXN"
+    },
+    {
+      "cik": "0000097745",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TMO"
+    },
+    {
+      "cik": "0000100493",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TSN"
+    },
+    {
+      "cik": "0000100517",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Passenger Airlines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "UAL"
+    },
+    {
+      "cik": "0000100885",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Rail Transportation",
+      "partition_model_family": "operating_fcff",
+      "ticker": "UNP"
+    },
+    {
+      "cik": "0000101829",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "RTX"
+    },
+    {
+      "cik": "0000104169",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Consumer Staples Merchandise Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WMT"
+    },
+    {
+      "cik": "0000105634",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction & Engineering",
+      "partition_model_family": "operating_fcff",
+      "ticker": "EME"
+    },
+    {
+      "cik": "0000105770",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Supplies",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WST"
+    },
+    {
+      "cik": "0000106040",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WDC"
+    },
+    {
+      "cik": "0000106535",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Timber REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "WY"
+    },
+    {
+      "cik": "0000107263",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Storage & Transportation",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "WMB"
+    },
+    {
+      "cik": "0000109198",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TJX"
+    },
+    {
+      "cik": "0000200406",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "JNJ"
+    },
+    {
+      "cik": "0000202058",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LHX"
+    },
+    {
+      "cik": "0000217346",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TXT"
+    },
+    {
+      "cik": "0000277135",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GWW"
+    },
+    {
+      "cik": "0000277948",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Rail Transportation",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CSX"
+    },
+    {
+      "cik": "0000310158",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MRK"
+    },
+    {
+      "cik": "0000310764",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SYK"
+    },
+    {
+      "cik": "0000313616",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DHR"
+    },
+    {
+      "cik": "0000313927",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Household Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CHD"
+    },
+    {
+      "cik": "0000315189",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Agricultural & Farm Machinery",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DE"
+    },
+    {
+      "cik": "0000315293",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "partition_model_family": "financial_equity",
+      "ticker": "AON"
+    },
+    {
+      "cik": "0000316709",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "partition_model_family": "financial_equity",
+      "ticker": "SCHW"
+    },
+    {
+      "cik": "0000318154",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AMGN"
+    },
+    {
+      "cik": "0000319201",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductor Materials & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "KLAC"
+    },
+    {
+      "cik": "0000320187",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel, Accessories & Luxury Goods",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NKE"
+    },
+    {
+      "cik": "0000320193",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AAPL"
+    },
+    {
+      "cik": "0000320335",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "GL"
+    },
+    {
+      "cik": "0000352541",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "LNT"
+    },
+    {
+      "cik": "0000352915",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Facilities",
+      "partition_model_family": "operating_fcff",
+      "ticker": "UHS"
+    },
+    {
+      "cik": "0000354190",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "partition_model_family": "financial_equity",
+      "ticker": "AJG"
+    },
+    {
+      "cik": "0000354950",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Home Improvement Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HD"
+    },
+    {
+      "cik": "0000702165",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Rail Transportation",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NSC"
+    },
+    {
+      "cik": "0000707549",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductor Materials & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LRCX"
+    },
+    {
+      "cik": "0000711404",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Supplies",
+      "partition_model_family": "operating_fcff",
+      "ticker": "COO"
+    },
+    {
+      "cik": "0000713676",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "PNC"
+    },
+    {
+      "cik": "0000715957",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "D"
+    },
+    {
+      "cik": "0000719955",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homefurnishing Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WSM"
+    },
+    {
+      "cik": "0000720005",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "partition_model_family": "financial_equity",
+      "ticker": "RJF"
+    },
+    {
+      "cik": "0000721371",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CAH"
+    },
+    {
+      "cik": "0000723125",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MU"
+    },
+    {
+      "cik": "0000723254",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Diversified Support Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CTAS"
+    },
+    {
+      "cik": "0000723531",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Human Resource & Employment Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PAYX"
+    },
+    {
+      "cik": "0000726728",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "O"
+    },
+    {
+      "cik": "0000726958",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Food Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CASY"
+    },
+    {
+      "cik": "0000728535",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Cargo Ground Transportation",
+      "partition_model_family": "operating_fcff",
+      "ticker": "JBHT"
+    },
+    {
+      "cik": "0000731766",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Managed Health Care",
+      "partition_model_family": "operating_fcff",
+      "ticker": "UNH"
+    },
+    {
+      "cik": "0000731802",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Gas Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "ATO"
+    },
+    {
+      "cik": "0000732712",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Integrated Telecommunication Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "VZ"
+    },
+    {
+      "cik": "0000732717",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Integrated Telecommunication Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "T"
+    },
+    {
+      "cik": "0000740260",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Health Care REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "VTR"
+    },
+    {
+      "cik": "0000745732",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ROST"
+    },
+    {
+      "cik": "0000746515",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Air Freight & Logistics",
+      "partition_model_family": "operating_fcff",
+      "ticker": "EXPD"
+    },
+    {
+      "cik": "0000749251",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "IT Consulting & Other Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "IT"
+    },
+    {
+      "cik": "0000753308",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "NEE"
+    },
+    {
+      "cik": "0000759944",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "CFG"
+    },
+    {
+      "cik": "0000764180",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Tobacco",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MO"
+    },
+    {
+      "cik": "0000764478",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Computer & Electronics Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BBY"
+    },
+    {
+      "cik": "0000764622",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "PNW"
+    },
+    {
+      "cik": "0000765880",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Health Care REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "DOC"
+    },
+    {
+      "cik": "0000766704",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Health Care REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "WELL"
+    },
+    {
+      "cik": "0000769397",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ADSK"
+    },
+    {
+      "cik": "0000773840",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Conglomerates",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HON"
+    },
+    {
+      "cik": "0000779152",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "JKHY"
+    },
+    {
+      "cik": "0000783325",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "WEC"
+    },
+    {
+      "cik": "0000788784",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "PEG"
+    },
+    {
+      "cik": "0000789019",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MSFT"
+    },
+    {
+      "cik": "0000789570",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Casinos & Gaming",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MGM"
+    },
+    {
+      "cik": "0000796343",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ADBE"
+    },
+    {
+      "cik": "0000797468",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "OXY"
+    },
+    {
+      "cik": "0000798354",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "FISV"
+    },
+    {
+      "cik": "0000804328",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "QCOM"
+    },
+    {
+      "cik": "0000811156",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "CMS"
+    },
+    {
+      "cik": "0000813672",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CDNS"
+    },
+    {
+      "cik": "0000814547",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FICO"
+    },
+    {
+      "cik": "0000815097",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CCL"
+    },
+    {
+      "cik": "0000815556",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Trading Companies & Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FAST"
+    },
+    {
+      "cik": "0000820027",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "AMP"
+    },
+    {
+      "cik": "0000820313",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "APH"
+    },
+    {
+      "cik": "0000820318",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "COHR"
+    },
+    {
+      "cik": "0000821189",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "EOG"
+    },
+    {
+      "cik": "0000822416",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homebuilding",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PHM"
+    },
+    {
+      "cik": "0000823768",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Environmental & Facilities Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WM"
+    },
+    {
+      "cik": "0000827052",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "EIX"
+    },
+    {
+      "cik": "0000827054",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MCHP"
+    },
+    {
+      "cik": "0000829224",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SBUX"
+    },
+    {
+      "cik": "0000831001",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "C"
+    },
+    {
+      "cik": "0000831259",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Copper",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "FCX"
+    },
+    {
+      "cik": "0000832101",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "IEX"
+    },
+    {
+      "cik": "0000833444",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "JCI"
+    },
+    {
+      "cik": "0000842023",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TECH"
+    },
+    {
+      "cik": "0000849395",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Construction Materials",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "CRH"
+    },
+    {
+      "cik": "0000849399",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GEN"
+    },
+    {
+      "cik": "0000857005",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PTC"
+    },
+    {
+      "cik": "0000858877",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CSCO"
+    },
+    {
+      "cik": "0000860730",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Facilities",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HCA"
+    },
+    {
+      "cik": "0000860731",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TYL"
+    },
+    {
+      "cik": "0000864749",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TRMB"
+    },
+    {
+      "cik": "0000865752",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Soft Drinks & Non-alcoholic Beverages",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MNST"
+    },
+    {
+      "cik": "0000866374",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Manufacturing Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FLEX"
+    },
+    {
+      "cik": "0000866787",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automotive Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AZO"
+    },
+    {
+      "cik": "0000872589",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "REGN"
+    },
+    {
+      "cik": "0000874716",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "IDXX"
+    },
+    {
+      "cik": "0000874761",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Independent Power Producers & Energy Traders",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "AES"
+    },
+    {
+      "cik": "0000874766",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "HIG"
+    },
+    {
+      "cik": "0000875045",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BIIB"
+    },
+    {
+      "cik": "0000875320",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "VRTX"
+    },
+    {
+      "cik": "0000877212",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Equipment & Instruments",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ZBRA"
+    },
+    {
+      "cik": "0000878927",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Cargo Ground Transportation",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ODFL"
+    },
+    {
+      "cik": "0000879101",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "KIM"
+    },
+    {
+      "cik": "0000879169",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "INCY"
+    },
+    {
+      "cik": "0000882095",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GILD"
+    },
+    {
+      "cik": "0000882184",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homebuilding",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DHI"
+    },
+    {
+      "cik": "0000882835",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Equipment & Instruments",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ROP"
+    },
+    {
+      "cik": "0000883241",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SNPS"
+    },
+    {
+      "cik": "0000884887",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "RCL"
+    },
+    {
+      "cik": "0000885725",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BSX"
+    },
+    {
+      "cik": "0000886982",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "partition_model_family": "financial_equity",
+      "ticker": "GS"
+    },
+    {
+      "cik": "0000895126",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "EXE"
+    },
+    {
+      "cik": "0000895421",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "partition_model_family": "financial_equity",
+      "ticker": "MS"
+    },
+    {
+      "cik": "0000896159",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "CB"
+    },
+    {
+      "cik": "0000896878",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "INTU"
+    },
+    {
+      "cik": "0000898173",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automotive Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ORLY"
+    },
+    {
+      "cik": "0000898293",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Manufacturing Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "JBL"
+    },
+    {
+      "cik": "0000899051",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "ALL"
+    },
+    {
+      "cik": "0000900075",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Diversified Support Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CPRT"
+    },
+    {
+      "cik": "0000906107",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "EQR"
+    },
+    {
+      "cik": "0000906163",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homebuilding",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NVR"
+    },
+    {
+      "cik": "0000906345",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "CPT"
+    },
+    {
+      "cik": "0000909832",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Consumer Staples Merchandise Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "COST"
+    },
+    {
+      "cik": "0000910521",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Footwear",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DECK"
+    },
+    {
+      "cik": "0000910606",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "REG"
+    },
+    {
+      "cik": "0000912595",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "MAA"
+    },
+    {
+      "cik": "0000914208",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "IVZ"
+    },
+    {
+      "cik": "0000915912",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "AVB"
+    },
+    {
+      "cik": "0000915913",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "ALB"
+    },
+    {
+      "cik": "0000916076",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Construction Materials",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "MLM"
+    },
+    {
+      "cik": "0000916365",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Other Specialty Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TSCO"
+    },
+    {
+      "cik": "0000920148",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LH"
+    },
+    {
+      "cik": "0000920522",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Multi-Family Residential REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "ESS"
+    },
+    {
+      "cik": "0000920760",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Homebuilding",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LEN"
+    },
+    {
+      "cik": "0000922224",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "PPL"
+    },
+    {
+      "cik": "0000922621",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "partition_model_family": "financial_equity",
+      "ticker": "ERIE"
+    },
+    {
+      "cik": "0000927066",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DVA"
+    },
+    {
+      "cik": "0000927628",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Consumer Finance",
+      "partition_model_family": "financial_equity",
+      "ticker": "COF"
+    },
+    {
+      "cik": "0000927653",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MCK"
+    },
+    {
+      "cik": "0000935703",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Consumer Staples Merchandise Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DLTR"
+    },
+    {
+      "cik": "0000936340",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "DTE"
+    },
+    {
+      "cik": "0000936395",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CIEN"
+    },
+    {
+      "cik": "0000936468",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LMT"
+    },
+    {
+      "cik": "0000940944",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DRI"
+    },
+    {
+      "cik": "0000943452",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction Machinery & Heavy Transportation Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WAB"
+    },
+    {
+      "cik": "0000943819",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "RMD"
+    },
+    {
+      "cik": "0000946581",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Interactive Home Entertainment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TTWO"
+    },
+    {
+      "cik": "0000947484",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Property & Casualty Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "ACGL"
+    },
+    {
+      "cik": "0001000228",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HSIC"
+    },
+    {
+      "cik": "0001000697",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WAT"
+    },
+    {
+      "cik": "0001001250",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Personal Care Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "EL"
+    },
+    {
+      "cik": "0001002047",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NTAP"
+    },
+    {
+      "cik": "0001002910",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "AEE"
+    },
+    {
+      "cik": "0001004980",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "PCG"
+    },
+    {
+      "cik": "0001013237",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "FDS"
+    },
+    {
+      "cik": "0001013871",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Independent Power Producers & Energy Traders",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "NRG"
+    },
+    {
+      "cik": "0001014473",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Internet Services & Infrastructure",
+      "partition_model_family": "operating_fcff",
+      "ticker": "VRSN"
+    },
+    {
+      "cik": "0001018724",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Broadline Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AMZN"
+    },
+    {
+      "cik": "0001020569",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Other Specialized REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "IRM"
+    },
+    {
+      "cik": "0001022079",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DGX"
+    },
+    {
+      "cik": "0001022671",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Steel",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "STLD"
+    },
+    {
+      "cik": "0001024478",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ROK"
+    },
+    {
+      "cik": "0001031296",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "FE"
+    },
+    {
+      "cik": "0001032208",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "SRE"
+    },
+    {
+      "cik": "0001034054",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Telecom Tower REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "SBAC"
+    },
+    {
+      "cik": "0001035002",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Refining & Marketing",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "VLO"
+    },
+    {
+      "cik": "0001035267",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ISRG"
+    },
+    {
+      "cik": "0001035443",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Office REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "ARE"
+    },
+    {
+      "cik": "0001035983",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction & Engineering",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FIX"
+    },
+    {
+      "cik": "0001037038",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel, Accessories & Luxury Goods",
+      "partition_model_family": "operating_fcff",
+      "ticker": "RL"
+    },
+    {
+      "cik": "0001037540",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Office REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "BXP"
+    },
+    {
+      "cik": "0001037646",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MTD"
+    },
+    {
+      "cik": "0001037868",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AME"
+    },
+    {
+      "cik": "0001039684",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Storage & Transportation",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "OKE"
+    },
+    {
+      "cik": "0001041061",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "partition_model_family": "operating_fcff",
+      "ticker": "YUM"
+    },
+    {
+      "cik": "0001043277",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Air Freight & Logistics",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CHRW"
+    },
+    {
+      "cik": "0001045609",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Industrial REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "PLD"
+    },
+    {
+      "cik": "0001045810",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NVDA"
+    },
+    {
+      "cik": "0001047862",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "ED"
+    },
+    {
+      "cik": "0001048286",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MAR"
+    },
+    {
+      "cik": "0001048695",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FFIV"
+    },
+    {
+      "cik": "0001048911",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Air Freight & Logistics",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FDX"
+    },
+    {
+      "cik": "0001050915",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction & Engineering",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PWR"
+    },
+    {
+      "cik": "0001051470",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Telecom Tower REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "CCI"
+    },
+    {
+      "cik": "0001053507",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Telecom Tower REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "AMT"
+    },
+    {
+      "cik": "0001057352",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Real Estate Services",
+      "partition_model_family": "reit_affo",
+      "ticker": "CSGP"
+    },
+    {
+      "cik": "0001058090",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CMG"
+    },
+    {
+      "cik": "0001058290",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "IT Consulting & Other Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CTSH"
+    },
+    {
+      "cik": "0001059556",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "MCO"
+    },
+    {
+      "cik": "0001060391",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Environmental & Facilities Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "RSG"
+    },
+    {
+      "cik": "0001063761",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Retail REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "SPG"
+    },
+    {
+      "cik": "0001065088",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Broadline Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "EBAY"
+    },
+    {
+      "cik": "0001065280",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NFLX"
+    },
+    {
+      "cik": "0001067701",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Trading Companies & Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "URI"
+    },
+    {
+      "cik": "0001067983",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Multi-Sector Holdings",
+      "partition_model_family": "financial_equity",
+      "ticker": "BRK.B"
+    },
+    {
+      "cik": "0001069183",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AXON"
+    },
+    {
+      "cik": "0001069202",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LII"
+    },
+    {
+      "cik": "0001070750",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Hotel & Resort REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "HST"
+    },
+    {
+      "cik": "0001071739",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Managed Health Care",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CNC"
+    },
+    {
+      "cik": "0001075531",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BKNG"
+    },
+    {
+      "cik": "0001086222",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Internet Services & Infrastructure",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AKAM"
+    },
+    {
+      "cik": "0001090012",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "DVN"
+    },
+    {
+      "cik": "0001090727",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Air Freight & Logistics",
+      "partition_model_family": "operating_fcff",
+      "ticker": "UPS"
+    },
+    {
+      "cik": "0001090872",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "A"
+    },
+    {
+      "cik": "0001091667",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Cable & Satellite",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CHTR"
+    },
+    {
+      "cik": "0001093557",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DXCM"
+    },
+    {
+      "cik": "0001094285",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Equipment & Instruments",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TDY"
+    },
+    {
+      "cik": "0001095073",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Reinsurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "EG"
+    },
+    {
+      "cik": "0001097149",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Supplies",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ALGN"
+    },
+    {
+      "cik": "0001097864",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ON"
+    },
+    {
+      "cik": "0001099219",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "MET"
+    },
+    {
+      "cik": "0001099800",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "EW"
+    },
+    {
+      "cik": "0001100682",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CRL"
+    },
+    {
+      "cik": "0001101239",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Data Center REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "EQIX"
+    },
+    {
+      "cik": "0001103982",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MDLZ"
+    },
+    {
+      "cik": "0001108524",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CRM"
+    },
+    {
+      "cik": "0001109357",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "EXC"
+    },
+    {
+      "cik": "0001111711",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "NI"
+    },
+    {
+      "cik": "0001113169",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "TROW"
+    },
+    {
+      "cik": "0001116132",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel, Accessories & Luxury Goods",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TPR"
+    },
+    {
+      "cik": "0001120193",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "NDAQ"
+    },
+    {
+      "cik": "0001121788",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Consumer Electronics",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GRMN"
+    },
+    {
+      "cik": "0001123360",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "GPN"
+    },
+    {
+      "cik": "0001126328",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "PFG"
+    },
+    {
+      "cik": "0001130310",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Multi-Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "CNP"
+    },
+    {
+      "cik": "0001133421",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NOC"
+    },
+    {
+      "cik": "0001136869",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ZBH"
+    },
+    {
+      "cik": "0001136893",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "FIS"
+    },
+    {
+      "cik": "0001137774",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "PRU"
+    },
+    {
+      "cik": "0001137789",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "STX"
+    },
+    {
+      "cik": "0001138118",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Real Estate Services",
+      "partition_model_family": "reit_affo",
+      "ticker": "CBRE"
+    },
+    {
+      "cik": "0001140536",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "partition_model_family": "financial_equity",
+      "ticker": "WTW"
+    },
+    {
+      "cik": "0001140859",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "COR"
+    },
+    {
+      "cik": "0001141391",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "MA"
+    },
+    {
+      "cik": "0001145197",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PODD"
+    },
+    {
+      "cik": "0001156039",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Managed Health Care",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ELV"
+    },
+    {
+      "cik": "0001156375",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "CME"
+    },
+    {
+      "cik": "0001163165",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "COP"
+    },
+    {
+      "cik": "0001164727",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Gold",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "NEM"
+    },
+    {
+      "cik": "0001166691",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Cable & Satellite",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CMCSA"
+    },
+    {
+      "cik": "0001174922",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Casinos & Gaming",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WYNN"
+    },
+    {
+      "cik": "0001175454",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "CPAY"
+    },
+    {
+      "cik": "0001176948",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "ARES"
+    },
+    {
+      "cik": "0001260221",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TDG"
+    },
+    {
+      "cik": "0001262039",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FTNT"
+    },
+    {
+      "cik": "0001267238",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Multi-line Insurance",
+      "partition_model_family": "financial_equity",
+      "ticker": "AIZ"
+    },
+    {
+      "cik": "0001274494",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FSLR"
+    },
+    {
+      "cik": "0001280452",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MPWR"
+    },
+    {
+      "cik": "0001281761",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "RF"
+    },
+    {
+      "cik": "0001283699",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Wireless Telecommunication Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TMUS"
+    },
+    {
+      "cik": "0001285785",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Fertilizers & Agricultural Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "MOS"
+    },
+    {
+      "cik": "0001286681",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Restaurants",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DPZ"
+    },
+    {
+      "cik": "0001289490",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Self-Storage REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "EXR"
+    },
+    {
+      "cik": "0001297996",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Data Center REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "DLR"
+    },
+    {
+      "cik": "0001300514",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Casinos & Gaming",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LVS"
+    },
+    {
+      "cik": "0001316835",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BLDR"
+    },
+    {
+      "cik": "0001318605",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automobile Manufacturers",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TSLA"
+    },
+    {
+      "cik": "0001321655",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PLTR"
+    },
+    {
+      "cik": "0001324404",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Fertilizers & Agricultural Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "CF"
+    },
+    {
+      "cik": "0001324424",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "EXPE"
+    },
+    {
+      "cik": "0001326160",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "DUK"
+    },
+    {
+      "cik": "0001326801",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Interactive Media & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "META"
+    },
+    {
+      "cik": "0001327567",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PANW"
+    },
+    {
+      "cik": "0001327811",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WDAY"
+    },
+    {
+      "cik": "0001335258",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LYV"
+    },
+    {
+      "cik": "0001336920",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Diversified Support Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LDOS"
+    },
+    {
+      "cik": "0001341439",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ORCL"
+    },
+    {
+      "cik": "0001373715",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NOW"
+    },
+    {
+      "cik": "0001374310",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "CBOE"
+    },
+    {
+      "cik": "0001375365",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SMCI"
+    },
+    {
+      "cik": "0001381197",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "partition_model_family": "financial_equity",
+      "ticker": "IBKR"
+    },
+    {
+      "cik": "0001383312",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Data Processing & Outsourced Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BR"
+    },
+    {
+      "cik": "0001385157",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Manufacturing Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TEL"
+    },
+    {
+      "cik": "0001389170",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Storage & Transportation",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "TRGP"
+    },
+    {
+      "cik": "0001390777",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "BNY"
+    },
+    {
+      "cik": "0001393052",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Technology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "VEEV"
+    },
+    {
+      "cik": "0001393311",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Self-Storage REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "PSA"
+    },
+    {
+      "cik": "0001393818",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "BX"
+    },
+    {
+      "cik": "0001396009",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Construction Materials",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "VMC"
+    },
+    {
+      "cik": "0001397187",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Apparel, Accessories & Luxury Goods",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LULU"
+    },
+    {
+      "cik": "0001402057",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Distributors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CDW"
+    },
+    {
+      "cik": "0001403161",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "V"
+    },
+    {
+      "cik": "0001403568",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Other Specialty Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ULTA"
+    },
+    {
+      "cik": "0001404912",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "KKR"
+    },
+    {
+      "cik": "0001408198",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "MSCI"
+    },
+    {
+      "cik": "0001410636",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Water Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "AWK"
+    },
+    {
+      "cik": "0001413329",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Tobacco",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PM"
+    },
+    {
+      "cik": "0001413447",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NXPI"
+    },
+    {
+      "cik": "0001415404",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Wireless Telecommunication Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ECHO"
+    },
+    {
+      "cik": "0001418135",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Soft Drinks & Non-alcoholic Beverages",
+      "partition_model_family": "operating_fcff",
+      "ticker": "KDP"
+    },
+    {
+      "cik": "0001437107",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Broadcasting",
+      "partition_model_family": "operating_fcff",
+      "ticker": "WBD"
+    },
+    {
+      "cik": "0001442145",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Research & Consulting Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "VRSK"
+    },
+    {
+      "cik": "0001466258",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TT"
+    },
+    {
+      "cik": "0001467373",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "IT Consulting & Other Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ACN"
+    },
+    {
+      "cik": "0001467858",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automobile Manufacturers",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GM"
+    },
+    {
+      "cik": "0001474735",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Heavy Electrical Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GNRC"
+    },
+    {
+      "cik": "0001478242",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Life Sciences Tools & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "IQV"
+    },
+    {
+      "cik": "0001489393",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Specialty Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "LYB"
+    },
+    {
+      "cik": "0001501585",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HII"
+    },
+    {
+      "cik": "0001506307",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Storage & Transportation",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "KMI"
+    },
+    {
+      "cik": "0001510295",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Refining & Marketing",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "MPC"
+    },
+    {
+      "cik": "0001512673",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "XYZ"
+    },
+    {
+      "cik": "0001513761",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NCLH"
+    },
+    {
+      "cik": "0001521332",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automotive Parts & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "APTV"
+    },
+    {
+      "cik": "0001524472",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "XYL"
+    },
+    {
+      "cik": "0001534701",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Refining & Marketing",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "PSX"
+    },
+    {
+      "cik": "0001535527",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CRWD"
+    },
+    {
+      "cik": "0001539838",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "FANG"
+    },
+    {
+      "cik": "0001543151",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Passenger Ground Transportation",
+      "partition_model_family": "operating_fcff",
+      "ticker": "UBER"
+    },
+    {
+      "cik": "0001551152",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ABBV"
+    },
+    {
+      "cik": "0001551182",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ETN"
+    },
+    {
+      "cik": "0001555280",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ZTS"
+    },
+    {
+      "cik": "0001559720",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ABNB"
+    },
+    {
+      "cik": "0001561550",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DDOG"
+    },
+    {
+      "cik": "0001564708",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Publishing",
+      "partition_model_family": "operating_fcff",
+      "ticker": "NWSA"
+    },
+    {
+      "cik": "0001571949",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "ICE"
+    },
+    {
+      "cik": "0001571996",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DELL"
+    },
+    {
+      "cik": "0001579241",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ALLE"
+    },
+    {
+      "cik": "0001585689",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Hotels, Resorts & Cruise Lines",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HLT"
+    },
+    {
+      "cik": "0001596532",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "ANET"
+    },
+    {
+      "cik": "0001601046",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Equipment & Instruments",
+      "partition_model_family": "operating_fcff",
+      "ticker": "KEYS"
+    },
+    {
+      "cik": "0001601712",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Consumer Finance",
+      "partition_model_family": "financial_equity",
+      "ticker": "SYF"
+    },
+    {
+      "cik": "0001609711",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Internet Services & Infrastructure",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GDDY"
+    },
+    {
+      "cik": "0001613103",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MDT"
+    },
+    {
+      "cik": "0001633917",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "partition_model_family": "financial_equity",
+      "ticker": "PYPL"
+    },
+    {
+      "cik": "0001633978",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Communications Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "LITE"
+    },
+    {
+      "cik": "0001637459",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Packaged Foods & Meats",
+      "partition_model_family": "operating_fcff",
+      "ticker": "KHC"
+    },
+    {
+      "cik": "0001645590",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HPE"
+    },
+    {
+      "cik": "0001652044",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Interactive Media & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GOOGL"
+    },
+    {
+      "cik": "0001659166",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FTV"
+    },
+    {
+      "cik": "0001666700",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Conglomerates",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DD"
+    },
+    {
+      "cik": "0001671933",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Advertising",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TTD"
+    },
+    {
+      "cik": "0001674101",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Electrical Components & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "VRT"
+    },
+    {
+      "cik": "0001679788",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Financial Exchanges & Data",
+      "partition_model_family": "financial_equity",
+      "ticker": "COIN"
+    },
+    {
+      "cik": "0001682852",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Biotechnology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MRNA"
+    },
+    {
+      "cik": "0001687229",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Single-Family Residential REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "INVH"
+    },
+    {
+      "cik": "0001690820",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Automotive Retail",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CVNA"
+    },
+    {
+      "cik": "0001692819",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "VST"
+    },
+    {
+      "cik": "0001699150",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "IR"
+    },
+    {
+      "cik": "0001701605",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Equipment & Services",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "BKR"
+    },
+    {
+      "cik": "0001705696",
+      "gics_sector": "Real Estate",
+      "gics_sub_industry": "Hotel & Resort REITs",
+      "partition_model_family": "reit_affo",
+      "ticker": "VICI"
+    },
+    {
+      "cik": "0001707925",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Industrial Gases",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "LIN"
+    },
+    {
+      "cik": "0001711269",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "EVRG"
+    },
+    {
+      "cik": "0001730168",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "AVGO"
+    },
+    {
+      "cik": "0001739940",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CI"
+    },
+    {
+      "cik": "0001744489",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DIS"
+    },
+    {
+      "cik": "0001748790",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Paper & Plastic Packaging Products & Materials",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "AMCR"
+    },
+    {
+      "cik": "0001751008",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Advertising",
+      "partition_model_family": "operating_fcff",
+      "ticker": "APP"
+    },
+    {
+      "cik": "0001751788",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Commodity Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "DOW"
+    },
+    {
+      "cik": "0001754301",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Broadcasting",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FOXA"
+    },
+    {
+      "cik": "0001755672",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Fertilizers & Agricultural Chemicals",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "CTVA"
+    },
+    {
+      "cik": "0001757898",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "STE"
+    },
+    {
+      "cik": "0001781335",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "partition_model_family": "operating_fcff",
+      "ticker": "OTIS"
+    },
+    {
+      "cik": "0001783180",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "CARR"
+    },
+    {
+      "cik": "0001783879",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "partition_model_family": "financial_equity",
+      "ticker": "HOOD"
+    },
+    {
+      "cik": "0001792044",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Pharmaceuticals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "VTRS"
+    },
+    {
+      "cik": "0001792789",
+      "gics_sector": "Consumer Discretionary",
+      "gics_sub_industry": "Specialized Consumer Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "DASH"
+    },
+    {
+      "cik": "0001811074",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "TPL"
+    },
+    {
+      "cik": "0001835632",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "partition_model_family": "operating_fcff",
+      "ticker": "MRVL"
+    },
+    {
+      "cik": "0001841666",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Exploration & Production",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "APA"
+    },
+    {
+      "cik": "0001858681",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "APO"
+    },
+    {
+      "cik": "0001868275",
+      "gics_sector": "Utilities",
+      "gics_sub_industry": "Electric Utilities",
+      "partition_model_family": "utility_fcfe",
+      "ticker": "CEG"
+    },
+    {
+      "cik": "0001932393",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GEHC"
+    },
+    {
+      "cik": "0001944048",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Personal Care Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "KVUE"
+    },
+    {
+      "cik": "0001964738",
+      "gics_sector": "Health Care",
+      "gics_sub_industry": "Health Care Technology",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SOLV"
+    },
+    {
+      "cik": "0001967680",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Environmental & Facilities Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "VLTO"
+    },
+    {
+      "cik": "0001973266",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "TKO"
+    },
+    {
+      "cik": "0001996810",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Heavy Electrical Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "GEV"
+    },
+    {
+      "cik": "0001996862",
+      "gics_sector": "Consumer Staples",
+      "gics_sub_industry": "Agricultural Products & Services",
+      "partition_model_family": "operating_fcff",
+      "ticker": "BG"
+    },
+    {
+      "cik": "0002005951",
+      "gics_sector": "Materials",
+      "gics_sub_industry": "Paper & Plastic Packaging Products & Materials",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "SW"
+    },
+    {
+      "cik": "0002011641",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Building Products",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FERG"
+    },
+    {
+      "cik": "0002012383",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Asset Management & Custody Banks",
+      "partition_model_family": "financial_equity",
+      "ticker": "BLK"
+    },
+    {
+      "cik": "0002023554",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "partition_model_family": "operating_fcff",
+      "ticker": "SNDK"
+    },
+    {
+      "cik": "0002041610",
+      "gics_sector": "Communication Services",
+      "gics_sub_industry": "Movies & Entertainment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "PSKY"
+    },
+    {
+      "cik": "0002058873",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductor Materials & Equipment",
+      "partition_model_family": "operating_fcff",
+      "ticker": "Q"
+    },
+    {
+      "cik": "0002082247",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Cargo Ground Transportation",
+      "partition_model_family": "operating_fcff",
+      "ticker": "FDXF"
+    },
+    {
+      "cik": "0002089271",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "partition_model_family": "operating_fcff",
+      "ticker": "HONA"
+    },
+    {
+      "cik": "0002115436",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Integrated Oil & Gas",
+      "partition_model_family": "resource_cycle_fcff",
+      "ticker": "XOM"
+    }
+  ]
+}

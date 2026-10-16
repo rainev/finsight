@@ -34,6 +34,12 @@ class Env:
     JWT_ACCESS_EXPIRES_MIN: int = int(os.environ.get("JWT_ACCESS_EXPIRES_MIN", "15"))
     JWT_REFRESH_EXPIRES_DAYS: int = int(os.environ.get("JWT_REFRESH_EXPIRES_DAYS", "7"))
 
+    # Owner-only setup for the PSE staged-refresh control. Blank disables it.
+    PSE_REFRESH_OWNER_EMAIL: str = os.environ.get("PSE_REFRESH_OWNER_EMAIL", "").strip().lower()
+    PSE_REFRESH_OWNER_USER_ID: int = int(os.environ.get("PSE_REFRESH_OWNER_USER_ID") or "0")
+    # Local U.S. stage-only control is opt-in; hosted deployments remain closed.
+    US_REFRESH_CONTROL_ENABLED: bool = os.environ.get("US_REFRESH_CONTROL_ENABLED", "false") == "true"
+
     # Where Google Identity Services sends the browser back / the audience we
     # verify ID tokens against. Optional so the app boots without it; the
     # /auth/google endpoint returns a clear error until it's set. Must match the

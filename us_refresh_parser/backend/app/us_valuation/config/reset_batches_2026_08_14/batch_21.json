@@ -1,0 +1,124 @@
+{
+  "batch": 21,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "industrials",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0000101829",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "RTX Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "RTX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000105634",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Construction & Engineering",
+      "issuer_name": "Emcor",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "EME"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000202058",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "L3Harris",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "LHX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000217346",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Aerospace & Defense",
+      "issuer_name": "Textron",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "TXT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000277135",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Industrial Machinery & Supplies & Components",
+      "issuer_name": "W. W. Grainger",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "GWW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000277948",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Rail Transportation",
+      "issuer_name": "CSX Corporation",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "CSX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000702165",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Rail Transportation",
+      "issuer_name": "Norfolk Southern",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "NSC"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000728535",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Cargo Ground Transportation",
+      "issuer_name": "J.B. Hunt",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "JBHT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000746515",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Air Freight & Logistics",
+      "issuer_name": "Expeditors International",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "core",
+      "ticker": "EXPD"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000815556",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Trading Companies & Distributors",
+      "issuer_name": "Fastenal",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "FAST"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

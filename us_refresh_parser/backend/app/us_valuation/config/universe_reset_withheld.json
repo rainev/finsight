@@ -1,0 +1,586 @@
+{
+  "version": "US-UNIVERSE-RESET-WITHHELD-1.0",
+  "valuation_date": "2026-08-14",
+  "entries": [
+    {
+      "batch": 1,
+      "ticker": "NEE",
+      "cik": "0000753308",
+      "issuer_name": "NextEra Energy, Inc.",
+      "model_version": "PRACTICAL-MIXED-UTILITY-FCFE-1.1",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MIXED_UTILITY_FALLBACK",
+        "CAPEX_CASH_CONVERSION_SENSITIVITY",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/13-three-company-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "OMC",
+      "cik": "0000029989",
+      "issuer_name": "Omnicom Group",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "TTWO",
+      "cik": "0000946581",
+      "issuer_name": "Take-Two Interactive",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CAPEX_CASH_CONVERSION_SENSITIVITY",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "MODEL_UNSUPPORTED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "CHTR",
+      "cik": "0001091667",
+      "issuer_name": "Charter Communications",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "CMCSA",
+      "cik": "0001166691",
+      "issuer_name": "Comcast",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "META",
+      "cik": "0001326801",
+      "issuer_name": "Meta Platforms",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CAPEX_CASH_CONVERSION_SENSITIVITY",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 2,
+      "ticker": "WBD",
+      "cik": "0001437107",
+      "issuer_name": "Warner Bros. Discovery",
+      "model_version": "BATCH-02-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "pipeline_revision_retries": 1,
+      "revision_retry_report": "docs/audit/31-batch-02-revised-pipeline-retry-result.md",
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "MAJOR_EVENT_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/18-batch-02-recovery-result.md"
+    },
+    {
+      "batch": 8,
+      "ticker": "NCLH",
+      "cik": "0001513761",
+      "issuer_name": "Norwegian Cruise Line Holdings",
+      "model_version": "BATCH-08-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CAPEX_CASH_CONVERSION_SENSITIVITY",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED",
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/57-batch-08-recovery-result.md"
+    },
+    {
+      "batch": 11,
+      "ticker": "BG",
+      "cik": "0001996862",
+      "issuer_name": "Bunge Global",
+      "model_version": "BATCH-11-SYY-BG-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONDITIONAL_EVENT_MODEL",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "PREDECESSOR_HISTORY_NOT_COMPARABLE",
+        "PRO_FORMA_CASH_FLOW_NOT_DISCLOSED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/66-batch-11-recovery-result.md"
+    },
+    {
+      "batch": 12,
+      "ticker": "UHS",
+      "cik": "0000352915",
+      "issuer_name": "Universal Health Services",
+      "model_version": "BATCH-12-WHOLE-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONDITIONAL_EVENT_MODEL",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "POST_PERIOD_CASH_DEBT_STATE_UNAVAILABLE",
+        "POST_PERIOD_OPERATING_STATE_CHANGED",
+        "PENDING_TRANSACTION_FINANCING_UNRESOLVED"
+      ],
+      "evidence_report": "docs/audit/69-batch-12-whole-recovery-result.md"
+    },
+    {
+      "batch": 15,
+      "ticker": "LH",
+      "cik": "0000920148",
+      "issuer_name": "Labcorp",
+      "model_version": "BATCH-15-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONSOLIDATED_MODEL_FALLBACK",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/76-batch-15-recovery-result.md"
+    },
+    {
+      "batch": 15,
+      "ticker": "ISRG",
+      "cik": "0001035267",
+      "issuer_name": "Intuitive Surgical",
+      "model_version": "BATCH-15-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/76-batch-15-recovery-result.md"
+    },
+    {
+      "batch": 15,
+      "ticker": "ALGN",
+      "cik": "0001097149",
+      "issuer_name": "Align Technology",
+      "model_version": "BATCH-15-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/76-batch-15-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "DXCM",
+      "cik": "0001093557",
+      "issuer_name": "Dexcom",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "EW",
+      "cik": "0001099800",
+      "issuer_name": "Edwards Lifesciences",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "CRL",
+      "cik": "0001100682",
+      "issuer_name": "Charles River Laboratories",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "ZBH",
+      "cik": "0001136869",
+      "issuer_name": "Zimmer Biomet",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "COR",
+      "cik": "0001140859",
+      "issuer_name": "Cencora",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 16,
+      "ticker": "ELV",
+      "cik": "0001156039",
+      "issuer_name": "Elevance Health",
+      "model_version": "BATCH-16-WITHHELD-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/80-batch-16-recovery-result.md"
+    },
+    {
+      "batch": 31,
+      "ticker": "ORCL",
+      "cik": "0001341439",
+      "issuer_name": "Oracle Corporation",
+      "model_version": "BATCH-31-ORCL-INFRASTRUCTURE-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "SPECIALIST_MODEL_UNCERTAINTY",
+        "CAPEX_CASH_CONVERSION_SENSITIVITY"
+      ],
+      "hard_blockers": [
+        "MODEL_UNSUPPORTED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/118-batch-31-orcl-recovery-result.md"
+    },
+    {
+      "batch": 36,
+      "ticker": "VLO",
+      "cik": "0001035002",
+      "issuer_name": "Valero Energy",
+      "model_version": "BATCH-36-VLO-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "NORMALIZED_CYCLICAL_RANGE",
+        "SPECIALIST_MODEL_UNCERTAINTY"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED"
+      ],
+      "evidence_report": "docs/audit/135-batch-36-vlo-recovery-result.md"
+    },
+    {
+      "batch": 38,
+      "ticker": "GPN",
+      "cik": "0001123360",
+      "issuer_name": "Global Payments",
+      "model_version": "BATCH-38-GPN-CPAY-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "POST_COMBINATION_HISTORY_INCOMPLETE",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "hard_blockers": [
+        "MODEL_UNSUPPORTED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/140-batch-38-gpn-cpay-recovery-result.md"
+    },
+    {
+      "batch": 40,
+      "ticker": "COIN",
+      "cik": "0001679788",
+      "issuer_name": "Coinbase Global, Inc.",
+      "model_version": "BATCH-40-COIN-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "NEGATIVE_THROUGH_CYCLE_BEAR",
+        "UNBOUNDED_TAX_REGULATORY_CLAIMS",
+        "SPECIALIST_MODEL_REQUIRED",
+        "VALUATION_WITHHELD"
+      ],
+      "hard_blockers": [
+        "CLAIMS_UNBOUNDED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/146-batch-40-coin-recovery-result.md"
+    },
+    {
+      "batch": 41,
+      "ticker": "IFF",
+      "cik": "0000051253",
+      "issuer_name": "International Flavors & Fragrances",
+      "model_version": "BATCH-41-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "CONTINUING_DISCONTINUED_CASH_PERIMETER_UNRESOLVED",
+        "NEGATIVE_PARENT_EARNINGS_HISTORY"
+      ],
+      "hard_blockers": [
+        "MODEL_UNSUPPORTED"
+      ],
+      "evidence_report": "docs/audit/148-batch-41-recovery-result.md"
+    },
+    {
+      "batch": 41,
+      "ticker": "IP",
+      "cik": "0000051434",
+      "issuer_name": "International Paper",
+      "model_version": "BATCH-41-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": [
+        "POST_COMBINATION_HISTORY_INCOMPLETE",
+        "CONTINUING_DISCONTINUED_CAPEX_PERIMETER_UNRESOLVED"
+      ],
+      "hard_blockers": [
+        "MODEL_UNSUPPORTED",
+        "NONFINITE_OR_NONPOSITIVE_VALUE"
+      ],
+      "evidence_report": "docs/audit/148-batch-41-recovery-result.md"
+    },
+    {
+      "batch": 42,
+      "ticker": "EXE",
+      "cik": "0000895126",
+      "issuer_name": "Expand Energy",
+      "model_version": "BATCH-42-EXE-ALB-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["POST_COMBINATION_HISTORY_INCOMPLETE", "SPECIALIST_MODEL_REQUIRED", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/150-batch-42-exe-alb-recovery-result.md"
+    },
+    {
+      "batch": 42,
+      "ticker": "ALB",
+      "cik": "0000915913",
+      "issuer_name": "Albemarle Corporation",
+      "model_version": "BATCH-42-EXE-ALB-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["NEGATIVE_THROUGH_CYCLE_BASE", "CURRENT_OBJECT_HISTORY_INCOMPLETE", "PREFERRED_CONVERSION_SCOPE_UNRESOLVED", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MODEL_UNSUPPORTED", "NONFINITE_OR_NONPOSITIVE_VALUE"],
+      "evidence_report": "docs/audit/150-batch-42-exe-alb-recovery-result.md"
+    },
+    {
+      "batch": 43,
+      "ticker": "DVN",
+      "cik": "0001090012",
+      "issuer_name": "Devon Energy",
+      "model_version": "BATCH-43-DVN-NEM-LYB-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["POST_COMBINATION_CASH_HISTORY_INCOMPLETE", "PRO_FORMA_EARNINGS_NOT_CASH_FLOW", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/152-batch-43-recovery-result.md"
+    },
+    {
+      "batch": 43,
+      "ticker": "NEM",
+      "cik": "0001164727",
+      "issuer_name": "Newmont",
+      "model_version": "BATCH-43-DVN-NEM-LYB-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["MATERIAL_JV_EVENT_UNBOUNDED", "CONFIDENTIAL_SETTLEMENT_UNQUANTIFIED", "ASSUMED_PROJECT_LIABILITIES_UNAVAILABLE", "VALUATION_WITHHELD"],
+      "hard_blockers": ["CLAIMS_UNBOUNDED", "MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/152-batch-43-recovery-result.md"
+    },
+    {
+      "batch": 43,
+      "ticker": "LYB",
+      "cik": "0001489393",
+      "issuer_name": "LyondellBasell",
+      "model_version": "BATCH-43-DVN-NEM-LYB-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["CONTINUING_COMPANY_CASH_SCOPE_UNAVAILABLE", "DISPOSED_OPERATIONS_CASH_NOT_SEPARABLE", "SEGMENT_EARNINGS_NOT_FCFF", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/152-batch-43-recovery-result.md"
+    },
+    {
+      "batch": 44,
+      "ticker": "BKR",
+      "cik": "0001701605",
+      "issuer_name": "Baker Hughes",
+      "model_version": "BATCH-44-RECOVERY-RECALIBRATION-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["POST_ACQUISITION_CASH_STATE_UNAVAILABLE", "ASSUMED_CLAIMS_UNBOUNDED", "PRO_FORMA_CASH_FLOW_NOT_DISCLOSED", "VALUATION_WITHHELD"],
+      "hard_blockers": ["CLAIMS_UNBOUNDED", "MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/154-batch-44-recovery-and-range-recalibration-result.md"
+    },
+    {
+      "batch": 47,
+      "ticker": "NRG",
+      "cik": "0001013871",
+      "issuer_name": "NRG Energy",
+      "model_version": "BATCH-47-MERCHANT-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["POST_ACQUISITION_HISTORY_INCOMPLETE", "HEDGE_SETTLEMENT_NORMALIZATION_UNRESOLVED", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/159-batch-47-recovery-result.md"
+    },
+    {
+      "batch": 47,
+      "ticker": "VST",
+      "cik": "0001692819",
+      "issuer_name": "Vistra Corp.",
+      "model_version": "BATCH-47-MERCHANT-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["MERCHANT_EARNINGS_NORMALIZATION_UNRESOLVED", "HEDGE_SETTLEMENT_NORMALIZATION_UNRESOLVED", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/159-batch-47-recovery-result.md"
+    },
+    {
+      "batch": 47,
+      "ticker": "CEG",
+      "cik": "0001868275",
+      "issuer_name": "Constellation Energy",
+      "model_version": "BATCH-47-MERCHANT-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["POST_ACQUISITION_HISTORY_INCOMPLETE", "MERCHANT_NUCLEAR_NORMALIZATION_UNRESOLVED", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/159-batch-47-recovery-result.md"
+    },
+    {
+      "batch": 48,
+      "ticker": "EQR",
+      "cik": "0000906107",
+      "issuer_name": "Equity Residential",
+      "model_version": "BATCH-48-REIT-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["MAJOR_EVENT_UNBOUNDED", "POST_COMBINATION_HISTORY_INCOMPLETE", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MAJOR_EVENT_UNBOUNDED", "MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/162-batch-48-recovery-result.md"
+    },
+    {
+      "batch": 49,
+      "ticker": "AVB",
+      "cik": "0000915912",
+      "issuer_name": "AvalonBay Communities",
+      "model_version": "BATCH-49-AVB-RECOVERY-1.0",
+      "recovery_attempts": 1,
+      "final_outcome": "withheld",
+      "reason_codes": ["MAJOR_EVENT_UNBOUNDED", "AFFO_RECONCILIATION_UNAVAILABLE", "POST_COMBINATION_HISTORY_INCOMPLETE", "VALUATION_WITHHELD"],
+      "hard_blockers": ["MAJOR_EVENT_UNBOUNDED", "MODEL_UNSUPPORTED"],
+      "evidence_report": "docs/audit/165-batch-49-avb-recovery-result.md"
+    }
+  ]
+}

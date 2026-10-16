@@ -1,0 +1,253 @@
+"""Closed future B03 local-admission proof; validation never grants release."""
+
+from pathlib import Path
+
+from .staged_batch03_inheritance import (
+    IDENTITIES,
+    NULLS,
+    PARENT_SHA,
+    PARENT_REGISTRY_SHA,
+    PARENT_VERSION,
+    ROOT_FILES,
+    TARGETS,
+    validate as validate_stage,
+)
+
+
+SCHEMA = "US-B03-LOCAL-ADMISSION-INHERITANCE-1"
+STAGE_SHA = "0ab505b64e433216bc8905587ad6ac642f29b7d4580d8c716817e4fe86f1e8b7"
+CONFIRMATION_SHA = "f6e2bedcad29981120aafa152e14ecb18ddf82731fc8098990e92aa0c68bbb35"
+PREPARATION_SHA = "eec4b32c82b8e7cb65e16ce9011e829b6bfd31a9f80882d04a44722050ec4106"
+STAGE_REGISTRY_SHA = "2934a0aa350c2f5207e0eaca160c2481e5be15170f5ab18468d3ad03d2bf6c99"
+POLICIES_SHA = "bd6a7f754455a4ed1e4a8fcebfd1b236b6116cd897abfcb292962d9e5e8720c4"
+REVIEW_SCHEMA = "US-B03-READ-ONLY-STAGED-REVIEW-1"
+AUTH_SCHEMA = "US-B03-EXPLICIT-LOCAL-RELEASE-AUTHORIZATION-1"
+READINESS_SCHEMA = "US-B03-ADMISSION-READINESS-HANDOFF-1"
+PREPARATION_SCHEMA = "US-B03-ADMISSION-READINESS-PREPARATION-AUTHORIZATION-1"
+CONFIRMATION_SCHEMA = "US-B03-STAGED-CANDIDATE-CONFIRMATION-1"
+EXTRA_FILES = {
+    "local-admission-stage.json",
+    "local-admission-confirmation.json",
+    "local-admission-preparation.json",
+    "local-admission-authorization.json",
+    "local-admission-readiness.json",
+}
+FALSE_AUTH = (
+    "automatic_new_source_revaluation",
+    "new_source_capture",
+    "new_recovery",
+    "next_batch",
+    "cloud_deployment",
+    "push",
+    "publication",
+    "save",
+    "source_adapter_integration",
+    "DB_job_write",
+    "live_SEC_refresh",
+    "new_live_refresh_job",
+    "new_valuation_inputs",
+    "valuation_recalculation",
+)
+PREPARATION_DENIED = (
+    "admission",
+    "activation",
+    "publication",
+    "automatic_new_source_revaluation",
+    "new_source_capture",
+    "new_recovery",
+    "new_valuation_inputs",
+    "live_runtime_promotion",
+    "new_live_refresh_job",
+    "next_batch",
+    "cloud_deployment",
+    "push",
+)
+READINESS_DENIED = PREPARATION_DENIED + ("save", "source_adapter_integration", "DB_job_write", "live_SEC_refresh", "valuation_recalculation")
+AUTH_FIELDS = set(FALSE_AUTH) | {
+    "schema_version",
+    "authorization_source",
+    "user_request",
+    "admission_authorized",
+    "local_activation_authorized",
+    "local_public_visibility_authorized",
+    "confirmed_stage_manifest_sha256",
+    "readiness_sha256",
+    "readiness_preparation_sha256",
+    "stage_confirmation_sha256",
+    "active_parent_manifest_sha256",
+    "public_numeric_additions",
+    "public_null_additions",
+    "new_filing_holds",
+    "evidence_cutoff",
+    "staged_registry_sha256",
+    "refresh_policy_sha256",
+}
+
+
+def require(value, why):
+    if not value:
+        raise ValueError("Batch03 local admission rejected: " + why)
+
+
+def _rows(manifest):
+    return {
+        entry["ticker"]: (
+            entry["cik"],
+            entry["batch"],
+            entry["availability_type"],
+            entry["artifact_sha256"],
+        )
+        for entry in manifest["entries"]
+    }
+
+
+def validate(root, manifest, *, deep=False, proof_reader=None):
+    require(callable(proof_reader), "verified proof reader missing")
+    grant = manifest.get("local_admission")
+    proof = manifest.get("approved_base_inheritance")
+    require(
+        isinstance(grant, dict)
+        and set(grant) == {"schema_version", "authorization_sha256", "readiness_sha256"}
+        and grant.get("schema_version") == "US-B03-LOCAL-ADMISSION-1",
+        "separate B03 local grant required",
+    )
+    require(
+        isinstance(proof, dict)
+        and proof == {
+            "schema_version": SCHEMA,
+            "confirmed_stage_manifest_sha256": STAGE_SHA,
+            "stage_confirmation_sha256": CONFIRMATION_SHA,
+            "readiness_preparation_sha256": PREPARATION_SHA,
+        },
+        "exact B03 stage/confirmation/preparation pins",
+    )
+
+    stage = proof_reader(root, "local-admission-stage.json", STAGE_SHA)
+    confirmation = proof_reader(root, "local-admission-confirmation.json", CONFIRMATION_SHA)
+    preparation = proof_reader(root, "local-admission-preparation.json", PREPARATION_SHA)
+    authorization = proof_reader(root, "local-admission-authorization.json", grant["authorization_sha256"])
+    readiness = proof_reader(root, "local-admission-readiness.json", grant["readiness_sha256"])
+
+    require(
+        confirmation.get("schema_version") == CONFIRMATION_SCHEMA
+        and confirmation.get("manifest_sha256") == STAGE_SHA
+        and confirmation.get("confirmed_scope") == "sealed_staged_public_candidate_only"
+        and confirmation.get("all_values_holds_and_KWR_dated_only_preserved") is True
+        and all(confirmation.get(key) is False for key in ("admission", "activation", "publication")),
+        "staged confirmation is not read-only",
+    )
+    require(
+        preparation.get("schema_version") == PREPARATION_SCHEMA
+        and preparation.get("readiness_preparation_authorized") is True
+        and preparation.get("stage_confirmation_sha256") == CONFIRMATION_SHA
+        and preparation.get("confirmed_staged_manifest_sha256") == STAGE_SHA
+        and preparation.get("candidate_count") == 530
+        and preparation.get("baseline_count") == 520
+        and preparation.get("evidence_cutoff") == "2026-10-06"
+        and all(preparation.get(key) is False for key in ("admission", "activation", "publication"))
+        and all(preparation.get(key) is False for key in PREPARATION_DENIED),
+        "readiness preparation scope widened",
+    )
+    require(
+        set(authorization) == AUTH_FIELDS
+        and authorization.get("schema_version") == AUTH_SCHEMA
+        and authorization.get("authorization_source") == "direct_human_user"
+        and isinstance(authorization.get("user_request"), str)
+        and authorization["user_request"].strip()
+        and all(authorization.get(key) is True for key in ("admission_authorized", "local_activation_authorized", "local_public_visibility_authorized"))
+        and all(authorization.get(key) is False for key in FALSE_AUTH),
+        "future local authority is not exact or contains prohibited permission",
+    )
+    require(
+        authorization.get("confirmed_stage_manifest_sha256") == STAGE_SHA
+        and authorization.get("readiness_sha256") == grant["readiness_sha256"]
+        and authorization.get("readiness_preparation_sha256") == PREPARATION_SHA
+        and authorization.get("stage_confirmation_sha256") == CONFIRMATION_SHA
+        and authorization.get("active_parent_manifest_sha256") == PARENT_SHA
+        and set(authorization.get("public_numeric_additions", [])) == TARGETS
+        and set(authorization.get("public_null_additions", [])) == NULLS
+        and authorization.get("new_filing_holds") == 10
+        and authorization.get("evidence_cutoff") == "2026-10-06"
+        and authorization.get("staged_registry_sha256") == STAGE_REGISTRY_SHA
+        and authorization.get("refresh_policy_sha256") == POLICIES_SHA,
+        "future local authority does not bind exact B03 scope",
+    )
+    require(
+        readiness.get("schema_version") == READINESS_SCHEMA
+        and readiness.get("status") == "verified_pending_single_admission_local_activation_decision"
+        and readiness.get("manifest_sha256") == STAGE_SHA
+        and readiness.get("live_count") == 520
+        and readiness.get("candidate_count") == 530
+        and readiness.get("public_numeric_count") == 490
+        and readiness.get("public_null_count") == 40
+        and readiness.get("new_declared_filing_holds") == 10
+        and readiness.get("new_auto_revaluation_ready") == 0
+        and readiness.get("approved_values_and_holds_preserved") is True
+        and all(readiness.get(key) is False for key in ("admission", "activation", "publication"))
+        and all(readiness.get(key) is False for key in READINESS_DENIED),
+        "readiness handoff is not verified/read-only",
+    )
+    require(
+        readiness.get("confirmation_sha256") == CONFIRMATION_SHA
+        and readiness.get("preparation_sha256") == PREPARATION_SHA
+        and readiness.get("staged_registry_sha256") == STAGE_REGISTRY_SHA
+        and readiness.get("refresh_policy_sha256") == POLICIES_SHA,
+        "readiness handoff proof pins changed",
+    )
+
+    originals = validate_stage(root, stage, deep=False, proof_reader=proof_reader)
+    changed = {
+        "catalog_version",
+        "catalog_kind",
+        "staged_release_only",
+        "admission_prepared_only",
+        "staged_read_only_review_ready",
+        "admission",
+        "approved_base_inheritance",
+        "local_admission",
+        "preserved_prior_estimate_sha256",
+    }
+    require(set(manifest) == set(stage) | {"local_admission"}, "future admitted metadata membership changed")
+    require(all(manifest[key] == value for key, value in stage.items() if key not in changed), "stage economics/metadata changed")
+    require(
+        str(manifest.get("catalog_version", "")).startswith("US-ADMITTED-B03-530-")
+        and manifest.get("catalog_kind") == "admitted_local_expansion"
+        and manifest.get("staged_release_only") is False
+        and manifest.get("admission_prepared_only") is False
+        and manifest.get("staged_read_only_review_ready") is False
+        and manifest.get("admission") is True
+        and manifest.get("activation") is False
+        and manifest.get("publication") is False,
+        "future admitted baseline scope is not local-only",
+    )
+    require(manifest.get("base_manifest_sha256") == PARENT_SHA and manifest.get("base_catalog_version") == PARENT_VERSION, "future parent changed")
+    preserved = {
+        **stage["preserved_prior_estimate_sha256"],
+        "local-admission-stage.json": STAGE_SHA,
+        "local-admission-confirmation.json": CONFIRMATION_SHA,
+        "local-admission-preparation.json": PREPARATION_SHA,
+        "local-admission-authorization.json": grant["authorization_sha256"],
+        "local-admission-readiness.json": grant["readiness_sha256"],
+    }
+    require(manifest.get("preserved_prior_estimate_sha256") == preserved, "future proof index changed")
+    if deep:
+        require({path.name for path in Path(root).iterdir()} == ROOT_FILES | EXTRA_FILES | {"artifacts", "recipes"}, "future admitted root allowlist changed")
+        for name, digest in preserved.items():
+            proof_reader(root, name, digest)
+        require({path.name for path in (Path(root) / "artifacts").iterdir()} == {entry["ticker"] + ".json" for entry in stage["entries"]}, "future artifact membership changed")
+        for entry in stage["entries"]:
+            proof_reader(root, "artifacts/" + entry["ticker"] + ".json", entry["artifact_sha256"])
+        require({path.name for path in (Path(root) / "recipes").iterdir()} == {ticker + ".json" for ticker in stage["private_recipe_sha256"]}, "future recipe membership changed")
+        for ticker, digest in stage["private_recipe_sha256"].items():
+            proof_reader(root, "recipes/" + ticker + ".json", digest)
+    return originals
+
+
+def validate_registry(root, manifest, registry, *, proof_reader=None):
+    require(callable(proof_reader), "verified proof reader missing")
+    parent = proof_reader(root, "approved-parent-registry.json", PARENT_REGISTRY_SHA)
+    require(registry.get("schema_version") == parent.get("schema_version") and len(registry.get("entries", [])) == 530, "future registry530 schema")
+    require(all(row in registry["entries"] for row in parent["entries"]), "future old520 registry records changed")
+    actual = {(entry["ticker"], entry["cik"], entry["batch"], entry["availability_type"]) for entry in registry["entries"]}
+    wanted = {(entry["ticker"], entry["cik"], entry["batch"], entry["availability_type"]) for entry in manifest["entries"]}
+    require(len(actual) == 530 and actual == wanted, "future registry identities/statuses")

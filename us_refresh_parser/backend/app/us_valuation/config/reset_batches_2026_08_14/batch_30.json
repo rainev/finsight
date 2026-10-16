@@ -1,0 +1,124 @@
+{
+  "batch": 30,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "information_technology",
+  "members": [
+    {
+      "boundary_reason": null,
+      "cik": "0001058290",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "IT Consulting & Other Services",
+      "issuer_name": "Cognizant",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "CTSH"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001094285",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Equipment & Instruments",
+      "issuer_name": "Teledyne Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "TDY"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001097864",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "ON Semiconductor",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "ON"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001137789",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Technology Hardware, Storage & Peripherals",
+      "issuer_name": "Seagate Technology",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "STX"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001262039",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Systems Software",
+      "issuer_name": "Fortinet",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "FTNT"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001274494",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "First Solar",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "FSLR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001280452",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Semiconductors",
+      "issuer_name": "Monolithic Power Systems",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "MPWR"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0001321655",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Application Software",
+      "issuer_name": "Palantir Technologies",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "core",
+      "ticker": "PLTR"
+    },
+    {
+      "boundary_reason": "outsourced_data_processing_boundary",
+      "cik": "0001383312",
+      "gics_sector": "Industrials",
+      "gics_sub_industry": "Data Processing & Outsourced Services",
+      "issuer_name": "Broadridge Financial Solutions",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "industrials",
+      "role": "boundary",
+      "ticker": "BR"
+    },
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0001385157",
+      "gics_sector": "Information Technology",
+      "gics_sub_industry": "Electronic Manufacturing Services",
+      "issuer_name": "TE Connectivity",
+      "partition_family_id": "operating_fcff",
+      "primary_lane_id": "information_technology",
+      "role": "boundary",
+      "ticker": "TEL"
+    }
+  ],
+  "partition_families": [
+    "operating_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

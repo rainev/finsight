@@ -1,0 +1,125 @@
+{
+  "batch": 35,
+  "boundary_count": 2,
+  "core_count": 8,
+  "core_lane": "financials",
+  "members": [
+    {
+      "boundary_reason": "same_cohort_rare_subindustry_boundary",
+      "cik": "0000072971",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "issuer_name": "Wells Fargo",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "boundary",
+      "ticker": "WFC"
+    },
+    {
+      "boundary_reason": "asset_backed_capital_structure_boundary",
+      "cik": "0000107263",
+      "gics_sector": "Energy",
+      "gics_sub_industry": "Oil & Gas Storage & Transportation",
+      "issuer_name": "Williams Companies",
+      "partition_family_id": "resource_cycle_fcff",
+      "primary_lane_id": "energy",
+      "role": "boundary",
+      "ticker": "WMB"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000315293",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "issuer_name": "Aon plc",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "AON"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000316709",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "issuer_name": "Charles Schwab Corporation",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "SCHW"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000320335",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Life & Health Insurance",
+      "issuer_name": "Globe Life",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "GL"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000354190",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Insurance Brokers",
+      "issuer_name": "Arthur J. Gallagher & Co.",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "AJG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000713676",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Diversified Banks",
+      "issuer_name": "PNC Financial Services",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "PNC"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000720005",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Investment Banking & Brokerage",
+      "issuer_name": "Raymond James Financial",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "RJF"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000759944",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Regional Banks",
+      "issuer_name": "Citizens Financial Group",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "CFG"
+    },
+    {
+      "boundary_reason": null,
+      "cik": "0000779152",
+      "gics_sector": "Financials",
+      "gics_sub_industry": "Transaction & Payment Processing Services",
+      "issuer_name": "Jack Henry & Associates",
+      "partition_family_id": "financial_equity",
+      "primary_lane_id": "financials",
+      "role": "core",
+      "ticker": "JKHY"
+    }
+  ],
+  "partition_families": [
+    "financial_equity",
+    "resource_cycle_fcff"
+  ],
+  "partition_version": "US-RESET-PARTITION-2026-08-14-2.0",
+  "universe_version": "US-SP500-ISSUERS-2026-08-14-1.0",
+  "valuation_date": "2026-08-14"
+}

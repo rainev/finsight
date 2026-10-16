@@ -71,6 +71,39 @@ _STATEMENTS: tuple[str, ...] = (
     )
     """,
     "CREATE INDEX IF NOT EXISTS idx_rate_limits_reset ON rate_limits (reset_at)",
+    # --- Independent invite-only U.S. 500 staged-refresh control ---
+    """
+    CREATE TABLE IF NOT EXISTS us_refresh_control_settings (
+      id SMALLINT PRIMARY KEY CHECK (id = 1),
+      first_due_at TIMESTAMPTZ NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS us_refresh_grants (
+      user_id INTEGER PRIMARY KEY REFERENCES users (id) ON DELETE CASCADE,
+      invited_by INTEGER NOT NULL REFERENCES users (id),
+      granted_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      revoked_at TIMESTAMPTZ
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS us_refresh_jobs (
+      id BIGSERIAL PRIMARY KEY,
+      requested_by INTEGER NOT NULL REFERENCES users (id),
+      window_start TIMESTAMPTZ NOT NULL,
+      kind TEXT NOT NULL CHECK (kind IN ('weekly', 'manual')),
+      status TEXT NOT NULL CHECK (status IN ('queued', 'running', 'succeeded', 'failed')),
+      requested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      started_at TIMESTAMPTZ,
+      finished_at TIMESTAMPTZ,
+      result JSONB,
+      error TEXT
+    )
+    """,
+    "CREATE UNIQUE INDEX IF NOT EXISTS idx_us_refresh_one_per_week ON us_refresh_jobs (window_start) WHERE kind = 'weekly' AND status IN ('queued', 'running', 'succeeded')",
+    "CREATE UNIQUE INDEX IF NOT EXISTS idx_us_refresh_one_in_flight ON us_refresh_jobs ((1)) WHERE status IN ('queued', 'running')",
+    "CREATE INDEX IF NOT EXISTS idx_us_refresh_jobs_requested ON us_refresh_jobs (requested_at DESC)",
     # --- Files ---
     """
     CREATE TABLE IF NOT EXISTS files (
@@ -319,8 +352,36 @@ _STATEMENTS: tuple[str, ...] = (
 )
 
 
+def _require_data_preserving_startup() -> None:
+    """Fail before any DDL when legacy migration would change existing data."""
+    legacy = query("""SELECT column_name FROM information_schema.columns
+        WHERE table_schema='public' AND table_name='holdings'
+        AND column_name IN ('shares','avg_cost')""")
+    if legacy:
+        raise RuntimeError("Data-preserving startup blocked: legacy holdings columns require a separately authorized migration")
+    scenario = query("""SELECT column_name FROM information_schema.columns
+        WHERE table_schema='public' AND table_name='pse_assumptions'
+        AND column_name='scenario'""")
+    if scenario:
+        pending = query("SELECT count(*) AS count FROM pse_assumptions WHERE scenario IS NULL")
+        if len(pending) != 1 or int(pending[0]['count']) != 0:
+            raise RuntimeError("Data-preserving startup blocked: pending PSE scenario normalization requires separate authorization")
+
+
 def run_migrations() -> None:
     """Apply the schema. Called from the app lifespan, after the pool is open."""
+    _require_data_preserving_startup()
+    # Existing clean schemas need none of these historical data-changing steps.
+    # Never execute them on automatic startup, even after a successful precheck.
+    separate_migration_only = {
+        "ALTER TABLE holdings DROP COLUMN IF EXISTS shares",
+        "ALTER TABLE holdings DROP COLUMN IF EXISTS avg_cost",
+        "UPDATE pse_assumptions SET scenario = 'all' WHERE scenario IS NULL",
+    }
+    applied = 0
     for statement in _STATEMENTS:
+        if statement in separate_migration_only:
+            continue
         query(statement)
-    log.info("Database migrations applied (%d statements).", len(_STATEMENTS))
+        applied += 1
+    log.info("Database migrations applied (%d statements; legacy data changes excluded).", applied)

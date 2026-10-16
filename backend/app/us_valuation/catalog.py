@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
@@ -27,6 +28,16 @@ class CatalogIntegrityError(ValueError):
 
 def _sha256(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
+
+
+def sha256_bytes(raw: bytes) -> str:
+    """Shared canonical profile hashing contract; ordinary catalog hashing is unchanged."""
+    return _sha256(raw)
+
+
+def canonical_json_bytes(value: object) -> bytes:
+    """Match the pipeline serializer for closed private-profile fingerprints."""
+    return (json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False, allow_nan=False) + "\n").encode("utf-8")
 
 
 def _read_object(path: Path, label: str) -> dict[str, Any]:
@@ -67,6 +78,7 @@ class ValuationCatalog:
     included_batches: tuple[int, ...]
     entries: tuple[CatalogEntry, ...]
     manifest_sha256: str
+    manifest: Mapping[str, Any]
 
     @property
     def artifacts_root(self) -> Path:
@@ -132,10 +144,16 @@ def load_catalog(root: Path, *, manifest_sha256: str | None = None) -> Valuation
         raise CatalogIntegrityError("catalog universe version is missing")
     if not isinstance(valuation_date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", valuation_date):
         raise CatalogIntegrityError("catalog valuation date is invalid")
-    if not isinstance(batches, list) or batches != list(range(1, 11)):
-        raise CatalogIntegrityError("website catalog must contain confirmed batches 1 through 10")
-    if not isinstance(rows, list) or len(rows) != 100 or manifest.get("artifact_count") != 100:
-        raise CatalogIntegrityError("website catalog must contain exactly 100 batch artifacts")
+    if (
+        not isinstance(batches, list)
+        or any(type(batch) is not int for batch in batches)
+        or not (len(batches) == 10 or len(batches) >= 50)
+        or batches != list(range(1, len(batches) + 1))
+    ):
+        raise CatalogIntegrityError("website catalog must contain contiguous confirmed batches starting at 1 (legacy 10 or at least 50)")
+    expected_count = 10 * len(batches)
+    if not isinstance(rows, list) or len(rows) != expected_count or manifest.get("artifact_count") != expected_count:
+        raise CatalogIntegrityError("website catalog must contain exactly ten artifacts per confirmed batch")
     if rows != sorted(rows, key=lambda row: str(row.get("ticker", ""))):
         raise CatalogIntegrityError("catalog entries must be sorted")
     if manifest.get("artifact_tree_sha256") != _tree_hash(rows):
@@ -177,7 +195,10 @@ def load_catalog(root: Path, *, manifest_sha256: str | None = None) -> Valuation
     if artifact_files != tickers:
         raise CatalogIntegrityError("catalog artifact files do not exactly match the manifest")
 
-    catalog = ValuationCatalog(root, version, universe, valuation_date, tuple(batches), tuple(entries), digest)
+    if any(sum(entry.batch == batch for entry in entries) != 10 for batch in batches):
+        raise CatalogIntegrityError("website catalog must contain ten issuers in every confirmed batch")
+
+    catalog = ValuationCatalog(root, version, universe, valuation_date, tuple(batches), tuple(entries), digest, manifest)
     for entry in entries:
         path = catalog.verify_artifact(entry.ticker)
         artifact = _read_object(path, f"{entry.ticker} artifact")
@@ -202,6 +223,16 @@ def load_active_catalog(catalogs_root: Path) -> ValuationCatalog:
     if not isinstance(expected_manifest, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_manifest):
         raise CatalogIntegrityError("active catalog manifest digest is invalid")
     catalog = load_catalog(catalogs_root / relative, manifest_sha256=expected_manifest)
+    if (catalog.manifest.get('staged_release_only') is True or catalog.manifest.get('admission_prepared_only') is True) and os.environ.get('APP_ENV') != 'test':
+        raise CatalogIntegrityError('unadmitted staged release catalog is available only in isolated test mode')
+    if (catalog.manifest.get('private_integration_only') is True or 'private_review' in catalog.manifest) and os.environ.get('APP_ENV') != 'test':
+        raise CatalogIntegrityError('private integration catalog is available only in isolated test mode')
     if catalog.version != expected_version:
         raise CatalogIntegrityError("active catalog version mismatch")
+    if 'approved_base_inheritance' in catalog.manifest and os.environ.get('APP_ENV') != 'test':
+        from .approved_inheritance import validate_inheritance
+        try:
+            validate_inheritance(catalog.root, catalog.manifest, deep=True)
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            raise CatalogIntegrityError('active catalog admission/inheritance proof invalid') from exc
     return catalog
